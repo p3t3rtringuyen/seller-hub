@@ -21,9 +21,12 @@ building and match them; otherwise a neutral, dense, data-first design.
   seller account / marketplace switcher (data from a hook P3-IDENTITY will implement; use a
   typed stub now), date-range picker with presets.
 - Data table: server-side pagination, sort, filter; column picker; totals row; cells that wrap or
-  truncate with an ellipsis and a tooltip, never clip bare; skeleton rows the height of real rows
-  while loading, with headers and static parts rendered at once; selection with bulk-action bar;
-  inline edit cell.
+  truncate with an ellipsis and a tooltip, never clip bare; **skeleton matches the real shape**
+  while loading: same column set, widths and alignment as the entity being loaded (the campaigns
+  page switches entity tabs — campaigns / ad groups / keywords / product targets / auto targets —
+  each with its own columns), same row height and row count as `pageSize`, header, toolbar
+  (filters, date range, column picker), totals row and pagination rendered at once, no layout
+  shift when data arrives; selection with bulk-action bar; inline edit cell.
 - Fields: currency (digits and one decimal point, currency from the marketplace, never
   `type="number"`), whole number (digits only), percentage, search, multi-select, status chip.
 - Feedback: empty, error, toast, confirm dialog (for bulk and destructive actions).
@@ -33,5 +36,6 @@ building and match them; otherwise a neutral, dense, data-first design.
 ## Done when
 
 Gate command green; every component has a story; a probe in the stories shows no table cell
-clipping text without an ellipsis, and skeleton rows measure the same height as loaded rows.
-Report the measurements.
+clipping text without an ellipsis, and the skeleton of every table story has the same column
+count, column widths, row height and row count as its loaded state (measure with a Storybook
+interaction test per entity tab; zero cumulative layout shift on load). Report the measurements.

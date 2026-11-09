@@ -56,6 +56,7 @@ its OWNED_PATHS, does not commit.
 | P1-SPAPI | `p1-spapi-catalog.md` | sonnet | medium | main | P0 | `tools/catalog/spapi.mjs`, `catalog/spapi/**`, `docs/discovery/spapi-domains.md` |
 | P1-ADS | `p1-ads-catalog.md` | sonnet | high | main | P0 | `tools/catalog/ads.mjs`, `catalog/ads/**`, `docs/discovery/ads-domains.md`, `docs/discovery/ads-mcp.md` |
 | P1-CONSOLE | `p1-ads-console.md` | sonnet | high | main | P0, R11 | `catalog/console/**`, `docs/discovery/ads-console-features.md` |
+| P1-VENDOR | `p1-vendor-console.md` | sonnet | high | main | P0, P1-CONSOLE done (one Chrome driver) | `catalog/vendor/**`, `docs/discovery/vendor-features.md` |
 | P1-WEB | `p1-legacy-web.md` | sonnet | medium | main | P0 | `catalog/legacy/web-*.json`, `docs/discovery/legacy-web-features.md` |
 | P1-API | `p1-legacy-api.md` | sonnet | medium | main | P0 | `catalog/legacy/api-*.json`, `catalog/legacy/entities.json`, `catalog/legacy/jobs.json`, `docs/discovery/legacy-api-domain.md` |
 | P1-REF | `p1-reference-patterns.md` | haiku | medium | main | P0 | `docs/discovery/reference-patterns.md`, `docs/discovery/feature-ideas.md` |
@@ -63,7 +64,8 @@ its OWNED_PATHS, does not commit.
 
 P1-SPAPI, P1-ADS, P1-WEB, P1-API, P1-REF and P1-CONSOLE run in parallel (six sessions — the
 total cap). P1-CONSOLE drives the user's Chrome: tell the user it is running, so they leave its
-tab alone.
+tab alone. P1-VENDOR (added 2026-11-09 for D5 = Seller + Vendor) also drives Chrome, so it starts
+when P1-CONSOLE is done, in the slot of whichever P1 session finished first. P1-SCOPE waits for it.
 
 ### P2 — Design
 

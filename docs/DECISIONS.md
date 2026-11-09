@@ -12,50 +12,50 @@ vào cuối file với số tiếp theo.
 ## Gate 0 — trước khi bắt đầu
 
 ### D0 — Quyền dùng code ads-web / ads-api
-- Trạng thái: OPEN · Mặc định: **clean room**
+- Trạng thái: DECIDED (2026-11-09) · Mặc định: **clean room**
 - Code thuộc Yes4All. Hệ thống mới dành cho seller khác.
 - (a) **Clean room**: agent chỉ đọc code cũ để kiểm kê tính năng, quy tắc nghiệp vụ, edge case;
   code mới viết lại hoàn toàn, không mang tên/host nội bộ Yes4All.
 - (b) Được phép tái sử dụng code (bạn đã có văn bản cho phép của công ty).
-- Trả lời: _
+- Trả lời: a — clean room.
 
 ### D1 — Mô hình triển khai "cho bất kỳ seller nào"
-- Trạng thái: OPEN · Mặc định: **(c)**
+- Trạng thái: DECIDED (2026-11-09) · Mặc định: **(c)**
 - (a) Tự host đơn tenant: mỗi seller tự deploy, tự đăng ký app SP-API **private** và app Ads API
   của họ. Không cần Amazon duyệt app công khai.
 - (b) SaaS đa tenant: bạn là **public developer**; Amazon duyệt app, yêu cầu audit bảo mật theo
   Data Protection Policy; seller kết nối qua OAuth.
 - (c) Schema và code đa tenant ngay từ đầu, triển khai kiểu (a) trước; mở (b) sau khi qua P6-SEC.
-- Trả lời: _
+- Trả lời: c — schema đa tenant, tự host trước; mở SaaS public sau P6-SEC.
 
 ### D2 — Phạm vi API
-- Trạng thái: OPEN · Mặc định: **(a)**
+- Trạng thái: DECIDED (2026-11-09) · Mặc định: **(a)**
 - (a) SP-API + Amazon Ads API (thay được ads-web và mở rộng sang vận hành).
 - (b) Chỉ SP-API (không có quản lý quảng cáo — không thay được ads-web).
-- Trả lời: _
+- Trả lời: a — SP-API + Amazon Ads API.
 
 ### D3 — Stack
-- Trạng thái: OPEN · Mặc định: **(a)**
+- Trạng thái: DECIDED (2026-11-09) · Mặc định: **(a)**
 - (a) **TypeScript toàn bộ**: Next.js App Router (BFF) + API Node (NestJS hoặc Fastify, chốt ở
   ADR) + worker hàng đợi (BullMQ/Redis) + PostgreSQL 16. Lý do: SDK chính thức của Amazon có
   JavaScript (kèm LWA và rate limiter), không có Go; một ngôn ngữ cho FE/BE → chung kiểu DTO,
   các session song song ít lệch nhau.
 - (b) Go backend (Gin/fx như ads-api) + Next.js. Đội quen; nhưng phải tự sinh client từ model và tự
   viết LWA, rate limiter, Restricted Data Token.
-- Trả lời: _
+- Trả lời: a — TypeScript toàn bộ (Node API + Next.js BFF + BullMQ worker + PostgreSQL 16).
 
 ### D4 — Khu vực / marketplace đầu tiên
-- Trạng thái: OPEN · Mặc định: **NA, US (`ATVPDKIKX0DER`)**; schema hỗ trợ đủ NA/EU/FE từ đầu.
-- Trả lời: _
+- Trạng thái: DECIDED (2026-11-09) · Mặc định: **NA, US (`ATVPDKIKX0DER`)**; schema hỗ trợ đủ NA/EU/FE từ đầu.
+- Trả lời: mặc định — NA, US (`ATVPDKIKX0DER`); schema hỗ trợ NA/EU/FE.
 
 ### D5 — Seller hay Vendor
-- Trạng thái: OPEN · Mặc định: **chỉ Seller**. Các API `vendor-*` để ngoài phạm vi.
-- Trả lời: _
+- Trạng thái: DECIDED (2026-11-09) · Mặc định: **chỉ Seller**. Các API `vendor-*` để ngoài phạm vi.
+- Trả lời: **Seller + Vendor.** Seller trước trong lát cắt đầu; Vendor (gồm Vendor Central Promotion Central, `vendor-*` SP-API) là phạm vi sản phẩm, xếp wave ở P1-SCOPE.
 
 ### D6 — Phân vai model và song song
-- Trạng thái: OPEN · Mặc định: như `docs/PLAN.md` (Opus 5.5 điều phối/thiết kế/review,
+- Trạng thái: DECIDED (2026-11-09) · Mặc định: như `docs/PLAN.md` (Opus 5.5 điều phối/thiết kế/review,
   Sonnet 5.5 viết code, Haiku 5.5 việc cơ học); tối đa **3** session viết code cùng lúc.
-- Trả lời: _
+- Trả lời: mặc định — như `docs/PLAN.md`.
 
 ### D7 — Remote git
 - Trạng thái: DECIDED (2026-10-14)
@@ -64,15 +64,15 @@ vào cuối file với số tiếp theo.
 - Trả lời: GitHub private repo ở trên.
 
 ### D8 — Tên sản phẩm / repo
-- Trạng thái: OPEN · Mặc định: `seller-hub`
-- Trả lời: _
+- Trạng thái: DECIDED (2026-11-09) · Mặc định: `seller-hub`
+- Trả lời: mặc định — `seller-hub`.
 
 ### D9 — Nguồn legacy bổ sung
-- Trạng thái: OPEN · Mặc định: **không**. Chỉ kiểm kê ads-web, ads-api (và ads-redesign cho mẫu
+- Trạng thái: DECIDED (2026-11-09) · Mặc định: **không**. Chỉ kiểm kê ads-web, ads-api (và ads-redesign cho mẫu
   auth BFF).
 - Có thể thêm: `catalog-web`, `products-web`, `promotion-web`, `master-data-web`, `portal-web` nếu
   muốn hệ thống mới gồm cả các mảng đó.
-- Trả lời: _
+- Trả lời: không.
 
 ---
 
@@ -161,3 +161,25 @@ vào cuối file với số tiếp theo.
 - Trả lời: **mới (v1)**. Cách hiểu đang áp dụng: v1 là mặc định cho mọi thứ v1 có. Chỗ v1 chưa có
   (theo mục lục docs hiện tại: portfolios, budget rules và một số API khác) dùng v0, và **mỗi chỗ là
   một ngoại lệ có tên** trong `docs/discovery/ads-domains.md` / ADR, để gỡ khi v1 bổ sung.
+
+### D54 — Bộ kiểm thử front-end
+- Trạng thái: DECIDED (2026-11-09) · Mặc định: **(a)** (theo brief PO 2026-11-02)
+- (a) Vitest + React Testing Library (unit), Storybook cho mọi component + interaction tests
+  (`@storybook/test`), Playwright (e2e). Chạy trong Turborepo pipeline, CI chặn merge khi đỏ.
+- (b) Như (a) nhưng không Storybook (giảm chi phí bảo trì).
+- Trả lời: a — Vitest + RTL, Storybook + interaction tests, Playwright.
+
+### D55 — Mô hình phân quyền (RBAC)
+- Trạng thái: DECIDED (2026-11-09) · Mặc định: **(a)**
+- (a) Tenant → user có **role** cố định: Owner, Admin, Manager (ghi campaign), Analyst (đọc + báo
+  cáo), Viewer. Quyền kiểm tra ở API; UI ẩn/khoá theo quyền. Phạm vi theo seller account.
+- (b) Như (a) + role tuỳ biến (permission-set do tenant tự định nghĩa). Linh hoạt hơn, tốn ~1 slice.
+- Trả lời: a — role cố định Owner/Admin/Manager/Analyst/Viewer, phạm vi theo seller account.
+
+### D56 — Chuẩn tính năng từ sản phẩm thị trường
+- Trạng thái: DECIDED (2026-11-09) · Mặc định: **có** (theo brief PO 2026-11-02)
+- P1-REF kiểm kê tính năng công khai của Pacvue / Perpetua (Sellics), Helium 10 Adtomic, Skai /
+  ProfitlogiQ (tài liệu, help center) làm nguồn ý tưởng cho `docs/SCOPE.md`: tối ưu tự động, nối
+  dữ liệu bán hàng + tồn kho + ads, gợi ý/harvest từ khoá, rule-based bidding, dayparting, pacing
+  ngân sách, phân tích AI. Chỉ lấy yêu cầu, không chép UI/thương hiệu.
+- Trả lời: có.
