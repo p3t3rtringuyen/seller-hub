@@ -2,10 +2,9 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P1 — 6 of 7 discovery tasks done and committed; P1-VENDOR, then P1-SCOPE
+- **Phase:** P1 — 7 of 7 discovery tasks done and committed; P1-SCOPE next
 - **Updated:** 2026-11-09
-- **Waiting on user:** `tiếp` to start P1-VENDOR (needs Chrome free: close the stuck Display-builder
-  tab, choose Leave); R5/R6 (own SP-API app, own Ads API LWA client); R1 Docker engine 500 (P3)
+- **Waiting on user:** `tiếp` to start P1-SCOPE; R5/R6 (own SP-API app, own Ads API LWA client); R1 Docker engine 500 (P3)
 
 ## Running
 
@@ -21,6 +20,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 | P1-CONSOLE | report read; entityId grep clean. Partial: account has SB only (SP/SD detail tabs, validation msgs, tooltips not covered) | committed on main | docs/reports/P1-CONSOLE.md |
 | P1-REF | report read; competitor evidence partly secondhand (some pages blocked) | committed on main | docs/reports/P1-REF.md |
 | P1-WEB | report read; 188/194 web calls match api-endpoints.json; JSON parses | committed on main | docs/reports/P1-WEB.md |
+| P1-VENDOR | report read; 24 entries parse; no ids/ASINs; all tabs closed. Partial: CA DF account, promo wizard steps 2–3, Personalized/Points, Invoices/Payments unreachable | committed on main | docs/reports/P1-VENDOR.md |
 | P1-API | report read; clean-room grep 0 (yes4all/y4a/codenames); SP-API names checked vs catalog/spapi | committed on main | docs/reports/P1-API.md |
 
 ## Blocked / waiting
@@ -30,7 +30,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 
 ## Next runnable
 
-- P1-VENDOR (on user's `tiếp`, Chrome free), then P1-SCOPE after P1-WEB/P1-API follow-ups and P1-VENDOR.
+- P1-SCOPE (opus/high) on the user's `tiếp`.
 
 ## Log
 
@@ -67,3 +67,6 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   cross-check endpoints now that P1-API's catalog exists. Nothing committed yet (waits for those).
 - 2026-11-09 — P1-API neutralised internal names (grep 0); P1-WEB cross-check: 188/194 calls match,
   5 go to other services, 95 backend routes unused by any screen. Committed all six P1 outputs.
+- 2026-11-09 — P1-VENDOR done (CA Direct Fulfillment account). Vendor promotions/coupons are
+  console-only (no SP-API); vendor API surface = POs, shipments, invoices, transaction status, DF
+  (RDT-restricted), 8 GET_VENDOR_* reports. Open questions passed to P1-SCOPE. Committed.

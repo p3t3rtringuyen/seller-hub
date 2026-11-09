@@ -1,0 +1,391 @@
+[
+  {
+    "area": "Promotion Central",
+    "screen": "Manage Promotions (dashboard / promotion list)",
+    "path": "/promotion-central/dashboard",
+    "purpose": "List and monitor all vendor deals and price discounts across regions; entry point to create, view, edit, cancel.",
+    "columns": [
+      {"name": "Promotion", "definition": "Thumbnail, title (auto-generated or vendor-named), promotion type label, ASIN count."},
+      {"name": "Status", "definition": "Status badge plus issue count (e.g. 'Has issues', '1 issues')."},
+      {"name": "Schedule", "definition": "Date range, event badge (e.g. a named sales event), store flag/country, audience (e.g. All Customers)."},
+      {"name": "Promotion terms", "definition": "Short terms label (e.g. 'Discount') plus a secondary value."},
+      {"name": "Performance", "definition": "Sales, Units sold, Glance views, Conversion."},
+      {"name": "Action", "definition": "Edit button with caret menu."}
+    ],
+    "filters": [
+      "Search box: ASIN, SKU, promotion title or id",
+      "Region tabs: Americas, Europe, Asia Pacific, India, Middle East/North Africa",
+      "Status (multi-select): Cancelled, Cancelling, Ended, Processing, Running, Has issues, Upcoming, Needs approval (default Running+Upcoming+Needs approval)",
+      "Type (multi-select): Best Deal, Fixed Price Discount, Lightning Deal, Personalized promotion, Points Deal",
+      "Store (multi-select): Brazil, Canada, Chile, Colombia, Mexico, United States (Americas)",
+      "All filters panel: Status, Type, Store, Event, Vendor Code, Creator, Start Date, End date",
+      "Sort by Status, Schedule; Clear all filters; results per page; pagination"
+    ],
+    "actions": [
+      {"name": "Create promotion (menu: Create Deal, Create Price Discount, Create personalized promotion, Create Points Deal)", "kind": "create", "writes": true},
+      {"name": "Edit", "kind": "update", "writes": true},
+      {"name": "View (row caret menu)", "kind": "read", "writes": false},
+      {"name": "Cancel (row caret menu)", "kind": "cancel", "writes": true},
+      {"name": "Export to CSV", "kind": "export", "writes": false},
+      {"name": "Select rows (checkbox) for bulk action", "kind": "read", "writes": false}
+    ],
+    "forms": [],
+    "api": "console-only",
+    "notes": "KPI tiles above the list: Sales, Units sold, Funding, Glance views, 'past 30 days', 'Last updated' timestamp; aggregated across all deals and price discounts. Banner: Price Discounts created after the announcement can only be managed in Promotion Central; older ones stay on a legacy 'Promotions' page. Auto-generated promotions exist (titled 'Auto Promotion - <ASIN>', type Best Deal, system author) and show 'Needs approval'/'Has issues'. promotions@2025-12-01 (seller audience, read-only search) may expose similar data; not verified for vendor accounts."
+  },
+  {
+    "area": "Promotion Central",
+    "screen": "Promotion detail / performance",
+    "path": "/promotion-central/deals/view/{promotionId}?region=NA",
+    "purpose": "Read one promotion: header facts, performance, products, issues, activity history.",
+    "columns": [
+      {"name": "Header", "definition": "Title, status badge, Promotion ID (uuid), Type, Event, Audience, Start date, End date (to the minute, 15-min grid e.g. 11:45 PM), Amazon Store, Billing Vendor Code, Agreement id, Funding source (e.g. Selling Partners). 'More details' expands Deal ID and PSS ID."},
+      {"name": "Performance tiles", "definition": "Sales, Units sold, Glance views, Conversion."},
+      {"name": "Products tab", "definition": "Product (image, title, ASIN, SKU) | Pricing (Likely promotional price, Your price, Featured Offer) | Units (Units Sold, Committed) | Discount (Discount, Per unit funding, Est. total funding). ASIN search, pagination (results per page default 100), 'Download Current Products'."},
+      {"name": "Issues tab", "definition": "Same product row layout; per-product issue label (observed: 'Discount too low'); count badge."},
+      {"name": "Activity tab", "definition": "Revision log: Time, Author (System/Vendor), Status (Published, Superseded), Promotion-level updates (promotion type, dates, store, billing vendor code, funding source, deal id, PSS id, marketing tags), Product-level updates (Download Product Changes)."}
+    ],
+    "filters": ["Filters tab inside Products / Issues / Activity", "Search by ASIN", "View Revision dropdown (observed: Published)"],
+    "actions": [
+      {"name": "Clone", "kind": "create", "writes": true},
+      {"name": "Edit", "kind": "update", "writes": true},
+      {"name": "Cancel Promotion", "kind": "cancel", "writes": true},
+      {"name": "Download Current Products", "kind": "export", "writes": false},
+      {"name": "Download Product Changes", "kind": "export", "writes": false},
+      {"name": "Return to all promotions", "kind": "navigate", "writes": false}
+    ],
+    "forms": [],
+    "api": "console-only",
+    "notes": "Revisions are immutable and superseded by new ones; status lifecycle seen: Published, Superseded, plus list statuses Processing, Needs approval, Has issues, Cancelling, Cancelled, Ended. Funding is per unit, borne by the 'Funding source' (Selling Partners)."
+  },
+  {
+    "area": "Promotion Central",
+    "screen": "Create a deal or price discount - wizard (3 steps), Step 1 Set details",
+    "path": "/promotion-central/deals/create/details",
+    "purpose": "Create Best Deal, Lightning Deal or Price discount; same wizard for all three.",
+    "columns": [],
+    "filters": [],
+    "actions": [
+      {"name": "Step 2: Add products (next)", "kind": "navigate", "writes": true},
+      {"name": "Back", "kind": "navigate", "writes": false}
+    ],
+    "forms": [
+      {"step": "Step 1: Set details", "fields": [
+        {"name": "Amazon Store", "type": "select (grouped by region, searchable)", "options": "Eligible stores only (tooltip: 'Eligible Amazon store to submit your promotion'); one option for this account", "default": "first eligible store", "validation": "required"},
+        {"name": "Billing Vendor Code", "type": "select", "options": "vendor codes of the account for the chosen store (values not recorded)", "default": "first code", "validation": "required"},
+        {"name": "Promotion Type", "type": "radio", "options": "Best Deal (time-bound offer with Deals Badge for a limited number of days); Lightning Deal (Deals Badge for a limited number of hours, usually 4 to 12, set by Amazon); Price discount (time-bound discounted price for a specified duration)", "default": "Best Deal", "validation": "required"},
+        {"name": "Schedule - Best Deal", "type": "Start date, End date (YYYY-MM-DD)", "options": "date pickers", "default": "empty", "validation": "'Start date is required', 'End date is required' (summary banner: 'Fix highlighted issues to submit')"},
+        {"name": "Schedule - Lightning Deal", "type": "Start date only (YYYY-MM-DD)", "options": "hint 'Runs for up to 12 hours'", "default": "empty", "validation": "start date required"},
+        {"name": "Schedule - Price discount", "type": "Start date, Start time, End date, End time", "options": "time pickers", "default": "Start time 12:00 AM, End time 11:45 PM", "validation": "'Start date is required', 'End date is required'"}
+      ]},
+      {"step": "Step 2: Add products", "fields": []},
+      {"step": "Step 3: Set product discounts", "fields": []}
+    ],
+    "api": "console-only",
+    "notes": "UNREACHABLE: Steps 2 and 3 could not be read - advancing needs valid dates and would create a draft on a live account (read-only rule). Their existence/titles come from the step header. Expected inputs (not observed): product selection by ASIN/upload, per-product discount/price, funding - verify in P3 from Amazon docs. Opening the wizard does not save anything; leaving it raised no Chrome dialog (wizard opened in its own tab and was closed)."
+  },
+  {
+    "area": "Promotion Central",
+    "screen": "Promotion type: Best Deal",
+    "path": "/promotion-central/deals/create/details (type radio)",
+    "purpose": "Multi-day deal with a Deals Badge; also generated by Amazon as 'Auto Promotion' for eligible ASINs.",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": "console-only",
+    "notes": "Observed in list/detail; schedule is a date range; audience 'All'; promotional price per product; funding per unit."
+  },
+  {
+    "area": "Promotion Central",
+    "screen": "Promotion type: Lightning Deal",
+    "path": "/promotion-central/deals/create/details (type radio)",
+    "purpose": "Few-hour deal (usually 4-12 h, chosen by Amazon) to lift sales/clear inventory.",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": "console-only",
+    "notes": "Only a start date is entered; no end date/time. No existing Lightning Deal in this account sample, so list/detail not observed."
+  },
+  {
+    "area": "Promotion Central",
+    "screen": "Promotion type: Price discount (Fixed Price Discount)",
+    "path": "/promotion-central/deals/create/details (type radio)",
+    "purpose": "Time-bound discounted price for a specified duration, with start/end time to the 15 minute.",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": "console-only",
+    "notes": "Appears as 'Fixed Price Discount' in the Type filter. Banner says Price Discounts created after the Promotion Central announcement are managed only there."
+  },
+  {
+    "area": "Promotion Central",
+    "screen": "Promotion type: Personalized promotion",
+    "path": "/promotion-central/personalized-promotions/create",
+    "purpose": "Audience-targeted promotion.",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": "console-only",
+    "notes": "NOT REACHABLE: page shows 'Access restricted - Personalized Promotion is not supported in your marketplace yet' (CA vendor account)."
+  },
+  {
+    "area": "Promotion Central",
+    "screen": "Promotion type: Points Deal",
+    "path": "/promotion-central/points/standard/promotion/create/details",
+    "purpose": "Points-based promotion.",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": "console-only",
+    "notes": "NOT REACHABLE: 'Access restricted - Points Promotion is not supported in your marketplace yet' (CA vendor account)."
+  },
+  {
+    "area": "Orders",
+    "screen": "Purchase Orders - PO Dashboard",
+    "path": "/po/vendor/members/po-mgmt/dashboard",
+    "purpose": "Landing page of PO management: announcements (new fulfillment centers, ASN/auto-cancel policy), summary widgets, 'View new experience' toggle.",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": [{"operation": "vendorOrders.getPurchaseOrdersStatus", "model": "catalog/spapi/definitions/vendorOrders@v1.json"}],
+    "notes": "Sub-nav: PO Dashboard, Manage POs, Recently Modified POs (100+), Manage POs in bulk. Operational notices (new FC codes, policy changes) are console content, not API. Dashboard widgets not read (page dominated by banners)."
+  },
+  {
+    "area": "Orders",
+    "screen": "Purchase Orders - Manage POs",
+    "path": "/po/vendor/members/po-mgmt/managepos?tabId=unconfirmed",
+    "purpose": "View and act on purchase orders; confirm POs so they are not auto-cancelled.",
+    "columns": [
+      {"name": "PO", "definition": "PO number (sortable)."},
+      {"name": "Vendor code", "definition": "Vendor code the PO belongs to."},
+      {"name": "PO items", "definition": "Number of items in PO."},
+      {"name": "Order date", "definition": "PO creation date."},
+      {"name": "Requested quantity", "definition": "Units requested."},
+      {"name": "Total requested cost", "definition": "Cost of requested units."},
+      {"name": "Ship-to location", "definition": "Amazon fulfillment center code."},
+      {"name": "SAN", "definition": "Ship-to address code."},
+      {"name": "Consolidation ID", "definition": "Groups POs for consolidated shipping."},
+      {"name": "Window start / Window end", "definition": "Delivery window."},
+      {"name": "Freight terms", "definition": "e.g. collect/prepaid."}
+    ],
+    "filters": ["Tabs: Unconfirmed, Confirmed, Closed, All (with counts)", "View by: PO | PO items", "Search by PO, ASIN, or external id (up to 500 values separated by space)", "Order date start/end", "Ship-to location (All)", "Sort & filter panel; 'Restore default sort and filters'; 'Apply pending cancellation items filter'", "Customize columns"],
+    "actions": [
+      {"name": "Upload PO confirmation", "kind": "submit", "writes": true},
+      {"name": "Export PO to Excel (split menu: Export PO items to Excel)", "kind": "export", "writes": false},
+      {"name": "Customize export", "kind": "config", "writes": false},
+      {"name": "Customize columns", "kind": "config", "writes": false}
+    ],
+    "forms": [],
+    "api": [
+      {"operation": "vendorOrders.getPurchaseOrders", "model": "catalog/spapi/definitions/vendorOrders@v1.json"},
+      {"operation": "vendorOrders.getPurchaseOrder", "model": "catalog/spapi/definitions/vendorOrders@v1.json"},
+      {"operation": "vendorOrders.getPurchaseOrdersStatus", "model": "catalog/spapi/definitions/vendorOrders@v1.json"},
+      {"operation": "vendorOrders.submitAcknowledgement", "model": "catalog/spapi/definitions/vendorOrders@v1.json"}
+    ],
+    "notes": "Policy shown: PO items without an ASN are auto-cancelled on the Cancellation Deadline. Volume on the account: hundreds of confirmed and closed POs, 1000+ total. Recently Modified POs and Manage POs in bulk tabs not opened."
+  },
+  {
+    "area": "Orders",
+    "screen": "Shipments (shipping queue)",
+    "path": "/kt/vendor/members/afi-shipment-mgr/shippingqueue",
+    "purpose": "Create/track ASN shipments, appointments and ASN defects.",
+    "columns": [
+      {"name": "Shipment ID (ARN) / ASN #", "definition": "Amazon reference number and vendor ASN."},
+      {"name": "Creation date", "definition": ""},
+      {"name": "Status / Date/detail", "definition": "Shipment status with date."},
+      {"name": "POs", "definition": "POs on the shipment."},
+      {"name": "Packing details", "definition": ""},
+      {"name": "Carrier / Mode", "definition": ""},
+      {"name": "Ship from / Ship to", "definition": ""},
+      {"name": "Action", "definition": "Row actions (not opened)."}
+    ],
+    "filters": ["Search PO, ASN or ARN", "Only show draft shipments", "Only show shipments missing a trailer ID", "Only show shipments pending ASN submission", "Tabs: All shipments, All appointments, All ASN defects"],
+    "actions": [
+      {"name": "Download/export data", "kind": "export", "writes": false}
+    ],
+    "forms": [],
+    "api": [
+      {"operation": "vendorShipments.GetShipmentDetails", "model": "catalog/spapi/definitions/vendorShipments@v1.json"},
+      {"operation": "vendorShipments.SubmitShipments", "model": "catalog/spapi/definitions/vendorShipments@v1.json"},
+      {"operation": "vendorShipments.SubmitShipmentConfirmations", "model": "catalog/spapi/definitions/vendorShipments@v1.json"},
+      {"operation": "vendorShipments.GetShipmentLabels", "model": "catalog/spapi/definitions/vendorShipments@v1.json"}
+    ],
+    "notes": "Appointments and ASN defects have no matching SP-API operation (console-only). Create-shipment flow not opened (would be a write wizard). Data was loading when read; tab bodies not captured."
+  },
+  {
+    "area": "Orders",
+    "screen": "Vendor-initiated orders",
+    "path": "/hz/vendor/members/vio/home",
+    "purpose": "Program selector; one program offered: 'Born to Run' - vendor tells Amazon how many units it expects to sell in 10 weeks; Amazon reviews and buys up to the approved amount.",
+    "columns": [], "filters": [],
+    "actions": [{"name": "Go to the programme", "kind": "navigate", "writes": false}],
+    "forms": [],
+    "api": "console-only",
+    "notes": "Rules shown: units not sold within the 10-week sell-through are subject to returns or retention fees at the vendor's election; usable to raise inventory position for launches/campaigns. Programme page itself not opened."
+  },
+  {
+    "area": "Orders",
+    "screen": "Direct Fulfillment Orders",
+    "path": "/hz/vendor/members/df/orders",
+    "purpose": "Orders the vendor ships directly to customers: process, label, confirm shipment.",
+    "columns": [],
+    "filters": [
+      "Warehouse selector; counters: New orders, Shipped, Cancelled, Late shipments; 'Shipments due by' (Today, Tomorrow, All)",
+      "Tabs by carrier (observed: All Shipments plus carrier tabs)",
+      "Refine by: ASIN/SKU/Order ID search, Received on (from/to), Status (Unshipped, Shipped, Paid, Cancelled), Next Processing Step (Any, Download Packing Slips, Add tracking, Print label, Confirm shipment), Warehouse, Ships by (date options), Products in order (Any/Single/Multiple), Orders with hazmat items (Any/Contains/Does not contain)"
+    ],
+    "actions": [
+      {"name": "Available actions (bulk, on selected orders)", "kind": "bulk", "writes": true},
+      {"name": "refresh", "kind": "read", "writes": false}
+    ],
+    "forms": [],
+    "api": [
+      {"operation": "vendorDirectFulfillmentOrders.getOrders / getOrder / submitAcknowledgement (2021-12-28)", "model": "catalog/spapi/definitions/vendorDirectFulfillmentOrders@2021-12-28.json"},
+      {"operation": "vendorDirectFulfillmentShipping.getShippingLabels / createShippingLabels / getPackingSlips / submitShipmentConfirmations / submitShipmentStatusUpdates (2021-12-28)", "model": "catalog/spapi/definitions/vendorDirectFulfillmentShipping@2021-12-28.json"},
+      {"operation": "vendorDirectFulfillmentInventory.submitInventoryUpdate", "model": "catalog/spapi/definitions/vendorDirectFulfillmentInventory@v1.json"},
+      {"operation": "vendorDirectFulfillmentPayments.submitInvoice", "model": "catalog/spapi/definitions/vendorDirectFulfillmentPayments@v1.json"}
+    ],
+    "notes": "Orders and shipping-document operations are Restricted Data Token operations (buyer PII), so out of MVP per D11. Order columns not captured (no orders matched the default filter). The bulk-action menu options were not opened. Training banners are console content."
+  },
+  {
+    "area": "Items",
+    "screen": "Catalogue (My Catalogue)",
+    "path": "/vendor/members/products/catalog",
+    "purpose": "All listings of the account across vendor codes: status, availability, cost, page views, recommended next step.",
+    "columns": [
+      {"name": "Product details", "definition": "Image, title, ASIN, UPC, SKU."},
+      {"name": "Vendor code / Product type / Brand", "definition": ""},
+      {"name": "Page views", "definition": "Last 30 days."},
+      {"name": "Availability", "definition": "e.g. Available, Permanently unavailable."},
+      {"name": "Cost", "definition": "Vendor cost, currency shown."},
+      {"name": "Last updated / Recommended next step", "definition": "Timestamp; link such as 'Fix listing issue'."}
+    ],
+    "filters": ["Tabs: All listings, Complete drafts, Activate listings, Enhance listings, Review listing changes", "Quick filters: All, Favourites (star per row)", "Search type selector (ASINs...) with up to 250 ASINs pasted", "Vendor codes multi-select", "Recommended next step", "All filters", "Sort by (default Last updated)", "Column settings", "Download"],
+    "actions": [
+      {"name": "Add listings", "kind": "create", "writes": true},
+      {"name": "Vendor code priority", "kind": "config", "writes": true},
+      {"name": "Row menu: Edit listing", "kind": "update", "writes": true},
+      {"name": "Row menu: Manage images", "kind": "update", "writes": true},
+      {"name": "Row menu: Update availability", "kind": "update", "writes": true},
+      {"name": "Row menu: Download pre-filled spreadsheet", "kind": "export", "writes": false}
+    ],
+    "forms": [],
+    "api": [
+      {"operation": "catalogItems.searchCatalogItems / getCatalogItem (2022-04-01)", "model": "catalog/spapi/definitions/catalogItems@2022-04-01.json"},
+      {"operation": "listingsItems.getListingsItem / putListingsItem / patchListingsItem (2021-08-01; vendor support partial)", "model": "catalog/spapi/definitions/listingsItems@2021-08-01.json"}
+    ],
+    "notes": "Vendor-specific attributes (cost, vendor code priority, availability per vendor code) and the listing workflow tabs have no dedicated vendor SP-API; Feeds API (JSON_LISTINGS_FEED) is the usual bulk path - confirm in P3. A 'What is new' dialog appears on first load and was dismissed with its close button only."
+  },
+  {
+    "area": "Items",
+    "screen": "Other Items menu entries (not opened)",
+    "path": "menu: Improve listing quality, Add Products, Bulk product submissions, Upload Images, Manage Product Availability, Upload and Manage Videos, Product Certificates, Manage Product Compliance, Manage Catalog Feeds",
+    "purpose": "Listing quality, creation, bulk submission, media, availability, compliance, feeds.",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": [
+      {"operation": "feeds (JSON_LISTINGS_FEED / vendor flat-file feeds) for bulk submissions", "model": "catalog/spapi/feeds.json"},
+      {"operation": "aplusContent (A+ only; images/videos have no API)", "model": "catalog/spapi/definitions/aplusContent@2020-11-01.json"}
+    ],
+    "notes": "Names only; pages not visited (time/scope). Treat as console-only except the feeds path."
+  },
+  {
+    "area": "Supply Chain",
+    "screen": "Supply Chain Connect; Analyze Performance (not opened)",
+    "path": "menu: Supply Chain",
+    "purpose": "Supply-chain collaboration and performance analysis.",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": "console-only",
+    "notes": "Menu entries only."
+  },
+  {
+    "area": "Advertising",
+    "screen": "Advertise at Amazon (link)",
+    "path": "menu: Advertising",
+    "purpose": "Link out to the Amazon Ads console (not followed: leaves Vendor Central and the account is the employer's).",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": [{"operation": "Amazon Ads API (see catalog/ads/**) - separate API, not SP-API", "model": "catalog/ads"}],
+    "notes": "Not visited."
+  },
+  {
+    "area": "Merchandising",
+    "screen": "Coupon campaigns",
+    "path": "/hz/vendor/members/coupon-campaigns",
+    "purpose": "List and create coupon campaigns.",
+    "columns": [
+      {"name": "Campaign card", "definition": "Created on, Coupons count, campaign name, budget type ('Per individual coupon'), Total budget, status (Active, Cancelled, ...), 'Campaign details' link, warnings such as 'Some products were removed or suppressed' and upload-error banners."}
+    ],
+    "filters": ["Campaign names (text)", "Starts: Any time, Today, Tomorrow, This week, Next week, This month, Date range", "Budget: All, Share, Per individual coupon", "Campaign status: All, Needs your attention, Active, Complete, Canceled, Expired", "Search", "1-10 of N total (thousands of campaigns)"],
+    "actions": [
+      {"name": "Create a new campaign", "kind": "create", "writes": true},
+      {"name": "Campaign details", "kind": "read", "writes": false}
+    ],
+    "forms": [
+      {"step": "Create coupons (dialog)", "fields": [
+        {"name": "Coupon type", "type": "radio", "options": "Standard Coupon; Reorder Coupon", "default": "Standard Coupon", "validation": ""},
+        {"name": "Download a spreadsheet", "type": "button", "options": "Download Standard Coupon spreadsheet", "default": "", "validation": ""},
+        {"name": "Upload completed spreadsheet", "type": "file (Browse)", "options": "", "default": "No file chosen", "validation": "spreadsheet errors reported on the campaign card after upload"},
+        {"name": "Create coupons one at a time", "type": "button", "options": "Go to upload products (Standard coupons only; Reorder coupons need the spreadsheet)", "default": "", "validation": ""}
+      ]}
+    ],
+    "api": "console-only",
+    "notes": "Two creation paths: spreadsheet upload or one at a time. The one-at-a-time flow was not opened (it starts a product upload). Dialog closed with X."
+  },
+  {
+    "area": "Merchandising",
+    "screen": "Other Merchandising entries (not opened)",
+    "path": "menu: Promotions (Promotion Central), Amazon Vine, A+ Content Manager, Manage your experiments, Business Pricing Discounts, Shopping guides",
+    "purpose": "Merchandising tools.",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": [{"operation": "aplusContent.* (A+ Content Manager only)", "model": "catalog/spapi/definitions/aplusContent@2020-11-01.json"}],
+    "notes": "Others console-only."
+  },
+  {
+    "area": "Growth",
+    "screen": "Product Opportunity Explorer; Manage Your Brands (not opened)",
+    "path": "menu: Growth",
+    "purpose": "Market/opportunity research and brand management.",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": "console-only",
+    "notes": "Menu entries only."
+  },
+  {
+    "area": "Reports",
+    "screen": "Retail Analytics (home and Sales)",
+    "path": "/retail-analytics, /retail-analytics/dashboard/sales",
+    "purpose": "Sales, Inventory, Net PPM and Catalogue analytics dashboards with downloadable reports.",
+    "columns": [
+      {"name": "Home tiles", "definition": "Customer Returns, Open Purchase Order Quantity, Sellable On-Hand Units, Unsellable On-Hand Units (with as-of date, 'Sourcing view')."},
+      {"name": "Sales report", "definition": "ASIN, Product Title, Brand, Shipped Revenue, Shipped COGS, Shipped Units, Customer Returns ... (26 columns, 'Customize Columns')."}
+    ],
+    "filters": ["Account selector (regional view)", "Time frame (Custom...), Start/End date", "View by (ASIN, vendor code...)", "Distributor View (Sourcing)", "Program View (Retail)", "Search ASIN (up to 100)", "Brand, Category, Subcategory", "Currency", "Prior Period, Year over Year"],
+    "actions": [
+      {"name": "Apply / Refine Results", "kind": "read", "writes": false},
+      {"name": "Download CSV / Excel", "kind": "export", "writes": false},
+      {"name": "Manage Downloads", "kind": "read", "writes": false}
+    ],
+    "forms": [],
+    "api": [
+      {"operation": "reports: GET_VENDOR_SALES_REPORT, GET_VENDOR_INVENTORY_REPORT, GET_VENDOR_TRAFFIC_REPORT, GET_VENDOR_FORECASTING_REPORT, GET_VENDOR_NET_PURE_PRODUCT_MARGIN_REPORT, GET_VENDOR_REAL_TIME_{SALES,INVENTORY,TRAFFIC}_REPORT", "model": "catalog/spapi/reports.json"},
+      {"operation": "dataKiosk vendorAnalytics@2024-09-30 (GraphQL)", "model": "catalog/spapi/data-kiosk.json"}
+    ],
+    "notes": "Announcements mention a newer 'Custom Analytics' reporting tool; a feedback survey dialog appeared and was dismissed with X (no answer submitted). Catalogue and Net PPM tabs not opened."
+  },
+  {
+    "area": "Reports",
+    "screen": "Brand Analytics; Voice of the Customer; Product Prep and Packaging; Concession Hub (not opened)",
+    "path": "menu: Reports",
+    "purpose": "Search/market analytics, customer feedback, prep/packaging compliance, concessions (chargebacks).",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": [{"operation": "reports: GET_BRAND_ANALYTICS_* (Brand Analytics role); others console-only", "model": "catalog/spapi/reports.json"}],
+    "notes": "Menu entries only."
+  },
+  {
+    "area": "Invoices / Payments",
+    "screen": "Not present in this account's menu",
+    "path": "n/a",
+    "purpose": "Vendor invoices and payment status are expected in Vendor Central but no Invoices or Payments entry exists in the top menu of this (Direct Fulfillment, CA) account.",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": [
+      {"operation": "vendorInvoices.submitInvoices", "model": "catalog/spapi/definitions/vendorInvoices@v1.json"},
+      {"operation": "vendorDirectFulfillmentPayments.submitInvoice", "model": "catalog/spapi/definitions/vendorDirectFulfillmentPayments@v1.json"}
+    ],
+    "notes": "NOT REACHABLE: no menu entry for this account (likely not enabled or lives under another vendor code/account type). API exists for submitting invoices only; no read API for payments."
+  },
+  {
+    "area": "Learn",
+    "screen": "Learning Hub; Webinars (not opened)",
+    "path": "menu: Learn",
+    "purpose": "Training content.",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "api": "console-only",
+    "notes": "Out of product scope."
+  }
+]
