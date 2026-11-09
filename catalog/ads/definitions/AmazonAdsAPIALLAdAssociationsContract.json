@@ -1,0 +1,564 @@
+{
+ "api": "AmazonAdsAPIALLAdAssociationsContract",
+ "file": "specs/dest/AmazonAdsAPIALLAdAssociationsContract_prod_3p.json",
+ "schemas": {
+  "AdAssociation": {
+   "properties": {
+    "adAssociationId": {
+     "description": "The unique identifier of the ad association.",
+     "type": "string"
+    },
+    "adGroupId": {
+     "description": "The ad group associated with the ad.",
+     "type": "string"
+    },
+    "adId": {
+     "description": "The ad Id associated with the ad.",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The end date time for the ad association.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date time for the ad association.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "State"
+    },
+    "weight": {
+     "description": "The relative percentage of traffic which would be directed to the associated Ad Creative in the Ad Group.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "adAssociationId",
+    "adGroupId",
+    "adId",
+    "state"
+   ],
+   "type": "object"
+  },
+  "AdAssociationAdAssociationIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdAssociationAdGroupIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdAssociationAdIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdAssociationCreate": {
+   "properties": {
+    "adGroupId": {
+     "description": "The ad group associated with the ad.",
+     "type": "string"
+    },
+    "adId": {
+     "description": "The ad Id associated with the ad.",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The end date time for the ad association.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date time for the ad association.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "CreateState"
+    },
+    "weight": {
+     "description": "The relative percentage of traffic which would be directed to the associated Ad Creative in the Ad Group.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "adId",
+    "state"
+   ],
+   "type": "object"
+  },
+  "AdAssociationMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "AdAssociationMultiStatusSuccess"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AdAssociationMultiStatusSuccess": {
+   "properties": {
+    "adAssociation": {
+     "$ref": "AdAssociation"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 19,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "adAssociation",
+    "index"
+   ],
+   "type": "object"
+  },
+  "AdAssociationSuccessResponse": {
+   "properties": {
+    "adAssociations": {
+     "items": {
+      "$ref": "AdAssociation"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdAssociationUpdate": {
+   "properties": {
+    "adAssociationId": {
+     "description": "The unique identifier of the ad association.",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The end date time for the ad association.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date time for the ad association.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "UpdateState"
+    },
+    "weight": {
+     "description": "The relative percentage of traffic which would be directed to the associated Ad Creative in the Ad Group.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "adAssociationId"
+   ],
+   "type": "object"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateAdAssociationRequest": {
+   "properties": {
+    "adAssociations": {
+     "items": {
+      "$ref": "AdAssociationCreate"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adAssociations"
+   ],
+   "type": "object"
+  },
+  "CreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "DeleteAdAssociationRequest": {
+   "properties": {
+    "adAssociationIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adAssociationIds"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "ASSET_NOT_READY",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FEATURE_NOT_AVAILABLE",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "GLOBAL_ATTRIBUTE_UPDATE_RESTRICTED_PORTFOLIO",
+    "GLOBAL_ATTRIBUTE_UPDATE_RESTRICTED_STATE",
+    "GLOBAL_CAMPAIGN_SINGLE_ADGROUP_LIMIT",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryAdAssociationRequest": {
+   "properties": {
+    "adAssociationIdFilter": {
+     "$ref": "AdAssociationAdAssociationIdFilter"
+    },
+    "adGroupIdFilter": {
+     "$ref": "AdAssociationAdGroupIdFilter"
+    },
+    "adIdFilter": {
+     "$ref": "AdAssociationAdIdFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "State": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateAdAssociationRequest": {
+   "properties": {
+    "adAssociations": {
+     "items": {
+      "$ref": "AdAssociationUpdate"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adAssociations"
+   ],
+   "type": "object"
+  },
+  "UpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  }
+ }
+}

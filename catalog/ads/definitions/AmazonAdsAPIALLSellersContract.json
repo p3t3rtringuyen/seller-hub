@@ -1,0 +1,369 @@
+{
+ "api": "AmazonAdsAPIALLSellersContract",
+ "file": "specs/dest/AmazonAdsAPIALLSellersContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_NOT_FOUND",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "RESOURCE_ID_NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QuerySellerRequest": {
+   "properties": {
+    "adProductFilter": {
+     "$ref": "SellerAdProductFilter"
+    },
+    "maxResults": {
+     "default": 10,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "SellerNameFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "sellerIdFilter": {
+     "$ref": "SellerSellerIdFilter"
+    },
+    "sellerParentIdFilter": {
+     "$ref": "SellerSellerParentIdFilter"
+    },
+    "sort": {
+     "items": {
+      "$ref": "SellerSortOption"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "Seller": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "isActive": {
+     "description": "Whether this seller is currently active.",
+     "type": "boolean"
+    },
+    "isConfidential": {
+     "description": "Whether identity is confidential per IAB sellers.json.",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "Display name. Normalized across all advertising systems. NULL when isConfidential is true.",
+     "type": "string"
+    },
+    "sellerId": {
+     "description": "The unique identifier of the seller (Long serialized as String).",
+     "type": "string"
+    },
+    "sellerParentId": {
+     "description": "The identifier of the parent holding company that owns this seller.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adProduct",
+    "sellerId"
+   ],
+   "type": "object"
+  },
+  "SellerAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+     "items": {
+      "$ref": "AdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SellerNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "SellerNameFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "SellerNameFilterType": {
+   "description": "**SellerNameFilterType Enum:** | SellerNameFilterType | Description | | --- | --- | | `BROAD_MATCH` | Filter by broad match. |",
+   "enum": [
+    "BROAD_MATCH"
+   ],
+   "type": "string"
+  },
+  "SellerSellerIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SellerSellerParentIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SellerSortOption": {
+   "properties": {
+    "by": {
+     "$ref": "SellerSortOptionsFields"
+    },
+    "direction": {
+     "$ref": "SortDirection"
+    }
+   },
+   "required": [
+    "by"
+   ],
+   "type": "object"
+  },
+  "SellerSortOptionsFields": {
+   "description": "Specify which field to order by. | Field Name | Supported Ordering | | --- | --- | | name | ASCENDING,DESCENDING |",
+   "enum": [
+    "name"
+   ],
+   "type": "string"
+  },
+  "SellerSuccessResponse": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "sellers": {
+     "items": {
+      "$ref": "Seller"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SortDirection": {
+   "description": "**SortDirection Enum:** | SortDirection | Description | | --- | --- | | `ASCENDING` | Sort in ascending order | | `DESCENDING` | Sort in descending order |",
+   "enum": [
+    "ASCENDING",
+    "DESCENDING"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

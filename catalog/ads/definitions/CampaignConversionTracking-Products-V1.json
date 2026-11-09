@@ -1,0 +1,394 @@
+{
+ "api": "CampaignConversionTracking-Products-V1",
+ "file": "specs/dest/CampaignConversionTracking-Products-V1_prod_3p.json",
+ "schemas": {
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspBatchError": {
+   "properties": {
+    "index": {
+     "description": "The position of the product in the request body.",
+     "type": "integer"
+    },
+    "subErrors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "index",
+    "subErrors"
+   ],
+   "type": "object"
+  },
+  "DspBatchSuccess": {
+   "description": "Success response",
+   "properties": {
+    "index": {
+     "description": "The position of the product in the request body.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "DspConflictExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspDeleteProductConversionTrackingV1ResponseContent": {
+   "description": "The update or delete operation response. If everything is successful, the errors array is omitted. If everything fails, the success array is omitted.",
+   "properties": {
+    "errors": {
+     "description": "The list of errors.",
+     "items": {
+      "$ref": "DspBatchError"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    },
+    "success": {
+     "description": "The list of success.",
+     "items": {
+      "$ref": "DspBatchSuccess"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetCampaignConversionTrackingProductsV1ResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    },
+    "productTrackingList": {
+     "description": "A list of products",
+     "items": {
+      "$ref": "ProductTrackingItemGet"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspPostProductConversionTrackingV1ResponseContent": {
+   "description": "The update or delete operation response. If everything is successful, the errors array is omitted. If everything fails, the success array is omitted.",
+   "properties": {
+    "errors": {
+     "description": "The list of errors.",
+     "items": {
+      "$ref": "DspBatchError"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    },
+    "success": {
+     "description": "The list of success.",
+     "items": {
+      "$ref": "DspBatchSuccess"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspProductConversionTrackingRequestContent": {
+   "properties": {
+    "productTrackingList": {
+     "description": "A list of products",
+     "items": {
+      "$ref": "ProductTrackingItemUpdate"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "productTrackingList"
+   ],
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ProductAssociationType": {
+   "description": "A featured ASIN is a specific product that’s promoted in creatives within this campaign. Tracking non-featured ASINs or variations, in addition to featured and parent ASINs, will ensure proper conversion metrics and pre…",
+   "enum": [
+    "FEATURED",
+    "FEATURED_WITH_VARIATION",
+    "NOT_FEATURED"
+   ],
+   "type": "string"
+  },
+  "ProductDomainGet": {
+   "description": "The Amazon domain where the ASIN is sold. This should be where you are running your campaign. To track ASINs across multiple geographies, each ASIN must be added once per domain. For example, if you want to run a campai…",
+   "enum": [
+    "AMAZON_AE",
+    "AMAZON_AU",
+    "AMAZON_BE",
+    "AMAZON_BR",
+    "AMAZON_CA",
+    "AMAZON_DE",
+    "AMAZON_EG",
+    "AMAZON_ES",
+    "AMAZON_FR",
+    "AMAZON_IE",
+    "AMAZON_IN",
+    "AMAZON_IT",
+    "AMAZON_JP",
+    "AMAZON_MX",
+    "AMAZON_NL",
+    "AMAZON_PL",
+    "AMAZON_SA",
+    "AMAZON_SE",
+    "AMAZON_SG",
+    "AMAZON_TR",
+    "AMAZON_UK",
+    "AMAZON_US",
+    "AMAZON_ZA",
+    "FRESH_STORES_US",
+    "OTHER",
+    "PRIME_NOW_CA",
+    "PRIME_NOW_DE",
+    "PRIME_NOW_ES",
+    "PRIME_NOW_FR",
+    "PRIME_NOW_IT",
+    "PRIME_NOW_JP",
+    "PRIME_NOW_UK",
+    "PRIME_NOW_US",
+    "PRIME_VIDEO_ROW_NA",
+    "WHOLE_FOODS_MARKET_US"
+   ],
+   "type": "string"
+  },
+  "ProductDomainUpdate": {
+   "description": "The Amazon domain where the ASIN is sold. This should be where you are running your campaign. To track ASINs across multiple geographies, each ASIN must be added once per domain. For example, if you want to run a campai…",
+   "enum": [
+    "AMAZON_AE",
+    "AMAZON_AU",
+    "AMAZON_BE",
+    "AMAZON_BR",
+    "AMAZON_CA",
+    "AMAZON_DE",
+    "AMAZON_EG",
+    "AMAZON_ES",
+    "AMAZON_FR",
+    "AMAZON_IE",
+    "AMAZON_IN",
+    "AMAZON_IT",
+    "AMAZON_JP",
+    "AMAZON_MX",
+    "AMAZON_NL",
+    "AMAZON_PL",
+    "AMAZON_SA",
+    "AMAZON_SE",
+    "AMAZON_SG",
+    "AMAZON_TR",
+    "AMAZON_UK",
+    "AMAZON_US",
+    "AMAZON_ZA",
+    "FRESH_STORES_US",
+    "WHOLE_FOODS_MARKET_US"
+   ],
+   "type": "string"
+  },
+  "ProductTrackingItemGet": {
+   "properties": {
+    "domain": {
+     "$ref": "ProductDomainGet"
+    },
+    "productAssociation": {
+     "$ref": "ProductAssociationType"
+    },
+    "productId": {
+     "description": "The Amazon Standard Identification Number (ASIN).",
+     "maxLength": 10,
+     "type": "string"
+    }
+   },
+   "required": [
+    "domain",
+    "productAssociation",
+    "productId"
+   ],
+   "type": "object"
+  },
+  "ProductTrackingItemUpdate": {
+   "properties": {
+    "domain": {
+     "$ref": "ProductDomainUpdate"
+    },
+    "productAssociation": {
+     "$ref": "ProductAssociationType"
+    },
+    "productId": {
+     "description": "The Amazon Standard Identification Number (ASIN).",
+     "maxLength": 10,
+     "type": "string"
+    }
+   },
+   "required": [
+    "domain",
+    "productAssociation",
+    "productId"
+   ],
+   "type": "object"
+  }
+ }
+}

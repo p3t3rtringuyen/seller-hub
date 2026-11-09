@@ -1,0 +1,1007 @@
+{
+ "api": "AdvertiserDataUpload",
+ "file": "specs/dest/AdvertiserDataUpload_prod_3p.json",
+ "schemas": {
+  "AddColumnToDataSetRequestContent": {
+   "description": "A request to add a column to a data set.",
+   "properties": {
+    "column": {
+     "$ref": "Column"
+    }
+   },
+   "required": [
+    "column"
+   ],
+   "type": "object"
+  },
+  "AddColumnToDataSetResponseContent": {
+   "description": "A response containing the updated data set containing the new column.",
+   "properties": {
+    "dataSet": {
+     "$ref": "DataSet"
+    }
+   },
+   "type": "object"
+  },
+  "BadRequestExceptionResponseContent": {
+   "description": "Bad Request.",
+   "properties": {
+    "code": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "details": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "The error message(s) associated with the exception.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "requestId": {
+     "description": "The request ID associated with the exception.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Column": {
+   "description": "The definition of a column in a data set.",
+   "properties": {
+    "columnType": {
+     "$ref": "ColumnType"
+    },
+    "consentType": {
+     "$ref": "ConsentType"
+    },
+    "dataType": {
+     "$ref": "DataType"
+    },
+    "description": {
+     "description": "Optional. The human-readable description of the purpose of this column.",
+     "type": "string"
+    },
+    "externalUserIdType": {
+     "$ref": "UserIdType"
+    },
+    "isCountryCode": {
+     "description": "Optional. If this column is countryCode or not. Default is false.",
+     "type": "boolean"
+    },
+    "isMainEventTime": {
+     "description": "Optional. If this column is contains the main event time of the record. Default is false.",
+     "type": "boolean"
+    },
+    "isMainUserId": {
+     "description": "Optional. If this column is the resolved user id. Default is false.",
+     "type": "boolean"
+    },
+    "isMainUserIdType": {
+     "description": "Optional. If this column should contain the resolved user id type. Default is false.",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "The name of this column.",
+     "type": "string"
+    },
+    "nullable": {
+     "description": "Optional. If data in this column can be null or not. Default is true.",
+     "type": "boolean"
+    },
+    "requiresOneWayHashing": {
+     "description": "Optional. If this column requires one way hashing or not. Default is false.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "columnType",
+    "dataType",
+    "name"
+   ],
+   "type": "object"
+  },
+  "ColumnType": {
+   "description": "The type of a data set column. There are two types of columns, the column which is a quantity or value rather than a dimension is METRIC. These columns are generally used in queries to perform aggregations. Typical exam…",
+   "enum": [
+    "DIMENSION",
+    "METRIC"
+   ],
+   "type": "string"
+  },
+  "ComparatorOperator": {
+   "description": "Optional. If a createdAt is provided, a comparator should be provided.",
+   "enum": [
+    "EQ",
+    "GT",
+    "GTE",
+    "LT",
+    "LTE"
+   ],
+   "type": "string"
+  },
+  "CompressionFormat": {
+   "description": "[UPDATE: As of 01/01/2025, `ZIP` is deprecated]. The compression format of data in S3 bucket.",
+   "enum": [
+    "BZIP",
+    "GZIP",
+    "NONE",
+    "SNAPPY",
+    "ZIP"
+   ],
+   "type": "string"
+  },
+  "ConsentType": {
+   "description": "The type of consent. If you have more than one ConsentType, you may define additional columns with the appropriate ConsentType. Each ConsentType may only be used once per DataSet.",
+   "enum": [
+    "AMZN_AD_STORAGE",
+    "AMZN_USER_DATA",
+    "GPP",
+    "TCF"
+   ],
+   "type": "string"
+  },
+  "CreateDataSetRequestContent": {
+   "description": "A request to create a new data set.",
+   "properties": {
+    "dataSet": {
+     "$ref": "DataSet"
+    }
+   },
+   "required": [
+    "dataSet"
+   ],
+   "type": "object"
+  },
+  "CreateDataSetResponseContent": {
+   "description": "A response containing the identifiers of the created data set.",
+   "properties": {
+    "dataSetId": {
+     "description": "The data set ID of the data set created.",
+     "type": "string"
+    },
+    "instanceId": {
+     "description": "The instance ID of the instance.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CreateUploadRequestContent": {
+   "description": "A request to create a new upload to a data set.",
+   "properties": {
+    "compressionFormat": {
+     "$ref": "CompressionFormat"
+    },
+    "countryCode": {
+     "description": "Optional. A field that specifies a country. Values corresponds to ISO-3166 codes for country definitions. Required to resolve provided identities.",
+     "type": "string"
+    },
+    "dataSource": {
+     "$ref": "CustomerDataSource"
+    },
+    "fileFormat": {
+     "$ref": "FileFormat"
+    },
+    "updateStrategy": {
+     "$ref": "UpdateStrategy"
+    }
+   },
+   "required": [
+    "compressionFormat",
+    "dataSource",
+    "fileFormat",
+    "updateStrategy"
+   ],
+   "type": "object"
+  },
+  "CreateUploadResponseContent": {
+   "description": "A response containing information about the upload.",
+   "properties": {
+    "status": {
+     "$ref": "Status"
+    },
+    "uploadId": {
+     "description": "The ID of the upload request.",
+     "type": "string"
+    },
+    "warnings": {
+     "description": "A list of warnings associated with the upload creation.",
+     "items": {
+      "$ref": "Warning"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateUserDeletionRequestRequestContent": {
+   "description": "A request to delete some user identities from previously uploaded data.",
+   "properties": {
+    "targetIdentities": {
+     "description": "Identities to be deleted. Max number of identities to delete is 1,000 per request.",
+     "items": {
+      "$ref": "Identity"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targetIdentities"
+   ],
+   "type": "object"
+  },
+  "CreateUserDeletionRequestResponseContent": {
+   "description": "A response containing information about the deletion request.",
+   "properties": {
+    "userDeletionRequestId": {
+     "description": "The request ID of the user deletion request.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "userDeletionRequestId"
+   ],
+   "type": "object"
+  },
+  "CsvDataFormat": {
+   "description": "Represents a CSV data format, and the values needed to ingest the source CSV file.",
+   "properties": {
+    "commentCharacter": {
+     "description": "Optional. String representing the comment character for a CSV file. Default is none.",
+     "type": "string"
+    },
+    "fieldDelimiter": {
+     "description": "Optional. String representing the field delimiter for a CSV file. Default is `,`.",
+     "type": "string"
+    },
+    "quoteCharacter": {
+     "description": "Optional. String representing the quote character for a CSV file. Default is `\"`.",
+     "type": "string"
+    },
+    "quoteEscapeCharacter": {
+     "description": "Optional. String representing the quote escape character for a CSV file. Default is `\\`.",
+     "type": "string"
+    },
+    "recordDelimiter": {
+     "description": "Optional. String representing the record delimiter for a CSV file. Default is `\\n`.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CustomerDataSource": {
+   "description": "Describes the source of the data. Exactly one of `sourceManifestS3Key`, `sourceFileS3Key`, or `sourceS3Prefix` must be provided.",
+   "properties": {
+    "sourceFileS3Key": {
+     "description": "S3 key of the single object to upload.",
+     "type": "string"
+    },
+    "sourceManifestS3Key": {
+     "description": "S3 key of the manifest containing the object(s) to upload.",
+     "type": "string"
+    },
+    "sourceS3Bucket": {
+     "description": "S3 bucket that is the source of the upload.",
+     "maxLength": 63,
+     "type": "string"
+    },
+    "sourceS3Prefix": {
+     "description": "S3 key prefix containing the object(s) to upload.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "sourceS3Bucket"
+   ],
+   "type": "object"
+  },
+  "DataSet": {
+   "description": "The definition of a data set.",
+   "properties": {
+    "columns": {
+     "description": "A list of data set columns.",
+     "items": {
+      "$ref": "Column"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "countryCode": {
+     "description": "Optional. A field that specifies a country. Values corresponds to ISO-3166 codes for country definitions. Required to resolve provided identities.",
+     "type": "string"
+    },
+    "customerEncryptionKeyArn": {
+     "description": "Optional. If the data being uploaded is encrypted with a customer-managed encryption key, the ARN of said encryption key.",
+     "type": "string"
+    },
+    "dataSetId": {
+     "description": "The unique identifier of the data set. Used to query the data set. Cannot contain spaces.",
+     "type": "string"
+    },
+    "description": {
+     "description": "Optional. The human-readable description of the data set.",
+     "type": "string"
+    },
+    "period": {
+     "$ref": "TimePartitionGranularity"
+    },
+    "warnings": {
+     "description": "A list of warnings associated with the data set.",
+     "items": {
+      "$ref": "Warning"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "columns",
+    "dataSetId"
+   ],
+   "type": "object"
+  },
+  "DataType": {
+   "description": "The data type for the data stored in this column.",
+   "enum": [
+    "DATE",
+    "DECIMAL",
+    "INTEGER",
+    "LONG",
+    "STRING",
+    "TIMESTAMP"
+   ],
+   "type": "string"
+  },
+  "DeleteColumnFromDataSetResponseContent": {
+   "description": "A response containing the updated data set without the deleted column.",
+   "properties": {
+    "dataSet": {
+     "$ref": "DataSet"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteDataSetResponseContent": {
+   "description": "A response containing identifiers of the deleted data set.",
+   "properties": {
+    "dataSetId": {
+     "description": "The data set ID of the deleted data set.",
+     "type": "string"
+    },
+    "instanceId": {
+     "description": "The instance ID of the instance.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ExternalIdentity": {
+   "description": "Representation of an External Identity to be removed. Contains the type of the ID, and the String value of the ID.",
+   "properties": {
+    "type": {
+     "$ref": "ExternalIdentityType"
+    },
+    "value": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "value"
+   ],
+   "type": "object"
+  },
+  "ExternalIdentityType": {
+   "description": "The external ID types that we support.",
+   "enum": [
+    "EXPERIAN",
+    "IDFA",
+    "KANTAR",
+    "LIVERAMP",
+    "MAID",
+    "MERKLE",
+    "NEUSTAR",
+    "REALID",
+    "SAMBATV"
+   ],
+   "type": "string"
+  },
+  "FileFormat": {
+   "description": "The format in which data to be uploaded is stored. Exactly one of `csvDataFormat`, `jsonDataFormat`, or `parquetDataFormat` must be provided.",
+   "oneOf": [
+    {
+     "properties": {
+      "csvDataFormat": {
+       "$ref": "CsvDataFormat"
+      }
+     },
+     "required": [
+      "csvDataFormat"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "jsonDataFormat": {
+       "$ref": "JsonDataFormat"
+      }
+     },
+     "required": [
+      "jsonDataFormat"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "parquetDataFormat": {
+       "$ref": "ParquetDataFormat"
+      }
+     },
+     "required": [
+      "parquetDataFormat"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ForbiddenRequestExceptionResponseContent": {
+   "description": "Forbidden. The request failed because the user does not have access to the specified resource.",
+   "properties": {
+    "code": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "details": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "The error message(s) associated with the exception.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "requestId": {
+     "description": "The request ID associated with the exception.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GatewayTimeoutExceptionResponseContent": {
+   "description": "Internal server timeout waiting on upstream service. Retry later. Contact support if this response persists.",
+   "properties": {
+    "code": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "details": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "The error message(s) associated with the exception.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "requestId": {
+     "description": "The request ID associated with the exception.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetDataSetResponseContent": {
+   "description": "A response containing the definition of the data set.",
+   "properties": {
+    "dataSet": {
+     "$ref": "DataSet"
+    }
+   },
+   "type": "object"
+  },
+  "GetUploadResponseContent": {
+   "description": "A response containing information about the upload.",
+   "properties": {
+    "upload": {
+     "$ref": "Upload"
+    }
+   },
+   "type": "object"
+  },
+  "GetUserDeletionRequestResponseContent": {
+   "description": "A response containing information about the user deletion request.",
+   "properties": {
+    "identityDeletion": {
+     "$ref": "UserDeletion"
+    }
+   },
+   "type": "object"
+  },
+  "HashedIdentity": {
+   "additionalProperties": {
+    "type": "string"
+   },
+   "description": "One or more pairs of a Hashed PII type and corresponding hashed value, representing a single individual to be deleted.",
+   "type": "object"
+  },
+  "HashedPiiType": {
+   "description": "The type of hashed PII.",
+   "enum": [
+    "ADDRESS",
+    "CITY",
+    "COUNTRY_CODE",
+    "EMAIL",
+    "FIRST_NAME",
+    "IP",
+    "LAST_NAME",
+    "PHONE",
+    "STATE",
+    "ZIP"
+   ],
+   "type": "string"
+  },
+  "Identity": {
+   "description": "The user identity to be deleted. Either an ExternalId or a collection of Hashed PII values representing a single user.",
+   "oneOf": [
+    {
+     "properties": {
+      "externalIdentity": {
+       "$ref": "ExternalIdentity"
+      }
+     },
+     "required": [
+      "externalIdentity"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "hashedIdentity": {
+       "$ref": "HashedIdentity"
+      }
+     },
+     "required": [
+      "hashedIdentity"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "plaintextIdentity": {
+       "$ref": "PlaintextIdentity"
+      }
+     },
+     "required": [
+      "plaintextIdentity"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "InternalServerExceptionResponseContent": {
+   "description": "Internal server error. Retry later. Contact support if this response persists.",
+   "properties": {
+    "code": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "details": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "The error message(s) associated with the exception.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "requestId": {
+     "description": "The request ID associated with the exception.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "JsonDataFormat": {
+   "description": "Represents a JSON data format, and the values needed to ingest the source JSON file.",
+   "enum": [
+    "DOCUMENT",
+    "LINES"
+   ],
+   "type": "string"
+  },
+  "ListDataSetsResponseContent": {
+   "description": "A response containing a list of data sets for the specified instance.",
+   "properties": {
+    "dataSets": {
+     "description": "The list of data sets returned by the request.",
+     "items": {
+      "$ref": "DataSet"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Optional. Token to use in subsequent request to retrieve next page of results. Null if all results have been returned.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListUploadsResponseContent": {
+   "description": "A response containing a list of uploads for the specified instance.",
+   "properties": {
+    "nextToken": {
+     "description": "Optional. Token to use in subsequent request to retrieve next page of results. Null if all results have been returned.",
+     "type": "string"
+    },
+    "uploads": {
+     "description": "The list of uploads for the specified instance.",
+     "items": {
+      "$ref": "Upload"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListUserDeletionRequestsResponseContent": {
+   "description": "A response containing a list of user deletion requests.",
+   "properties": {
+    "nextToken": {
+     "description": "Optional. Token to use in subsequent request to retrieve next page of results. Null if all results have been returned.",
+     "type": "string"
+    },
+    "userDeletions": {
+     "description": "List of identity deletions.",
+     "items": {
+      "$ref": "UserDeletion"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "MetricsMap": {
+   "additionalProperties": {
+    "description": "The numerical value of the metric.",
+    "format": "double",
+    "type": "number"
+   },
+   "description": "A map containing metrics about an upload, where the key is the name of the metric and the value is a double representing the numerical value of said metric.",
+   "type": "object"
+  },
+  "ParquetDataFormat": {
+   "description": "Represents a Parquet data format, and the values needed to ingest the source Parquet file.",
+   "enum": [
+    "PARQUET_DATA_FORMAT"
+   ],
+   "type": "string"
+  },
+  "PlaintextIdentity": {
+   "additionalProperties": {
+    "type": "string"
+   },
+   "description": "One or more pairs of a Plaintext PII type and corresponding plaintext value, representing a single individual to be deleted.",
+   "type": "object"
+  },
+  "PlaintextPiiType": {
+   "description": "The type of raw (plaintext) PII.",
+   "enum": [
+    "IP"
+   ],
+   "type": "string"
+  },
+  "ResourceNotFoundExceptionResponseContent": {
+   "description": "The requested resource was not found.",
+   "properties": {
+    "code": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "details": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "The error message(s) associated with the exception.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "requestId": {
+     "description": "The request ID associated with the exception.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Status": {
+   "description": "The status of the upload.",
+   "enum": [
+    "FAILED",
+    "IN_PROGRESS",
+    "SUBMITTED",
+    "SUCCESS"
+   ],
+   "type": "string"
+  },
+  "TimePartitionGranularity": {
+   "description": "For FACT data sets only. Time partition granularity denotes the granularity of partition performed during the upload. For ex: P1D is a day partitioned data set, i.e. during upload data will be partitioned on event time …",
+   "enum": [
+    "P1D",
+    "P1M",
+    "PT1H"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsExceptionResponseContent": {
+   "description": "Too Many Requests. The request was rate-limited. Retry later.",
+   "properties": {
+    "code": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "details": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "The error message(s) associated with the exception.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "requestId": {
+     "description": "The request ID associated with the exception.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UnauthorizedRequestExceptionResponseContent": {
+   "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+   "properties": {
+    "code": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "details": {
+     "description": "The error code associated with the exception.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "The error message(s) associated with the exception.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "requestId": {
+     "description": "The request ID associated with the exception.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateColumnInDataSetRequestContent": {
+   "description": "A request to update a column in a data set.",
+   "properties": {
+    "updateDescription": {
+     "description": "Optional. An updated column description.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "updatedColumnName": {
+     "description": "Optional. An updated column name.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateColumnInDataSetResponseContent": {
+   "description": "A response containing the updated data set containing the updated column.",
+   "properties": {
+    "dataSet": {
+     "$ref": "DataSet"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateDataSetRequestContent": {
+   "description": "A request to update a data set definition.",
+   "properties": {
+    "countryCode": {
+     "description": "Optional. A field that specifies a country. Values corresponds to ISO-3166 codes for country definitions. Required to resolve provided identities.",
+     "type": "string"
+    },
+    "description": {
+     "description": "Optional. An updated description of the data set defintion.",
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateDataSetResponseContent": {
+   "description": "A response containing the updated data set definition.",
+   "properties": {
+    "dataSet": {
+     "$ref": "DataSet"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateStrategy": {
+   "description": "Represents the update strategy to be used when updating the data set.",
+   "enum": [
+    "ADDITIVE",
+    "FULL_REPLACE",
+    "OVERLAP_KEEP",
+    "OVERLAP_REPLACE"
+   ],
+   "type": "string"
+  },
+  "Upload": {
+   "description": "The available metadata about a previously submitted upload.",
+   "properties": {
+    "countryCode": {
+     "description": "Optional. A field that specifies a country. Values corresponds to ISO-3166 codes for country definitions. Required to resolve provided identities.",
+     "type": "string"
+    },
+    "createdAt": {
+     "description": "A timestamp representing the time the upload was created.",
+     "type": "string"
+    },
+    "dataSetId": {
+     "description": "The data set ID of the upload.",
+     "type": "string"
+    },
+    "dataSource": {
+     "$ref": "CustomerDataSource"
+    },
+    "instanceId": {
+     "description": "The instance ID of the upload.",
+     "type": "string"
+    },
+    "message": {
+     "description": "A message specifying details of the upload. This is usually an error message describing a failure.",
+     "type": "string"
+    },
+    "metrics": {
+     "$ref": "MetricsMap"
+    },
+    "status": {
+     "$ref": "Status"
+    },
+    "updatedAt": {
+     "description": "A timestamp representing the last time the upload was updated.",
+     "type": "string"
+    },
+    "uploadId": {
+     "description": "The unique identifier for an upload.",
+     "type": "string"
+    },
+    "warnings": {
+     "description": "A list of warnings associated with the upload.",
+     "items": {
+      "$ref": "Warning"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UserDeletion": {
+   "description": "The available metadata about a previously submitted user deletion request.",
+   "properties": {
+    "creationDateTime": {
+     "description": "A timestamp representing the time the user deletion request was created. This field is in UTC and is formatted as yyyy-MM-dd'T'HH:mm:ss'Z'.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "identityCount": {
+     "description": "The number of identities requested for user deletion.",
+     "type": "number"
+    },
+    "status": {
+     "$ref": "UserDeletionStatus"
+    },
+    "userDeletionRequestId": {
+     "description": "The request ID of the user deletion request.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UserDeletionStatus": {
+   "enum": [
+    "PENDING",
+    "SUCCEEDED"
+   ],
+   "type": "string"
+  },
+  "UserIdType": {
+   "description": "Specifies the type of an identity. An identity column may represent either a single hashed PII attribute, or an external identity in one of the supported identity spaces.",
+   "oneOf": [
+    {
+     "properties": {
+      "externalIdentity": {
+       "$ref": "ExternalIdentityType"
+      }
+     },
+     "required": [
+      "externalIdentity"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "hashedPii": {
+       "$ref": "HashedPiiType"
+      }
+     },
+     "required": [
+      "hashedPii"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "plaintextPii": {
+       "$ref": "PlaintextPiiType"
+      }
+     },
+     "required": [
+      "plaintextPii"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "Warning": {
+   "description": "A customer-facing warning.",
+   "properties": {
+    "message": {
+     "description": "The warning message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

@@ -1,0 +1,245 @@
+{
+ "api": "ADSPAudiences",
+ "file": "specs/dest/ADSPAudiences_prod_3p.json",
+ "schemas": {
+  "DspAudienceCreateRequestItem": {
+   "description": "Complete audience model to be used for creation of the audience.",
+   "properties": {
+    "audienceType": {
+     "description": "Type of audience to create.",
+     "enum": [
+      "PRODUCT_PURCHASES",
+      "PRODUCT_SEARCH",
+      "PRODUCT_SIMS",
+      "PRODUCT_VIEWS",
+      "WHOLE_FOODS_MARKET_PURCHASES"
+     ],
+     "type": "string"
+    },
+    "country": {
+     "description": "The ISO Alpha-2 code for the country in which the audience will be available during audience discovery and targeting setup. **Notes:** - If you are using a Global Advertising account, this field is required. - If you ar…",
+     "enum": [
+      "AE",
+      "AU",
+      "BR",
+      "CA",
+      "DE",
+      "ES",
+      "FR",
+      "GB",
+      "IN",
+      "IT",
+      "JP",
+      "MX",
+      "NL",
+      "SA",
+      "SE",
+      "TR",
+      "US"
+     ],
+     "maxLength": 2,
+     "type": "string"
+    },
+    "description": {
+     "description": "The audience description.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "idempotencyKey": {
+     "description": "The unique UUID for this requested audience.",
+     "format": "uuid",
+     "type": "string"
+    },
+    "lookback": {
+     "description": "The specified time period (in days) to include those who performed the action in the audience. Lookback Constraints Table: Provides available valid values of lookback allowed for given audienceType | audienceType | look…",
+     "maximum": 365,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "name": {
+     "description": "The audience name.",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "rules": {
+     "description": "The set of rules defining an audience; these rules will be ORed.",
+     "items": {
+      "$ref": "DspAudienceRule"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audienceType",
+    "description",
+    "idempotencyKey",
+    "lookback",
+    "name",
+    "rules"
+   ],
+   "type": "object"
+  },
+  "DspAudienceError": {
+   "description": "The error object.",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspAudienceErrorItem": {
+   "description": "The error response object.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspAudienceErrorItemError"
+     },
+     "maxItems": 7,
+     "minItems": 0,
+     "type": "array"
+    },
+    "idempotencyKey": {
+     "description": "The UUID provided in the request for creation of this audience.",
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the DspAudienceCreateRequestItem from the request, e.g. 1st item in the batch request will correspond to index 0 in the response.",
+     "type": "integer"
+    },
+    "message": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "errors",
+    "idempotencyKey",
+    "index",
+    "message"
+   ]
+  },
+  "DspAudienceErrorItemError": {
+   "description": "The error object.",
+   "properties": {
+    "errorType": {
+     "enum": [
+      "OTHER",
+      "VALUE_INVALID",
+      "VALUE_OUT_OF_RANGE"
+     ],
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspAudienceResponse": {
+   "description": "This holds an array of successful items and an array of error items from the request.",
+   "properties": {
+    "error": {
+     "description": "The items in this array represent items in the request that failed.",
+     "items": {
+      "$ref": "DspAudienceErrorItem"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "description": "The items in this array represent items in the request that were successful.",
+     "items": {
+      "$ref": "DspAudienceSuccessItem"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "DspAudienceRule": {
+   "description": "A rule for defining an audience. **Rule Constraints Table**: Provides available valid combinations of parameters allowed in DspAudienceRule | audienceType | attributeType | attributeValues | max attribute values | max r…",
+   "properties": {
+    "attributeType": {
+     "description": "For a given audienceType, the type of the attributes being supplied.",
+     "enum": [
+      "ASIN"
+     ],
+     "type": "string"
+    },
+    "attributeValues": {
+     "description": "For a given audienceType and attributeType combination, the attribute values being supplied.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "clause": {
+     "description": "This parameter is used to include or exclude this particular rule. Currently only include is supported.",
+     "enum": [
+      "INCLUDE"
+     ],
+     "type": "string"
+    },
+    "operator": {
+     "description": "For a given attributeType, the operator used for attributeValues.",
+     "enum": [
+      "ONE_OF"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "attributeType",
+    "attributeValues",
+    "clause",
+    "operator"
+   ],
+   "type": "object"
+  },
+  "DspAudienceSuccessItem": {
+   "description": "The success response object.",
+   "properties": {
+    "audienceId": {
+     "description": "The audience identifier.",
+     "type": "string"
+    },
+    "idempotencyKey": {
+     "description": "The UUID provided in the request for creation of this audience.",
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the DspAudienceCreateRequestItem from the request, e.g. 1st item in the batch request will correspond to index 0 in the response.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "audienceId",
+    "idempotencyKey",
+    "index"
+   ],
+   "type": "object"
+  }
+ }
+}

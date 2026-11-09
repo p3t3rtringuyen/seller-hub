@@ -1,0 +1,1204 @@
+{
+ "api": "AmazonAdsAPISPGLOBALAdGroupsContract",
+ "file": "specs/dest/AmazonAdsAPISPGLOBALAdGroupsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "marketplace": {
+     "$ref": "ErrorMarketplace"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorMarketplace": {
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdGroup": {
+   "properties": {
+    "adGroupId": {
+     "description": "The unique identifier of the ad group.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "SPGlobalAdProduct"
+    },
+    "adSettings": {
+     "$ref": "SPGlobalAdSettings"
+    },
+    "bid": {
+     "$ref": "SPGlobalAdGroupBid"
+    },
+    "campaignId": {
+     "description": "The unique identifier of the campaign the ad group belongs to.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date time that the ad group was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time that the ad group was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global ad group that enables overriding certain attributes at individual marketplace level. For example, if a global ad group state is ENABLED and needs to be PAUSED onl…",
+     "items": {
+      "$ref": "SPGlobalMarketplaceAdGroupConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaceScope": {
+     "$ref": "SPGlobalMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad group is applicable. The marketplaces included should either be same as or subset of parent campaign",
+     "items": {
+      "$ref": "SPGlobalMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SPGlobalState"
+    },
+    "status": {
+     "$ref": "SPGlobalStatus"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad group",
+     "items": {
+      "$ref": "SPGlobalTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "adProduct",
+    "bid",
+    "campaignId",
+    "creationDateTime",
+    "lastUpdatedDateTime",
+    "marketplaceScope",
+    "marketplaces",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdGroupAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `SPONSORED_PRODUCTS` | Sponsored Products ad product. |",
+     "items": {
+      "$ref": "SPGlobalAdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdGroupBid": {
+   "properties": {
+    "marketplaceSettings": {
+     "description": "The bid associated with the ad group at specified marketplace level. Either one of bid or marketplaceSettings should always be specified",
+     "items": {
+      "$ref": "SPGlobalAdGroupBidMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalAdGroupBidMarketplaceSetting": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "SPGlobalCurrencyCode"
+    },
+    "defaultBid": {
+     "description": "The default maximum bid for ads and targets in the ad group. This is used in sponsored ads as the maximum bid during the auction.",
+     "format": "double",
+     "type": "number"
+    },
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "marketplace"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdGroupCampaignIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdGroupCreate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "SPGlobalAdProduct"
+    },
+    "adSettings": {
+     "$ref": "SPGlobalCreateAdSettings"
+    },
+    "bid": {
+     "$ref": "SPGlobalCreateAdGroupBid"
+    },
+    "campaignId": {
+     "description": "The unique identifier of the campaign the ad group belongs to.",
+     "type": "string"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global ad group that enables overriding certain attributes at individual marketplace level. For example, if a global ad group state is ENABLED and needs to be PAUSED onl…",
+     "items": {
+      "$ref": "SPGlobalCreateMarketplaceAdGroupConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaceScope": {
+     "$ref": "SPGlobalMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad group is applicable. The marketplaces included should either be same as or subset of parent campaign",
+     "items": {
+      "$ref": "SPGlobalMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SPGlobalCreateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad group",
+     "items": {
+      "$ref": "SPGlobalCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adProduct",
+    "bid",
+    "campaignId",
+    "marketplaceScope",
+    "marketplaces",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdGroupMarketplaceScopeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "SPGlobalMarketplaceScope"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdGroupMultiStatusResponseWithPartialErrors": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "partialSuccess": {
+     "items": {
+      "$ref": "SPGlobalAdGroupPartialIndex"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "SPGlobalAdGroupMultiStatusSuccess"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalAdGroupMultiStatusSuccess": {
+   "properties": {
+    "adGroup": {
+     "$ref": "SPGlobalAdGroup"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "adGroup",
+    "index"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdGroupNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "SPGlobalAdGroupNameFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdGroupNameFilterType": {
+   "description": "**AdGroupNameFilterType Enum:** | AdGroupNameFilterType | Description | | --- | --- | | `EXACT_MATCH` | Filter by exact match. | | `BROAD_MATCH` | Filter by broad match. |",
+   "enum": [
+    "BROAD_MATCH",
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "SPGlobalAdGroupPartialIndex": {
+   "properties": {
+    "adGroup": {
+     "$ref": "SPGlobalAdGroup"
+    },
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "adGroup",
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdGroupStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `ENABLED` | The object is set active by user and eligible for delivery. | | `PAUSED` | The object is stopped by user and not eligible for delivery. | | `ARCHIVED` …",
+     "items": {
+      "$ref": "SPGlobalState"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdGroupSuccessResponse": {
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "SPGlobalAdGroup"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalAdGroupUpdate": {
+   "properties": {
+    "adGroupId": {
+     "description": "The unique identifier of the ad group.",
+     "type": "string"
+    },
+    "adSettings": {
+     "$ref": "SPGlobalUpdateAdSettings"
+    },
+    "bid": {
+     "$ref": "SPGlobalUpdateAdGroupBid"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global ad group that enables overriding certain attributes at individual marketplace level. For example, if a global ad group state is ENABLED and needs to be PAUSED onl…",
+     "items": {
+      "$ref": "SPGlobalCreateMarketplaceAdGroupConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad group is applicable. The marketplaces included should either be same as or subset of parent campaign",
+     "items": {
+      "$ref": "SPGlobalMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SPGlobalUpdateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad group",
+     "items": {
+      "$ref": "SPGlobalCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroupId"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `SPONSORED_PRODUCTS` | Sponsored Products ad product. |",
+   "enum": [
+    "SPONSORED_PRODUCTS"
+   ],
+   "type": "string"
+  },
+  "SPGlobalAdSettings": {
+   "properties": {
+    "productAttributeSetRefinementConfigurationId": {
+     "description": "Identifier for the product attribute configuration set associated with this ad group.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCreateAdGroupBid": {
+   "properties": {
+    "marketplaceSettings": {
+     "description": "The bid associated with the ad group at specified marketplace level. Either one of bid or marketplaceSettings should always be specified",
+     "items": {
+      "$ref": "SPGlobalCreateAdGroupBidMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCreateAdGroupBidMarketplaceSetting": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "SPGlobalCurrencyCode"
+    },
+    "defaultBid": {
+     "description": "The default maximum bid for ads and targets in the ad group. This is used in sponsored ads as the maximum bid during the auction.",
+     "format": "double",
+     "type": "number"
+    },
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "marketplace"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateAdGroupRequest": {
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "SPGlobalAdGroupCreate"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateAdSettings": {
+   "properties": {
+    "productAttributeSetRefinementConfigurationId": {
+     "description": "Identifier for the product attribute configuration set associated with this ad group.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCreateMarketplaceAdGroupConfigurations": {
+   "properties": {
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    },
+    "overrides": {
+     "$ref": "SPGlobalCreateMarketplaceAdGroupFieldOverrides"
+    }
+   },
+   "required": [
+    "marketplace",
+    "overrides"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateMarketplaceAdGroupFieldOverrides": {
+   "properties": {
+    "name": {
+     "description": "The name of the ad group for this marketplace",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SPGlobalState"
+    },
+    "tags": {
+     "description": "Marketplace specific tags for the ad group",
+     "items": {
+      "$ref": "SPGlobalCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SPGlobalCreateTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | |------|------| | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `CHF` | Swiss Franc | …",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CHF",
+    "CNY",
+    "DKK",
+    "EGP",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "MXP",
+    "NGN",
+    "NOK",
+    "NZD",
+    "PLN",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "SPGlobalDeleteAdGroupRequest": {
+   "properties": {
+    "adGroupIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroupIds"
+   ],
+   "type": "object"
+  },
+  "SPGlobalDeliveryReason": {
+   "description": "**DeliveryReason Enum:** | DeliveryReason | Description | |------|------| | `ADVERTISER_ARCHIVED` | | | `ADVERTISER_OUT_OF_BUDGET` | Indicates that an advertiser is out of budget for Sponsored Products campaigns for sel…",
+   "enum": [
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_OUT_OF_BUDGET",
+    "ADVERTISER_OUT_OF_POSTPAY_CREDIT_LIMIT",
+    "ADVERTISER_OUT_OF_POSTPAY_MONTHLY_BUDGET",
+    "ADVERTISER_OUT_OF_PREPAY_BALANCE",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_POLICING_PENDING_REVIEW",
+    "ADVERTISER_POLICING_SUSPENDED",
+    "AD_ARCHIVED",
+    "AD_CREATION_FAILED",
+    "AD_CREATION_IN_PROGRESS",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_INCOMPLETE",
+    "AD_GROUP_LOW_BID",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_REVIEW",
+    "AD_GROUP_POLICING_PENDING_REVIEW",
+    "AD_GROUP_REJECTED",
+    "AD_INELIGIBLE",
+    "AD_MISSING_DECORATION",
+    "AD_MISSING_IMAGE",
+    "AD_NOT_DELIVERING",
+    "AD_PAUSED",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "BRAND_INELIGIBLE",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_REVIEW",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_REJECTED",
+    "CREATIVE_MISSING_ASSET",
+    "CREATIVE_PENDING_REVIEW",
+    "CREATIVE_REJECTED",
+    "LANDING_PAGE_INELIGIBLE",
+    "LANDING_PAGE_NOT_AVAILABLE",
+    "MODERATION_ADULT_NOVELTY_POLICY_VIOLATION",
+    "MODERATION_ADULT_PRODUCT_POLICY_VIOLATION",
+    "MODERATION_ADULT_SOFTLINES_POLICY_VIOLATION",
+    "MODERATION_CLAIM_WEIGHTLOSS_POLICY_VIOLATION",
+    "MODERATION_CONTENT_NUDITY_POLICY_VIOLATION",
+    "MODERATION_CONTENT_PROVOCATIVE_POLICY_VIOLATION",
+    "MODERATION_CONTENT_SMOKING_POLICY_VIOLATION",
+    "MODERATION_CRITICAL_EVENTS_POLICY_VIOLATION",
+    "MODERATION_ERROR_404",
+    "MODERATION_GRAPHICAL_SEXUAL_IMAGES_POLICY_VIOLATION",
+    "MODERATION_HFSS_PRODUCT_POLICY_VIOLATION",
+    "MODERATION_LANGUAGE_OFFENSIVE_POLICY_VIOLATION",
+    "MODERATION_NOT_COMPLIANT_TO_AD_POLICY",
+    "MODERATION_SMOKING_RELATED_POLICY_VIOLATION",
+    "NOT_BUYABLE",
+    "NOT_IN_BUYBOX",
+    "NOT_IN_POLICY",
+    "NO_INVENTORY",
+    "NO_PURCHASABLE_OFFER",
+    "OTHER",
+    "OUT_OF_REWARD_BUDGET",
+    "OUT_OF_STOCK",
+    "PIR_RULE_EXCLUDED",
+    "PORTFOLIO_ARCHIVED",
+    "PORTFOLIO_END_DATE_REACHED",
+    "PORTFOLIO_OUT_OF_BUDGET",
+    "PORTFOLIO_PAUSED",
+    "PORTFOLIO_PENDING_START_DATE",
+    "SECURITY_SCAN_PENDING_REVIEW",
+    "SECURITY_SCAN_REJECTED",
+    "SPEND_LIMIT_EXCEEDED",
+    "STATUS_UNAVAILABLE",
+    "TARGET_ARCHIVED",
+    "TARGET_BLOCKED",
+    "TARGET_PAUSED",
+    "TARGET_POLICING_SUSPENDED"
+   ],
+   "type": "string"
+  },
+  "SPGlobalDeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | |------|------| | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplac…",
+   "enum": [
+    "DELIVERING",
+    "LIMITED",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "SPGlobalMarketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "SPGlobalMarketplaceAdGroupConfigurations": {
+   "properties": {
+    "adGroupId": {
+     "description": "Represents marketplace adGroup id (Ex: adGroupId-US) associated to global adGroup (Ex: adGroupId-Global)",
+     "type": "string"
+    },
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    },
+    "overrides": {
+     "$ref": "SPGlobalMarketplaceAdGroupFieldOverrides"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "marketplace",
+    "overrides"
+   ],
+   "type": "object"
+  },
+  "SPGlobalMarketplaceAdGroupFieldOverrides": {
+   "properties": {
+    "name": {
+     "description": "The name of the ad group for this marketplace",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SPGlobalState"
+    },
+    "tags": {
+     "description": "Marketplace specific tags for the ad group",
+     "items": {
+      "$ref": "SPGlobalTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalMarketplaceScope": {
+   "enum": [
+    "GLOBAL"
+   ],
+   "type": "string"
+  },
+  "SPGlobalQueryAdGroupRequest": {
+   "properties": {
+    "adProductFilter": {
+     "$ref": "SPGlobalAdGroupAdProductFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "SPGlobalAdGroupCampaignIdFilter"
+    },
+    "marketplaceScopeFilter": {
+     "$ref": "SPGlobalAdGroupMarketplaceScopeFilter"
+    },
+    "maxResults": {
+     "default": 1000,
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "SPGlobalAdGroupNameFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "SPGlobalAdGroupStateFilter"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "SPGlobalState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SPGlobalStatus": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "SPGlobalDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "SPGlobalDeliveryStatus"
+    },
+    "marketplaceSettings": {
+     "description": "The list of marketplace level delivery status and reasons of global resources, for all the marketplaces the global resource is applicable in.",
+     "items": {
+      "$ref": "SPGlobalStatusMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "deliveryStatus",
+    "marketplaceSettings"
+   ],
+   "type": "object"
+  },
+  "SPGlobalStatusMarketplaceSetting": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "SPGlobalDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "SPGlobalDeliveryStatus"
+    },
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    }
+   },
+   "required": [
+    "deliveryStatus",
+    "marketplace"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SPGlobalUpdateAdGroupBid": {
+   "properties": {
+    "marketplaceSettings": {
+     "description": "The bid associated with the ad group at specified marketplace level. Either one of bid or marketplaceSettings should always be specified",
+     "items": {
+      "$ref": "SPGlobalCreateAdGroupBidMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalUpdateAdGroupRequest": {
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "SPGlobalAdGroupUpdate"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "SPGlobalUpdateAdSettings": {
+   "properties": {
+    "productAttributeSetRefinementConfigurationId": {
+     "description": "Identifier for the product attribute configuration set associated with this ad group.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalUpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

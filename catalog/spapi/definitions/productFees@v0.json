@@ -1,0 +1,411 @@
+{
+  "Error": {
+    "description": "An object representing an error that occurred during the API operation.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "FeeDetail": {
+    "description": "The type of fee, fee amount, and other details.",
+    "properties": {
+      "FeeAmount": {
+        "description": "The amount charged for a given fee.",
+        "ref": "MoneyType"
+      },
+      "FeePromotion": {
+        "description": "The promotion amount for a given fee.",
+        "ref": "MoneyType"
+      },
+      "FeeType": {
+        "description": "The type of fee charged to a seller.",
+        "type": "string"
+      },
+      "FinalFee": {
+        "description": "The final fee amount for a given fee.",
+        "ref": "MoneyType"
+      },
+      "IncludedFeeDetailList": {
+        "ref": "IncludedFeeDetailList"
+      },
+      "TaxAmount": {
+        "description": "The tax amount for a given fee.",
+        "ref": "MoneyType"
+      }
+    },
+    "required": [
+      "FeeAmount",
+      "FeeType",
+      "FinalFee"
+    ],
+    "type": "object"
+  },
+  "FeeDetailList": {
+    "description": "A list of other fees that contribute to a given fee.",
+    "properties": {},
+    "ref": "FeeDetail",
+    "required": [],
+    "type": "array"
+  },
+  "FeesEstimate": {
+    "description": "The total estimated fees for an item and a list of details.",
+    "properties": {
+      "FeeDetailList": {
+        "ref": "FeeDetailList"
+      },
+      "TimeOfFeesEstimation": {
+        "description": "The time at which the fees were estimated.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "TotalFeesEstimate": {
+        "description": "Total estimated fees for a given item, price, and fulfillment channel.",
+        "ref": "MoneyType"
+      }
+    },
+    "required": [
+      "TimeOfFeesEstimation"
+    ],
+    "type": "object"
+  },
+  "FeesEstimateByIdRequest": {
+    "description": "A product, marketplace, and proposed price used to request estimated fees.",
+    "properties": {
+      "FeesEstimateRequest": {
+        "ref": "FeesEstimateRequest"
+      },
+      "IdType": {
+        "ref": "IdType"
+      },
+      "IdValue": {
+        "description": "The item identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "IdType",
+      "IdValue"
+    ],
+    "type": "object"
+  },
+  "FeesEstimateError": {
+    "description": "An unexpected error occurred during this operation.",
+    "properties": {
+      "Code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "Detail": {
+        "ref": "FeesEstimateErrorDetail"
+      },
+      "Message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      },
+      "Type": {
+        "description": "An error type, identifying either the receiver or the sender as the originator of the error.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "Code",
+      "Detail",
+      "Message",
+      "Type"
+    ],
+    "type": "object"
+  },
+  "FeesEstimateErrorDetail": {
+    "description": "Additional information that can help the caller understand or fix the issue.",
+    "itemType": "object",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "FeesEstimateIdentifier": {
+    "description": "An item identifier, marketplace, time of request, and other details that identify an estimate.",
+    "properties": {
+      "IdType": {
+        "ref": "IdType"
+      },
+      "IdValue": {
+        "description": "The item identifier.",
+        "type": "string"
+      },
+      "IsAmazonFulfilled": {
+        "description": "When true, the offer is fulfilled by Amazon.",
+        "type": "boolean"
+      },
+      "MarketplaceId": {
+        "description": "A marketplace identifier.",
+        "type": "string"
+      },
+      "OptionalFulfillmentProgram": {
+        "ref": "OptionalFulfillmentProgram"
+      },
+      "PriceToEstimateFees": {
+        "description": "The item price on which the fee estimate is based.",
+        "ref": "PriceToEstimateFees"
+      },
+      "SellerId": {
+        "description": "The seller identifier.",
+        "type": "string"
+      },
+      "SellerInputIdentifier": {
+        "description": "A unique identifier provided by the caller to track this request.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "FeesEstimateRequest": {
+    "description": "A product, marketplace, and proposed price used to request estimated fees.",
+    "properties": {
+      "Identifier": {
+        "description": "A unique identifier provided by the caller to track this request.",
+        "type": "string"
+      },
+      "IsAmazonFulfilled": {
+        "description": "When true, the offer is fulfilled by Amazon.",
+        "type": "boolean"
+      },
+      "MarketplaceId": {
+        "description": "A marketplace identifier.",
+        "type": "string"
+      },
+      "OptionalFulfillmentProgram": {
+        "ref": "OptionalFulfillmentProgram"
+      },
+      "PriceToEstimateFees": {
+        "description": "The product price that the fee estimate is based on.",
+        "ref": "PriceToEstimateFees"
+      }
+    },
+    "required": [
+      "Identifier",
+      "MarketplaceId",
+      "PriceToEstimateFees"
+    ],
+    "type": "object"
+  },
+  "FeesEstimateResult": {
+    "description": "An item identifier and the estimated fees for the item.",
+    "properties": {
+      "Error": {
+        "description": "An error object with a type, code, and message.",
+        "ref": "FeesEstimateError"
+      },
+      "FeesEstimate": {
+        "description": "The total estimated fees for an item and a list of details.",
+        "ref": "FeesEstimate"
+      },
+      "FeesEstimateIdentifier": {
+        "description": "Information used to identify a fees estimate request.",
+        "ref": "FeesEstimateIdentifier"
+      },
+      "Status": {
+        "description": "The status of the fee request.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetMyFeesEstimateRequest": {
+    "description": "Request schema.",
+    "properties": {
+      "FeesEstimateRequest": {
+        "ref": "FeesEstimateRequest"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetMyFeesEstimateResponse": {
+    "description": "The response object for the GetMyFeesEstimate operation.",
+    "properties": {
+      "errors": {
+        "description": "A list of errors that may have occurred during the GetMyFeesEstimate operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the operation.",
+        "ref": "GetMyFeesEstimateResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetMyFeesEstimateResult": {
+    "description": "Response schema.",
+    "properties": {
+      "FeesEstimateResult": {
+        "description": "The item's estimated fees.",
+        "ref": "FeesEstimateResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetMyFeesEstimatesErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses returned when a request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "GetMyFeesEstimatesRequest": {
+    "description": "Request for estimated fees for a list of products.",
+    "properties": {},
+    "ref": "FeesEstimateByIdRequest",
+    "required": [],
+    "type": "array"
+  },
+  "GetMyFeesEstimatesResponse": {
+    "description": "Estimated fees for a list of products.",
+    "properties": {},
+    "ref": "FeesEstimateResult",
+    "required": [],
+    "type": "array"
+  },
+  "IdType": {
+    "description": "The type of product identifier used in a `FeesEstimateByIdRequest`.",
+    "enum": [
+      "ASIN",
+      "SellerSKU"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "IncludedFeeDetail": {
+    "description": "The type of fee, fee amount, and other details.",
+    "properties": {
+      "FeeAmount": {
+        "description": "The amount charged for a given fee.",
+        "ref": "MoneyType"
+      },
+      "FeePromotion": {
+        "description": "The promotion amount for a given fee.",
+        "ref": "MoneyType"
+      },
+      "FeeType": {
+        "description": "The type of fee charged to a seller.",
+        "type": "string"
+      },
+      "FinalFee": {
+        "description": "The final fee amount for a given fee.",
+        "ref": "MoneyType"
+      },
+      "TaxAmount": {
+        "description": "The tax amount for a given fee.",
+        "ref": "MoneyType"
+      }
+    },
+    "required": [
+      "FeeAmount",
+      "FeeType",
+      "FinalFee"
+    ],
+    "type": "object"
+  },
+  "IncludedFeeDetailList": {
+    "description": "A list of other fees that contribute to a given fee.",
+    "properties": {},
+    "ref": "IncludedFeeDetail",
+    "required": [],
+    "type": "array"
+  },
+  "MoneyType": {
+    "description": "An object representing a monetary value with its currency information.",
+    "properties": {
+      "Amount": {
+        "description": "The monetary value.",
+        "type": "number"
+      },
+      "CurrencyCode": {
+        "description": "The currency code in ISO 4217 format.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OptionalFulfillmentProgram": {
+    "description": "An optional enrollment program to return the estimated fees when the offer is fulfilled by Amazon (IsAmazonFulfilled is set to true).",
+    "enum": [
+      "FBA_CORE",
+      "FBA_EFN",
+      "FBA_SNL"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Points": {
+    "description": "The number of Amazon Points offered with the purchase of an item.The Amazon Points program is only available in Japan.",
+    "properties": {
+      "PointsMonetaryValue": {
+        "ref": "MoneyType"
+      },
+      "PointsNumber": {
+        "description": "The number of Amazon Points",
+        "format": "int32",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PriceToEstimateFees": {
+    "description": "Price information for an item, used to estimate fees.",
+    "properties": {
+      "ListingPrice": {
+        "description": "The price of the item.",
+        "ref": "MoneyType"
+      },
+      "Points": {
+        "description": "The number of Amazon Points offered with the purchase of an item.",
+        "ref": "Points"
+      },
+      "Shipping": {
+        "description": "The shipping cost.",
+        "ref": "MoneyType"
+      }
+    },
+    "required": [
+      "ListingPrice"
+    ],
+    "type": "object"
+  }
+}

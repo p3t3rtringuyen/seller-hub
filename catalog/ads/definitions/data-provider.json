@@ -1,0 +1,150 @@
+{
+ "api": "data-provider",
+ "file": "specs/data-provider/openapi.yaml",
+ "schemas": {
+  "advertiserId": {
+   "description": "The advertiser identifier.",
+   "format": "int64",
+   "type": "integer"
+  },
+  "amazonConsent": {
+   "properties": {
+    "amazonAdStorage": {
+     "description": "Set consent for advertising related storage such as cookies(web) or device identifiers(apps).",
+     "enum": [
+      "GRANTED",
+      "DENIED"
+     ],
+     "type": "string"
+    },
+    "amazonUserData": {
+     "description": "Set consent to use personal data for online advertising purposes.",
+     "enum": [
+      "GRANTED",
+      "DENIED"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "amazonAdStorage",
+    "amazonUserData"
+   ],
+   "type": "object"
+  },
+  "audienceDescription": {
+   "description": "The audience description. Must be an alphanumeric, non-null string between 0 to 1000 characters in length.",
+   "type": "string"
+  },
+  "audienceFees": {
+   "items": {
+    "description": "Object describing the audience fee.",
+    "properties": {
+     "cpmCents": {
+      "description": "Cost per thousand impressions (CPM) in cents. For example, $1.00 = 100 cents.",
+      "type": "integer"
+     },
+     "currency": {
+      "description": "Currency key as defined in https://en.wikipedia.org/wiki/ISO_4217. Note that the currency key is required to match the default currency associated with the Amazon DSP account.",
+      "enum": [
+       "USD",
+       "CAD",
+       "JPY",
+       "GBP",
+       "EUR",
+       "AUD",
+       "AED",
+       "SAR",
+       "MXN",
+       "INR",
+       "SEK",
+       "TRY",
+       "BRL"
+      ],
+      "type": "string"
+     }
+    },
+    "required": [
+     "cpmCents",
+     "currency"
+    ],
+    "type": "object"
+   },
+   "type": "array"
+  },
+  "audienceId": {
+   "description": "The",
+   "format": "int64",
+   "type": "integer"
+  },
+  "audienceName": {
+   "description": "The audience name. Must be an alphanumeric string between 10 to 128 characters in length.",
+   "type": "string"
+  },
+  "dataSourceCountry": {
+   "description": "A list of country codes describing where data in an audience is collected from. Country code is defined in https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2.",
+   "items": {
+    "description": "Country code is defined in https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2.",
+    "type": "string"
+   },
+   "type": "array"
+  },
+  "errorDescription": {
+   "description": "A human-readable description of the error.",
+   "type": "string"
+  },
+  "externalAudienceId": {
+   "description": "The user-defined audience identifier.",
+   "type": "string"
+  },
+  "gpp": {
+   "description": "GPP(Global Privacy Platform) consent string that wraps privacy consent information from user.",
+   "type": "string"
+  },
+  "httpStatusCode": {
+   "description": "The HTTP status code.",
+   "type": "string"
+  },
+  "metadataType": {
+   "description": "The audience metadata type. Only 'DATA_PROVIDER' is currently supported.",
+   "enum": [
+    "DATA_PROVIDER"
+   ],
+   "type": "string"
+  },
+  "recordTtl": {
+   "description": "Time-to-live (ttl), in seconds. The amount of time the record is associated with the audience.",
+   "maximum": 34300800,
+   "minimum": 0,
+   "type": "integer"
+  },
+  "requestId": {
+   "description": "The request identifier.",
+   "type": "string"
+  },
+  "subError": {
+   "items": {
+    "properties": {
+     "errorType": {
+      "description": "The type of error.",
+      "type": "string"
+     },
+     "fieldName": {
+      "description": "The field name.",
+      "type": "string"
+     },
+     "message": {
+      "description": "A human-readable description of the error.",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "type": "array"
+  },
+  "tcf": {
+   "description": "TCF(Transparency & Consent Framework) consent string that wraps privacy consent information from user.",
+   "type": "string"
+  }
+ }
+}

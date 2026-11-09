@@ -1,0 +1,3327 @@
+{
+ "api": "AdvertisingBilling",
+ "file": "specs/dest/AdvertisingBilling_prod_3p.json",
+ "schemas": {
+  "AdPayInvoicesMode": {
+   "description": "Enum defining different Payment Agreement types.",
+   "enum": [
+    "EXECUTE",
+    "PREVIEW"
+   ],
+   "type": "string"
+  },
+  "AdPaymentsBackupMethodsConfiguration": {
+   "description": "Describes backup method configuration for a payment method type.",
+   "properties": {
+    "types": {
+     "description": "List of eligible backup payment method types.",
+     "items": {
+      "$ref": "AdPaymentsPaymentMethodType"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AdPaymentsBulkCreationResult": {
+   "properties": {
+    "id": {
+     "description": "The identifier of the resource that this result is referencing.",
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the item in the input list.",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "reason": {
+     "description": "A human readable reason giving more details regarding this result.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "id",
+    "index"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsCountryCode": {
+   "description": "Enum defining country codes.",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "CL",
+    "CO",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NG",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "UK",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "AdPaymentsCountryCodeList": {
+   "description": "A list of country codes.",
+   "items": {
+    "$ref": "AdPaymentsCountryCode"
+   },
+   "minItems": 0,
+   "type": "array"
+  },
+  "AdPaymentsCreatePaymentAgreementsInput": {
+   "description": "Represents the input of the create payment agreement API.",
+   "properties": {
+    "paymentAgreements": {
+     "$ref": "AdPaymentsPaymentAgreementList"
+    }
+   },
+   "required": [
+    "paymentAgreements"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsCreatePaymentAgreementsOutput": {
+   "description": "Represent the output of the create payment agreement API.",
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "AdPaymentsBulkCreationResult"
+     },
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "AdPaymentsBulkCreationResult"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsCreatePaymentProfileInput": {
+   "description": "Represents the input of the create payment profiles API.",
+   "properties": {
+    "paymentProfiles": {
+     "$ref": "AdPaymentsPaymentProfileList"
+    }
+   },
+   "required": [
+    "paymentProfiles"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsCreatePaymentProfilesOutput": {
+   "description": "Represent the output of the create payment profiles API.",
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "AdPaymentsBulkCreationResult"
+     },
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "AdPaymentsBulkCreationResult"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsCreditCardPaymentMethod": {
+   "description": "Represents Credit Card payment method structure.",
+   "properties": {
+    "brand": {
+     "description": "The processor used to execute payments on the card, such as Visa, MasterCard, etc. Only valued for credit card payment methods.",
+     "type": "string"
+    },
+    "eligibleCountries": {
+     "$ref": "AdPaymentsCountryCodeList"
+    },
+    "expiryDetails": {
+     "$ref": "AdPaymentsExpiryDetails"
+    },
+    "foreignExchange": {
+     "$ref": "AdPaymentsForeignExchange"
+    },
+    "instrumentId": {
+     "description": "Identifies a credit card payment method.",
+     "type": "string"
+    },
+    "tail": {
+     "description": "The last four digits of the credit card number.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "AdPaymentsPaymentMethodType"
+    }
+   },
+   "required": [
+    "brand",
+    "eligibleCountries",
+    "expiryDetails",
+    "instrumentId",
+    "tail",
+    "type"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsCreditCardPaymentMethodList": {
+   "description": "A list of credit card payment methods.",
+   "items": {
+    "$ref": "AdPaymentsCreditCardPaymentMethod"
+   },
+   "maxItems": 100,
+   "minItems": 0,
+   "type": "array"
+  },
+  "AdPaymentsCurrencyAmount": {
+   "properties": {
+    "amount": {
+     "description": "A monetary amount.",
+     "type": "number"
+    },
+    "currencyCode": {
+     "$ref": "AdPaymentsCurrencyCode"
+    }
+   },
+   "required": [
+    "amount",
+    "currencyCode"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsCurrencyCode": {
+   "description": "Enum defining different currency codes.",
+   "enum": [
+    "AED",
+    "AUD",
+    "BGN",
+    "BRL",
+    "CAD",
+    "CHF",
+    "CLP",
+    "CNY",
+    "COP",
+    "CZK",
+    "DKK",
+    "EGP",
+    "EUR",
+    "GBP",
+    "HKD",
+    "HUF",
+    "ILS",
+    "INR",
+    "JPY",
+    "KRW",
+    "MXN",
+    "NGN",
+    "NZD",
+    "PLN",
+    "RON",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "TWD",
+    "USD",
+    "VND",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "AdPaymentsDeductFromPaymentPaymentMethod": {
+   "description": "Represents DeductFromPayment payment method structure. DeductFromPayment is a type of payment method where spends are deducted from vendor balance of a particular vendor code.",
+   "properties": {
+    "countryCode": {
+     "$ref": "AdPaymentsCountryCode"
+    },
+    "eligibleCountries": {
+     "$ref": "AdPaymentsCountryCodeList"
+    },
+    "type": {
+     "$ref": "AdPaymentsPaymentMethodType"
+    },
+    "vendorCode": {
+     "description": "A vendor code identifies a product being sold by a vendor on the retail website. When Amazon purchases products from a vendor, Amazon owes the vendor money which gets added to the vendor''s balance. An advertising accou…",
+     "type": "string"
+    },
+    "vendorCodeBalance": {
+     "$ref": "AdPaymentsCurrencyAmount"
+    },
+    "vendorCodeName": {
+     "description": "The name of the vendor code this payment method represents.",
+     "type": "string"
+    },
+    "vendorGroupId": {
+     "description": "The identifier of the vendor group that this vendor code belongs to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "eligibleCountries",
+    "type",
+    "vendorCode",
+    "vendorCodeName"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsDeductFromPaymentPaymentMethodList": {
+   "description": "A list of deduct from payment payment methods.",
+   "items": {
+    "$ref": "AdPaymentsDeductFromPaymentPaymentMethod"
+   },
+   "maxItems": 100,
+   "minItems": 0,
+   "type": "array"
+  },
+  "AdPaymentsDirectDebitPaymentMethod": {
+   "description": "Represents Direct Debit payment method structure.",
+   "properties": {
+    "eligibleCountries": {
+     "$ref": "AdPaymentsCountryCodeList"
+    },
+    "instrumentId": {
+     "description": "Identifies a direct debit payment method.",
+     "type": "string"
+    },
+    "tail": {
+     "description": "The last four digits of the bank account number.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "AdPaymentsPaymentMethodType"
+    }
+   },
+   "required": [
+    "eligibleCountries",
+    "instrumentId",
+    "tail",
+    "type"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsDirectDebitPaymentMethodList": {
+   "description": "A list of direct debit payment methods.",
+   "items": {
+    "$ref": "AdPaymentsDirectDebitPaymentMethod"
+   },
+   "maxItems": 100,
+   "minItems": 0,
+   "type": "array"
+  },
+  "AdPaymentsEntityMarketplace": {
+   "description": "Represents an advertiser and marketplace combination.",
+   "properties": {
+    "countryCode": {
+     "$ref": "AdPaymentsCountryCode"
+    },
+    "entityId": {
+     "description": "The identifier of the entity.",
+     "type": "string"
+    },
+    "entityType": {
+     "$ref": "AdPaymentsEntityType"
+    }
+   },
+   "required": [
+    "entityId",
+    "entityType"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsEntityMarketplaceList": {
+   "description": "A list of uniquely identifiable advertising entities.",
+   "items": {
+    "$ref": "AdPaymentsEntityMarketplace"
+   },
+   "maxItems": 100,
+   "minItems": 0,
+   "type": "array"
+  },
+  "AdPaymentsEntityType": {
+   "description": "Enum defining different advertiser types.",
+   "enum": [
+    "AGENCY",
+    "DSP_ADVERTISING_ACCOUNT",
+    "GLOBAL_ACCOUNT",
+    "MANAGER_ACCOUNT",
+    "SELLER",
+    "VENDOR"
+   ],
+   "type": "string"
+  },
+  "AdPaymentsError": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "details": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "details"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsExpiryDetails": {
+   "description": "Indicates the month a payment method will expire.",
+   "properties": {
+    "month": {
+     "description": "The month the payment method will expire.",
+     "type": "integer"
+    },
+    "year": {
+     "description": "The year the payment method will expire.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "month",
+    "year"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsForeignExchange": {
+   "description": "Foreign exchange information on credit card.",
+   "properties": {
+    "currencyConversionConsentStatus": {
+     "$ref": "CurrencyConversionConsentStatus"
+    },
+    "feePercentage": {
+     "description": "Percentage fee amazon is taking in transaction.",
+     "type": "number"
+    },
+    "rate": {
+     "description": "Rate used for currency conversion.",
+     "type": "number"
+    },
+    "targetCurrencyCode": {
+     "description": "Currency the customer is paying in (credit card currency).",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdPaymentsGetCustomerPaymentMethodsOutput": {
+   "description": "Represents the output of the get payment methods API.",
+   "properties": {
+    "creditCardPaymentMethods": {
+     "$ref": "AdPaymentsCreditCardPaymentMethodList"
+    },
+    "deductFromPaymentPaymentMethods": {
+     "$ref": "AdPaymentsDeductFromPaymentPaymentMethodList"
+    },
+    "directDebitPaymentMethods": {
+     "$ref": "AdPaymentsDirectDebitPaymentMethodList"
+    },
+    "nextToken": {
+     "$ref": "AdPaymentsNextToken"
+    },
+    "payByInvoicePaymentMethods": {
+     "$ref": "AdPaymentsPayByInvoicePaymentMethodList"
+    },
+    "paymentMethodConfigurations": {
+     "$ref": "AdPaymentsPaymentMethodConfigurationList"
+    },
+    "sellerPayablePaymentMethods": {
+     "$ref": "AdPaymentsSellerPayablePaymentMethodList"
+    }
+   },
+   "type": "object"
+  },
+  "AdPaymentsGetPaymentAgreementOutput": {
+   "description": "Represent the output of the get payment agreements API.",
+   "properties": {
+    "nextToken": {
+     "$ref": "AdPaymentsNextToken"
+    },
+    "paymentAgreements": {
+     "$ref": "AdPaymentsPaymentAgreementList"
+    }
+   },
+   "required": [
+    "paymentAgreements"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsIdempotenceId": {
+   "description": "Idempotency Id that will be used as a identifier to ensure idempotency while creating /updating the given resource. Requests with same idempotency Id will be considered identical and processed in an idempotent manner.",
+   "type": "string"
+  },
+  "AdPaymentsLocale": {
+   "description": "Enum defining supported language locales.",
+   "enum": [
+    "ar_AE",
+    "de_DE",
+    "en_AU",
+    "en_CA",
+    "en_GB",
+    "en_IN",
+    "en_SG",
+    "en_US",
+    "es_CO",
+    "es_ES",
+    "es_MX",
+    "es_US",
+    "fr_CA",
+    "fr_FR",
+    "hi_IN",
+    "it_IT",
+    "ja_JP",
+    "ko_KR",
+    "nl_NL",
+    "pl_PL",
+    "pt_BR",
+    "sv_SE",
+    "ta_IN",
+    "th_TH",
+    "tr_TR",
+    "vi_VN",
+    "zh_CN",
+    "zh_TW"
+   ],
+   "type": "string"
+  },
+  "AdPaymentsNextToken": {
+   "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, there are no further results.",
+   "type": "string"
+  },
+  "AdPaymentsPayByInvoicePaymentMethod": {
+   "description": "Represents Pay By Invoice payment method structure. Pay By Invoice is a type of payment method where the customer receives a physical invoice which they can pay via bank transfer.",
+   "properties": {
+    "eligibleCountries": {
+     "$ref": "AdPaymentsCountryCodeList"
+    },
+    "type": {
+     "$ref": "AdPaymentsPaymentMethodType"
+    }
+   },
+   "required": [
+    "eligibleCountries",
+    "type"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsPayByInvoicePaymentMethodList": {
+   "description": "A list of pay by invoice payment methods.",
+   "items": {
+    "$ref": "AdPaymentsPayByInvoicePaymentMethod"
+   },
+   "maxItems": 100,
+   "minItems": 0,
+   "type": "array"
+  },
+  "AdPaymentsPayInvoicesInput": {
+   "description": "Represents the input to the pay invoices API.",
+   "properties": {
+    "idempotenceId": {
+     "$ref": "AdPaymentsIdempotenceId"
+    },
+    "mode": {
+     "$ref": "AdPayInvoicesMode"
+    },
+    "paymentAgreementId": {
+     "$ref": "AdPaymentsPaymentAgreementId"
+    },
+    "reasonLocale": {
+     "$ref": "AdPaymentsLocale"
+    },
+    "targetCountryCodes": {
+     "$ref": "AdPaymentsCountryCodeList"
+    }
+   },
+   "required": [
+    "idempotenceId"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsPayInvoicesOutput": {
+   "description": "Represents the output of the pay invoices API.",
+   "properties": {
+    "failure": {
+     "$ref": "AdPaymentsPaymentResultList"
+    },
+    "success": {
+     "$ref": "AdPaymentsPaymentResultList"
+    }
+   },
+   "required": [
+    "failure",
+    "success"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsPaymentAgreement": {
+   "description": "Represents an agreement between two parties indicating what profile to use during payment execution.",
+   "properties": {
+    "paymentAgreementId": {
+     "description": "The ID associated to this payment agreement.",
+     "type": "string"
+    },
+    "paymentProfile": {
+     "$ref": "AdPaymentsPaymentProfile"
+    },
+    "target": {
+     "$ref": "AdPaymentsTarget"
+    }
+   },
+   "required": [
+    "paymentProfile",
+    "target"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsPaymentAgreementId": {
+   "description": "ID of a payment agreement that must belong to the customer. A one-time payment will be collected using the payment agreement's associated payment profile. If not provided, the latest payment agreement of the advertiser …",
+   "type": "string"
+  },
+  "AdPaymentsPaymentAgreementList": {
+   "items": {
+    "$ref": "AdPaymentsPaymentAgreement"
+   },
+   "maxItems": 100,
+   "minItems": 0,
+   "type": "array"
+  },
+  "AdPaymentsPaymentAgreementType": {
+   "description": "Enum defining different Payment Agreement types.",
+   "enum": [
+    "AUTO_PAY",
+    "PAY_NOW"
+   ],
+   "type": "string"
+  },
+  "AdPaymentsPaymentMethod": {
+   "description": "Represents a payment method.",
+   "properties": {
+    "brand": {
+     "description": "The processor used to execute payments on the card, such as Visa, MasterCard, etc. Only valued for credit card payment methods.",
+     "type": "string"
+    },
+    "countryCode": {
+     "$ref": "AdPaymentsCountryCode"
+    },
+    "expiryDetails": {
+     "$ref": "AdPaymentsExpiryDetails"
+    },
+    "foreignExchange": {
+     "$ref": "AdPaymentsForeignExchange"
+    },
+    "instrumentId": {
+     "description": "Identifies a credit card or direct debit payment method.",
+     "type": "string"
+    },
+    "priority": {
+     "description": "A numerical priority assigned to each payment method within a given profile, dictating the sequential order in which these payment methods are utilized during payment execution. Lower numerical values indicate higher pr…",
+     "type": "integer"
+    },
+    "sellerAccountId": {
+     "description": "The seller account ID associated to this payment method, only valued for seller payable payment methods.",
+     "type": "string"
+    },
+    "tail": {
+     "description": "The last four digits of a credit card or bank account number.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "AdPaymentsPaymentMethodType"
+    },
+    "vendorCode": {
+     "description": "The vendor code associated to this payment method, only valued for deduct from payment payment methods.",
+     "type": "string"
+    },
+    "vendorCodeBalance": {
+     "$ref": "AdPaymentsCurrencyAmount"
+    },
+    "vendorCodeName": {
+     "description": "The name of the vendor code this payment method represents.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "priority",
+    "type"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsPaymentMethodConfiguration": {
+   "description": "Configuration for a primary payment method and its backup options.",
+   "properties": {
+    "backupMethods": {
+     "$ref": "AdPaymentsBackupMethodsConfiguration"
+    },
+    "primaryMethod": {
+     "$ref": "AdPaymentsPaymentMethodType"
+    }
+   },
+   "required": [
+    "primaryMethod"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsPaymentMethodConfigurationList": {
+   "description": "A list of payment method configurations.",
+   "items": {
+    "$ref": "AdPaymentsPaymentMethodConfiguration"
+   },
+   "maxItems": 10,
+   "minItems": 0,
+   "type": "array"
+  },
+  "AdPaymentsPaymentMethodList": {
+   "items": {
+    "$ref": "AdPaymentsPaymentMethod"
+   },
+   "maxItems": 100,
+   "minItems": 1,
+   "type": "array"
+  },
+  "AdPaymentsPaymentMethodType": {
+   "description": "Enum defining different PaymentMethod.",
+   "enum": [
+    "CREDIT_CARD",
+    "DEDUCT_FOR_PAYMENT",
+    "DIRECT_DEBIT",
+    "PAY_BY_INVOICE",
+    "SELLER_PAYABLE"
+   ],
+   "type": "string"
+  },
+  "AdPaymentsPaymentProfile": {
+   "description": "Represents a list of payment methods and the scope of advertisers able to access them.",
+   "properties": {
+    "defaultFor": {
+     "$ref": "AdPaymentsEntityMarketplaceList"
+    },
+    "eligibleEntities": {
+     "$ref": "AdPaymentsEntityMarketplaceList"
+    },
+    "paymentMethods": {
+     "$ref": "AdPaymentsPaymentMethodList"
+    },
+    "paymentProfileId": {
+     "description": "The ID associated to this payment profile.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdPaymentsPaymentProfileList": {
+   "items": {
+    "$ref": "AdPaymentsPaymentProfile"
+   },
+   "maxItems": 100,
+   "minItems": 1,
+   "type": "array"
+  },
+  "AdPaymentsPaymentResult": {
+   "description": "Represents the result of a payment execution.",
+   "properties": {
+    "countryCode": {
+     "$ref": "AdPaymentsCountryCode"
+    },
+    "foreignExchange": {
+     "$ref": "AdPaymentsForeignExchange"
+    },
+    "invoiceCFID": {
+     "description": "The customer facing ID of the invoice.",
+     "type": "string"
+    },
+    "paymentAmount": {
+     "$ref": "AdPaymentsCurrencyAmount"
+    },
+    "reason": {
+     "description": "A human-readable reason explaining the payment result.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "invoiceCFID"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsPaymentResultList": {
+   "items": {
+    "$ref": "AdPaymentsPaymentResult"
+   },
+   "maxItems": 100,
+   "minItems": 0,
+   "type": "array"
+  },
+  "AdPaymentsSellerPayablePaymentMethod": {
+   "description": "Represents Seller Payable payment method structure. Seller Payable is a type of payment method where spends are deducted from the seller balance of a particular seller account.",
+   "properties": {
+    "countryCode": {
+     "$ref": "AdPaymentsCountryCode"
+    },
+    "eligibleCountries": {
+     "$ref": "AdPaymentsCountryCodeList"
+    },
+    "sellerAccountId": {
+     "description": "The seller account ID associated to this payment method",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "AdPaymentsPaymentMethodType"
+    }
+   },
+   "required": [
+    "eligibleCountries",
+    "type"
+   ],
+   "type": "object"
+  },
+  "AdPaymentsSellerPayablePaymentMethodList": {
+   "description": "A list of seller payable payment methods.",
+   "items": {
+    "$ref": "AdPaymentsSellerPayablePaymentMethod"
+   },
+   "maxItems": 100,
+   "minItems": 0,
+   "type": "array"
+  },
+  "AdPaymentsTarget": {
+   "properties": {
+    "agreementType": {
+     "$ref": "AdPaymentsPaymentAgreementType"
+    },
+    "countryCode": {
+     "$ref": "AdPaymentsCountryCode"
+    },
+    "entityId": {
+     "description": "The ID associated to the entity in this target.",
+     "type": "string"
+    },
+    "entityType": {
+     "$ref": "AdPaymentsEntityType"
+    }
+   },
+   "required": [
+    "agreementType",
+    "countryCode"
+   ],
+   "type": "object"
+  },
+  "ApplyBillingProfileRequest": {
+   "description": "Request with a list of advertisers to which a list of billing profiles needs to be applied.",
+   "properties": {
+    "billingProfileUsages": {
+     "description": "List of advertisers to which a list of billing profiles needs to be applied.",
+     "items": {
+      "properties": {
+       "advertiser": {
+        "$ref": "MarketplaceAdvertiser"
+       },
+       "billingProfileIds": {
+        "description": "List of billing profile identifiers which needs to be associated with an advertiser.",
+        "items": {
+         "type": "string"
+        },
+        "maxItems": 2,
+        "minItems": 1,
+        "type": "array"
+       }
+      },
+      "required": [
+       "advertiser",
+       "billingProfileIds"
+      ],
+      "type": "object"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "billingProfileUsages"
+   ],
+   "type": "object"
+  },
+  "ApplyBillingProfileResponse": {
+   "description": "Contains a list of one or more responses corresponding to each advertiser and applied billing profile(s).",
+   "properties": {
+    "billingProfileUsages": {
+     "description": "Segregated list of success and error responses for each country and applied billing profile(s).",
+     "properties": {
+      "error": {
+       "description": "Error responses for each country and applied billing profile.",
+       "items": {
+        "properties": {
+         "advertiser": {
+          "$ref": "MarketplaceAdvertiser"
+         },
+         "billingProfileIds": {
+          "description": "List of billing profile identifiers corresponding to billing profiles in request payload.",
+          "items": {
+           "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 1,
+          "type": "array"
+         },
+         "errors": {
+          "description": "Indicates the error occurred for a billing profile apply operation.",
+          "items": {
+           "$ref": "ErrorResponse"
+          },
+          "maxItems": 200,
+          "minItems": 0,
+          "type": "array"
+         },
+         "index": {
+          "description": "Index corresponding to index of the apply operation in request",
+          "format": "int64",
+          "type": "integer"
+         }
+        },
+        "type": "object"
+       },
+       "maxItems": 30,
+       "minItems": 0,
+       "type": "array"
+      },
+      "success": {
+       "description": "Success responses for each country and applied billing profile(s).",
+       "items": {
+        "properties": {
+         "advertiser": {
+          "$ref": "MarketplaceAdvertiser"
+         },
+         "billingProfileIds": {
+          "description": "List of billing profile identifiers corresponding to billing profiles in request payload.",
+          "items": {
+           "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 1,
+          "type": "array"
+         },
+         "index": {
+          "description": "Index corresponding to index of the apply operation in request",
+          "format": "int64",
+          "type": "integer"
+         }
+        },
+        "type": "object"
+       },
+       "maxItems": 30,
+       "minItems": 0,
+       "type": "array"
+      }
+     },
+     "type": "object"
+    }
+   },
+   "type": "object"
+  },
+  "AvailableDocumentResponse": {
+   "properties": {
+    "contentType": {
+     "type": "string"
+    },
+    "docType": {
+     "$ref": "DocType"
+    },
+    "fileName": {
+     "type": "string"
+    },
+    "storagePath": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BaseBillingProfile": {
+   "description": "Billing profile object which contains details regarding address, tax, etc.",
+   "properties": {
+    "address": {
+     "description": "Address details to be used for a billing profile",
+     "properties": {
+      "addressLine1": {
+       "maxLength": 60,
+       "type": "string"
+      },
+      "addressLine2": {
+       "maxLength": 60,
+       "type": "string"
+      },
+      "addressLine3": {
+       "maxLength": 60,
+       "type": "string"
+      },
+      "billingName": {
+       "description": "The name of the person or organization who is going to recieve the invoice",
+       "maxLength": 50,
+       "type": "string"
+      },
+      "city": {
+       "maxLength": 50,
+       "type": "string"
+      },
+      "contactName": {
+       "description": "Contact name for the billing profile which will also be printed on the invoice.",
+       "maxLength": 50,
+       "type": "string"
+      },
+      "countryCode": {
+       "type": "string"
+      },
+      "faxNumber": {
+       "maxLength": 100,
+       "type": "string"
+      },
+      "phoneNumber": {
+       "maxLength": 100,
+       "type": "string"
+      },
+      "postalCode": {
+       "maxLength": 20,
+       "type": "string"
+      },
+      "primaryEmail": {
+       "type": "string"
+      },
+      "secondaryEmails": {
+       "items": {
+        "maxLength": 64,
+        "type": "string"
+       },
+       "maxItems": 100,
+       "minItems": 0,
+       "type": "array"
+      },
+      "stateOrRegion": {
+       "maxLength": 50,
+       "type": "string"
+      }
+     },
+     "required": [
+      "addressLine1",
+      "billingName",
+      "city",
+      "contactName",
+      "countryCode",
+      "primaryEmail"
+     ],
+     "type": "object"
+    },
+    "agreements": {
+     "description": "List of tax-type and corresponding details.",
+     "items": {
+      "properties": {
+       "consent": {
+        "default": "false",
+        "description": "Consent on the provided agreement document.",
+        "type": "boolean"
+       },
+       "documentName": {
+        "description": "Agreement document name against which consent needs to be provided. The content of the agreement can be checked by providing agreement name in `POST /billingProfileAgreementContents/{billingProfileAgreementContentId}` A…",
+        "type": "string"
+       },
+       "locale": {
+        "$ref": "Locale"
+       }
+      },
+      "required": [
+       "consent",
+       "documentName"
+      ],
+      "type": "object"
+     },
+     "type": "array"
+    },
+    "billingProfileName": {
+     "description": "Name of a billing profile. This name will only be used to identify the billing profile and will not be used for billing. This is for the client to organize the billing profiles and doesn't affect the billing process.",
+     "type": "string"
+    },
+    "displayInfo": {
+     "description": "Object determines publicly displayed information about the advertiser",
+     "properties": {
+      "displayName": {
+       "description": "Relevant for only authors. Required if author chooses displayNameField as DISPLAY_NAME.The value inside this field will be shown publicly.",
+       "maxLength": 100,
+       "type": "string"
+      },
+      "displayNameField": {
+       "description": "Determines the name field that will be displayed publicly.For non-authors, the default and only allowed value for this is BILLING_NAME. For author accounts, If BILLING_NAME is chosen then the value inside address.billin…",
+       "enum": [
+        "BILLING_NAME",
+        "DISPLAY_NAME"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "holdingCompany": {
+     "description": "Type of holding company for agency billing profile. Agency Holding Companies are conglomerate entities that own multiple smaller advertising agencies. There are six holding companies, WPP, Omnicom, Publicis, Interpublic…",
+     "type": "string"
+    },
+    "isDefault": {
+     "default": "false",
+     "description": "Attribute to indicate if a billing profile is default or not under that global account. Once marked as default, for new countries this billing profile will get automatically applied, if all information provided are suff…",
+     "type": "boolean"
+    },
+    "purchaseOrderNumber": {
+     "description": "Number to track spend against the budgeted amounts.",
+     "maxLength": 64,
+     "type": "string"
+    },
+    "taxes": {
+     "description": "List of tax-type and values.",
+     "items": {
+      "properties": {
+       "countryCode": {
+        "description": "Code of the country to which the tax value belongs to which would override the countryCode provided in the address.",
+        "type": "string"
+       },
+       "type": {
+        "description": "Type of tax. Check following table for supported tax types: <br/><br/><table border=1><caption> **Supported Tax Types** </caption><tr> <th>Tax Type</th> </tr><tr> <td>VAT</td> </tr><tr> <td>GST</td> </tr><tr> <td>RFC</t…",
+        "type": "string"
+       },
+       "value": {
+        "description": "Value of the tax type. For example, VAT number for VAT tax type, etc.",
+        "type": "string"
+       }
+      },
+      "required": [
+       "type",
+       "value"
+      ],
+      "type": "object"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "address",
+    "billingParty",
+    "billingProfileName",
+    "isBillTo",
+    "purchaseOrderNumber"
+   ],
+   "type": "object"
+  },
+  "BillingInvoiceSummariesRequest": {
+   "description": "Payload with filter, sort and aggregate key(s) to fetch list of billing invoice summary(s).",
+   "properties": {
+    "aggregation": {
+     "description": "Object encapsulating the aggregation query information",
+     "properties": {
+      "attribute": {
+       "description": "Aggregation attribute for the billing invoice summary(s)",
+       "type": "string"
+      },
+      "groupBy": {
+       "description": "Aggregation bucket for the billing invoice summary(s)",
+       "type": "string"
+      },
+      "operation": {
+       "description": "Aggregate operation for the billing invoice summary(s)",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "countryValueFilter": {
+     "description": "Object encapsulating the country filtering information",
+     "properties": {
+      "include": {
+       "description": "List of country value(s) to filter from the list of billing invoice summary(s).",
+       "items": {
+        "type": "string"
+       },
+       "maxItems": 30,
+       "minItems": 0,
+       "type": "array"
+      },
+      "queryTermMatchType": {
+       "description": "Defines how would the string resource field be matched with the query term in filter.",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "invoiceDueDateRangeFilter": {
+     "description": "Object encapsulating due date range information",
+     "properties": {
+      "endDate": {
+       "description": "The ending due date (inclusive) of the date range for filtering invoices. Please provide the date in ISO-8601 format, representing a UTC date with only the date portion (no time).",
+       "format": "date",
+       "type": "string"
+      },
+      "startDate": {
+       "description": "The starting due date (inclusive) of the date range for filtering invoices. Please provide the date in ISO-8601 format, representing a UTC date with only the date portion (no time).",
+       "format": "date",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "invoiceIssuedDateRangeFilter": {
+     "description": "Object encapsulating issued date range information",
+     "properties": {
+      "endDate": {
+       "description": "The ending issued date (inclusive) of the date range for filtering invoices. Please provide the date in ISO-8601 format, representing a UTC date with only the date portion (no time).",
+       "format": "date",
+       "type": "string"
+      },
+      "startDate": {
+       "description": "The starting issued date (inclusive) of the date range for filtering invoices. Please provide the date in ISO-8601 format, representing a UTC date with only the date portion (no time).",
+       "format": "date",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "invoiceNumberFilter": {
+     "description": "Object encapsulating the invoice number search information",
+     "properties": {
+      "include": {
+       "description": "List of invoice number(s) to filter from the list of billing invoice summary(s).",
+       "items": {
+        "type": "string"
+       },
+       "maxItems": 30,
+       "minItems": 0,
+       "type": "array"
+      }
+     },
+     "type": "object"
+    },
+    "maxResults": {
+     "default": "100",
+     "description": "Max results / billing invoice summary(s) to be shown in a single page.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Offset to fetch next page with list of billing invoice summary(s).",
+     "type": "string"
+    },
+    "paymentMethodTypeValueFilter": {
+     "description": "Object encapsulating the payment method type filtering information against which invoice is issued",
+     "properties": {
+      "include": {
+       "description": "List of payment method type value(s) to filter from the list of billing invoice summary(s).",
+       "items": {
+        "type": "string"
+       },
+       "maxItems": 10,
+       "minItems": 0,
+       "type": "array"
+      },
+      "queryTermMatchType": {
+       "description": "Defines how would the string resource field be matched with the query term in filter.",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "reserveOrderNumberFilter": {
+     "description": "Object encapsulating the reserve order number search information",
+     "properties": {
+      "include": {
+       "description": "List of reserve order number(s) to filter from the list of billing invoice summary(s).",
+       "items": {
+        "type": "string"
+       },
+       "maxItems": 30,
+       "minItems": 0,
+       "type": "array"
+      }
+     },
+     "type": "object"
+    },
+    "sort": {
+     "description": "Object encapsulating the sort operation information",
+     "properties": {
+      "attribute": {
+       "description": "Sort key or attribute for the list of billing invoice summary(s)",
+       "type": "string"
+      },
+      "direction": {
+       "description": "Sort order(ascending or descending) for list of billing invoice summary(s)",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "statusValueFilter": {
+     "description": "Object encapsulating the invoice status filtering information",
+     "properties": {
+      "include": {
+       "description": "List of invoice status value(s) to filter from the list of billing invoice summary(s).",
+       "items": {
+        "type": "string"
+       },
+       "maxItems": 10,
+       "minItems": 0,
+       "type": "array"
+      },
+      "queryTermMatchType": {
+       "description": "Defines how would the string resource field be matched with the query term in filter.",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    }
+   },
+   "type": "object"
+  },
+  "BillingInvoiceSummariesResponse": {
+   "description": "Contains an object encapsulating either the aggregation result(s) or sorted & filtered billing invoice summary(s).",
+   "properties": {
+    "aggregation": {
+     "description": "Object encapsulating the aggregation query and result(s) information",
+     "properties": {
+      "invoiceSummaries": {
+       "description": "List of object(s) encapsulating information of billing invoice summary(s).",
+       "items": {
+        "$ref": "BillingInvoiceSummary"
+       },
+       "type": "array"
+      },
+      "results": {
+       "description": "Object encapsulating the aggregation result as per aggregation attribute, operation and bucket (or groupById) on the list of billing invoice summary(s).",
+       "items": {
+        "description": "Object encapsulating the aggregation result as per aggregation attribute, operation and bucket (or groupById) on the list of billing invoice summary(s).",
+        "properties": {
+         "currencyCode": {
+          "description": "Currency of the aggregate value over the aggregation bucket for a certain key on the aggregation attribute for the specified aggregation operation.",
+          "type": "string"
+         },
+         "groupId": {
+          "description": "Aggregation bucket key (or groupById) to which the specific aggregation result belongs.",
+          "type": "string"
+         },
+         "value": {
+          "description": "Aggregate value over the aggregation bucket for a certain key on the aggregation attribute for the specified aggregation operation.",
+          "format": "double",
+          "type": "number"
+         }
+        },
+        "type": "object"
+       },
+       "type": "array"
+      }
+     },
+     "type": "object"
+    },
+    "nextToken": {
+     "description": "Offset to fetch next page with list of billing invoice summary(s).",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BillingInvoiceSummary": {
+   "description": "Object encapsulating billing invoice summary information",
+   "properties": {
+    "amountDue": {
+     "$ref": "CurrencyAmount"
+    },
+    "country": {
+     "description": "Object encapsulating billing invoice country information",
+     "properties": {
+      "code": {
+       "description": "Country code for the invoice",
+       "type": "string"
+      },
+      "value": {
+       "description": "Country name for the invoice",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "dueDate": {
+     "description": "Invoice due date in ISO-8601 format, representing a UTC date with only the date portion (no time)",
+     "format": "date",
+     "type": "string"
+    },
+    "ePaymentStatus": {
+     "description": "Object encapsulating e-payment status for the invoice",
+     "properties": {
+      "code": {
+       "description": "e-payment status code for the invoice",
+       "type": "string"
+      },
+      "value": {
+       "description": "e-payment status for the invoice",
+       "type": "string"
+      }
+     },
+     "type": "string"
+    },
+    "id": {
+     "description": "Billing Document Number",
+     "type": "string"
+    },
+    "issuedDate": {
+     "description": "Invoice issued date in ISO-8601 format, representing a UTC date with only the date portion (no time)",
+     "format": "date",
+     "type": "string"
+    },
+    "paymentMethodType": {
+     "description": "Object encapsulating payment method type against which invoice is issued",
+     "properties": {
+      "code": {
+       "description": "Payment method type for the invoice code",
+       "type": "string"
+      },
+      "value": {
+       "description": "Payment method type for the invoice",
+       "type": "string"
+      }
+     },
+     "type": "string"
+    },
+    "refundDetails": {
+     "description": "Object encapsulating the invoice refund information",
+     "properties": {
+      "amount": {
+       "$ref": "CurrencyAmount"
+      },
+      "reason": {
+       "description": "Refund reason of the invoice",
+       "type": "string"
+      },
+      "status": {
+       "description": "Refund status of the invoice",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "remainingAmountDue": {
+     "$ref": "CurrencyAmount"
+    },
+    "reserveOrderNumber": {
+     "description": "Reserve Order Number",
+     "type": "string"
+    },
+    "status": {
+     "description": "Object encapsulating billing invoice summary status information",
+     "properties": {
+      "code": {
+       "description": "Invoice summary status code",
+       "type": "string"
+      },
+      "description": {
+       "description": "Invoice summary status description",
+       "type": "string"
+      },
+      "value": {
+       "description": "Invoice summary status",
+       "type": "string"
+      }
+     },
+     "type": "string"
+    },
+    "statusDecorator": {
+     "description": "Object encapsulating billing invoice summary status decorator information",
+     "properties": {
+      "code": {
+       "description": "Invoice summary status decorator code",
+       "type": "string"
+      },
+      "value": {
+       "description": "Invoice summary status decorator",
+       "type": "string"
+      }
+     },
+     "type": "string"
+    }
+   },
+   "type": "string"
+  },
+  "BillingProfile": {
+   "allOf": [
+    {
+     "$ref": "BaseBillingProfile"
+    },
+    {
+     "properties": {
+      "billingParty": {
+       "description": "Choose `AGENCY` if you are an agency representing an advertiser. Choose `BRAND_OWNER` if you are advertising for your product's sales.",
+       "type": "string"
+      },
+      "billingProfileId": {
+       "description": "Billing profile identifier which will be used to identify a billing profile. This identifier will NOT affect billing process.",
+       "type": "string"
+      },
+      "isBillTo": {
+       "description": "Whether the billingProfile created should be used for invoicing, taxation and other billing workflows. If the `billTo=false` is setthe `billingName` of that profile is used to determine the 'Advertiser Name' shown to co…",
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "billingParty",
+      "billingProfileId",
+      "isBillTo"
+     ],
+     "type": "object"
+    }
+   ],
+   "description": "Billing profile object which contains details regarding address, tax, etc.",
+   "type": "object"
+  },
+  "BillingProfileAgreementContentResponse": {
+   "properties": {
+    "content": {
+     "description": "An HTML document to be rendered and read. A consent needs to be provided against this content.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BillingProfileErrorResponse": {
+   "description": "Contains the machine-readable error code and human-readable details.",
+   "properties": {
+    "code": {
+     "description": "The code describing the error reason.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BillingProfileStatus": {
+   "description": "Current Status of the link between the billing Profile and the country. The following table defines the statuses and their descriptions. <table><thead> <tr> <th>Status</th> <th>Description</th> </tr></thead><tbody> <tr>…",
+   "properties": {
+    "statusCode": {
+     "type": "string"
+    },
+    "statusMessage": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BillingProfileUsage": {
+   "description": "This object contains billing profile(s) that is applied to a given country under a global account",
+   "properties": {
+    "advertiser": {
+     "$ref": "MarketplaceAdvertiser"
+    },
+    "billingProfileUsageId": {
+     "description": "Billing profile usage unique identifier.",
+     "type": "string"
+    },
+    "billingProfiles": {
+     "items": {
+      "$ref": "BillingProfile"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "fallbackBillingProfiles": {
+     "items": {
+      "$ref": "BillingProfile"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "status": {
+     "$ref": "BillingProfileStatus"
+    }
+   },
+   "type": "object"
+  },
+  "BillingStatementErrorResponse": {
+   "properties": {
+    "billingStatementRequestId": {
+     "description": "Billing statement request identifier.",
+     "type": "string"
+    },
+    "code": {
+     "description": "The code describing the error reason.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CountryCode": {
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "CL",
+    "CO",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NG",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "UK",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "CreateBillingProfile": {
+   "allOf": [
+    {
+     "$ref": "BaseBillingProfile"
+    },
+    {
+     "properties": {
+      "billingParty": {
+       "description": "Choose `AGENCY` if you are an agency representing an advertiser. Choose `BRAND_OWNER` if you are advertising for your product's sales",
+       "type": "string"
+      },
+      "isBillTo": {
+       "description": "Whether the billingProfile created should be used for invoicing, taxation and other billing workflows. If the `billTo=false` is setthe `billingName` of that profile is used to determine the 'Advertiser Name' shown to co…",
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "billingParty",
+      "isBillTo"
+     ],
+     "type": "object"
+    }
+   ],
+   "description": "Object encapsulating information for creating a billing profile",
+   "type": "object"
+  },
+  "CreateBillingProfilesRequest": {
+   "description": "Contains a list of one or more billing profiles to be created.",
+   "properties": {
+    "billingProfiles": {
+     "items": {
+      "$ref": "CreateBillingProfile"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "billingProfiles"
+   ],
+   "type": "object"
+  },
+  "CreateBillingStatementRequest": {
+   "properties": {
+    "countryCodes": {
+     "description": "List of countries for which billing statements are to be fetched. If no country codes are passed in the request, the statement will be generated for all the advertising countries by default.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "endDate": {
+     "description": "End date of the invoice summary period for a report in the format YYYY-MM-DD.",
+     "format": "date",
+     "type": "string"
+    },
+    "format": {
+     "default": "CSV",
+     "description": "Format of the file, such as, for billing statements, etc.",
+     "enum": [
+      "CSV"
+     ],
+     "type": "string"
+    },
+    "locale": {
+     "description": "Preferred locale can be chosen among the list of valid language codes. Check the table below for supported language code. <br/><br/><table border=1><caption> **Supported Locales Table** </caption><tr> <th>Locale code</t…",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "Start date of the invoice summary period for a report in the format YYYY-MM-DD.",
+     "format": "date",
+     "type": "string"
+    }
+   },
+   "required": [
+    "endDate",
+    "locale",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "CreateBillingStatementResponse": {
+   "properties": {
+    "billingStatementRequestId": {
+     "description": "Billing statement request identifier.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CreateOrUpdateBillingProfilesResponse": {
+   "description": "Contains a list of one or more responses corresponding to each billing profile along with index.",
+   "properties": {
+    "billingProfiles": {
+     "description": "Segregated list of success and error responses for each billing profile in request payload.",
+     "properties": {
+      "error": {
+       "description": "List of error responses for each billing profile in request payload.",
+       "items": {
+        "properties": {
+         "billingProfileId": {
+          "description": "Billing profile identifier corresponding to a billing profile in request payload.",
+          "type": "string"
+         },
+         "errors": {
+          "description": "List of errors for a particular billing profile in request payload.",
+          "items": {
+           "$ref": "ErrorResponse"
+          },
+          "maxItems": 200,
+          "minItems": 0,
+          "type": "array"
+         },
+         "index": {
+          "description": "Indicates the index of a billing profile in request payload.",
+          "format": "int64",
+          "type": "integer"
+         }
+        },
+        "type": "object"
+       },
+       "maxItems": 100,
+       "minItems": 0,
+       "type": "array"
+      },
+      "success": {
+       "description": "List of success responses for each billing profile in request payload.",
+       "items": {
+        "properties": {
+         "billingProfileId": {
+          "description": "Billing profile identifier corresponding to a billing profile in the list.",
+          "type": "string"
+         },
+         "index": {
+          "description": "Indicates the index of billing profile in the list of request payload.",
+          "format": "int64",
+          "type": "integer"
+         }
+        },
+        "type": "object"
+       },
+       "maxItems": 100,
+       "minItems": 0,
+       "type": "array"
+      }
+     },
+     "type": "object"
+    }
+   },
+   "type": "object"
+  },
+  "CurrencyAmount": {
+   "description": "Identifies the amount along with currency code.",
+   "properties": {
+    "amount": {
+     "type": "number"
+    },
+    "currencyCode": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "amount",
+    "currencyCode"
+   ],
+   "type": "object"
+  },
+  "CurrencyConversionConsentStatus": {
+   "description": "Enum defining different ConsentStatus for Currency conversion.",
+   "enum": [
+    "NOT_SELECTED",
+    "OPTED_IN",
+    "OPTED_OUT"
+   ],
+   "type": "string"
+  },
+  "DocType": {
+   "description": "Supported type of billing document to be specified through query parameter. Prepayment Receipts do not share the same documentId as the other DocTypes and must be requested separately.",
+   "enum": [
+    "CA_DST_REFUND",
+    "CREDIT_MEMO",
+    "GIS_CREDIT_MEMO",
+    "GIS_INVOICE",
+    "INVOICE",
+    "PAYMENT_COMPLEMENT",
+    "PREPAYMENT_RECEIPT"
+   ],
+   "type": "string"
+  },
+  "ErrorResponse": {
+   "description": "Contains the machine-readable error code and human-readable details.",
+   "properties": {
+    "errorCode": {
+     "description": "The code describing the error reason.",
+     "type": "string"
+    },
+    "errorMessage": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetBillingProfileUsageRequest": {
+   "description": "The request body to fetch billing profiles linked to each country of global ads account.",
+   "properties": {
+    "expandBillingProfile": {
+     "default": "false",
+     "description": "By default only the billingProfileId linked to the country will be returned. Choose `true` if you would like to see the content of the billing profiles linked to a country",
+     "type": "boolean"
+    },
+    "expandFallbackBillingProfile": {
+     "default": "false",
+     "description": "Choose `true` if you would like to see the information currently being used for billing for this marketplace. Useful when the billingProfileUsage status is not `OK` and the billing information coundn't be propagated for…",
+     "type": "boolean"
+    },
+    "filters": {
+     "description": "Filter object to be used to fetch list of billing profile usage(s).",
+     "properties": {
+      "advertiserFilter": {
+       "description": "Indicates list of advertiser identifiers(s) for which billing profile(s) needs to be fetched.",
+       "items": {
+        "$ref": "MarketplaceAdvertiser"
+       },
+       "maxItems": 1,
+       "minItems": 0,
+       "type": "array"
+      }
+     },
+     "type": "object"
+    },
+    "maxResults": {
+     "default": "100",
+     "description": "Max results / billing profile usage(s) to be shown in a single page.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Offset to fetch next page with list of billing profile usage(s).",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetBillingProfileUsageResponse": {
+   "description": "Contains billing profile usages: list of advertisers and applied billing profile.",
+   "properties": {
+    "billingProfileUsages": {
+     "items": {
+      "$ref": "BillingProfileUsage"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "default": "100",
+     "description": "Max results / billing profile usage(s) to be shown in a single page.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Indicates the pagination token to be used to access next page.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetBillingProfilesRequest": {
+   "description": "Payload to fetch list of billing profile(s).",
+   "properties": {
+    "filters": {
+     "description": "Filter object to be used to fetch list of billing profile(s).",
+     "properties": {
+      "billingProfileIdFilter": {
+       "description": "Indicates list of billing profile identifier(s) for which billing profile(s) needs to be fetched.",
+       "items": {
+        "type": "string"
+       },
+       "maxItems": 20,
+       "minItems": 0,
+       "type": "array"
+      },
+      "defaultBillingProfileFilter": {
+       "default": "false",
+       "description": "Indicates if default billing profile needs to be fetched.",
+       "type": "boolean"
+      }
+     },
+     "type": "object"
+    },
+    "maxResults": {
+     "default": "100",
+     "description": "Max results / billing profile(s) to be shown in a single page.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Offset to fetch next page with list of billing profile(s).",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetBillingProfilesResponse": {
+   "description": "Paginated list of billing profile(s) response.",
+   "properties": {
+    "billingProfiles": {
+     "description": "Indicates list of billing profile(s).",
+     "items": {
+      "$ref": "BillingProfile"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "default": "100",
+     "description": "Max results / billing profile(s) to be shown in a single page.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Offset to fetch next page with list of billing profile(s).",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetBillingStatementResponse": {
+   "properties": {
+    "details": {
+     "description": "The human-readable description of the response.",
+     "type": "string"
+    },
+    "reportStatus": {
+     "description": "The request status of the billing statement.",
+     "enum": [
+      "FAILED",
+      "IN_PROGRESS",
+      "SUCCESS"
+     ],
+     "type": "string"
+    },
+    "s3DownloadLink": {
+     "description": "Download link of the billing statement file. Only when reportStatus is SUCCESS.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetDocumentResponseContent": {
+   "properties": {
+    "availableDocuments": {
+     "items": {
+      "$ref": "AvailableDocumentResponse"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "unavailableDocuments": {
+     "items": {
+      "$ref": "UnavailableDocumentResponse"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "InternalServerExceptionResponseContent": {
+   "description": "Thrown when service encounters unexpected error during processing of request.",
+   "properties": {
+    "code": {
+     "description": "Error Code.",
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable response message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Locale": {
+   "description": "Preferred locale can be chosen among the list of valid language codes. Check the table below for supported language code. <br/><br/><table border=1><caption> **Supported Locales Table** </caption><tr> <th>Locale code</t…",
+   "type": "string"
+  },
+  "MarketplaceAdvertiser": {
+   "description": "Represents one country inside a global account",
+   "properties": {
+    "countryCode": {
+     "$ref": "CountryCode"
+    }
+   },
+   "required": [
+    "countryCode"
+   ],
+   "type": "object"
+  },
+  "ResourceNotFoundExceptionResponseContent": {
+   "description": "Request references a resource which does not exist.",
+   "properties": {
+    "code": {
+     "description": "Error Code.",
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable response message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "description": "Error Code.",
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable response message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnavailableDocumentResponse": {
+   "properties": {
+    "contentType": {
+     "type": "string"
+    },
+    "docType": {
+     "$ref": "DocType"
+    },
+    "fileName": {
+     "type": "string"
+    },
+    "reason": {
+     "type": "string"
+    },
+    "storagePath": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateBillingProfile": {
+   "allOf": [
+    {
+     "$ref": "BaseBillingProfile"
+    },
+    {
+     "properties": {
+      "billingProfileId": {
+       "description": "Billing profile identifier which will be used to identify a billing profile. This identifier will NOT affect billing process.",
+       "type": "string"
+      }
+     },
+     "required": [
+      "billingProfileId"
+     ],
+     "type": "object"
+    }
+   ],
+   "description": "Object encapsulating information for updating a billing profile",
+   "type": "object"
+  },
+  "UpdateBillingProfilesRequest": {
+   "description": "Contains a list of one or more billing profiles to be updated.",
+   "properties": {
+    "billingProfiles": {
+     "items": {
+      "$ref": "UpdateBillingProfile"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ValidationExceptionResponseContent": {
+   "description": "The input fails to satisfy the constraints specified by an Advertising API service.",
+   "properties": {
+    "code": {
+     "description": "Error Code.",
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable response message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "adProgram": {
+   "description": "Sponsored Ads only. This field indicates the ad type (such as Sponsored Products, Sponsored Brands or Sponsored Display).",
+   "enum": [
+    "AMAZON LIVE",
+    "CREATOR CONNECTIONS",
+    "SPONSORED BRANDS",
+    "SPONSORED DISPLAY",
+    "SPONSORED DISPLAY FOR FIRE TV",
+    "SPONSORED PRODUCT"
+   ],
+   "type": "string"
+  },
+  "address": {
+   "properties": {
+    "addressLine1": {
+     "type": "string"
+    },
+    "addressLine2": {
+     "type": "string"
+    },
+    "addressLine3": {
+     "type": "string"
+    },
+    "attentionName": {
+     "type": "string"
+    },
+    "city": {
+     "type": "string"
+    },
+    "companyName": {
+     "type": "string"
+    },
+    "countryCode": {
+     "$ref": "countryCode"
+    },
+    "postalCode": {
+     "type": "string"
+    },
+    "stateOrRegion": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "addressLine1",
+    "addressLine2",
+    "addressLine3",
+    "city",
+    "companyName",
+    "countryCode",
+    "postalCode",
+    "stateOrRegion"
+   ],
+   "type": "object"
+  },
+  "adjustment": {
+   "properties": {
+    "accountingDate": {
+     "$ref": "date"
+    },
+    "amount": {
+     "$ref": "currencyAmount"
+    },
+    "comments": {
+     "type": "string"
+    },
+    "fees": {
+     "description": "Charges can include different fees (see feeType below).",
+     "items": {
+      "$ref": "fee"
+     },
+     "type": "array"
+    },
+    "portfolioId": {
+     "description": "Sponsored Ads only. This identifier maps to one of the portfolios listed in the portfolios section.",
+     "format": "int64",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "accountingDate",
+    "amount"
+   ],
+   "type": "object"
+  },
+  "adjustments": {
+   "description": "List of adjustments (positive and negative) applied to this invoice.",
+   "items": {
+    "$ref": "adjustment"
+   },
+   "type": "array"
+  },
+  "advertiserMarketplace": {
+   "properties": {
+    "advertiserId": {
+     "type": "string"
+    },
+    "advertiserType": {
+     "$ref": "advertiserTypes"
+    },
+    "marketplaceId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertiserId",
+    "marketplaceId"
+   ],
+   "type": "object"
+  },
+  "advertiserTypes": {
+   "enum": [
+    "AGENCY",
+    "DSP_ADVERTISING_ACCOUNT",
+    "SELLER",
+    "VENDOR"
+   ],
+   "type": "string"
+  },
+  "billingAggregation": {
+   "properties": {
+    "billingAggregationId": {
+     "description": "An identifier that helps associate this invoice with specific billing entities, such as campaigns or rodeo advertiser accounts.",
+     "type": "string"
+    },
+    "billingAggregationResourcePath": {
+     "description": "The resource path to suffix to the base URL endpoints to retrieve the corresponding billing aggregation entity, such as a specific campaign or all active campaigns under DSP Rodeo Advertiser. An example URL after suffix…",
+     "type": "string"
+    },
+    "billingLevel": {
+     "$ref": "billingLevel"
+    }
+   },
+   "type": "object"
+  },
+  "billingLevel": {
+   "description": "Configured on the Rodeo portal and only applicable to ADSP-SS, this flag reflects the basis on which campaigns are consolidated. Possible values include: - 'CAMPAIGN': Billing is based on individual campaigns. - 'ACCOUN…",
+   "enum": [
+    "ACCOUNT",
+    "CAMPAIGN"
+   ],
+   "type": "string"
+  },
+  "billingNotification": {
+   "properties": {
+    "advertiserMarketplaces": {
+     "items": {
+      "$ref": "advertiserMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "description": {
+     "type": "string"
+    },
+    "impact": {
+     "$ref": "billingNotificationImpact"
+    },
+    "notificationName": {
+     "$ref": "billingNotificationNames"
+    },
+    "paymentDueDate": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "priority": {
+     "format": "int32",
+     "type": "integer"
+    },
+    "severity": {
+     "$ref": "billingNotificationSeverity"
+    },
+    "suspensionDate": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "description",
+    "impact",
+    "notificationName",
+    "priority",
+    "severity",
+    "title"
+   ],
+   "type": "object"
+  },
+  "billingNotificationImpact": {
+   "enum": [
+    "CAMPAIGNS_SUSPENDED",
+    "NO_IMPACT"
+   ],
+   "type": "string"
+  },
+  "billingNotificationNames": {
+   "enum": [
+    "ACCOUNT_ERROR",
+    "ACCOUNT_ERROR_IN_SELLER",
+    "AUTHOR_REGISTRATION_NOT_FOUND",
+    "BAD_DEBT_SUSPENSION",
+    "BILLING_ADDRESS_REGISTRATION_NOT_FOUND",
+    "BILLING_PROFILE_ERROR",
+    "BILLING_PROFILE_INVALID_DSA_INFO",
+    "BILLING_PROFILE_INVALID_PERMISSION",
+    "BILLING_PROFILE_INVALID_TAX",
+    "CNPJ_VERIFICATION_IN_PROGRESS",
+    "CREDIT_CARD_ALLOWED_AMOUNT_FAILURE",
+    "CREDIT_CARD_AUTHENTICATION_FAILURE",
+    "CREDIT_CARD_AUTHORIZATION_FAILURE",
+    "CREDIT_CARD_AUTH_EXPIRED_FAILURE",
+    "CREDIT_CARD_CHARGE_DISPUTE_CAUSED_SUSPENSION",
+    "CREDIT_CARD_CLOSED_FAILURE",
+    "CREDIT_CARD_EXPIRED",
+    "CREDIT_CARD_EXPIRES_SOON",
+    "CREDIT_CARD_GENERIC_FAILURE",
+    "CREDIT_CARD_INELIGIBLE_CARD",
+    "CREDIT_CARD_INELIGIBLE_SHARED_CARD",
+    "CREDIT_CARD_INSUF_BAL",
+    "CREDIT_CARD_INTERNAL_FAILURE",
+    "CREDIT_CARD_INVALID_ACCOUNT_FAILURE",
+    "CREDIT_CARD_INVALID_ADDRESS_FAILURE",
+    "CREDIT_CARD_INVALID_BANK_HOLDER_FAILURE",
+    "CREDIT_CARD_INVALID_CARD_FAILURE",
+    "CREDIT_CARD_INVALID_DETAILS",
+    "CREDIT_CARD_ISSUE_WITH_CARD",
+    "CREDIT_CARD_LOCKED_CARD",
+    "CREDIT_CARD_MFA_EXPIRED_FAILURE",
+    "CREDIT_CARD_PAYMENT_FAILURE_CAUSED_SUSPENSION",
+    "CREDIT_CARD_TRANSACTION_SIZE_FAILURE",
+    "CREDIT_CARD_VERIFICATION_FAILURE",
+    "CREDIT_CARD_VERIFICATION_FAILURE_CAUSED_SUSPENSION",
+    "CREDIT_CARD_VERIFICATION_PENDING",
+    "CREDIT_CARD_VOLUME_FAILURE",
+    "CREDIT_CARD_WITH_VERIFICATION_PAYMENT_FAILURE",
+    "CREDIT_CARD_WITH_VERIFICATION_PAYMENT_FAILURE_CAUSED_SUSPENSION",
+    "CREDIT_CARD_WITH_VERIFICATION_PENDING_CAUSED_SUSPENSION",
+    "CREDIT_CARD_WITH_VERIFICATION_SUSPENSION_WITH_PAYMENT_IN_PROGRESS",
+    "DEDUCT_FROM_PROCEEDS_PAYMENT_FAILURE_CAUSED_SUSPENSION",
+    "DEDUCT_FROM_PROCEEDS_WITH_CREDIT_CARD_FALLBACK_PAYMENT_FAILURE_CAUSED_SUSPENSION",
+    "DEDUCT_FROM_PROCEEDS_WITH_CREDIT_LIMIT_ELIGIBLE",
+    "DEDUCT_FROM_PROCEEDS_WITH_MONTHLY_INVOICE_ELIGIBLE",
+    "DIRECT_DEBIT_PAYMENT_PENDING",
+    "DPS_DENIED_PARTY",
+    "DPS_VERIFICATION_PENDING",
+    "INACTIVE_SELLER_ACCOUNT_CAUSED_SUSPENSION",
+    "INVALID_PAYMENT_REGISTRATION",
+    "MERCH_ON_DEMAND_REGISTRATION_NOT_FOUND",
+    "PAY_BY_INVOICE_OVERDUE_PAYMENT",
+    "PAY_BY_INVOICE_OVERDUE_PAYMENT_CAUSED_SUSPENSION",
+    "PAY_BY_INVOICE_OVERDUE_PAYMENT_PENDING_SUSPENSION",
+    "PAY_BY_INVOICE_UPCOMING_PAYMENT",
+    "PENDING_PAYMENT_REGISTRATION",
+    "PENDING_VALID_CNPJ_REGISTRATION",
+    "POLICY_VIOLATIONS",
+    "PREPAY_INSUFFICIENT_BALANCE",
+    "PRE_AUTH_FAILURE_SUSPENSION",
+    "RO_INSUFFICIENT_BALANCE",
+    "SAFETY_BUDGET_BREACH_SUSPENSION",
+    "SELLER_ACCOUNT_BALANCE_LOW",
+    "SELLER_ACCOUNT_BALANCE_RESERVED",
+    "SELLER_ACCOUNT_INSUFFICIENT_AVAILABLE_BALANCE_CAUSED_SUSPENSION",
+    "SELLER_ACCOUNT_INSUFFICIENT_GROSS_BALANCE_CAUSED_SUSPENSION",
+    "SELLER_ACCOUNT_MISSING_BACKUP",
+    "SELLER_ACCOUNT_PAYMENT_FAILURE_CAUSED_SUSPENSION",
+    "SELLER_ACCOUNT_WITH_CREDIT_CARD_FALLBACK_PAYMENT_FAILURE_CAUSED_SUSPENSION",
+    "STORED_VALUE_AUTO_RELOAD_PAYMENT_FAILURE",
+    "SUSPICIOUS_ACTIVITY",
+    "TAX_ID_VALIDATION_IN_PROGRESS",
+    "TAX_ID_VALIDATION_REJECTED"
+   ],
+   "type": "string"
+  },
+  "billingNotificationSeverity": {
+   "enum": [
+    "ALERT",
+    "INFO",
+    "WARNING"
+   ],
+   "type": "string"
+  },
+  "billingStatus": {
+   "properties": {
+    "billingStatusCode": {
+     "$ref": "billingStatusCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "billingStatusCode",
+    "message"
+   ],
+   "type": "object"
+  },
+  "billingStatusCode": {
+   "enum": [
+    "ACCOUNT_BILLING_ISSUE",
+    "INVALID_PAYMENT_REGISTRATION",
+    "PAYMENT_METHOD_EXPIRED",
+    "PAYMENT_METHOD_VERIFICATION_FAILED",
+    "PENDING_BILLING_REGISTRATION",
+    "PENDING_PAYMENT_REGISTRATION",
+    "PENDING_TAX_REGISTRATION",
+    "RESERVE_ORDER_BALANCE_TOO_LOW",
+    "STORED_VALUE_BALANCE_TOO_LOW",
+    "VALID_BILLING_STATUS"
+   ],
+   "type": "string"
+  },
+  "bulkGetBillingNotificationsError": {
+   "properties": {
+    "advertiserMarketplace": {
+     "$ref": "advertiserMarketplace"
+    },
+    "advertiserMarketplaces": {
+     "items": {
+      "$ref": "advertiserMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "description": {
+     "type": "string"
+    },
+    "errorCode": {
+     "$ref": "bulkGetBillingNotificationsErrorCodes"
+    },
+    "index": {
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "description",
+    "errorCode",
+    "index"
+   ],
+   "type": "object"
+  },
+  "bulkGetBillingNotificationsErrorCodes": {
+   "enum": [
+    "BAD_REQUEST",
+    "INTERNAL_ERROR",
+    "NOT_AUTHORIZED",
+    "NOT_FOUND"
+   ],
+   "type": "string"
+  },
+  "bulkGetBillingNotificationsErrorResponse": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "bulkGetBillingNotificationsRequestBody": {
+   "description": "The properties needed to get the billing notifications for a set of advertisers.",
+   "properties": {
+    "advertiserMarketplaces": {
+     "items": {
+      "$ref": "advertiserMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "locale": {
+     "$ref": "locale"
+    }
+   },
+   "type": "object"
+  },
+  "bulkGetBillingNotificationsResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "bulkGetBillingNotificationsError"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "bulkGetBillingNotificationsSuccess"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "bulkGetBillingNotificationsSuccess": {
+   "properties": {
+    "advertiserMarketplace": {
+     "$ref": "advertiserMarketplace"
+    },
+    "billingNotifications": {
+     "items": {
+      "$ref": "billingNotification"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "billingNotifications",
+    "index"
+   ],
+   "type": "object"
+  },
+  "bulkGetBillingStatusError": {
+   "properties": {
+    "advertiserMarketplace": {
+     "$ref": "advertiserMarketplace"
+    },
+    "description": {
+     "type": "string"
+    },
+    "errorCode": {
+     "$ref": "bulkGetBillingStatusErrorCodes"
+    },
+    "index": {
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "advertiserId",
+    "index"
+   ],
+   "type": "object"
+  },
+  "bulkGetBillingStatusErrorCodes": {
+   "enum": [
+    "BAD_REQUEST",
+    "INTERNAL_ERROR",
+    "NOT_AUTHORIZED",
+    "NOT_FOUND"
+   ],
+   "type": "string"
+  },
+  "bulkGetBillingStatusErrorResponse": {
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "bulkGetBillingStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "bulkGetBillingStatusError"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "bulkGetBillingStatusSuccess"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "bulkGetBillingStatusSuccess": {
+   "properties": {
+    "advertiserMarketplace": {
+     "$ref": "advertiserMarketplace"
+    },
+    "billingStatus": {
+     "$ref": "billingStatus"
+    },
+    "index": {
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "advertiserMarketplace",
+    "billingStatus",
+    "index"
+   ],
+   "type": "object"
+  },
+  "bulkGetBillingStatusesRequestBody": {
+   "description": "The properties needed to get the billing statuses for a set of advertisers.",
+   "properties": {
+    "advertiserMarketplaces": {
+     "items": {
+      "$ref": "advertiserMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "locale": {
+     "$ref": "locale"
+    }
+   },
+   "required": [
+    "advertiserMarketplaces"
+   ],
+   "type": "object"
+  },
+  "contactInfo": {
+   "properties": {
+    "address": {
+     "$ref": "address"
+    },
+    "email": {
+     "$ref": "email"
+    }
+   },
+   "required": [
+    "address",
+    "email"
+   ],
+   "type": "object"
+  },
+  "countryCode": {
+   "description": "ISO 3611 country code",
+   "type": "string"
+  },
+  "currencyAmount": {
+   "properties": {
+    "amount": {
+     "type": "number"
+    },
+    "currencyCode": {
+     "$ref": "currencyCode"
+    }
+   },
+   "type": "object"
+  },
+  "currencyCode": {
+   "description": "The currency used for all monetary values for entities under this profile |Region|`countryCode`|Country Name|`currencyCode`| |-|-|-|-| |NA|US|United States|USD| |NA|CA|Canada|CAD| |NA|MX|Mexico|MXN| |NA|BR|Brazil|BRL| |…",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "EGP",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "PLN",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "date": {
+   "description": "Date in YYYYMMDD format",
+   "type": "string"
+  },
+  "documentType": {
+   "enum": [
+    "CREDIT_NOTE",
+    "INVOICE"
+   ],
+   "type": "string"
+  },
+  "email": {
+   "properties": {
+    "displayName": {
+     "description": "Customer name used in email communication.",
+     "type": "string"
+    },
+    "emailAddress": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "displayName",
+    "emailAddress"
+   ],
+   "type": "object"
+  },
+  "fee": {
+   "properties": {
+    "cost": {
+     "$ref": "currencyAmount"
+    },
+    "feeIdentifiers": {
+     "description": "Identifiers describing attributes for different fee types. * countryCode: ISO 3611 country code for country specific Regulatory Advertising Fees.",
+     "properties": {
+      "countryCode": {
+       "$ref": "countryCode"
+      }
+     },
+     "type": "object"
+    },
+    "feeType": {
+     "description": "* `PLATFORM_FEE`: Billable fee set at the Rodeo Entity level by internal users which reflects the cost of using the Amazon DSP * Supply Cost * Platform Fee % * `AGENCY_FEE`: Non-billable fee set at the Rodeo Order level…",
+     "enum": [
+      "3P_AUTO_NON_ABSORBED_FEE",
+      "3P_NON_ABSORBED_FEE",
+      "3P_PREBID_FEE",
+      "AUDIENCE_FEE",
+      "OMNICHANNEL_METRICS_FEE",
+      "PLATFORM_FEE",
+      "REGULATORY_ADVERTISING_FEE",
+      "REWARDED_ADS_COST"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "cost",
+    "feeType"
+   ],
+   "type": "object"
+  },
+  "governmentInvoiceInformation": {
+   "description": "Government invoice data is provided in marketplaces (such as Italy or India) that require a government-assigned invoice ID. This object contains this identifier, along with the type of transaction (which will always be …",
+   "properties": {
+    "countryCode": {
+     "$ref": "countryCode"
+    },
+    "governmentDocumentS3Link": {
+     "description": "PreSigned URL to grant time-limited download access for govt invoice pdf",
+     "type": "string"
+    },
+    "governmentInvoiceId": {
+     "description": "Government generated ID",
+     "type": "string"
+    },
+    "governmentXmlDocumentS3Link": {
+     "description": "PreSigned URL to grant time-limited download access for govt invoice XML",
+     "type": "string"
+    },
+    "transactionType": {
+     "enum": [
+      "CREDIT",
+      "DEBIT"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "invoice": {
+   "properties": {
+    "adjustments": {
+     "$ref": "adjustments"
+    },
+    "governmentInvoiceInformation": {
+     "$ref": "governmentInvoiceInformation"
+    },
+    "invoiceLines": {
+     "$ref": "invoiceLines"
+    },
+    "invoiceSummary": {
+     "$ref": "invoiceSummary"
+    },
+    "issuerContactInfo": {
+     "$ref": "contactInfo"
+    },
+    "payerContactInfo": {
+     "$ref": "contactInfo"
+    },
+    "payments": {
+     "$ref": "payments"
+    },
+    "portfolios": {
+     "$ref": "portfolios"
+    },
+    "promotions": {
+     "$ref": "promotions"
+    },
+    "taxDetail": {
+     "$ref": "taxDetail"
+    },
+    "thirdPartyContactInfo": {
+     "$ref": "thirdPartyContactInformation"
+    }
+   },
+   "required": [
+    "adjustments",
+    "invoiceLines",
+    "invoiceSummary",
+    "issuerContactInfo",
+    "payerContactInfo",
+    "payments",
+    "portfolios",
+    "promotions",
+    "taxDetail",
+    "thirdPartyContactInfo"
+   ],
+   "type": "object"
+  },
+  "invoiceLine": {
+   "properties": {
+    "campaignId": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "campaignName": {
+     "type": "string"
+    },
+    "campaignTags": {
+     "additionalProperties": {
+      "description": "The key-value pair for the campaign tag.",
+      "type": "string"
+     },
+     "description": "Campaign tags in the form of string key-value pairs.",
+     "type": "object"
+    },
+    "commissionAmount": {
+     "$ref": "currencyAmount"
+    },
+    "commissionRate": {
+     "type": "number"
+    },
+    "cost": {
+     "$ref": "currencyAmount"
+    },
+    "costEventCount": {
+     "description": "Number of clicks/impressions charged",
+     "format": "int64",
+     "type": "integer"
+    },
+    "costEventType": {
+     "description": "Type of event charged (clicks or impressions)",
+     "enum": [
+      "CLICKS",
+      "IMPRESSIONS"
+     ],
+     "type": "string"
+    },
+    "costPerEventType": {
+     "description": "Ad spends cost (Cost exclusive of adjustments/promotions/fees/etc) per unit (thousand impressions/clicks).",
+     "type": "number"
+    },
+    "costPerUnit": {
+     "type": "number"
+    },
+    "fees": {
+     "description": "Charges can include different fees (see feeType below).",
+     "items": {
+      "$ref": "fee"
+     },
+     "type": "array"
+    },
+    "name": {
+     "type": "string"
+    },
+    "portfolioId": {
+     "description": "Sponsored Ads only. This identifier maps to one of the portfolios listed in the portfolios section.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "priceType": {
+     "description": "Metric used for performance measurement.",
+     "enum": [
+      "CPC",
+      "CPM",
+      "FIXED_PRICE"
+     ],
+     "type": "string"
+    },
+    "programName": {
+     "$ref": "adProgram"
+    },
+    "promotionAmount": {
+     "$ref": "currencyAmount"
+    },
+    "purchaseOrderNumber": {
+     "type": "string"
+    },
+    "supplyCost": {
+     "$ref": "currencyAmount"
+    }
+   },
+   "required": [
+    "cost",
+    "costEventCount",
+    "costEventType",
+    "costPerUnit",
+    "name",
+    "priceType"
+   ],
+   "type": "object"
+  },
+  "invoiceLines": {
+   "description": "Line items for this invoice. For Sponsored Ads, this will be a per-campaign breakdown of charges. For DSP, this will be the line items for the campaign getting invoiced.",
+   "items": {
+    "$ref": "invoiceLine"
+   },
+   "type": "array"
+  },
+  "invoiceStatus": {
+   "description": "* `ISSUED`: An invoice is issued when its charges are finalized and tax is computed on the total amount. * `PAID_IN_PART`: When a partial payment is received, the invoice status will change to paid in part. * `PAID_IN_P…",
+   "enum": [
+    "ACCUMULATING",
+    "ISSUED",
+    "PAID_IN_FULL",
+    "PAID_IN_PART",
+    "PROCESSING",
+    "WRITTEN_OFF"
+   ],
+   "type": "string"
+  },
+  "invoiceSummary": {
+   "properties": {
+    "amountDue": {
+     "$ref": "currencyAmount"
+    },
+    "billingAggregation": {
+     "$ref": "billingAggregation"
+    },
+    "downloadableDocuments": {
+     "description": "List of downloadable documents associated with this invoice and accessible from the advertising console.",
+     "items": {
+      "$ref": "documentType"
+     },
+     "type": "array"
+    },
+    "dueDate": {
+     "$ref": "date"
+    },
+    "fees": {
+     "description": "Regulatory Advertising Fees.",
+     "items": {
+      "$ref": "fee"
+     },
+     "type": "array"
+    },
+    "fromDate": {
+     "$ref": "date"
+    },
+    "id": {
+     "type": "string"
+    },
+    "invoiceDate": {
+     "$ref": "date"
+    },
+    "paymentMethod": {
+     "$ref": "paymentMethod"
+    },
+    "paymentTermsDays": {
+     "type": "integer"
+    },
+    "paymentTermsType": {
+     "enum": [
+      "EOM",
+      "NET"
+     ],
+     "type": "string"
+    },
+    "purchaseOrderNumber": {
+     "type": "string"
+    },
+    "remainingAmountDue": {
+     "$ref": "currencyAmount"
+    },
+    "remainingFees": {
+     "description": "Remaining Regulatory Advertising Fees.",
+     "items": {
+      "$ref": "fee"
+     },
+     "type": "array"
+    },
+    "remainingTaxAmountDue": {
+     "$ref": "currencyAmount"
+    },
+    "status": {
+     "$ref": "invoiceStatus"
+    },
+    "taxAmountDue": {
+     "$ref": "currencyAmount"
+    },
+    "taxRate": {
+     "type": "number"
+    },
+    "toDate": {
+     "$ref": "date"
+    }
+   },
+   "required": [
+    "amountDue",
+    "fromDate",
+    "id",
+    "invoiceDate",
+    "remainingAmountDue",
+    "status",
+    "toDate"
+   ],
+   "type": "object"
+  },
+  "locale": {
+   "enum": [
+    "ar_AE",
+    "bn_IN",
+    "cs_CZ",
+    "de_DE",
+    "en_AE",
+    "en_AU",
+    "en_CA",
+    "en_GB",
+    "en_IN",
+    "en_NG",
+    "en_SG",
+    "en_US",
+    "en_ZA",
+    "es_CL",
+    "es_CO",
+    "es_ES",
+    "es_MX",
+    "es_US",
+    "fr_BE",
+    "fr_CA",
+    "fr_FR",
+    "he_IL",
+    "hi_IN",
+    "it_IT",
+    "ja_JP",
+    "ko_KR",
+    "ml_IN",
+    "mr_IN",
+    "nl_BE",
+    "nl_NL",
+    "pl_PL",
+    "pt_BR",
+    "pt_PT",
+    "sv_SE",
+    "ta_IN",
+    "te_IN",
+    "tr_TR",
+    "zh_CN",
+    "zh_TW"
+   ],
+   "type": "string"
+  },
+  "payment": {
+   "properties": {
+    "amount": {
+     "$ref": "currencyAmount"
+    },
+    "currentPaymentAttemptDate": {
+     "$ref": "date"
+    },
+    "id": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "lastPaymentAttemptDate": {
+     "$ref": "date"
+    },
+    "nextPaymentAttemptDate": {
+     "$ref": "date"
+    },
+    "paymentMethod": {
+     "$ref": "paymentMethod"
+    },
+    "reason": {
+     "description": "Provides additional details and reason for the payment status",
+     "type": "string"
+    },
+    "refundedAmount": {
+     "$ref": "currencyAmount"
+    },
+    "status": {
+     "enum": [
+      "FAILED",
+      "PROCESSING",
+      "REFUNDED",
+      "SUCCEEDED",
+      "VERIFICATION_REQUIRED",
+      "VOIDED"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "amount",
+    "id",
+    "paymentMethod",
+    "status"
+   ],
+   "type": "object"
+  },
+  "paymentMethod": {
+   "enum": [
+    "CREDIT_CARD",
+    "DEDUCT_FROM_PAYMENT",
+    "DIRECT_DEBIT",
+    "ELECTRONIC_FUNDS_TRANSFER",
+    "PREPAY",
+    "UNIFIED_BILLING"
+   ],
+   "type": "string"
+  },
+  "payments": {
+   "description": "List of payments made against the invoice.",
+   "items": {
+    "$ref": "payment"
+   },
+   "type": "array"
+  },
+  "portfolio": {
+   "properties": {
+    "feeAmount": {
+     "$ref": "currencyAmount"
+    },
+    "id": {
+     "type": "integer"
+    },
+    "name": {
+     "type": "string"
+    },
+    "totalAmount": {
+     "$ref": "currencyAmount"
+    }
+   },
+   "required": [
+    "id",
+    "name",
+    "totalAmount"
+   ],
+   "type": "object"
+  },
+  "portfolios": {
+   "description": "Sponsored Ads only. This is a list of portfolios with their name, ID and the total cost of the campaign(s) they contain. This totalAmount corresponds to the sum of the invoice lines tagged with the ID of this portfolio.",
+   "items": {
+    "$ref": "portfolio"
+   },
+   "type": "array"
+  },
+  "promotion": {
+   "properties": {
+    "amount": {
+     "$ref": "currencyAmount"
+    },
+    "description": {
+     "type": "string"
+    },
+    "lastConsumedDate": {
+     "$ref": "date"
+    }
+   },
+   "required": [
+    "amount",
+    "description",
+    "lastConsumedDate"
+   ],
+   "type": "object"
+  },
+  "promotions": {
+   "description": "List of promotions applied to the charges in this invoice.",
+   "items": {
+    "$ref": "promotion"
+   },
+   "type": "array"
+  },
+  "taxBreakup": {
+   "properties": {
+    "issuerJurisdiction": {
+     "description": "Tax jurisdiction of issuer (Amazon billing entity)",
+     "type": "string"
+    },
+    "issuerTaxInformation": {
+     "properties": {
+      "taxId": {
+       "description": "Tax registration with government (Ex: VAT ID, GST ID)",
+       "type": "string"
+      }
+     },
+     "required": [
+      "taxId"
+     ],
+     "type": "object"
+    },
+    "payerJurisdiction": {
+     "description": "Tax jurisdiction of payer (billed customer)",
+     "type": "string"
+    },
+    "payerTaxInformation": {
+     "properties": {
+      "taxId": {
+       "description": "Tax registration with government (Ex: VAT ID, GST ID)",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "taxAmount": {
+     "$ref": "currencyAmount"
+    },
+    "taxName": {
+     "type": "string"
+    },
+    "taxRate": {
+     "type": "number"
+    },
+    "taxedJurisdictionName": {
+     "description": "Tax jurisdiction for which tax applies, this can be at the country, state or local level.",
+     "type": "string"
+    },
+    "thirdPartyTaxInformation": {
+     "properties": {
+      "taxId": {
+       "description": "Tax registration with government (Ex: VAT ID, GST ID)",
+       "type": "string"
+      }
+     },
+     "required": [
+      "taxId"
+     ],
+     "type": "object"
+    }
+   },
+   "required": [
+    "issuerJurisdiction",
+    "issuerTaxInformation",
+    "payerTaxInformation",
+    "taxAmount",
+    "taxName",
+    "taxRate",
+    "taxedJurisdictionName"
+   ],
+   "type": "object"
+  },
+  "taxDetail": {
+   "properties": {
+    "permanentAccountNumber": {
+     "description": "**IN only** field that represents the tax account number of the billed entity entered on AMS portal.",
+     "type": "string"
+    },
+    "taxBreakups": {
+     "description": "List of taxes applied on the transaction for this invoice.",
+     "items": {
+      "$ref": "taxBreakup"
+     },
+     "type": "array"
+    },
+    "taxCalculationDate": {
+     "$ref": "date"
+    }
+   },
+   "required": [
+    "taxBreakups",
+    "taxCalculationDate"
+   ],
+   "type": "object"
+  },
+  "thirdPartyContactInformation": {
+   "description": "Additional contacts. This field is used in cases such as Loi Sapin in France where both advertiser and agency addresses need to be provided.",
+   "items": {
+    "$ref": "contactInfo"
+   },
+   "type": "array"
+  }
+ }
+}

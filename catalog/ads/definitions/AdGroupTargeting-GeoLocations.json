@@ -1,0 +1,248 @@
+{
+ "api": "AdGroupTargeting-GeoLocations",
+ "file": "specs/dest/AdGroupTargeting-GeoLocations_prod_3p.json",
+ "schemas": {
+  "DspAdGroupGeoLocationTargetsV1": {
+   "properties": {
+    "geoLocationId": {
+     "description": "The unique identifier for the location. Use the [geoLocations](https://advertising.amazon.com/API/docs/en-us/dsp-campaigns/#/Discovery/getGeoLocations) discovery resource to look up geoLocation identifiers.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) users who match the given target when serving an ad.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "geoLocationId",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateAdGroupGeoLocationTargetsRequestContentV1": {
+   "properties": {
+    "geoLocationTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspAdGroupGeoLocationTargetsV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "geoLocationTargets"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupGeoLocationTargetsRequestContentV1": {
+   "properties": {
+    "geoLocationTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspAdGroupGeoLocationTargetsV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "geoLocationTargets"
+   ],
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetAdGroupGeoLocationTargetsResponseContent": {
+   "properties": {
+    "geoLocationTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspAdGroupGeoLocationTargetsV1"
+     },
+     "maxItems": 20000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "geoLocationTargets"
+   ],
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

@@ -1,0 +1,391 @@
+{
+ "api": "AmazonAdsAPIALLCommitmentSpendsContract",
+ "file": "specs/dest/AmazonAdsAPIALLCommitmentSpendsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CommitmentSpend": {
+   "properties": {
+    "accruedSpendValue": {
+     "description": "Actual accrual spend amount in commitment currency.",
+     "format": "double",
+     "type": "number"
+    },
+    "accruedToDateTime": {
+     "description": "Timestamp for accrual spend.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "commitmentId": {
+     "$ref": "CommitmentSpendIdentifier"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "projectedSpendValue": {
+     "description": "Projected spend amount in commitment currency.",
+     "format": "double",
+     "type": "number"
+    },
+    "spendAtRiskValue": {
+     "description": "Spend at risk amount in commitment currency.",
+     "format": "double",
+     "type": "number"
+    },
+    "spendDimensionType": {
+     "$ref": "SpendDimensionType"
+    }
+   },
+   "required": [
+    "accruedToDateTime",
+    "commitmentId",
+    "currencyCode",
+    "spendDimensionType"
+   ],
+   "type": "object"
+  },
+  "CommitmentSpendIdentifier": {
+   "properties": {
+    "commitmentId": {
+     "description": "Commitment ID associated with the commitment.",
+     "type": "string"
+    },
+    "spendDimension": {
+     "$ref": "SpendDimension"
+    }
+   },
+   "required": [
+    "commitmentId"
+   ],
+   "type": "object"
+  },
+  "CommitmentSpendMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "CommitmentSpendMultiStatusSuccess"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CommitmentSpendMultiStatusSuccess": {
+   "properties": {
+    "commitmentSpend": {
+     "$ref": "CommitmentSpend"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 0,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "commitmentSpend",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | | --- | --- | | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `DKK` | Danish Krone | |…",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "DKK",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "NOK",
+    "NZD",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RetrieveCommitmentSpendRequest": {
+   "properties": {
+    "commitmentIds": {
+     "items": {
+      "$ref": "CommitmentSpendIdentifier"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commitmentIds"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SpendDimension": {
+   "description": "| SpendDimension | Description | | --- | --- | | `advertiserAccountId` | Identifier for an advertising account. | | `campaignId` | Identifier for campaign entity | | `dealId` | Identifier for deal entity |",
+   "oneOf": [
+    {
+     "properties": {
+      "advertiserAccountId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "advertiserAccountId"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "campaignId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "campaignId"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "dealId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "dealId"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SpendDimensionType": {
+   "description": "**SpendDimensionType Enum:** | SpendDimensionType | Description | | --- | --- | | `COMMITMENT` | Commitment Level Spend Detail | | `ADVERTISER` | Advertiser Level Spend Detail | | `CAMPAIGN` | Campaign Level Spend Detai…",
+   "enum": [
+    "ADVERTISER",
+    "CAMPAIGN",
+    "COMMITMENT",
+    "DEAL"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

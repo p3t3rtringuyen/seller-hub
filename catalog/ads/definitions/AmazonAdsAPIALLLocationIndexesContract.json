@@ -1,0 +1,691 @@
+{
+ "api": "AmazonAdsAPIALLLocationIndexesContract",
+ "file": "specs/dest/AmazonAdsAPIALLLocationIndexesContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ConstituentIndexValue": {
+   "description": "Values for a location index where the indexValue is calculated from the constituents.",
+   "properties": {
+    "brandSales": {
+     "description": "The brand sales value for the postal code.",
+     "format": "double",
+     "type": "number"
+    },
+    "categorySales": {
+     "description": "The category sales value for the postal code.",
+     "format": "double",
+     "type": "number"
+    },
+    "postalCode": {
+     "description": "The postal code for the location index prefixed by country code (i.e. US-10118).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "brandSales",
+    "categorySales",
+    "postalCode"
+   ],
+   "type": "object"
+  },
+  "ConstituentIndexValues": {
+   "properties": {
+    "values": {
+     "description": "List of brand and category sales values.",
+     "items": {
+      "$ref": "ConstituentIndexValue"
+     },
+     "maxItems": 1000000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "values"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CountryCode": {
+   "enum": [
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "SE",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "CreateConstituentIndexValue": {
+   "description": "Values for a location index where the indexValue is calculated from the constituents.",
+   "properties": {
+    "brandSales": {
+     "description": "The brand sales value for the postal code.",
+     "format": "double",
+     "type": "number"
+    },
+    "categorySales": {
+     "description": "The category sales value for the postal code.",
+     "format": "double",
+     "type": "number"
+    },
+    "postalCode": {
+     "description": "The postal code for the location index prefixed by country code (i.e. US-10118).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "brandSales",
+    "categorySales",
+    "postalCode"
+   ],
+   "type": "object"
+  },
+  "CreateConstituentIndexValues": {
+   "properties": {
+    "values": {
+     "description": "List of brand and category sales values.",
+     "items": {
+      "$ref": "CreateConstituentIndexValue"
+     },
+     "maxItems": 1000000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "values"
+   ],
+   "type": "object"
+  },
+  "CreateDirectIndexValue": {
+   "description": "Values for a location index where the indexValue is the pre-calculated index.",
+   "properties": {
+    "indexValue": {
+     "description": "The pre-calculated index value.",
+     "format": "double",
+     "type": "number"
+    },
+    "postalCode": {
+     "description": "The postal code for the location index prefixed by country code (i.e. US-10118).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "indexValue",
+    "postalCode"
+   ],
+   "type": "object"
+  },
+  "CreateDirectIndexValues": {
+   "properties": {
+    "values": {
+     "description": "List of direct index values.",
+     "items": {
+      "$ref": "CreateDirectIndexValue"
+     },
+     "maxItems": 1000000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "values"
+   ],
+   "type": "object"
+  },
+  "CreateIndexValues": {
+   "oneOf": [
+    {
+     "properties": {
+      "directIndexValues": {
+       "$ref": "CreateDirectIndexValues"
+      }
+     },
+     "required": [
+      "directIndexValues"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "constituentIndexValues": {
+       "$ref": "CreateConstituentIndexValues"
+      }
+     },
+     "required": [
+      "constituentIndexValues"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateLocationIndexRequest": {
+   "properties": {
+    "locationIndexes": {
+     "items": {
+      "$ref": "LocationIndexCreate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "locationIndexes"
+   ],
+   "type": "object"
+  },
+  "DirectIndexValue": {
+   "description": "Values for a location index where the indexValue is the pre-calculated index.",
+   "properties": {
+    "indexValue": {
+     "description": "The pre-calculated index value.",
+     "format": "double",
+     "type": "number"
+    },
+    "postalCode": {
+     "description": "The postal code for the location index prefixed by country code (i.e. US-10118).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "indexValue",
+    "postalCode"
+   ],
+   "type": "object"
+  },
+  "DirectIndexValues": {
+   "properties": {
+    "values": {
+     "description": "List of direct index values.",
+     "items": {
+      "$ref": "DirectIndexValue"
+     },
+     "maxItems": 1000000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "values"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `FEATURE_NOT_AVAILABLE` | The requested feature is not available. | | `FI…",
+   "enum": [
+    "BAD_REQUEST",
+    "FEATURE_NOT_AVAILABLE",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "IndexStatus": {
+   "description": "**IndexStatus Enum:** | IndexStatus | Description | |------|------| | `ENABLED` | The location index is active and can be used in smart locations. | | `FAILED` | The location index creation failed and cannot be used in …",
+   "enum": [
+    "ENABLED",
+    "FAILED",
+    "PENDING",
+    "UPDATE_FAILED"
+   ],
+   "type": "string"
+  },
+  "IndexValues": {
+   "oneOf": [
+    {
+     "properties": {
+      "constituentIndexValues": {
+       "$ref": "ConstituentIndexValues"
+      }
+     },
+     "required": [
+      "constituentIndexValues"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "directIndexValues": {
+       "$ref": "DirectIndexValues"
+      }
+     },
+     "required": [
+      "directIndexValues"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "LocationIndex": {
+   "properties": {
+    "campaignId": {
+     "description": "The campaign associated with the location index. Used to filter location indexes that were auto-created based on campaign data.",
+     "type": "string"
+    },
+    "countryCode": {
+     "$ref": "CountryCode"
+    },
+    "creationDateTime": {
+     "description": "The date time the location index was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "indexData": {
+     "$ref": "IndexValues"
+    },
+    "indexId": {
+     "description": "The identifier of the location index.",
+     "type": "string"
+    },
+    "indexName": {
+     "description": "The name of the location index.",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time the location index was last updated successfully.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "IndexStatus"
+    }
+   },
+   "required": [
+    "creationDateTime",
+    "indexData",
+    "indexId",
+    "indexName",
+    "lastUpdatedDateTime",
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocationIndexCreate": {
+   "properties": {
+    "campaignId": {
+     "description": "The campaign associated with the location index. Used to filter location indexes that were auto-created based on campaign data.",
+     "type": "string"
+    },
+    "countryCode": {
+     "$ref": "CountryCode"
+    },
+    "indexData": {
+     "$ref": "CreateIndexValues"
+    },
+    "indexName": {
+     "description": "The name of the location index.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "indexData",
+    "indexName"
+   ],
+   "type": "object"
+  },
+  "LocationIndexMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "LocationIndexMultiStatusSuccess"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "LocationIndexMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "locationIndex": {
+     "$ref": "LocationIndex"
+    }
+   },
+   "required": [
+    "index",
+    "locationIndex"
+   ],
+   "type": "object"
+  },
+  "LocationIndexSuccessResponse": {
+   "properties": {
+    "locationIndexes": {
+     "items": {
+      "$ref": "LocationIndex"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "LocationIndexUpdate": {
+   "properties": {
+    "indexData": {
+     "$ref": "UpdateIndexValues"
+    },
+    "indexId": {
+     "description": "The identifier of the location index.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "indexId"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RetrieveLocationIndexRequest": {
+   "properties": {
+    "indexIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "indexIds"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateConstituentIndexValues": {
+   "properties": {
+    "values": {
+     "description": "List of brand and category sales values.",
+     "items": {
+      "$ref": "CreateConstituentIndexValue"
+     },
+     "maxItems": 1000000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateDirectIndexValues": {
+   "properties": {
+    "values": {
+     "description": "List of direct index values.",
+     "items": {
+      "$ref": "CreateDirectIndexValue"
+     },
+     "maxItems": 1000000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateIndexValues": {
+   "oneOf": [
+    {
+     "properties": {
+      "directIndexValues": {
+       "$ref": "UpdateDirectIndexValues"
+      }
+     },
+     "required": [
+      "directIndexValues"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "constituentIndexValues": {
+       "$ref": "UpdateConstituentIndexValues"
+      }
+     },
+     "required": [
+      "constituentIndexValues"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "UpdateLocationIndexRequest": {
+   "properties": {
+    "locationIndexes": {
+     "items": {
+      "$ref": "LocationIndexUpdate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "locationIndexes"
+   ],
+   "type": "object"
+  }
+ }
+}

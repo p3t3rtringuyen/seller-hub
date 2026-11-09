@@ -1,0 +1,302 @@
+{
+ "api": "AdLibraryAPI",
+ "file": "specs/dest/AdLibraryAPI_prod_3p.json",
+ "schemas": {
+  "AccessDeniedExceptionResponseContent": {
+   "description": "Exception for AccessDeniedException 403 response.",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdRepositoryResponseMap": {
+   "properties": {
+    "advertisementPurpose": {
+     "description": "Displays the intent of the advertisement.",
+     "type": "string"
+    },
+    "advertiserName": {
+     "description": "Name of the Advertiser.",
+     "type": "string"
+    },
+    "contentUrls": {
+     "description": "List of strings containing link to (1) the store product detail page of products shown in an ad, (2) the store brand page of the brand shown in an ad, or (3) the image of the ad.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryAfterDateUtc": {
+     "description": "The specified start date of the delivered ads.The date string is specified in ISO format (YYYY-MM-DD) in UTC timezone. For example: 2020-12-16.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "deliveryBeforeDateUtc": {
+     "description": "The specified end date of the delivered ads.The date string is specified in ISO format (YYYY-MM-DD) in UTC timezone. For example: 2020-12-16.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "id": {
+     "description": "Globally unique identifier for the advertisement, to support lookups in the repository. It represents the combination of an ad-creative identifier, its marketplace and source of record.",
+     "type": "string"
+    },
+    "illegalContentReport": {
+     "description": "Describes whether the ad was removed as a result of an illegal content report.",
+     "type": "boolean"
+    },
+    "isRestricted": {
+     "description": "Whether the ad was paused, removed or suppressed based on alleged illegality or incompatibility with terms and conditions.",
+     "type": "boolean"
+    },
+    "payerName": {
+     "description": "Name of the entity who paid for the Ad.",
+     "type": "string"
+    },
+    "restrictionCategory": {
+     "description": "Reason(s) why an ad was paused, removed, or suppressed.",
+     "type": "string"
+    },
+    "restrictionDetectionAutomated": {
+     "description": "Describes whether automation was used to identify the restricted ad.",
+     "type": "boolean"
+    },
+    "subjectMatterUrl": {
+     "description": "Subject matter of the advertisement (link to image or rendering).",
+     "type": "string"
+    },
+    "targetingMethods": {
+     "description": "This field lists the targeted advertising methods with the descriptions. The targeted advertising methods includes: 1: 'LOCATION': 'Their estimated location', 2: 'PAST_ACTIVITY': 'Their past activity on Amazon websites …",
+     "items": {
+      "$ref": "TargetMethodRecipientGroup"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalRecipientsRange": {
+     "$ref": "TotalRecipientsRange"
+    },
+    "totalRecipientsRangeBySite": {
+     "$ref": "RecipientsBySite"
+    },
+    "type": {
+     "$ref": "Type"
+    }
+   },
+   "required": [
+    "advertisementPurpose",
+    "advertiserName",
+    "deliveryAfterDateUtc",
+    "deliveryBeforeDateUtc",
+    "id",
+    "isRestricted",
+    "subjectMatterUrl",
+    "targetingMethods",
+    "totalRecipientsRange",
+    "totalRecipientsRangeBySite",
+    "type"
+   ],
+   "type": "object"
+  },
+  "GetAdsByIDResponseContent": {
+   "properties": {
+    "ad": {
+     "$ref": "AdRepositoryResponseMap"
+    }
+   },
+   "required": [
+    "ad"
+   ],
+   "type": "object"
+  },
+  "InternalServerExceptionResponseContent": {
+   "description": "Unexpected error during processing of request.",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "InvalidInputExceptionResponseContent": {
+   "description": "Exception for malformed input.",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListAdsRequestContent": {
+   "properties": {
+    "advertisementPurpose": {
+     "description": "This parameter will limit results to those matching the requested advertisement purpose. This includes the name of the product, service, or brand within the ad or affiliate marketing content.",
+     "type": "string"
+    },
+    "advertiserName": {
+     "description": "The person or entity on whose behalf the ad or affiliate marketing content is presented. This parameter will limit results to advertisement summaries matching the requested advertiser name.",
+     "type": "string"
+    },
+    "deliveryAfterDateUtc": {
+     "description": "When specified, limits results to those with delivery date after the specified date string. The date string is specified in ISO format (YYYY-MM-DD) in UTC timezone. For example: 2020-12-16.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "deliveryBeforeDateUtc": {
+     "description": "When specified, limits results to those with a delivery date prior to the specified date string. The date string is specified in ISO format (YYYY-MM-DD) in UTC timezone. For example: 2020-12-16.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "isRestricted": {
+     "description": "Whether the advertisement was paused, removed or suppressed based on alleged illegality or incompatibility with terms and conditions. Limits results based on their restriction status.",
+     "type": "boolean"
+    },
+    "maxResults": {
+     "description": "Defaults to 10, with supported values between 1 and 1000. If the size of the result set is larger than the limit, callers will retrieve additional results through pagination parameters.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nameMatchType": {
+     "$ref": "NameMatchType"
+    },
+    "nextToken": {
+     "description": "Pagination token to retrieve the next set of results. Callers must make use of the token provided in a previous response to use this parameter.",
+     "type": "string"
+    },
+    "siteName": {
+     "description": "When specified, limits results based on their delivery to a particular Amazon EU store (e.g., amazon.de, amazon.fr).",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListAdsResponseContent": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "AdRepositoryResponseMap"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "Total number of return results for the query input.",
+     "type": "number"
+    }
+   },
+   "required": [
+    "ads",
+    "totalResults"
+   ],
+   "type": "object"
+  },
+  "NameMatchType": {
+   "enum": [
+    "CONTAINS",
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "RecipientsBySite": {
+   "properties": {
+    "amazonBe": {
+     "$ref": "TotalRecipientsRange"
+    },
+    "amazonDe": {
+     "$ref": "TotalRecipientsRange"
+    },
+    "amazonEs": {
+     "$ref": "TotalRecipientsRange"
+    },
+    "amazonFr": {
+     "$ref": "TotalRecipientsRange"
+    },
+    "amazonIt": {
+     "$ref": "TotalRecipientsRange"
+    },
+    "amazonNl": {
+     "$ref": "TotalRecipientsRange"
+    },
+    "amazonPl": {
+     "$ref": "TotalRecipientsRange"
+    },
+    "amazonSe": {
+     "$ref": "TotalRecipientsRange"
+    }
+   },
+   "type": "object"
+  },
+  "ResourceNotFoundExceptionResponseContent": {
+   "description": "Request references a resource which does not exist.",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TargetMethodRecipientGroup": {
+   "enum": [
+    "ADS_PREFERENCES",
+    "LOCATION",
+    "PAST_ACTIVITY",
+    "SEARCH_TERMS"
+   ],
+   "type": "string"
+  },
+  "ThrottlingExceptionResponseContent": {
+   "description": "Exception for ThrottlingException 429 response.",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TotalRecipientsRange": {
+   "properties": {
+    "max": {
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "number"
+    },
+    "min": {
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "max",
+    "min"
+   ],
+   "type": "object"
+  },
+  "Type": {
+   "enum": [
+    "AD",
+    "AFFILIATE_MARKETING_CONTENT"
+   ],
+   "type": "string"
+  },
+  "UnauthorizedExceptionResponseContent": {
+   "description": "Exception for UnauthorizedException 401 response.",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

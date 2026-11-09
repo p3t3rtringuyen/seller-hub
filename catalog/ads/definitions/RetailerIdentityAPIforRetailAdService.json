@@ -1,0 +1,136 @@
+{
+ "api": "RetailerIdentityAPIforRetailAdService",
+ "file": "specs/dest/RetailerIdentityAPIforRetailAdService_prod_3p.json",
+ "schemas": {
+  "CountryCodeFilter": {
+   "description": "Filters entities by ISO 3166-1 alpha-2 country codes",
+   "properties": {
+    "include": {
+     "items": {
+      "description": "ISO 3166-1 alpha-2 country code (e.g. US, GB).",
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "$ref": "ErrorMessage"
+    }
+   },
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "Error code",
+   "type": "string"
+  },
+  "ErrorMessage": {
+   "description": "Human readable response message",
+   "type": "string"
+  },
+  "IdentityListRetailersResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "retailers": {
+     "items": {
+      "$ref": "Retailer"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of entities",
+     "format": "int64",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListRetailersRequestContent": {
+   "properties": {
+    "countryCodeFilter": {
+     "$ref": "CountryCodeFilter"
+    },
+    "maxResults": {
+     "default": "10",
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API",
+     "format": "int32",
+     "maximum": 200,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "retailerIdFilter": {
+     "$ref": "RetailerIdFilter"
+    }
+   },
+   "type": "object"
+  },
+  "Retailer": {
+   "properties": {
+    "countryCode": {
+     "description": "ISO 3166-1 alpha-2 country code of the Retailer (e.g. US, GB).",
+     "type": "string"
+    },
+    "domain": {
+     "description": "The domain of the Retailer.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the Retailer.",
+     "type": "string"
+    },
+    "retailerId": {
+     "description": "The identifier of the Retailer.",
+     "type": "string"
+    },
+    "status": {
+     "description": "Status of the Retailer.",
+     "enum": [
+      "ACTIVE",
+      "INACTIVE",
+      "RETIRED"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RetailerIdFilter": {
+   "description": "Filter entities by the list of RetailerIds",
+   "properties": {
+    "include": {
+     "items": {
+      "description": "Retailer's ids to filter",
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  }
+ }
+}

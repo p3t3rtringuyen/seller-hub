@@ -1,0 +1,367 @@
+{
+ "api": "AmazonAdsAPIALLPromotionCodeRedemptionsContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLPromotionCodeRedemptionsContract_prod_3p_BETA.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreatePromotionCodeRedemptionRequest": {
+   "properties": {
+    "promotionCodeRedemptions": {
+     "items": {
+      "$ref": "PromotionCodeRedemptionCreate"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "promotionCodeRedemptions"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "ACCOUNT_NOT_ELIGIBLE",
+    "BAD_REQUEST",
+    "EXPIRED_PROMOTION_CODE",
+    "INTERNAL_ERROR",
+    "INVALID_PROMOTION_CODE",
+    "MAXIMUM_REDEMPTIONS_REACHED",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Marketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "CL",
+    "CO",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NG",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "PromotionCodeRedemption": {
+   "properties": {
+    "accountId": {
+     "description": "The account id for which promotion code redemption is created. Only supports global advertiser account id.",
+     "type": "string"
+    },
+    "marketplace": {
+     "$ref": "Marketplace"
+    },
+    "promotionCodeId": {
+     "description": "The promotion code ID associated with the promotion code redemption.",
+     "type": "string"
+    },
+    "promotionCodeRedemptionId": {
+     "description": "The unique identifier of the promotion code redemption.",
+     "type": "string"
+    },
+    "redemptionResult": {
+     "$ref": "RedemptionResult"
+    }
+   },
+   "required": [
+    "accountId",
+    "marketplace",
+    "promotionCodeId",
+    "promotionCodeRedemptionId",
+    "redemptionResult"
+   ],
+   "type": "object"
+  },
+  "PromotionCodeRedemptionCreate": {
+   "properties": {
+    "marketplace": {
+     "$ref": "Marketplace"
+    },
+    "promotionCodeId": {
+     "description": "The promotion code ID associated with the promotion code redemption.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "marketplace",
+    "promotionCodeId"
+   ],
+   "type": "object"
+  },
+  "PromotionCodeRedemptionMultiStatusResponse": {
+   "properties": {
+    "contentLanguage": {
+     "type": "string"
+    },
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "PromotionCodeRedemptionMultiStatusSuccess"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "contentLanguage"
+   ],
+   "type": "object"
+  },
+  "PromotionCodeRedemptionMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 4,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "promotionCodeRedemption": {
+     "$ref": "PromotionCodeRedemption"
+    }
+   },
+   "required": [
+    "index",
+    "promotionCodeRedemption"
+   ],
+   "type": "object"
+  },
+  "RedemptionResult": {
+   "description": "Types of rewards that can be redeemed through a promotion code redemption. | RedemptionResult | Description | | --- | --- | | `promotionOffer` | A promotion offer that was redeemed. |",
+   "oneOf": [
+    {
+     "properties": {
+      "promotionOffer": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "promotionOffer"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

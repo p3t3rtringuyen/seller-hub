@@ -1,0 +1,575 @@
+{
+  "BoundedInterval": {
+    "description": "A time interval defined by a start time and end time.",
+    "properties": {
+      "endTime": {
+        "description": "The inclusive end of the interval, in UTC RFC 3339 date-time format.",
+        "ref": "Instant"
+      },
+      "startTime": {
+        "description": "The inclusive start of the interval, in UTC RFC 3339 date-time format.",
+        "ref": "Instant"
+      }
+    },
+    "required": [
+      "endTime",
+      "startTime"
+    ],
+    "type": "object"
+  },
+  "CarrierTracking": {
+    "description": "The carrier information.",
+    "properties": {
+      "carrierCode": {
+        "description": "The carrier code associated with the carrier tracking number.",
+        "type": "string"
+      },
+      "trackingNumber": {
+        "description": "The tracking number assigned by the carrier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "trackingNumber"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of errors for an unsuccessful request.",
+    "properties": {
+      "errors": {
+        "description": "An array of error details.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "GetShipmentTrackingResponse": {
+    "description": "Contains tracking details for a requested shipment.",
+    "properties": {
+      "trackingDetail": {
+        "description": "Current and historical tracking information for a shipment.",
+        "ref": "TrackingDetail"
+      }
+    },
+    "required": [
+      "trackingDetail"
+    ],
+    "type": "object"
+  },
+  "Instant": {
+    "description": "A timestamp in UTC RFC 3339 date-time format.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "TrackingDetail": {
+    "description": "Tracking information for the shipment identifier.",
+    "properties": {
+      "identifier": {
+        "description": "The tracking identifier used to look up this shipment (for example, `id`, `acsin`, or `containerNumber`).",
+        "ref": "TrackingIdentifier"
+      },
+      "latestMilestone": {
+        "description": "The most recent milestone event for the shipment.",
+        "ref": "TrackingMilestone"
+      },
+      "milestoneHistory": {
+        "description": "A chronological list of all milestone events for the shipment, from most recent to oldest.",
+        "ref": "TrackingMilestone",
+        "type": "array"
+      },
+      "trackingEstimates": {
+        "description": "A list of time-based estimated intervals for the shipment, such as estimated delivery date.",
+        "ref": "TrackingEstimate",
+        "type": "array"
+      },
+      "trackingUrl": {
+        "description": "The URL to view the shipment's tracking information.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "identifier",
+      "milestoneHistory"
+    ],
+    "type": "object"
+  },
+  "TrackingEstimate": {
+    "description": "A time-based estimate for the shipment, such as estimated delivery date.",
+    "properties": {
+      "estimatedInterval": {
+        "description": "The estimated time window for this event, represented as a start and end time in UTC RFC 3339 date-time format.",
+        "ref": "BoundedInterval"
+      },
+      "lastUpdatedTime": {
+        "description": "The timestamp when this estimate was last modified, in UTC RFC 3339 date-time format.",
+        "ref": "Instant"
+      },
+      "type": {
+        "description": "The type of estimate.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "estimatedInterval",
+      "lastUpdatedTime",
+      "type"
+    ],
+    "type": "object"
+  },
+  "TrackingIdentifier": {
+    "description": "The identifier to track a shipment.",
+    "properties": {
+      "acsin": {
+        "description": "The Air Cargo Shipment Identification Number.",
+        "type": "string"
+      },
+      "aftn": {
+        "description": "The Amazon Fulfillment Tracking Number.",
+        "type": "string"
+      },
+      "carrierTracking": {
+        "description": "The carrier-assigned tracking information.",
+        "ref": "CarrierTracking"
+      },
+      "containerNumber": {
+        "description": "The container number provided by the Logistics Service Provider.",
+        "type": "string"
+      },
+      "houseBillOfLadingNumber": {
+        "description": "The House Bill of Lading (HBL) number.",
+        "type": "string"
+      },
+      "id": {
+        "description": "A unique identifier generated by Amazon for the shipment tracking request.",
+        "type": "string"
+      },
+      "proNumber": {
+        "description": "The PRO number assigned by the freight carrier",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TrackingMilestone": {
+    "description": "A single milestone event in a shipment's journey.",
+    "properties": {
+      "location": {
+        "description": "The location where this milestone occurred, if available.",
+        "ref": "TrackingMilestoneLocation"
+      },
+      "occurredAt": {
+        "description": "The timestamp when this milestone occurred, in UTC RFC 3339 date-time format.",
+        "ref": "Instant"
+      },
+      "status": {
+        "description": "The milestone's status details.",
+        "ref": "TrackingMilestoneStatus"
+      }
+    },
+    "required": [
+      "occurredAt",
+      "status"
+    ],
+    "type": "object"
+  },
+  "TrackingMilestoneAddress": {
+    "description": "The physical address of the location.",
+    "properties": {
+      "city": {
+        "description": "The city where the milestone occurred.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two-character country code in ISO 3166-1 alpha-2 format (for example, `US`).",
+        "type": "string"
+      },
+      "region": {
+        "description": "The state or region where the milestone occurred.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TrackingMilestoneLocation": {
+    "description": "The location where a tracking milestone occurred.",
+    "properties": {
+      "address": {
+        "description": "The physical address where the milestone occurred.",
+        "ref": "TrackingMilestoneAddress"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TrackingMilestoneStatus": {
+    "description": "The status codes and description of the milestone event.",
+    "properties": {
+      "code": {
+        "description": "A status code that identifies the milestone event (for example, `DELIVERED`, `CUSTOMS_CLEARED`, `DEPARTED`).",
+        "enum": [
+          "ARRIVED",
+          "ARRIVED_AT_DESTINATION_YARD",
+          "ARRIVED_AT_RAIL_TERMINAL",
+          "ARRIVED_AT_TERMINAL",
+          "ARRIVED_IN_DESTINATION_COUNTRY",
+          "BOOKING_ACCEPTED",
+          "BOOKING_CANCELLED",
+          "BOOKING_CONFIRMED",
+          "BOOKING_RECEIVED",
+          "CARRIER_ASSIGNED",
+          "CARRIER_HOLD",
+          "CARRIER_RECEIVED_SHIPMENT",
+          "CARRIER_TRANSFER",
+          "CONTAINERIZED",
+          "CUSTOMER_CONTACTED",
+          "CUSTOMER_MOVED",
+          "CUSTOMER_PICKUP_COMPLETED",
+          "CUSTOMS_CLEARED",
+          "CUSTOMS_DECLARATION_DISCHARGE_PORT",
+          "CUSTOMS_DECLARATION_EMBARK_PORT",
+          "CUSTOMS_DELAY",
+          "CUSTOMS_EXCEPTION",
+          "CUSTOMS_HOLD",
+          "CUSTOMS_HOLD_DISCHARGE_PORT",
+          "CUSTOMS_IMPORT_SECURITY_FILED",
+          "CUSTOMS_IMPORT_SECURITY_FILING_ACCEPTED",
+          "CUSTOMS_PAYMENT_REQUIRED",
+          "CUSTOMS_PROCESSING",
+          "DAMAGED",
+          "DELAYED",
+          "DELIVERED",
+          "DELIVERY_ADDRESS_UPDATED",
+          "DELIVERY_APPOINTMENT_CONFIRMED",
+          "DELIVERY_ATTEMPTED",
+          "DELIVERY_CHANGE_REQUESTED",
+          "DELIVERY_ESTIMATE_UPDATED",
+          "DEPARTED",
+          "DEPARTED_RAIL_TERMINAL",
+          "DEPARTED_TERMINAL",
+          "DOCUMENTS_RECEIVED_DISCHARGE_PORT",
+          "DOCUMENTS_RECEIVED_EMBARK_PORT",
+          "DRAY_STOP_OFF",
+          "EMPTY_RETURN",
+          "INCORRECT_ADDRESS",
+          "IN_TRANSIT_TO_PICKUP",
+          "LOADED",
+          "LOADED_TRAIN",
+          "LOST",
+          "MANIFESTED_NOT_RECEIVED",
+          "MISSING_MANIFEST",
+          "MISSORTED",
+          "ORDER_CANCELLED",
+          "ORDER_PREPARING",
+          "OUT_FOR_DELIVERY",
+          "PICKED_UP",
+          "PICKUP_FAILED",
+          "READY_FOR_CUSTOMER_PICKUP",
+          "READY_FOR_DELIVERY",
+          "RECEIVED_AT_ORIGIN",
+          "RECEIVED_FROM_CARRIER",
+          "RECIPIENT_REFUSED_DELIVERY",
+          "RETURNED",
+          "RETURN_DROPPED_OFF",
+          "RETURN_IN_TRANSIT",
+          "RETURN_PICKED_UP",
+          "RETURN_RECEIVED",
+          "SHIPPED",
+          "SORTED",
+          "TRAILER_UNLOADED",
+          "TRAILER_UNLOADING",
+          "UNDELIVERABLE",
+          "UNDELIVERABLE_DESTROY_IN_FIELD",
+          "UNLOADED",
+          "UNLOADED_TRAIN"
+        ],
+        "type": "string"
+      },
+      "description": {
+        "description": "A human-readable explanation of the milestone event.",
+        "type": "string"
+      },
+      "subCode": {
+        "description": "Status subcode that provides additional details about the milestone status.",
+        "enum": [
+          "ACCIDENT",
+          "ADDRESS_CHANGE",
+          "ADDRESS_ISSUE",
+          "ADDRESS_NON_SERVICED",
+          "ADULT_SIGNATURE_REQUIRED",
+          "AIRPLANE_LATE",
+          "AIR_HUB",
+          "ANIMAL_HAZARD",
+          "APARTMENT",
+          "APPOINTMENT",
+          "APPOINTMENT_REQUIRED",
+          "ARMED_FORCES_POST_OFFICE",
+          "BAG",
+          "BAG_ID_MISMATCH",
+          "BATCH",
+          "BEHIND_WHEELIE_BIN",
+          "BUILDING_LOCKER",
+          "BUSINESS_CLOSED",
+          "BUSINESS_CLOSED_HOLIDAY",
+          "BUYBACK",
+          "CARRIER_HUB",
+          "CARRIER_HUB_DELAY",
+          "CARRIER_NO_ACCESS",
+          "CARRIER_NO_CAPACITY",
+          "CARRIER_REFUSAL",
+          "CITY_TOWN_STATE",
+          "CN_BUYER_PAYER_RECIPIENT_MISMATCH",
+          "CN_CUSTOMS_ALIPAY_WECHAT_NAME_FAILED",
+          "CN_CUSTOMS_CAN_GATEWAY_ID_VERIFICATION",
+          "CN_CUSTOMS_CLEARANCE_DATA_ISSUE",
+          "CN_CUSTOMS_CONVERT_TO_PERSONAL_REVIEW",
+          "CN_CUSTOMS_DATA_TRANSMISSION_DELAY",
+          "CN_CUSTOMS_PACKAGE_INFO_MISMATCH",
+          "CN_CUSTOMS_PERSONAL_REVIEW_DELAY",
+          "CN_CUSTOMS_PERSONAL_REVIEW_QUOTA_EXCEEDED",
+          "CN_CUSTOMS_PROHIBITED_WORDING",
+          "CN_CUSTOMS_SYSTEM_UPGRADE",
+          "CONSERVATORY",
+          "CONTAINER_FREIGHT_STATION",
+          "CONTENT_SPILL_OUT",
+          "COUNTER",
+          "COVERAGE_AREA_ISSUE",
+          "CUSTOMER",
+          "CUSTOMER_CANCELLED",
+          "CUSTOMER_MOVED",
+          "CUSTOMER_PICK_UP_FAILURE",
+          "CUSTOMER_REFUSAL",
+          "CUSTOMER_REQUEST",
+          "CUSTOMS",
+          "CUSTOMS_FEES",
+          "CUSTOMS_HUB",
+          "CUSTOMS_ISSUE",
+          "DAMAGE",
+          "DATE_CHANGE",
+          "DELAY",
+          "DELIVERY_AGENT_ASSIGNED",
+          "DELIVERY_ATTEMPTED",
+          "DELIVERY_DATE_MISMATCH",
+          "DELIVERY_DEPOT",
+          "DELIVERY_DEPOT_DELAY",
+          "DELIVERY_NOT_ATTEMPTED",
+          "DESTINATION",
+          "DIRECTIONS_REQUIRED",
+          "DRIVER_EMERGENCY",
+          "DRIVER_HELD",
+          "DRIVER_LATE",
+          "DRONE",
+          "DRONE_REPLAN",
+          "DUPLICATE",
+          "DUTIES_TAX_PENDING",
+          "EMERGENCY",
+          "EXCEEDS_20000_RMB_CLEARANCE_QUOTA",
+          "EXCEEDS_PERSONAL_QUANTITIES_QUOTA",
+          "EXPORT_CARRIER",
+          "FACILITY_BREAKDOWN",
+          "FACILITY_CLOSURE",
+          "FAILED_ADULT_VERIFICATION",
+          "FAILED_MAX_ATTEMPTS",
+          "FINAL_ATTEMPT_FAILED",
+          "FORCE_MAJEURE",
+          "FRAUDULENT_ACTIVITY",
+          "FREIGHT_FORWARDER",
+          "FRONT_PORCH",
+          "FRONT_PORCH_OR_FRONT_DOOR",
+          "FULFILLMENT_FACILITY",
+          "FULFILLMENT_ISSUE",
+          "FULFILLMENT_PROVIDER_MISSORT",
+          "FULFILLMENT_PROVIDER_RETURN_REQUEST",
+          "GARAGE",
+          "GARDEN",
+          "GOVERNMENT_AGENCY_INSPECTION_REQUIRED",
+          "GREENHOUSE",
+          "HANDED_OVER_FOR_FINAL_DELIVERY",
+          "HAZMAT",
+          "HEAVY_BULKY_CARRIER",
+          "HELD_FOR_PAYMENT",
+          "HELD_IN_TRAILER",
+          "HOLD_FOR_PICK_UP",
+          "HS_CODE_ISSUES",
+          "IMPORT_BLOCKED",
+          "IMPORT_DOCUMENTATION_REQUIRED",
+          "IMPORT_ELIGIBILITY_ISSUE",
+          "INCORRECT_ITEM",
+          "INCOTERMS_ISSUE",
+          "INSIDE_BOX",
+          "INSIDE_HOME",
+          "INSIDE_VEHICLE",
+          "INSUFFICIENT_PAPERWORK",
+          "INTERNATIONAL_TRANSIT_DELAY",
+          "INVALID_ADDRESS",
+          "INVALID_CITY_TOWN_STATE_ADDRESS",
+          "INVALID_POSTAL_CODE",
+          "INVALID_RECIPIENT_NAME",
+          "INVALID_STREET_ADDRESS",
+          "LABEL_ISSUE",
+          "LARGE_ITEM",
+          "LATE_DELIVERY",
+          "LEAVE_TO_NEIGHBOR",
+          "LETTERBOX",
+          "LOCKER",
+          "LOOSE",
+          "MAIL_BOX_FULL",
+          "MAIL_ROOM",
+          "MANUAL_CLEARANCE",
+          "MANUAL_SCAN_UPLOAD",
+          "MISSING_APARTMENT_ADDRESS",
+          "MISSING_COMMERCIAL_DOCS",
+          "MISSING_OR_INCOMPLETE_NAME",
+          "MISSING_RECIPIENT_PERSONAL_DATA",
+          "MISSORT",
+          "NAME_AUTHENTICATION_FAILED",
+          "NEARBY_STORE",
+          "NEIGHBOR",
+          "NEIGHBOR_SIGNED",
+          "NON_PERSONAL_BELONGINGS",
+          "NON_POSTAL_CARRIER",
+          "NOT_ORDERED",
+          "NOT_WANTED",
+          "NO_ACCESS",
+          "NO_CONTACT_INFORMATION",
+          "NO_RESPONSE",
+          "NO_SECURITY_ACCESS",
+          "OFF_AMAZON_CUSTOMER",
+          "ON_HOLD",
+          "ORIGIN",
+          "OUTBUILDING",
+          "OVER_FORECAST",
+          "PACKAGE_OPEN",
+          "PACKAGE_OVERSIZED",
+          "PARCEL_HUB",
+          "PARTIAL",
+          "PAYMENT_REFUSED",
+          "PENDING_INSPECTION",
+          "PGA_HOLD",
+          "PICKUP_FAILURE",
+          "PICKUP_POINT",
+          "PICKUP_POINT_CLOSED",
+          "PKG_DIMENSION_EXCEEDS",
+          "POI_DELIVERY_ADDRESS_MISMATCH",
+          "POI_INVALID",
+          "POI_RECIPIENT_NAME_MISMATCH",
+          "PORCH",
+          "POSTAL_CARRIER",
+          "POSTAL_CODE",
+          "POST_OFFICE",
+          "POWER_OF_ATTORNEY_REQUIRED",
+          "PO_BOX",
+          "PO_BOX_QUERY",
+          "PREDICTED",
+          "PROCESSING_DELAY",
+          "PROCESSING_HUB",
+          "PRODUCT_DAMAGED",
+          "PRODUCT_DEFECTIVE",
+          "PRODUCT_MISSING",
+          "PRODUCT_NOT_FUNCTIONAL",
+          "PRODUCT_PRICE_EXCEEDS_2000_RMB",
+          "PROHIBITED_ITEM",
+          "READY_FOR_PICKUP",
+          "REAR_PORCH",
+          "REAR_PORCH_OR_REAR_DOOR",
+          "RECEPTION",
+          "RECIPIENT_CANCELLED",
+          "RECIPIENT_HOLIDAY",
+          "RECIPIENT_ID_IMAGE_QUALITY",
+          "RECIPIENT_ID_INVALID",
+          "RECIPIENT_ID_MISSING",
+          "RECIPIENT_ID_NOT_RECEIVED",
+          "RECIPIENT_ID_RECEIVED",
+          "RECIPIENT_PIN_NOT_AVAILABLE",
+          "RECIPIENT_UNIQUE_CODE_MISSING",
+          "RECIPIENT_UNKNOWN_ENTITY",
+          "REDIRECTED_SHIPMENT",
+          "REDIRECT_FAILED",
+          "REMOTE_AREA",
+          "REROUTED_TO_LOCKER",
+          "REROUTED_TO_STORE",
+          "RETURN_TO_SELLER",
+          "REVERTED",
+          "ROAD_ISSUE",
+          "SAFE_PLACE",
+          "SCHEDULE_ADJUSTMENT",
+          "SECURITY_ACCESS",
+          "SECURITY_CHECKS_REQUIRED",
+          "SECURITY_DESK",
+          "SELLER_ISSUE",
+          "SELLER_MOVED",
+          "SELLER_REJECTION",
+          "SELLER_REQUEST",
+          "SHED",
+          "SHIPMENT_DAMAGED",
+          "SHIPMENT_FEES",
+          "SHIPMENT_HIJACKED",
+          "SHIPMENT_MISSING",
+          "SHIPMENT_NOT_RECEIVED",
+          "SHIPMENT_OVERDUE_14_DAYS",
+          "SHIPPER_RELATED",
+          "SHIPPER_REQUEST",
+          "SIDE_PORCH",
+          "SIGNATURE_REQUIRED",
+          "SIGNATURE_WAIVED",
+          "SIGNED",
+          "STORE",
+          "STREET",
+          "TERRACE",
+          "THEFT",
+          "THIRD_PARTY_CARRIER_DELAY",
+          "TRAILER_LATE",
+          "TRAIN_LATE",
+          "TRANSPORTATION_CAPACITY_SHORTAGE",
+          "TRUCK",
+          "UNIT_LOAD_DEVICE",
+          "UNKNOWN_ENTITY",
+          "UNREADABLE_BARCODE",
+          "UNSUCCESSFUL_CUSTOMER_CONTACT",
+          "UNVERIFIED_ADDRESS",
+          "VAN",
+          "VAN_REPLAN",
+          "VEHICLE_BREAKDOWN",
+          "WEATHER",
+          "WRONG_DELIVERY_ROUTE",
+          "WRONG_PHONE_NUMBER"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "description"
+    ],
+    "type": "object"
+  }
+}

@@ -1,0 +1,1098 @@
+{
+ "api": "Localization",
+ "file": "specs/dest/Localization_prod_3p.json",
+ "schemas": {
+  "LocalizationCurrency": {
+   "description": "A currency to be localized.",
+   "properties": {
+    "amount": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "amount"
+   ],
+   "type": "object"
+  },
+  "LocalizationCurrencyRequest": {
+   "description": "LocalizationCurrencyRequest Object.",
+   "properties": {
+    "currency": {
+     "$ref": "LocalizationCurrency"
+    },
+    "currencyCode": {
+     "description": "A three-letter currency code with enum value corresponding to ISO-4217 code.",
+     "enum": [
+      "USD"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "currency"
+   ],
+   "type": "object"
+  },
+  "LocalizationCurrencyResponse": {
+   "description": "LocalizationCurrencyResponse Object.",
+   "properties": {
+    "errorCode": {
+     "description": "If status is ERROR, the error code.",
+     "type": "string"
+    },
+    "localizedCurrencies": {
+     "additionalProperties": {
+      "$ref": "LocalizationCurrency"
+     },
+     "description": "A map from target marketplace ID (string) to localized monetary amount.",
+     "type": "object"
+    },
+    "status": {
+     "description": "If SUCCESS, do not retry. If ERROR, may retry.",
+     "enum": [
+      "ERROR",
+      "SUCCESS"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "localizedCurrencies",
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocalizationCurrencyResponseV2": {
+   "description": "LocalizationCurrencyResponse Object.",
+   "properties": {
+    "errorCode": {
+     "description": "If status is ERROR, the error code. Not present if status is SUCCESS.",
+     "type": "string"
+    },
+    "localizedCurrencyResults": {
+     "additionalProperties": {
+      "$ref": "LocalizationCurrencyResult"
+     },
+     "description": "A map from target marketplace ID (country code) (string) to details regarding the localization status and messages.",
+     "type": "object"
+    },
+    "sourceCurrency": {
+     "$ref": "LocalizationCurrency"
+    },
+    "status": {
+     "description": "If SUCCESS, PARTIAL_SUCCESS, or FAILURE, do not retry. If ERROR, may retry.",
+     "enum": [
+      "ERROR",
+      "FAILURE",
+      "PARTIAL_SUCCESS",
+      "SUCCESS"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "localizedCurrencyResults",
+    "sourceCurrency",
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocalizationCurrencyResult": {
+   "description": "LocalizationCurrencyResult Object.",
+   "properties": {
+    "errorCode": {
+     "description": "If status is ERROR, the error code. Not present if status is SUCCESS.",
+     "type": "string"
+    },
+    "localizedCurrency": {
+     "$ref": "LocalizationCurrency"
+    },
+    "messages": {
+     "description": "If present, contains one or more strings describing why products could not be localized. For manual diagnostic use.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "status": {
+     "description": "If SUCCESS, FAILURE, do not retry. If ERROR, may retry.",
+     "enum": [
+      "ERROR",
+      "FAILURE",
+      "SUCCESS"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "localizedCurrency",
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocalizationKeyword": {
+   "description": "An object containing information about a keyword.",
+   "properties": {
+    "keyword": {
+     "description": "The keyword string.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "keyword"
+   ],
+   "type": "object"
+  },
+  "LocalizationKeywordRequest": {
+   "description": "A LocalizationKeywordRequest object. Contains information needed about the keyword to be localized.",
+   "properties": {
+    "localizationKeyword": {
+     "additionalProperties": {
+      "$ref": "LocalizationKeyword"
+     },
+     "description": "A keyword to be localized.",
+     "type": "object"
+    }
+   },
+   "required": [
+    "localizationKeyword"
+   ],
+   "type": "object"
+  },
+  "LocalizationKeywordResponse": {
+   "description": "A LocalizationKeywordResponse object. Contains localized keywords in the various target marketplaces/locales.",
+   "properties": {
+    "errorCode": {
+     "description": "If status is ERROR, the error code. Not present if status is SUCCESS.",
+     "type": "string"
+    },
+    "localizedKeywords": {
+     "additionalProperties": {
+      "$ref": "LocalizationKeyword"
+     },
+     "description": "Key (string): target marketplace ID. Value (LocalizationKeyword): localized keyword. If the source keyword cannot be translated into the language associated with a given target marketplace, it will be unchanged for that…",
+     "type": "object"
+    },
+    "status": {
+     "description": "If SUCCESS, do not retry. If ERROR, may retry.",
+     "enum": [
+      "ERROR",
+      "SUCCESS"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "localizedProducts",
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocalizationKeywordResponseV2": {
+   "description": "A LocalizationKeywordResponse object. Contains localized keywords in the various target marketplaces/locales.",
+   "properties": {
+    "errorCode": {
+     "description": "If status is ERROR, the error code. Not present if status is SUCCESS.",
+     "type": "string"
+    },
+    "localizedKeywordResults": {
+     "additionalProperties": {
+      "$ref": "LocalizationKeywordResult"
+     },
+     "description": "A map from target marketplace ID / locale / countryCode to details regarding the localization status and messages.",
+     "type": "object"
+    },
+    "sourceKeyword": {
+     "additionalProperties": {
+      "$ref": "LocalizationKeyword"
+     },
+     "description": "Source keyword that was localized."
+    },
+    "status": {
+     "description": "If SUCCESS, PARTIAL_SUCCESS or FAILURE, do not retry. If ERROR, may retry.",
+     "enum": [
+      "ERROR",
+      "FAILURE",
+      "PARTIAL_SUCCESS",
+      "SUCCESS"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "localizedKeywordResults",
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocalizationKeywordResult": {
+   "description": "LocalizationKeywordResult Object.",
+   "properties": {
+    "errorCode": {
+     "description": "If status is ERROR or FAILURE, the error code.",
+     "type": "string"
+    },
+    "localizedKeyword": {
+     "$ref": "LocalizationKeyword"
+    },
+    "messages": {
+     "description": "If present, contains one or more strings describing why products could not be localized. For manual diagnostic use.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "status": {
+     "description": "If SUCCESS, FAILURE, do not retry. If ERROR, may retry.",
+     "enum": [
+      "ERROR",
+      "FAILURE",
+      "SUCCESS"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "localizedKeyword",
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocalizationKeywordSourceDetails": {
+   "description": "The source details for the LocalizationKeywordRequests. One of locale, marketplaceId, or countryCode has to be present. If locale is present, the content of marketplaceIds or countryCode is ignored.",
+   "properties": {
+    "countryCode": {
+     "description": "A two-letter country code. When locale or marketplaceId is present, countryCode is ignored. Please refer to the table above for a list of supported country codes.",
+     "type": "string"
+    },
+    "locale": {
+     "description": "The source locale. For example, if the caller is localizing keywords from British English (en_GB) to Simplified Chinese (zh_CN), the source locale is en_GB. Please see the table within the description of the targetDetai…",
+     "type": "string"
+    },
+    "marketplaceId": {
+     "description": "The ID of the source marketplace. For example, if the caller is an advertiser based in the UK (marketplace ID A1F83G8C2ARO7P) and wishes to localize keywords to Germany (marketplace ID A1PA6795UKMFR9), the source market…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "LocalizationKeywordTargetDetails": {
+   "description": "The target details for the LocalizationKeywordRequests. One of locales, countryCode, or marketplaceIds must be present. If locale is present, the content of marketplaceIds and countryCodes is ignored. Each locale / mark…",
+   "properties": {
+    "countryCodes": {
+     "description": "A list of two-letter country codes. When another form of locale (marketplaceId or locale) is present, countryCode is ignored. Please refer to the table above for a list of supported country codes.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "locales": {
+     "description": "The target locales (locales to which the caller wishes to localize the specified keywords). For example, if the caller is localizing keywords from British English (en_GB) to Simplified Chinese (zh_CN), the target locale…",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaceIds": {
+     "description": "The IDs of target marketplaces (marketplaces in which the caller wishes to localize the specified keywords). For example, if the caller is an advertiser based in the UK (marketplace ID A1F83G8C2ARO7P) and wishes to loca…",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "LocalizationProduct": {
+   "description": "A product to be localized.",
+   "properties": {
+    "asin": {
+     "description": "The product's Amazon Standard Identification Number. Required for entityType=KDP_AUTHOR and entityType=VENDOR. If caller's entityType is SELLER, this field is optional and can yield better localization results if includ…",
+     "type": "string"
+    },
+    "sku": {
+     "description": "The product's Stock Keeping Unit. Required for entityType=SELLER. If caller's entityType is KDP_AUTHOR or VENDOR, this field is ignored.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "LocalizationProductRequest": {
+   "properties": {
+    "product": {
+     "$ref": "LocalizationProduct"
+    }
+   },
+   "required": [
+    "product"
+   ],
+   "type": "object"
+  },
+  "LocalizationProductResponse": {
+   "properties": {
+    "errorCode": {
+     "description": "If the status is ERROR, the error code. Not present if the status is SUCCESS.",
+     "type": "string"
+    },
+    "localizedProducts": {
+     "additionalProperties": {
+      "$ref": "LocalizationProduct"
+     },
+     "description": "Key (string): target marketplace ID. Value (LocalizationProduct): localized product. If no localized product is available in a given target marketplace, the map will not contain an entry for that marketplace. An empty m…",
+     "type": "object"
+    },
+    "status": {
+     "description": "If SUCCESS, do not retry. If ERROR, may retry.",
+     "enum": [
+      "ERROR",
+      "SUCCESS"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "localizedProducts",
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocalizationProductResponseV2": {
+   "properties": {
+    "errorCode": {
+     "description": "If the status is ERROR, the error code. Not present if the status is SUCCESS.",
+     "type": "string"
+    },
+    "localizedProductResults": {
+     "additionalProperties": {
+      "$ref": "LocalizationProductResult"
+     },
+     "description": "Key (string): target marketplace ID. Value (LocalizationProductResult): localized product results. Information regarding how a product was localized, or how a product was not localized in this particular marketplace.",
+     "type": "object"
+    },
+    "sourceProduct": {
+     "$ref": "LocalizationProduct"
+    },
+    "status": {
+     "description": "If SUCCESS, PARTIAL_SUCCESS or FAILURE, do not retry. If ERROR, may retry.",
+     "enum": [
+      "ERROR",
+      "FAILURE",
+      "PARTIAL_SUCCESS",
+      "SUCCESS"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "localizedProductResults",
+    "sourceProduct",
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocalizationProductResult": {
+   "description": "Information regarding how a product was localized, or how a product was not localized in this particular marketplace.",
+   "properties": {
+    "errorCode": {
+     "description": "If the status is ERROR, the error code. Not present if the status is SUCCESS.",
+     "type": "string"
+    },
+    "localizedProduct": {
+     "$ref": "LocalizationProduct"
+    },
+    "matchType": {
+     "description": "This represents the type of match for a localized product. LOCAL: It represents the product selling by an advertiser locally in the marketplace. GLOBAL_STORE: It represents the product selling by advertiser via [GlobalS…",
+     "enum": [
+      "GLOBAL_STORE",
+      "LOCAL"
+     ],
+     "type": "string"
+    },
+    "messages": {
+     "description": "If present, contains one or more strings describing why products could not be localized. For manual diagnostic use.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productMetadata": {
+     "$ref": "ProductMetadata"
+    },
+    "status": {
+     "description": "The status of the localization operation. SUCCESS: The product was localized successfully for this marketplace. FAILURE: The product could not be localized and retrying later will not change the result. ERROR: The produ…",
+     "enum": [
+      "ERROR",
+      "FAILURE",
+      "SUCCESS"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "localizedProduct",
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocalizationProductTargetDetails": {
+   "description": "The target details for the LocalizationProductRequests. There must be only one target details object per marketplace ID. The advertiser ID may be repeated across target details objects. The order of target details objec…",
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser ID of the caller in the associated target marketplace. The ID of the source advertiser account. This may be either a marketplace-specific obfuscated ID (AD9EUOBWMS33M), an entity ID (ENTITYYXZDK86N86HG), …",
+     "type": "string"
+    },
+    "countryCode": {
+     "description": "A two-letter country code. When both marketplaceId and countryCode are present, countryCode is ignored. Please refer to the table above for a list of supported country codes.",
+     "type": "string"
+    },
+    "marketplaceId": {
+     "description": "The ID of a target marketplace (a marketplace in which the caller wishes to localize the specified products). For example, if the caller is an advertiser based in the UK (marketplace ID A1F83G8C2ARO7P) and wishes to loc…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertiserId"
+   ],
+   "type": "object"
+  },
+  "LocalizationTargetingExpression": {
+   "description": "A targeting expression composed of one or more predicates.",
+   "properties": {
+    "expression": {
+     "description": "The predicates forming the targeting expression.",
+     "items": {
+      "$ref": "LocalizationTargetingExpressionPredicate"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "isForNegativeTargeting": {
+     "description": "Specifies whether the expression is for positive targeting (false) or negative targeting (true).",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "expression",
+    "isForNegativeTargeting"
+   ],
+   "type": "object"
+  },
+  "LocalizationTargetingExpressionPredicate": {
+   "description": "A targeting expression predicate.",
+   "properties": {
+    "type": {
+     "$ref": "LocalizationTargetingExpressionPredicateType"
+    },
+    "value": {
+     "description": "The value of the predicate. Targeting expression syntax, including examples of predicates and the values they support, is documented [here](https://advertising.amazon.com/API/docs/en-us/bulksheets/sp/sp-general-info/sp-…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "value"
+   ],
+   "type": "object"
+  },
+  "LocalizationTargetingExpressionPredicateType": {
+   "description": "Targeting predicate type. The following predicate types are supported: | Type | Description | Data in `value` String | | --- | --- | --- | | `asinCategorySameAs` | Target the specified category. | Integer ID | | `asinBr…",
+   "type": "string"
+  },
+  "LocalizationTargetingExpressionRequest": {
+   "description": "A request to localize a targeting expression from a source marketplace to one or more target marketplaces.",
+   "properties": {
+    "targetingExpression": {
+     "$ref": "LocalizationTargetingExpression"
+    }
+   },
+   "required": [
+    "targetingExpression"
+   ],
+   "type": "object"
+  },
+  "LocalizationTargetingExpressionResponse": {
+   "description": "A response to a request to localize a targeting expression from a source marketplace to one or more target marketplaces.",
+   "properties": {
+    "localizedTargetingExpressionResults": {
+     "additionalProperties": {
+      "$ref": "LocalizationTargetingExpressionResult"
+     },
+     "description": "A map from target marketplace ID (string) to the localization result (`LocalizationTargetingExpressionResult`). All target marketplaces present in the request will have an entry in this map.",
+     "type": "object"
+    },
+    "localizedTargetingExpressions": {
+     "additionalProperties": {
+      "$ref": "LocalizationTargetingExpression"
+     },
+     "description": "A map from target marketplace ID (string) to localized targeting expression (`LocalizationTargetingExpression`). If no entry exists for a given target marketplace, the source targeting expression could not be localized …",
+     "type": "object"
+    }
+   },
+   "type": "object"
+  },
+  "LocalizationTargetingExpressionResponseV2": {
+   "description": "A response to a request to localize a targeting expression from a source marketplace to one or more target marketplaces.",
+   "properties": {
+    "errorCode": {
+     "description": "If status is ERROR, the error code. Not present if status is SUCCESS.",
+     "type": "string"
+    },
+    "localizedTargetingExpressionResults": {
+     "additionalProperties": {
+      "$ref": "LocalizationTargetingExpressionResult"
+     },
+     "description": "A map from target marketplace ID (string) to the localization result (`LocalizationTargetingExpressionResult`). All target marketplaces present in the request will have an entry in this map.",
+     "type": "object"
+    },
+    "sourceTargetingExpressions": {
+     "additionalProperties": {
+      "$ref": "LocalizationTargetingExpression"
+     },
+     "description": "Source targeting expression for this result set.",
+     "type": "object"
+    },
+    "status": {
+     "description": "If SUCCESS, PARTIAL_SUCCESS or FAILURE, do not retry. If ERROR, may retry.",
+     "enum": [
+      "ERROR",
+      "FAILURE",
+      "PARTIAL_SUCCESS",
+      "SUCCESS"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "localizedTargetingExpressionResults",
+    "sourceTargetingExpression",
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocalizationTargetingExpressionResponseV3": {
+   "description": "A response to a request to localize a targeting expression from a source marketplace to one or more target marketplaces.",
+   "properties": {
+    "errorCode": {
+     "description": "If status is ERROR, the error code. Not present if status is SUCCESS.",
+     "type": "string"
+    },
+    "localizedResolvedTargetingExpressionResults": {
+     "additionalProperties": {
+      "$ref": "LocalizationTargetingExpressionResult"
+     },
+     "description": "A map from resolved target locales to the resolved result (`LocalizationTargetingExpressionResult`). All resolved target locales present in the request will have an entry in this map.",
+     "type": "object"
+    },
+    "localizedTargetingExpressionResults": {
+     "additionalProperties": {
+      "$ref": "LocalizationTargetingExpressionResult"
+     },
+     "description": "A map from target marketplace ID (string) to the localization result (`LocalizationTargetingExpressionResult`). All target marketplaces present in the request will have an entry in this map.",
+     "type": "object"
+    },
+    "sourceResolvedTargetingExpressionResults": {
+     "additionalProperties": {
+      "$ref": "LocalizationTargetingExpressionResult"
+     },
+     "description": "A map from resolved source locales to the resolved result (`LocalizationTargetingExpressionResult`). All resolved source locales present in the request will have an entry in this map.",
+     "type": "object"
+    },
+    "sourceTargetingExpression": {
+     "additionalProperties": {
+      "$ref": "LocalizationTargetingExpression"
+     },
+     "description": "Source targeting expression for this result set."
+    },
+    "status": {
+     "description": "If SUCCESS, PARTIAL_SUCCESS or FAILURE, do not retry. If ERROR, may retry.",
+     "enum": [
+      "ERROR",
+      "FAILURE",
+      "PARTIAL_SUCCESS",
+      "SUCCESS"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "localizedTargetingExpressionResults",
+    "sourceTargetingExpression",
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocalizationTargetingExpressionResult": {
+   "description": "Information regarding how and to what extent a targeting expression was localized.",
+   "properties": {
+    "errorCode": {
+     "description": "If status is ERROR or FAILURE, the error code.",
+     "type": "string"
+    },
+    "localizedTargetingExpression": {
+     "$ref": "LocalizationTargetingExpression"
+    },
+    "messages": {
+     "description": "If present, contains one or more strings describing why predicates could not be localized. For manual diagnostic use.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "status": {
+     "description": "The status of the localization operation. Note that if the source targeting expression contains an age range predicate that cannot be localized, localization of the entire expression will fail. SUCCESS: All predicates w…",
+     "enum": [
+      "ERROR",
+      "FAILURE",
+      "SUCCESS"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocalizationTargetingSourceDetails": {
+   "description": "A source marketplace. One of the marketplace ID or the two-letter country code must be present. The latter is ignored if the former is present.",
+   "properties": {
+    "countryCode": {
+     "description": "A two-letter country code. Please refer to the table above for a list of supported country codes.",
+     "type": "string"
+    },
+    "marketplaceId": {
+     "description": "The ID of the source marketplace. For example, when mapping data from the UK (marketplace ID A1F83G8C2ARO7P) to Germany (marketplace ID A1PA6795UKMFR9), the source marketplace ID is that of the UK, i.e., A1F83G8C2ARO7P.…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "LocalizationTargetingTargetDetails": {
+   "description": "A target marketplace. One of the marketplace ID or the two-letter country code must be present. The latter is ignored if the former is present.",
+   "properties": {
+    "countryCode": {
+     "description": "A two-letter country code. Please refer to the table above for a list of supported country codes.",
+     "type": "string"
+    },
+    "marketplaceId": {
+     "description": "The ID of the target marketplace. For example, when mapping data from the UK (marketplace ID A1F83G8C2ARO7P) to Germany (marketplace ID A1PA6795UKMFR9), the target marketplace ID is that of the UK, i.e., A1F83G8C2ARO7P.…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ProductMetadata": {
+   "description": "This represents the metadata associated with the product.",
+   "properties": {
+    "catalogSourceCountryCode": {
+     "description": "This field will be present for Global Store business where it represents the country code of source marketplace where seller has listed the product.",
+     "enum": [
+      "AE",
+      "DE",
+      "JP",
+      "UK",
+      "US"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "currencyLocalizationError": {
+   "description": "A CurrencyLocalizationError Object.",
+   "properties": {
+    "code": {
+     "description": "Programmatic status code.",
+     "type": "integer"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code"
+   ],
+   "type": "object"
+  },
+  "currencyLocalizationRequest": {
+   "description": "Currency Localization Request Object.",
+   "properties": {
+    "localizeCurrencyRequests": {
+     "description": "An array of LocalizationCurrencyRequest objects. The order will be maintained in the response.",
+     "items": {
+      "$ref": "LocalizationCurrencyRequest"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "sourceCountryCode": {
+     "description": "A two-letter country code. When both marketplaceId and countryCode are present, countryCode is ignored. Please refer to the table above for a list of supported country codes.",
+     "type": "string"
+    },
+    "sourceMarketplaceId": {
+     "description": "The source marketplace ID. Please see the table in the description of `targetMarketplaces` for supported values.",
+     "type": "string"
+    },
+    "targetCountryCodes": {
+     "description": "A list of two-letter country codes. When both marketplaceId and countryCode are present, countryCode is ignored. Please refer to the table above for a list of supported country codes.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetMarketplaces": {
+     "description": "A list of target marketplace IDs. Each element must be unique. The order is irrelevant. The following marketplaces are supported: |Region|Country Code|Name|Marketplace ID| |-|-|-|-| |EU|AE|United Arab Emirates|A2VIGQ35R…",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "localizeCurrencyRequests"
+   ],
+   "type": "object"
+  },
+  "currencyLocalizationResponse": {
+   "description": "CurrencyLocalizationResponse Object.",
+   "properties": {
+    "localizedCurrencyResponses": {
+     "description": "An array of LocalizationCurrencyResponse objects. The order matches that of the input LocalizationCurrencyRequest object array.",
+     "items": {
+      "$ref": "LocalizationCurrencyResponse"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "localizedCurrencyResponses"
+   ],
+   "type": "object"
+  },
+  "currencyLocalizationResponseV2": {
+   "description": "CurrencyLocalizationResponse Object.",
+   "properties": {
+    "localizedCurrencyResponses": {
+     "description": "An array of LocalizationCurrencyResponseV2 objects. The order matches that of the input LocalizationCurrencyRequest object array.",
+     "items": {
+      "$ref": "LocalizationCurrencyResponseV2"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "localizedCurrencyResponses"
+   ],
+   "type": "object"
+  },
+  "keywordsLocalizationError": {
+   "properties": {
+    "code": {
+     "description": "Programmatic status code.",
+     "type": "integer"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "keywordsLocalizationRequest": {
+   "properties": {
+    "localizeKeywordRequests": {
+     "description": "List of LocalizationKeywordRequests. The order will be maintained in the response.",
+     "items": {
+      "$ref": "LocalizationKeywordRequest"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "sourceDetails": {
+     "$ref": "LocalizationKeywordSourceDetails"
+    },
+    "targetDetails": {
+     "$ref": "LocalizationKeywordTargetDetails"
+    }
+   },
+   "required": [
+    "localizeKeywordRequests",
+    "targetDetails"
+   ],
+   "type": "object"
+  },
+  "keywordsLocalizationResponse": {
+   "properties": {
+    "localizedKeywordResponses": {
+     "description": "List of LocalizationKeywordResponses. The order matches that of the LocalizationKeywordRequests list in the request.",
+     "items": {
+      "$ref": "LocalizationKeywordResponse"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "localizedKeywordResponses"
+   ],
+   "type": "object"
+  },
+  "keywordsLocalizationResponseV2": {
+   "properties": {
+    "localizedKeywordResponses": {
+     "description": "List of LocalizationKeywordResponses. The order matches that of the LocalizationKeywordRequests list in the request.",
+     "items": {
+      "$ref": "LocalizationKeywordResponseV2"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "localizedKeywordResponses"
+   ],
+   "type": "object"
+  },
+  "productLocalizationError": {
+   "properties": {
+    "code": {
+     "description": "Programmatic status code.",
+     "type": "integer"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "productLocalizationRequest": {
+   "properties": {
+    "adType": {
+     "description": "Used to confirm that the caller is eligible to advertise localized products. Currently, only Sponsored Products advertising is supported.",
+     "enum": [
+      "SPONSORED_PRODUCTS"
+     ],
+     "type": "string"
+    },
+    "entityType": {
+     "description": "The type of the advertiser accounts for which IDs are specified elsewhere in the request.",
+     "enum": [
+      "KDP_AUTHOR",
+      "SELLER",
+      "VENDOR"
+     ],
+     "type": "string"
+    },
+    "localizeProductRequests": {
+     "description": "The products to be localized. Their order will be maintained in the response.",
+     "items": {
+      "$ref": "LocalizationProductRequest"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "sourceAdvertiserId": {
+     "description": "The ID of the source advertiser account. This may be either a marketplace-specific obfuscated ID (AD9EUOBWMS33M), an entity ID (ENTITYYXZDK86N86HG), or a global account ID (amzn1.ads-account.g.e0kbzpoe2gkpai1pqeaca59k8).",
+     "type": "string"
+    },
+    "sourceCountryCode": {
+     "description": "A two-letter country code. When both marketplaceId and countryCode are present, countryCode is ignored. Please refer to the table above for a list of supported country codes.",
+     "type": "string"
+    },
+    "sourceMarketplaceId": {
+     "description": "The ID of the source marketplace. Please see the table within the description of the target details object for supported values.",
+     "type": "string"
+    },
+    "targetDetails": {
+     "description": "The target details for the LocalizationProductRequests. There must be only one target details object per marketplace ID. The advertiser ID may be repeated across target details objects. The order of target details objec…",
+     "items": {
+      "$ref": "LocalizationProductTargetDetails"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adType",
+    "entityType",
+    "localizeProductRequests",
+    "sourceAdvertiserId",
+    "targetDetails"
+   ],
+   "type": "object"
+  },
+  "productLocalizationResponse": {
+   "properties": {
+    "localizedProductResponses": {
+     "description": "List of product localization map objects. The order matches that of the localizeProductRequests field in the request.",
+     "items": {
+      "$ref": "LocalizationProductResponse"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "localizedProductResponses"
+   ],
+   "type": "object"
+  },
+  "productLocalizationResponseV2": {
+   "properties": {
+    "localizedProductResponses": {
+     "description": "List of product localization map objects. The order matches that of the localizeProductRequests field in the request.",
+     "items": {
+      "$ref": "LocalizationProductResponseV2"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "localizedProductResponses"
+   ],
+   "type": "object"
+  },
+  "targetingExpressionLocalizationError": {
+   "properties": {
+    "code": {
+     "description": "Programmatic status code.",
+     "type": "integer"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "targetingExpressionLocalizationRequest": {
+   "properties": {
+    "requests": {
+     "description": "A list of requests, each containing a targeting expression to localize. Its order will be maintained in `responses` in the corresponding `targetingExpressionLocalizationResponse` object.",
+     "items": {
+      "$ref": "LocalizationTargetingExpressionRequest"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "sourceDetails": {
+     "$ref": "LocalizationTargetingSourceDetails"
+    },
+    "sourceResolvedTargetingExpressionLocales": {
+     "description": "The locales to which the caller wishes to retrieve the human readable string (e.g. category name instead of category id) of the source targeting expressions. For example, if the caller wishes to retrieve the category na…",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetDetailsList": {
+     "description": "The targets to which the source targeting expression should be localized.",
+     "items": {
+      "$ref": "LocalizationTargetingTargetDetails"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "targetResolvedTargetingExpressionLocale": {
+     "description": "The locale to which the caller wishes to retrieve the human readable string (e.g. category name instead of category id) of the localized targeting expressions. For example, if the caller wishes to retrieve the category …",
+     "type": "string"
+    }
+   },
+   "required": [
+    "requests",
+    "sourceDetails",
+    "targetDetailsList"
+   ],
+   "type": "object"
+  },
+  "targetingExpressionLocalizationResponse": {
+   "properties": {
+    "responses": {
+     "description": "A list of responses containing localized targeting expressions. Its order matches that of `requests` in the corresponding `targetingExpressionLocalizationRequest` object.",
+     "items": {
+      "$ref": "LocalizationTargetingExpressionResponse"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "responses"
+   ],
+   "type": "object"
+  },
+  "targetingExpressionLocalizationResponseV2": {
+   "properties": {
+    "responses": {
+     "description": "A list of responses containing localized targeting expressions. Its order matches that of `requests` in the corresponding `targetingExpressionLocalizationRequest` object.",
+     "items": {
+      "$ref": "LocalizationTargetingExpressionResponseV2"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "responses"
+   ],
+   "type": "object"
+  },
+  "targetingExpressionLocalizationResponseV3": {
+   "properties": {
+    "responses": {
+     "description": "A list of responses containing localized targeting expressions. Its order matches that of `requests` in the corresponding `targetingExpressionLocalizationRequest` object.",
+     "items": {
+      "$ref": "LocalizationTargetingExpressionResponseV3"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "responses"
+   ],
+   "type": "object"
+  }
+ }
+}

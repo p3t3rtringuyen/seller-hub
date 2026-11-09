@@ -1,0 +1,107 @@
+{
+ "api": "Locations",
+ "file": "specs/dest/Locations_prod_3p.json",
+ "schemas": {
+  "Error": {
+   "description": "The error response object.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "SubError"
+     },
+     "maxItems": 10,
+     "type": "array"
+    },
+    "message": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "Request Id that uniquely identifies your request.",
+     "type": "string"
+    }
+   }
+  },
+  "ListLocationsRequestBodyV1": {
+   "description": "Resulting locations will match all specified filters",
+   "properties": {
+    "filters": {
+     "items": {
+      "$ref": "LocationFilterV1"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "LocationCategoryV1": {
+   "description": "The location category.",
+   "enum": [
+    "CITY",
+    "COUNTRY",
+    "DMA",
+    "POSTAL_CODE",
+    "STATE"
+   ],
+   "type": "string"
+  },
+  "LocationFilterV1": {
+   "properties": {
+    "field": {
+     "description": "Field to filter by. Supported enums are 'locationId', 'name', and 'category'. The 'name' filter is a fuzzy search. If 'category' is specified, the values must match either 'CITY', 'STATE', 'DMA', 'COUNTRY', or 'POSTAL_C…",
+     "enum": [
+      "category",
+      "locationId",
+      "name"
+     ],
+     "type": "string"
+    },
+    "values": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "LocationIdV1": {
+   "description": "The identifier of the location.",
+   "type": "string"
+  },
+  "LocationV1": {
+   "properties": {
+    "category": {
+     "$ref": "LocationCategoryV1"
+    },
+    "locationId": {
+     "$ref": "LocationIdV1"
+    },
+    "name": {
+     "description": "The location name.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SubError": {
+   "description": "The sub error object.",
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

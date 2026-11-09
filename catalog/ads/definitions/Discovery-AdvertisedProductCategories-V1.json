@@ -1,0 +1,202 @@
+{
+ "api": "Discovery-AdvertisedProductCategories-V1",
+ "file": "specs/dest/Discovery-AdvertisedProductCategories-V1_prod_3p.json",
+ "schemas": {
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListAdvertisedProductCategoriesRequestContent": {
+   "properties": {
+    "maxResults": {
+     "description": "Sets the maximum number of objects in the returned array. Use in conjunction with the nextToken parameter to control pagination. For example, supplying maxResults=20 with a previously returned token will fetch up to the…",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListAdvertisedProductCategoriesResponseContent": {
+   "properties": {
+    "categories": {
+     "description": "List of the Product Categories.",
+     "items": {
+      "$ref": "DspProductCategory"
+     },
+     "maxItems": 5000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "A token representing the state of the pagination for the results. Use this token in subsequent requests to fetch the next set of results. If nextToken value is null it means the result set is exhausted.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspProductCategory": {
+   "properties": {
+    "id": {
+     "description": "The category identifier.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The category name.",
+     "type": "string"
+    },
+    "parentId": {
+     "description": "The identifier of the parent category. This is not present in the object if the category is a parent category.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

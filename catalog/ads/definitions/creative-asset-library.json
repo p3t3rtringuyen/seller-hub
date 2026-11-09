@@ -1,0 +1,1177 @@
+{
+ "api": "creative-asset-library",
+ "file": "specs/creative-asset-library/creative-asset-library-openapi.yaml",
+ "schemas": {
+  "APPROVED_AD_POLICY": {
+   "enum": [
+    "STORE4V_SPOTLIGHT",
+    "STORES_MODERATION",
+    "HSA4V_PRODUCTS",
+    "AD_POST"
+   ],
+   "type": "string"
+  },
+  "ASIN": {
+   "description": "The ASIN value on which to filter.",
+   "type": "string"
+  },
+  "ASSET_EXTENSION": {
+   "enum": [
+    "JPG",
+    "JPEG",
+    "PNG"
+   ],
+   "type": "string"
+  },
+  "ASSET_SUB_TYPE": {
+   "description": "STORE4V_SPOTLIGHT = Store Spotlight STORES_MODERATION = Stores HSA4V_Products = Sponsored Brands AD_POST = Posts",
+   "enum": [
+    "AUTHOR_IMAGE",
+    "LIFESTYLE_IMAGE",
+    "PRODUCT_IMAGE",
+    "OTHER_IMAGE",
+    "LOGO"
+   ],
+   "type": "string"
+  },
+  "ASSET_TYPE": {
+   "description": "Asset types available are only the following:",
+   "enum": [
+    "IMAGE"
+   ],
+   "type": "string"
+  },
+  "CAMPAIGN_ID": {
+   "description": "The campaignID for which to filter.",
+   "type": "string"
+  },
+  "CAMPAIGN_NAME": {
+   "description": "The name of the campaign for which to filter.",
+   "type": "string"
+  },
+  "DATE_UPLOADED": {
+   "description": "The value for this should be timestamp in milliseconds. It is the same as creation date.",
+   "type": "string"
+  },
+  "PROGRAM": {
+   "enum": [
+    "A_PLUS"
+   ],
+   "type": "string"
+  },
+  "SIZE": {
+   "description": "File size in bytes.",
+   "type": "string"
+  },
+  "TAG": {
+   "description": "A tag is assigned to a creative asset at time of registration. Values can include any tags that you have created.",
+   "type": "string"
+  },
+  "caAccounts": {
+   "description": "The list of advertiser accounts the asset can be shared with. All the accounts within this list will be able to search this asset. Additional validation of checking that the accounts are associated will be done as part …",
+   "items": {
+    "type": "string"
+   },
+   "maxItems": 100,
+   "minItems": 1,
+   "type": "array"
+  },
+  "caAdPolicyModerationResult": {
+   "properties": {
+    "locale": {
+     "type": "string"
+    },
+    "marketplaceId": {
+     "type": "string"
+    },
+    "moderationStatus": {
+     "$ref": "caModerationStatus"
+    },
+    "policyName": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caArgumentList": {
+   "description": "List of arguments for translation string",
+   "items": {
+    "type": "string"
+   },
+   "type": "array"
+  },
+  "caAsins": {
+   "description": "Tagging assets with ASIN, promotes asset discoverability downstream. If ASIN is provided at the time of upload/during asset registration, it is applied as a tag on that asset. This allows for that asset to be searchable…",
+   "items": {
+    "type": "string"
+   },
+   "maxItems": 100,
+   "minItems": 1,
+   "type": "array"
+  },
+  "caAsset": {
+   "properties": {
+    "assetId": {
+     "type": "string"
+    },
+    "assetSubTypes": {
+     "items": {
+      "$ref": "caAssetSubType"
+     },
+     "type": "array"
+    },
+    "assetType": {
+     "$ref": "caAssetType"
+    },
+    "associatedAccountIds": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "associatedContexts": {
+     "$ref": "caAssociatedContextTypeMapping"
+    },
+    "collections": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "createdBy": {
+     "type": "string"
+    },
+    "creationTime": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "fileMetadata": {
+     "$ref": "caFileMetadata"
+    },
+    "lastUpdatedBy": {
+     "type": "string"
+    },
+    "lastUpdatedTime": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "marketplaces": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "moderationPolicyMap": {
+     "$ref": "caModerationPolicyMap"
+    },
+    "name": {
+     "type": "string"
+    },
+    "specCheckApprovedPrograms": {
+     "$ref": "caSpecCheckApprovedPrograms"
+    },
+    "status": {
+     "$ref": "caAssetStatus"
+    },
+    "storageLocationUrls": {
+     "$ref": "caStorageLocationUrls"
+    },
+    "tags": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "version": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caAssetFiles": {
+   "description": "Structure containing processed transcode files for an asset defaultUrl: This is the location of the original source. processedFiles: List of processed files with metadata.",
+   "properties": {
+    "defaultUrl": {
+     "type": "string"
+    },
+    "processedFiles": {
+     "items": {
+      "$ref": "caProcessedFile"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "caAssetGlobal": {
+   "properties": {
+    "accountIds": {
+     "$ref": "caAccounts"
+    },
+    "assetId": {
+     "$ref": "caAssetId"
+    },
+    "assetType": {
+     "$ref": "caAssetType"
+    },
+    "marketplaceId": {
+     "$ref": "caMarketplaceIds"
+    }
+   },
+   "type": "object"
+  },
+  "caAssetId": {
+   "description": "The asset identifier.",
+   "type": "string"
+  },
+  "caAssetIdentifier": {
+   "properties": {
+    "assetId": {
+     "$ref": "caAssetId"
+    },
+    "version": {
+     "$ref": "caVersion"
+    }
+   },
+   "type": "object"
+  },
+  "caAssetName": {
+   "description": "The name to be given to the asset being registered.",
+   "type": "string"
+  },
+  "caAssetSortCriteria": {
+   "properties": {
+    "field": {
+     "enum": [
+      "CREATED_TIME",
+      "SIZE",
+      "NAME",
+      "IMAGE_HEIGHT",
+      "IMAGE_WIDTH",
+      "EXTENSION"
+     ],
+     "type": "string"
+    },
+    "order": {
+     "enum": [
+      "ASC",
+      "DESC"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caAssetSourceId": {
+   "enum": [
+    "AMAZON_CREATIVE_SERVICES",
+    "AMAZON_VIDEO_BUILDER",
+    "ASSET_LIBRARY",
+    "SELF_SERVICE_FIRE_TV",
+    "INTEGRATED_VIDEO_EXPERIENCE",
+    "CANVA_PLUGIN",
+    "AMAZON_DSP",
+    "SPONSORED_DISPLAY",
+    "SPONSORED_BRANDS"
+   ],
+   "type": "string"
+  },
+  "caAssetSourceInfo": {
+   "description": "Details on the source of this asset and any source specific metadata to be associated against it.",
+   "properties": {
+    "assetSourceId": {
+     "$ref": "caAssetSourceId"
+    },
+    "assetSourceMetadata": {
+     "$ref": "caAssetSourceMetadataMap"
+    }
+   },
+   "type": "object"
+  },
+  "caAssetSourceMetadataMap": {
+   "additionalProperties": {
+    "type": "string"
+   },
+   "description": "Map containing source information details. Total map size should not exceed 5, with each Key's length 50 and Value's length 500.",
+   "type": "object"
+  },
+  "caAssetStatus": {
+   "enum": [
+    "ACTIVE",
+    "PROCESSING",
+    "ARCHIVED"
+   ],
+   "type": "string"
+  },
+  "caAssetSubType": {
+   "enum": [
+    "LOGO",
+    "PRODUCT_IMAGE",
+    "AUTHOR_IMAGE",
+    "LIFESTYLE_IMAGE",
+    "OTHER_IMAGE",
+    "BACKGROUND_VIDEO"
+   ],
+   "type": "string"
+  },
+  "caAssetSubTypes": {
+   "items": {
+    "$ref": "caAssetSubType"
+   },
+   "maxItems": 10,
+   "minItems": 1,
+   "type": "array"
+  },
+  "caAssetType": {
+   "description": "The asset type you are registering [`IMAGE`, `VIDEO`]",
+   "enum": [
+    "IMAGE",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "caAssetUploadLocation": {
+   "description": "The url to upload the asset. The url expires in 15 minutes.",
+   "type": "string"
+  },
+  "caAssetVersion": {
+   "properties": {
+    "assetFiles": {
+     "$ref": "caAssetFiles"
+    },
+    "assetIdentifier": {
+     "$ref": "caAssetIdentifier"
+    },
+    "assetStatus": {
+     "$ref": "caAssetStatus"
+    },
+    "assetSubTypes": {
+     "$ref": "caassetSubTypes"
+    },
+    "createdBy": {
+     "type": "string"
+    },
+    "creationTime": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "failedSpecChecks": {
+     "$ref": "caProgramSpecificationsList"
+    },
+    "fileMetadata": {
+     "$ref": "caFileMetadata"
+    },
+    "lastUpdatedBy": {
+     "type": "string"
+    },
+    "lastUpdatedTime": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "moderationContentList": {
+     "items": {
+      "$ref": "caModerationContent"
+     },
+     "type": "array"
+    },
+    "name": {
+     "$ref": "caFileName"
+    },
+    "otherMetadata": {
+     "$ref": "caMetadataMap"
+    },
+    "specCheckApprovedPrograms": {
+     "$ref": "caSpecCheckApprovedPrograms"
+    },
+    "storageLocationUrls": {
+     "$ref": "caStorageLocationUrls"
+    },
+    "url": {
+     "$ref": "caURL"
+    },
+    "versionNotes": {
+     "description": "The URL of the asset",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caAssetVersionList": {
+   "description": "The asset version list.",
+   "items": {
+    "$ref": "caAssetVersion"
+   },
+   "maxItems": 100,
+   "minItems": 1,
+   "type": "array"
+  },
+  "caAssociatedContextTypeMapping": {
+   "description": "A hashmap of key-value pairs, this is the most accurate way of defining a map in swagger 2.0",
+   "type": "object"
+  },
+  "caAssociatedProgram": {
+   "properties": {
+    "metadata": {
+     "$ref": "caMetadataMap"
+    },
+    "programName": {
+     "$ref": "caProgram"
+    }
+   },
+   "type": "object"
+  },
+  "caAssociatedSubEntity": {
+   "properties": {
+    "brandEntityId": {
+     "description": "The entity id of brand, which can be retrieved using GET /brands.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caAssociatedSubEntityList": {
+   "description": "This field is required for sellers, but not required for vendors. The brandEntityId is required for sellers uploading assets for use in Sponsored Brands. As a best practice, ensure to include brandEntityId when uploadin…",
+   "items": {
+    "$ref": "caAssociatedSubEntity"
+   },
+   "maxItems": 100,
+   "minItems": 1,
+   "type": "array"
+  },
+  "caAudioStreamMetadata": {
+   "description": "Structure containing metadata of Video Stream. profile: This is the profile of the stream. duration: This is the duration of the stream in secs. codecName: This tells the codec of the media stream. codecType: This is th…",
+   "properties": {
+    "bitRate": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "channelLayout": {
+     "type": "string"
+    },
+    "codecName": {
+     "type": "string"
+    },
+    "codecType": {
+     "type": "string"
+    },
+    "duration": {
+     "format": "double",
+     "type": "number"
+    },
+    "profile": {
+     "type": "string"
+    },
+    "sampleRate": {
+     "format": "int64",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "caBadRequest": {
+   "description": "400 bad request",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caBatchRegistrationContext": {
+   "description": "Contextual information for asset registration e.g. what is the source of this asset.",
+   "properties": {
+    "assetSourceInfo": {
+     "$ref": "caAssetSourceInfo"
+    }
+   },
+   "type": "object"
+  },
+  "caFailedRegistrationDetails": {
+   "description": "Structure containing details of registration failure for each url in a batch registration request.",
+   "properties": {
+    "failureReason": {
+     "description": "Failure reason for registration of media file identified by corresponding url in batch registration request.",
+     "type": "string"
+    },
+    "url": {
+     "description": "Url of the media file as provided in the input of batch registration request.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caFailedRegistrationDetailsList": {
+   "description": "List containing failed registration details",
+   "items": {
+    "$ref": "caFailedRegistrationDetails"
+   },
+   "maxItems": 100,
+   "minItems": 0,
+   "type": "array"
+  },
+  "caFileMetadata": {
+   "properties": {
+    "aspectRatio": {
+     "description": "The aspect ration of the asset.",
+     "type": "string"
+    },
+    "audioSampleRate": {
+     "format": "double",
+     "type": "number"
+    },
+    "contentType": {
+     "description": "The content type of the asset.",
+     "enum": [
+      "jpeg",
+      "jpg",
+      "png",
+      "mp4",
+      "image/jpg",
+      "image/jpeg",
+      "image/png"
+     ],
+     "type": "string"
+    },
+    "duration": {
+     "format": "double",
+     "type": "number"
+    },
+    "extension": {
+     "description": "The extension of the file name.",
+     "type": "string"
+    },
+    "fileSize": {
+     "description": "The asset size in bytes.",
+     "type": "number"
+    },
+    "height": {
+     "description": "The height of the asset in pixels.",
+     "type": "number"
+    },
+    "resolutionHeight": {
+     "type": "integer"
+    },
+    "resolutionWidth": {
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width of the asset in pixels.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "caFileName": {
+   "description": "The fileName of the asset.",
+   "type": "string"
+  },
+  "caFilterCriteria": {
+   "description": "**Optional** this is used to filter results, we support two types of filters, valueFilter and rangeFilter",
+   "properties": {
+    "rangeFilters": {
+     "items": {
+      "$ref": "caRangeFilter"
+     },
+     "type": "array"
+    },
+    "valueFilters": {
+     "items": {
+      "$ref": "caValueFilter"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "caForbiddenRequest": {
+   "description": "403 forbidden request",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caInProgressRegistrationDetails": {
+   "description": "Structure containing details of in progress registration for each url in a batch registration request.",
+   "properties": {
+    "url": {
+     "description": "Url of the media file as provided in the input of batch registration request.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caInProgressRegistrationDetailsList": {
+   "description": "List containing in progress registration details",
+   "items": {
+    "$ref": "caInProgressRegistrationDetails"
+   },
+   "maxItems": 100,
+   "minItems": 0,
+   "type": "array"
+  },
+  "caInternalError": {
+   "description": "500 internal server error",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caMarketplaceIds": {
+   "description": "The list of marketplace Ids.",
+   "items": {
+    "type": "string"
+   },
+   "maxItems": 100,
+   "minItems": 1,
+   "type": "array"
+  },
+  "caMetadataMap": {
+   "additionalProperties": {
+    "type": "string"
+   },
+   "description": "Include key-value pairs related to the asset. For DSP use \"dspAdvertiserId\" = \"ID\". Include program as AMAZON_DSP.",
+   "type": "object"
+  },
+  "caModerationContent": {
+   "properties": {
+    "adPolicyModerationResultList": {
+     "items": {
+      "$ref": "caAdPolicyModerationResult"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "assetSubType": {
+     "$ref": "caAssetSubType"
+    },
+    "moderationContentStatus": {
+     "$ref": "caModerationContentStatus"
+    }
+   },
+   "type": "object"
+  },
+  "caModerationContentStatus": {
+   "enum": [
+    "IN_PROGRESS",
+    "COMPLETED",
+    "FAILED"
+   ],
+   "type": "string"
+  },
+  "caModerationPolicyMap": {
+   "description": "A hashmap of key-value pairs, this is the most accurate way of defining a map in swagger 2.0",
+   "type": "object"
+  },
+  "caModerationStatus": {
+   "enum": [
+    "REJECTED",
+    "APPROVED",
+    "PENDING"
+   ],
+   "type": "string"
+  },
+  "caPageCriteria": {
+   "description": "used for pagination when searching for the first page, no need to put anything, otherwise, use the token returned from previous search call",
+   "properties": {
+    "identifier": {
+     "$ref": "caPageIdentifier"
+    },
+    "size": {
+     "$ref": "caPageSize"
+    }
+   },
+   "type": "object"
+  },
+  "caPageIdentifier": {
+   "properties": {
+    "pageNumber": {
+     "type": "integer"
+    },
+    "token": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caPageSize": {
+   "default": 25,
+   "maximum": 500,
+   "minimum": 1,
+   "type": "integer"
+  },
+  "caProcessedFile": {
+   "description": "Structure containing url, program, profile and metadata of processed output program: This is the program for which this transcoding is done. profile: This is the profile/outformat of the processed file. url: This is the…",
+   "properties": {
+    "fileMetadata": {
+     "$ref": "caProcessedFileMetadata"
+    },
+    "profile": {
+     "$ref": "caProcessedUrlType"
+    },
+    "programs": {
+     "items": {
+      "$ref": "caProgram"
+     },
+     "type": "array"
+    },
+    "url": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caProcessedFileMetadata": {
+   "description": "Structure containing metadata of processed file. contentHash: This is the location of the original source. contentType: This is the location of the original source. videoStreams: This contains the metadata of Video stre…",
+   "properties": {
+    "audioStreams": {
+     "items": {
+      "$ref": "caAudioStreamMetadata"
+     },
+     "type": "array"
+    },
+    "contentHash": {
+     "type": "string"
+    },
+    "contentType": {
+     "type": "string"
+    },
+    "videoStreams": {
+     "items": {
+      "$ref": "caVideoStreamMetadata"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "caProcessedUrlType": {
+   "description": "Enum containing different type of processed urls 1. `MODERATION`: This is an internal url that will be used to moderate the asset. 2. `IMAGE_THUMBNAIL_500`: This is the url for image asset type to support thumbnail rend…",
+   "enum": [
+    "MODERATION",
+    "IMAGE_THUMBNAIL_500",
+    "VIDEO_DEFAULT_OPTIMIZED",
+    "PRODUCT_VIDEO_OPTIMIZED",
+    "BACKGROUND_VIDEO_TILE",
+    "VIDEO_TILE",
+    "INTRO_SPLASH",
+    "MP4_260KBS_25FPS_48KHZ_64KBS_180P_H264_BASELINE",
+    "MP4_300KBS_15FPS_48KHZ_96KBS_360P",
+    "MP4_300KBS_30FPS_48KHZ_96KBS_360P_H264_BASELINE",
+    "MP4_320KBS_25FPS_48KHZ_96KBS_576P_H264_HIGH",
+    "MP4_375KBS_30FPS_48KHZ_192KBS_360P_H264_HIGH",
+    "MP4_450KBS_15FPS_48KHZ_96KBS_360P",
+    "MP4_450KBS_30FPS_48KHZ_96KBS_360P_H264_BASELINE",
+    "MP4_600KBS_15FPS_48KHZ_96KBS_480P",
+    "MP4_600KBS_30FPS_48KHZ_96KBS_480P_H264_BASELINE",
+    "MP4_600KBS_25FPS_48KHZ_128KBS_360P_H264_BASELINE",
+    "MP4_600KBS_30FPS_48KHZ_128KBS_360P_H264_BASELINE",
+    "MP4_700KBS_24FPS_48KHZ_96KBS_360P",
+    "MP4_750KBS_30FPS_48KHZ_192KBS_432P_H264_HIGH",
+    "MP4_750KBS_25FPS_48KHZ_96KBS_576P_H264_HIGH",
+    "MP4_900KBS_15FPS_48KHZ_96KBS_480P",
+    "MP4_900KBS_30FPS_48KHZ_96KBS_480P_H264_BASELINE",
+    "MP4_1350KBS_30FPS_48KHZ_96KBS_720P",
+    "MP4_1350KBS_30FPS_48KHZ_96KBS_720P_H264_HIGH",
+    "MP4_1350KBS_25FPS_48KHZ_128KBS_540P_H264_MAIN",
+    "MP4_1500KBS_24FPS_48KHZ_96KBS_576P",
+    "MP4_1500KBS_30FPS_48KHZ_192KBS_540P_H264_HIGH",
+    "MP4_1500KBS_25FPS_48KHZ_128KBS_576P_H264_HIGH",
+    "MP4_2000KBS_30FPS_48KHZ_96KBS_720P",
+    "MP4_2000KBS_30FPS_48KHZ_96KBS_720P_H264_HIGH",
+    "MP4_2000KBS_30FPS_48KHZ_192KBS_720P_H264_HIGH",
+    "MP4_2100KBS_30FPS_48KHZ_192KBS_576P_H264_HIGH",
+    "MP4_2100KBS_30FPS_48KHZ_192KBS_480P_H264_MAIN",
+    "MP4_3400KBS_30FPS_48KHZ_192KBS_1080P_H264_HIGH",
+    "MP4_3500KBS_24FPS_48KHZ_96KBS_1080P",
+    "MP4_3500KBS_30FPS_48KHZ_128KBS_720P_H264_HIGH",
+    "MP4_4000KBS_30FPS_48KHZ_192KBS_1080P",
+    "MP4_4000KBS_30FPS_48KHZ_192KBS_1080P_H264_HIGH",
+    "MP4_10000KBS_30FPS_48KHZ_320KBS_1080P",
+    "MP4_10000KBS_30FPS_48KHZ_320KBS_1080P_H264_HIGH",
+    "MP4_20000KBS_AUTOFPS_48KHZ_320KBS",
+    "MP4_20000KBS_AUTOFPS_48KHZ_320KBS_1080P_H264_HIGH",
+    "MP4_25000KBS_30FPS_48KHZ_192KBS_1080P_H264_HIGH",
+    "MP4_25000KBS_30FPS_48KHZ_192KBS_1080P_H264_MAIN"
+   ],
+   "type": "string"
+  },
+  "caProcessedUrlsMap": {
+   "additionalProperties": {
+    "type": "object"
+   },
+   "description": "Map containing processed urls of the asset. Key is the processed type and value is the url",
+   "type": "object"
+  },
+  "caProgram": {
+   "description": "Use this field to specify which program you are uploading an asset for. Currently, the accepted value here on registration is to associate an asset with a DSP advertiser.",
+   "enum": [
+    "A_PLUS",
+    "INTEGRATED_VIDEO_EXPERIENCE",
+    "SB",
+    "POSTS",
+    "STORES",
+    "SPONSORED_BRANDS_VIDEO",
+    "SPONSORED_DISPLAY_VIDEO",
+    "AMAZON_DSP",
+    "FIRE_TV",
+    "SPONSORED_TV",
+    "PRODUCT_DESCRIPTION_PAGE"
+   ],
+   "type": "string"
+  },
+  "caProgramSpecifications": {
+   "description": "Specification Check for program, This contains program name and specifications",
+   "properties": {
+    "specProgramName": {
+     "$ref": "caSpecificationProgram"
+    },
+    "specifications": {
+     "$ref": "caSpecificationList"
+    }
+   },
+   "type": "object"
+  },
+  "caProgramSpecificationsList": {
+   "description": "Specification Checks for all programs",
+   "items": {
+    "$ref": "caProgramSpecifications"
+   },
+   "type": "array"
+  },
+  "caRange": {
+   "properties": {
+    "end": {
+     "type": "string"
+    },
+    "start": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caRangeFilter": {
+   "description": "Filter assets which have certain ranges of asset attributes. For example, filter assets which have file size in the range of [10,20] or [40,50].",
+   "properties": {
+    "rangeField": {
+     "$ref": "caValueRangeFilterOptions"
+    },
+    "ranges": {
+     "items": {
+      "$ref": "caRange"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "caRegistrationContext": {
+   "description": "This is used on registration of an asset, to associate DSP assets to a specific advertiser. This is **required** for assets being uploaded for use in DSP.",
+   "properties": {
+    "associatedPrograms": {
+     "items": {
+      "$ref": "caAssociatedProgram"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "caRegistrationStatus": {
+   "description": "Possible statuses of batch registration request",
+   "enum": [
+    "FAILED",
+    "IN_PROGRESS",
+    "COMPLETE"
+   ],
+   "type": "string"
+  },
+  "caResourceNotFound": {
+   "description": "404 requested resource not found",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caSearchAssetText": {
+   "description": "The text used for searching assets, it matches asset name, asset name prefix, tags and ASINs associated with the assets",
+   "type": "string"
+  },
+  "caSearchRequestCommon": {
+   "properties": {
+    "filterCriteria": {
+     "$ref": "caFilterCriteria"
+    },
+    "pageCriteria": {
+     "$ref": "caPageCriteria"
+    },
+    "sortCriteria": {
+     "$ref": "caAssetSortCriteria"
+    },
+    "text": {
+     "$ref": "caSearchAssetText"
+    }
+   }
+  },
+  "caSpecCheckApprovedPrograms": {
+   "description": "List of spec programs for which asset spec check is approved",
+   "items": {
+    "$ref": "caSpecificationProgram"
+   },
+   "type": "array"
+  },
+  "caSpecification": {
+   "description": "Structure containing specification stringId: This is the translated string Id, client will be retrieving the translation corresponding to this string. failureReason: This specifies the failure reason of specification. a…",
+   "properties": {
+    "actualValue": {
+     "type": "string"
+    },
+    "arguments": {
+     "$ref": "caArgumentList"
+    },
+    "failureReason": {
+     "type": "string"
+    },
+    "isPassed": {
+     "type": "boolean"
+    },
+    "stringId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caSpecificationList": {
+   "description": "List of specifications",
+   "items": {
+    "$ref": "caSpecification"
+   },
+   "type": "array"
+  },
+  "caSpecificationProgram": {
+   "enum": [
+    "SPONSORED_BRANDS_VIDEO",
+    "SPONSORED_DISPLAY_VIDEO",
+    "SPONSORED_DISPLAY_LANDSCAPE_VIDEO",
+    "SPONSORED_DISPLAY_PORTRAIT_VIDEO",
+    "SPONSORED_DISPLAY_SQUARE_VIDEO",
+    "STORES_VIDEO_TILE",
+    "STORES_BACKGROUND_VIDEO_TILE",
+    "STORES_INTRO_SPLASH",
+    "FIRE_TV_FEATURE_ROTATOR",
+    "SPONSORED_TV",
+    "SPONSORED_BRANDS_VIDEO_PORTRAIT",
+    "DEMAND_SIDE_PLATFORM_OTT",
+    "DEMAND_SIDE_PLATFORM_OLV",
+    "DEMAND_SIDE_PLATFORM_H1_DESKTOP",
+    "DEMAND_SIDE_PLATFORM_H1_MOBILE",
+    "LIVE_IMAGE_SPONSORED_DISPLAY"
+   ],
+   "type": "string"
+  },
+  "caStorageLocationUrls": {
+   "properties": {
+    "defaultUrl": {
+     "type": "string"
+    },
+    "processedUrls": {
+     "$ref": "caProcessedUrlsMap"
+    }
+   },
+   "type": "object"
+  },
+  "caSuccessfulRegistrationDetails": {
+   "description": "Structure containing details of successful registration for each url in a batch registration request.",
+   "properties": {
+    "assetIdentifier": {
+     "$ref": "caAssetIdentifier"
+    },
+    "url": {
+     "description": "Url of the media file as provided in the input of batch registration request.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caSuccessfulRegistrationDetailsList": {
+   "description": "List containing successful registration details",
+   "items": {
+    "$ref": "caSuccessfulRegistrationDetails"
+   },
+   "maxItems": 100,
+   "minItems": 0,
+   "type": "array"
+  },
+  "caTagList": {
+   "description": "List of tags.",
+   "items": {
+    "$ref": "caTagName"
+   },
+   "maxItems": 10,
+   "minItems": 1,
+   "type": "array"
+  },
+  "caTagName": {
+   "description": "Tag Name.",
+   "type": "string"
+  },
+  "caThrottledRequest": {
+   "description": "429 request throttled",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caURL": {
+   "description": "The URL of the asset.",
+   "type": "string"
+  },
+  "caUnauthorizedRequest": {
+   "description": "401 unauthorized request",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caValueFilter": {
+   "description": "Filter for certain values of asset attributes",
+   "properties": {
+    "valueField": {
+     "enum": [
+      "TAG",
+      "ASIN",
+      "CAMPAIGN_NAME",
+      "CAMPAIGN_ID",
+      "PROGRAM",
+      "ASSET_TYPE",
+      "ASSET_SUB_TYPE",
+      "APPROVED_AD_POLICY",
+      "ASSET_EXTENSION"
+     ],
+     "type": "string"
+    },
+    "values": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "caValueFilterOptions": {
+   "anyOf": [
+    {
+     "$ref": "ASSET_TYPE"
+    },
+    {
+     "$ref": "TAG"
+    },
+    {
+     "$ref": "ASSET_SUB_TYPE"
+    },
+    {
+     "$ref": "APPROVED_AD_POLICY"
+    },
+    {
+     "$ref": "ASSET_EXTENSION"
+    },
+    {
+     "$ref": "PROGRAM"
+    },
+    {
+     "$ref": "ASIN"
+    },
+    {
+     "$ref": "CAMPAIGN_NAME"
+    },
+    {
+     "$ref": "CAMPAIGN_ID"
+    }
+   ]
+  },
+  "caValueRangeFilterOptions": {
+   "anyOf": [
+    {
+     "$ref": "SIZE"
+    },
+    {
+     "$ref": "DATE_UPLOADED"
+    }
+   ]
+  },
+  "caVersion": {
+   "description": "The version of the asset.",
+   "type": "string"
+  },
+  "caVersionInfo": {
+   "properties": {
+    "linkedAssetId": {
+     "description": "The registering asset will be created as a new version of this linkedAssetId.",
+     "type": "string"
+    },
+    "versionNotes": {
+     "description": "The version notes that client can associate to the asset.Versioning enables users to update an old asset, so that you can ensure the latest asset is being used. You can upload a new version of an existing asset along wi…",
+     "maxLength": 1000,
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "caVideoStreamMetadata": {
+   "description": "Structure containing metadata of Video Stream. profile: This is the profile of the stream. width: This is the resolution width of stream. height: This is the resolution height of stream. duration: This is the duration o…",
+   "properties": {
+    "bitRate": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "codecName": {
+     "type": "string"
+    },
+    "codecType": {
+     "type": "string"
+    },
+    "displayAspectRatio": {
+     "type": "string"
+    },
+    "duration": {
+     "format": "double",
+     "type": "number"
+    },
+    "frameRate": {
+     "format": "double",
+     "type": "number"
+    },
+    "height": {
+     "type": "integer"
+    },
+    "profile": {
+     "type": "string"
+    },
+    "width": {
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "caassetSubTypes": {
+   "description": "1. For assetType `IMAGE` acceptable assetSubTypes are `LOGO`, `PRODUCT_IMAGE`, `AUTHOR_IMAGE`, `LIFESTYLE_IMAGE`, `OTHER_IMAGE` 2. For assetType `VIDEO` acceptable assetSubtype is `BACKGROUND_VIDEO`.",
+   "items": {
+    "$ref": "caAssetSubType"
+   },
+   "maxItems": 10,
+   "minItems": 1,
+   "type": "array"
+  }
+ }
+}

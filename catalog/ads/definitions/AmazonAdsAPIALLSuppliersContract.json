@@ -1,0 +1,644 @@
+{
+ "api": "AmazonAdsAPIALLSuppliersContract",
+ "file": "specs/dest/AmazonAdsAPIALLSuppliersContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CountryCode": {
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "CL",
+    "CO",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NG",
+    "NL",
+    "NZ",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "DeliveryChannel": {
+   "description": "Where a supply source shows its ads, and how that inventory is bought. For example, desktop web bought through real-time bidding, or in-app inventory bought through a direct deal. **DeliveryChannel Enum:** | DeliveryCha…",
+   "enum": [
+    "CTV-RTB",
+    "MobileApp-RTB",
+    "Web-RTB"
+   ],
+   "type": "string"
+  },
+  "DeviceType": {
+   "description": "**DeviceType Enum:** | DeviceType | Description | | --- | --- | | `DESKTOP` | Desktop computers and laptops. | | `MOBILE` | Mobile phones and tablets. | | `CONNECTED_TV` | Connected TV devices. | | `CONNECTED_DEVICE` | …",
+   "enum": [
+    "CONNECTED_DEVICE",
+    "CONNECTED_TV",
+    "DESKTOP",
+    "MOBILE"
+   ],
+   "type": "string"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_NOT_FOUND",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "RESOURCE_ID_NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "IntegrationType": {
+   "description": "**IntegrationType Enum:** | IntegrationType | Description | | --- | --- | | `DIRECT` | Supplier is directly integrated with ADSP via OpenRTB. | | `BIDSWITCH` | Supplier routes inventory through BidSwitch as an intermedi…",
+   "enum": [
+    "BIDSWITCH",
+    "DIRECT"
+   ],
+   "type": "string"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InventoryType": {
+   "description": "**InventoryType Enum:** | InventoryType | Description | | --- | --- | | `STANDARD_DISPLAY` | | | `AMAZON_MOBILE_DISPLAY` | | | `AAP_MOBILE_APP` | | | `DISPLAY` | | | `MOBILE_DISPLAY` | Display ads optimized for mobile d…",
+   "enum": [
+    "AAP_MOBILE_APP",
+    "ALEXA_DEVICES",
+    "ALL",
+    "AMAZON_MOBILE_DISPLAY",
+    "AUDIO",
+    "AUDIO_AMAZON_DEAL",
+    "DIGITAL_OUT_OF_HOME",
+    "DISPLAY",
+    "LIVE_EVENTS",
+    "MOBILE_DISPLAY",
+    "NATIVE",
+    "ONLINE_VIDEO",
+    "PODCAST",
+    "STANDARD_DISPLAY",
+    "STREAMING_TV",
+    "STREAMING_TV_AMAZON_DEAL",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QuerySupplierRequest": {
+   "properties": {
+    "adProductFilter": {
+     "$ref": "SupplierAdProductFilter"
+    },
+    "integrationTypeFilter": {
+     "$ref": "SupplierIntegrationTypeFilter"
+    },
+    "maxResults": {
+     "default": 10,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "openAuctionDeliveryChannelsFilter": {
+     "$ref": "SupplierDeliveryChannelFilter"
+    },
+    "openAuctionDeviceTypesFilter": {
+     "$ref": "SupplierDeviceTypeFilter"
+    },
+    "openAuctionInventoryTypesFilter": {
+     "$ref": "SupplierInventoryTypeFilter"
+    },
+    "sort": {
+     "items": {
+      "$ref": "SupplierSortOption"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "stateFilter": {
+     "$ref": "SupplierSupplierStateFilter"
+    },
+    "supplierIdFilter": {
+     "$ref": "SupplierSupplierIdFilter"
+    },
+    "supplierNameFilter": {
+     "$ref": "SupplierSupplierNameFilter"
+    },
+    "typeFilter": {
+     "$ref": "SupplierSupplierTypeFilter"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SortDirection": {
+   "description": "**SortDirection Enum:** | SortDirection | Description | | --- | --- | | `ASCENDING` | Sort in ascending order | | `DESCENDING` | Sort in descending order |",
+   "enum": [
+    "ASCENDING",
+    "DESCENDING"
+   ],
+   "type": "string"
+  },
+  "Supplier": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "canonicalId": {
+     "description": "The identifier advertisers use to target this supplier.",
+     "type": "string"
+    },
+    "countries": {
+     "description": "ISO 3166-1 alpha-2 country codes where supplier operates.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "domain": {
+     "description": "Corporate SCO domain in sellers.json supply chain object (e.g., pubmatic.com).",
+     "type": "string"
+    },
+    "integrationType": {
+     "$ref": "IntegrationType"
+    },
+    "owner": {
+     "description": "Parent owner company name of the Supplier. Defaults to brand name if unspecified.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SupplierState"
+    },
+    "supplierId": {
+     "description": "The unique identifier of the supplier (Long serialized as String).",
+     "type": "string"
+    },
+    "supplierName": {
+     "description": "Canonical display name of the Supplier. Normalized across systems.",
+     "type": "string"
+    },
+    "supportedDeliveryChannels": {
+     "$ref": "SupplierSupportedDeliveryChannels"
+    },
+    "supportedDeviceTypes": {
+     "$ref": "SupplierSupportedDeviceTypes"
+    },
+    "supportedInventoryTypes": {
+     "$ref": "SupplierSupportedInventoryTypes"
+    },
+    "type": {
+     "$ref": "SupplierType"
+    }
+   },
+   "required": [
+    "adProduct",
+    "supplierId",
+    "supplierName"
+   ],
+   "type": "object"
+  },
+  "SupplierAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+     "items": {
+      "$ref": "AdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierDeliveryChannelFilter": {
+   "properties": {
+    "include": {
+     "description": "**OpenAuctionDeliveryChannels Enum:** | OpenAuctionDeliveryChannels | Description | | --- | --- | | `Web-RTB` | Desktop and mobile web ads bought through real-time bidding. Third-party exchange supply. | | `MobileApp-RT…",
+     "items": {
+      "$ref": "DeliveryChannel"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierDeviceTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**OpenAuctionDeviceTypes Enum:** | OpenAuctionDeviceTypes | Description | | --- | --- | | `DESKTOP` | Desktop computers and laptops. | | `MOBILE` | Mobile phones and tablets. | | `CONNECTED_TV` | Connected TV devices. |…",
+     "items": {
+      "$ref": "DeviceType"
+     },
+     "maxItems": 4,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierIntegrationTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**IntegrationType Enum:** | IntegrationType | Description | | --- | --- | | `DIRECT` | Supplier is directly integrated with ADSP via OpenRTB. | | `BIDSWITCH` | Supplier routes inventory through BidSwitch as an intermedi…",
+     "items": {
+      "$ref": "IntegrationType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierInventoryTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**OpenAuctionInventoryTypes Enum:** | OpenAuctionInventoryTypes | Description | | --- | --- | | `STANDARD_DISPLAY` | | | `AMAZON_MOBILE_DISPLAY` | | | `AAP_MOBILE_APP` | | | `DISPLAY` | | | `MOBILE_DISPLAY` | Display ad…",
+     "items": {
+      "$ref": "InventoryType"
+     },
+     "maxItems": 17,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierSortOption": {
+   "properties": {
+    "by": {
+     "$ref": "SupplierSortOptionsFields"
+    },
+    "direction": {
+     "$ref": "SortDirection"
+    }
+   },
+   "required": [
+    "by"
+   ],
+   "type": "object"
+  },
+  "SupplierSortOptionsFields": {
+   "description": "Specify which field to order by. | Field Name | Supported Ordering | | --- | --- | | supplierName | ASCENDING,DESCENDING |",
+   "enum": [
+    "supplierName"
+   ],
+   "type": "string"
+  },
+  "SupplierState": {
+   "description": "**SupplierState Enum:** | SupplierState | Description | | --- | --- | | `CREATED` | Supplier record created but not yet in testing. | | `TESTING` | Integration is in testing or onboarding phase. | | `ACTIVE` | Supplier …",
+   "enum": [
+    "ACTIVE",
+    "CREATED",
+    "INACTIVE",
+    "TESTING"
+   ],
+   "type": "string"
+  },
+  "SupplierSuccessResponse": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "suppliers": {
+     "items": {
+      "$ref": "Supplier"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SupplierSupplierIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierSupplierNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "SupplierSupplierNameFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "SupplierSupplierNameFilterType": {
+   "description": "**SupplierSupplierNameFilterType Enum:** | SupplierSupplierNameFilterType | Description | | --- | --- | | `BROAD_MATCH` | Filter by broad match. |",
+   "enum": [
+    "BROAD_MATCH"
+   ],
+   "type": "string"
+  },
+  "SupplierSupplierStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `CREATED` | Supplier record created but not yet in testing. | | `TESTING` | Integration is in testing or onboarding phase. | | `ACTIVE` | Supplier is live and send…",
+     "items": {
+      "$ref": "SupplierState"
+     },
+     "maxItems": 4,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierSupplierTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**Type Enum:** | Type | Description | | --- | --- | | `THIRD_PARTY_EXCHANGE` | Third-party exchange (3PX). External SSP or exchange such as Magnite, PubMatic, or Index Exchange. | | `AMAZON_OWNED_AND_OPERATED` | Amazon …",
+     "items": {
+      "$ref": "SupplierType"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierSupportedDeliveryChannels": {
+   "description": "Which delivery channels a supplier can serve, grouped by how that inventory is bought. Each field covers one buying method, so a new method can be added later as its own field.",
+   "properties": {
+    "openAuctionDeliveryChannels": {
+     "description": "The delivery channels this supplier offers in the open auction. An EMPTY list means the supplier cannot be targeted in the open auction.",
+     "items": {
+      "$ref": "DeliveryChannel"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SupplierSupportedDeviceTypes": {
+   "description": "Which classes of device a supplier can serve, grouped by how that inventory is bought.",
+   "properties": {
+    "openAuctionDeviceTypes": {
+     "description": "The classes of device this supplier reaches in the open auction. An EMPTY list means the supplier cannot be targeted in the open auction.",
+     "items": {
+      "$ref": "DeviceType"
+     },
+     "maxItems": 4,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SupplierSupportedInventoryTypes": {
+   "description": "What kinds of inventory a supplier can serve, grouped by how that inventory is bought. Each field covers one buying method, so a new method can be added later as its own field.",
+   "properties": {
+    "openAuctionInventoryTypes": {
+     "description": "The kinds of inventory this supplier offers in the open auction. An EMPTY list means the supplier cannot be targeted in the open auction.",
+     "items": {
+      "$ref": "InventoryType"
+     },
+     "maxItems": 17,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SupplierType": {
+   "description": "The three supply categories an advertiser sees on the line item page. **SupplierType Enum:** | SupplierType | Description | | --- | --- | | `THIRD_PARTY_EXCHANGE` | Third-party exchange (3PX). External SSP or exchange s…",
+   "enum": [
+    "AMAZON_OWNED_AND_OPERATED",
+    "AMAZON_PUBLISHER_DIRECT",
+    "THIRD_PARTY_EXCHANGE"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

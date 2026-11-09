@@ -1,0 +1,3761 @@
+[
+  {
+    "status": "both",
+    "roles": [
+      "logged-in user with a profile"
+    ],
+    "filters": [
+      "Campaign name search",
+      "Dynamic filters from profile config",
+      "Date range (no Life time preset)",
+      "Shortcut: Show last 30 days"
+    ],
+    "urlState": [
+      "tab=campaign-dashboard|atlas-dashboard",
+      "profileId"
+    ],
+    "forms": [],
+    "columns": [
+      {
+        "name": "Campaigns almost/out of budget: Campaign, Status, Budget + 4 swappable metrics (default sale, spend, acos, cr)",
+        "metric": false,
+        "definition": "Top 4 rows sorted by out-of-budget percent desc."
+      },
+      {
+        "name": "Keyword targets with abnormal ACOS increase: Targeting + 4 metrics (default acos, click, ctr, sale)",
+        "metric": false,
+        "definition": "Rows where last-7-day ACOS rose >= 15 (points); top 4."
+      },
+      {
+        "name": "Product targets with abnormal ACOS increase: same shape",
+        "metric": false,
+        "definition": "Same rule, target type product; top 4."
+      },
+      {
+        "name": "ASINs with abnormal ACOS increase: ASIN + 4 metrics",
+        "metric": false,
+        "definition": "Same rule on products; top 3."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Stat cards: Assigned issues, ASIN out of stock, Product ads ineligible",
+        "kind": "inline",
+        "amazonWrite": false
+      },
+      {
+        "name": "Download ineligible-ASIN report",
+        "kind": "export",
+        "amazonWrite": false,
+        "note": "Requests a background report, then opens Reports."
+      },
+      {
+        "name": "Swap a metric column (menu lists only unused metrics, session-only)",
+        "kind": "inline",
+        "amazonWrite": false
+      },
+      {
+        "name": "See all / View More -> opens target list in new tab with filters, dates, pageSize 50 carried over",
+        "kind": "inline",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "campaigns/get-list"
+      },
+      {
+        "method": "POST",
+        "path": "target/get-all-targeting"
+      },
+      {
+        "method": "POST",
+        "path": "product/get-list"
+      },
+      {
+        "method": "POST",
+        "path": "ticket-management/get-all-ticket"
+      },
+      {
+        "method": "POST",
+        "path": "download-histories/get-status-asins-ineligible"
+      },
+      {
+        "method": "POST",
+        "path": "download-histories/download-asins-status"
+      }
+    ],
+    "notes": "Second tab embeds an external BI report in an iframe (scaled to width, spinner until loaded). Search/filter/date/metric choices are intentionally NOT in the URL. Tables fail independently with Retry; skeleton row counts equal real row counts. \"Assigned issues\" and ineligible ASIN download come from an internal ticket system: internal.",
+    "internal": true,
+    "route": "/",
+    "title": "Home / issue dashboard",
+    "entity": "dashboard",
+    "amazonConcept": "Cross-entity KPIs (campaigns, targets, ASINs)",
+    "internalNote": "Issue tickets + BI embed are internal. A generic version (dashboard of campaigns out of budget, targets with ACOS spikes, out-of-stock ASINs from SP-API inventory) makes sense for any seller."
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW (read)",
+      "CAMPAIGN_EDIT (bulk/inline/copy/create)"
+    ],
+    "filters": [
+      "Search by name",
+      "Filter dialog: single/multi value, comparison (=, >, >=, <, <=, between) on metrics",
+      "Date range with presets + Compare toggle",
+      "Entity tab (Campaigns, Ad groups, Product ads, Targeting Keywords, Targeting Products & Auto)",
+      "Sort one column",
+      "Page size 5/10/15/20/25/30/50/100"
+    ],
+    "urlState": [
+      "entity=<tab>",
+      "per-tab prefixed search/filters/sort/page (adGroups.*, productAds.*, keywordTargets.*)",
+      "date range + compare, pageSize, profileId, selection",
+      "campaign/ad-group scope that narrows later tabs"
+    ],
+    "forms": [
+      {
+        "name": "Adjust budget",
+        "fields": [
+          {
+            "name": "rule",
+            "type": "select(5 rules)",
+            "validation": "required"
+          },
+          {
+            "name": "value",
+            "type": "money or whole percent",
+            "validation": "> 0; money digits + one dot, 2 decimals; percent integers only"
+          }
+        ]
+      },
+      {
+        "name": "Copy campaign",
+        "fields": [
+          {
+            "name": "name",
+            "type": "text",
+            "validation": ""
+          },
+          {
+            "name": "start/end date",
+            "type": "date",
+            "validation": "end not before start"
+          },
+          {
+            "name": "pause after creation",
+            "type": "checkbox",
+            "validation": ""
+          }
+        ]
+      },
+      {
+        "name": "Copy to another profile",
+        "fields": [
+          {
+            "name": "target ads account",
+            "type": "select",
+            "validation": "must differ from current"
+          },
+          {
+            "name": "start date",
+            "type": "date",
+            "validation": "default today in profile timezone"
+          },
+          {
+            "name": "pause",
+            "type": "checkbox",
+            "validation": ""
+          }
+        ]
+      }
+    ],
+    "columns": [
+      {
+        "name": "Active (switch)",
+        "metric": false,
+        "definition": "Writes campaign state; locked when archived, ended or end date passed, or no edit permission."
+      },
+      {
+        "name": "Campaign name",
+        "metric": false,
+        "definition": "Link to detail; inline rename; row menu with Copy."
+      },
+      {
+        "name": "AWS Name",
+        "metric": false,
+        "definition": "Name as stored at Amazon (read-only)."
+      },
+      {
+        "name": "Status",
+        "metric": false,
+        "definition": "Delivery status chip."
+      },
+      {
+        "name": "Type",
+        "metric": false,
+        "definition": "SP/SB/SD plus second line with targeting kind."
+      },
+      {
+        "name": "Portfolio",
+        "metric": false,
+        "definition": "Link to portfolio; literal \"No Portfolio\" when none."
+      },
+      {
+        "name": "Bidding strategy",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Start date",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "End date",
+        "metric": false,
+        "definition": "Editable inline; \"No End Date\" option; locked when archived (SB also ended)."
+      },
+      {
+        "name": "Budget",
+        "metric": false,
+        "definition": "Editable inline within marketplace min/max; second line \"Daily|Lifetime - Recommend $x\" (click applies suggestion)."
+      },
+      {
+        "name": "Top-of-search IS",
+        "metric": true,
+        "definition": "Share of top-of-search impressions received out of those the campaign was eligible for; SB and SP only; last 90 days only. For SP it is the first-page top-of-search placement."
+      },
+      {
+        "name": "Spend",
+        "metric": true,
+        "definition": "Total charges for clicks/impressions in the period. Late invalid-click removal can lower recent days for up to ~3 days."
+      },
+      {
+        "name": "Orders",
+        "metric": true,
+        "definition": "Orders attributed to ads in the attribution window (14 days); attribution scope differs by ad product; cancelled/failed-payment orders removed after ~72h."
+      },
+      {
+        "name": "Sales",
+        "metric": true,
+        "definition": "Sales value attributed to ads in the attribution window; same attribution rules as Orders; data can lag up to ~12h."
+      },
+      {
+        "name": "Clicks",
+        "metric": true,
+        "definition": "Number of ad clicks (invalid clicks removed later)."
+      },
+      {
+        "name": "Impressions",
+        "metric": true,
+        "definition": "Number of times the ads were shown."
+      },
+      {
+        "name": "CR",
+        "metric": true,
+        "definition": "Conversion rate. INFERRED: orders / clicks. Not defined in the legacy UI; computed by backend."
+      },
+      {
+        "name": "CTR",
+        "metric": true,
+        "definition": "Click-through rate = clicks / impressions."
+      },
+      {
+        "name": "CPC",
+        "metric": true,
+        "definition": "Cost per click = average paid per click."
+      },
+      {
+        "name": "CPM",
+        "metric": true,
+        "definition": "Cost per 1000 impressions. INFERRED: spend / impressions * 1000."
+      },
+      {
+        "name": "ACOS",
+        "metric": true,
+        "definition": "Advertising cost of sales = spend / sales."
+      },
+      {
+        "name": "ROAS",
+        "metric": true,
+        "definition": "Return on ad spend = sales / spend."
+      },
+      {
+        "name": "CPO",
+        "metric": true,
+        "definition": "Cost per order. INFERRED: spend / orders."
+      },
+      {
+        "name": "CPU",
+        "metric": true,
+        "definition": "Cost per unit. INFERRED: spend / units sold; unit source unclear. Backend can filter by it although the legacy UI did not offer it."
+      },
+      {
+        "name": "AOV",
+        "metric": true,
+        "definition": "Average order value. INFERRED: sales / orders."
+      },
+      {
+        "name": "Total row",
+        "metric": false,
+        "definition": "Sum/aggregate row under the table; Budget total recalculated after budget edits; hidden for a configured list of profiles."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Enable / Pause / Archive (bulk, with confirm; Archive irreversible)",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Adjust budget (+$ / +% / set to $ / -$ / -% ; result must be > 0)",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Move to portfolio / Remove from portfolio",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Copy to another profile (bulk)",
+        "kind": "bulk",
+        "amazonWrite": true,
+        "note": "Copy excludes budget rules, automation rules and creatives."
+      },
+      {
+        "name": "Copy campaign within profile (name, dates, pause-after-create)",
+        "kind": "edit",
+        "amazonWrite": true
+      },
+      {
+        "name": "Inline: switch, name, budget, end date, apply suggested budget",
+        "kind": "inline",
+        "amazonWrite": true
+      },
+      {
+        "name": "Ad groups tab bulk: Enable/Pause/Archive",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Product ads tab bulk: Enable/Pause",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Keyword/product target bulk: Adjust bid, Apply suggested bid, Adjust state",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Export (client xlsx of selected or current page; or background export up to 1000 selected)",
+        "kind": "export",
+        "amazonWrite": false
+      },
+      {
+        "name": "Create campaign (objective chooser SP/SB/SD)",
+        "kind": "create",
+        "amazonWrite": true
+      },
+      {
+        "name": "Column menu: show/hide, reorder, pin left/right, resize; saved per browser",
+        "kind": "inline",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "campaigns/get-list"
+      },
+      {
+        "method": "POST",
+        "path": "ad-group/get-list"
+      },
+      {
+        "method": "POST",
+        "path": "product-ads/get-list"
+      },
+      {
+        "method": "POST",
+        "path": "target/get-all-targeting"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/update-multiple"
+      },
+      {
+        "method": "PUT",
+        "path": "campaigns/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "ad-group/update-state"
+      },
+      {
+        "method": "POST",
+        "path": "product-ads/update-state"
+      },
+      {
+        "method": "POST",
+        "path": "keyword/updates"
+      },
+      {
+        "method": "POST",
+        "path": "target/updates"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/clone"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/clone-from-profile"
+      },
+      {
+        "method": "POST",
+        "path": "portfolio/list-for-filter"
+      },
+      {
+        "method": "POST",
+        "path": "exports"
+      }
+    ],
+    "notes": "Selection limit 300 campaigns (100 for child tabs), kept across pages. Inline edits send the WHOLE campaign record (PUT replaces). Bulk writes return HTTP 200 with partial failures: show Successful/Failed counts + error file; totalSuccess=0 means rejection. Seller accounts can only pick SP in the objective chooser. Date \"today\" and calendar ceiling use the profile timezone, Life time = 2023-01-01..today. v1 and v2 of the same screen coexist; v2 columns must equal v1 columns. Recommendations and Daily-max-budget columns were removed in v2.",
+    "internal": false,
+    "route": "/campaign (also /campaigns, /campaigns/[campaignType])",
+    "title": "Sponsored Ads manager (listing)",
+    "entity": "campaign / ad group / product ad / keyword target / product+auto target",
+    "amazonConcept": "Sponsored Products/Brands/Display campaigns, ad groups, product ads, targets (Ads API)"
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_EDIT"
+    ],
+    "filters": [],
+    "urlState": [
+      "returnTo (sanitised internal path)",
+      "portfolioID prefill"
+    ],
+    "forms": [
+      {
+        "name": "Campaign settings",
+        "fields": [
+          {
+            "name": "Campaign name",
+            "type": "text",
+            "validation": "required, <=117 chars, no ! # % < >, default \"Campaign - <timestamp>\""
+          },
+          {
+            "name": "Portfolio",
+            "type": "select (enabled only)",
+            "validation": "optional"
+          },
+          {
+            "name": "Start",
+            "type": "date",
+            "validation": "not before today (profile tz), not after End"
+          },
+          {
+            "name": "End",
+            "type": "date|No End Date",
+            "validation": "not before Start"
+          },
+          {
+            "name": "Country",
+            "type": "locked",
+            "validation": "from profile"
+          },
+          {
+            "name": "Budget",
+            "type": "money",
+            "validation": "min 1.00, max 1,000,000.00 (marketplace constraints), 2 decimals"
+          }
+        ]
+      },
+      {
+        "name": "Sites",
+        "fields": [
+          {
+            "name": "Site restriction",
+            "type": "radio: Amazon and beyond | Amazon Business",
+            "validation": "section shown only if profile allows"
+          }
+        ]
+      },
+      {
+        "name": "Bidding strategy",
+        "fields": [
+          {
+            "name": "strategy",
+            "type": "radio: dynamic up/down | dynamic down only (default) | fixed",
+            "validation": ""
+          }
+        ]
+      },
+      {
+        "name": "Bid adjustments",
+        "fields": [
+          {
+            "name": "Top of search / Product pages / Rest of search %",
+            "type": "int",
+            "validation": "0-900"
+          },
+          {
+            "name": "Amazon Business placement",
+            "type": "switch",
+            "validation": "hidden when site = Amazon Business; 0% row not sent"
+          },
+          {
+            "name": "Audience adjustments",
+            "type": "audience + %",
+            "validation": "audience required, 1-900"
+          }
+        ]
+      },
+      {
+        "name": "Ad group",
+        "fields": [
+          {
+            "name": "Ad name",
+            "type": "text",
+            "validation": "required, <=244 chars, no ! # % < >"
+          }
+        ]
+      },
+      {
+        "name": "Products",
+        "fields": [
+          {
+            "name": "ASINs",
+            "type": "suggested list | pasted list | uploaded file",
+            "validation": ">=1; rejects invalid (!=10 chars), duplicate, non-existent, ineligible ASINs with per-reason lists"
+          }
+        ]
+      },
+      {
+        "name": "Targeting",
+        "fields": [
+          {
+            "name": "mode",
+            "type": "Automatic | Manual keyword | Manual product",
+            "validation": "required"
+          },
+          {
+            "name": "auto: default bid or per-group bids (close, loose, substitutes, complements)",
+            "type": "money",
+            "validation": "bid in [marketplace min, min(max bid, budget)]; >=1 group on"
+          },
+          {
+            "name": "keywords",
+            "type": "list x match type (broad/phrase/exact)",
+            "validation": ">=1, <=150 rows, no ? / \" & \\, <=80 chars, <=10 words; missing suggested bid prompts alternate bid"
+          },
+          {
+            "name": "product targets",
+            "type": "categories (tree, refine by brand) | individual products",
+            "validation": ">=1, <=150"
+          },
+          {
+            "name": "negative keywords",
+            "type": "negative exact|phrase",
+            "validation": "<=200; phrase <=4 words, exact <=10 words"
+          },
+          {
+            "name": "negative products/brands",
+            "type": "list",
+            "validation": "<=200"
+          }
+        ]
+      },
+      {
+        "name": "Launch confirm",
+        "fields": [
+          {
+            "name": "initial state",
+            "type": "switch Enable/Pause",
+            "validation": ""
+          }
+        ]
+      }
+    ],
+    "columns": [],
+    "actions": [
+      {
+        "name": "Launch campaign (create)",
+        "kind": "create",
+        "amazonWrite": true
+      },
+      {
+        "name": "Add / Add All / Remove All suggestions",
+        "kind": "inline",
+        "amazonWrite": false
+      },
+      {
+        "name": "Export added lists",
+        "kind": "export",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "campaigns"
+      },
+      {
+        "method": "POST",
+        "path": "keyword/get-recommend"
+      },
+      {
+        "method": "POST",
+        "path": "target/get-bid-recommend"
+      },
+      {
+        "method": "POST",
+        "path": "target/get-product-recommend"
+      },
+      {
+        "method": "POST",
+        "path": "category/get-recommend"
+      },
+      {
+        "method": "POST",
+        "path": "category/get-list"
+      },
+      {
+        "method": "GET",
+        "path": "category/get-refine/{categoryId}"
+      },
+      {
+        "method": "GET",
+        "path": "audience/get-list-audience/{campaignType}"
+      },
+      {
+        "method": "POST",
+        "path": "negative-target/brand-search"
+      },
+      {
+        "method": "GET",
+        "path": "negative-target/brand-recommend"
+      }
+    ],
+    "notes": "Targeting sections appear only after >=1 product. Launch disabled with tooltip listing up to 6 blockers; blocked with a toast while marketplace budget/bid limits are still loading (otherwise comparisons pass falsely). Changing product set while Automatic re-fetches suggested bids and discards manual edits. Hidden sections are never sent. No review screen after success: toast + back to list. Error dialog shows status + message + Copy Error Content. Vendor accounts (no SKU) can add products without SKU.",
+    "internal": false,
+    "route": "/campaign/create, /campaign/create-sponser-product",
+    "title": "Create Sponsored Products campaign",
+    "entity": "campaign + ad group + product ads + targeting",
+    "amazonConcept": "SP campaign create (Ads API)"
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_EDIT"
+    ],
+    "filters": [],
+    "urlState": [
+      "v=1|2 selects legacy vs rebuilt page",
+      "portfolioID prefill"
+    ],
+    "forms": [
+      {
+        "name": "Goal",
+        "fields": [
+          {
+            "name": "goal",
+            "type": "card: Drive page visits (CPC) | Grow brand impression share (vCPM)",
+            "validation": "required; changing it after choice asks confirmation and resets goal-dependent sections but keeps name, portfolio, budget, schedule, site, dynamic bidding"
+          }
+        ]
+      },
+      {
+        "name": "Campaign settings",
+        "fields": [
+          {
+            "name": "name",
+            "type": "text",
+            "validation": "required, <=117, no ! # % < >"
+          },
+          {
+            "name": "portfolio",
+            "type": "select",
+            "validation": "optional"
+          },
+          {
+            "name": "budget type",
+            "type": "Daily|Lifetime",
+            "validation": ""
+          },
+          {
+            "name": "budget",
+            "type": "money",
+            "validation": "within marketplace min/max for type (fallback 1..1,000,000)"
+          },
+          {
+            "name": "start/end",
+            "type": "date",
+            "validation": "start not before today in marketplace tz; end not before start"
+          }
+        ]
+      },
+      {
+        "name": "Sites",
+        "fields": [
+          {
+            "name": "site",
+            "type": "Amazon | Amazon Business",
+            "validation": "only if profile constraint enabled"
+          }
+        ]
+      },
+      {
+        "name": "Ad group and Ad",
+        "fields": [
+          {
+            "name": "ad group name",
+            "type": "text",
+            "validation": "required <=117 no special chars"
+          },
+          {
+            "name": "ad format",
+            "type": "Store Spotlight | Video | Brand video | Product collection",
+            "validation": ""
+          },
+          {
+            "name": "collection type",
+            "type": "Manual (Automatic disabled \"Coming soon\")",
+            "validation": ""
+          },
+          {
+            "name": "landing page",
+            "type": "Brand Store | Product detail page (video only)",
+            "validation": ""
+          },
+          {
+            "name": "products",
+            "type": "ASIN picker",
+            "validation": "collection 3-10; product list >=3; detail page >=1; Store Spotlight needs 3 subpages each with a distinct ASIN"
+          },
+          {
+            "name": "creative",
+            "type": "brand name, logo, headline, video, ad title",
+            "validation": "brand/logo/headline/video required per format; ad title <=32"
+          }
+        ]
+      },
+      {
+        "name": "Targeting",
+        "fields": [
+          {
+            "name": "mode",
+            "type": "Keyword | Product",
+            "validation": "only for CPC goal and non-automatic collection; otherwise implicit keyword"
+          },
+          {
+            "name": "rows",
+            "type": "keywords/targets",
+            "validation": "<=150 keywords, <=150 targets, <=200 negative keywords"
+          }
+        ]
+      },
+      {
+        "name": "Cost control",
+        "fields": [
+          {
+            "name": "target average CPC",
+            "type": "money",
+            "validation": "only goal Page visit + Store/Video formats; >= 0.50 and <= daily budget"
+          }
+        ]
+      },
+      {
+        "name": "Campaign bid adjustments",
+        "fields": [
+          {
+            "name": "placement %",
+            "type": "int",
+            "validation": "0-900"
+          },
+          {
+            "name": "audience %",
+            "type": "int",
+            "validation": "1-900"
+          }
+        ]
+      }
+    ],
+    "columns": [],
+    "actions": [
+      {
+        "name": "Create (confirm dialog with Enable/Pause switch)",
+        "kind": "create",
+        "amazonWrite": true
+      },
+      {
+        "name": "Upload / pick video, logo, image assets",
+        "kind": "inline",
+        "amazonWrite": true,
+        "note": "Asset upload to Amazon then register, then spec check polled every 2s up to 30 times."
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "campaigns"
+      },
+      {
+        "method": "GET",
+        "path": "campaigns/get-by-id/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "sb/recommendations/keyword"
+      },
+      {
+        "method": "POST",
+        "path": "sb/recommendations/targets/bids"
+      },
+      {
+        "method": "POST",
+        "path": "sb/recommendations/targets/category"
+      },
+      {
+        "method": "POST",
+        "path": "sb/recommendations/targets/products"
+      },
+      {
+        "method": "GET",
+        "path": "sd/assets?assetId&version"
+      },
+      {
+        "method": "POST",
+        "path": "sd/assets/upload"
+      },
+      {
+        "method": "POST",
+        "path": "sd/assets/register"
+      }
+    ],
+    "notes": "Blocked until marketplace constraints load. Submit disabled while video spec is failed or still checking; \"unavailable\" does not block. Draft is not kept: reload gives an empty form. Success shows a Success Review screen (\"ad under review, 24-48h\"). The product-exclusions section exists in code but is never shown. Negative product targeting for SB is not built.",
+    "internal": false,
+    "route": "/campaign/create-sponser-brand",
+    "title": "Create Sponsored Brands campaign",
+    "entity": "campaign + ad group + ad + targeting",
+    "amazonConcept": "SB campaign create (Ads API sb)"
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_EDIT"
+    ],
+    "filters": [],
+    "urlState": [
+      "v=1|2"
+    ],
+    "forms": [
+      {
+        "name": "Campaign settings",
+        "fields": [
+          {
+            "name": "name/portfolio/budget/dates",
+            "type": "as SB",
+            "validation": "same rules with label \"Sponsored Display\""
+          }
+        ]
+      },
+      {
+        "name": "Ad group",
+        "fields": [
+          {
+            "name": "name",
+            "type": "text",
+            "validation": "required <=244, no ! # % < >"
+          }
+        ]
+      },
+      {
+        "name": "Bid optimization",
+        "fields": [
+          {
+            "name": "optimization",
+            "type": "reach(vCPM) | clicks(page visits) | conversions",
+            "validation": "only same-family options shown; default clicks"
+          }
+        ]
+      },
+      {
+        "name": "Ad format / Products",
+        "fields": [
+          {
+            "name": "format",
+            "type": "Image | Video",
+            "validation": ""
+          },
+          {
+            "name": "products",
+            "type": "ASINs",
+            "validation": ">=1"
+          }
+        ]
+      },
+      {
+        "name": "Tactic",
+        "fields": [
+          {
+            "name": "tactic",
+            "type": "Contextual | Audiences",
+            "validation": "required, default contextual"
+          }
+        ]
+      },
+      {
+        "name": "Targeting",
+        "fields": [
+          {
+            "name": "contextual rows",
+            "type": "categories/products",
+            "validation": ">=1, <=150"
+          },
+          {
+            "name": "audiences",
+            "type": "audience + lookback window",
+            "validation": ">=1, <=20, lookback required for each"
+          },
+          {
+            "name": "bid per row",
+            "type": "money",
+            "validation": ">= 0.02 and < half the daily budget"
+          }
+        ]
+      },
+      {
+        "name": "Creative",
+        "fields": [
+          {
+            "name": "logo, headline, image switches",
+            "type": "switch",
+            "validation": "off sends null and is not required"
+          },
+          {
+            "name": "logo/headline",
+            "type": "asset/text",
+            "validation": "required when switch on"
+          },
+          {
+            "name": "video",
+            "type": "asset",
+            "validation": "required for video ads, spec-checked (landscape >=1920x1080, H.264/MPEG-4/MPEG-2, PCM/AAC)"
+          }
+        ]
+      }
+    ],
+    "columns": [],
+    "actions": [
+      {
+        "name": "Create (confirm with Enable/Pause)",
+        "kind": "create",
+        "amazonWrite": true
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "campaigns"
+      },
+      {
+        "method": "POST",
+        "path": "sd/creatives/preview"
+      },
+      {
+        "method": "POST",
+        "path": "sd/assets/upload"
+      },
+      {
+        "method": "POST",
+        "path": "sd/assets/register"
+      },
+      {
+        "method": "GET",
+        "path": "sd/assets?assetId&version"
+      }
+    ],
+    "notes": "Default payload: manual targeting, daily budget, lowercase state values (SD uses lowercase, SB/SP uppercase). Two default placement bid rows (top, product page) at 0%.",
+    "internal": false,
+    "route": "/campaign/create-sponser-display",
+    "title": "Create Sponsored Display campaign",
+    "entity": "campaign + ad group + product ads + targeting + creative",
+    "amazonConcept": "SD campaign create (Ads API sd)"
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW",
+      "CAMPAIGN_EDIT + per-entity isEdit"
+    ],
+    "filters": [
+      "Date range kept on URL for the whole tab",
+      "Search Campaign History"
+    ],
+    "urlState": [
+      "tab / sub / modal chain; tab ∈ campaign-settings|ad-groups|budget-rules|bid-adjustment|history (+negative-targeting for SP)",
+      "sub: all-placement|audiences(|amazon-business SP), campaign-history|out-of-budget-history, keyword|product",
+      "modals: budgetRule=new|<amazon ruleId>, isOpenModalAdjustAudience, negativeTargeting=new"
+    ],
+    "forms": [
+      {
+        "name": "Campaign settings",
+        "fields": [
+          {
+            "name": "name",
+            "type": "text",
+            "validation": "no ! # % < >; <=117 (128 if equals AWS name)"
+          },
+          {
+            "name": "portfolio",
+            "type": "select",
+            "validation": ""
+          },
+          {
+            "name": "schedule",
+            "type": "dates",
+            "validation": "start read-only once running; start not before today in marketplace tz"
+          },
+          {
+            "name": "budget",
+            "type": "money",
+            "validation": "marketplace min/max, lockable per record flags"
+          },
+          {
+            "name": "bidding strategy (SP)",
+            "type": "select",
+            "validation": ""
+          },
+          {
+            "name": "cost control (SB, goal page visit)",
+            "type": "money",
+            "validation": ">=0.50, <= daily budget"
+          }
+        ]
+      },
+      {
+        "name": "Budget rule (SB)",
+        "fields": [
+          {
+            "name": "name",
+            "type": "text",
+            "validation": "required <=128"
+          },
+          {
+            "name": "increase %",
+            "type": "number",
+            "validation": ">0"
+          },
+          {
+            "name": "metric",
+            "type": "IS | NTB | ROAS (SB); ACOS | CTR | CVR | ROAS (SP)",
+            "validation": "required"
+          },
+          {
+            "name": "threshold",
+            "type": "number",
+            "validation": ">0; <=100 unless ROAS"
+          },
+          {
+            "name": "event or date range",
+            "type": "",
+            "validation": "start required; end >= start"
+          },
+          {
+            "name": "weekly days",
+            "type": "",
+            "validation": ">=1 day"
+          },
+          {
+            "name": "hours",
+            "type": "",
+            "validation": "start/end required if restricted"
+          }
+        ]
+      }
+    ],
+    "columns": [
+      {
+        "name": "Tab Ad groups: ad-group listing pinned to this campaign (5 rows default, Campaign column hidden)",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Tab Bid adjustment / All Placement: placement, % adjustment, performance",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Tab Bid adjustment / Audiences: audience rows + Campaign total, performance",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Tab Budget rules: rule list for campaign",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Tab History: Level, Type, Action, From, To, Date, User",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Tab Negative targeting (SP): keyword / product tables",
+        "metric": false,
+        "definition": ""
+      }
+    ],
+    "actions": [
+      {
+        "name": "Active switch (header and settings share one value)",
+        "kind": "inline",
+        "amazonWrite": true
+      },
+      {
+        "name": "Save campaign settings (one Save for the tab)",
+        "kind": "edit",
+        "amazonWrite": true
+      },
+      {
+        "name": "Archive campaign (= DELETE on legacy backend; irreversible)",
+        "kind": "inline",
+        "amazonWrite": true
+      },
+      {
+        "name": "Create ad group",
+        "kind": "create",
+        "amazonWrite": true
+      },
+      {
+        "name": "Save placement / audience bid adjustment (upsert into full placement array)",
+        "kind": "edit",
+        "amazonWrite": true
+      },
+      {
+        "name": "Adjust audience modal / Remove audience (set to 0% then save)",
+        "kind": "edit",
+        "amazonWrite": true
+      },
+      {
+        "name": "Budget rule add/edit/toggle",
+        "kind": "edit",
+        "amazonWrite": true
+      },
+      {
+        "name": "Add negative targeting / Archive selected (SP)",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Export audience log (returns link)",
+        "kind": "export",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "campaigns/get-by-id/{id}"
+      },
+      {
+        "method": "PUT",
+        "path": "campaigns/{id}"
+      },
+      {
+        "method": "DELETE",
+        "path": "campaigns/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "ad-group/get-list"
+      },
+      {
+        "method": "GET",
+        "path": "sb|sp|sd/budgets/campaign-get-rule"
+      },
+      {
+        "method": "POST",
+        "path": "sb/budgets/create-multiple"
+      },
+      {
+        "method": "POST",
+        "path": "sp/budgets"
+      },
+      {
+        "method": "POST",
+        "path": "sd/budgets"
+      },
+      {
+        "method": "PUT",
+        "path": "sb|sp|sd/budgets/{ruleId}"
+      },
+      {
+        "method": "GET",
+        "path": "sb|sp|sd/budgets/recomment"
+      },
+      {
+        "method": "GET",
+        "path": "sb/campaigns/{id}/optimization-rules"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/get-campaign-placement/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/get-campaign-placement-amazon-business/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "audience/get-data-audience"
+      },
+      {
+        "method": "POST",
+        "path": "audience/download-log-audience"
+      },
+      {
+        "method": "POST",
+        "path": "user-log/get-list"
+      },
+      {
+        "method": "GET",
+        "path": "user-log/get-filter-config"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/get-log-campaigns-oob"
+      },
+      {
+        "method": "POST",
+        "path": "campaign-negative-keywords/create"
+      }
+    ],
+    "notes": "Trap: PUT campaign/ad group REPLACES the record, so every save spreads the original record and overrides only changed fields; placementBidding is a whole-set array, every tab must upsert, otherwise untouched placements go up as zero. Budget-rule id in the URL is Amazon's ruleId (wrong id creates a duplicate). Tree panel (campaign->ad group->ad) lazy-loads per branch. Tab chunks preloaded when idle. SD has only 4 tabs (no bid adjustment/negative targeting). SB v2 is the most complete; SP/SD v2 detail partly unverified in legacy docs. Missing record -> \"Record not found\" modal.",
+    "internal": false,
+    "route": "/campaigns/[campaignType]/[campaignId], /campaign/sp/[campaignID], /campaign/sb/[campaignID], /campaign/sd/[campaignID]",
+    "title": "Campaign detail",
+    "entity": "campaign",
+    "amazonConcept": "Campaign + budget rules + placements/audiences + negative targeting"
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW",
+      "CAMPAIGN_EDIT + isEdit"
+    ],
+    "filters": [],
+    "urlState": [
+      "adGroupTab ∈ ad-group-settings|ads|targeting|negative-targeting|search-term|history (SD: creative, no search-term)",
+      "adGroupSub keyword|product (data-driven lock)",
+      "modals: addProductAds, creativeAd=<adId>, createTargeting, negativeTargeting"
+    ],
+    "forms": [
+      {
+        "name": "Ad group settings",
+        "fields": [
+          {
+            "name": "name",
+            "type": "text",
+            "validation": "required; no ! # % < >; <=244 (255 if equals AWS name)"
+          },
+          {
+            "name": "default bid",
+            "type": "money",
+            "validation": "required, in marketplace bid range (min 0.02)"
+          }
+        ]
+      },
+      {
+        "name": "Add product ads",
+        "fields": [
+          {
+            "name": "ASIN/SKU",
+            "type": "picker",
+            "validation": "SP: ASIN already in ad group blocked (\"Already in this ad group.\")"
+          }
+        ]
+      },
+      {
+        "name": "SD creative",
+        "fields": [
+          {
+            "name": "logo",
+            "type": "asset",
+            "validation": "required if switch on"
+          },
+          {
+            "name": "headline",
+            "type": "text",
+            "validation": "required if switch on"
+          },
+          {
+            "name": "video",
+            "type": "asset",
+            "validation": "required for video ad; spec-gated"
+          }
+        ]
+      }
+    ],
+    "columns": [
+      {
+        "name": "Ads: Active, Ad/product(+Manage Creative for SB), Status, SKU, inventory level/action (SP), metrics",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Targeting: Active, Targeting expression, Type (match), Status, Bid, Sugg. bid, metrics",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Negative targeting: keyword or category/product, match type",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Search term: Action, Added, Customer search term, Keyword or Category&Product, Target bid, metrics + impression rank/share drawer (7/14/30 days)",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "History",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "SD Creative: video, brand logo, headline, image",
+        "metric": false,
+        "definition": ""
+      }
+    ],
+    "actions": [
+      {
+        "name": "Active switch (HTTP 200 with totalSuccess 0 = rejected)",
+        "kind": "inline",
+        "amazonWrite": true
+      },
+      {
+        "name": "Save ad group settings (name + default bid)",
+        "kind": "edit",
+        "amazonWrite": true
+      },
+      {
+        "name": "Archive ad group (DELETE, irreversible)",
+        "kind": "inline",
+        "amazonWrite": true
+      },
+      {
+        "name": "Add Products to Advertise (disabled if first ad Ended)",
+        "kind": "create",
+        "amazonWrite": true
+      },
+      {
+        "name": "Manage Creative / Edit ad (blocked while in review: moderation up to 72h)",
+        "kind": "edit",
+        "amazonWrite": true
+      },
+      {
+        "name": "Bulk Enable/Pause ads",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Add keyword / product target (partial-success reporting)",
+        "kind": "create",
+        "amazonWrite": true
+      },
+      {
+        "name": "Bulk bid/state targets",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Add negative targeting / Archive negatives",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Search term: Add as keyword / negative keyword / product / negative product",
+        "kind": "inline",
+        "amazonWrite": true
+      },
+      {
+        "name": "SD Creative: Submit for review (POST first time, PUT after)",
+        "kind": "edit",
+        "amazonWrite": true
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "ad-group/get-by-id/{id}"
+      },
+      {
+        "method": "PUT",
+        "path": "ad-group/{id}"
+      },
+      {
+        "method": "DELETE",
+        "path": "ad-group/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "ad-group/update-state"
+      },
+      {
+        "method": "POST",
+        "path": "product-ads/get-list"
+      },
+      {
+        "method": "POST",
+        "path": "product-ads"
+      },
+      {
+        "method": "POST",
+        "path": "product-ads/update-state"
+      },
+      {
+        "method": "POST",
+        "path": "sb/creatives/list"
+      },
+      {
+        "method": "POST",
+        "path": "product-ads/{adId}/update-creative"
+      },
+      {
+        "method": "POST",
+        "path": "keyword"
+      },
+      {
+        "method": "POST",
+        "path": "target"
+      },
+      {
+        "method": "PUT",
+        "path": "keyword/{id}"
+      },
+      {
+        "method": "PUT",
+        "path": "target/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "keyword/updates"
+      },
+      {
+        "method": "POST",
+        "path": "target/updates"
+      },
+      {
+        "method": "POST",
+        "path": "negative-keyword"
+      },
+      {
+        "method": "POST",
+        "path": "search-terms/get-list"
+      },
+      {
+        "method": "POST",
+        "path": "search-terms/impression-share/detail"
+      },
+      {
+        "method": "POST",
+        "path": "user-log/get-list"
+      },
+      {
+        "method": "GET",
+        "path": "sd/{adGroupId}/creatives"
+      },
+      {
+        "method": "GET",
+        "path": "sd/moderation/creatives"
+      },
+      {
+        "method": "POST",
+        "path": "sd/creatives"
+      }
+    ],
+    "notes": "SD Negative targeting tab only for Contextual tactic. Auto SP ad groups hide Add target and search-term actions. Product ad groups accept only ASIN search terms. SD creative preview debounced 500 ms; rejected creatives show policy-violation reasons. Video spec rules measured, not transcribed (see UX rules). Ad group name limit differs: 117 in create-SB, 244 elsewhere.",
+    "internal": false,
+    "route": "/campaigns/[campaignType]/[campaignId]/ad-groups/[adGroupId], /campaign/{sp|sb|sd}/[id]/ad-group/[adGroupID]",
+    "title": "Ad group detail",
+    "entity": "ad group",
+    "amazonConcept": "Ad group, product ads, targets, negative targets, search terms, SD creative"
+  },
+  {
+    "status": "v2",
+    "roles": [
+      "CAMPAIGN_EDIT"
+    ],
+    "filters": [],
+    "urlState": [
+      "returnTo (sanitised)"
+    ],
+    "forms": [
+      {
+        "name": "Create ad group",
+        "fields": [
+          {
+            "name": "ad group + ad sections",
+            "type": "same cards as campaign create minus campaign-level cards",
+            "validation": "goal/cost type/budget read from the campaign as seed (not sent); SD tactic read-only"
+          }
+        ]
+      }
+    ],
+    "columns": [],
+    "actions": [
+      {
+        "name": "Create ad group",
+        "kind": "create",
+        "amazonWrite": true
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "campaigns/get-by-id/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "ad-group"
+      },
+      {
+        "method": "POST",
+        "path": "ad-group/get-list"
+      }
+    ],
+    "notes": "Page replaces form with a message when the campaign is not SB, not editable, or archived (SB). Backend returns data null, so SB re-finds the new id by name to enable \"Edit Ad Group\". Success: \"ad under review\". SD page does not re-check isEdit/archived on direct URL entry (gap).",
+    "internal": false,
+    "route": "/campaigns/[campaignType]/[campaignId]/new-ad-group",
+    "title": "Create ad group (SB, SD)",
+    "entity": "ad group",
+    "amazonConcept": "Ad group create under existing campaign"
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW",
+      "CAMPAIGN_EDIT"
+    ],
+    "filters": [
+      "Tabs: Targeting keywords | Targeting products",
+      "Search, filters, date range, sort, page"
+    ],
+    "urlState": [
+      "tab=keyword|product (v2) / tab=product",
+      "listing state prefixed"
+    ],
+    "forms": [],
+    "columns": [
+      {
+        "name": "Active",
+        "metric": false,
+        "definition": "switch"
+      },
+      {
+        "name": "Targeting",
+        "metric": false,
+        "definition": "Expression (keyword or product/category); translation shown below for configured countries (e.g. JP)."
+      },
+      {
+        "name": "Type",
+        "metric": false,
+        "definition": "match type / targeting type"
+      },
+      {
+        "name": "Status",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Bid",
+        "metric": false,
+        "definition": "inline editable; locked when cost control owns bids"
+      },
+      {
+        "name": "Sugg. bid",
+        "metric": false,
+        "definition": "Amazon suggested bid; apply via bulk"
+      },
+      {
+        "name": "Campaign",
+        "metric": false,
+        "definition": "link"
+      },
+      {
+        "name": "Campaign status",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Ad group",
+        "metric": false,
+        "definition": "link"
+      },
+      {
+        "name": "Products",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Spend",
+        "metric": true,
+        "definition": "Total charges for clicks/impressions in the period. Late invalid-click removal can lower recent days for up to ~3 days."
+      },
+      {
+        "name": "Orders",
+        "metric": true,
+        "definition": "Orders attributed to ads in the attribution window (14 days); attribution scope differs by ad product; cancelled/failed-payment orders removed after ~72h."
+      },
+      {
+        "name": "Sales",
+        "metric": true,
+        "definition": "Sales value attributed to ads in the attribution window; same attribution rules as Orders; data can lag up to ~12h."
+      },
+      {
+        "name": "Clicks",
+        "metric": true,
+        "definition": "Number of ad clicks (invalid clicks removed later)."
+      },
+      {
+        "name": "Impressions",
+        "metric": true,
+        "definition": "Number of times the ads were shown."
+      },
+      {
+        "name": "CR",
+        "metric": true,
+        "definition": "Conversion rate. INFERRED: orders / clicks. Not defined in the legacy UI; computed by backend."
+      },
+      {
+        "name": "CTR",
+        "metric": true,
+        "definition": "Click-through rate = clicks / impressions."
+      },
+      {
+        "name": "CPC",
+        "metric": true,
+        "definition": "Cost per click = average paid per click."
+      },
+      {
+        "name": "CPM",
+        "metric": true,
+        "definition": "Cost per 1000 impressions. INFERRED: spend / impressions * 1000."
+      },
+      {
+        "name": "ACOS",
+        "metric": true,
+        "definition": "Advertising cost of sales = spend / sales."
+      },
+      {
+        "name": "ROAS",
+        "metric": true,
+        "definition": "Return on ad spend = sales / spend."
+      },
+      {
+        "name": "CPO",
+        "metric": true,
+        "definition": "Cost per order. INFERRED: spend / orders."
+      },
+      {
+        "name": "CPU",
+        "metric": true,
+        "definition": "Cost per unit. INFERRED: spend / units sold; unit source unclear. Backend can filter by it although the legacy UI did not offer it."
+      },
+      {
+        "name": "AOV",
+        "metric": true,
+        "definition": "Average order value. INFERRED: sales / orders."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Adjust bid",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Apply suggested bid",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Adjust state (Enabled/Paused/Archived)",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Inline bid edit and state switch",
+        "kind": "inline",
+        "amazonWrite": true
+      },
+      {
+        "name": "Export",
+        "kind": "export",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "target/get-all-targeting"
+      },
+      {
+        "method": "PUT",
+        "path": "keyword/{id}"
+      },
+      {
+        "method": "PUT",
+        "path": "target/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "keyword/updates"
+      },
+      {
+        "method": "POST",
+        "path": "target/updates"
+      },
+      {
+        "method": "POST",
+        "path": "competitor-target-products/get-list"
+      }
+    ],
+    "notes": "Bulk disabled reasons: \"Bids can't be edited while cost control is on.\", \"None of the selected keywords has a suggested bid.\", \"Every selected keyword is already at its suggested bid.\" Bid minimum 0.02. Confirm text \"Confirm Pause 2 Keywords\" etc.",
+    "internal": false,
+    "route": "/targeting",
+    "title": "Targeting listing (keyword and product/auto targets)",
+    "entity": "keyword target / product target",
+    "amazonConcept": "Keywords, product targets, auto targeting groups"
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW",
+      "CAMPAIGN_EDIT"
+    ],
+    "filters": [
+      "Filter, search, date range",
+      "OOB alert card button sets budget filter"
+    ],
+    "urlState": [
+      "v=2 redirect on /budget-recommend"
+    ],
+    "forms": [],
+    "columns": [
+      {
+        "name": "Active, Campaign name, AWS Name, Status, Type, Portfolio, Bidding strategy, Start/End date, Budget (shared with campaign list)",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Avg. time in budget",
+        "metric": true,
+        "definition": "Average time of day the campaign stays within budget."
+      },
+      {
+        "name": "Recommend budget",
+        "metric": false,
+        "definition": "Suggested daily budget; apply button."
+      },
+      {
+        "name": "Est. missed sales",
+        "metric": true,
+        "definition": "Estimated sales lost while out of budget."
+      },
+      {
+        "name": "Est. missed impressions",
+        "metric": true,
+        "definition": "Estimated impressions lost."
+      },
+      {
+        "name": "Est. missed clicks",
+        "metric": true,
+        "definition": "Estimated clicks lost."
+      },
+      {
+        "name": "Spend",
+        "metric": true,
+        "definition": "Total charges for clicks/impressions in the period. Late invalid-click removal can lower recent days for up to ~3 days."
+      },
+      {
+        "name": "Orders",
+        "metric": true,
+        "definition": "Orders attributed to ads in the attribution window (14 days); attribution scope differs by ad product; cancelled/failed-payment orders removed after ~72h."
+      },
+      {
+        "name": "Sales",
+        "metric": true,
+        "definition": "Sales value attributed to ads in the attribution window; same attribution rules as Orders; data can lag up to ~12h."
+      },
+      {
+        "name": "Clicks",
+        "metric": true,
+        "definition": "Number of ad clicks (invalid clicks removed later)."
+      },
+      {
+        "name": "Impressions",
+        "metric": true,
+        "definition": "Number of times the ads were shown."
+      },
+      {
+        "name": "CR",
+        "metric": true,
+        "definition": "Conversion rate. INFERRED: orders / clicks. Not defined in the legacy UI; computed by backend."
+      },
+      {
+        "name": "CTR",
+        "metric": true,
+        "definition": "Click-through rate = clicks / impressions."
+      },
+      {
+        "name": "CPC",
+        "metric": true,
+        "definition": "Cost per click = average paid per click."
+      },
+      {
+        "name": "CPM",
+        "metric": true,
+        "definition": "Cost per 1000 impressions. INFERRED: spend / impressions * 1000."
+      },
+      {
+        "name": "ACOS",
+        "metric": true,
+        "definition": "Advertising cost of sales = spend / sales."
+      },
+      {
+        "name": "ROAS",
+        "metric": true,
+        "definition": "Return on ad spend = sales / spend."
+      },
+      {
+        "name": "CPO",
+        "metric": true,
+        "definition": "Cost per order. INFERRED: spend / orders."
+      },
+      {
+        "name": "CPU",
+        "metric": true,
+        "definition": "Cost per unit. INFERRED: spend / units sold; unit source unclear. Backend can filter by it although the legacy UI did not offer it."
+      },
+      {
+        "name": "AOV",
+        "metric": true,
+        "definition": "Average order value. INFERRED: sales / orders."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Apply suggested budget (confirm: \"daily budget will be set to the suggested value\")",
+        "kind": "inline",
+        "amazonWrite": true
+      },
+      {
+        "name": "Inline edit Budget, End date",
+        "kind": "inline",
+        "amazonWrite": true
+      },
+      {
+        "name": "Export",
+        "kind": "export",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "campaigns/recommend"
+      },
+      {
+        "method": "PUT",
+        "path": "campaigns/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/get-list"
+      }
+    ],
+    "notes": "Alert card: count of SP campaigns out/almost out of budget today (CAMPAIGN_OUT_OF_BUDGET filter), cached 60 s. No-op when suggestion empty or equal to current budget. Update replaces the whole record. The same Recommend-budget idea exists in Real-time mode listing.",
+    "internal": false,
+    "route": "/budget-recommend, /budget-recommendation, /amazon/budget/recommendations",
+    "title": "Budget recommendation",
+    "entity": "campaign (SP) with budget suggestion",
+    "amazonConcept": "Budget recommendations / out-of-budget insight (Ads API budget rules recommendations)"
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW (no write permission checks found in module — unverified)"
+    ],
+    "filters": [],
+    "urlState": [
+      "none (modals and paging not in URL)"
+    ],
+    "forms": [
+      {
+        "name": "Create/Edit rule",
+        "fields": [
+          {
+            "name": "rule",
+            "type": "Budget | Bid",
+            "validation": ""
+          },
+          {
+            "name": "type",
+            "type": "Schedule | Performance (bid: schedule only)",
+            "validation": ""
+          },
+          {
+            "name": "campaign type",
+            "type": "SP|SD|SB (bid: no SB)",
+            "validation": ""
+          },
+          {
+            "name": "performance metric",
+            "type": "SP/SD: ACOS,CTR,CVR,ROAS; SB: Top-of-search IS, % NTB sales, ROAS",
+            "validation": ""
+          },
+          {
+            "name": "comparison",
+            "type": "<, <=, >=, >",
+            "validation": ""
+          },
+          {
+            "name": "threshold",
+            "type": "number",
+            "validation": ">0; <=100 except ROAS"
+          },
+          {
+            "name": "date range",
+            "type": "start/end",
+            "validation": "end optional"
+          },
+          {
+            "name": "recurrence",
+            "type": "Daily|Weekly(>=1 day)",
+            "validation": ""
+          },
+          {
+            "name": "hours of day",
+            "type": "all day | start-end",
+            "validation": "only US, CA, UK, IN, JP"
+          },
+          {
+            "name": "action",
+            "type": "budget increase % | bid adjustment",
+            "validation": "integer 1-100"
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "validation": "<=128"
+          },
+          {
+            "name": "enabled",
+            "type": "switch",
+            "validation": "off = created then paused with a second call"
+          }
+        ]
+      }
+    ],
+    "columns": [
+      {
+        "name": "Active",
+        "metric": false,
+        "definition": "switch"
+      },
+      {
+        "name": "Rule",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Type",
+        "metric": false,
+        "definition": "two lines: rule kind + trigger (schedule/performance)"
+      },
+      {
+        "name": "Campaign type",
+        "metric": false,
+        "definition": "SP/SB/SD merged list"
+      },
+      {
+        "name": "Status",
+        "metric": false,
+        "definition": "derived by backend from clock and dates"
+      },
+      {
+        "name": "Description",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Schedule",
+        "metric": false,
+        "definition": "No start/end, All day"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Toggle active (PUT {sb|sd|sp}/budgets/{id}/update-status ACTIVE|PAUSED)",
+        "kind": "inline",
+        "amazonWrite": true
+      },
+      {
+        "name": "Create rule (modal)",
+        "kind": "create",
+        "amazonWrite": true
+      },
+      {
+        "name": "Edit rule (opens by rule name)",
+        "kind": "edit",
+        "amazonWrite": true
+      },
+      {
+        "name": "Choose campaigns (Enabled only, same campaign type)",
+        "kind": "edit",
+        "amazonWrite": true
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "budgets/get-list"
+      },
+      {
+        "method": "PUT",
+        "path": "{sb|sd|sp}/budgets/{id}/update-status"
+      },
+      {
+        "method": "GET",
+        "path": "budgets/{id}/detail"
+      },
+      {
+        "method": "POST",
+        "path": "{sp|sd|sb}/budgets/create-multiple"
+      },
+      {
+        "method": "PUT",
+        "path": "budgets/{id}/update-multiple"
+      },
+      {
+        "method": "POST",
+        "path": "rules/bidding-rule/create-multiple"
+      },
+      {
+        "method": "PUT",
+        "path": "rules/bidding-rule/update-multiple"
+      },
+      {
+        "method": "GET",
+        "path": "{type}/budgets/all-recommendation"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/get-list"
+      }
+    ],
+    "notes": "One rule applies to one campaign type. create-multiple always returns 200; per-campaign failures are in errors; partial failures are shown as warnings, >=1 success counts as created. Hourly rules warn that the rule is ineligible until daily budget >= 10 (client-side design rule). Sale-event rules keep event dates as custom range on save. 50 rows per page, 30 s cache.",
+    "internal": false,
+    "route": "/rules",
+    "title": "Rules management (budget and bid rules)",
+    "entity": "budget rule / bid rule",
+    "amazonConcept": "Sponsored Ads budget rules (SP/SB/SD); bid rules are internal automation"
+  },
+  {
+    "status": "v1",
+    "roles": [
+      "CAMPAIGN_VIEW"
+    ],
+    "filters": [],
+    "urlState": [],
+    "forms": [],
+    "columns": [
+      {
+        "name": "Rule Name",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Status",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Type",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Date Range",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Recurrence",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Increase",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Budget",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Assign",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Campaign Name",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Portfolio",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Campaign Status",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Campaign Type",
+        "metric": false,
+        "definition": ""
+      }
+    ],
+    "actions": [
+      {
+        "name": "Assign / unassign rule to campaigns",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Create/edit rule",
+        "kind": "create",
+        "amazonWrite": true
+      },
+      {
+        "name": "Add budget (modal)",
+        "kind": "create",
+        "amazonWrite": true
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "{type}/budgets/assign"
+      },
+      {
+        "method": "POST",
+        "path": "{type}/budgets/un-assign"
+      },
+      {
+        "method": "POST",
+        "path": "{type}/budgets"
+      },
+      {
+        "method": "PUT",
+        "path": "{type}/budgets/{ruleId}"
+      },
+      {
+        "method": "GET",
+        "path": "{type}/budgets/rules"
+      },
+      {
+        "method": "GET",
+        "path": "{type}/budgets/recomment"
+      }
+    ],
+    "notes": "Superseded in v2 by /rules (create/edit from modal). Only to confirm assign/un-assign behaviour; verification partial (read through service files, not walked screen by screen).",
+    "internal": false,
+    "route": "/rules/[ruleId], /rules/create-rule, /budget-rule, /rule-campaign",
+    "title": "Legacy rule pages (v1)",
+    "entity": "budget rule / rule-to-campaign assignment",
+    "amazonConcept": "Budget rules"
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW",
+      "ads_portfolio_create (create)",
+      "per-row isEdit (Modify)"
+    ],
+    "filters": [
+      "Search Portfolio",
+      "Filters from profile config"
+    ],
+    "urlState": [],
+    "forms": [
+      {
+        "name": "Create portfolio",
+        "fields": [
+          {
+            "name": "name",
+            "type": "text",
+            "validation": "required after trim"
+          }
+        ]
+      },
+      {
+        "name": "Modify portfolio",
+        "fields": [
+          {
+            "name": "name",
+            "type": "text",
+            "validation": ""
+          },
+          {
+            "name": "policy",
+            "type": "No budget cap | Date range | Monthly recurring",
+            "validation": ""
+          },
+          {
+            "name": "amount",
+            "type": "money",
+            "validation": "within daily-budget bounds"
+          },
+          {
+            "name": "start",
+            "type": "date",
+            "validation": "required for date range"
+          },
+          {
+            "name": "end",
+            "type": "date|Never",
+            "validation": "required if cap already had an end or Monthly \"On\"; not before start"
+          }
+        ]
+      }
+    ],
+    "columns": [
+      {
+        "name": "Portfolio",
+        "metric": false,
+        "definition": "link to detail"
+      },
+      {
+        "name": "Status",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Budget",
+        "metric": false,
+        "definition": "budget cap"
+      },
+      {
+        "name": "Budget Start",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Budget End",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Spend",
+        "metric": true,
+        "definition": "Total charges for clicks/impressions in the period. Late invalid-click removal can lower recent days for up to ~3 days."
+      },
+      {
+        "name": "Orders",
+        "metric": true,
+        "definition": "Orders attributed to ads in the attribution window (14 days); attribution scope differs by ad product; cancelled/failed-payment orders removed after ~72h."
+      },
+      {
+        "name": "Sales",
+        "metric": true,
+        "definition": "Sales value attributed to ads in the attribution window; same attribution rules as Orders; data can lag up to ~12h."
+      },
+      {
+        "name": "Clicks",
+        "metric": true,
+        "definition": "Number of ad clicks (invalid clicks removed later)."
+      },
+      {
+        "name": "Impressions",
+        "metric": true,
+        "definition": "Number of times the ads were shown."
+      },
+      {
+        "name": "CR",
+        "metric": true,
+        "definition": "Conversion rate. INFERRED: orders / clicks. Not defined in the legacy UI; computed by backend."
+      },
+      {
+        "name": "CTR",
+        "metric": true,
+        "definition": "Click-through rate = clicks / impressions."
+      },
+      {
+        "name": "CPC",
+        "metric": true,
+        "definition": "Cost per click = average paid per click."
+      },
+      {
+        "name": "CPM",
+        "metric": true,
+        "definition": "Cost per 1000 impressions. INFERRED: spend / impressions * 1000."
+      },
+      {
+        "name": "ACOS",
+        "metric": true,
+        "definition": "Advertising cost of sales = spend / sales."
+      },
+      {
+        "name": "ROAS",
+        "metric": true,
+        "definition": "Return on ad spend = sales / spend."
+      },
+      {
+        "name": "CPO",
+        "metric": true,
+        "definition": "Cost per order. INFERRED: spend / orders."
+      },
+      {
+        "name": "CPU",
+        "metric": true,
+        "definition": "Cost per unit. INFERRED: spend / units sold; unit source unclear. Backend can filter by it although the legacy UI did not offer it."
+      },
+      {
+        "name": "AOV",
+        "metric": true,
+        "definition": "Average order value. INFERRED: sales / orders."
+      },
+      {
+        "name": "Action",
+        "metric": false,
+        "definition": "Modify button"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Create portfolio (2 steps: name, confirm); created WITHOUT a budget cap",
+        "kind": "create",
+        "amazonWrite": true
+      },
+      {
+        "name": "Modify: name + budget cap policy (none | date range | monthly recurring), end Never|On",
+        "kind": "edit",
+        "amazonWrite": true
+      },
+      {
+        "name": "Export",
+        "kind": "export",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "portfolio/list"
+      },
+      {
+        "method": "POST",
+        "path": "portfolio/create"
+      },
+      {
+        "method": "POST",
+        "path": "portfolio/update"
+      },
+      {
+        "method": "POST",
+        "path": "portfolio/list-for-filter"
+      }
+    ],
+    "notes": "Loads up to 500 rows once and paginates client-side (default 10). Quirk to NOT carry over: edit success toast reads \"Add portfolio success!\". No-cap save sends inBudget false, budget null.",
+    "internal": false,
+    "route": "/portfolios, /portfolios/management",
+    "title": "Portfolio management (list)",
+    "entity": "portfolio",
+    "amazonConcept": "Portfolio with optional budget cap (Ads API portfolios)"
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW",
+      "CAMPAIGN_EDIT"
+    ],
+    "filters": [
+      "Search Campaign"
+    ],
+    "urlState": [],
+    "forms": [],
+    "columns": [
+      {
+        "name": "Active",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Campaigns",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "AWS Name",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Status",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Type",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Start Date",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "End Date",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Budget",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Spend",
+        "metric": true,
+        "definition": "Total charges for clicks/impressions in the period. Late invalid-click removal can lower recent days for up to ~3 days."
+      },
+      {
+        "name": "Orders",
+        "metric": true,
+        "definition": "Orders attributed to ads in the attribution window (14 days); attribution scope differs by ad product; cancelled/failed-payment orders removed after ~72h."
+      },
+      {
+        "name": "Sales",
+        "metric": true,
+        "definition": "Sales value attributed to ads in the attribution window; same attribution rules as Orders; data can lag up to ~12h."
+      },
+      {
+        "name": "Clicks",
+        "metric": true,
+        "definition": "Number of ad clicks (invalid clicks removed later)."
+      },
+      {
+        "name": "Impressions",
+        "metric": true,
+        "definition": "Number of times the ads were shown."
+      },
+      {
+        "name": "CR",
+        "metric": true,
+        "definition": "Conversion rate. INFERRED: orders / clicks. Not defined in the legacy UI; computed by backend."
+      },
+      {
+        "name": "CTR",
+        "metric": true,
+        "definition": "Click-through rate = clicks / impressions."
+      },
+      {
+        "name": "CPC",
+        "metric": true,
+        "definition": "Cost per click = average paid per click."
+      },
+      {
+        "name": "CPM",
+        "metric": true,
+        "definition": "Cost per 1000 impressions. INFERRED: spend / impressions * 1000."
+      },
+      {
+        "name": "ACOS",
+        "metric": true,
+        "definition": "Advertising cost of sales = spend / sales."
+      },
+      {
+        "name": "ROAS",
+        "metric": true,
+        "definition": "Return on ad spend = sales / spend."
+      },
+      {
+        "name": "CPO",
+        "metric": true,
+        "definition": "Cost per order. INFERRED: spend / orders."
+      },
+      {
+        "name": "CPU",
+        "metric": true,
+        "definition": "Cost per unit. INFERRED: spend / units sold; unit source unclear. Backend can filter by it although the legacy UI did not offer it."
+      },
+      {
+        "name": "AOV",
+        "metric": true,
+        "definition": "Average order value. INFERRED: sales / orders."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Bulk Enable/Pause/Archive (confirm text \"{Action} {n} campaign(s)?\")",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Bulk Adjust budget (5 rules; out-of-range rows withheld and reported)",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Move to portfolio (enabled portfolios only) / Remove from portfolio",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Inline budget (0.02-10,000), end date, active switch",
+        "kind": "inline",
+        "amazonWrite": true
+      },
+      {
+        "name": "Export \"Portfolio campaigns\"",
+        "kind": "export",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "portfolio/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/get-list"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/update-multiple"
+      },
+      {
+        "method": "PUT",
+        "path": "campaigns/{id}"
+      }
+    ],
+    "notes": "Rows locked when campaign ended, archived or read-only on Amazon. Table reloads after every write (no optimistic update) because a row may leave the portfolio. Header shows status and budget cap.",
+    "internal": false,
+    "route": "/portfolios/[portfolioID], /portfolios/management/[portfolioID], /portfolios/management/modify/[portfolioID]",
+    "title": "Portfolio detail",
+    "entity": "portfolio + its campaigns",
+    "amazonConcept": "Portfolio membership and budget"
+  },
+  {
+    "status": "v1",
+    "roles": [
+      "ADS_PORTFOLIO_EDIT"
+    ],
+    "filters": [],
+    "urlState": [],
+    "forms": [],
+    "columns": [
+      {
+        "name": "Portfolio list",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Users per portfolio",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Permission",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "History out of budget log",
+        "metric": false,
+        "definition": ""
+      }
+    ],
+    "actions": [
+      {
+        "name": "Add user to portfolio / remove",
+        "kind": "edit",
+        "amazonWrite": false
+      },
+      {
+        "name": "Set user permission",
+        "kind": "edit",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "portfolio/operations"
+      },
+      {
+        "method": "POST",
+        "path": "portfolio/operations/users"
+      },
+      {
+        "method": "POST",
+        "path": "portfolio/operations/{id}/users"
+      },
+      {
+        "method": "GET",
+        "path": "portfolio/operations/suffix-emails"
+      },
+      {
+        "method": "POST",
+        "path": "role/save"
+      },
+      {
+        "method": "POST",
+        "path": "operation-log/get-list"
+      }
+    ],
+    "notes": "Partial verification (service files only). Not Amazon-facing.",
+    "internal": true,
+    "route": "/portfolios/setting, /portfolios/setting/[portfolioID]",
+    "title": "Portfolio settings (users, permissions, history)",
+    "entity": "portfolio user assignment",
+    "amazonConcept": "None (internal access control)",
+    "internalNote": "Per-portfolio user access is an internal RBAC concept; a generic version would be seller-account-level roles with optional per-brand/portfolio scope."
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW"
+    ],
+    "filters": [
+      "Level/Action tree filter",
+      "Search",
+      "Date range",
+      "Scope by campaignID/adGroupID in URL"
+    ],
+    "urlState": [
+      "tab=campaign-history|out-of-budget-history|log-request-action",
+      "legacy ?tab=history&sub= redirected"
+    ],
+    "forms": [],
+    "columns": [
+      {
+        "name": "ID",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Level",
+        "metric": false,
+        "definition": "Link to the entity screen (campaign->Ad groups, ad group->Ads, target->Targeting, negative->Negative targeting, budget rule->Budget rules)"
+      },
+      {
+        "name": "Type",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Action",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "From",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "To",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Date and Time",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "User",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Log request action: Id, status, startTime, endTime, Username, Result (detail dialog: ID, campaign name, SP/SB/SD, from/to ads account, status, message)",
+        "metric": false,
+        "definition": ""
+      }
+    ],
+    "actions": [
+      {
+        "name": "Export in page (xlsx, 7 columns)",
+        "kind": "export",
+        "amazonWrite": false
+      },
+      {
+        "name": "Export all (background report appears in Reports)",
+        "kind": "export",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "user-log/get-list"
+      },
+      {
+        "method": "GET",
+        "path": "user-log/get-filter-config"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/get-log-campaigns-oob"
+      },
+      {
+        "method": "POST",
+        "path": "log-request-action/get-list"
+      },
+      {
+        "method": "POST",
+        "path": "user-log/export-excel"
+      }
+    ],
+    "notes": "Log request action tab hidden when route is scoped to a campaign/ad group. Empty-state copy: \"Nothing has been changed in this period.\"",
+    "internal": false,
+    "route": "/history",
+    "title": "History (audit of changes)",
+    "entity": "user log / out-of-budget log / bulk request log",
+    "amazonConcept": "None (internal audit) + OOB events"
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW"
+    ],
+    "filters": [],
+    "urlState": [],
+    "forms": [],
+    "columns": [
+      {
+        "name": "Status",
+        "metric": false,
+        "definition": "chip: SUCCESS green, FAILED/ERROR red, PROCESSING/PENDING cyan"
+      },
+      {
+        "name": "Report Name",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Last Run",
+        "metric": false,
+        "definition": "created time"
+      },
+      {
+        "name": "Report Period",
+        "metric": false,
+        "definition": "start - end"
+      },
+      {
+        "name": "Action",
+        "metric": false,
+        "definition": "Download; enabled only if SUCCESS and URL present"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Download report file (fetch as blob)",
+        "kind": "export",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "download-histories/get-list"
+      }
+    ],
+    "notes": "No pagination; loads up to 300; hint tells user to refresh in ~5s for new data. Error \"Cannot load reports.\" with Retry.",
+    "internal": false,
+    "route": "/report, /reports",
+    "title": "Reports (generated files)",
+    "entity": "download history",
+    "amazonConcept": "None (internal report jobs)"
+  },
+  {
+    "status": "both",
+    "roles": [
+      "ADS_NOTIFICATION_EDIT"
+    ],
+    "filters": [
+      "Search Notification"
+    ],
+    "urlState": [],
+    "forms": [
+      {
+        "name": "Create/Edit notification",
+        "fields": [
+          {
+            "name": "profiles",
+            "type": "multi-select grouped by country",
+            "validation": "required"
+          },
+          {
+            "name": "type",
+            "type": "Notification | Incident",
+            "validation": ""
+          },
+          {
+            "name": "priority+color",
+            "type": "High|Medium|Low",
+            "validation": "Notification only"
+          },
+          {
+            "name": "name",
+            "type": "text",
+            "validation": "required"
+          },
+          {
+            "name": "description",
+            "type": "text",
+            "validation": "required for Notification"
+          },
+          {
+            "name": "start/end date",
+            "type": "date",
+            "validation": "end optional, not before start"
+          },
+          {
+            "name": "hours of day",
+            "type": "run all day | start-end",
+            "validation": "end > start, max 24:00"
+          },
+          {
+            "name": "state",
+            "type": "ENABLED|PAUSED",
+            "validation": ""
+          }
+        ]
+      }
+    ],
+    "columns": [
+      {
+        "name": "Active",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Name",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Type",
+        "metric": false,
+        "definition": "Notification | Incident"
+      },
+      {
+        "name": "Time",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Last updated",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Created by",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Updated by",
+        "metric": false,
+        "definition": ""
+      }
+    ],
+    "actions": [
+      {
+        "name": "Create/Edit",
+        "kind": "create",
+        "amazonWrite": false
+      },
+      {
+        "name": "Active switch (sends full record)",
+        "kind": "inline",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "notification/list"
+      },
+      {
+        "method": "POST",
+        "path": "notification/create"
+      },
+      {
+        "method": "PUT",
+        "path": "notification/{id}"
+      },
+      {
+        "method": "GET",
+        "path": "/api/notifications/ws-url"
+      }
+    ],
+    "notes": "Bell: live notifications over WebSocket (tabs All/Mentions, module filter, unread count). Banner: shows when state enabled, profile in list, date and hours window match, not dismissed; High priority cannot be dismissed; dismiss key includes updated time so edits re-show it.",
+    "internal": true,
+    "route": "/notification",
+    "title": "Notification management (admin) + bell + banner",
+    "entity": "notification / incident announcement",
+    "amazonConcept": "None",
+    "internalNote": "Generic announcement/notification centre is useful to any multi-user tenant; mentions and incident wording are internal."
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW"
+    ],
+    "filters": [
+      "Search by ASIN or Alert ID (spaces/commas normalised)",
+      "Inventory Level multi-select",
+      "Alert date: custom range only (presets disabled)"
+    ],
+    "urlState": [],
+    "forms": [
+      {
+        "name": "Send Feedback",
+        "fields": [
+          {
+            "name": "comment",
+            "type": "text",
+            "validation": "required, non-blank"
+          }
+        ]
+      }
+    ],
+    "columns": [
+      {
+        "name": "Alert ID",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Country",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "ASIN",
+        "metric": false,
+        "definition": "image + title"
+      },
+      {
+        "name": "Inventory Level",
+        "metric": false,
+        "definition": "chip, 14 levels (Out Of Stock, Low Stock variants, In Stock variants, Healthy, Critical Incomings, High Stock, Restock, Low Performance)"
+      },
+      {
+        "name": "Action on ASIN",
+        "metric": false,
+        "definition": "recommended ad action"
+      },
+      {
+        "name": "Has Feedback",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Action",
+        "metric": false,
+        "definition": "Send Feedback"
+      },
+      {
+        "name": "Alert Date Time",
+        "metric": false,
+        "definition": ""
+      }
+    ],
+    "actions": [
+      {
+        "name": "Send feedback (comment required)",
+        "kind": "create",
+        "amazonWrite": false
+      },
+      {
+        "name": "Export selected (adds feedback details)",
+        "kind": "export",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "inventory-alerts/get-list"
+      },
+      {
+        "method": "POST",
+        "path": "sp/inventory-alert-feedback/create"
+      },
+      {
+        "method": "GET",
+        "path": "sp/inventory-alert-feedback/{alertId}"
+      }
+    ],
+    "notes": "Three columns hidden for profiles listed in a static config file. Ad group Ads tab reuses the stock columns for SP/SD.",
+    "internal": true,
+    "route": "/inventory-alert",
+    "title": "Inventory alert",
+    "entity": "inventory alert per ASIN",
+    "amazonConcept": "SP-API inventory + advertised ASIN stock risk",
+    "internalNote": "Alert generation and the \"Action on ASIN\" recommendation are an internal engine. A generic version (stock-risk alerts on advertised ASINs using SP-API inventory/forecast) fits any seller."
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW"
+    ],
+    "filters": [
+      "Find your ASIN",
+      "Availability filter (e.g. OUT_OF_STOCK)"
+    ],
+    "urlState": [],
+    "forms": [],
+    "columns": [
+      {
+        "name": "Products",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Trends",
+        "metric": false,
+        "definition": "opens drawer with chart"
+      },
+      {
+        "name": "Status",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Sponsored Products Eligibility",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "DOC",
+        "metric": false,
+        "definition": "days of cover"
+      },
+      {
+        "name": "Saleable inventory (internal warehouse)",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Saleable inventory (Amazon)",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Total real sale",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Total sale",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Total ads spend",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "TACOS",
+        "metric": false,
+        "definition": "total ad spend / total sales (inferred)"
+      },
+      {
+        "name": "Spend",
+        "metric": true,
+        "definition": "Total charges for clicks/impressions in the period. Late invalid-click removal can lower recent days for up to ~3 days."
+      },
+      {
+        "name": "Orders",
+        "metric": true,
+        "definition": "Orders attributed to ads in the attribution window (14 days); attribution scope differs by ad product; cancelled/failed-payment orders removed after ~72h."
+      },
+      {
+        "name": "Sales",
+        "metric": true,
+        "definition": "Sales value attributed to ads in the attribution window; same attribution rules as Orders; data can lag up to ~12h."
+      },
+      {
+        "name": "Clicks",
+        "metric": true,
+        "definition": "Number of ad clicks (invalid clicks removed later)."
+      },
+      {
+        "name": "Impressions",
+        "metric": true,
+        "definition": "Number of times the ads were shown."
+      },
+      {
+        "name": "CR",
+        "metric": true,
+        "definition": "Conversion rate. INFERRED: orders / clicks. Not defined in the legacy UI; computed by backend."
+      },
+      {
+        "name": "CTR",
+        "metric": true,
+        "definition": "Click-through rate = clicks / impressions."
+      },
+      {
+        "name": "CPC",
+        "metric": true,
+        "definition": "Cost per click = average paid per click."
+      },
+      {
+        "name": "CPM",
+        "metric": true,
+        "definition": "Cost per 1000 impressions. INFERRED: spend / impressions * 1000."
+      },
+      {
+        "name": "ACOS",
+        "metric": true,
+        "definition": "Advertising cost of sales = spend / sales."
+      },
+      {
+        "name": "ROAS",
+        "metric": true,
+        "definition": "Return on ad spend = sales / spend."
+      },
+      {
+        "name": "CPO",
+        "metric": true,
+        "definition": "Cost per order. INFERRED: spend / orders."
+      },
+      {
+        "name": "CPU",
+        "metric": true,
+        "definition": "Cost per unit. INFERRED: spend / units sold; unit source unclear. Backend can filter by it although the legacy UI did not offer it."
+      },
+      {
+        "name": "AOV",
+        "metric": true,
+        "definition": "Average order value. INFERRED: sales / orders."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Add to existing campaign and ad group (1-10 products, per ASIN x ad group result)",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Turn off ads (list ads -> pause -> report rejections)",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Expand product->campaign->ad group tree; cascading checkboxes",
+        "kind": "inline",
+        "amazonWrite": false
+      },
+      {
+        "name": "Export",
+        "kind": "export",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "product/get-list"
+      },
+      {
+        "method": "POST",
+        "path": "product/get-list-sub"
+      },
+      {
+        "method": "POST",
+        "path": "product/inventory"
+      },
+      {
+        "method": "POST",
+        "path": "product/metadata"
+      },
+      {
+        "method": "POST",
+        "path": "product-ads/create-multi"
+      },
+      {
+        "method": "POST",
+        "path": "product-ads/get-list-ads"
+      },
+      {
+        "method": "POST",
+        "path": "product-ads/update-state"
+      }
+    ],
+    "notes": "Campaigns for each product prefetched on load; ad groups of an opened product prefetched.",
+    "internal": true,
+    "route": "/product-management, /products",
+    "title": "Products",
+    "entity": "product (ASIN) -> campaign -> ad group tree",
+    "amazonConcept": "Catalog/listings + advertised products",
+    "internalNote": "Internal warehouse inventory, \"real sale\" and DOC come from internal systems; generic version uses SP-API inventory + sales and the seller's own cost data. Turn-off-ads UI does not check CAMPAIGN_EDIT (gap to fix)."
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW"
+    ],
+    "filters": [
+      "Search Product Tickets",
+      "Filters from config"
+    ],
+    "urlState": [],
+    "forms": [],
+    "columns": [
+      {
+        "name": "Name",
+        "metric": false,
+        "definition": "link"
+      },
+      {
+        "name": "Type",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Status",
+        "metric": false,
+        "definition": "chip: done, inpreview, reject, followup, inprogress, new, failed, reviewnoaction, cancel"
+      },
+      {
+        "name": "Owner",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Create date",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Detail: Action, Description, Assignee, Due Date, On/off, Confirm",
+        "metric": false,
+        "definition": ""
+      }
+    ],
+    "actions": [
+      {
+        "name": "Update ticket / confirm action",
+        "kind": "edit",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "ticket-management/get-all-ticket"
+      },
+      {
+        "method": "GET",
+        "path": "ticket-management/get-detail/{id}"
+      },
+      {
+        "method": "POST",
+        "path": "ticket-management/get-profiles"
+      },
+      {
+        "method": "PUT",
+        "path": "ticket-management/update/{id}"
+      }
+    ],
+    "notes": "Detail page is still v1 only.",
+    "internal": true,
+    "route": "/product-issue-ticket, /product-tickets, /product-issue-ticket/[ticketID]",
+    "title": "Product issue tickets",
+    "entity": "ticket",
+    "amazonConcept": "None",
+    "internalNote": "Internal issue workflow between ads team and product owners. Out of MVP; generic equivalent would be a task/assignment on alerts."
+  },
+  {
+    "status": "v1",
+    "roles": [
+      "CAMPAIGN_VIEW"
+    ],
+    "filters": [],
+    "urlState": [],
+    "forms": [],
+    "columns": [
+      {
+        "name": "Request Name",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Status",
+        "metric": false,
+        "definition": "Complete / Cancel / Manager Approve / Finance Confirm"
+      },
+      {
+        "name": "Platform",
+        "metric": false,
+        "definition": "Amazon/Walmart/Wayfair"
+      },
+      {
+        "name": "Team",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Budget",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Request Month",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Create Date",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Created By",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Approved By",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Function",
+        "metric": false,
+        "definition": ""
+      }
+    ],
+    "actions": [
+      {
+        "name": "Create request",
+        "kind": "create",
+        "amazonWrite": false
+      },
+      {
+        "name": "Clone",
+        "kind": "inline",
+        "amazonWrite": false
+      },
+      {
+        "name": "Delete",
+        "kind": "inline",
+        "amazonWrite": false
+      },
+      {
+        "name": "Approve (approver journey)",
+        "kind": "inline",
+        "amazonWrite": false
+      },
+      {
+        "name": "Export",
+        "kind": "export",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "portal/budget/approve-journey"
+      },
+      {
+        "method": "POST",
+        "path": "portal/budget/ticket"
+      },
+      {
+        "method": "POST",
+        "path": "portal/budget/ticket/clone"
+      },
+      {
+        "method": "POST",
+        "path": "portal/budget/ticket/approve"
+      }
+    ],
+    "notes": "Roles edit/approve/view.",
+    "internal": true,
+    "route": "/budget-account, /budget-account/[budgetAccountID]",
+    "title": "Budget account requests",
+    "entity": "budget request ticket",
+    "amazonConcept": "None",
+    "internalNote": "Internal finance approval workflow per team and platform. Not an Amazon concept. A generic version = monthly ad budget plan with optional approval step; low priority."
+  },
+  {
+    "status": "v1",
+    "roles": [
+      "CAMPAIGN_VIEW"
+    ],
+    "filters": [
+      "month start",
+      "marketplace (Amazon/Walmart/Wayfair)",
+      "team"
+    ],
+    "urlState": [],
+    "forms": [],
+    "columns": [
+      {
+        "name": "Total Spend chart by date (per team/marketplace)",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Total Performance chart",
+        "metric": false,
+        "definition": ""
+      }
+    ],
+    "actions": [],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "report/get-spend-by-date"
+      },
+      {
+        "method": "POST",
+        "path": "report/get-performance-by-date"
+      }
+    ],
+    "notes": "Marketplace list includes Walmart/Wayfair: out of scope for an Amazon product. Verification partial.",
+    "internal": true,
+    "route": "/dashboard-campaign",
+    "title": "Spend / performance dashboard",
+    "entity": "chart",
+    "amazonConcept": "Aggregated spend and performance",
+    "internalNote": "Team dimension is internal; spend/performance trend charts across accounts are generic and wanted by any seller."
+  },
+  {
+    "status": "both",
+    "roles": [
+      "admin (tab 1 top-admin role only; tab 2 either admin role)"
+    ],
+    "filters": [
+      "Search Name or Email (800 ms debounce)",
+      "Selection kept across pages"
+    ],
+    "urlState": [
+      "tab=settings|permissions"
+    ],
+    "forms": [],
+    "columns": [
+      {
+        "name": "Tab User Management: Name & Email, Department, Role, Profile Access, Action",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Tab Portfolio User Management: Name & Email, Role, Assign Portfolio, Action",
+        "metric": false,
+        "definition": ""
+      }
+    ],
+    "actions": [
+      {
+        "name": "Assign role + profiles (drawer: role, profiles by country, select all, confirm)",
+        "kind": "edit",
+        "amazonWrite": false
+      },
+      {
+        "name": "Bulk assign roles and profiles",
+        "kind": "bulk",
+        "amazonWrite": false
+      },
+      {
+        "name": "Assign portfolios / Bulk assign portfolios",
+        "kind": "edit",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "role/save"
+      },
+      {
+        "method": "GET",
+        "path": "role/list-role"
+      },
+      {
+        "method": "POST",
+        "path": "portfolio/operations/users"
+      },
+      {
+        "method": "POST",
+        "path": "portfolio/operations"
+      }
+    ],
+    "notes": "Roles: campaign view, campaign edit, portfolio edit/create, notification edit, admin. Roles are per profile. Page-level gate gaps noted in report.",
+    "internal": true,
+    "route": "/user-management, /user-management/module, /user-management/profile",
+    "title": "User management",
+    "entity": "user / role / profile access / portfolio assignment",
+    "amazonConcept": "None (app RBAC)",
+    "internalNote": "Department is internal; a generic version = tenant members with role + seller-account/marketplace scope."
+  },
+  {
+    "status": "both",
+    "roles": [
+      "CAMPAIGN_VIEW",
+      "CAMPAIGN_EDIT"
+    ],
+    "filters": [
+      "Filter config separate from the stored-data one",
+      "Search name",
+      "Page size only 50 or 100",
+      "Targeting uses cursor (Previous/Next) paging"
+    ],
+    "urlState": [
+      "v=2",
+      "tab=adGroup|ads|targeting|searchTerms",
+      "sub=placement|audience|amazonBusinessPlacement"
+    ],
+    "forms": [],
+    "columns": [
+      {
+        "name": "Campaigns: Active, Campaign name, Type, Status, Portfolio, Budget, Start, End, Top-of-search IS",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Spend",
+        "metric": true,
+        "definition": "Total charges for clicks/impressions in the period. Late invalid-click removal can lower recent days for up to ~3 days."
+      },
+      {
+        "name": "Orders",
+        "metric": true,
+        "definition": "Orders attributed to ads in the attribution window (14 days); attribution scope differs by ad product; cancelled/failed-payment orders removed after ~72h."
+      },
+      {
+        "name": "Sales",
+        "metric": true,
+        "definition": "Sales value attributed to ads in the attribution window; same attribution rules as Orders; data can lag up to ~12h."
+      },
+      {
+        "name": "Clicks",
+        "metric": true,
+        "definition": "Number of ad clicks (invalid clicks removed later)."
+      },
+      {
+        "name": "Impressions",
+        "metric": true,
+        "definition": "Number of times the ads were shown."
+      },
+      {
+        "name": "Detail page views",
+        "metric": true,
+        "definition": "Extended metric (SB/SD): detail-page views from ads."
+      },
+      {
+        "name": "Brand Store page views",
+        "metric": true,
+        "definition": "Extended metric (SB): Brand Store page views."
+      },
+      {
+        "name": "NTB orders",
+        "metric": true,
+        "definition": "New-to-brand orders (customer had not bought the brand in the lookback)."
+      },
+      {
+        "name": "% of orders new to brand",
+        "metric": true,
+        "definition": "NTB orders / orders."
+      },
+      {
+        "name": "NTB sales",
+        "metric": true,
+        "definition": "New-to-brand sales."
+      },
+      {
+        "name": "% of sales new to brand",
+        "metric": true,
+        "definition": "NTB sales / sales."
+      },
+      {
+        "name": "Long-term sales",
+        "metric": true,
+        "definition": "Extended metric: sales including the long attribution window."
+      },
+      {
+        "name": "Long-term ROAS",
+        "metric": true,
+        "definition": "Long-term sales / spend."
+      },
+      {
+        "name": "Targeting: Active, Targeting, Status, Targeting type, Campaign, Campaign status, Ad group, Products, Bid, Sugg. bid",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Ad groups: Active, Name, Status, Targets, Products",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Ads: Active, Ad, Status, SKU",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Search terms: Keyword, Product, Search term, Added, Target bid",
+        "metric": false,
+        "definition": ""
+      },
+      {
+        "name": "Audiences: Impressions, Clicks, Sales, ACOS, ROAS, Spend, CPC, CTR, Orders",
+        "metric": false,
+        "definition": ""
+      }
+    ],
+    "actions": [
+      {
+        "name": "Campaign switch and budget edit (1 - 1,000,000)",
+        "kind": "inline",
+        "amazonWrite": true
+      },
+      {
+        "name": "Bulk Adjust budget / Enable / Pause (no Archive)",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Targeting bid (0.02 - 10,000) and state; bulk Adjust bid / state / Apply suggested",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Placement bid adjustment 0-900 % (SP: top, product pages, rest; SB: top, rest; Amazon Business SP)",
+        "kind": "edit",
+        "amazonWrite": true
+      },
+      {
+        "name": "Adjust / remove audience",
+        "kind": "edit",
+        "amazonWrite": true
+      },
+      {
+        "name": "Ad group and ad enable/pause",
+        "kind": "bulk",
+        "amazonWrite": true
+      },
+      {
+        "name": "Create campaign (objective chooser carries returnTo)",
+        "kind": "create",
+        "amazonWrite": true
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "campaigns/amz-campaign-list"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/update-multiple"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/amz-campaign-placement"
+      },
+      {
+        "method": "POST",
+        "path": "campaigns/amz-campaign-placement-amazon-business"
+      },
+      {
+        "method": "POST",
+        "path": "ad-group/amz-adgroup-list"
+      },
+      {
+        "method": "POST",
+        "path": "product-ads/amz-product-ad"
+      },
+      {
+        "method": "POST",
+        "path": "target/amz-target-in-campaign"
+      },
+      {
+        "method": "POST",
+        "path": "search-terms/amz-search-term"
+      },
+      {
+        "method": "POST",
+        "path": "keyword/updates"
+      },
+      {
+        "method": "POST",
+        "path": "target/updates"
+      }
+    ],
+    "notes": "Only Delivering and Out-of-budget campaigns appear. Writes go straight to Amazon; a 200 is not success unless at least one row accepted; rows outside Amazon range are withheld and reported. Page size must be a multiple of 50 or backend 500s. Writes patch the cache (no refetch) so row order is stable. This mode exists because the legacy stored data lags Amazon; seller-hub should decide read-through vs mirrored model (see SCOPE).",
+    "internal": false,
+    "route": "/amazon, /amazon/campaigns, /amazon/campaigns/[campaignId], /amazon/campaigns/[campaignId]/{targeting|placements|search-terms}, /amazon/campaigns/[campaignId]/ad-groups/[adGroupId], .../ads, .../targeting, /amazon/targeting",
+    "title": "Real-time mode (live Amazon data)",
+    "entity": "campaign / ad group / ad / target / search term read live from Amazon",
+    "amazonConcept": "Direct Ads API reads and writes (no local store)"
+  },
+  {
+    "status": "v2",
+    "roles": [
+      "none (behind login)"
+    ],
+    "filters": [],
+    "urlState": [],
+    "forms": [],
+    "columns": [],
+    "actions": [
+      {
+        "name": "Download as Markdown / Word",
+        "kind": "export",
+        "amazonWrite": false
+      },
+      {
+        "name": "Search docs (diacritic-insensitive), table of contents, Mermaid diagrams",
+        "kind": "inline",
+        "amazonWrite": false
+      }
+    ],
+    "endpoints": [],
+    "notes": "Developer-facing docs rendered in the product; not a seller feature. Skip.",
+    "internal": true,
+    "route": "/docs, /docs/[slug]",
+    "title": "In-app documentation viewer",
+    "entity": "markdown docs",
+    "amazonConcept": "None",
+    "internalNote": "Not needed."
+  }
+]

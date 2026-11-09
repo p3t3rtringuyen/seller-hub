@@ -1,0 +1,820 @@
+{
+ "api": "AmazonAdsAPIALLDealAvailsesContract",
+ "file": "specs/dest/AmazonAdsAPIALLDealAvailsesContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "AppListTargetingEntry": {
+   "description": "An app list targeting entry. All entries must share the same negative value.",
+   "properties": {
+    "appListId": {
+     "description": "The app list to target.",
+     "type": "string"
+    },
+    "groupId": {
+     "description": "Identifies the group this entry belongs to. Entries sharing the same groupId are OR'd together.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "When true, this entry is a negative (exclusion) target. Defaults to false when omitted.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "appListId",
+    "groupId"
+   ],
+   "type": "object"
+  },
+  "AppTargetingEntry": {
+   "description": "An app targeting entry. All entries must share the same negative value.",
+   "properties": {
+    "appId": {
+     "description": "The app to target.",
+     "type": "string"
+    },
+    "groupId": {
+     "description": "Identifies the group this entry belongs to. Entries sharing the same groupId are OR'd together.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "When true, this entry is a negative (exclusion) target. Defaults to false when omitted.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "appId",
+    "groupId"
+   ],
+   "type": "object"
+  },
+  "AudienceTargetingEntry": {
+   "description": "An individual audience targeting entry. Entries sharing the same groupId are OR'd (union). Included groups (negative=false) are AND'd (intersection) across groups. All audiences in a negative group are OR'd, then exclud…",
+   "properties": {
+    "audienceId": {
+     "description": "The audience segment to target.",
+     "type": "string"
+    },
+    "groupId": {
+     "description": "Identifies the group this audience belongs to. Audiences sharing the same groupId are OR'd together. Use any unique string per group (e.g. '1', '2').",
+     "type": "string"
+    },
+    "negative": {
+     "description": "When true, this audience belongs to a negative (exclusion) group. Defaults to false when omitted.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "audienceId",
+    "groupId"
+   ],
+   "type": "object"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CountryCode": {
+   "enum": [
+    "AE",
+    "AT",
+    "AU",
+    "BE",
+    "BH",
+    "BR",
+    "CA",
+    "CH",
+    "CN",
+    "DE",
+    "DK",
+    "ES",
+    "FI",
+    "FR",
+    "GB",
+    "IE",
+    "IL",
+    "IN",
+    "IT",
+    "JP",
+    "KW",
+    "LU",
+    "MA",
+    "MX",
+    "NL",
+    "NO",
+    "NZ",
+    "OTHER",
+    "OTHER_EEA",
+    "SA",
+    "SE",
+    "TR",
+    "US",
+    "ZZ"
+   ],
+   "type": "string"
+  },
+  "CreativeSizeTargetingEntry": {
+   "description": "A creative size targeting entry. All entries must share the same negative value.",
+   "properties": {
+    "creativeSize": {
+     "$ref": "Size"
+    },
+    "groupId": {
+     "description": "Identifies the group this entry belongs to. Entries sharing the same groupId are OR'd together.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "When true, this entry is a negative (exclusion) target. Defaults to false when omitted.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "creativeSize",
+    "groupId"
+   ],
+   "type": "object"
+  },
+  "DealAvails": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertisingDealId": {
+     "description": "The advertising deal this avails record belongs to.",
+     "type": "string"
+    },
+    "appId": {
+     "description": "App for this avails slice.",
+     "type": "string"
+    },
+    "audienceId": {
+     "description": "Audience segment for this avails slice.",
+     "type": "string"
+    },
+    "countryCode": {
+     "$ref": "CountryCode"
+    },
+    "creativeSize": {
+     "$ref": "Size"
+    },
+    "dealAvailsId": {
+     "description": "A unique identifier for the deal avails record.",
+     "type": "string"
+    },
+    "deviceType": {
+     "$ref": "DeviceType"
+    },
+    "domainEntry": {
+     "$ref": "DomainEntry"
+    },
+    "eligibleAvails": {
+     "description": "Bid opportunities over the last 7 days eligible for bidding (bids and no-bids, excluding punts). Filtered by the EligibleAvailsTargeting when provided.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "eligibleAvailsTargeting": {
+     "$ref": "EligibleAvailsTargeting"
+    },
+    "groupByAttributes": {
+     "description": "Attributes to break results down by. When empty or omitted, results are aggregated to one entry per deal. APP, DOMAIN, SUPPLIER_SELLER, and CREATIVE_SIZE are high-cardinality attributes. At most one high-cardinality att…",
+     "items": {
+      "$ref": "DealAvailsAttributeField"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryType": {
+     "$ref": "InventoryType"
+    },
+    "supplierSellerId": {
+     "description": "The supplier seller associated with this avails record.",
+     "type": "string"
+    },
+    "totalAvails": {
+     "description": "Total bid opportunities over the last 7 days for this deal, including bids, no-bids, and punts. Not filtered by the EligibleAvailsTargeting.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "adProduct",
+    "advertisingDealId",
+    "dealAvailsId",
+    "eligibleAvails",
+    "totalAvails"
+   ],
+   "type": "object"
+  },
+  "DealAvailsAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+     "items": {
+      "$ref": "AdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DealAvailsAdvertisingDealIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DealAvailsAttributeField": {
+   "description": "Available attributes for aggregating deal avails results. **DealAvailsAttributeField Enum:** | DealAvailsAttributeField | Description | | --- | --- | | `INVENTORY_TYPE` | Break down by inventory type (e.g. display, vide…",
+   "enum": [
+    "APP",
+    "AUDIENCE",
+    "COUNTRY_CODE",
+    "CREATIVE_SIZE",
+    "DEVICE_TYPE",
+    "DOMAIN",
+    "INVENTORY_TYPE",
+    "SUPPLIER_SELLER"
+   ],
+   "type": "string"
+  },
+  "DealAvailsDealAvailsAttributeFieldFilter": {
+   "properties": {
+    "include": {
+     "description": "**GroupByAttributes Enum:** | GroupByAttributes | Description | | --- | --- | | `INVENTORY_TYPE` | Break down by inventory type (e.g. display, video, audio). | | `CREATIVE_SIZE` | Break down by creative size (width x he…",
+     "items": {
+      "$ref": "DealAvailsAttributeField"
+     },
+     "maxItems": 8,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DealAvailsEligibleAvailsTargetingFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "EligibleAvailsTargeting"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DealAvailsSortOption": {
+   "properties": {
+    "by": {
+     "$ref": "DealAvailsSortOptionsFields"
+    },
+    "direction": {
+     "$ref": "SortDirection"
+    }
+   },
+   "required": [
+    "by"
+   ],
+   "type": "object"
+  },
+  "DealAvailsSortOptionsFields": {
+   "description": "Specify which field to order by. | Field Name | Supported Ordering | | --- | --- | | eligibleAvails | DESCENDING | | totalAvails | DESCENDING |",
+   "enum": [
+    "eligibleAvails",
+    "totalAvails"
+   ],
+   "type": "string"
+  },
+  "DealAvailsSuccessResponse": {
+   "properties": {
+    "dealAvailses": {
+     "items": {
+      "$ref": "DealAvails"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DeviceType": {
+   "description": "**DeviceType Enum:** | DeviceType | Description | | --- | --- | | `DESKTOP` | Desktop computers and laptops. | | `MOBILE` | Mobile phones and tablets. | | `CONNECTED_TV` | Connected TV devices. | | `CONNECTED_DEVICE` | …",
+   "enum": [
+    "CONNECTED_DEVICE",
+    "CONNECTED_TV",
+    "DESKTOP",
+    "MOBILE",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DeviceTypeTargetingEntry": {
+   "description": "A device type targeting entry. All entries must share the same negative value.",
+   "properties": {
+    "deviceType": {
+     "$ref": "DeviceType"
+    },
+    "groupId": {
+     "description": "Identifies the group this entry belongs to. Entries sharing the same groupId are OR'd together.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "When true, this entry is a negative (exclusion) target. Defaults to false when omitted.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "deviceType",
+    "groupId"
+   ],
+   "type": "object"
+  },
+  "DomainEntry": {
+   "description": "A single domain entry in a domain list.",
+   "properties": {
+    "domainName": {
+     "description": "The domain name (e.g., example.com).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "domainName"
+   ],
+   "type": "object"
+  },
+  "DomainListTargetingEntry": {
+   "description": "A domain list targeting entry. All entries must share the same negative value.",
+   "properties": {
+    "domainListId": {
+     "description": "The domain list to target.",
+     "type": "string"
+    },
+    "groupId": {
+     "description": "Identifies the group this entry belongs to. Entries sharing the same groupId are OR'd together.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "When true, this entry is a negative (exclusion) target. Defaults to false when omitted.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "domainListId",
+    "groupId"
+   ],
+   "type": "object"
+  },
+  "DomainTargetingEntry": {
+   "description": "A domain targeting entry. All entries must share the same negative value.",
+   "properties": {
+    "domainEntry": {
+     "$ref": "DomainEntry"
+    },
+    "groupId": {
+     "description": "Identifies the group this entry belongs to. Entries sharing the same groupId are OR'd together.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "When true, this entry is a negative (exclusion) target. Defaults to false when omitted.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "domainEntry",
+    "groupId"
+   ],
+   "type": "object"
+  },
+  "EligibleAvailsTargeting": {
+   "description": "Targeting that filters eligible avails. All targeting dimensions are AND'd together, except app and domain entries (including list variants) which are OR'd together since a bid contains either an app or a domain, never …",
+   "properties": {
+    "appListTargetingEntries": {
+     "description": "App list targeting entries. App, domain, app list, and domain list targeting entries are always combined with OR logic because a bid contains either an app or a domain, never both.",
+     "items": {
+      "$ref": "AppListTargetingEntry"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "appTargetingEntries": {
+     "description": "App targeting entries. App, domain, app list, and domain list targeting entries are always combined with OR logic because a bid contains either an app or a domain, never both.",
+     "items": {
+      "$ref": "AppTargetingEntry"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "audienceTargetingEntries": {
+     "description": "Audience targeting entries. Entries are grouped by groupId. Within a group, audiences are OR'd (union). Across included groups, groups are AND'd (intersection).",
+     "items": {
+      "$ref": "AudienceTargetingEntry"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizeTargetingEntries": {
+     "description": "Creative size targeting entries.",
+     "items": {
+      "$ref": "CreativeSizeTargetingEntry"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deviceTypeTargetingEntries": {
+     "description": "Device type targeting entries.",
+     "items": {
+      "$ref": "DeviceTypeTargetingEntry"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "domainListTargetingEntries": {
+     "description": "Domain list targeting entries. App, domain, app list, and domain list targeting entries are always combined with OR logic because a bid contains either an app or a domain, never both.",
+     "items": {
+      "$ref": "DomainListTargetingEntry"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "domainTargetingEntries": {
+     "description": "Domain targeting entries. App, domain, app list, and domain list targeting entries are always combined with OR logic because a bid contains either an app or a domain, never both.",
+     "items": {
+      "$ref": "DomainTargetingEntry"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypeTargetingEntries": {
+     "description": "Inventory type targeting entries.",
+     "items": {
+      "$ref": "InventoryTypeTargetingEntry"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "locationTargetingEntries": {
+     "description": "Location targeting entries.",
+     "items": {
+      "$ref": "LocationTargetingEntry"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "supplierSellerTargetingEntries": {
+     "description": "Supplier seller targeting entries.",
+     "items": {
+      "$ref": "SupplierSellerTargetingEntry"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InventoryType": {
+   "description": "**InventoryType Enum:** | InventoryType | Description | | --- | --- | | `DISPLAY` | | | `VIDEO` | | | `STREAMING_TV` | | | `ONLINE_VIDEO` | | | `AUDIO` | Audio ads that serve on streaming audio inventory. |",
+   "enum": [
+    "AUDIO",
+    "DISPLAY",
+    "ONLINE_VIDEO",
+    "STREAMING_TV",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "InventoryTypeTargetingEntry": {
+   "description": "An inventory type targeting entry. All entries must share the same negative value.",
+   "properties": {
+    "groupId": {
+     "description": "Identifies the group this entry belongs to. Entries sharing the same groupId are OR'd together.",
+     "type": "string"
+    },
+    "inventoryType": {
+     "$ref": "InventoryType"
+    },
+    "negative": {
+     "description": "When true, this entry is a negative (exclusion) target. Defaults to false when omitted.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "groupId",
+    "inventoryType"
+   ],
+   "type": "object"
+  },
+  "LocationTargetingEntry": {
+   "description": "A location targeting entry. Currently only country-level targeting is supported. All entries must share the same negative value.",
+   "properties": {
+    "countryCode": {
+     "$ref": "CountryCode"
+    },
+    "groupId": {
+     "description": "Identifies the group this entry belongs to. Entries sharing the same groupId are OR'd together.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "When true, this entry is a negative (exclusion) target. Defaults to false when omitted.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "countryCode",
+    "groupId"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryDealAvailsRequest": {
+   "properties": {
+    "adProductFilter": {
+     "$ref": "DealAvailsAdProductFilter"
+    },
+    "advertisingDealIdFilter": {
+     "$ref": "DealAvailsAdvertisingDealIdFilter"
+    },
+    "eligibleAvailsTargetingFilter": {
+     "$ref": "DealAvailsEligibleAvailsTargetingFilter"
+    },
+    "groupByAttributesFilter": {
+     "$ref": "DealAvailsDealAvailsAttributeFieldFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "sort": {
+     "items": {
+      "$ref": "DealAvailsSortOption"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adProductFilter",
+    "advertisingDealIdFilter"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Size": {
+   "properties": {
+    "height": {
+     "description": "The height of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "height",
+    "width"
+   ],
+   "type": "object"
+  },
+  "SortDirection": {
+   "description": "**SortDirection Enum:** | SortDirection | Description | | --- | --- | | `ASCENDING` | Sort in ascending order | | `DESCENDING` | Sort in descending order |",
+   "enum": [
+    "ASCENDING",
+    "DESCENDING"
+   ],
+   "type": "string"
+  },
+  "SupplierSellerTargetingEntry": {
+   "description": "A supplier seller targeting entry. All entries must share the same negative value.",
+   "properties": {
+    "groupId": {
+     "description": "Identifies the group this entry belongs to. Entries sharing the same groupId are OR'd together.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "When true, this entry is a negative (exclusion) target. Defaults to false when omitted.",
+     "type": "boolean"
+    },
+    "supplierSellerId": {
+     "description": "The supplier seller to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "groupId",
+    "supplierSellerId"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

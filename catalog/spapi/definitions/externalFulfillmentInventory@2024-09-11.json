@@ -1,0 +1,225 @@
+{
+  "ActionableError": {
+    "description": "Error details you can take action on.",
+    "properties": {
+      "errorSubType": {
+        "description": "The secondary level error type.",
+        "type": "string"
+      },
+      "errorType": {
+        "description": "The top level error type that may contain multiple error subtypes.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BatchInventoryRequest": {
+    "description": "A list of inventory requests.",
+    "properties": {
+      "requests": {
+        "ref": "BatchInventoryRequestList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BatchInventoryRequestList": {
+    "description": "A list of inventory requests.",
+    "properties": {},
+    "ref": "InventoryRequest",
+    "required": [],
+    "type": "array"
+  },
+  "BatchInventoryResponse": {
+    "description": "The response of the `batchInventory` operation.",
+    "properties": {
+      "responses": {
+        "ref": "BatchInventoryResponseList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BatchInventoryResponseList": {
+    "description": "A list of inventory request responses.",
+    "properties": {},
+    "ref": "InventoryResponse",
+    "required": [],
+    "type": "array"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "An object containing a list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses returned when a request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "HttpMethod": {
+    "description": "The HTTP method associated with an individual request within a batch.",
+    "enum": [
+      "GET",
+      "POST"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "HttpStatusLine": {
+    "description": "The HTTP status associated with the response for an individual request within a batch.",
+    "properties": {
+      "reasonPhrase": {
+        "description": "The HTTP response reason phrase.",
+        "type": "string"
+      },
+      "statusCode": {
+        "description": "The HTTP response status code.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InventoryRequest": {
+    "description": "An inventory request.",
+    "properties": {
+      "body": {
+        "description": "The body associated with the individual APIs being called as part of the batch request.",
+        "ref": "InventoryRequestParams"
+      },
+      "method": {
+        "description": "The method associated with the individual operation from the batch request.",
+        "ref": "HttpMethod"
+      },
+      "uri": {
+        "description": "The URI associated with the individual APIs from the batch request.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "method",
+      "uri"
+    ],
+    "type": "object"
+  },
+  "InventoryRequestParams": {
+    "description": "The parameters for an individual request.",
+    "properties": {
+      "clientSequenceNumber": {
+        "description": "The latest sequence number for the inventory update operation.",
+        "type": "integer"
+      },
+      "marketplaceAttributes": {
+        "ref": "MarketplaceAttributes"
+      },
+      "quantity": {
+        "description": "The absolute inventory quantity.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InventoryResponse": {
+    "description": "A response to an individual inventory request.",
+    "properties": {
+      "body": {
+        "description": "The body of the response.",
+        "ref": "InventoryResponseBody"
+      },
+      "status": {
+        "description": "The HTTP status code associated with the response.",
+        "ref": "HttpStatusLine"
+      }
+    },
+    "required": [
+      "body",
+      "status"
+    ],
+    "type": "object"
+  },
+  "InventoryResponseBody": {
+    "description": "The response to an inventory request.",
+    "properties": {
+      "actionableErrors": {
+        "description": "Inventory operation errors that require seller action before retrying the inventory request.",
+        "ref": "ActionableError",
+        "type": "array"
+      },
+      "clientSequenceNumber": {
+        "description": "Latest sequence number for an inventory update.",
+        "type": "integer"
+      },
+      "locationId": {
+        "description": "The location where inventory is updated or retrieved.",
+        "type": "string"
+      },
+      "marketplaceAttributes": {
+        "ref": "MarketplaceAttributes"
+      },
+      "reservedQuantity": {
+        "description": "The number of items of the specified SKU created in any marketplace that are reserved for shipment and yet to be fulfilled.",
+        "type": "integer"
+      },
+      "sellableQuantity": {
+        "description": "The number of items of the specified SKU that are available for purchase.",
+        "type": "integer"
+      },
+      "skuId": {
+        "description": "The SKU ID for which inventory is updated or retrieved",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "MarketplaceAttributes": {
+    "description": "The channel name and marketplace ID.",
+    "properties": {
+      "channelName": {
+        "description": "The name of the fulfillment channel in which to update inventory.",
+        "enum": [
+          "DF",
+          "FBA",
+          "MFN"
+        ],
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The marketplace ID of the marketplace where you want to update inventory.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

@@ -1,0 +1,3458 @@
+{
+ "api": "Measurement",
+ "file": "specs/dest/Measurement_prod_3p.json",
+ "schemas": {
+  "AdTypeV1": {
+   "description": "Supported values are DSP(Demand Side Platform).",
+   "enum": [
+    "DSP"
+   ],
+   "type": "string"
+  },
+  "AssetTypeV1M2": {
+   "description": "The type of the Asset.",
+   "enum": [
+    "IMAGE",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "AssetV1M2": {
+   "description": "The Amazon Creative Asset Library asset identifier. Refer https://advertising.amazon.com/API/docs/en-us/creative-asset-library",
+   "properties": {
+    "assetId": {
+     "description": "The assetId.",
+     "type": "string"
+    },
+    "assetType": {
+     "$ref": "AssetTypeV1M2"
+    },
+    "version": {
+     "description": "The version of the asset.",
+     "type": "string"
+    }
+   }
+  },
+  "AudienceGroupV1M2": {
+   "description": "The model for holding Audiece selection within a group. The expression within an audience group will be evaluated using the IntraGroupOperator. The InterGroupOperator will be applied on the output of one audience group …",
+   "properties": {
+    "audienceSegments": {
+     "description": "List of audience segments in this group.",
+     "items": {
+      "$ref": "AudienceSegmentV1M2"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "interGroupOperator": {
+     "$ref": "AudienceSelectionOperatorV1M2"
+    },
+    "intraGroupOperator": {
+     "$ref": "AudienceSelectionOperatorV1M2"
+    }
+   },
+   "type": "object"
+  },
+  "AudienceResearchStudyResultV1M2": {
+   "description": "The result of Audience Research study.",
+   "properties": {
+    "studyId": {
+     "description": "The canonical Id of Study.",
+     "type": "string"
+    },
+    "surveyResponses": {
+     "description": "Detailed response rate for each response in Survey question aggregated by different segments.",
+     "items": {
+      "$ref": "SurveyResponseResultV1"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResponses": {
+     "description": "Total number of responses received in the Survey.",
+     "type": "number"
+    }
+   }
+  },
+  "AudienceSegmentV1M2": {
+   "description": "The model for holding an Audience Segment.",
+   "properties": {
+    "segmentId": {
+     "description": "ID for the audience segment. This ID can be fetched from these APIs- https://advertising.amazon.com/API/docs/en-us/audiences/#/Discovery",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AudienceSelectionOperatorV1M2": {
+   "description": "The operator used in Audience Segment Selection to determine which operation needs to be applied across selected segments. AND operator takes priority over OR operator.",
+   "enum": [
+    "AND",
+    "OR"
+   ],
+   "type": "string"
+  },
+  "AudienceTargetingGroupV1M2": {
+   "description": "The model for holding Audiece targeting group. The includedAudienceGroups and excludedAudienceGroups are always joined with AND operator.",
+   "properties": {
+    "excludedAudienceGroups": {
+     "description": "List of audience groups to be excluded from the targeted audience.",
+     "items": {
+      "$ref": "AudienceGroupV1M2"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "includedAudienceGroups": {
+     "description": "List of audience groups to be included in the targeted audience.",
+     "items": {
+      "$ref": "AudienceGroupV1M2"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BaseEligibilityRequestV1": {
+   "description": "The request object of measurement eligibility check.",
+   "properties": {
+    "fundingTypeFilters": {
+     "description": "FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+     "items": {
+      "$ref": "FundingTypeV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorProductIdFilters": {
+     "description": "VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorTypeFilters": {
+     "description": "VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+     "items": {
+      "$ref": "VendorTypeV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BaseEligibilityRequestV1M1": {
+   "description": "The request object of measurement eligibility check.",
+   "properties": {
+    "fundingTypeFilters": {
+     "description": "FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+     "items": {
+      "$ref": "FundingTypeV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorProductIdFilters": {
+     "description": "VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorTypeFilters": {
+     "description": "VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+     "items": {
+      "$ref": "VendorTypeV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BaseEligibilityRequestV1M2": {
+   "description": "The request object of measurement eligibility check.",
+   "properties": {
+    "fundingTypeFilters": {
+     "description": "FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+     "items": {
+      "$ref": "FundingTypeV1M2"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorProductIdFilters": {
+     "description": "VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorTypeFilters": {
+     "description": "VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+     "items": {
+      "$ref": "VendorTypeV1M2"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   }
+  },
+  "BaseEligibilityRequestV1M3": {
+   "description": "The request object of measurement eligibility check.",
+   "properties": {
+    "fundingTypeFilters": {
+     "description": "FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+     "items": {
+      "$ref": "FundingTypeV1M3"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorProductIdFilters": {
+     "description": "VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorTypeFilters": {
+     "description": "VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+     "items": {
+      "$ref": "VendorTypeV1M3"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   }
+  },
+  "BaseStudyV1": {
+   "description": "The base study object.",
+   "properties": {
+    "comment": {
+     "description": "The approver's comment on why the study is approved/rejected.",
+     "type": "string"
+    },
+    "createDate": {
+     "description": "The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "externalReferenceId": {
+     "description": "Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.",
+     "type": "string"
+    },
+    "id": {
+     "description": "The study canonical identifier. Immutable field. This is required for update.",
+     "type": "string"
+    },
+    "lastUpdatedDate": {
+     "description": "The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The study name.",
+     "type": "string"
+    },
+    "rejectionReasons": {
+     "deprecated": true,
+     "description": "List of reasons for rejection, this will only be available if the status is REJECTED. This field is deprecated, use statusReasons instead.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "reviewDate": {
+     "description": "The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "StudyStatusV1"
+    },
+    "statusReasons": {
+     "description": "List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "studyResultStatus": {
+     "description": "The status of result of the study.",
+     "enum": [
+      "AVAILABLE"
+     ],
+     "type": "string"
+    },
+    "submissionType": {
+     "$ref": "StudySubmissionTypeV1"
+    },
+    "surveyId": {
+     "description": "The study survey canonical identifier.",
+     "type": "string"
+    },
+    "vendorProductId": {
+     "description": "Associated vendor product canonical identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BaseStudyV1M1": {
+   "description": "The base study object.",
+   "properties": {
+    "comment": {
+     "description": "The approver's comment on why the study is approved/rejected.",
+     "type": "string"
+    },
+    "createDate": {
+     "description": "The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "externalReferenceId": {
+     "description": "Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.",
+     "type": "string"
+    },
+    "id": {
+     "description": "The study canonical identifier. Immutable field. This is required for update.",
+     "type": "string"
+    },
+    "lastUpdatedDate": {
+     "description": "The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "links": {
+     "items": {
+      "$ref": "ResourceLinkV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The study name.",
+     "type": "string"
+    },
+    "rejectionReasons": {
+     "deprecated": true,
+     "description": "List of reasons for rejection, this will only be available if the status is REJECTED. This field is deprecated, use statusReasons instead.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "reviewDate": {
+     "description": "The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "StudyStatusV1"
+    },
+    "statusReasons": {
+     "description": "List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "studyResultStatus": {
+     "description": "The status of result of the study.",
+     "enum": [
+      "AVAILABLE"
+     ],
+     "type": "string"
+    },
+    "submissionType": {
+     "$ref": "StudySubmissionTypeV1"
+    },
+    "surveyId": {
+     "description": "The study survey canonical identifier.",
+     "type": "string"
+    },
+    "vendorProductId": {
+     "description": "Associated vendor product canonical identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BaseStudyV1M2": {
+   "description": "The base study object.",
+   "properties": {
+    "comment": {
+     "description": "The approver's comment on why the study is approved/rejected.",
+     "type": "string"
+    },
+    "createDate": {
+     "description": "The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "externalReferenceId": {
+     "description": "Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.",
+     "type": "string"
+    },
+    "lastUpdatedDate": {
+     "description": "The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The study name.",
+     "type": "string"
+    },
+    "reviewDate": {
+     "description": "The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "StudyStatusV1"
+    },
+    "statusReasons": {
+     "description": "List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "studyResultStatus": {
+     "description": "The status of result of the study.",
+     "enum": [
+      "AVAILABLE"
+     ],
+     "type": "string"
+    },
+    "surveyId": {
+     "description": "The study survey canonical identifier.",
+     "type": "string"
+    },
+    "vendorProductId": {
+     "description": "Associated vendor product canonical identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BenchmarkCategoryV1": {
+   "description": "The study benchmark product category.",
+   "enum": [
+    "APPLIANCES",
+    "APPS_AND_GAMES",
+    "ARTS_CRAFTS_AND_SEWING",
+    "AUTOMOTIVE",
+    "BABY",
+    "BEAUTY_AND_PERSONAL_CARE",
+    "BEVERAGES",
+    "BOOKS",
+    "CELL_PHONES_AND_ACCESSORIES",
+    "CLOTHING_SHOES_AND_JEWELRY",
+    "COMPUTERS_AND_ACCESSORIES",
+    "DIGITAL_MUSIC",
+    "EDUCATION",
+    "ELECTRONICS",
+    "FINANCIAL_AND_INSURANCE",
+    "FOOD",
+    "HEALTH_AND_HOUSEHOLD",
+    "HOME_AND_KITCHEN",
+    "HOSPITALITY",
+    "KITCHEN_AND_DINING",
+    "MOVIES_AND_TV",
+    "OFFICE_PRODUCTS",
+    "PATIO_LAWN_AND_GARDEN",
+    "PET_SUPPLIES",
+    "RESTAURANTS",
+    "SOFTWARE",
+    "SPORTS_AND_OUTDOORS",
+    "TELECOMMUNICATIONS_SERVICES",
+    "TOOLS_AND_HOME_IMPROVEMENT",
+    "TOYS_AND_GAMES",
+    "VIDEO_GAMES"
+   ],
+   "type": "string"
+  },
+  "BrandLiftStudyResultV1": {
+   "description": "The result of Brand Lift study.",
+   "properties": {
+    "brandLiftSummary": {
+     "description": "Summary of Brand Lift achieved for each objective.",
+     "items": {
+      "$ref": "BrandLiftSummaryV1"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    },
+    "studyId": {
+     "description": "The canonical Id of Study.",
+     "type": "string"
+    },
+    "surveyResponses": {
+     "description": "Detailed response rate for each response in Survey question aggregated by different segments.",
+     "items": {
+      "$ref": "SurveyResponseResultV1"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResponses": {
+     "description": "Total number of responses received in the Survey.",
+     "type": "number"
+    }
+   }
+  },
+  "BrandLiftStudyResultV1M1": {
+   "description": "The result of Brand Lift study.",
+   "properties": {
+    "brandLiftSummary": {
+     "description": "Summary of Brand Lift achieved for each objective.",
+     "items": {
+      "$ref": "BrandLiftSummaryV1M1"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    },
+    "studyId": {
+     "description": "The canonical Id of Study.",
+     "type": "string"
+    },
+    "surveyResponses": {
+     "description": "Detailed response rate for each response in Survey question aggregated by different segments.",
+     "items": {
+      "$ref": "SurveyResponseResultV1M1"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResponses": {
+     "description": "Total number of responses received in the Survey.",
+     "type": "number"
+    }
+   }
+  },
+  "BrandLiftSummaryV1": {
+   "description": "Summary of Brand Lift achieved for an objective.",
+   "properties": {
+    "adExposedGroupRate": {
+     "description": "Ad exposed group response rate.",
+     "format": "double",
+     "type": "number"
+    },
+    "benchmarkLiftRate": {
+     "description": "The benchmark lift rate for the selected product category in the Survey.",
+     "format": "double",
+     "type": "number"
+    },
+    "controlGroupRate": {
+     "description": "Control group response rate.",
+     "format": "double",
+     "type": "number"
+    },
+    "qualifyingResponses": {
+     "description": "Qualifying responses aggregated to measure the Brand Lift.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "questionObjective": {
+     "$ref": "SurveyQuestionObjectiveTypeV1"
+    },
+    "questionText": {
+     "description": "Text of the Survey question.",
+     "type": "string"
+    },
+    "statisticalSignificance": {
+     "description": "The significance percentage of achieved Brand Lift.",
+     "format": "double",
+     "type": "number"
+    }
+   }
+  },
+  "BrandLiftSummaryV1M1": {
+   "description": "Summary of Brand Lift achieved for an objective.",
+   "properties": {
+    "adExposedGroupRate": {
+     "description": "Ad exposed group response rate.",
+     "type": "number"
+    },
+    "benchmarkLiftRate": {
+     "description": "The benchmark lift rate for the selected product category in the Survey.",
+     "type": "number"
+    },
+    "controlGroupRate": {
+     "description": "Control group response rate.",
+     "type": "number"
+    },
+    "qualifyingResponses": {
+     "description": "Qualifying responses aggregated to measure the Brand Lift.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "questionObjective": {
+     "$ref": "SurveyQuestionObjectiveTypeV1M1"
+    },
+    "questionText": {
+     "description": "Text of the Survey question.",
+     "type": "string"
+    },
+    "statisticalSignificance": {
+     "description": "The significance percentage of achieved Brand Lift.",
+     "type": "number"
+    }
+   }
+  },
+  "CreateDSPAudienceResearchStudyV1M2": {
+   "allOf": [
+    {
+     "$ref": "BaseStudyV1M2"
+    },
+    {
+     "$ref": "DSPCampaignPlanningMetadataV1M2"
+    },
+    {
+     "$ref": "DSPAudienceResearchMetadataV1M2"
+    }
+   ],
+   "description": "Create DSP AUDIENCE_RESEARCH study object.",
+   "type": "object"
+  },
+  "CreateDSPCreativeTestingStudyV1M2": {
+   "allOf": [
+    {
+     "$ref": "BaseStudyV1M2"
+    },
+    {
+     "$ref": "DSPCampaignPlanningMetadataV1M2"
+    },
+    {
+     "$ref": "DSPCreativeTestingMetadataV1M2"
+    }
+   ],
+   "description": "Create DSP CREATIVE_TESTING study object.",
+   "type": "object"
+  },
+  "CreativeTestingStudyResultV1M2": {
+   "description": "The result of Creative Testing study.",
+   "properties": {
+    "studyId": {
+     "description": "The canonical Id of Study.",
+     "type": "string"
+    },
+    "surveyResponses": {
+     "description": "Detailed response rate for each response in Survey question aggregated by different segments.",
+     "items": {
+      "$ref": "SurveyResponseResultV1M2"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResponses": {
+     "description": "Total number of responses received in the Survey.",
+     "type": "number"
+    }
+   }
+  },
+  "CustomSurveyQuestionV1": {
+   "deprecated": true,
+   "description": "The templated measurement survey question.",
+   "properties": {
+    "questionText": {
+     "description": "The survey question text.",
+     "type": "string"
+    },
+    "responses": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "type": {
+     "$ref": "SurveyQuestionTypeV1"
+    }
+   },
+   "type": "object"
+  },
+  "DSPAudienceResearchEligibilityDataV1M2": {
+   "description": "The audience research study eligibility data.",
+   "properties": {
+    "audienceTargetingGroup": {
+     "$ref": "AudienceTargetingGroupV1M2"
+    }
+   },
+   "type": "object"
+  },
+  "DSPAudienceResearchEligibilityRequestV1M2": {
+   "allOf": [
+    {
+     "$ref": "BaseEligibilityRequestV1M2"
+    },
+    {
+     "$ref": "DSPAudienceResearchEligibilityDataV1M2"
+    }
+   ],
+   "description": "The request object of DSP Audience Research study eligibility check."
+  },
+  "DSPAudienceResearchMetadataV1M2": {
+   "description": "The basic model for all DSP AUDIENCE_RESEARCH objective studies.",
+   "properties": {
+    "audienceTargetingGroup": {
+     "$ref": "AudienceTargetingGroupV1M2"
+    },
+    "brandName": {
+     "description": "The study brand name.",
+     "type": "string"
+    },
+    "peerNames": {
+     "description": "A list of peer names for the study brand.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productCategory": {
+     "description": "The study product category.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPAudienceResearchStudyV1M2": {
+   "allOf": [
+    {
+     "properties": {
+      "id": {
+       "description": "The study canonical identifier. Immutable field.",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "$ref": "BaseStudyV1M2"
+    },
+    {
+     "$ref": "DSPCampaignPlanningMetadataV1M2"
+    },
+    {
+     "$ref": "DSPAudienceResearchMetadataV1M2"
+    }
+   ],
+   "description": "DSP AUDIENCE_RESEARCH study object.",
+   "type": "object"
+  },
+  "DSPBrandLiftEligibilityDataV1": {
+   "description": "The campaign study eligibility data.",
+   "properties": {
+    "currentStudyId": {
+     "description": "Optional current study identifier, if provided orders are expected to be added into this study and the orders already associated with this study will be excluded from certain eligibility check.",
+     "type": "string"
+    },
+    "excludedLineItemIds": {
+     "description": "A list of canonical lineItem identifiers that are excluded from the eligibility check.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "orderIds": {
+     "description": "A list of canonical order identifiers. By default all lineItems in those orders will be included.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPBrandLiftEligibilityRequestV1": {
+   "allOf": [
+    {
+     "$ref": "BaseEligibilityRequestV1"
+    },
+    {
+     "$ref": "DSPBrandLiftEligibilityDataV1"
+    }
+   ],
+   "description": "The request object of DSP brand lift eligibility check.",
+   "type": "object"
+  },
+  "DSPBrandLiftEligibilityRequestV1M1": {
+   "allOf": [
+    {
+     "$ref": "BaseEligibilityRequestV1M1"
+    },
+    {
+     "$ref": "DSPBrandLiftEligibilityDataV1"
+    }
+   ],
+   "description": "The request object of DSP brand lift eligibility check.",
+   "type": "object"
+  },
+  "DSPBrandLiftMetadataV1": {
+   "description": "The basic model for all DSP BRAND_LIFT objective studies.",
+   "properties": {
+    "benchmarkCategory": {
+     "$ref": "BenchmarkCategoryV1"
+    },
+    "brandName": {
+     "description": "The study brand name.",
+     "type": "string"
+    },
+    "peerNames": {
+     "description": "A list of peer names for the study brand.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productCategory": {
+     "description": "The study product category.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPBrandLiftMetadataV1M1": {
+   "description": "The basic model for all DSP BRAND_LIFT objective studies.",
+   "properties": {
+    "benchmarkCategory": {
+     "$ref": "BenchmarkCategoryV1"
+    },
+    "brandName": {
+     "description": "The study brand name.",
+     "type": "string"
+    },
+    "peerNames": {
+     "description": "A list of peer names for the study brand.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productCategory": {
+     "description": "The study product category.",
+     "type": "string"
+    },
+    "verb": {
+     "description": "The verb that will be used in the applicable survey questions to construct the question text.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPBrandLiftStudyV1": {
+   "allOf": [
+    {
+     "$ref": "BaseStudyV1"
+    },
+    {
+     "$ref": "DSPCampaignMeasurementMetadataV1"
+    },
+    {
+     "$ref": "DSPBrandLiftMetadataV1"
+    }
+   ],
+   "description": "DSP BRAND_LIFT study object.",
+   "type": "object"
+  },
+  "DSPBrandLiftStudyV1M1": {
+   "allOf": [
+    {
+     "$ref": "BaseStudyV1M1"
+    },
+    {
+     "$ref": "DSPCampaignMeasurementMetadataV1M1"
+    },
+    {
+     "$ref": "DSPBrandLiftMetadataV1M1"
+    }
+   ],
+   "description": "DSP BRAND_LIFT study object.",
+   "type": "object"
+  },
+  "DSPCampaignMeasurementMetadataV1": {
+   "description": "The basic model for all DSP CAMPAIGN_MEASUREMENT objective studies.",
+   "properties": {
+    "advertiserId": {
+     "description": "The associated advertiser identifier. Immutable field.",
+     "type": "string"
+    },
+    "excludedLineItemIds": {
+     "description": "A list of canonical lineItem identifiers that are excluded from the study.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "orderIds": {
+     "description": "A list of canonical order identifiers that are associated with the study. By default all lineItems in those orders will be included.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCampaignMeasurementMetadataV1M1": {
+   "description": "The basic model for all DSP CAMPAIGN_MEASUREMENT objective studies.",
+   "properties": {
+    "advertiserId": {
+     "description": "The associated advertiser identifier. Immutable field.",
+     "type": "string"
+    },
+    "excludedLineItemIds": {
+     "description": "A list of canonical lineItem identifiers that are excluded from the study.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "orderIds": {
+     "description": "A list of canonical order identifiers that are associated with the study. By default all lineItems in those orders will be included.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCampaignPlanningMetadataV1M2": {
+   "description": "The basic model for all DSP CAMPAIGN_PLANNING objective studies.",
+   "properties": {
+    "advertiserId": {
+     "description": "The associated advertiser identifier. Immutable field.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreativeTestingEligibilityDataV1M2": {
+   "description": "The creative testing study eligibility data.",
+   "properties": {
+    "audienceTargetingGroup": {
+     "$ref": "AudienceTargetingGroupV1M2"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreativeTestingEligibilityRequestV1M2": {
+   "allOf": [
+    {
+     "$ref": "BaseEligibilityRequestV1M2"
+    },
+    {
+     "$ref": "DSPCreativeTestingEligibilityDataV1M2"
+    }
+   ],
+   "description": "The request object of DSP Creative Testing study eligibility check."
+  },
+  "DSPCreativeTestingMetadataV1M2": {
+   "description": "The basic model for all DSP CREATIVE_TESTING objective studies.",
+   "properties": {
+    "assets": {
+     "description": "A list of assets to be used for the creative testing study as part of either the survey question or the response. In case of API responses, number of assets returned would be limited to 10 even if a creative testing stu…",
+     "items": {
+      "$ref": "AssetV1M2"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "audienceTargetingGroup": {
+     "$ref": "AudienceTargetingGroupV1M2"
+    },
+    "brandName": {
+     "description": "The study brand name.",
+     "type": "string"
+    },
+    "productCategory": {
+     "description": "Optional study product category.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreativeTestingStudyV1M2": {
+   "allOf": [
+    {
+     "properties": {
+      "id": {
+       "description": "The study canonical identifier. Immutable field.",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "$ref": "BaseStudyV1M2"
+    },
+    {
+     "$ref": "DSPCampaignPlanningMetadataV1M2"
+    },
+    {
+     "$ref": "DSPCreativeTestingMetadataV1M2"
+    }
+   ],
+   "description": "DSP CREATIVE_TESTING study object.",
+   "type": "object"
+  },
+  "DSPOmnichannelMetricsEligibilityDataV1M2": {
+   "description": "The campaign study eligibility data.",
+   "properties": {
+    "brandIds": {
+     "description": "A list of canonical brand identifiers.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "currentStudyId": {
+     "description": "Optional current study identifier. If provided orders are expected to be added into this study and the orders already associated with this study will be excluded from certain eligibility checks.",
+     "type": "string"
+    },
+    "excludedLineItemIds": {
+     "description": "A list of canonical lineItem identifiers that are excluded from the eligibility check.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "orderIds": {
+     "description": "A list of canonical order identifiers. By default all lineItems in those orders will be included.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPOmnichannelMetricsEligibilityRequestV1M2": {
+   "allOf": [
+    {
+     "$ref": "BaseEligibilityRequestV1M2"
+    },
+    {
+     "$ref": "DSPOmnichannelMetricsEligibilityDataV1M2"
+    }
+   ],
+   "description": "The request object of DSP omnichannel metrics eligibility check."
+  },
+  "DSPOmnichannelMetricsEligibilityRequestV1M3": {
+   "allOf": [
+    {
+     "$ref": "BaseEligibilityRequestV1M3"
+    },
+    {
+     "$ref": "DSPOmnichannelMetricsEligibilityDataV1M2"
+    }
+   ],
+   "description": "The request object of DSP omnichannel metrics eligibility check."
+  },
+  "DSPOmnichannelMetricsMetadataV1M2": {
+   "description": "The basic model for all DSP OMNICHANNEL_METRICS objective studies.",
+   "properties": {
+    "brandIds": {
+     "description": "A list of canonical brand ids to be tracked for off-Amazon conversions.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPOmnichannelMetricsStudyV1M2": {
+   "allOf": [
+    {
+     "$ref": "BaseStudyV1"
+    },
+    {
+     "$ref": "DSPCampaignMeasurementMetadataV1"
+    },
+    {
+     "$ref": "DSPOmnichannelMetricsMetadataV1M2"
+    }
+   ],
+   "description": "DSP OMNICHANNEL_METRICS study object.",
+   "type": "object"
+  },
+  "DSPOmnichannelMetricsStudyV1M3": {
+   "allOf": [
+    {
+     "$ref": "BaseStudyV1M1"
+    },
+    {
+     "$ref": "DSPCampaignMeasurementMetadataV1M1"
+    },
+    {
+     "$ref": "DSPOmnichannelMetricsMetadataV1M2"
+    }
+   ],
+   "description": "DSP OMNICHANNEL_METRICS study object.",
+   "type": "object"
+  },
+  "EligibilityFieldV1": {
+   "description": "Fields that will be checked as part of eligibility API call.",
+   "enum": [
+    "BUDGET",
+    "END_TIME",
+    "FLIGHT_LENGTH",
+    "GOAL",
+    "IMPRESSIONS",
+    "LEAD_TIME",
+    "LOCALE",
+    "ORDER",
+    "START_TIME"
+   ],
+   "type": "string"
+  },
+  "EligibilityFieldV1M2": {
+   "description": "Fields that will be checked as part of eligibility API call.",
+   "enum": [
+    "BUDGET",
+    "BUYER_COUNT",
+    "END_TIME",
+    "FLIGHT_LENGTH",
+    "GOAL",
+    "IMPRESSIONS",
+    "INDUSTRY",
+    "LEAD_TIME",
+    "LOCALE",
+    "ORDER",
+    "START_TIME"
+   ],
+   "type": "string"
+  },
+  "EligibilityIssueSeverityV1": {
+   "description": "Supported values are WARNING, ERROR. ERROR severity issues need to be resolved while WARNING severity issues can be ignored.",
+   "enum": [
+    "ERROR",
+    "WARNING"
+   ],
+   "type": "string"
+  },
+  "EligibilityIssueV1": {
+   "description": "The list of eligibility issues.",
+   "properties": {
+    "code": {
+     "description": "An enumerated issue code for machine use.",
+     "type": "string"
+    },
+    "field": {
+     "$ref": "EligibilityFieldV1"
+    },
+    "message": {
+     "description": "A human-readable description of the issue with suggestions on how to resolve the issue.",
+     "type": "string"
+    },
+    "severity": {
+     "$ref": "EligibilityIssueSeverityV1"
+    }
+   },
+   "type": "object"
+  },
+  "EligibilityIssueV1M2": {
+   "description": "The list of eligibility issues.",
+   "properties": {
+    "code": {
+     "description": "An enumerated issue code for machine use.",
+     "type": "string"
+    },
+    "field": {
+     "$ref": "EligibilityFieldV1M2"
+    },
+    "message": {
+     "description": "A human-readable description of the issue with suggestions on how to resolve the issue.",
+     "type": "string"
+    },
+    "severity": {
+     "$ref": "EligibilityIssueSeverityV1"
+    }
+   }
+  },
+  "EligibilityMetadataV1": {
+   "description": "The eligibility metadata.",
+   "properties": {
+    "budget": {
+     "description": "The total budget. Expressed in dollars.",
+     "format": "double",
+     "type": "number"
+    },
+    "endDate": {
+     "description": "The latest end date of the associated orders in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "flightLength": {
+     "description": "The flight length of the associated orders. Expressed in days.",
+     "type": "integer"
+    },
+    "impressions": {
+     "description": "The total estimated impressions.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "startDate": {
+     "description": "The earliest start date of associated orders in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+     "format": "date-time",
+     "type": "string"
+    }
+   }
+  },
+  "EligibilityResponseV1": {
+   "description": "The eligibility check response object.",
+   "properties": {
+    "metadata": {
+     "$ref": "EligibilityMetadataV1"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "vendorProductEligibilities": {
+     "items": {
+      "$ref": "VendorProductEligibilityV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "EligibilityResponseV1M2": {
+   "description": "The eligibility check response object.",
+   "properties": {
+    "metadata": {
+     "$ref": "EligibilityMetadataV1"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "vendorProductEligibilities": {
+     "items": {
+      "$ref": "VendorProductEligibilityV1M2"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   }
+  },
+  "EligibilityStatusV1": {
+   "description": "Supported values are ELIGIBLE, INELIGIBLE and ELIGIBLE_WITH_WARNING. INELIGIBLE status indicates the study can not be created.",
+   "enum": [
+    "ELIGIBLE",
+    "ELIGIBLE_WITH_WARNING",
+    "INELIGIBLE"
+   ],
+   "type": "string"
+  },
+  "ErrorV1": {
+   "description": "The error response object.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "SubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "Request Id that uniquely identifies your request.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "FundingTypeV1": {
+   "description": "The measurement funding type. For COMPLIMENTARY studies the cost will be covered by Amazon.",
+   "enum": [
+    "COMPLIMENTARY"
+   ],
+   "type": "string"
+  },
+  "FundingTypeV1M1": {
+   "description": "The measurement funding type. For COMPLIMENTARY studies the cost will be covered by Amazon.",
+   "enum": [
+    "COMPLIMENTARY",
+    "THIRD_PARTY_PAYMENT"
+   ],
+   "type": "string"
+  },
+  "FundingTypeV1M2": {
+   "description": "The measurement funding type. For COMPLIMENTARY studies the cost will be covered by Amazon.",
+   "enum": [
+    "COMPLIMENTARY",
+    "CPM",
+    "FLAT_RATE"
+   ],
+   "type": "string"
+  },
+  "FundingTypeV1M3": {
+   "description": "The measurement funding type. For COMPLIMENTARY studies the cost will be covered by Amazon.",
+   "enum": [
+    "COMPLIMENTARY",
+    "CPM",
+    "THIRD_PARTY_PAYMENT"
+   ],
+   "type": "string"
+  },
+  "GridQuestionResponsesV1M1": {
+   "description": "The grid question response object. Only applicable for SINGLE_SELECT_GRID type question.",
+   "properties": {
+    "columns": {
+     "items": {
+      "$ref": "SurveyQuestionPlaceholderFieldValueV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "rows": {
+     "items": {
+      "$ref": "SurveyQuestionPlaceholderFieldValueV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "MeasurementCountryV1": {
+   "description": "The measurement country.",
+   "enum": [
+    "AE",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "UK",
+    "US"
+   ],
+   "type": "string"
+  },
+  "MeasurementGoalV1": {
+   "description": "The measurement budget optimization goal type goal.",
+   "enum": [
+    "AWARENESS",
+    "CONSIDERATIONS_ON_AMAZON",
+    "CONVERSIONS_OFF_AMAZON",
+    "ENGAGEMENT_WITH_MY_AD",
+    "MOBILE_APP_INSTALLS",
+    "PURCHASES_ON_AMAZON"
+   ],
+   "type": "string"
+  },
+  "MeasurementLocaleV1": {
+   "description": "The measurement locale.",
+   "enum": [
+    "DE_DE",
+    "EN_CA",
+    "EN_GB",
+    "EN_US",
+    "ES_ES",
+    "ES_MX",
+    "FR_FR",
+    "IT_IT",
+    "PT_BR"
+   ],
+   "type": "string"
+  },
+  "MeasurementMarketplaceV1": {
+   "description": "The marketplace with corresponding rules.",
+   "properties": {
+    "country": {
+     "$ref": "MeasurementCountryV1"
+    },
+    "minimumBudget": {
+     "description": "The minimum budget. Expressed in dollars.",
+     "format": "double",
+     "type": "number"
+    },
+    "minimumImpressions": {
+     "description": "The minimum impressions.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "supportedLocales": {
+     "items": {
+      "$ref": "MeasurementLocaleV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "OmnichannelMetricsBrandSearchRequestV1M2": {
+   "description": "The request object to fetch brands to be used in the OMNICHANNEL_METRICS vendor product.",
+   "properties": {
+    "brandIdFilter": {
+     "description": "List of brandIds in the omnichannel metrics brand catalog. Either one of brandIdFilter or brandNameSearch should be provided.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    },
+    "brandNameSearch": {
+     "description": "Text to search for eligible brands in the omnichannel metrics brand catalog. Either one of brandIdFilter or brandNameSearch should be provided.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "OmnichannelMetricsBrandV1M2": {
+   "properties": {
+    "brand": {
+     "description": "The brand name.",
+     "type": "string"
+    },
+    "category": {
+     "type": "string"
+    },
+    "company": {
+     "type": "string"
+    },
+    "id": {
+     "description": "The brand canonical Id",
+     "type": "string"
+    },
+    "majorBrand": {
+     "type": "string"
+    },
+    "manufacturer": {
+     "type": "string"
+    },
+    "subcategory": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedBaseStudiesV1": {
+   "description": "A list of studies.",
+   "properties": {
+    "measurements": {
+     "items": {
+      "$ref": "BaseStudyV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedBaseStudiesV1M1": {
+   "description": "A list of studies.",
+   "properties": {
+    "measurements": {
+     "items": {
+      "$ref": "BaseStudyV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedDSPAudienceResearchStudiesV1M2": {
+   "description": "A list of audience research studies.",
+   "properties": {
+    "measurements": {
+     "items": {
+      "$ref": "DSPAudienceResearchStudyV1M2"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedDSPBrandLiftStudiesV1": {
+   "description": "A list of studies.",
+   "properties": {
+    "measurements": {
+     "items": {
+      "$ref": "DSPBrandLiftStudyV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedDSPBrandLiftStudiesV1M1": {
+   "description": "A list of studies.",
+   "properties": {
+    "measurements": {
+     "items": {
+      "$ref": "DSPBrandLiftStudyV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedDSPCreativeTestingStudiesV1M2": {
+   "description": "A list of creative testing studies.",
+   "properties": {
+    "measurements": {
+     "items": {
+      "$ref": "DSPCreativeTestingStudyV1M2"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedDSPOmnichannelMetricsStudiesV1M2": {
+   "description": "A list of studies.",
+   "properties": {
+    "measurements": {
+     "items": {
+      "$ref": "DSPOmnichannelMetricsStudyV1M2"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedDSPOmnichannelMetricsStudiesV1M3": {
+   "description": "A list of studies.",
+   "properties": {
+    "measurements": {
+     "items": {
+      "$ref": "DSPOmnichannelMetricsStudyV1M3"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedOmnichannelMetricsBrandsV1M2": {
+   "properties": {
+    "brands": {
+     "items": {
+      "$ref": "OmnichannelMetricsBrandV1M2"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of matched brands.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedSurveyQuestionTemplatesV1": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "surveyQuestionTemplates": {
+     "items": {
+      "$ref": "SurveyQuestionTemplateV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of templates.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedSurveyQuestionTemplatesV1M1": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "surveyQuestionTemplates": {
+     "items": {
+      "$ref": "SurveyQuestionTemplateV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of templates.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedSurveysV1": {
+   "description": "A list of study surveys.",
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "surveys": {
+     "items": {
+      "$ref": "SurveyV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedSurveysV1M1": {
+   "description": "A list of study surveys.",
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "surveys": {
+     "items": {
+      "$ref": "SurveyV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedVendorProductPoliciesV1": {
+   "description": "A list of measurement vendor products policies.",
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "policies": {
+     "items": {
+      "$ref": "VendorProductPolicyV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of vendor products.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedVendorProductPoliciesV1M1": {
+   "description": "A list of measurement vendor products policies.",
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "policies": {
+     "items": {
+      "$ref": "VendorProductPolicyV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of vendor products.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedVendorProductsV1": {
+   "description": "A list of measurement vendor products.",
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of vendor products.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "vendorProducts": {
+     "items": {
+      "$ref": "VendorProductV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PaginatedVendorProductsV1M1": {
+   "description": "A list of measurement vendor products.",
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of vendor products.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "vendorProducts": {
+     "items": {
+      "$ref": "VendorProductV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PlaceholderValueTypeV1": {
+   "description": "The placeholder value type.",
+   "enum": [
+    "INTEGER",
+    "STRING"
+   ],
+   "type": "string"
+  },
+  "PlanningEligibilityDataV1M3": {
+   "description": "The planning eligibility data.",
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiserId.",
+     "type": "string"
+    },
+    "locale": {
+     "$ref": "MeasurementLocaleV1"
+    },
+    "orderMetadata": {
+     "items": {
+      "$ref": "PlanningOrderMetadataV1M3"
+     },
+     "type": "array"
+    },
+    "studyTypeFilters": {
+     "description": "StudyType identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+     "items": {
+      "$ref": "StudyTypeV1M2"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PlanningEligibilityRequestV1M3": {
+   "allOf": [
+    {
+     "$ref": "BaseEligibilityRequestV1M2"
+    },
+    {
+     "$ref": "PlanningEligibilityDataV1M3"
+    }
+   ],
+   "description": "The request object of planning eligibility check.",
+   "type": "object"
+  },
+  "PlanningEligibilityResponseV1M3": {
+   "description": "The planning eligibility response object.",
+   "properties": {
+    "metadata": {
+     "$ref": "EligibilityMetadataV1"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "vendorProductEligibilities": {
+     "items": {
+      "$ref": "PlanningEligibilityV1M3"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PlanningEligibilityV1M3": {
+   "description": "The request object of measurement eligibility check.",
+   "properties": {
+    "issues": {
+     "description": "A list of issues will be provided if the status is INELIGIBLE or ELIGIBLE_WITH_WARNING.",
+     "items": {
+      "$ref": "EligibilityIssueV1M2"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "rank": {
+     "description": "The lower the number, the more recommended the vendor product is.",
+     "type": "number"
+    },
+    "status": {
+     "$ref": "EligibilityStatusV1"
+    },
+    "vendorProductId": {
+     "description": "Vendor product canonical identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PlanningOrderMetadataV1M3": {
+   "description": "Metadata around a hypothetical order.",
+   "properties": {
+    "budget": {
+     "description": "The total estimated budget of the order.",
+     "format": "double",
+     "type": "number"
+    },
+    "endDate": {
+     "description": "The estimated end date of the order in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "goal": {
+     "$ref": "MeasurementGoalV1"
+    },
+    "impressions": {
+     "description": "The total estimated impressions of the order.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "startDate": {
+     "description": "The estimated start date of the order in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ResourceLinkV1M1": {
+   "description": "The link that can be used to access corresponding resources in advertising portal.",
+   "properties": {
+    "name": {
+     "description": "The resource name.",
+     "type": "string"
+    },
+    "url": {
+     "description": "The resource url.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StudyObjectiveV1": {
+   "description": "Measurement category based on the purpose of the measurement.",
+   "enum": [
+    "CAMPAIGN_MEASUREMENT",
+    "CAMPAIGN_PLANNING"
+   ],
+   "type": "string"
+  },
+  "StudyResponseV1": {
+   "description": "Study response.",
+   "properties": {
+    "code": {
+     "description": "An enumerated success or error code for machine use.",
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "SubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the object in the request, starting from 1.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "message": {
+     "description": "A human-readable message of the code.",
+     "type": "string"
+    },
+    "studyId": {
+     "description": "The study canonical identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StudyResponsesV1": {
+   "description": "Studies response.",
+   "properties": {
+    "requestId": {
+     "description": "Request Id that uniquely identifies your request.",
+     "type": "string"
+    },
+    "responses": {
+     "items": {
+      "$ref": "StudyResponseV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "StudyStatusV1": {
+   "description": "The study status. Only required if study is in DRAFT as part of study creation/update.",
+   "enum": [
+    "APPROVED",
+    "CANCELLED",
+    "DRAFT",
+    "ENDED",
+    "INFEASIBLE",
+    "PENDING",
+    "REJECTED",
+    "RUNNING"
+   ],
+   "type": "string"
+  },
+  "StudySubmissionTypeV1": {
+   "description": "The submission type for the creation and updating of studies. Currently, this submission type is supported for brand lift studies only. This is an optional parameter in each of the request objects and its default value …",
+   "enum": [
+    "DRAFT",
+    "SUBMISSION"
+   ],
+   "type": "string"
+  },
+  "StudyTypeV1": {
+   "description": "The study type.",
+   "enum": [
+    "BRAND_LIFT"
+   ],
+   "type": "string"
+  },
+  "StudyTypeV1M2": {
+   "description": "The study type.",
+   "enum": [
+    "AUDIENCE_RESEARCH",
+    "BRAND_LIFT",
+    "CREATIVE_TESTING",
+    "OMNICHANNEL_METRICS"
+   ],
+   "type": "string"
+  },
+  "SubErrorV1": {
+   "description": "The sub error object.",
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SurveyErrorV1": {
+   "description": "The survey error object.",
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "questionTemplateId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SurveyQuestionCategoryRequirementV1M1": {
+   "description": "The requirement for specific survey question category.",
+   "properties": {
+    "category": {
+     "$ref": "SurveyQuestionCategoryV1M1"
+    },
+    "maximumQuestions": {
+     "description": "The maximum number of questions required for the question category.",
+     "type": "integer"
+    },
+    "minimumQuestions": {
+     "description": "The minimum number of questions required for the question category.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "SurveyQuestionCategoryV1M1": {
+   "description": "The survey question category.",
+   "enum": [
+    "BRAND_KPI",
+    "CUSTOM",
+    "WEIGHTING"
+   ],
+   "type": "string"
+  },
+  "SurveyQuestionGridQuestionResponseV1M1": {
+   "description": "The grid question response object. Only applicable for SINGLE_SELECT_GRID type question.",
+   "properties": {
+    "columns": {
+     "$ref": "SurveyQuestionPlaceholderCandidateV1"
+    },
+    "rows": {
+     "$ref": "SurveyQuestionPlaceholderCandidateV1"
+    }
+   },
+   "type": "object"
+  },
+  "SurveyQuestionObjectiveTypeV1": {
+   "description": "The survey objective.",
+   "enum": [
+    "AD_RECALL",
+    "ASSOCIATION",
+    "ATTITUDES",
+    "AWARENESS",
+    "BEHAVIORS",
+    "FAMILIARITY",
+    "FAVORABILITY",
+    "INTENT",
+    "PREFERENCE"
+   ],
+   "type": "string"
+  },
+  "SurveyQuestionObjectiveTypeV1M1": {
+   "description": "The survey objective.",
+   "enum": [
+    "AD_RECALL",
+    "AGE",
+    "AMAZON_SERVICE_USAGE",
+    "ATTITUDES",
+    "AWARENESS",
+    "BEHAVIORS",
+    "CHILDREN_IN_HOUSEHOLD",
+    "CONSIDERATION",
+    "EDUCATION",
+    "ETHNICITY",
+    "FAMILIARITY",
+    "FAVORABILITY",
+    "GENDER",
+    "HOUSEHOLD_INCOME",
+    "HOUSEHOLD_SIZE",
+    "INTENT",
+    "IN_MARKET_STATUS",
+    "PREFERENCE",
+    "PURCHASE_FREQUENCY",
+    "PURCHASE_HISTORY",
+    "PURCHASE_LOCATION",
+    "TIME_ONLINE",
+    "TV_MEDIA_CONSUMPTION",
+    "UNAIDED_AWARENESS"
+   ],
+   "type": "string"
+  },
+  "SurveyQuestionPlaceholderAllowedRangeV1": {
+   "description": "Allowed value range for placeholder.",
+   "properties": {
+    "maximumValue": {
+     "description": "The maximum allowed value.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "minimumValue": {
+     "description": "The minimum allowed value.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "parentField": {
+     "description": "The field name that this range depends on. Will be empty if this range is the default range.",
+     "type": "string"
+    },
+    "parentValue": {
+     "description": "The field value that this range depends on. Will be empty if this range is the default range.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SurveyQuestionPlaceholderAllowedValueV1": {
+   "description": "Allowed values for placeholder.",
+   "properties": {
+    "parentField": {
+     "description": "The field name that this value list depends on. Will be empty if this is the default list.",
+     "type": "string"
+    },
+    "parentValue": {
+     "description": "The field value that this value list depend on. Will be empty if this is the default list.",
+     "type": "string"
+    },
+    "values": {
+     "description": "Allowed values for placeholder.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SurveyQuestionPlaceholderCandidateV1": {
+   "description": "The placeholder candidate in Survey question.",
+   "properties": {
+    "allowCustomValue": {
+     "description": "Whether custom value is allowed for the placeholder.",
+     "type": "boolean"
+    },
+    "allowedValueRanges": {
+     "description": "Allowed value ranges for placeholder. Only applicable if the valueType is INTEGER.",
+     "items": {
+      "$ref": "SurveyQuestionPlaceholderAllowedRangeV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "allowedValues": {
+     "description": "Allowed values for placeholder. Will be empty if placeholder is free text field.",
+     "items": {
+      "$ref": "SurveyQuestionPlaceholderAllowedValueV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "defaultValues": {
+     "description": "Default values that will be appended to the values list regardless.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "fieldName": {
+     "description": "The survey question placeholder field name.",
+     "type": "string"
+    },
+    "inferredFields": {
+     "description": "Where the placeholder values will be inferred from.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maximumValueLength": {
+     "description": "The maximum allowed character length for each individual placeholder value.",
+     "type": "integer"
+    },
+    "minimumValueLength": {
+     "description": "The minimum allowed character length for each individual placeholder value.",
+     "type": "integer"
+    },
+    "valueType": {
+     "$ref": "PlaceholderValueTypeV1"
+    }
+   },
+   "type": "object"
+  },
+  "SurveyQuestionPlaceholderFieldValueV1": {
+   "properties": {
+    "isQualifying": {
+     "description": "This is only required if the corresponding field is 'response', this will help to define if the response value will be counted as a positive one in the study report.",
+     "type": "boolean"
+    },
+    "value": {
+     "description": "The survey question placeholder field value.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SurveyQuestionPlaceholderV1": {
+   "description": "The object specifying a placeholder in Survey question.",
+   "properties": {
+    "fieldName": {
+     "description": "The survey question placeholder field name.",
+     "type": "string"
+    },
+    "fieldValues": {
+     "description": "The survey question placeholder field values.",
+     "items": {
+      "$ref": "SurveyQuestionPlaceholderFieldValueV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SurveyQuestionResponseV1M2": {
+   "description": "The survey question response chosen by Survey audience.",
+   "properties": {
+    "asset": {
+     "$ref": "AssetV1M2"
+    },
+    "responseType": {
+     "description": "The type of response.",
+     "enum": [
+      "ASSET",
+      "TEXT"
+     ],
+     "type": "string"
+    },
+    "responseValue": {
+     "description": "The response text if the question response type is TEXT.",
+     "type": "string"
+    }
+   }
+  },
+  "SurveyQuestionSubCategoryV1M1": {
+   "description": "The survey question sub-category. Only applicable to certain categories",
+   "enum": [
+    "BEHAVIOR",
+    "DEMOGRAPHIC",
+    "PURCHASE_HISTORY"
+   ],
+   "type": "string"
+  },
+  "SurveyQuestionTemplateV1": {
+   "description": "Survey question template for vendor product.",
+   "properties": {
+    "id": {
+     "description": "The survey question template canonical Id.",
+     "type": "string"
+    },
+    "locale": {
+     "$ref": "MeasurementLocaleV1"
+    },
+    "maximumQualifyingResponses": {
+     "description": "The maximum number of qualifying responses allowed for the question. This will be available if the qualifying responses are not pre-defined/inferred.",
+     "type": "integer"
+    },
+    "maximumQuestionResponses": {
+     "description": "The maximum number of responses allowed for the question. This will be available if the question responses are not pre-defined/inferred.",
+     "type": "integer"
+    },
+    "minimumQualifyingResponses": {
+     "description": "The minimum number of qualifying responses required for the question. This will be available if the qualifying responses are not pre-defined/inferred.",
+     "type": "integer"
+    },
+    "minimumQuestionResponses": {
+     "description": "The minimum number of responses required for the question. This will be available if the question responses are not pre-defined/inferred.",
+     "type": "integer"
+    },
+    "objectiveType": {
+     "$ref": "SurveyQuestionObjectiveTypeV1"
+    },
+    "placeholderCandidates": {
+     "items": {
+      "$ref": "SurveyQuestionPlaceholderCandidateV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "qualifyingResponses": {
+     "description": "The pre-defined qualifying survey question responses with placeholders, this will help to define which responses will be counted as positive ones in the study report.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "questionResponses": {
+     "description": "The pre-defined survey question responses with placeholders.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "questionText": {
+     "description": "The survey question text with placeholders.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "SurveyQuestionTypeV1"
+    },
+    "vendorProductId": {
+     "description": "The associated vendor product id.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SurveyQuestionTemplateV1M1": {
+   "description": "Survey question template for vendor product.",
+   "properties": {
+    "category": {
+     "$ref": "SurveyQuestionCategoryV1M1"
+    },
+    "gridQuestionResponse": {
+     "$ref": "SurveyQuestionGridQuestionResponseV1M1"
+    },
+    "id": {
+     "description": "The survey question template canonical Id.",
+     "type": "string"
+    },
+    "locale": {
+     "$ref": "MeasurementLocaleV1"
+    },
+    "maximumQualifyingResponses": {
+     "description": "The maximum number of qualifying responses allowed for the question. This will be available if the qualifying responses are not pre-defined/inferred.",
+     "type": "integer"
+    },
+    "maximumQuestionResponses": {
+     "description": "The maximum number of responses allowed for the question. This will be available if the question responses are not pre-defined/inferred.",
+     "type": "integer"
+    },
+    "minimumQualifyingResponses": {
+     "description": "The minimum number of qualifying responses required for the question. This will be available if the qualifying responses are not pre-defined/inferred.",
+     "type": "integer"
+    },
+    "minimumQuestionResponses": {
+     "description": "The minimum number of responses required for the question. This will be available if the question responses are not pre-defined/inferred.",
+     "type": "integer"
+    },
+    "objectiveType": {
+     "$ref": "SurveyQuestionObjectiveTypeV1M1"
+    },
+    "placeholderCandidates": {
+     "items": {
+      "$ref": "SurveyQuestionPlaceholderCandidateV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "priority": {
+     "description": "The priority of the question. If present this will determine the ordering of questions in a survey. The check will be enforced when a survey is created/updated. Lower number indicates higher priority.",
+     "type": "integer"
+    },
+    "qualifyingResponses": {
+     "description": "The pre-defined qualifying survey question responses with placeholders, this will help to define which responses will be counted as positive ones in the study report.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "questionResponses": {
+     "description": "The pre-defined survey question responses with placeholders.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "questionText": {
+     "description": "The survey question text with placeholders.",
+     "type": "string"
+    },
+    "subCategory": {
+     "$ref": "SurveyQuestionSubCategoryV1M1"
+    },
+    "type": {
+     "$ref": "SurveyQuestionTypeV1M1"
+    },
+    "vendorProductId": {
+     "description": "The associated vendor product id.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SurveyQuestionTypeV1": {
+   "description": "The survey question type. SINGLE_SELECT question will allow customers to choose only one response, MULTI_SELECT question will allow customers to choose multiple responses, RATING will allow customers to choose a rating …",
+   "enum": [
+    "FREE_TEXT",
+    "MULTI_SELECT",
+    "RATING",
+    "SINGLE_ASSET_SELECT",
+    "SINGLE_SELECT"
+   ],
+   "type": "string"
+  },
+  "SurveyQuestionTypeV1M1": {
+   "description": "The survey question type. SINGLE_SELECT question will allow customers to choose only one response, MULTI_SELECT question will allow customers to choose multiple responses, RATING will allow customers to choose a rating …",
+   "enum": [
+    "FREE_TEXT",
+    "MULTI_SELECT",
+    "RATING",
+    "SINGLE_SELECT",
+    "SINGLE_SELECT_GRID"
+   ],
+   "type": "string"
+  },
+  "SurveyResponseResultV1": {
+   "description": "The rate of response for each response in Survey question.",
+   "properties": {
+    "adExposedGroupResponseRate": {
+     "description": "The percent of people in ad exposed group choosing this response.",
+     "format": "double",
+     "type": "number"
+    },
+    "controlGroupResponseRate": {
+     "description": "The percent of people in control group choosing this response.",
+     "format": "double",
+     "type": "number"
+    },
+    "isQualifyingResponse": {
+     "description": "Is the response a qualifying response. Used in calculating Brand Lift.",
+     "type": "boolean"
+    },
+    "marginOfError": {
+     "description": "The percentage of margin of error for this response.",
+     "type": "number"
+    },
+    "questionObjective": {
+     "$ref": "SurveyQuestionObjectiveTypeV1"
+    },
+    "questionResponse": {
+     "description": "The response choosen by Survey audience.",
+     "type": "string"
+    },
+    "questionSequence": {
+     "description": "Sequence number of the question in the Survey.",
+     "type": "number"
+    },
+    "questionText": {
+     "description": "Text of the Survey question.",
+     "type": "string"
+    },
+    "responseRate": {
+     "description": "The percentage of people choosing this response.",
+     "format": "double",
+     "type": "number"
+    },
+    "segmentType": {
+     "description": "The segment type to which this response data belongs to.",
+     "enum": [
+      "AGE",
+      "AUDIENCES",
+      "CHANNEL",
+      "FREQUENCY",
+      "GENDER",
+      "HOUSEHOLD_INCOME",
+      "OVERALL"
+     ],
+     "type": "string"
+    },
+    "segmentValue": {
+     "description": "The segment value to which this response data belongs to. Would be corresponding to the above segmentType field.",
+     "type": "string"
+    },
+    "statisticalSignificance": {
+     "description": "The significance percentage for the response data in this segment.",
+     "format": "double",
+     "type": "number"
+    }
+   }
+  },
+  "SurveyResponseResultV1M1": {
+   "description": "The rate of response for each response in Survey question.",
+   "properties": {
+    "adExposedGroupResponseRate": {
+     "description": "The percent of people in ad exposed group choosing this response.",
+     "type": "number"
+    },
+    "controlGroupResponseRate": {
+     "description": "The percent of people in control group choosing this response.",
+     "type": "number"
+    },
+    "isQualifyingResponse": {
+     "description": "Is the response a qualifying response. Used in calculating Brand Lift.",
+     "type": "boolean"
+    },
+    "questionObjective": {
+     "$ref": "SurveyQuestionObjectiveTypeV1M1"
+    },
+    "questionResponse": {
+     "description": "The response choosen by Survey audience.",
+     "type": "string"
+    },
+    "questionSequence": {
+     "description": "Sequence number of the question in the Survey.",
+     "type": "number"
+    },
+    "questionText": {
+     "description": "Text of the Survey question.",
+     "type": "string"
+    },
+    "responseRate": {
+     "description": "The percentage of people choosing this response.",
+     "type": "number"
+    },
+    "segmentType": {
+     "description": "The segment type to which this response data belongs to.",
+     "enum": [
+      "AGE",
+      "AUDIENCES",
+      "CHANNEL",
+      "FREQUENCY",
+      "GENDER",
+      "HOUSEHOLD_INCOME",
+      "OVERALL"
+     ],
+     "type": "string"
+    },
+    "segmentValue": {
+     "description": "The segment value to which this response data belongs to. Would be corresponding to the above segmentType field.",
+     "type": "string"
+    },
+    "statisticalSignificance": {
+     "description": "The significance percentage for the response data in this segment.",
+     "type": "number"
+    }
+   }
+  },
+  "SurveyResponseResultV1M2": {
+   "description": "The rate of response for each response in Survey question.",
+   "properties": {
+    "adExposedGroupResponseRate": {
+     "description": "The percent of people in ad exposed group choosing this response.",
+     "format": "double",
+     "type": "number"
+    },
+    "controlGroupResponseRate": {
+     "description": "The percent of people in control group choosing this response.",
+     "format": "double",
+     "type": "number"
+    },
+    "isQualifyingResponse": {
+     "description": "Is the response a qualifying response. Used in calculating Brand Lift.",
+     "type": "boolean"
+    },
+    "marginOfError": {
+     "description": "The percentage of margin of error for this response.",
+     "type": "number"
+    },
+    "questionAsset": {
+     "$ref": "AssetV1M2"
+    },
+    "questionObjective": {
+     "$ref": "SurveyQuestionObjectiveTypeV1"
+    },
+    "questionResponse": {
+     "$ref": "SurveyQuestionResponseV1M2"
+    },
+    "questionSequence": {
+     "description": "Sequence number of the question in the Survey.",
+     "type": "number"
+    },
+    "questionText": {
+     "description": "Text of the Survey question.",
+     "type": "string"
+    },
+    "responseRate": {
+     "description": "The percentage of people choosing this response.",
+     "format": "double",
+     "type": "number"
+    },
+    "segmentType": {
+     "description": "The segment type to which this response data belongs to.",
+     "enum": [
+      "AGE",
+      "AUDIENCES",
+      "CHANNEL",
+      "FREQUENCY",
+      "GENDER",
+      "HOUSEHOLD_INCOME",
+      "OVERALL"
+     ],
+     "type": "string"
+    },
+    "segmentValue": {
+     "description": "The segment value to which this response data belongs to. Would be corresponding to the above segmentType field.",
+     "type": "string"
+    },
+    "statisticalSignificance": {
+     "description": "The significance percentage for the response data in this segment.",
+     "format": "double",
+     "type": "number"
+    }
+   }
+  },
+  "SurveyResponseV1": {
+   "description": "Survey response.",
+   "properties": {
+    "code": {
+     "description": "An enumerated success or error code for machine use.",
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "SurveyErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the object in the request, starting from 1.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "message": {
+     "description": "A human-readable message of the code.",
+     "type": "string"
+    },
+    "surveyId": {
+     "description": "The survey canonical identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SurveyResponsesV1": {
+   "description": "Surveys response.",
+   "properties": {
+    "requestId": {
+     "description": "Request Id that uniquely identifies your request.",
+     "type": "string"
+    },
+    "responses": {
+     "items": {
+      "$ref": "SurveyResponseV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SurveyStatusV1": {
+   "description": "The survey status. Only required if the survey is in DRAFT. Created survey will be in AVAILABLE status by default and will only be in IN_USE status if it's associated with a study.",
+   "enum": [
+    "AVAILABLE",
+    "DRAFT",
+    "IN_USE"
+   ],
+   "type": "string"
+  },
+  "SurveyV1": {
+   "description": "The measurement survey.",
+   "properties": {
+    "customQuestions": {
+     "deprecated": true,
+     "description": "A list of custom survey questions.",
+     "items": {
+      "$ref": "CustomSurveyQuestionV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "id": {
+     "description": "The survey canonical identifier. Immutable field. This is required for update.",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "SurveyStatusV1"
+    },
+    "studyId": {
+     "description": "The associated study identifier. Survey needs to be created prior to the study creation.",
+     "type": "string"
+    },
+    "templatedQuestions": {
+     "description": "A list of templated survey questions.",
+     "items": {
+      "$ref": "TemplatedSurveyQuestionV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorProductId": {
+     "description": "The vendor product canonical identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SurveyV1M1": {
+   "description": "The measurement survey.",
+   "properties": {
+    "customQuestions": {
+     "deprecated": true,
+     "description": "A list of custom survey questions.",
+     "items": {
+      "$ref": "CustomSurveyQuestionV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "id": {
+     "description": "The survey canonical identifier. Immutable field. This is required for update.",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "SurveyStatusV1"
+    },
+    "studyId": {
+     "description": "The associated study identifier. Survey needs to be created prior to the study creation.",
+     "type": "string"
+    },
+    "templatedQuestions": {
+     "description": "A list of templated survey questions.",
+     "items": {
+      "$ref": "TemplatedSurveyQuestionV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorProductId": {
+     "description": "The vendor product canonical identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TemplatedSurveyQuestionV1": {
+   "description": "The templated measurement survey question.",
+   "properties": {
+    "id": {
+     "description": "The survey question template canonical identifier.",
+     "type": "string"
+    },
+    "placeholders": {
+     "description": "List of question placeholders",
+     "items": {
+      "$ref": "SurveyQuestionPlaceholderV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "TemplatedSurveyQuestionV1M1": {
+   "description": "The templated measurement survey question.",
+   "properties": {
+    "gridQuestionResponse": {
+     "$ref": "GridQuestionResponsesV1M1"
+    },
+    "id": {
+     "description": "The survey question template canonical identifier.",
+     "type": "string"
+    },
+    "placeholders": {
+     "description": "List of question placeholders",
+     "items": {
+      "$ref": "SurveyQuestionPlaceholderV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateDSPAudienceResearchStudyV1M2": {
+   "allOf": [
+    {
+     "$ref": "BaseStudyV1M2"
+    },
+    {
+     "$ref": "DSPCampaignPlanningMetadataV1M2"
+    },
+    {
+     "$ref": "DSPAudienceResearchMetadataV1M2"
+    }
+   ],
+   "description": "Update DSP AUDIENCE_RESEARCH study object.",
+   "type": "object"
+  },
+  "UpdateDSPCreativeTestingStudyV1M2": {
+   "allOf": [
+    {
+     "$ref": "BaseStudyV1M2"
+    },
+    {
+     "$ref": "DSPCampaignPlanningMetadataV1M2"
+    },
+    {
+     "$ref": "DSPCreativeTestingMetadataV1M2"
+    }
+   ],
+   "description": "Update DSP CREATIVE_TESTING study object.",
+   "type": "object"
+  },
+  "VendorProductEligibilityV1": {
+   "description": "The measurement eligibility details for a certain vendor product.",
+   "properties": {
+    "issues": {
+     "description": "A list of issues will be provided if the status is INELIGIBLE or ELIGIBLE_WITH_WARNING.",
+     "items": {
+      "$ref": "EligibilityIssueV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "status": {
+     "$ref": "EligibilityStatusV1"
+    },
+    "vendorProductId": {
+     "description": "vendor product canonical identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "VendorProductEligibilityV1M2": {
+   "description": "The measurement eligibility details for a certain vendor product.",
+   "properties": {
+    "issues": {
+     "description": "A list of issues will be provided if the status is INELIGIBLE or ELIGIBLE_WITH_WARNING.",
+     "items": {
+      "$ref": "EligibilityIssueV1M2"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "status": {
+     "$ref": "EligibilityStatusV1"
+    },
+    "vendorProductId": {
+     "description": "vendor product canonical identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "VendorProductPolicyV1": {
+   "description": "The policy rules will be enforced at vendor product level.",
+   "properties": {
+    "benchMarkCategoryRequired": {
+     "description": "Whether or not the benchMark category is required for measurement setup.",
+     "type": "boolean"
+    },
+    "customQuestionAllowed": {
+     "description": "Whether custom survey questions are allowed.",
+     "type": "boolean"
+    },
+    "externalReferenceIdRequired": {
+     "description": "Whether or not the vendor assigned external reference identifier is required for measurement setup.",
+     "type": "boolean"
+    },
+    "leadTime": {
+     "description": "Days required for measurement configuration. It is recommended that the startDate of the campaign has sufficient padding to accommodate this lead time, but measurement can begin after the campaign start date in some cas…",
+     "type": "integer"
+    },
+    "maximumOrders": {
+     "description": "The maximum number of order allowed for the product.",
+     "type": "integer"
+    },
+    "maximumPeerNames": {
+     "description": "The maximum number of peer names required for the product.",
+     "type": "integer"
+    },
+    "maximumStudyLength": {
+     "description": "The maximum required length/duration of the study in days.",
+     "type": "integer"
+    },
+    "maximumSurveyQuestions": {
+     "description": "The maximum number of survey questions required for the product.",
+     "type": "integer"
+    },
+    "minimumOrders": {
+     "description": "The maximum number of orders required for the product.",
+     "type": "integer"
+    },
+    "minimumPeerNames": {
+     "description": "The minimum number of peer names required for the product.",
+     "type": "integer"
+    },
+    "minimumStudyLength": {
+     "description": "The minimum required length/duration of the study in days.",
+     "type": "integer"
+    },
+    "minimumSurveyQuestions": {
+     "description": "The minimum number of survey questions required for the product.",
+     "type": "integer"
+    },
+    "requiredQuestionObjectives": {
+     "description": "The required question objectives that need to be included as part of the survey.",
+     "items": {
+      "$ref": "SurveyQuestionObjectiveTypeV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "supportedGoals": {
+     "items": {
+      "$ref": "MeasurementGoalV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "supportedMarketplaces": {
+     "items": {
+      "$ref": "MeasurementMarketplaceV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "vendorApprovalRequired": {
+     "description": "Whether or not the vendor requires an additional sign off process to fully qualify for study.",
+     "type": "boolean"
+    },
+    "vendorProductId": {
+     "description": "vendor product canonical identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "VendorProductPolicyV1M1": {
+   "description": "The policy rules will be enforced at vendor product level.",
+   "properties": {
+    "benchMarkCategoryRequired": {
+     "description": "Whether or not the benchMark category is required for measurement setup.",
+     "type": "boolean"
+    },
+    "customQuestionAllowed": {
+     "description": "Whether custom survey questions are allowed.",
+     "type": "boolean"
+    },
+    "externalReferenceIdRequired": {
+     "description": "Whether or not the vendor assigned external reference identifier is required for measurement setup.",
+     "type": "boolean"
+    },
+    "leadTime": {
+     "description": "Days required for measurement configuration. It is recommended that the startDate of the campaign has sufficient padding to accommodate this lead time, but measurement can begin after the campaign start date in some cas…",
+     "type": "integer"
+    },
+    "maximumOrders": {
+     "description": "The maximum number of order allowed for the product.",
+     "type": "integer"
+    },
+    "maximumPeerNames": {
+     "description": "The maximum number of peer names required for the product.",
+     "type": "integer"
+    },
+    "maximumStudyLength": {
+     "description": "The maximum required length/duration of the study in days.",
+     "type": "integer"
+    },
+    "maximumSurveyQuestions": {
+     "description": "The maximum number of survey questions required for the product.",
+     "type": "integer"
+    },
+    "minimumOrders": {
+     "description": "The maximum number of orders required for the product.",
+     "type": "integer"
+    },
+    "minimumPeerNames": {
+     "description": "The minimum number of peer names required for the product.",
+     "type": "integer"
+    },
+    "minimumStudyLength": {
+     "description": "The minimum required length/duration of the study in days.",
+     "type": "integer"
+    },
+    "minimumSurveyQuestions": {
+     "description": "The minimum number of survey questions required for the product.",
+     "type": "integer"
+    },
+    "requiredQuestionCategories": {
+     "description": "The requirements for survey question categories.",
+     "items": {
+      "$ref": "SurveyQuestionCategoryRequirementV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "requiredQuestionObjectives": {
+     "description": "The required question objectives that need to be included as part of the survey.",
+     "items": {
+      "$ref": "SurveyQuestionObjectiveTypeV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "supportedGoals": {
+     "items": {
+      "$ref": "MeasurementGoalV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "supportedMarketplaces": {
+     "items": {
+      "$ref": "MeasurementMarketplaceV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "supportedVerbs": {
+     "description": "List of supported verbs that can be used in survey questions.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "vendorApprovalRequired": {
+     "description": "Whether or not the vendor requires an additional sign off process to fully qualify for study.",
+     "type": "boolean"
+    },
+    "vendorProductId": {
+     "description": "vendor product canonical identifier.",
+     "type": "string"
+    },
+    "verbRequired": {
+     "description": "Whether or not a verb is required for measurement setup. It will be used in applicable survey questions to construct the question text.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "VendorProductRequestV1": {
+   "description": "The request object to fetch measurement vendor products.",
+   "properties": {
+    "adTypeFilters": {
+     "description": "AdType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+     "items": {
+      "$ref": "AdTypeV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "fundingTypeFilters": {
+     "description": "FundingType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+     "items": {
+      "$ref": "FundingTypeV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "objectiveTypeFilters": {
+     "description": "StudyObjective filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+     "items": {
+      "$ref": "StudyObjectiveV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "studyTypeFilters": {
+     "description": "StudyType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+     "items": {
+      "$ref": "StudyTypeV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorProductIdFilters": {
+     "description": "VendorProduct identifier filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorTypeFilters": {
+     "description": "VendorType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+     "items": {
+      "$ref": "VendorTypeV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "VendorProductRequestV1M1": {
+   "description": "The request object to fetch measurement vendor products.",
+   "properties": {
+    "adTypeFilters": {
+     "description": "AdType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+     "items": {
+      "$ref": "AdTypeV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "fundingTypeFilters": {
+     "description": "FundingType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+     "items": {
+      "$ref": "FundingTypeV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "objectiveTypeFilters": {
+     "description": "StudyObjective filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+     "items": {
+      "$ref": "StudyObjectiveV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "studyTypeFilters": {
+     "description": "StudyType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+     "items": {
+      "$ref": "StudyTypeV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorProductIdFilters": {
+     "description": "VendorProduct identifier filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "vendorTypeFilters": {
+     "description": "VendorType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+     "items": {
+      "$ref": "VendorTypeV1M1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "VendorProductTypeV1": {
+   "description": "The measurement vendor product type.",
+   "enum": [
+    "SHOPPER_PANEL"
+   ],
+   "type": "string"
+  },
+  "VendorProductTypeV1M1": {
+   "description": "The measurement vendor product type.",
+   "enum": [
+    "BRAND_LIFT_INSIGHTS",
+    "DASH",
+    "DIGITAL_BRAND_EFFECT",
+    "DYNATA",
+    "EXPANDED_VIEW_LITE",
+    "LUCID",
+    "MACROMILL",
+    "SHOPPER_PANEL",
+    "UPWAVE"
+   ],
+   "type": "string"
+  },
+  "VendorProductV1": {
+   "description": "The measurement vendor product.",
+   "properties": {
+    "adType": {
+     "$ref": "AdTypeV1"
+    },
+    "fundingType": {
+     "$ref": "FundingTypeV1"
+    },
+    "id": {
+     "description": "The vendor product identifier.",
+     "type": "string"
+    },
+    "objective": {
+     "$ref": "StudyObjectiveV1"
+    },
+    "studyType": {
+     "$ref": "StudyTypeV1"
+    },
+    "vendorProductType": {
+     "$ref": "VendorProductTypeV1"
+    },
+    "vendorType": {
+     "$ref": "VendorTypeV1"
+    }
+   },
+   "type": "object"
+  },
+  "VendorProductV1M1": {
+   "description": "The measurement vendor product.",
+   "properties": {
+    "adType": {
+     "$ref": "AdTypeV1"
+    },
+    "displayName": {
+     "description": "The vendor product display name.",
+     "type": "string"
+    },
+    "fundingType": {
+     "$ref": "FundingTypeV1M1"
+    },
+    "id": {
+     "description": "The vendor product identifier.",
+     "type": "string"
+    },
+    "objective": {
+     "$ref": "StudyObjectiveV1"
+    },
+    "studyType": {
+     "$ref": "StudyTypeV1"
+    },
+    "vendorProductType": {
+     "$ref": "VendorProductTypeV1M1"
+    },
+    "vendorType": {
+     "$ref": "VendorTypeV1M1"
+    }
+   },
+   "type": "object"
+  },
+  "VendorTypeV1": {
+   "description": "The measurement vendor type, each study type will have different supported vendors.",
+   "enum": [
+    "AMAZON"
+   ],
+   "type": "string"
+  },
+  "VendorTypeV1M1": {
+   "description": "The measurement vendor type, each study type will have different supported vendors.",
+   "enum": [
+    "AMAZON",
+    "DYNATA",
+    "KANTAR",
+    "LUCID",
+    "MACROMILL",
+    "NIELSEN",
+    "UPWAVE"
+   ],
+   "type": "string"
+  },
+  "VendorTypeV1M2": {
+   "description": "The measurement vendor type, each study type will have different supported vendors.",
+   "enum": [
+    "AMAZON",
+    "OMNICHANNEL_METRICS"
+   ],
+   "type": "string"
+  },
+  "VendorTypeV1M3": {
+   "description": "The measurement vendor type, each study type will have different supported vendors.",
+   "enum": [
+    "AMAZON",
+    "DYNATA",
+    "KANTAR",
+    "LUCID",
+    "MACROMILL",
+    "NIELSEN",
+    "OMNICHANNEL_METRICS",
+    "UPWAVE"
+   ],
+   "type": "string"
+  }
+ }
+}

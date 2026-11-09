@@ -1,0 +1,772 @@
+{
+ "api": "D16GFMApiFrequencyGroupAssociationV1",
+ "file": "specs/dest/D16GFMApiFrequencyGroupAssociationV1_prod_3p.json",
+ "schemas": {
+  "AdsOwnerType": {
+   "description": "If the frequency group belongs to a DSP entity or manager account, ownerType is MANAGER_ACCOUNT. If the frequency group belongs to a DSP advertiser, ownerType is ADVERTISER.",
+   "enum": [
+    "ADVERTISER",
+    "MANAGER_ACCOUNT"
+   ],
+   "type": "string"
+  },
+  "CampaignFrequency": {
+   "properties": {
+    "maxImpressions": {
+     "type": "number"
+    },
+    "timeUnit": {
+     "$ref": "TimeUnitV1"
+    },
+    "timeUnitCount": {
+     "type": "number"
+    },
+    "type": {
+     "$ref": "CampaignType"
+    }
+   },
+   "type": "object"
+  },
+  "CampaignType": {
+   "enum": [
+    "CUSTOM",
+    "UNCAPPED"
+   ],
+   "type": "string"
+  },
+  "CauseForAssociationUnavailability": {
+   "enum": [
+    "ALREADY_ASSOCIATED",
+    "DELIVERY_STATUS_NOT_ACTIVE",
+    "TARGET_FREQUENCY"
+   ],
+   "type": "string"
+  },
+  "DeliveryStatus": {
+   "enum": [
+    "ACTIVE",
+    "ADS_NOT_RUNNING",
+    "ADVERTISER_NOT_RUNNING",
+    "BOOKING_REQUESTED",
+    "CAMPAIGN_NOT_RUNNING",
+    "CREATIVES_NOT_RUNNING",
+    "DELETED",
+    "ENDED",
+    "INACTIVE",
+    "NOT_APPROVED",
+    "OK",
+    "OUT_OF_BUDGET",
+    "PAUSED_BY_SYSTEM",
+    "PAUSED_BY_USER",
+    "PENDING_ADSERVER_RECEIPT",
+    "PREBOOK",
+    "PREBOOKED",
+    "PROPOSAL",
+    "READY_TO_RUN",
+    "RUNNING",
+    "UNINITIALIZED_BUDGET"
+   ],
+   "type": "string"
+  },
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "FrequencyGroupInput": {
+   "properties": {
+    "id": {
+     "description": "The identifier of the frequency group.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "id"
+   ],
+   "type": "object"
+  },
+  "FrequencyGroupWithAssociationOutput": {
+   "properties": {
+    "id": {
+     "description": "The frequency group identifier.",
+     "type": "string"
+    },
+    "isTransitiveAssociation": {
+     "description": "Return true, if the campaign is not directly associated to the frequency group, but the advertiser that the campaign belongs to is directly associated to the frequency group. Return false, if the campaign is directly as…",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "The frequency group name.",
+     "type": "string"
+    },
+    "ownerId": {
+     "description": "If the frequency group belongs to a DSP entity or manager account, ownerId is DSP entity id. If the frequency group belongs to a DSP advertiser, ownerId is DSP advertiser id.",
+     "type": "string"
+    },
+    "ownerType": {
+     "$ref": "AdsOwnerType"
+    }
+   },
+   "type": "object"
+  },
+  "KPI": {
+   "enum": [
+    "COMBINED_ROAS",
+    "COMPLETION_RATE",
+    "CPA",
+    "CPC",
+    "CPD",
+    "CPDPV",
+    "CPFAO",
+    "CPI",
+    "CPVC",
+    "CTR",
+    "DPVR",
+    "INCREMENTAL_REACH",
+    "IOPS",
+    "NONE",
+    "OTHER",
+    "REACH",
+    "ROAS",
+    "TARGET_FREQUENCY",
+    "TOTAL_CPSU",
+    "TOTAL_ROAS"
+   ],
+   "type": "string"
+  },
+  "ListAdvertiserAssociationResponseBaseObject": {
+   "properties": {
+    "id": {
+     "description": "The advertiser identifier.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The advertiser name.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListAdvertiserFrequencyGroupAssociationResponseBaseObject": {
+   "properties": {
+    "id": {
+     "description": "The frequency group identifier.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The frequency group name.",
+     "type": "string"
+    },
+    "ownerId": {
+     "description": "If the frequency group belongs to a DSP entity or manager account, ownerId is DSP entity id. If the frequency group belongs to a DSP advertiser, ownerId is advertiser id.",
+     "type": "string"
+    },
+    "ownerType": {
+     "$ref": "AdsOwnerType"
+    }
+   },
+   "type": "object"
+  },
+  "ListAdvertisersBaseObject": {
+   "properties": {
+    "advertiserId": {
+     "type": "string"
+    },
+    "advertiserName": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListAdvertisersFrequencyGroupAssociationsBaseObject": {
+   "properties": {
+    "advertiser": {
+     "$ref": "ListAdvertisersBaseObject"
+    },
+    "frequencyGroup": {
+     "$ref": "ListAdvertisersFrequencyGroupBaseObject"
+    }
+   },
+   "type": "object"
+  },
+  "ListAdvertisersFrequencyGroupAssociationsRequestContentV1": {
+   "properties": {
+    "advertiserNameFilter": {
+     "description": "Allows the user to specify a name filter to limit the results by advertiser name",
+     "type": "string"
+    },
+    "frequencyGroupIdFilter": {
+     "description": "A frequency group identifier to extract the advertiserIdFilter from; and empty string indicates that we are querying for all advertisers in the requesting entity",
+     "type": "string"
+    },
+    "maxResults": {
+     "description": "Sets the maximum number of objects in the returned array. Use in conjunction with the nextToken parameter to control pagination. The range for maxResults is [1,100] with default as 20. For example, supplying maxResults=…",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the maxResults N parameter to control pagination of the returned array",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListAdvertisersFrequencyGroupBaseObject": {
+   "properties": {
+    "frequencyGroupIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListCampaignAssociationResponseBaseObject": {
+   "properties": {
+    "advertiserId": {
+     "description": "The identifier of the advertiser that the campaign belongs to.",
+     "type": "string"
+    },
+    "id": {
+     "description": "The campaign identifier.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The campaign name.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListCampaignsCampaignBaseObject": {
+   "properties": {
+    "advertiserId": {
+     "type": "string"
+    },
+    "availableForFGAssociation": {
+     "type": "boolean"
+    },
+    "campaignId": {
+     "type": "string"
+    },
+    "campaignName": {
+     "type": "string"
+    },
+    "causeForAssociationUnavailability": {
+     "items": {
+      "$ref": "CauseForAssociationUnavailability"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "DeliveryStatus"
+    },
+    "frequency": {
+     "$ref": "CampaignFrequency"
+    },
+    "kpi": {
+     "$ref": "KPI"
+    }
+   },
+   "type": "object"
+  },
+  "ListCampaignsFrequencyGroupAssociationsRequestContentV1": {
+   "properties": {
+    "advertiserIdFilter": {
+     "description": "The advertiser identifier",
+     "type": "string"
+    },
+    "campaignNameFilter": {
+     "description": "Allows the user to specify a name filter to limit the results by campaign name",
+     "type": "string"
+    },
+    "frequencyGroupIdFilter": {
+     "description": "A frequency group identifier to extract the advertiserIdFilter from",
+     "type": "string"
+    },
+    "includeTransitiveAssociations": {
+     "description": "A campaign is transitively associated to a frequency group if the advertiser that this campaign belongs to is directly associated to the frequency group.",
+     "type": "boolean"
+    },
+    "maxResults": {
+     "description": "Sets the maximum number of objects in the returned array. Use in conjunction with the nextToken parameter to control pagination. The range for maxResults is [1,100] with default as 20. For example, supplying maxResults=…",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the maxResults N parameter to control pagination of the returned array",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListCampaignsFrequencyGroupBaseObject": {
+   "properties": {
+    "frequencyGroupId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListCampaignsFrequencyGroupCampaignAssociationsBaseObject": {
+   "description": "Campaign and associated frequency groups. frequencyGroup contains a frequency group belongs to DSP advertiser. frequencyGroups contains frequency groups belong to DSP entities.",
+   "properties": {
+    "campaign": {
+     "$ref": "ListCampaignsCampaignBaseObject"
+    },
+    "frequencyGroup": {
+     "$ref": "ListCampaignsFrequencyGroupBaseObject"
+    },
+    "frequencyGroups": {
+     "items": {
+      "$ref": "FrequencyGroupWithAssociationOutput"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListFrequencyGroupAdvertiserAssociationRequestContentV1": {
+   "properties": {
+    "advertiserIds": {
+     "description": "A list of advertiser identifiers.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "frequencyGroupIds": {
+     "description": "A list of frequency group identifiers.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "includeTransitiveAssociations": {
+     "description": "An advertiser is transitively associated to a frequency group if one of its campaigns is directly associated to the frequency group.",
+     "type": "boolean"
+    },
+    "maxResults": {
+     "description": "Sets the maximum number of objects in the returned array. Use in conjunction with the nextToken parameter to control pagination. The range for maxResults is [1,100] with default as 20.",
+     "maximum": 200,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the maxResults parameter to control the pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListFrequencyGroupAdvertiserAssociationResponseBaseObject": {
+   "properties": {
+    "advertiser": {
+     "$ref": "ListAdvertiserAssociationResponseBaseObject"
+    },
+    "entityId": {
+     "type": "string"
+    },
+    "entityName": {
+     "type": "string"
+    },
+    "frequencyGroup": {
+     "$ref": "ListAdvertiserFrequencyGroupAssociationResponseBaseObject"
+    },
+    "isTransitiveAssociation": {
+     "description": "Return true, if the campaign is not directly associated to the frequency group, but the advertiser that the campaign belongs to is directly associated to the frequency group. Return false, if the campaign is directly as…",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "ListFrequencyGroupAssociationRequestContentV1": {
+   "properties": {
+    "campaignIds": {
+     "description": "A list of campaign identifiers.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "frequencyGroupIds": {
+     "description": "A list of frequency group identifiers.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "includeTransitiveAssociations": {
+     "description": "A campaign is transitively associated to a frequency group if the advertiser that this campaign belongs to is directly associated to the frequency group.",
+     "type": "boolean"
+    },
+    "maxResults": {
+     "description": "Sets the maximum number of objects in the returned array. Use in conjunction with the nextToken parameter to control pagination. The range for maxResults is [1,100] with default as 20.",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the maxResults parameter to control the pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListFrequencyGroupAssociationResponseBaseObject": {
+   "properties": {
+    "id": {
+     "description": "The frequency group identifier.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The frequency group name.",
+     "type": "string"
+    },
+    "ownerId": {
+     "description": "If the frequency group belongs to a DSP entity or manager account, ownerId is DSP entity id. If the frequency group belongs to a DSP advertiser, ownerId is advertiser id.",
+     "type": "string"
+    },
+    "ownerType": {
+     "$ref": "AdsOwnerType"
+    }
+   },
+   "type": "object"
+  },
+  "ListFrequencyGroupCampaignAssociationResponseBaseObject": {
+   "properties": {
+    "campaign": {
+     "$ref": "ListCampaignAssociationResponseBaseObject"
+    },
+    "entityId": {
+     "type": "string"
+    },
+    "entityName": {
+     "type": "string"
+    },
+    "frequencyGroup": {
+     "$ref": "ListFrequencyGroupAssociationResponseBaseObject"
+    },
+    "isTransitiveAssociation": {
+     "description": "Return true, if the campaign is not directly associated to the frequency group, but the advertiser that the campaign belongs to is directly associated to the frequency group. Return false, if the campaign is directly as…",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "TimeUnitV1": {
+   "enum": [
+    "DAYS",
+    "HOURS"
+   ],
+   "type": "string"
+  },
+  "UpdateFrequencyGroupAdvertiserAssociationRequestContentV1": {
+   "properties": {
+    "frequencyGroupAdvertiserAssociations": {
+     "items": {
+      "$ref": "UpdateFrequencyGroupAdvertiserAssociationsBaseObject"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateFrequencyGroupAdvertiserAssociationsBaseObject": {
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser identifier.",
+     "type": "string"
+    },
+    "frequencyGroupIds": {
+     "description": "List of frequency groups identifiers to be associated. Represents the list of frequency groups associated to the advertiser after the operation, updating all existing associations for the advertiser.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "advertiserId"
+   ],
+   "type": "object"
+  },
+  "UpdateFrequencyGroupAssociationsBaseObject": {
+   "description": "Either frequencyGroupId or frequencyGroups should be provided, not both. Provide frequencyGroupId, if the frequency group belongs to a DSP advertiser. Provide frequencyGroups, if the frequency groups belong to a DSP ent…",
+   "properties": {
+    "campaignId": {
+     "description": "The campaign identifier of the campaign.",
+     "type": "string"
+    },
+    "frequencyGroupId": {
+     "description": "The frequency group identifier of the frequency group to which campaign needs to be updated. The frequency group should belong to a DSP advertiser.",
+     "type": "string"
+    },
+    "frequencyGroups": {
+     "description": "The list of frequency groups to which campaign needs to be updated. The frequency groups should belong to DSP entities.",
+     "items": {
+      "$ref": "FrequencyGroupInput"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaignId"
+   ],
+   "type": "object"
+  },
+  "UpdateFrequencyGroupAssociationsRequestContentV1": {
+   "properties": {
+    "frequencyGroupCampaignAssociations": {
+     "items": {
+      "$ref": "UpdateFrequencyGroupAssociationsBaseObject"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "listAdvertisersFrequencyGroupAssociationsV1ResponseContent": {
+   "properties": {
+    "advertisers": {
+     "items": {
+      "$ref": "ListAdvertisersFrequencyGroupAssociationsBaseObject"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "entityId": {
+     "type": "string"
+    },
+    "maxResults": {
+     "type": "number"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "resultCount": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "listCampaignsFrequencyGroupAssociationsV1ResponseContent": {
+   "properties": {
+    "advertiserId": {
+     "type": "string"
+    },
+    "associations": {
+     "items": {
+      "$ref": "ListCampaignsFrequencyGroupCampaignAssociationsBaseObject"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "type": "number"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "resultCount": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "listFrequencyGroupAdvertiserAssociationsV1ResponseContent": {
+   "properties": {
+    "associations": {
+     "description": "A list of frequency group to advertiser associations returned by the operation.",
+     "items": {
+      "$ref": "ListFrequencyGroupAdvertiserAssociationResponseBaseObject"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of results returned by the operation.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "listFrequencyGroupCampaignAssociationsV1ResponseContent": {
+   "properties": {
+    "associations": {
+     "description": "A list of frequency group to campaign associations returned by the operation.",
+     "items": {
+      "$ref": "ListFrequencyGroupCampaignAssociationResponseBaseObject"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of results returned by the operation.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

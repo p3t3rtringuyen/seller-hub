@@ -1,0 +1,1472 @@
+{
+  "AddAppointmentRequest": {
+    "description": "Input for add appointment operation.",
+    "properties": {
+      "appointmentTime": {
+        "description": "Input appointment time details.",
+        "ref": "AppointmentTimeInput"
+      }
+    },
+    "required": [
+      "appointmentTime"
+    ],
+    "type": "object"
+  },
+  "Address": {
+    "description": "The shipping address for the service job.",
+    "properties": {
+      "addressLine1": {
+        "description": "The first line of the address.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "addressLine3": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two digit country code, in ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "county": {
+        "description": "The county.",
+        "type": "string"
+      },
+      "district": {
+        "description": "The district.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the person, business, or institution.",
+        "type": "string"
+      },
+      "phone": {
+        "description": "The phone number.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "The postal code.",
+        "type": "string"
+      },
+      "stateOrRegion": {
+        "description": "The state or region.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "addressLine1",
+      "name"
+    ],
+    "type": "object"
+  },
+  "Appointment": {
+    "description": "The details of an appointment.",
+    "properties": {
+      "appointmentId": {
+        "description": "The appointment identifier.",
+        "ref": "AppointmentId"
+      },
+      "appointmentStatus": {
+        "description": "The status of the appointment.",
+        "enum": [
+          "ACTIVE",
+          "CANCELLED",
+          "COMPLETED"
+        ],
+        "type": "string"
+      },
+      "appointmentTime": {
+        "description": "The time of the appointment window.",
+        "ref": "AppointmentTime"
+      },
+      "assignedTechnicians": {
+        "description": "A list of technicians assigned to the service job.",
+        "ref": "Technician",
+        "type": "array"
+      },
+      "poa": {
+        "description": "Proof of Appointment (POA) details.",
+        "ref": "Poa"
+      },
+      "rescheduledAppointmentId": {
+        "description": "The identifier of a rescheduled appointment.",
+        "ref": "AppointmentId"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AppointmentId": {
+    "description": "The appointment identifier.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AppointmentResource": {
+    "description": "The resource that performs or performed appointment fulfillment.",
+    "properties": {
+      "resourceId": {
+        "description": "The resource identifier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AppointmentResources": {
+    "description": "List of resources that performs or performed job appointment fulfillment.",
+    "properties": {},
+    "ref": "AppointmentResource",
+    "required": [],
+    "type": "array"
+  },
+  "AppointmentSlot": {
+    "description": "A time window along with associated capacity in which the service can be performed.",
+    "properties": {
+      "capacity": {
+        "description": "Number of resources for which a slot can be reserved.",
+        "type": "integer"
+      },
+      "endTime": {
+        "description": "Time window end time in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startTime": {
+        "description": "Time window start time in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AppointmentSlotReport": {
+    "description": "Availability information as per the service context queried.",
+    "properties": {
+      "appointmentSlots": {
+        "description": "A list of time windows along with associated capacity in which the service can be performed.",
+        "ref": "AppointmentSlot",
+        "type": "array"
+      },
+      "endTime": {
+        "description": "End Time up to which the appointment slots are generated in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "schedulingType": {
+        "description": "Defines the type of slots.",
+        "enum": [
+          "NON_REAL_TIME_SCHEDULING",
+          "REAL_TIME_SCHEDULING"
+        ],
+        "type": "string"
+      },
+      "startTime": {
+        "description": "Start Time from which the appointment slots are generated in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AppointmentTime": {
+    "description": "The time of the appointment window.",
+    "properties": {
+      "durationInMinutes": {
+        "description": "The duration of the appointment window, in minutes.",
+        "type": "integer"
+      },
+      "startTime": {
+        "description": "The date and time of the start of the appointment window in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "durationInMinutes",
+      "startTime"
+    ],
+    "type": "object"
+  },
+  "AppointmentTimeInput": {
+    "description": "The input appointment time details.",
+    "properties": {
+      "durationInMinutes": {
+        "description": "The duration of an appointment in minutes.",
+        "type": "integer"
+      },
+      "startTime": {
+        "description": "The date, time in UTC for the start time of an appointment in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "startTime"
+    ],
+    "type": "object"
+  },
+  "AssignAppointmentResourcesRequest": {
+    "description": "Request schema for the `assignAppointmentResources` operation.",
+    "properties": {
+      "resources": {
+        "description": "List of resource objects to be assigned.",
+        "ref": "AppointmentResources"
+      }
+    },
+    "required": [
+      "resources"
+    ],
+    "type": "object"
+  },
+  "AssignAppointmentResourcesResponse": {
+    "description": "Response schema for the `assignAppointmentResources` operation.",
+    "properties": {
+      "errors": {
+        "description": "Errors occurred during during the `assignAppointmentResources` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `assignAppointmentResource` operation.",
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AssociatedItem": {
+    "description": "Information about an item associated with the service job.",
+    "properties": {
+      "asin": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      },
+      "brandName": {
+        "description": "The brand name of the item.",
+        "type": "string"
+      },
+      "itemDelivery": {
+        "description": "Delivery information for the item.",
+        "ref": "ItemDelivery"
+      },
+      "itemStatus": {
+        "description": "The status of the item.",
+        "enum": [
+          "ACTIVE",
+          "CANCELLED",
+          "DELIVERED",
+          "SHIPPED"
+        ],
+        "type": "string"
+      },
+      "linkedAssets": {
+        "description": "A list of customer-owned assets on which the service must be performed.",
+        "ref": "LinkedAsset",
+        "type": "array"
+      },
+      "orderId": {
+        "description": "The Amazon-defined identifier for an order placed by the buyer in 3-7-7 format.",
+        "ref": "OrderId"
+      },
+      "quantity": {
+        "description": "The total number of items included in the order.",
+        "type": "integer"
+      },
+      "title": {
+        "description": "The title of the item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AvailabilityRecord": {
+    "description": "`AvailabilityRecord` to represent the capacity of a resource over a time range.",
+    "properties": {
+      "capacity": {
+        "description": "Signifies the capacity of a resource which is available.",
+        "type": "integer"
+      },
+      "endTime": {
+        "description": "Denotes the time till when the resource is available in a day in ISO-8601 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "recurrence": {
+        "description": "Recurrence object containing the recurrence pattern of schedule.",
+        "ref": "Recurrence"
+      },
+      "startTime": {
+        "description": "Denotes the time from when the resource is available in a day in ISO-8601 format.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "endTime",
+      "startTime"
+    ],
+    "type": "object"
+  },
+  "AvailabilityRecords": {
+    "description": "List of `AvailabilityRecord`s to represent the capacity of a resource over a time range.",
+    "properties": {},
+    "ref": "AvailabilityRecord",
+    "required": [],
+    "type": "array"
+  },
+  "Buyer": {
+    "description": "Information about the buyer.",
+    "properties": {
+      "buyerId": {
+        "description": "The identifier of the buyer.",
+        "type": "string"
+      },
+      "isPrimeMember": {
+        "description": "When true, the service is for an Amazon Prime buyer.",
+        "type": "boolean"
+      },
+      "name": {
+        "description": "The name of the buyer.",
+        "type": "string"
+      },
+      "phone": {
+        "description": "The phone number of the buyer.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CancelReservationResponse": {
+    "description": "Response schema for the `cancelReservation` operation.",
+    "properties": {
+      "errors": {
+        "description": "Errors encountered, if any",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CancelServiceJobByServiceJobIdResponse": {
+    "description": "Response schema for the `cancelServiceJobByServiceJobId` operation.",
+    "properties": {
+      "errors": {
+        "description": "Encountered errors for the `cancelServiceJobByServiceJobId` operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CapacityType": {
+    "description": "Type of capacity",
+    "enum": [
+      "AVAILABLE_CAPACITY",
+      "ENCUMBERED_CAPACITY",
+      "RESERVED_CAPACITY",
+      "SCHEDULED_CAPACITY"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CompleteServiceJobByServiceJobIdResponse": {
+    "description": "Response schema for the `completeServiceJobByServiceJobId` operation.",
+    "properties": {
+      "errors": {
+        "description": "Encountered errors for the `completeServiceJobByServiceJobId` operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateReservationRecord": {
+    "description": "`CreateReservationRecord` entity contains the `Reservation` if there is an error/warning while performing the requested operation on it, otherwise it will contain the new `reservationId`.",
+    "properties": {
+      "errors": {
+        "description": "Errors encountered, if any.",
+        "ref": "ErrorList"
+      },
+      "reservation": {
+        "description": "Reservation record if the operation failed.",
+        "ref": "Reservation"
+      },
+      "warnings": {
+        "description": "Warnings encountered, if any.",
+        "ref": "WarningList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateReservationRequest": {
+    "description": "Request schema for the `createReservation` operation.",
+    "properties": {
+      "reservation": {
+        "description": "`Reservation` object to reduce the capacity of a resource.",
+        "ref": "Reservation"
+      },
+      "resourceId": {
+        "description": "Resource (store) identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "reservation",
+      "resourceId"
+    ],
+    "type": "object"
+  },
+  "CreateReservationResponse": {
+    "description": "Response schema for the `createReservation` operation.",
+    "properties": {
+      "errors": {
+        "description": "Errors encountered, if any.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "`CreateReservationRecord` contains only the new `reservationId` if the operation was successful.",
+        "ref": "CreateReservationRecord"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateServiceDocumentUploadDestination": {
+    "description": "The response schema for the `createServiceDocumentUploadDestination` operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "ref": "ServiceDocumentUploadDestination"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DateTimeRange": {
+    "description": "A range of time.",
+    "properties": {
+      "endTime": {
+        "description": "The end of the time range.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startTime": {
+        "description": "The beginning of the time range.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "endTime",
+      "startTime"
+    ],
+    "type": "object"
+  },
+  "DayOfWeek": {
+    "description": "The day of the week.",
+    "enum": [
+      "FRIDAY",
+      "MONDAY",
+      "SATURDAY",
+      "SUNDAY",
+      "THURSDAY",
+      "TUESDAY",
+      "WEDNESDAY"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "EncryptionDetails": {
+    "description": "Encryption details for required client-side encryption and decryption of document contents.",
+    "properties": {
+      "initializationVector": {
+        "description": "The vector to encrypt or decrypt the document contents using Cipher Block Chaining (CBC).",
+        "type": "string"
+      },
+      "key": {
+        "description": "The encryption key used to encrypt or decrypt the document contents.",
+        "type": "string"
+      },
+      "standard": {
+        "description": "The encryption standard required to encrypt or decrypt the document contents.",
+        "enum": [
+          "AES"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "initializationVector",
+      "key",
+      "standard"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "errorLevel": {
+        "description": "The type of error.",
+        "enum": [
+          "ERROR",
+          "WARNING"
+        ],
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "FixedSlot": {
+    "description": "In this slot format each slot only has the requested capacity types.",
+    "properties": {
+      "availableCapacity": {
+        "description": "Available capacity corresponding to the slot.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "encumberedCapacity": {
+        "description": "Encumbered capacity corresponding to the slot.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "reservedCapacity": {
+        "description": "Reserved capacity corresponding to the slot.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "scheduledCapacity": {
+        "description": "Scheduled capacity corresponding to the slot.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "startDateTime": {
+        "description": "Start date time of slot in ISO 8601 format with precision of seconds.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "FixedSlotCapacity": {
+    "description": "Response schema for the `getFixedSlotCapacity` operation.",
+    "properties": {
+      "capacities": {
+        "description": "Array of capacity slots in fixed slot format.",
+        "ref": "FixedSlot",
+        "type": "array"
+      },
+      "nextPageToken": {
+        "description": "Next page token, if there are more pages.",
+        "type": "string"
+      },
+      "resourceId": {
+        "description": "Resource Identifier.",
+        "type": "string"
+      },
+      "slotDuration": {
+        "description": "The duration of each slot which is returned.",
+        "format": "int32",
+        "type": "number"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "FixedSlotCapacityErrors": {
+    "description": "The error response schema for the `getFixedSlotCapacity` operation.",
+    "properties": {
+      "errors": {
+        "description": "Errors encountered during the `getFixedSlotCapacity` operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "FixedSlotCapacityQuery": {
+    "description": "Request schema for the `getFixedSlotCapacity` operation.",
+    "properties": {
+      "capacityTypes": {
+        "description": "An array of capacity types which are being requested.",
+        "ref": "CapacityType",
+        "type": "array"
+      },
+      "endDateTime": {
+        "description": "End date time up to which the capacity slots are being requested in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "slotDuration": {
+        "description": "Size in which slots are being requested.",
+        "format": "int32",
+        "type": "number"
+      },
+      "startDateTime": {
+        "description": "Start date time from which the capacity slots are being requested in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "endDateTime",
+      "startDateTime"
+    ],
+    "type": "object"
+  },
+  "FulfillmentDocument": {
+    "description": "Document that captured during service appointment fulfillment that portrays proof of completion",
+    "properties": {
+      "contentSha256": {
+        "description": "Sha256 hash of the file content.",
+        "type": "string"
+      },
+      "uploadDestinationId": {
+        "description": "The identifier of the upload destination.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "FulfillmentDocuments": {
+    "description": "List of documents captured during service appointment fulfillment.",
+    "properties": {},
+    "ref": "FulfillmentDocument",
+    "required": [],
+    "type": "array"
+  },
+  "FulfillmentTime": {
+    "description": "Input for fulfillment time details",
+    "properties": {
+      "endTime": {
+        "description": "The date, time in UTC of the fulfillment end time in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startTime": {
+        "description": "The date, time in UTC of the fulfillment start time in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetAppointmentSlotsResponse": {
+    "description": "The response of fetching appointment slots based on service context.",
+    "properties": {
+      "errors": {
+        "description": "Errors occurred in getting schedule.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The appointment slots fetched based on service context.",
+        "ref": "AppointmentSlotReport"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetServiceJobByServiceJobIdResponse": {
+    "description": "The response schema for the `getServiceJobByServiceJobId` operation.",
+    "properties": {
+      "errors": {
+        "description": "An unexpected condition occurred during the `getServiceJobByServiceJobId` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getServiceJobByServiceJobId` operation.",
+        "ref": "ServiceJob"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetServiceJobsResponse": {
+    "description": "Response schema for the `getServiceJobs` operation.",
+    "properties": {
+      "errors": {
+        "description": "An unexpected condition occurred during the `getServiceJobs` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getServiceJobs` operation.",
+        "ref": "JobListing"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemDelivery": {
+    "description": "Delivery information for the item.",
+    "properties": {
+      "estimatedDeliveryDate": {
+        "description": "The date and time of the latest Estimated Delivery Date (EDD) of all the items with an EDD.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "itemDeliveryPromise": {
+        "description": "Promised delivery information for the item.",
+        "ref": "ItemDeliveryPromise"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemDeliveryPromise": {
+    "description": "Promised delivery information for the item.",
+    "properties": {
+      "endTime": {
+        "description": "The date and time of the end of the promised delivery window in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startTime": {
+        "description": "The date and time of the start of the promised delivery window in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "JobListing": {
+    "description": "The payload for the `getServiceJobs` operation.",
+    "properties": {
+      "jobs": {
+        "description": "List of job details for the given input.",
+        "ref": "ServiceJob",
+        "type": "array"
+      },
+      "nextPageToken": {
+        "description": "A generated string used to pass information to your next request.",
+        "type": "string"
+      },
+      "previousPageToken": {
+        "description": "A generated string used to pass information to your next request.",
+        "type": "string"
+      },
+      "totalResultSize": {
+        "description": "Total result size of the query result.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "LinkedAsset": {
+    "description": "Information about an asset linked to an associated item, such as vehicle information for Ship-to-Store orders.",
+    "properties": {
+      "additionalAttributes": {
+        "description": "Additional attributes of the linked asset, such as vehicle make, model, year, and engine details.",
+        "itemType": "string",
+        "type": "object"
+      },
+      "assetName": {
+        "description": "The name of the linked asset.",
+        "type": "string"
+      },
+      "assetType": {
+        "description": "The type of the linked asset.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "MoneyAmount": {
+    "description": "The monetary amount and type of currency.",
+    "properties": {
+      "currency": {
+        "description": "The currency code in ISO 4217 format.",
+        "type": "string"
+      },
+      "value": {
+        "description": "The monetary value.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "currency",
+      "value"
+    ],
+    "type": "object"
+  },
+  "OrderId": {
+    "description": "The Amazon-defined identifier for an order placed by the buyer, in 3-7-7 format.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Payment": {
+    "description": "Payment information for the service job.",
+    "properties": {
+      "amount": {
+        "description": "The payment amount.",
+        "ref": "MoneyAmount"
+      },
+      "instrument": {
+        "description": "The payment instrument used for the transaction.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Poa": {
+    "description": "Proof of Appointment (POA) details.",
+    "properties": {
+      "appointmentTime": {
+        "description": "The time of the appointment window.",
+        "ref": "AppointmentTime"
+      },
+      "poaType": {
+        "description": "The type of POA uploaded.",
+        "enum": [
+          "CUSTOMER_SIGNATURE",
+          "DUMMY_RECEIPT",
+          "NO_SIGNATURE_DUMMY_POS",
+          "POA_RECEIPT"
+        ],
+        "type": "string"
+      },
+      "technicians": {
+        "description": "A list of technicians.",
+        "ref": "Technician",
+        "type": "array"
+      },
+      "uploadTime": {
+        "description": "The date and time when the POA was uploaded in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "uploadingTechnician": {
+        "description": "The identifier of the technician who uploaded the POA.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RangeCapacity": {
+    "description": "Range capacity entity where each entry has a capacity type and corresponding slots.",
+    "properties": {
+      "capacityType": {
+        "description": "Capacity type corresponding to the slots.",
+        "ref": "CapacityType"
+      },
+      "slots": {
+        "description": "Array of capacity slots in range slot format.",
+        "ref": "RangeSlot",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RangeSlot": {
+    "description": "Capacity slots represented in a format similar to availability rules.",
+    "properties": {
+      "capacity": {
+        "description": "Capacity of the slot.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "endDateTime": {
+        "description": "End date time of slot in ISO 8601 format with precision of seconds.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startDateTime": {
+        "description": "Start date time of slot in ISO 8601 format with precision of seconds.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RangeSlotCapacity": {
+    "description": "Response schema for the `getRangeSlotCapacity` operation.",
+    "properties": {
+      "capacities": {
+        "description": "Array of range capacities where each entry is for a specific capacity type.",
+        "ref": "RangeCapacity",
+        "type": "array"
+      },
+      "nextPageToken": {
+        "description": "Next page token, if there are more pages.",
+        "type": "string"
+      },
+      "resourceId": {
+        "description": "Resource Identifier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RangeSlotCapacityErrors": {
+    "description": "The error response schema for the `getRangeSlotCapacity` operation.",
+    "properties": {
+      "errors": {
+        "description": "Errors encountered during the `getRangeSlotCapacity` operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RangeSlotCapacityQuery": {
+    "description": "Request schema for the `getRangeSlotCapacity` operation.",
+    "properties": {
+      "capacityTypes": {
+        "description": "An array of capacity types which are being requested.",
+        "ref": "CapacityType",
+        "type": "array"
+      },
+      "endDateTime": {
+        "description": "End date time up to which the capacity slots are being requested in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startDateTime": {
+        "description": "Start date time from which the capacity slots are being requested in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "endDateTime",
+      "startDateTime"
+    ],
+    "type": "object"
+  },
+  "Recurrence": {
+    "description": "Repeated occurrence of an event in a time range.",
+    "properties": {
+      "daysOfMonth": {
+        "description": "Days of the month when recurrence is valid.",
+        "itemType": "integer",
+        "type": "array"
+      },
+      "daysOfWeek": {
+        "description": "Days of the week when recurrence is valid.",
+        "ref": "DayOfWeek",
+        "type": "array"
+      },
+      "endTime": {
+        "description": "End time of the recurrence.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "endTime"
+    ],
+    "type": "object"
+  },
+  "RescheduleAppointmentRequest": {
+    "description": "Input for rescheduled appointment operation.",
+    "properties": {
+      "appointmentTime": {
+        "description": "Input appointment time details.",
+        "ref": "AppointmentTimeInput"
+      },
+      "rescheduleReasonCode": {
+        "description": "Input appointment reschedule reason.",
+        "ref": "RescheduleReasonCode"
+      }
+    },
+    "required": [
+      "appointmentTime",
+      "rescheduleReasonCode"
+    ],
+    "type": "object"
+  },
+  "RescheduleReasonCode": {
+    "description": "The appointment reschedule reason code.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Reservation": {
+    "description": "Reservation object reduces the capacity of a resource.",
+    "properties": {
+      "availability": {
+        "description": "`AvailabilityRecord` to represent the capacity of a resource over a time range.",
+        "ref": "AvailabilityRecord"
+      },
+      "reservationId": {
+        "description": "Unique identifier for a reservation.",
+        "type": "string"
+      },
+      "type": {
+        "description": "Type of reservation.",
+        "enum": [
+          "APPOINTMENT",
+          "BREAK",
+          "TRAINING",
+          "TRAVEL",
+          "VACATION"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "availability",
+      "type"
+    ],
+    "type": "object"
+  },
+  "ScopeOfWork": {
+    "description": "The scope of work for the order.",
+    "properties": {
+      "asin": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the service job.",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "The number of service jobs.",
+        "type": "integer"
+      },
+      "requiredSkills": {
+        "description": "A list of skills required to perform the job.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "title": {
+        "description": "The title of the service job.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Seller": {
+    "description": "Information about the seller of the service job.",
+    "properties": {
+      "sellerId": {
+        "description": "The identifier of the seller of the service job.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ServiceDocumentUploadDestination": {
+    "description": "Information about an upload destination.",
+    "properties": {
+      "encryptionDetails": {
+        "ref": "EncryptionDetails"
+      },
+      "headers": {
+        "description": "The headers to include in the upload request.",
+        "type": "object"
+      },
+      "uploadDestinationId": {
+        "description": "The unique identifier to be used by APIs that reference the upload destination.",
+        "type": "string"
+      },
+      "url": {
+        "description": "The URL to which to upload the file.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "encryptionDetails",
+      "uploadDestinationId",
+      "url"
+    ],
+    "type": "object"
+  },
+  "ServiceJob": {
+    "description": "The job details of a service.",
+    "properties": {
+      "appointments": {
+        "description": "A list of appointments.",
+        "ref": "Appointment",
+        "type": "array"
+      },
+      "associatedItems": {
+        "description": "A list of items associated with the service job.",
+        "ref": "AssociatedItem",
+        "type": "array"
+      },
+      "buyer": {
+        "description": "Information about the buyer.",
+        "ref": "Buyer"
+      },
+      "createTime": {
+        "description": "The date and time of the creation of the job in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The marketplace identifier.",
+        "type": "string"
+      },
+      "payments": {
+        "description": "A list that contains payment information for the service job.",
+        "ref": "Payment",
+        "type": "array"
+      },
+      "preferredAppointmentTimes": {
+        "description": "A list of appointment windows preferred by the buyer.",
+        "ref": "AppointmentTime",
+        "type": "array"
+      },
+      "productOrderIds": {
+        "description": "A list of associated product order IDs for the service job.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "scopeOfWork": {
+        "description": "The scope of work for the order.",
+        "ref": "ScopeOfWork"
+      },
+      "seller": {
+        "description": "Information about the seller of the service job.",
+        "ref": "Seller"
+      },
+      "serviceJobId": {
+        "description": "The service job identifier.",
+        "ref": "ServiceJobId"
+      },
+      "serviceJobProvider": {
+        "description": "Information about the service job provider.",
+        "ref": "ServiceJobProvider"
+      },
+      "serviceJobStatus": {
+        "description": "The status of the service job.",
+        "enum": [
+          "CANCELLED",
+          "COMPLETED",
+          "HOLD",
+          "NOT_FULFILLABLE",
+          "NOT_SERVICED",
+          "PAYMENT_DECLINED",
+          "PENDING_SCHEDULE"
+        ],
+        "type": "string"
+      },
+      "serviceLocation": {
+        "description": "Information about the location of the service job.",
+        "ref": "ServiceLocation"
+      },
+      "serviceOrderId": {
+        "description": "The Amazon-defined identifier for an order placed by the buyer in 3-7-7 format.",
+        "ref": "OrderId"
+      },
+      "storeId": {
+        "description": "The Amazon-defined identifier for the region scope.",
+        "type": "string"
+      },
+      "trackingIds": {
+        "description": "A list of associated product tracking IDs for the service job.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ServiceJobId": {
+    "description": "Amazon identifier for the service job.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ServiceJobProvider": {
+    "description": "Information about the service job provider.",
+    "properties": {
+      "providerServiceJobReferenceId": {
+        "description": "The reference ID for the service job assigned to the provider.",
+        "type": "string"
+      },
+      "serviceJobProviderId": {
+        "description": "The identifier of the service job provider.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ServiceLocation": {
+    "description": "Information about the location of the service job.",
+    "properties": {
+      "address": {
+        "description": "The shipping address for the service job.",
+        "ref": "Address"
+      },
+      "serviceLocationType": {
+        "description": "The location of the service job.",
+        "enum": [
+          "IN_HOME",
+          "IN_STORE",
+          "ONLINE"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ServiceUploadDocument": {
+    "description": "Input for to be uploaded document.",
+    "properties": {
+      "contentLength": {
+        "description": "The content length of the to-be-uploaded file",
+        "format": "int64",
+        "type": "number"
+      },
+      "contentMD5": {
+        "description": "An MD5 hash of the content to be submitted to the upload destination.",
+        "type": "string"
+      },
+      "contentType": {
+        "description": "The content type of the to-be-uploaded file",
+        "enum": [
+          "GIF",
+          "JPEG",
+          "JPG",
+          "PDF",
+          "PNG",
+          "TIFF"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "contentLength",
+      "contentType"
+    ],
+    "type": "object"
+  },
+  "SetAppointmentFulfillmentDataRequest": {
+    "description": "Input for set appointment fulfillment data operation.",
+    "properties": {
+      "appointmentResources": {
+        "description": "Resources involved in appointment fulfillment.",
+        "ref": "AppointmentResources"
+      },
+      "estimatedArrivalTime": {
+        "description": "The range of time when the technician is expected to arrive at the fulfillment location.",
+        "ref": "DateTimeRange"
+      },
+      "fulfillmentDocuments": {
+        "description": "Documents specific to appointment fulfillment.",
+        "ref": "FulfillmentDocuments"
+      },
+      "fulfillmentTime": {
+        "description": "Input appointment time details.",
+        "ref": "FulfillmentTime"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SetAppointmentResponse": {
+    "description": "Response schema for the `addAppointmentForServiceJobByServiceJobId` and `rescheduleAppointmentForServiceJobByServiceJobId` operations.",
+    "properties": {
+      "appointmentId": {
+        "description": "New appointment identifier generated during the `addAppointmentForServiceJobByServiceJobId` or `rescheduleAppointmentForServiceJobByServiceJobId` operations.",
+        "ref": "AppointmentId"
+      },
+      "errors": {
+        "description": "Errors occurred during during the `addAppointmentForServiceJobByServiceJobId` or `rescheduleAppointmentForServiceJobByServiceJobId` operations.",
+        "ref": "ErrorList"
+      },
+      "warnings": {
+        "description": "Warnings generated during the `addAppointmentForServiceJobByServiceJobId` or `rescheduleAppointmentForServiceJobByServiceJobId` operations.",
+        "ref": "WarningList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Technician": {
+    "description": "A technician who is assigned to perform the service job in part or in full.",
+    "properties": {
+      "name": {
+        "description": "The name of the technician.",
+        "type": "string"
+      },
+      "technicianId": {
+        "description": "The technician identifier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UpdateReservationRecord": {
+    "description": "`UpdateReservationRecord` entity contains the `Reservation` if there is an error/warning while performing the requested operation on it, otherwise it will contain the new `reservationId`.",
+    "properties": {
+      "errors": {
+        "description": "Errors encountered, if any.",
+        "ref": "ErrorList"
+      },
+      "reservation": {
+        "description": "Reservation record if the operation failed.",
+        "ref": "Reservation"
+      },
+      "warnings": {
+        "description": "Warnings encountered, if any.",
+        "ref": "WarningList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UpdateReservationRequest": {
+    "description": "Request schema for the `updateReservation` operation.",
+    "properties": {
+      "reservation": {
+        "description": "`Reservation` object to reduce the capacity of a resource.",
+        "ref": "Reservation"
+      },
+      "resourceId": {
+        "description": "Resource (store) identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "reservation",
+      "resourceId"
+    ],
+    "type": "object"
+  },
+  "UpdateReservationResponse": {
+    "description": "Response schema for the `updateReservation` operation.",
+    "properties": {
+      "errors": {
+        "description": "Errors encountered, if any.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "`UpdateReservationRecord` contains only the new `reservationId` if the operation was successful.",
+        "ref": "UpdateReservationRecord"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UpdateScheduleRecord": {
+    "description": "`UpdateScheduleRecord` entity contains the `AvailabilityRecord` if there is an error/warning while performing the requested operation on it.",
+    "properties": {
+      "availability": {
+        "description": "Availability record if the operation failed.",
+        "ref": "AvailabilityRecord"
+      },
+      "errors": {
+        "description": "Errors encountered, if any.",
+        "ref": "ErrorList"
+      },
+      "warnings": {
+        "description": "Warnings encountered, if any.",
+        "ref": "WarningList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UpdateScheduleRequest": {
+    "description": "Request schema for the `updateSchedule` operation.",
+    "properties": {
+      "schedules": {
+        "description": "List of schedule objects to define the normal working hours of a resource.",
+        "ref": "AvailabilityRecords"
+      }
+    },
+    "required": [
+      "schedules"
+    ],
+    "type": "object"
+  },
+  "UpdateScheduleResponse": {
+    "description": "Response schema for the `updateSchedule` operation.",
+    "properties": {
+      "errors": {
+        "description": "Errors encountered, if any.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "Contains the `UpdateScheduleRecords` for which the error/warning has occurred.",
+        "ref": "UpdateScheduleRecord",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Warning": {
+    "description": "Warning returned when the request is successful, but there are important callouts based on which API clients should take defined actions.",
+    "properties": {
+      "code": {
+        "description": "An warning code that identifies the type of warning that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or address the warning.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the warning condition in a human-readable form.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "WarningList": {
+    "description": "A list of warnings returned in the sucessful execution response of an API request.",
+    "properties": {},
+    "ref": "Warning",
+    "required": [],
+    "type": "array"
+  }
+}

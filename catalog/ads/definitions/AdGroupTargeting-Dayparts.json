@@ -1,0 +1,262 @@
+{
+ "api": "AdGroupTargeting-Dayparts",
+ "file": "specs/dest/AdGroupTargeting-Dayparts_prod_3p.json",
+ "schemas": {
+  "DayOfWeek": {
+   "description": "The day of the week.",
+   "enum": [
+    "SUNDAY",
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY",
+    "SATURDAY"
+   ],
+   "type": "string"
+  },
+  "DspAdGroupDaypartTargetsV1": {
+   "properties": {
+    "dayOfWeek": {
+     "$ref": "DayOfWeek"
+    },
+    "hourSlot": {
+     "description": "Specify the hour slot in which the ad is to be served. For example, specifying 8 will serve the ad between 8:00 and 9:00.",
+     "maximum": 23,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "dayOfWeek",
+    "hourSlot"
+   ],
+   "type": "object"
+  },
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateAdGroupDaypartTargetsRequestContentV1": {
+   "properties": {
+    "daypartTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspAdGroupDaypartTargetsV1"
+     },
+     "maxItems": 168,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "daypartTargets"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupDaypartTargetsRequestContentV1": {
+   "properties": {
+    "daypartTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspAdGroupDaypartTargetsV1"
+     },
+     "maxItems": 168,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "daypartTargets"
+   ],
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetAdGroupDaypartTargetsResponseContent": {
+   "properties": {
+    "daypartTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspAdGroupDaypartTargetsV1"
+     },
+     "maxItems": 168,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "daypartTargets"
+   ],
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

@@ -1,0 +1,225 @@
+{
+ "api": "Discovery-Apps-V1",
+ "file": "specs/dest/Discovery-Apps-V1_prod_3p.json",
+ "schemas": {
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspDiscoveryApp": {
+   "properties": {
+    "id": {
+     "description": "The app identifier.",
+     "type": "string"
+    },
+    "legacyId": {
+     "description": "Legacy app identifier. Only applicable when `appType=STV`.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The app name.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListDiscoveryAppType": {
+   "enum": [
+    "MOBILE",
+    "STV"
+   ],
+   "type": "string"
+  },
+  "DspListDiscoveryAppsRequestContent": {
+   "properties": {
+    "appIdFilter": {
+     "description": "An array of mobile or streaming TV app Ids to retrieve. You may include up to 1000 in one request.",
+     "items": {
+      "maxLength": 255,
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "appType": {
+     "$ref": "DspListDiscoveryAppType"
+    },
+    "maxResults": {
+     "description": "Sets the maximum number of objects in the returned array. Use in conjunction with the nextToken parameter to control pagination. For example, supplying maxResults=20 with a previously returned token will fetch up to the…",
+     "maximum": 5000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    },
+    "textQuery": {
+     "description": "Filter by text.",
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListDiscoveryAppsResponseContent": {
+   "properties": {
+    "apps": {
+     "items": {
+      "$ref": "DspDiscoveryApp"
+     },
+     "maxItems": 5000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

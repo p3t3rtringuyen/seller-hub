@@ -1,0 +1,1297 @@
+{
+ "api": "AMCCustomModels",
+ "file": "specs/dest/AMCCustomModels_prod_3p.json",
+ "schemas": {
+  "AMCModelBasedAudienceCMAAArn": {
+   "description": "The ARN returned when the customer associates an algorithm with a membership.",
+   "type": "string"
+  },
+  "AMCModelBasedAudienceConfiguredModelAlgorithmAssociations": {
+   "description": "The ARN returned when the customer associates an algorithm with a membership.",
+   "items": {
+    "$ref": "AMCModelBasedAudienceCMAAArn"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "AMCModelBasedAudienceCreateMlDataExportInput": {
+   "description": "Create MlDataExport input",
+   "properties": {
+    "dataType": {
+     "description": "The data type that needs to be exported",
+     "type": "string"
+    },
+    "inferenceJobId": {
+     "description": "InferenceJobId to export data from",
+     "type": "string"
+    },
+    "trainedModelId": {
+     "description": "TrainedModelId to export data from",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AMCModelBasedAudienceCreateMlDataExportOutput": {
+   "description": "Response on a successful creation of a MlDAtaExport create.",
+   "properties": {
+    "mlDataExportId": {
+     "$ref": "AMCModelBasedAudienceMlDataExportId"
+    }
+   },
+   "required": [
+    "mlDataExportId"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceCreateMlInputChannelInput": {
+   "description": "Model based audience MlInputChannel create input",
+   "properties": {
+    "configuredModelAlgorithmAssociations": {
+     "$ref": "AMCModelBasedAudienceConfiguredModelAlgorithmAssociations"
+    },
+    "enforceAggregationThresholds": {
+     "description": "Optional. If the enforceAggregationThresholds option is enabled, the system will ensure SQL query and the resulting data meets the restrictions and minimum levels of aggregation defined by the columns selected. Defaults…",
+     "type": "boolean"
+    },
+    "enforceUserLevelTargeting": {
+     "description": "If the enforceUserLevelTargeting option is enabled, the system will ensure that the it only uses data sources relevant for user level targeting.",
+     "type": "boolean"
+    },
+    "idempotencyKey": {
+     "$ref": "AMCModelBasedAudienceIdempotencyKey"
+    },
+    "name": {
+     "description": "The name of MlInputChannel.",
+     "type": "string"
+    },
+    "outputFormat": {
+     "$ref": "MlInputChannelOutputFormat"
+    },
+    "queryParameters": {
+     "$ref": "AMCModelBasedAudienceQueryParameters"
+    }
+   },
+   "required": [
+    "configuredModelAlgorithmAssociationArn",
+    "name",
+    "queryParameters"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceCreateMlInputChannelOut": {
+   "description": "Model based audience MlInputChannel create output",
+   "properties": {
+    "mlInputChannelId": {
+     "$ref": "AMCModelBasedAudienceMlInputChannelId"
+    }
+   },
+   "required": [
+    "mlInputChannelId"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceCreateModeledDatasetInput": {
+   "description": "Create ModeledDataset input",
+   "properties": {
+    "description": {
+     "description": "The description of the ModeledDataset",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the ModeledDataset",
+     "type": "string"
+    },
+    "schema": {
+     "$ref": "AMCModelBasedAudienceModeledDatasetSchema"
+    }
+   },
+   "required": [
+    "name",
+    "schema"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceCreateModeledDatasetOutput": {
+   "description": "Response on a successful creation of a ModeledDataset.",
+   "properties": {
+    "modeledDatasetId": {
+     "$ref": "AMCModelBasedAudienceModeledDatasetId"
+    }
+   },
+   "required": [
+    "modeledDatasetId"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceCreateModeledDatasetUploadJobInput": {
+   "description": "CreateModeledDatasetUploadJobInput",
+   "properties": {
+    "inferenceJobIds": {
+     "$ref": "AMCModelBasedAudienceTrainedModelInferenceJobIds"
+    },
+    "modeledDatasetId": {
+     "$ref": "AMCModelBasedAudienceModeledDatasetId"
+    },
+    "trainedModelIds": {
+     "$ref": "AMCModelBasedAudienceTrainedModelIds"
+    },
+    "updateStrategy": {
+     "$ref": "AMCModelBasedAudienceModeledDatasetUploadJobUpdateStrategy"
+    }
+   },
+   "required": [
+    "modeledDatasetId"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceCreateModeledDatasetUploadJobOutput": {
+   "description": "Response on a successful creation of a ModeledDataset.",
+   "properties": {
+    "modeledDatasetUploadJobId": {
+     "$ref": "AMCModelBasedAudienceModeledDatasetUploadJobId"
+    }
+   },
+   "required": [
+    "modeledDatasetUploadJobId"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceCreateTrainedModelInput": {
+   "description": "Model based audience trained model execution metadata information.",
+   "properties": {
+    "configuredModelAlgorithmAssociationArn": {
+     "$ref": "AMCModelBasedAudienceCMAAArn"
+    },
+    "description": {
+     "description": "Customer provided description for a trained model.",
+     "type": "string"
+    },
+    "enforceAnonymizedResults": {
+     "description": "Optional. If the enforceAnonymizedResults option is enabled, the system will ensure that the training and inference processes produce output data that has been anonymized. This is required to use MlDataExports APIs. enf…",
+     "type": "boolean"
+    },
+    "enforceUserLevelTargeting": {
+     "description": "If the enforceUserLevelTargeting option is enabled, the system will ensure that the training process only uses data sources relevant for user level targeting.",
+     "type": "boolean"
+    },
+    "environment": {
+     "$ref": "AMCModelBasedAudienceEnvironment"
+    },
+    "featureFields": {
+     "$ref": "AMCModelBasedAudienceFeatureFields"
+    },
+    "hyperParameters": {
+     "$ref": "AMCModelBasedAudienceHyperParameters"
+    },
+    "idempotencyKey": {
+     "$ref": "AMCModelBasedAudienceIdempotencyKey"
+    },
+    "incrementalTrainingDataChannels": {
+     "$ref": "AMCModelBasedAudienceIncrementalTrainingDataChannels"
+    },
+    "mlInputChannels": {
+     "$ref": "AMCModelBasedAudienceMlInputChannels"
+    },
+    "name": {
+     "description": "Customer provided name for a trained model.",
+     "type": "string"
+    },
+    "resourceConfig": {
+     "$ref": "AMCModelBasedAudienceResourceConfig"
+    },
+    "stoppingCondition": {
+     "$ref": "AMCModelBasedAudienceStoppingCondition"
+    }
+   },
+   "required": [
+    "configuredModelAlgorithmAssociationArn",
+    "name",
+    "queryParameters"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceCreateTrainedModelOutput": {
+   "description": "Response on a successful creation of a TrainedModel.",
+   "properties": {
+    "trainedModelId": {
+     "$ref": "AMCModelBasedAudienceTrainedModelId"
+    }
+   },
+   "required": [
+    "trainedModelId"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceEnvironment": {
+   "additionalProperties": {
+    "maxLength": 512,
+    "type": "string"
+   },
+   "description": "The environment variables to set in the Docker container.",
+   "type": "object"
+  },
+  "AMCModelBasedAudienceFeatureFields": {
+   "additionalProperties": {
+    "maxLength": 2500,
+    "type": "string"
+   },
+   "description": "Optional. Declares the features whose importance to compute, as a map of feature name to a regular expression that captures the feature's numeric value from the training container logs.",
+   "type": "object"
+  },
+  "AMCModelBasedAudienceFeatureImportanceScores": {
+   "additionalProperties": {
+    "maxLength": 2500,
+    "type": "string"
+   },
+   "description": "Signed relative-impact label per feature, stating the feature's magnitude as a percentage band of the strongest feature in the run. Values are labels, not numbers.",
+   "type": "object"
+  },
+  "AMCModelBasedAudienceFeatureImportanceStatusReason": {
+   "description": "Explains why feature importance scores are absent, or conveys a caveat alongside a successful result. Absent on a clean run.",
+   "maxLength": 2500,
+   "type": "string"
+  },
+  "AMCModelBasedAudienceGetMlDataExportOutput": {
+   "description": "Model based audience MLDataExport metadata information.",
+   "properties": {
+    "createTime": {
+     "description": "Timestamp of when the mlDataExport request was submitted. This field is in UTC and is formatted as yyyy-MM-dd'T'HH:mm:ss'Z'.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "mlDataExportId": {
+     "$ref": "AMCModelBasedAudienceMlDataExportId"
+    },
+    "preSignedErrorS3Uri": {
+     "description": "Presigned S3 url to download the error file.",
+     "type": "string"
+    },
+    "preSignedS3Uris": {
+     "$ref": "AMCModelBasedAudienceMlDataExportPresignedUrls"
+    },
+    "status": {
+     "$ref": "MlDataExportStatus"
+    },
+    "statusReason": {
+     "description": "Description of why the execution is in FAILED state.",
+     "type": "string"
+    },
+    "validUntil": {
+     "description": "Timestamp of when the mlDataExport request will be valid until. This field is in UTC and is formatted as yyyy-MM-dd'T'HH:mm:ss'Z'.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "createTime",
+    "mlDataExportId",
+    "status"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceGetModeledDatasetOutput": {
+   "description": "Model based audience trained model inference job execution metadata information.",
+   "properties": {
+    "createTime": {
+     "description": "Timestamp of when the modeled dataset request was submitted.This field is in UTC and is formatted as yyyy-MM-dd'T'HH:mm:ss'Z'.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "description": {
+     "description": "The description of the ModeledDataset",
+     "type": "string"
+    },
+    "modeledDatasetId": {
+     "$ref": "AMCModelBasedAudienceModeledDatasetId"
+    },
+    "name": {
+     "description": "The name of the ModeledDataset",
+     "type": "string"
+    },
+    "schema": {
+     "$ref": "AMCModelBasedAudienceModeledDatasetSchema"
+    },
+    "status": {
+     "$ref": "ModeledDatasetStatus"
+    },
+    "statusReason": {
+     "description": "Description of why the execution is in FAILED state.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "createTime",
+    "modeledDataSetId",
+    "name",
+    "schema",
+    "status"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceGetModeledDatasetUploadJobOutput": {
+   "description": "Model based audience trained model inference job execution metadata information.",
+   "properties": {
+    "estimatedRowCount": {
+     "type": "integer"
+    },
+    "inferenceJobIds": {
+     "$ref": "AMCModelBasedAudienceTrainedModelInferenceJobIds"
+    },
+    "modeledDatasetId": {
+     "$ref": "AMCModelBasedAudienceModeledDatasetId"
+    },
+    "modeledDatasetUploadJobId": {
+     "$ref": "AMCModelBasedAudienceModeledDatasetUploadJobId"
+    },
+    "status": {
+     "$ref": "ModeledDatasetUploadJobStatus"
+    },
+    "statusReason": {
+     "description": "Description of why the execution is in FAILED state.",
+     "type": "string"
+    },
+    "trainedModelIds": {
+     "$ref": "AMCModelBasedAudienceTrainedModelIds"
+    },
+    "updateStrategy": {
+     "$ref": "AMCModelBasedAudienceModeledDatasetUploadJobUpdateStrategy"
+    }
+   },
+   "required": [
+    "estimatedRowCount",
+    "modeledDataSetId",
+    "modeledDatasetUploadJobId",
+    "name",
+    "status"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceGetTrainedModelInferenceJobOutput": {
+   "description": "Model based audience trained model inference job execution metadata information.",
+   "properties": {
+    "configuredModelAlgorithmAssociationArn": {
+     "$ref": "AMCModelBasedAudienceCMAAArn"
+    },
+    "containerExecutionParameters": {
+     "$ref": "InferenceJobContainerExecutionParameters"
+    },
+    "createTime": {
+     "description": "Timestamp of when the trained model request was submitted.This field is in UTC and is formatted as yyyy-MM-dd'T'HH:mm:ss'Z'.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "description": {
+     "description": "Description of the trained model inference job",
+     "type": "string"
+    },
+    "enforceAnonymizedResults": {
+     "description": "Optional. If the enforceAnonymizedResults option is enabled, the system will ensure that the training and inference processes produce output data that has been anonymized. This is required to use MlDataExports APIs. enf…",
+     "type": "boolean"
+    },
+    "enforceUserLevelTargeting": {
+     "description": "If the enforceUserLevelTargeting option is enabled, the system will ensure that the inference process only uses data sources relevant for user level targeting.",
+     "type": "boolean"
+    },
+    "instanceId": {
+     "description": "AMC instance identifier.",
+     "type": "string"
+    },
+    "logsStatus": {
+     "$ref": "PublishStatus"
+    },
+    "logsStatusDetails": {
+     "description": "Detailed information about logs publishing status, especially useful when logsStatus is PUBLISH_FAILED",
+     "type": "string"
+    },
+    "metricsStatus": {
+     "$ref": "PublishStatus"
+    },
+    "metricsStatusDetails": {
+     "description": "Detailed information about metrics publishing status, especially useful when metricsStatus is PUBLISH_FAILED",
+     "type": "string"
+    },
+    "mlInputChannelId": {
+     "$ref": "AMCModelBasedAudienceMlInputChannelId"
+    },
+    "name": {
+     "description": "Name of the trained model inference job",
+     "type": "string"
+    },
+    "resourceConfig": {
+     "$ref": "InferenceJobResourceConfig"
+    },
+    "status": {
+     "$ref": "TrainedModelInferenceJobStatus"
+    },
+    "statusReason": {
+     "description": "The error message when the status is FAILED. Algorithm errors include an S3 URL to retrieve the error summary if you have configured the CMAA log configuration policy see Log Configuration Policy Details (https://advert…",
+     "type": "string"
+    },
+    "trainedModelId": {
+     "$ref": "AMCModelBasedAudienceTrainedModelId"
+    },
+    "trainedModelInferenceJobId": {
+     "$ref": "AMCModelBasedAudienceTrainedModelInferenceJobId"
+    }
+   },
+   "required": [
+    "configuredModelAlgorithmAssociationArn",
+    "instanceId",
+    "mlInputChannelId",
+    "status",
+    "trainedModelId",
+    "trainedModelInferenceJobId"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceGetTrainedModelOutput": {
+   "description": "Model based audience trained model execution metadata information.",
+   "properties": {
+    "audienceEligible": {
+     "description": "Indicates if the TrainedModel can be used for audience generation.",
+     "type": "boolean"
+    },
+    "configuredModelAlgorithmAssociationArn": {
+     "$ref": "AMCModelBasedAudienceCMAAArn"
+    },
+    "createTime": {
+     "description": "Timestamp of when the trained model request was submitted.This field is in UTC and is formatted as yyyy-MM-dd'T'HH:mm:ss'Z'.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "dataExportEligible": {
+     "description": "Indicates if the TrainedModel can be used for modeled output data exports generation. You must create the TrainedModel with the enforceAnonymizedResults flag set to true.",
+     "type": "boolean"
+    },
+    "description": {
+     "description": "Customer provided description for a trained model.",
+     "type": "string"
+    },
+    "environment": {
+     "$ref": "AMCModelBasedAudienceEnvironment"
+    },
+    "featureFields": {
+     "$ref": "AMCModelBasedAudienceFeatureFields"
+    },
+    "featureImportanceScores": {
+     "$ref": "AMCModelBasedAudienceFeatureImportanceScores"
+    },
+    "featureImportanceStatusReason": {
+     "$ref": "AMCModelBasedAudienceFeatureImportanceStatusReason"
+    },
+    "hyperParameters": {
+     "$ref": "AMCModelBasedAudienceHyperParameters"
+    },
+    "incrementalTrainingDataChannels": {
+     "$ref": "AMCModelBasedAudienceIncrementalTrainingDataChannels"
+    },
+    "instanceId": {
+     "description": "AMC instance identifier.",
+     "type": "string"
+    },
+    "logsStatus": {
+     "$ref": "PublishStatus"
+    },
+    "logsStatusDetails": {
+     "description": "Detailed information about logs publishing status, especially useful when logsStatus is PUBLISH_FAILED",
+     "type": "string"
+    },
+    "metricsStatus": {
+     "$ref": "PublishStatus"
+    },
+    "metricsStatusDetails": {
+     "description": "Detailed information about metrics publishing status, especially useful when metricsStatus is PUBLISH_FAILED",
+     "type": "string"
+    },
+    "mlInputChannels": {
+     "$ref": "AMCModelBasedAudienceMlInputChannels"
+    },
+    "name": {
+     "description": "Customer provided name for a trained model.",
+     "type": "string"
+    },
+    "resourceConfig": {
+     "$ref": "AMCModelBasedAudienceResourceConfig"
+    },
+    "status": {
+     "$ref": "TrainedModelStatus"
+    },
+    "statusReason": {
+     "description": "The error message when the status is FAILED. Algorithm errors include an S3 URL to retrieve the error summary if you have configured the CMAA log configuration policy - see Log Configuration Policy Details (https://adve…",
+     "type": "string"
+    },
+    "stoppingCondition": {
+     "$ref": "AMCModelBasedAudienceStoppingCondition"
+    },
+    "trainedModelId": {
+     "$ref": "AMCModelBasedAudienceTrainedModelId"
+    }
+   },
+   "required": [
+    "configuredModelAlgorithmAssociationArn",
+    "createTime",
+    "name",
+    "queryParameters",
+    "status",
+    "trainedModelId"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceHyperParameters": {
+   "additionalProperties": {
+    "maxLength": 2500,
+    "type": "string"
+   },
+   "description": "Algorithm-specific parameters that influence the quality of the model.",
+   "type": "object"
+  },
+  "AMCModelBasedAudienceIdempotencyKey": {
+   "description": "Idempotency key to prevent duplicate records.",
+   "type": "string"
+  },
+  "AMCModelBasedAudienceIncrementalTrainingDataChannel": {
+   "description": "A named input source that the container will consume. This is the location of a model which will be used for incremental training.",
+   "properties": {
+    "channelName": {
+     "maxLength": 64,
+     "type": "string"
+    },
+    "trainedModelId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "channelName",
+    "trainedModelId"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceIncrementalTrainingDataChannels": {
+   "description": "A list of trained models to perform incremental training against.",
+   "items": {
+    "$ref": "AMCModelBasedAudienceIncrementalTrainingDataChannel"
+   },
+   "maxItems": 1,
+   "minItems": 0,
+   "type": "array"
+  },
+  "AMCModelBasedAudienceListMlDataExportOutput": {
+   "properties": {
+    "mlDataExportList": {
+     "description": "A list of mlDataExport metadata",
+     "items": {
+      "$ref": "AMCModelBasedAudienceGetMlDataExportOutput"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token to use in subsequent request to retrieve next page of results. Field will be null if all results have been returned.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AMCModelBasedAudienceListModeledDatasetOutput": {
+   "properties": {
+    "modeledDatasetList": {
+     "description": "A list of ModeledDataset metadata",
+     "items": {
+      "$ref": "AMCModelBasedAudienceGetModeledDatasetOutput"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token to use in subsequent request to retrieve next page of results. Field will be null if all results have been returned.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AMCModelBasedAudienceListModeledDatasetUploadJobsOutput": {
+   "properties": {
+    "modeledDatasetUploadJobList": {
+     "description": "Paginated list of ModeledDatasetUploadJobs",
+     "items": {
+      "$ref": "AMCModelBasedAudienceGetModeledDatasetUploadJobOutput"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token to use in subsequent request to retrieve next page of results. Field will be null if all results have been returned.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AMCModelBasedAudienceListTrainedModelInferenceJobOutput": {
+   "properties": {
+    "nextToken": {
+     "description": "Token to use in subsequent request to retrieve next page of results. Field will be null if all results have been returned.",
+     "type": "string"
+    },
+    "trainedModelInferenceJobList": {
+     "description": "List of the AMC model based audience trained model inference job for a given instanceId.",
+     "items": {
+      "$ref": "AMCModelBasedAudienceGetTrainedModelInferenceJobOutput"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AMCModelBasedAudienceListTrainedModelsOutput": {
+   "properties": {
+    "nextToken": {
+     "description": "Token to use in subsequent request to retrieve next page of results. Field will be null if all results have been returned.",
+     "type": "string"
+    },
+    "trainedModelMetadataList": {
+     "description": "List of the AMC model based audience trained models for a given instanceId.",
+     "items": {
+      "$ref": "AMCModelBasedAudienceGetTrainedModelOutput"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AMCModelBasedAudienceMlDataExportId": {
+   "description": "MlDataExportId",
+   "type": "string"
+  },
+  "AMCModelBasedAudienceMlDataExportPresignedUrls": {
+   "items": {
+    "description": "Presigned S3 url to download the exported data from.",
+    "type": "string"
+   },
+   "maxItems": 100,
+   "minItems": 0,
+   "type": "array"
+  },
+  "AMCModelBasedAudienceMlInputChannel": {
+   "description": "A named input source that the container will consume. This is the location of the output of the query.",
+   "properties": {
+    "channelName": {
+     "maxLength": 64,
+     "type": "string"
+    },
+    "mlInputChannelId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "channelName",
+    "mlInputChannelId"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceMlInputChannelExecutionMetadata": {
+   "description": "MlInputChannelExecutionMetadata",
+   "properties": {
+    "approximateRecordCount": {
+     "description": "The approximate record count.",
+     "type": "string"
+    },
+    "approximateSizeOnDisk": {
+     "description": "The approximate size of the data result on disk.",
+     "type": "string"
+    },
+    "configuredModelAlgorithmAssociations": {
+     "$ref": "AMCModelBasedAudienceConfiguredModelAlgorithmAssociations"
+    },
+    "createTime": {
+     "description": "Timestamp of when the trained model request was submitted.This field is in UTC and is formatted as yyyy-MM-dd'T'HH:mm:ss'Z'.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "enforceAggregationThresholds": {
+     "description": "Optional. If the enforceAggregationThresholds option is enabled, the system will ensure SQL query and the resulting data meets the restrictions and minimum levels of aggregation defined by the columns selected. Defaults…",
+     "type": "boolean"
+    },
+    "enforceUserLevelTargeting": {
+     "description": "If the enforceUserLevelTargeting option is enabled, the system will ensure that the training process only uses data sources relevant for user level targeting.",
+     "type": "boolean"
+    },
+    "expirationTimeInUtc": {
+     "description": "The expiration time of MlInputChannel",
+     "type": "string"
+    },
+    "instanceId": {
+     "description": "AMC instance identifier.",
+     "type": "string"
+    },
+    "isAudienceEligible": {
+     "description": "Indicates if the data source can be used for audience generation.",
+     "type": "boolean"
+    },
+    "mlInputChannelId": {
+     "$ref": "AMCModelBasedAudienceMlInputChannelId"
+    },
+    "name": {
+     "description": "The name for the ml input data.",
+     "type": "string"
+    },
+    "numberOfFiles": {
+     "description": "The number of files in the MlInputChannel.",
+     "maximum": 1000000,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "outputFormat": {
+     "$ref": "MlInputChannelOutputFormat"
+    },
+    "queryParameters": {
+     "$ref": "AMCModelBasedAudienceQueryParameters"
+    },
+    "status": {
+     "$ref": "MlInputChannelStatus"
+    },
+    "statusReason": {
+     "description": "Description of why the execution is in FAILED state.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "configuredModelAlgorithmAssociations",
+    "createTime",
+    "instanceId",
+    "mlInputChannelId",
+    "name",
+    "queryParameters",
+    "status"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceMlInputChannelId": {
+   "description": "A unique ID that represents an AMCMlInputChannel object",
+   "type": "string"
+  },
+  "AMCModelBasedAudienceMlInputChannelMetadataList": {
+   "properties": {
+    "mlInputChannelMetadataList": {
+     "description": "A list of MlInputChannelMetadata",
+     "items": {
+      "$ref": "AMCModelBasedAudienceMlInputChannelExecutionMetadata"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token to use in subsequent request to retrieve next page of results. Field will be null if all results have been returned.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AMCModelBasedAudienceMlInputChannels": {
+   "description": "a list of mlInputChannels",
+   "items": {
+    "$ref": "AMCModelBasedAudienceMlInputChannel"
+   },
+   "maxItems": 20,
+   "minItems": 1,
+   "type": "array"
+  },
+  "AMCModelBasedAudienceModeledDatasetId": {
+   "description": "Identifier that uniquely represents an AMC model based audience modeled dataset",
+   "type": "string"
+  },
+  "AMCModelBasedAudienceModeledDatasetSchema": {
+   "description": "ModeledDataset schema",
+   "properties": {
+    "tableColumns": {
+     "description": "a list of tableColumn",
+     "items": {
+      "$ref": "AMCModelBasedAudienceModeledDatasetTableColumn"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "tableColumns"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceModeledDatasetTableColumn": {
+   "description": "Object to store tableColumn",
+   "properties": {
+    "columnName": {
+     "type": "string"
+    },
+    "dataType": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "userIdColumn": {
+     "default": false,
+     "description": "True for only one column. The one that contains ad user id. If true, dataType must be STRING. Optional, defaults to false.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "columnName",
+    "dataType",
+    "userIdColumn"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceModeledDatasetUploadJobId": {
+   "description": "Identifier that uniquely represents an AMC model based audience modeled dataset upload job",
+   "type": "string"
+  },
+  "AMCModelBasedAudienceModeledDatasetUploadJobUpdateStrategy": {
+   "description": "UpdateStrategy of ModeledDatasetUploadJob",
+   "enum": [
+    "ADDITIVE",
+    "FULL_REPLACE"
+   ],
+   "type": "string"
+  },
+  "AMCModelBasedAudienceQueryParameters": {
+   "description": "Defines the AMC query to run against AMC data whose output will be used for model training.",
+   "properties": {
+    "amcQuery": {
+     "description": "Customer created query to run on AMC instance.",
+     "type": "string"
+    },
+    "inputParameters": {
+     "$ref": "QueryBasedAudienceInputParam"
+    },
+    "parameterValues": {
+     "additionalProperties": {},
+     "description": "Custom parameters specified in the query.",
+     "type": "object"
+    },
+    "timeWindowEnd": {
+     "description": "Ending date of data to query. This field is in UTC and is formatted as yyyy-MM-dd'T'HH:mm:ss'Z'.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "timeWindowStart": {
+     "description": "Starting date of data to query. This field is in UTC and is formatted as yyyy-MM-dd'T'HH:mm:ss'Z'.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "amcQuery",
+    "timeWindowEnd",
+    "timeWindowStart"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceResourceConfig": {
+   "description": "Configuration options for an training resource.",
+   "properties": {
+    "instanceCount": {
+     "default": 1,
+     "description": "instanceCount of training resource.",
+     "maximum": 10,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "instanceType": {
+     "type": "string"
+    },
+    "volumeSizeInGb": {
+     "description": "The volume size in gigabytes (GB) of the training resource. Note that volume size limits depend on your instance type. Check the EC2 documentation (https://aws.amazon.com/ec2/instance-types/) for the limits specific to …",
+     "maximum": 8192,
+     "minimum": 1,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "AMCModelBasedAudienceStoppingCondition": {
+   "description": "Specifies a limit to how long a model training job can run.",
+   "properties": {
+    "maxRuntimeInSeconds": {
+     "default": 86400,
+     "description": "The maximum length of time, in seconds, that a model can train before it is stopped. Minimum value of 1",
+     "maximum": 2419200,
+     "minimum": 1,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "AMCModelBasedAudienceTrainedModelId": {
+   "description": "Identifier that uniquely represents an AMC model based audience trained model.",
+   "type": "string"
+  },
+  "AMCModelBasedAudienceTrainedModelIds": {
+   "description": "A list of trainedModelIds",
+   "items": {
+    "$ref": "AMCModelBasedAudienceTrainedModelId"
+   },
+   "maxItems": 1,
+   "minItems": 0,
+   "type": "array"
+  },
+  "AMCModelBasedAudienceTrainedModelInferenceJobId": {
+   "description": "A unique ID that represents a trained model inference job",
+   "type": "string"
+  },
+  "AMCModelBasedAudienceTrainedModelInferenceJobIds": {
+   "description": "A list of trainedModelInferenceJobIds",
+   "items": {
+    "$ref": "AMCModelBasedAudienceTrainedModelInferenceJobId"
+   },
+   "maxItems": 1,
+   "minItems": 0,
+   "type": "array"
+  },
+  "AMCModelBasedAudienceTrainedModelInferenceJobRequest": {
+   "description": "Model based audience TrainedModelInferenceJob execution metadata information.",
+   "properties": {
+    "configuredModelAlgorithmAssociationArn": {
+     "$ref": "AMCModelBasedAudienceCMAAArn"
+    },
+    "containerExecutionParameters": {
+     "$ref": "InferenceJobContainerExecutionParameters"
+    },
+    "description": {
+     "description": "Description of the trained model inference job",
+     "type": "string"
+    },
+    "enforceAnonymizedResults": {
+     "description": "Optional. If the enforceAnonymizedResults option is enabled, the system will ensure that the training and inference processes produce output data that has been anonymized. This is required to use MlDataExports APIs. enf…",
+     "type": "boolean"
+    },
+    "enforceUserLevelTargeting": {
+     "description": "If the enforceUserLevelTargeting option is enabled, the system will ensure that the inference process only uses data sources relevant for user level targeting.",
+     "type": "boolean"
+    },
+    "environment": {
+     "$ref": "AMCModelBasedAudienceEnvironment"
+    },
+    "idempotencyKey": {
+     "$ref": "AMCModelBasedAudienceIdempotencyKey"
+    },
+    "mlInputChannelId": {
+     "$ref": "AMCModelBasedAudienceMlInputChannelId"
+    },
+    "name": {
+     "description": "Name of the trained model inference job",
+     "type": "string"
+    },
+    "resourceConfig": {
+     "$ref": "InferenceJobResourceConfig"
+    },
+    "trainedModelId": {
+     "$ref": "AMCModelBasedAudienceTrainedModelId"
+    }
+   },
+   "required": [
+    "enforceUserLevelTargeting",
+    "mlInputChannelId",
+    "name",
+    "resourceConfig",
+    "trainedModelId"
+   ],
+   "type": "object"
+  },
+  "AMCModelBasedAudienceTrainedModelInferenceJobResponse": {
+   "description": "Model based audience trained model inference job execution metadata information.",
+   "properties": {
+    "trainedModelInferenceJobId": {
+     "$ref": "AMCModelBasedAudienceTrainedModelInferenceJobId"
+    }
+   },
+   "required": [
+    "trainedModelInferenceJobId"
+   ],
+   "type": "object"
+  },
+  "ComplexDataType": {
+   "oneOf": [
+    {
+     "properties": {
+      "elementDataType": {
+       "$ref": "DataTypes"
+      },
+      "elementNullable": {
+       "type": "boolean"
+      },
+      "type": {
+       "enum": [
+        "ARRAY"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "properties": {
+      "precision": {
+       "nullable": true,
+       "type": "integer"
+      },
+      "type": {
+       "enum": [
+        "DECIMAL"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "properties": {
+      "keyDataType": {
+       "$ref": "DataTypes"
+      },
+      "type": {
+       "enum": [
+        "MAP"
+       ],
+       "type": "string"
+      },
+      "valueDataType": {
+       "$ref": "DataTypes"
+      },
+      "valueNullable": {
+       "type": "boolean"
+      }
+     },
+     "type": "object"
+    },
+    {
+     "properties": {
+      "fields": {
+       "items": {
+        "properties": {
+         "dataType": {
+          "$ref": "DataTypes"
+         },
+         "name": {
+          "type": "string"
+         }
+        },
+        "type": "object"
+       },
+       "maxItems": 100,
+       "minItems": 0,
+       "type": "array"
+      },
+      "type": {
+       "enum": [
+        "STRUCT"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "type": "object"
+  },
+  "DataTypes": {
+   "oneOf": [
+    {
+     "$ref": "SimpleDataType"
+    },
+    {
+     "$ref": "ComplexDataType"
+    }
+   ]
+  },
+  "ErrorCode": {
+   "description": "Error code",
+   "type": "string"
+  },
+  "ErrorMessage": {
+   "description": "Human readable response message",
+   "type": "string"
+  },
+  "HttpResponse": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "$ref": "ErrorMessage"
+    }
+   }
+  },
+  "InferenceJobContainerExecutionParameters": {
+   "description": "Container execution parameters for an inference job.",
+   "properties": {
+    "maxPayloadInMb": {
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "InferenceJobResourceConfig": {
+   "description": "Configuration options for an inference resource.",
+   "properties": {
+    "instanceCount": {
+     "default": 1,
+     "maximum": 10,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "instanceType": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "MlDataExportStatus": {
+   "description": "Enum containing all possible MlDataExport status.",
+   "enum": [
+    "CREATE_FAILED",
+    "CREATE_IN_PROGRESS",
+    "CREATE_SUCCEEDED"
+   ],
+   "type": "string"
+  },
+  "MlInputChannelOutputFormat": {
+   "description": "Format in which the MlInputChannel output is materialized. Defaults to CSV when not specified at create time.",
+   "enum": [
+    "CSV",
+    "PARQUET"
+   ],
+   "type": "string"
+  },
+  "MlInputChannelStatus": {
+   "description": "Enum containing all possible MlInputChannel status.",
+   "enum": [
+    "ACTIVE",
+    "CREATE_FAILED",
+    "CREATE_IN_PROGRESS",
+    "DELETE_FAILED",
+    "DELETE_IN_PROGRESS",
+    "INACTIVE",
+    "QUEUED"
+   ],
+   "type": "string"
+  },
+  "ModeledDatasetStatus": {
+   "description": "Enum containing all possible ModeledDataset status.",
+   "enum": [
+    "ACTIVE",
+    "CREATE_FAILED",
+    "CREATE_IN_PROGRESS",
+    "DELETE_FAILED",
+    "DELETE_IN_PROGRESS",
+    "INACTIVE"
+   ],
+   "type": "string"
+  },
+  "ModeledDatasetUploadJobStatus": {
+   "description": "Enum containing all possible ModeledDatasetUploadJob status.",
+   "enum": [
+    "ACTIVE",
+    "CREATE_FAILED",
+    "CREATE_IN_PROGRESS",
+    "INACTIVE"
+   ],
+   "type": "string"
+  },
+  "PublishStatus": {
+   "description": "Enum containing all possible CloudWatch Logs and Metrics publish status values.",
+   "enum": [
+    "PUBLISH_FAILED",
+    "PUBLISH_SUCCEEDED"
+   ],
+   "type": "string"
+  },
+  "QueryBasedAudienceInputParam": {
+   "description": "\"Optional. Defines the parameters that can be referenced by workflow. definition. If workflow references a parameter not defined here the compilation fails.\"",
+   "items": {
+    "properties": {
+     "columnType": {
+      "description": "Type of the column corresponding to the parameter.",
+      "enum": [
+       "DIMENSION",
+       "METRIC"
+      ],
+      "type": "string"
+     },
+     "dataType": {
+      "description": "Data type of the parameter corresponding to the data type of a column.",
+      "oneOf": [
+       {
+        "$ref": "SimpleDataType"
+       },
+       {
+        "$ref": "ComplexDataType"
+       }
+      ]
+     },
+     "defaultValue": {
+      "description": "Value to assign to the parameter if no value is provided.",
+      "type": "string"
+     },
+     "description": {
+      "description": "Human-readable description of what the parameter is used for.",
+      "type": "string"
+     },
+     "name": {
+      "description": "Name of the parameter.",
+      "type": "string"
+     }
+    },
+    "required": [
+     "dataType",
+     "name"
+    ],
+    "type": "object"
+   },
+   "maxItems": 100,
+   "minItems": 0,
+   "type": "array"
+  },
+  "SimpleDataType": {
+   "type": "string"
+  },
+  "TrainedModelInferenceJobStatus": {
+   "description": "Enum containing all possible TrainedModelInferenceJob status.",
+   "enum": [
+    "ACTIVE",
+    "CANCEL_FAILED",
+    "CANCEL_IN_PROGRESS",
+    "CREATE_FAILED",
+    "CREATE_IN_PROGRESS",
+    "INACTIVE",
+    "QUEUED"
+   ],
+   "type": "string"
+  },
+  "TrainedModelStatus": {
+   "description": "Enum containing all possible TrainedModel status.",
+   "enum": [
+    "ACTIVE",
+    "CREATE_FAILED",
+    "CREATE_IN_PROGRESS",
+    "DELETE_FAILED",
+    "DELETE_IN_PROGRESS",
+    "INACTIVE",
+    "QUEUED"
+   ],
+   "type": "string"
+  }
+ }
+}

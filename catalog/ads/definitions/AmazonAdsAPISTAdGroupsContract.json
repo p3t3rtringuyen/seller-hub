@@ -1,0 +1,768 @@
+{
+ "api": "AmazonAdsAPISTAdGroupsContract",
+ "file": "specs/dest/AmazonAdsAPISTAdGroupsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "STAdGroup": {
+   "properties": {
+    "adGroupId": {
+     "description": "The unique identifier of the ad group.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "STAdProduct"
+    },
+    "bid": {
+     "$ref": "STAdGroupBid"
+    },
+    "campaignId": {
+     "description": "The unique identifier of the campaign the ad group belongs to.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date time that the ad group was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time that the ad group was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad group is applicable. The marketplaces included should either be same as or subset of parent campaign",
+     "items": {
+      "$ref": "STMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "STState"
+    },
+    "status": {
+     "$ref": "STStatus"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "adProduct",
+    "campaignId",
+    "creationDateTime",
+    "lastUpdatedDateTime",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "STAdGroupAdGroupIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STAdGroupAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `SPONSORED_TELEVISION` | Sponsored Television ad product. |",
+     "items": {
+      "$ref": "STAdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STAdGroupBid": {
+   "properties": {
+    "baseBid": {
+     "description": "The lower bound bid used for the ads in the ad group. This field is optional for ad groups that use automated bid optimization; when omitted, the system manages bidding on your behalf. It remains required when automated…",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "$ref": "STCurrencyCode"
+    },
+    "defaultBid": {
+     "description": "The default maximum bid for ads and targets in the ad group. This is used in sponsored ads as the maximum bid during the auction.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currencyCode"
+   ],
+   "type": "object"
+  },
+  "STAdGroupCampaignIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STAdGroupCreate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "STAdProduct"
+    },
+    "bid": {
+     "$ref": "STCreateAdGroupBid"
+    },
+    "campaignId": {
+     "description": "The unique identifier of the campaign the ad group belongs to.",
+     "type": "string"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad group is applicable. The marketplaces included should either be same as or subset of parent campaign",
+     "items": {
+      "$ref": "STMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "STCreateState"
+    }
+   },
+   "required": [
+    "adProduct",
+    "campaignId",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "STAdGroupMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "STAdGroupMultiStatusSuccess"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "STAdGroupMultiStatusSuccess": {
+   "properties": {
+    "adGroup": {
+     "$ref": "STAdGroup"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "adGroup",
+    "index"
+   ],
+   "type": "object"
+  },
+  "STAdGroupNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "STAdGroupNameFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "STAdGroupNameFilterType": {
+   "description": "**AdGroupNameFilterType Enum:** | AdGroupNameFilterType | Description | | --- | --- | | `EXACT_MATCH` | Filter by exact match. | | `BROAD_MATCH` | Filter by broad match. |",
+   "enum": [
+    "BROAD_MATCH",
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "STAdGroupStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `ENABLED` | The object is set active by user and eligible for delivery. | | `PAUSED` | The object is stopped by user and not eligible for delivery. | | `ARCHIVED` …",
+     "items": {
+      "$ref": "STState"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STAdGroupSuccessResponse": {
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "STAdGroup"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "STAdGroupUpdate": {
+   "properties": {
+    "adGroupId": {
+     "description": "The unique identifier of the ad group.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "STAdProduct"
+    },
+    "bid": {
+     "$ref": "STUpdateAdGroupBid"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad group is applicable. The marketplaces included should either be same as or subset of parent campaign",
+     "items": {
+      "$ref": "STMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "STUpdateState"
+    }
+   },
+   "required": [
+    "adGroupId"
+   ],
+   "type": "object"
+  },
+  "STAdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `SPONSORED_TELEVISION` | Sponsored Television ad product. |",
+   "enum": [
+    "SPONSORED_TELEVISION"
+   ],
+   "type": "string"
+  },
+  "STCreateAdGroupBid": {
+   "properties": {
+    "baseBid": {
+     "description": "The lower bound bid used for the ads in the ad group. This field is optional for ad groups that use automated bid optimization; when omitted, the system manages bidding on your behalf. It remains required when automated…",
+     "format": "double",
+     "type": "number"
+    },
+    "defaultBid": {
+     "description": "The default maximum bid for ads and targets in the ad group. This is used in sponsored ads as the maximum bid during the auction.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "STCreateAdGroupRequest": {
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "STAdGroupCreate"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "STCreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "STCurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | |------|------| | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `CHF` | Swiss Franc | …",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CHF",
+    "CNY",
+    "DKK",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "NOK",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "STDeliveryReason": {
+   "enum": [
+    "AD_CREATIVES_NOT_RUNNING",
+    "AD_GROUPS_NOT_RUNNING",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_ENDED",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_START_DATE",
+    "AD_GROUP_POLICING_SUSPENDED",
+    "AD_NOT_APPROVED_FOR_ALL_AD_GROUPS",
+    "AD_NOT_ASSOCIATED_WITH_AD_GROUP",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_POLICING_SUSPENDED",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "STDeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | |------|------| | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplac…",
+   "enum": [
+    "DELIVERING",
+    "LIMITED",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "STMarketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "SG",
+    "US"
+   ],
+   "type": "string"
+  },
+  "STQueryAdGroupRequest": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "STAdGroupAdGroupIdFilter"
+    },
+    "adProductFilter": {
+     "$ref": "STAdGroupAdProductFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "STAdGroupCampaignIdFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "STAdGroupNameFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "STAdGroupStateFilter"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "STState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "STStatus": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "STDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "STDeliveryStatus"
+    }
+   },
+   "required": [
+    "deliveryStatus"
+   ],
+   "type": "object"
+  },
+  "STUpdateAdGroupBid": {
+   "properties": {
+    "baseBid": {
+     "description": "The lower bound bid used for the ads in the ad group. This field is optional for ad groups that use automated bid optimization; when omitted, the system manages bidding on your behalf. It remains required when automated…",
+     "format": "double",
+     "type": "number"
+    },
+    "defaultBid": {
+     "description": "The default maximum bid for ads and targets in the ad group. This is used in sponsored ads as the maximum bid during the auction.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "STUpdateAdGroupRequest": {
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "STAdGroupUpdate"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "STUpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

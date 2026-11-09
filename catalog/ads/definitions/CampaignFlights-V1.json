@@ -1,0 +1,401 @@
+{
+ "api": "CampaignFlights-V1",
+ "file": "specs/dest/CampaignFlights-V1_prod_3p.json",
+ "schemas": {
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateCampaignFlight": {
+   "properties": {
+    "budgetAmount": {
+     "description": "The total flight budget amount. Currency is derived from the advertiser level.",
+     "format": "double",
+     "minimum": 1,
+     "type": "number"
+    },
+    "endDateTime": {
+     "description": "The flight end timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "impressionBudgetAmount": {
+     "description": "The total flight impression budget amount against your flight budget.",
+     "format": "double",
+     "minimum": 1,
+     "type": "number"
+    },
+    "name": {
+     "description": "The flight name.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The flight start timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "budgetAmount",
+    "endDateTime",
+    "startDateTime"
+   ],
+   "type": "object"
+  },
+  "DspCreateCampaignFlightOutput": {
+   "properties": {
+    "flightId": {
+     "description": "The flight identifier.",
+     "type": "string"
+    },
+    "index": {
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateCampaignFlightsContent": {
+   "properties": {
+    "flights": {
+     "items": {
+      "$ref": "DspCreateCampaignFlight"
+     },
+     "maxItems": 150,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "flights"
+   ],
+   "type": "object"
+  },
+  "DspCreateCampaignFlightsResponseContent": {
+   "properties": {
+    "flights": {
+     "items": {
+      "$ref": "DspCreateCampaignFlightOutput"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListCampaignFlight": {
+   "properties": {
+    "budgetAmount": {
+     "description": "The total flight budget amount.",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "description": "ISO 4217 standard currency code for all currency-related campaign attributes.",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The flight end date. When listing flights UTC time zone will be used.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "flightId": {
+     "description": "The flight identifier.",
+     "type": "string"
+    },
+    "impressionBudgetAmount": {
+     "description": "The total flight impression budget amount against your flight budget.",
+     "format": "double",
+     "minimum": 1,
+     "type": "number"
+    },
+    "name": {
+     "description": "The flight name.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The flight start date. When listing flights UTC time zone will be used.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListCampaignFlightsDateFiltersInput": {
+   "properties": {
+    "filterDateTime": {
+     "description": "The date filter. Any time zone can be accepted as input. For example 2022-07-31T19:20:30+01:00.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "filterOperator": {
+     "$ref": "DspListCampaignFlightsFilterOperatorInput"
+    },
+    "filterType": {
+     "$ref": "DspListCampaignFlightsFilterTypeInput"
+    }
+   },
+   "required": [
+    "filterDateTime",
+    "filterOperator",
+    "filterType"
+   ],
+   "type": "object"
+  },
+  "DspListCampaignFlightsFilterOperatorInput": {
+   "description": "The operator for the date filter.",
+   "enum": [
+    "EQUALS",
+    "GREATER_THAN",
+    "LESS_THAN"
+   ],
+   "type": "string"
+  },
+  "DspListCampaignFlightsFilterTypeInput": {
+   "description": "The date filter type.",
+   "enum": [
+    "END_DATE",
+    "START_DATE"
+   ],
+   "type": "string"
+  },
+  "DspListCampaignFlightsRequestContent": {
+   "properties": {
+    "dateFilters": {
+     "items": {
+      "$ref": "DspListCampaignFlightsDateFiltersInput"
+     },
+     "maxItems": 4,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspListCampaignFlightsResponseContent": {
+   "properties": {
+    "flights": {
+     "items": {
+      "$ref": "DspListCampaignFlight"
+     },
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUpdateCampaignFlight": {
+   "properties": {
+    "budgetAmount": {
+     "description": "The total flight budget amount. Currency is derived from the advertiser level.",
+     "format": "double",
+     "minimum": 1,
+     "type": "number"
+    },
+    "endDateTime": {
+     "description": "The flight end timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "flightId": {
+     "description": "The flight unique identifier.",
+     "type": "string"
+    },
+    "impressionBudgetAmount": {
+     "description": "The total flight impression budget amount against your flight budget.",
+     "format": "double",
+     "minimum": 1,
+     "type": "number"
+    },
+    "name": {
+     "description": "The flight name.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The flight start timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "flightId"
+   ],
+   "type": "object"
+  },
+  "DspUpdateCampaignFlightsContent": {
+   "properties": {
+    "flights": {
+     "items": {
+      "$ref": "DspUpdateCampaignFlight"
+     },
+     "maxItems": 150,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "flights"
+   ],
+   "type": "object"
+  },
+  "dspDeleteCampaignFlightsV1RequestContent": {
+   "properties": {
+    "flightIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 150,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "flightIds"
+   ],
+   "type": "object"
+  }
+ }
+}

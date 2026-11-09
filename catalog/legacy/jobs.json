@@ -1,0 +1,522 @@
+{
+ "meta": {
+  "task": "P1-API",
+  "counts": {
+   "total": 25
+  },
+  "notes": [
+   "Schedules are not in the repo (NFI-006 in the legacy SRS); every cron-kind job is a CLI command started by an external scheduler.",
+   "Command names are Cobra Use: values in cmd/*.go.",
+   "amazonCalls ids refer to catalog/legacy/api-amazon-calls.json."
+  ]
+ },
+ "jobs": [
+  {
+   "name": "cron-bidding-rule",
+   "kind": "cron",
+   "trigger": "external scheduler runs the CLI command (cron expression is not in the repo, NFI-006); also POST /api/internal/campaigns/bidding-rules/cron and /api/external/campaigns/bidding-rules/cron",
+   "does": "Evaluates every enabled bidding rule: compares the campaign metric (field, date range, operator, value) with the rule; inside the rule window and when the condition becomes true it raises or lowers the campaign placement bid percentages (product page, rest of search, top of search) by the rule action and remembers it is running; when the condition stops holding or the window ends it restores the saved original percentages and pauses/re-enables the rule. Percentages never go below 0.",
+   "reads": [
+    "app DB (bidding_rules, campaigns)",
+    "reporting DB (warehouse replica) (campaign metrics)"
+   ],
+   "writes": [
+    "app DB (bidding_rules.is_running/status/state)",
+    "campaign placement bids on Amazon"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign"
+   ],
+   "notes": "The rule is evaluated in the Amazon marketplace time zone of the profile. Acts as user \"bidding-rule\" in audit logs.",
+   "source": "cmd/cron_bidding_rule.go, usecase/bidding_rule.go"
+  },
+  {
+   "name": "alert-campaign-job",
+   "kind": "cron",
+   "trigger": "external scheduler runs the CLI command (cron expression is not in the repo, NFI-006)",
+   "does": "For each profile and ad product (SP, SD, SB) finds campaigns whose state differs between Amazon and the app DB and posts the list to a chat room (drift alert).",
+   "reads": [
+    "app DB",
+    "Amazon campaign lists"
+   ],
+   "writes": [
+    "chat webhook (GG Chat)"
+   ],
+   "amazonCalls": [
+    "GetListCampaign",
+    "SDCampaignGetList",
+    "SBCampaignList"
+   ],
+   "notes": "Large parts of the body are commented out in the source.",
+   "source": "cmd/job_alert_campaign.go, usecase/migrate.go AlertCampaign"
+  },
+  {
+   "name": "auto-bidding-job",
+   "kind": "cron",
+   "trigger": "external scheduler runs the CLI command (cron expression is not in the repo, NFI-006)",
+   "does": "Runs two automations in sequence: AutoBudgetCampaign as the budget rule engine (set campaign daily budget and placement percentages from the work queue) and AutoTargetBid as the keyword-bid rule engine (set keyword/target bids from the work queue). Rows are marked pending (3) before work, then ok/failed with an error type; a chat message is posted at start and end.",
+   "reads": [
+    "automation work-queue tables in the warehouse (legacy automation store): budget/placement queue, bid queue",
+    "app DB (campaigns, ad_groups, keywords, targets)"
+   ],
+   "writes": [
+    "automation work-queue tables in the warehouse (legacy automation store) (status, timestamp, error)",
+    "campaign budget, placement bids, keyword and target bids on Amazon"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignUpdate",
+    "SBCampaignUpdate",
+    "UpdateTarget",
+    "SDTargetUpdate",
+    "SBTargetUpdate",
+    "UpdateKeyword",
+    "SBKeywordUpdate"
+   ],
+   "notes": "ads-api only EXECUTES; the numbers are decided by an external model that writes the queue. Batch limit 100 for SP, 10 for SB in some flows. Manual budget edits on a campaign can be blocked while budget rule engine controls it (BR-007).",
+   "source": "cmd/job_auto_bidding.go, usecase/auto.go"
+  },
+  {
+   "name": "auto-campaign-job",
+   "kind": "cron",
+   "trigger": "external scheduler runs the CLI command (cron expression is not in the repo, NFI-006)",
+   "does": "Runs two automations as the search-term rule engine: AutoNegative (add search terms as negative keywords / negative product targets) and AutoGoodSearchTerm (add search terms as keywords or targets with a bid). Skips a term already present as the same or counterpart keyword/target; SD is unsupported for the negative flow; archived rows are excluded from duplicate checks.",
+   "reads": [
+    "automation work-queue tables in the warehouse (legacy automation store): bad / good search-term queues",
+    "app DB (negative_keywords, negative_targets, keywords, targets, ad_groups, campaigns)"
+   ],
+   "writes": [
+    "automation work-queue tables in the warehouse (legacy automation store) (status, timestamp, error)",
+    "negative keywords/targets, keywords/targets on Amazon"
+   ],
+   "amazonCalls": [
+    "SPNegativeKeywordInsert",
+    "NegativeTargetInsert",
+    "SBNegativeKeywordInsert",
+    "SBNegativeTargetInsert",
+    "SDNegativeTargetInsert",
+    "CreateKeyword",
+    "CreateTarget",
+    "SBKeywordInsert",
+    "SBTargetInsert"
+   ],
+   "notes": "ConfirmToAction flag on each row: a user (or the bot) must confirm before ads-api acts.",
+   "source": "cmd/job_auto_campaign.go, usecase/auto.go"
+  },
+  {
+   "name": "auto-create-campaign-job",
+   "kind": "cron",
+   "trigger": "external scheduler runs the CLI command (cron expression is not in the repo, NFI-006)",
+   "does": "As as the campaign-creation rule engine creates whole campaigns (campaign, ad groups, product ads, targets/keywords) from the auto-campaign dimension tables, then writes status back.",
+   "reads": [
+    "automation work-queue tables in the warehouse (legacy automation store): dim_campaign/ad_group/target/product_ads tables"
+   ],
+   "writes": [
+    "automation work-queue tables in the warehouse (legacy automation store)",
+    "campaigns, ad groups, ads, targets on Amazon",
+    "app DB"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignInsert",
+    "SBCampaignInsert",
+    "UpSertAdsGroup",
+    "UpSertProductAds",
+    "CreateKeyword",
+    "CreateTarget"
+   ],
+   "notes": null,
+   "source": "cmd/job_auto_create_campaign.go, usecase/auto.go AutoCreateCampaign"
+  },
+  {
+   "name": "migrate-campaign-job",
+   "kind": "cron / one-shot",
+   "trigger": "external scheduler runs the CLI command (cron expression is not in the repo, NFI-006) (and the /api/internal/migrate/* endpoints)",
+   "does": "Pulls campaigns, ad groups, product ads, keywords, targets, negatives, creatives and budget rules from Amazon for every profile and ad product into the app DB (the \"sync\"). This is how the app DB mirrors Amazon.",
+   "reads": [
+    "Amazon via proxy"
+   ],
+   "writes": [
+    "app DB (campaigns, ad_groups, product_ads, keywords, targets, negative_*, creatives, budget_rules)",
+    "Redis (cache invalidation)"
+   ],
+   "amazonCalls": [
+    "GetProfiles",
+    "GetListCampaign",
+    "GetListAdsGroup",
+    "GetKeywords",
+    "GetTargets",
+    "GetListProductAds",
+    "SDCampaignGetList",
+    "SDAdGroupGetList",
+    "SDTargetGetList",
+    "SDListCreatives",
+    "SDProductAdGetList",
+    "SBCampaignList",
+    "SBAdGroupList",
+    "SBKeywordList",
+    "SBNegativeKeywordList",
+    "SBNegativeTargetList",
+    "SBThemeKeywordList",
+    "SBTargetList",
+    "SBProductAdList",
+    "SPCampaignNegativeKeywordList",
+    "SPCampaignNegativeProductList",
+    "GetAllbudgetRule"
+   ],
+   "notes": "Full pull, no incremental token; SP lists capped by maxResults/nextToken paging.",
+   "source": "cmd/job_migrate_campaign.go, usecase/migrate.go"
+  },
+  {
+   "name": "migrate-change-status-asin-product-ads-job",
+   "kind": "cron",
+   "trigger": "external scheduler runs the CLI command (cron expression is not in the repo, NFI-006)",
+   "does": "Reads product ads from Amazon and records ASIN eligibility status (extended data) into log_status_asin_product_ads and status_asin_product_ads, so users can export ineligible ASINs.",
+   "reads": [
+    "Amazon via proxy",
+    "app DB"
+   ],
+   "writes": [
+    "app DB (log_status_asin_product_ads, status_asin_product_ads)"
+   ],
+   "amazonCalls": [
+    "GetListProductAds",
+    "SDProductAdGetList",
+    "SBProductAdList"
+   ],
+   "notes": null,
+   "source": "cmd/job_migrate_product_ads_status.go, usecase/migrate.go MigrateProductAdsStatus"
+  },
+  {
+   "name": "noti-oob-job",
+   "kind": "cron",
+   "trigger": "external scheduler runs the CLI command (cron expression is not in the repo, NFI-006)",
+   "does": "v1 out-of-budget notifier: finds campaigns that reached 100% of budget (last 3 days window) in the stream budget-usage table, resolves the users who can see those portfolios and publishes notifications.",
+   "reads": [
+    "reporting DB (warehouse replica) (amz_adv_str.amz_str_budget_usage = Marketing Stream budget usage)",
+    "app DB (portfolio_users, roles)"
+   ],
+   "writes": [
+    "Kafka notification topic"
+   ],
+   "amazonCalls": [],
+   "notes": "Superseded by v2; both commands still exist.",
+   "source": "cmd/job_noti_oob.go, usecase/migrate.go NotiOOB"
+  },
+  {
+   "name": "noti-oob-job-v2",
+   "kind": "cron",
+   "trigger": "external scheduler runs the CLI command (cron expression is not in the repo, NFI-006)",
+   "does": "v2 out-of-budget notifier: for campaigns AND portfolios whose budget_usage_percentage >= 100 (budget scope type) not already reported, builds profile -> email -> names lists (distinct emails) and publishes one notification per user.",
+   "reads": [
+    "reporting DB (warehouse replica) (amz_adv_str.amz_str_budget_usage = Marketing Stream budget usage)",
+    "app DB (portfolio_users, roles_ads_management)"
+   ],
+   "writes": [
+    "Kafka notification topic (consumed by an internal notification platform)"
+   ],
+   "amazonCalls": [],
+   "notes": "The out-of-budget (OOB) log shown in the UI (campaigns/get-log-campaigns-oob) reads the same stream table.",
+   "source": "cmd/job_noti_oob_v2.go, usecase/migrate.go NotiOOBV2"
+  },
+  {
+   "name": "budget-job",
+   "kind": "cron",
+   "trigger": "external scheduler runs the CLI command (cron expression is not in the repo, NFI-006)",
+   "does": "NewCalculateBudgetForAlert: for each internal \"team\" (group of profiles) creates the daily report of campaign spend vs the internally approved monthly budget, recalculates, and alerts by chat/email when spend runs ahead of budget or when the next month budget is missing.",
+   "reads": [
+    "app DB (budget_accounts, campaigns, budget_rules)",
+    "reporting DB (warehouse replica) (spend)",
+    "profile->team mapping loaded from a CSV file at start"
+   ],
+   "writes": [
+    "app DB (budget_histories_daily_reports, campaigns_spend_reports, budget_rule_spend_reports)",
+    "chat + mail alerts"
+   ],
+   "amazonCalls": [],
+   "notes": "Entirely driven by an internal finance ticket flow (budget_accounts) and the company team grouping; no Amazon call.",
+   "source": "cmd/jobs.go, usecase/budget_rule.go"
+  },
+  {
+   "name": "migrate-job",
+   "kind": "one-shot",
+   "trigger": "manual: CLI with args (profile id, product type)",
+   "does": "MigrateBudgetFromAmazon: copies budget rules from Amazon for one profile.",
+   "reads": [
+    "Amazon via proxy"
+   ],
+   "writes": [
+    "app DB (budget_rules, assigned_rules)"
+   ],
+   "amazonCalls": [
+    "GetAllbudgetRule",
+    "GetCampaignByBudgetID"
+   ],
+   "notes": null,
+   "source": "cmd/jobs_migrate.go"
+  },
+  {
+   "name": "repush-failed",
+   "kind": "one-shot",
+   "trigger": "manual CLI",
+   "does": "Re-publishes messages stored in kafka_failed_histories to their original topics (dead-letter replay).",
+   "reads": [
+    "app DB (kafka_failed_histories)"
+   ],
+   "writes": [
+    "Kafka"
+   ],
+   "amazonCalls": [],
+   "notes": "DLQ consumer group ids are hard-coded test-like values in some processors (SRS R-007).",
+   "source": "cmd/repush_dlq.go, kafka/consumer/repush_failed.go"
+  },
+  {
+   "name": "api (background goroutines)",
+   "kind": "service",
+   "trigger": "process start",
+   "does": "The HTTP server also initialises Keycloak client, Redis, several Postgres connections (app DB plus replicate, replicate-legacy, CDH, CDH-read, datamart, report) and the warehouse connection; reads the profile->team CSV at start.",
+   "reads": [],
+   "writes": [],
+   "amazonCalls": [],
+   "notes": null,
+   "source": "cmd/api.go, pkg/infra/*"
+  },
+  {
+   "name": "budget_campaign",
+   "kind": "kafka-consumer",
+   "trigger": "Kafka consumer (command consumer-campaign-budget); topic from env KAFKA_TOPIC_BUDGET_CAMPAIGN (+ DLQ topic)",
+   "does": "UpdateCampaignBudgetMultiple: tops up the daily budget of campaigns that ran out of budget, using the adjustment queue (final budget input vs last budget), marks rows processed with error message.",
+   "reads": [
+    "automation work-queue tables in the warehouse (legacy automation store) (adhoc budget adjustment queue)",
+    "app DB"
+   ],
+   "writes": [
+    "automation work-queue tables in the warehouse (legacy automation store)",
+    "campaign budget on Amazon"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignUpdate",
+    "SBCampaignUpdate"
+   ],
+   "notes": "The message is only a trigger; the work list is read from the warehouse table.",
+   "source": null
+  },
+  {
+   "name": "target_bid",
+   "kind": "kafka-consumer",
+   "trigger": "Kafka consumer (command consumer-campaign-budget); topic from env KAFKA_TOPIC_TARGET_BID (+ DLQ topic)",
+   "does": "UpdateTargetBidMultiple: applies queued bid changes to targets/keywords by product type.",
+   "reads": [
+    "automation work-queue tables in the warehouse (legacy automation store) (bid queue)",
+    "app DB"
+   ],
+   "writes": [
+    "automation work-queue tables in the warehouse (legacy automation store)",
+    "target/keyword bids on Amazon"
+   ],
+   "amazonCalls": [
+    "UpdateTarget",
+    "SDTargetUpdate",
+    "SBTargetUpdate",
+    "UpdateKeyword",
+    "SBKeywordUpdate"
+   ],
+   "notes": null,
+   "source": null
+  },
+  {
+   "name": "create_campaign",
+   "kind": "kafka-consumer",
+   "trigger": "Kafka consumer (command consumer-campaign-budget); topic from env KAFKA_TOPIC_CREATE_CAMPAIGN (+ DLQ topic)",
+   "does": "Triggers AutoCreateCampaign as the campaign-creation rule engine (same work as auto-create-campaign-job).",
+   "reads": [
+    "automation work-queue tables in the warehouse (legacy automation store)"
+   ],
+   "writes": [
+    "automation work-queue tables in the warehouse (legacy automation store)",
+    "Amazon"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignInsert",
+    "SBCampaignInsert",
+    "UpSertAdsGroup",
+    "UpSertProductAds",
+    "CreateKeyword",
+    "CreateTarget"
+   ],
+   "notes": null,
+   "source": null
+  },
+  {
+   "name": "create_negative_search_term",
+   "kind": "kafka-consumer",
+   "trigger": "Kafka consumer (command consumer-campaign-budget); topic from env KAFKA_TOPIC_CREATE_NEGATIVE_SEARCH_TERM (+ DLQ topic)",
+   "does": "CreateNegativeSearchTermMultiple: adds queued bad search terms as negatives, grouped by profile and ad product.",
+   "reads": [
+    "automation work-queue tables in the warehouse (legacy automation store)",
+    "app DB"
+   ],
+   "writes": [
+    "automation work-queue tables in the warehouse (legacy automation store)",
+    "negatives on Amazon"
+   ],
+   "amazonCalls": [
+    "SPNegativeKeywordInsert",
+    "NegativeTargetInsert",
+    "SBNegativeKeywordInsert",
+    "SBNegativeTargetInsert",
+    "SDNegativeTargetInsert"
+   ],
+   "notes": null,
+   "source": null
+  },
+  {
+   "name": "delete_negative_search_term",
+   "kind": "kafka-consumer",
+   "trigger": "Kafka consumer (command consumer-campaign-budget); topic from env KAFKA_TOPIC_DELETE_NEGATIVE_SEARCH_TERM (+ DLQ topic)",
+   "does": "DeleteNegativeSearchTermMultiple: removes (archives) previously added negatives that the bot un-flagged.",
+   "reads": [
+    "automation work-queue tables in the warehouse (legacy automation store)",
+    "app DB"
+   ],
+   "writes": [
+    "automation work-queue tables in the warehouse (legacy automation store)",
+    "negatives on Amazon"
+   ],
+   "amazonCalls": [
+    "SPNegativeKeywordDelete",
+    "NegativeTargetDelete",
+    "SBNegativeKeywordDelete",
+    "SBNegativeTargetDelete"
+   ],
+   "notes": null,
+   "source": null
+  },
+  {
+   "name": "add_keyword_search_term",
+   "kind": "kafka-consumer",
+   "trigger": "Kafka consumer (command consumer-campaign-budget); topic from env KAFKA_TOPIC_ADD_KEYWORD_SEARCH_TERM (+ DLQ topic)",
+   "does": "Triggers AutoGoodSearchTerm as the search-term rule engine (add good search terms as keywords/targets).",
+   "reads": [
+    "automation work-queue tables in the warehouse (legacy automation store)",
+    "app DB"
+   ],
+   "writes": [
+    "automation work-queue tables in the warehouse (legacy automation store)",
+    "keywords/targets on Amazon"
+   ],
+   "amazonCalls": [
+    "CreateKeyword",
+    "CreateTarget",
+    "SBKeywordInsert",
+    "SBTargetInsert"
+   ],
+   "notes": null,
+   "source": null
+  },
+  {
+   "name": "productad_update_state",
+   "kind": "kafka-consumer",
+   "trigger": "Kafka consumer (command consumer-campaign-budget); topic from env KAFKA_TOPIC_PRODUCT_AD_UPDATE_STATE (+ DLQ topic)",
+   "does": "HandleUpdateStateMessage: when an inventory alert says an ASIN is out of stock in a country, finds every product ad of that ASIN across the profiles of that country and sets it to paused (it never re-enables); only acts if a feature flag (IsAutoStopAdsEnabled) is on, otherwise consumes and ignores. In non-production only one test profile is processed.",
+   "reads": [
+    "app DB",
+    "Amazon via proxy"
+   ],
+   "writes": [
+    "product ads on Amazon",
+    "app DB"
+   ],
+   "amazonCalls": [
+    "UpSertProductAds",
+    "SDProductAdUpdate",
+    "SBProductAdUpdate",
+    "GetListProductAds"
+   ],
+   "notes": "Message is the inventory alert row published by the inventory_alert consumer (pushToAutoOfAdsTopic).",
+   "source": null
+  },
+  {
+   "name": "inventory_alert",
+   "kind": "kafka-consumer",
+   "trigger": "Kafka consumer (command consumer-campaign-budget); topic from env KAFKA_TOPIC_<inventory alert> (+ DLQ topic)",
+   "does": "SubInventoryAlert: ignores ASINs whose SKU belongs to one internal department (looked up in a product-lifecycle service), stores the inventory alert (ASIN, SKU, country, level, days of cover, triggered rules) produced by an internal inventory engine, sends an in-app notification to the users responsible for the ASIN, and, only when the alert action is AUTO_STOP_ADS and the feature flag is on, republishes it to the product-ad-update-state topic.",
+   "reads": [
+    "Kafka message",
+    "app DB",
+    "datamart (legacy datamart table: per-ASIN inventory level metrics)",
+    "product catalog service (ASIN owners)",
+    "product lifecycle service (SKU department)"
+   ],
+   "writes": [
+    "app DB (inventory_alerts)",
+    "Kafka notification topic",
+    "Kafka"
+   ],
+   "amazonCalls": [],
+   "notes": "The inventory signal itself is not computed here.",
+   "source": null
+  },
+  {
+   "name": "portal_platform",
+   "kind": "kafka-consumer",
+   "trigger": "Kafka consumer (command consumer-campaign-budget); topic from env KAFKA_TOPIC_PORTAL_MANAGEMENT_PERMISSION_EVENTS (+ DLQ topic)",
+   "does": "SubAssignUserPermission: applies permission events from the company portal (assign/revoke user roles per org/profile/item) to roles_ads_management and the user directory.",
+   "reads": [
+    "Kafka message"
+   ],
+   "writes": [
+    "app DB (roles_ads_management, users_simulator)",
+    "Redis (permission cache)"
+   ],
+   "amazonCalls": [],
+   "notes": "Identity and permissions are owned by an external portal; ads-api only mirrors them.",
+   "source": null
+  },
+  {
+   "name": "notification",
+   "kind": "kafka-consumer",
+   "trigger": "Kafka consumer (command consumer-notification); topics from env KAFKA_TOPIC_NOTIFICATION / PIMS_NOTIFICATION (+ DLQ)",
+   "does": "PubNotification: converts a ticket/notification event to the internal notification format and republishes it to the notification platform topic.",
+   "reads": [
+    "Kafka message"
+   ],
+   "writes": [
+    "Kafka"
+   ],
+   "amazonCalls": [],
+   "notes": "A relay to the internal notification platform; no business logic.",
+   "source": null
+  },
+  {
+   "name": "budget_profile (consumer_group.go)",
+   "kind": "kafka-consumer",
+   "trigger": "Kafka consumer group in kafka/consumer (topic env KAFKA_TOPIC_BUDGET_PROFILE)",
+   "does": "ProcessUpsertBudgetProfile -> CreateTicket: creates a budget account row (value per profile/team/category/platform, approved time) from an internal budget-approval ticket.",
+   "reads": [
+    "Kafka message"
+   ],
+   "writes": [
+    "app DB (budget_accounts)"
+   ],
+   "amazonCalls": [],
+   "notes": "Internal finance flow; also reachable by POST /api/internal/budget-profile publishing to the same topic.",
+   "source": null
+  },
+  {
+   "name": "activity-log producers (not consumers)",
+   "kind": "kafka-producer",
+   "trigger": "inline in usecases",
+   "does": "Every business write publishes a user-activity and an operation-activity message to Kafka (KAFKA_TOPIC_ES_USER_ACTIVITY_LOG / ES_OPERATION_ACTIVITY_LOG) that an external pipeline loads into a search index; the activity-log endpoints query that index.",
+   "reads": [],
+   "writes": [
+    "Kafka"
+   ],
+   "amazonCalls": [],
+   "notes": "Replace with a plain audit table (append-only, tenant scoped).",
+   "source": null
+  }
+ ]
+}

@@ -1,0 +1,433 @@
+{
+ "api": "AmazonAdsAPIALLAdvertiserProductGroupEligibilitiesContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLAdvertiserProductGroupEligibilitiesContract_prod_3p_BETA.json",
+ "schemas": {
+  "AdProductGroup": {
+   "description": "A group of adProducts **AdProductGroup Enum:** | AdProductGroup | Description | |------|------| | `ADSP` | Include adProducts: ADSP |",
+   "enum": [
+    "ADSP"
+   ],
+   "type": "string"
+  },
+  "AdvertiserProductGroupEligibility": {
+   "properties": {
+    "adProductGroup": {
+     "$ref": "AdProductGroup"
+    },
+    "advertiserAccountId": {
+     "description": "The identifier of the advertiser account in the eligibility request.",
+     "type": "string"
+    },
+    "advertiserProductGroupEligibilityId": {
+     "description": "The unique identifer for the advertiser product group eligibility request.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "Timestamp of when the eligibility request resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "rejectedReasonDetail": {
+     "description": "The details explaining the rejected eligibility request status.",
+     "items": {
+      "$ref": "RejectedReasonDetail"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "status": {
+     "$ref": "AdvertiserProductGroupEligibilityStatus"
+    }
+   },
+   "required": [
+    "adProductGroup",
+    "advertiserAccountId",
+    "advertiserProductGroupEligibilityId",
+    "creationDateTime",
+    "status"
+   ],
+   "type": "object"
+  },
+  "AdvertiserProductGroupEligibilityAdvertiserProductGroupEligibilityStatusFilter": {
+   "properties": {
+    "include": {
+     "description": "**Status Enum:** | Status | Description | | --- | --- | | `APPROVED` | The eligibility request is completed and approved. | | `PENDING` | The eligibility request is still in process and awaiting a decision. | | `REJECTE…",
+     "items": {
+      "$ref": "AdvertiserProductGroupEligibilityStatus"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdvertiserProductGroupEligibilityCreate": {
+   "properties": {
+    "adProductGroup": {
+     "$ref": "AdProductGroup"
+    },
+    "rejectedReasonDetail": {
+     "description": "The details explaining the rejected eligibility request status.",
+     "items": {
+      "$ref": "CreateRejectedReasonDetail"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adProductGroup"
+   ],
+   "type": "object"
+  },
+  "AdvertiserProductGroupEligibilityMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "AdvertiserProductGroupEligibilityMultiStatusSuccess"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AdvertiserProductGroupEligibilityMultiStatusSuccess": {
+   "properties": {
+    "advertiserProductGroupEligibility": {
+     "$ref": "AdvertiserProductGroupEligibility"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "advertiserProductGroupEligibility",
+    "index"
+   ],
+   "type": "object"
+  },
+  "AdvertiserProductGroupEligibilityStatus": {
+   "description": "The current status of an eligibility request. **AdvertiserProductGroupEligibilityStatus Enum:** | AdvertiserProductGroupEligibilityStatus | Description | |------|------| | `APPROVED` | The eligibility request is complet…",
+   "enum": [
+    "APPROVED",
+    "PENDING",
+    "REJECTED"
+   ],
+   "type": "string"
+  },
+  "AdvertiserProductGroupEligibilitySuccessResponse": {
+   "properties": {
+    "advertiserProductGroupEligibilities": {
+     "items": {
+      "$ref": "AdvertiserProductGroupEligibility"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateAdvertiserProductGroupEligibilityRequest": {
+   "properties": {
+    "advertiserProductGroupEligibilities": {
+     "items": {
+      "$ref": "AdvertiserProductGroupEligibilityCreate"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "advertiserProductGroupEligibilities"
+   ],
+   "type": "object"
+  },
+  "CreateRejectedReasonDetail": {
+   "description": "The details to explain rejected eligibility request status which contains code and description.",
+   "properties": {
+    "code": {
+     "$ref": "RejectedReasonDetailCode"
+    },
+    "description": {
+     "description": "The description to explain rejected eligibility request status.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "description"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `INTERNAL_ERROR` | The server encountered an unexpected condition that pr…",
+   "enum": [
+    "BAD_REQUEST",
+    "INTERNAL_ERROR",
+    "INVALID_INPUT",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryAdvertiserProductGroupEligibilityRequest": {
+   "properties": {
+    "maxResults": {
+     "default": 10,
+     "format": "int32",
+     "maximum": 10,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "statusFilter": {
+     "$ref": "AdvertiserProductGroupEligibilityAdvertiserProductGroupEligibilityStatusFilter"
+    }
+   },
+   "type": "object"
+  },
+  "RejectedReasonDetail": {
+   "description": "The details to explain rejected eligibility request status which contains code and description.",
+   "properties": {
+    "code": {
+     "$ref": "RejectedReasonDetailCode"
+    },
+    "description": {
+     "description": "The description to explain rejected eligibility request status.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "description"
+   ],
+   "type": "object"
+  },
+  "RejectedReasonDetailCode": {
+   "description": "The code string that describes the rejected reason. **RejectedReasonDetailCode Enum:** | RejectedReasonDetailCode | Description | |------|------| | `BUSINESS_VERIFICATION_FAILED` | The advertiser failed to pass business…",
+   "enum": [
+    "BUSINESS_VERIFICATION_FAILED",
+    "SALES_VERIFICATION_FAILED"
+   ],
+   "type": "string"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

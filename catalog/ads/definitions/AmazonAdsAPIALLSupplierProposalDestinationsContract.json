@@ -1,0 +1,330 @@
+{
+ "api": "AmazonAdsAPIALLSupplierProposalDestinationsContract",
+ "file": "specs/dest/AmazonAdsAPIALLSupplierProposalDestinationsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CountryCode": {
+   "enum": [
+    "AD",
+    "AE",
+    "AF",
+    "AG",
+    "AI",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IT",
+    "JP",
+    "KR",
+    "MX",
+    "US"
+   ],
+   "type": "string"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QuerySupplierProposalDestinationRequest": {
+   "properties": {
+    "maxResults": {
+     "default": 10,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "sort": {
+     "items": {
+      "$ref": "SupplierProposalDestinationSortOption"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "supplierProposalDestinationIdFilter": {
+     "$ref": "SupplierProposalDestinationSupplierProposalDestinationIdFilter"
+    },
+    "supplierProposalDestinationNameFilter": {
+     "$ref": "SupplierProposalDestinationSupplierProposalDestinationNameFilter"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SortDirection": {
+   "description": "**SortDirection Enum:** | SortDirection | Description | | --- | --- | | `ASCENDING` | Sort in ascending order | | `DESCENDING` | Sort in descending order |",
+   "enum": [
+    "ASCENDING",
+    "DESCENDING"
+   ],
+   "type": "string"
+  },
+  "SupplierProposalDestination": {
+   "properties": {
+    "countries": {
+     "description": "The list of ISO 3166-1 alpha-2 formatted country codes allowed for the supplier proposal destination.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "description": {
+     "description": "The description of the supplier proposal destination.",
+     "type": "string"
+    },
+    "supplierProposalDestinationId": {
+     "description": "The identifier ID for this supplier proposal destination.",
+     "type": "string"
+    },
+    "supplierProposalDestinationName": {
+     "description": "The name for the supplier proposal destination.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierProposalDestinationId",
+    "supplierProposalDestinationName"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalDestinationSortOption": {
+   "properties": {
+    "by": {
+     "$ref": "SupplierProposalDestinationSortOptionsFields"
+    },
+    "direction": {
+     "$ref": "SortDirection"
+    }
+   },
+   "required": [
+    "by"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalDestinationSortOptionsFields": {
+   "description": "Specify which field to order by. | Field Name | Supported Ordering | | --- | --- | | supplierProposalDestinationName | ASCENDING,DESCENDING |",
+   "enum": [
+    "supplierProposalDestinationName"
+   ],
+   "type": "string"
+  },
+  "SupplierProposalDestinationSuccessResponse": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "supplierProposalDestinations": {
+     "items": {
+      "$ref": "SupplierProposalDestination"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "SupplierProposalDestinationSupplierProposalDestinationIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalDestinationSupplierProposalDestinationNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

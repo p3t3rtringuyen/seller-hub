@@ -1,0 +1,319 @@
+{
+ "api": "AdGroupTargeting-Audiences",
+ "file": "specs/dest/AdGroupTargeting-Audiences_prod_3p.json",
+ "schemas": {
+  "DspAcrossGroupOperatorV1": {
+   "description": "The intraoperator used among audiences between audience groups. This is a legacy field that is no longer supported, and will only return a non-null value on legacy ad groups.",
+   "enum": [
+    "ANY",
+    "ALL"
+   ],
+   "type": "string"
+  },
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateAdGroupAudienceTargetV1": {
+   "properties": {
+    "audienceId": {
+     "description": "The unique identifier for the audience. Use the [audiences](https://advertising.amazon.com/API/docs/en-us/audiences/#/Discovery/listAudiences) discovery resource to look up audience identifiers.",
+     "type": "string"
+    },
+    "groupId": {
+     "description": "The string identifying a group of audiences. Only numbers formatted as strings are accepted (e.g., \"1\"). To add audiences to a new group, choose any string not currently being used on this ad group. To add audiences to …",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) users who match the given target when serving an ad.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "audienceId",
+    "groupId",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "DspCreateAdGroupAudienceTargetsRequestContentV1": {
+   "properties": {
+    "audienceTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspCreateAdGroupAudienceTargetV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audienceTargets"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupAudienceTargetV1": {
+   "properties": {
+    "audienceId": {
+     "description": "The unique identifier for the audience. Use the [audiences](https://advertising.amazon.com/API/docs/en-us/audiences/#/Discovery/listAudiences) discovery resource to look up audience identifiers.",
+     "type": "string"
+    },
+    "groupId": {
+     "description": "A unique ID for the audience group.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) users who match the given target when serving an ad.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "audienceId",
+    "groupId",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupAudienceTargetsRequestContentV1": {
+   "properties": {
+    "audienceTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspDeleteAdGroupAudienceTargetV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audienceTargets"
+   ],
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetAdGroupAudienceTargetV1": {
+   "properties": {
+    "acrossGroupOperator": {
+     "$ref": "DspAcrossGroupOperatorV1"
+    },
+    "audienceId": {
+     "description": "The unique identifier for the audience. Use the [audiences](https://advertising.amazon.com/API/docs/en-us/audiences/#/Discovery/listAudiences) discovery resource to look up audience identifiers.",
+     "type": "string"
+    },
+    "groupId": {
+     "description": "A unique ID for the audience group.",
+     "type": "string"
+    },
+    "inGroupOperator": {
+     "$ref": "DspInGroupOperatorV1"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) users who match the given target when serving an ad.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "audienceId",
+    "groupId",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "DspGetAdGroupAudienceTargetsResponseContent": {
+   "properties": {
+    "audienceTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspGetAdGroupAudienceTargetV1"
+     },
+     "maxItems": 5500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceTargets"
+   ],
+   "type": "object"
+  },
+  "DspInGroupOperatorV1": {
+   "description": "The interoperator used among audiences within the same audience group. This is a legacy field that is no longer supported, and will only return a non-null value on legacy ad groups.",
+   "enum": [
+    "ANY",
+    "ALL"
+   ],
+   "type": "string"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

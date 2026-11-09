@@ -1,0 +1,452 @@
+{
+  "Address": {
+    "description": "The shipping address details of the shipment.",
+    "properties": {
+      "AddressLine1": {
+        "description": "The street address.",
+        "type": "string"
+      },
+      "AddressLine2": {
+        "description": "Additional street address information, if required.",
+        "type": "string"
+      },
+      "AddressLine3": {
+        "description": "Additional street address information, if required.",
+        "type": "string"
+      },
+      "AddressType": {
+        "ref": "AddressTypeEnum"
+      },
+      "City": {
+        "description": "The city.",
+        "type": "string"
+      },
+      "CountryCode": {
+        "description": "The country code.",
+        "type": "string"
+      },
+      "County": {
+        "description": "The county.",
+        "type": "string"
+      },
+      "District": {
+        "description": "The district.",
+        "type": "string"
+      },
+      "Name": {
+        "description": "The name.",
+        "type": "string"
+      },
+      "Phone": {
+        "description": "The phone number.",
+        "type": "string"
+      },
+      "PostalCode": {
+        "description": "The postal code.",
+        "type": "string"
+      },
+      "StateOrRegion": {
+        "description": "The state or region.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AddressTypeEnum": {
+    "description": "The shipping address type.",
+    "enum": [
+      "Commercial",
+      "Residential"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Blob": {
+    "description": "Shipment invoice document content.",
+    "format": "byte",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "BuyerTaxInfo": {
+    "description": "Tax information about the buyer.",
+    "properties": {
+      "CompanyLegalName": {
+        "description": "The legal name of the company.",
+        "type": "string"
+      },
+      "TaxClassifications": {
+        "ref": "TaxClassificationList"
+      },
+      "TaxingRegion": {
+        "description": "The country or region imposing the tax.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "An error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "GetInvoiceStatusResponse": {
+    "description": "The response schema for the getInvoiceStatus operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the getInvoiceStatus operation.",
+        "ref": "ShipmentInvoiceStatusResponse"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetShipmentDetailsResponse": {
+    "description": "The response schema for the getShipmentDetails operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the getShipmentDetails operation",
+        "ref": "ShipmentDetail"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "MarketplaceTaxInfo": {
+    "description": "Tax information about the marketplace.",
+    "properties": {
+      "CompanyLegalName": {
+        "description": "The legal name of the company.",
+        "type": "string"
+      },
+      "TaxClassifications": {
+        "ref": "TaxClassificationList"
+      },
+      "TaxingRegion": {
+        "description": "The country or region imposing the tax.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Money": {
+    "description": "The currency type and amount.",
+    "properties": {
+      "Amount": {
+        "description": "The currency amount.",
+        "type": "string"
+      },
+      "CurrencyCode": {
+        "description": "Three-digit currency code in ISO 4217 format.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PaymentInformation": {
+    "description": "Information about a payment transaction.",
+    "properties": {
+      "AcquirerId": {
+        "description": "The government ID of the acquirer.",
+        "type": "string"
+      },
+      "AuthorizationCode": {
+        "description": "The authorization code of this payment.",
+        "type": "string"
+      },
+      "CardBrand": {
+        "description": "The credit card brand if the payment method is `CreditCard`.",
+        "type": "string"
+      },
+      "PaymentMethod": {
+        "description": "The name of the payment method.",
+        "ref": "PaymentMethodEnum"
+      },
+      "PaymentValue": {
+        "description": "The amount paid in this payment.",
+        "ref": "Money"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PaymentInformationList": {
+    "description": "A list of payment transactions.",
+    "properties": {},
+    "ref": "PaymentInformation",
+    "required": [],
+    "type": "array"
+  },
+  "PaymentMethodDetailItemList": {
+    "description": "The list of payment method details.",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "PaymentMethodEnum": {
+    "description": "Payment methods",
+    "enum": [
+      "BankSlip",
+      "CreditCard",
+      "DebitCard",
+      "GiftCard",
+      "Other",
+      "Pix"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "SerialNumbersList": {
+    "description": "The list of serial numbers.",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "ShipmentDetail": {
+    "description": "The information required by a selling partner to issue a shipment invoice.",
+    "properties": {
+      "AmazonOrderId": {
+        "description": "The Amazon-defined identifier for the order.",
+        "type": "string"
+      },
+      "AmazonShipmentId": {
+        "description": "The Amazon-defined identifier for the shipment.",
+        "type": "string"
+      },
+      "BuyerCounty": {
+        "description": "The county of the buyer.",
+        "type": "string"
+      },
+      "BuyerName": {
+        "description": "The name of the buyer.",
+        "type": "string"
+      },
+      "BuyerTaxInfo": {
+        "ref": "BuyerTaxInfo"
+      },
+      "MarketplaceId": {
+        "description": "The identifier for the marketplace where the order was placed.",
+        "type": "string"
+      },
+      "MarketplaceTaxInfo": {
+        "ref": "MarketplaceTaxInfo"
+      },
+      "PaymentMethodDetails": {
+        "ref": "PaymentMethodDetailItemList"
+      },
+      "Payments": {
+        "ref": "PaymentInformationList"
+      },
+      "PurchaseDate": {
+        "description": "The date and time when the order was created.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "SellerDisplayName": {
+        "description": "The seller’s friendly name registered in the marketplace.",
+        "type": "string"
+      },
+      "SellerId": {
+        "description": "The seller identifier.",
+        "type": "string"
+      },
+      "ShipmentItems": {
+        "ref": "ShipmentItems"
+      },
+      "ShippingAddress": {
+        "ref": "Address"
+      },
+      "WarehouseId": {
+        "description": "The Amazon-defined identifier for the warehouse.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ShipmentInvoiceStatus": {
+    "description": "The shipment invoice status.",
+    "enum": [
+      "Accepted",
+      "Errored",
+      "NotFound",
+      "Processing"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ShipmentInvoiceStatusInfo": {
+    "description": "The shipment invoice status information.",
+    "properties": {
+      "AmazonShipmentId": {
+        "description": "The Amazon-defined shipment identifier.",
+        "type": "string"
+      },
+      "InvoiceStatus": {
+        "ref": "ShipmentInvoiceStatus"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ShipmentInvoiceStatusResponse": {
+    "description": "The shipment invoice status response.",
+    "properties": {
+      "Shipments": {
+        "ref": "ShipmentInvoiceStatusInfo"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ShipmentItem": {
+    "description": "The shipment item information required by a seller to issue a shipment invoice.",
+    "properties": {
+      "ASIN": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      },
+      "GiftWrapPrice": {
+        "description": "The gift wrap price of the item.",
+        "ref": "Money"
+      },
+      "ItemPrice": {
+        "description": "The selling price of the item multiplied by the quantity ordered.",
+        "ref": "Money"
+      },
+      "OrderItemId": {
+        "description": "The Amazon-defined identifier for the order item.",
+        "type": "string"
+      },
+      "PromotionDiscount": {
+        "description": "The total of all promotional discounts in the offer.",
+        "ref": "Money"
+      },
+      "QuantityOrdered": {
+        "description": "The number of items ordered.",
+        "type": "number"
+      },
+      "SellerSKU": {
+        "description": "The seller SKU of the item.",
+        "type": "string"
+      },
+      "SerialNumbers": {
+        "description": "The list of serial numbers.",
+        "ref": "SerialNumbersList"
+      },
+      "ShippingDiscount": {
+        "description": "The discount on the shipping price.",
+        "ref": "Money"
+      },
+      "ShippingPrice": {
+        "description": "The shipping price of the item.",
+        "ref": "Money"
+      },
+      "Title": {
+        "description": "The name of the item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ShipmentItems": {
+    "description": "A list of shipment items.",
+    "properties": {},
+    "ref": "ShipmentItem",
+    "required": [],
+    "type": "array"
+  },
+  "SubmitInvoiceRequest": {
+    "description": "The request schema for the submitInvoice operation.",
+    "properties": {
+      "ContentMD5Value": {
+        "description": "MD5 sum for validating the invoice data.",
+        "type": "string"
+      },
+      "InvoiceContent": {
+        "ref": "Blob"
+      },
+      "MarketplaceId": {
+        "description": "An Amazon marketplace identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "ContentMD5Value",
+      "InvoiceContent"
+    ],
+    "type": "object"
+  },
+  "SubmitInvoiceResponse": {
+    "description": "The response schema for the submitInvoice operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TaxClassification": {
+    "description": "The tax classification for the entity.",
+    "properties": {
+      "Name": {
+        "description": "The type of tax.",
+        "type": "string"
+      },
+      "Value": {
+        "description": "The entity's tax identifier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TaxClassificationList": {
+    "description": "The list of tax classifications.",
+    "properties": {},
+    "ref": "TaxClassification",
+    "required": [],
+    "type": "array"
+  }
+}

@@ -1,0 +1,3888 @@
+{
+ "api": "AmazonAdvertiserAPIforRetailAdService",
+ "file": "specs/dest/AmazonAdvertiserAPIforRetailAdService_prod_3p.json",
+ "schemas": {
+  "RASv1AccessDeniedErrorCode": {
+   "enum": [
+    "ACCESS_DENIED"
+   ],
+   "type": "string"
+  },
+  "RASv1AccessDeniedExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "RASv1AccessDeniedErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RASv1AdEligibilityError": {
+   "description": "Errors related to ad eligibility",
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "marketplace": {
+     "$ref": "RASv1Marketplace"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1AdEligibilityErrorReason"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1AdEligibilityErrorReason": {
+   "enum": [
+    "AD_INELIGIBLE"
+   ],
+   "type": "string"
+  },
+  "RASv1AdGroupAccessError": {
+   "properties": {
+    "errorType": {
+     "description": "The type of the error",
+     "type": "string"
+    },
+    "errorValue": {
+     "$ref": "RASv1AdGroupAccessErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "RASv1AdGroupAccessErrorSelector": {
+   "properties": {
+    "entityNotFoundError": {
+     "$ref": "RASv1EntityNotFoundError"
+    },
+    "internalServerError": {
+     "$ref": "RASv1InternalServerError"
+    },
+    "malformedValueError": {
+     "$ref": "RASv1MalformedValueError"
+    },
+    "missingValueError": {
+     "$ref": "RASv1MissingValueError"
+    },
+    "otherError": {
+     "$ref": "RASv1OtherError"
+    },
+    "rangeError": {
+     "$ref": "RASv1RangeError"
+    },
+    "throttledError": {
+     "$ref": "RASv1ThrottledError"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1AdGroupAccessExceptionResponseContent": {
+   "description": "Exception resulting in accessing ad group entities",
+   "properties": {
+    "code": {
+     "$ref": "RASv1InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "RASv1AdGroupAccessError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RASv1AdGroupExtendedData": {
+   "properties": {
+    "creationDateTime": {
+     "description": "Creation date in ISO 8601.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdateDateTime": {
+     "description": "Last updated date in ISO 8601.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "servingStatus": {
+     "$ref": "RASv1AdGroupServingStatus"
+    },
+    "servingStatusDetails": {
+     "description": "The serving status reasons of the AdGroup",
+     "items": {
+      "$ref": "RASv1AdGroupServingStatusDetailItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1AdGroupMutationError": {
+   "properties": {
+    "errorType": {
+     "description": "The type of the error",
+     "type": "string"
+    },
+    "errorValue": {
+     "$ref": "RASv1AdGroupMutationErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "RASv1AdGroupMutationErrorSelector": {
+   "properties": {
+    "biddingError": {
+     "$ref": "RASv1BiddingError"
+    },
+    "duplicateValueError": {
+     "$ref": "RASv1DuplicateValueError"
+    },
+    "entityNotFoundError": {
+     "$ref": "RASv1EntityNotFoundError"
+    },
+    "entityStateError": {
+     "$ref": "RASv1EntityStateError"
+    },
+    "internalServerError": {
+     "$ref": "RASv1InternalServerError"
+    },
+    "malformedValueError": {
+     "$ref": "RASv1MalformedValueError"
+    },
+    "missingValueError": {
+     "$ref": "RASv1MissingValueError"
+    },
+    "otherError": {
+     "$ref": "RASv1OtherError"
+    },
+    "parentEntityError": {
+     "$ref": "RASv1ParentEntityError"
+    },
+    "rangeError": {
+     "$ref": "RASv1RangeError"
+    },
+    "throttledError": {
+     "$ref": "RASv1ThrottledError"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1AdGroupMutationExceptionResponseContent": {
+   "description": "Exception resulting in mutating AdGroup management entities",
+   "properties": {
+    "code": {
+     "$ref": "RASv1InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "RASv1AdGroupMutationError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RASv1AdGroupOutput": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the AdGroup.",
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "The identifier of the campaign.",
+     "type": "string"
+    },
+    "defaultBid": {
+     "description": "A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-co…",
+     "format": "double",
+     "type": "number"
+    },
+    "extendedData": {
+     "$ref": "RASv1AdGroupExtendedData"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "retailerId": {
+     "description": "Id of retailer targeted by the ad group",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "campaignId",
+    "defaultBid",
+    "name",
+    "retailerId",
+    "state"
+   ],
+   "type": "object"
+  },
+  "RASv1AdGroupServingStatus": {
+   "enum": [
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_OUT_OF_BUDGET",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_POLICING_PENDING_REVIEW",
+    "ADVERTISER_POLICING_SUSPENDED",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_INCOMPLETE",
+    "AD_GROUP_LOW_BID",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_POLICING_CREATIVE_REJECTED",
+    "AD_GROUP_POLICING_PENDING_REVIEW",
+    "AD_GROUP_STATUS_ENABLED",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_STATUS_ENABLED",
+    "ENDED",
+    "OTHER",
+    "PENDING_REVIEW",
+    "PENDING_START_DATE",
+    "PORTFOLIO_ARCHIVED",
+    "PORTFOLIO_ENDED",
+    "PORTFOLIO_OUT_OF_BUDGET",
+    "PORTFOLIO_PAUSED",
+    "PORTFOLIO_PENDING_START_DATE",
+    "PORTFOLIO_STATUS_ENABLED",
+    "REJECTED"
+   ],
+   "type": "string"
+  },
+  "RASv1AdGroupServingStatusDetailItem": {
+   "properties": {
+    "helpUrl": {
+     "description": "A URL with additional information about the status identifier.",
+     "type": "string"
+    },
+    "message": {
+     "description": "A human-readable description of the status identifier specified in the name field.",
+     "type": "string"
+    },
+    "name": {
+     "$ref": "RASv1AdGroupServingStatusReason"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1AdGroupServingStatusReason": {
+   "enum": [
+    "ADVERTISER_ARCHIVED_DETAIL",
+    "ADVERTISER_OUT_OF_BUDGET_DETAIL",
+    "ADVERTISER_PAUSED_DETAIL",
+    "ADVERTISER_PAYMENT_FAILURE_DETAIL",
+    "ADVERTISER_POLICING_PENDING_REVIEW_DETAIL",
+    "ADVERTISER_POLICING_SUSPENDED_DETAIL",
+    "AD_GROUP_ARCHIVED_DETAIL",
+    "AD_GROUP_INCOMPLETE_DETAIL",
+    "AD_GROUP_LOW_BID_DETAIL",
+    "AD_GROUP_PAUSED_DETAIL",
+    "AD_GROUP_POLICING_CREATIVE_REJECTED_DETAIL",
+    "AD_GROUP_POLICING_PENDING_REVIEW_DETAIL",
+    "AD_GROUP_STATUS_ENABLED_DETAIL",
+    "CAMPAIGN_ARCHIVED_DETAIL",
+    "CAMPAIGN_INCOMPLETE_DETAIL",
+    "CAMPAIGN_OUT_OF_BUDGET_DETAIL",
+    "CAMPAIGN_PAUSED_DETAIL",
+    "CAMPAIGN_STATUS_ENABLED_DETAIL",
+    "ENDED_DETAIL",
+    "OTHER",
+    "PENDING_REVIEW_DETAIL",
+    "PENDING_START_DATE_DETAIL",
+    "PORTFOLIO_ARCHIVED_DETAIL",
+    "PORTFOLIO_ENDED_DETAIL",
+    "PORTFOLIO_OUT_OF_BUDGET_DETAIL",
+    "PORTFOLIO_PAUSED_DETAIL",
+    "PORTFOLIO_PENDING_START_DATE_DETAIL",
+    "PORTFOLIO_STATUS_ENABLED_DETAIL",
+    "REJECTED_DETAIL"
+   ],
+   "type": "string"
+  },
+  "RASv1AutoMatchType": {
+   "description": "The match type for the auto target.",
+   "enum": [
+    "KEYWORDS_CLOSE_MATCH",
+    "KEYWORDS_LOOSE_MATCH",
+    "PRODUCT_COMPLEMENTS",
+    "PRODUCT_SUBSTITUTES"
+   ],
+   "type": "string"
+  },
+  "RASv1AutoTarget": {
+   "properties": {
+    "matchType": {
+     "$ref": "RASv1AutoMatchType"
+    }
+   },
+   "required": [
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "RASv1BadGatewayExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "description": "Error code",
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable response message",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1BiddingError": {
+   "description": "Errors related to bids",
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "lowerLimit": {
+     "type": "string"
+    },
+    "marketplace": {
+     "$ref": "RASv1Marketplace"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1BiddingErrorReason"
+    },
+    "upperLimit": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1BiddingErrorReason": {
+   "enum": [
+    "BID_GT_BUDGET",
+    "BID_OUT_OF_MARKET_PLACE_RANGE"
+   ],
+   "type": "string"
+  },
+  "RASv1BiddingStrategy": {
+   "description": "The bidding strategy. | Value | Strategy name | Description | |----------------|---------------|-------------| | `MANUAL` | Fixed bid | Uses your exact bid and any placement adjustments you set, and is not subject to dy…",
+   "enum": [
+    "MANUAL"
+   ],
+   "type": "string"
+  },
+  "RASv1BudgetError": {
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "lowerLimit": {
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1BudgetErrorReason"
+    },
+    "upperLimit": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1BudgetErrorReason": {
+   "enum": [
+    "BUDGETING_POLICY_INVALID",
+    "BUDGET_CURRENCY_DOES_NOT_MATCH_MARKETPLACE_SETTINGS",
+    "BUDGET_LT_DEFAULT_BIDS",
+    "BUDGET_LT_KEYWORD_BIDS",
+    "BUDGET_LT_PREDEFINED_TARGET_BIDS",
+    "BUDGET_OUT_OF_MARKET_PLACE_RANGE",
+    "BUDGET_TOO_HIGH",
+    "BUDGET_TOO_LOW",
+    "MISSING_BUDGETING_POLICY",
+    "MISSING_IN_BUDGET_FLAG"
+   ],
+   "type": "string"
+  },
+  "RASv1BudgetInput": {
+   "properties": {
+    "budget": {
+     "description": "Monetary value",
+     "format": "double",
+     "type": "number"
+    },
+    "budgetType": {
+     "$ref": "RASv1BudgetType"
+    }
+   },
+   "required": [
+    "budget",
+    "budgetType"
+   ],
+   "type": "object"
+  },
+  "RASv1BudgetOutput": {
+   "properties": {
+    "budget": {
+     "description": "Monetary value",
+     "format": "double",
+     "type": "number"
+    },
+    "budgetType": {
+     "$ref": "RASv1BudgetType"
+    },
+    "effectiveBudget": {
+     "description": "Monetary value",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "budget",
+    "budgetType"
+   ],
+   "type": "object"
+  },
+  "RASv1BudgetType": {
+   "enum": [
+    "DAILY"
+   ],
+   "type": "string"
+  },
+  "RASv1BulkCreateAdGroupsOutcomes": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "RASv1MutateAdGroupFailureItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "RASv1CreateAdGroupSuccessItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1BulkCreateCampaignsOutcomes": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "RASv1MutateCampaignFailureItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "RASv1CreateCampaignSuccessItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1BulkCreateProductAdsOutcomes": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "RASv1MutateProductAdFailureItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "RASv1CreateProductAdSuccessItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1BulkCreateTargetsOutcomes": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "RASv1MutateTargetFailureItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "RASv1CreateTargetSuccessItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1BulkMutateAdGroupsOutcomes": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "RASv1MutateAdGroupFailureItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "RASv1MutateAdGroupSuccessItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1BulkMutateCampaignsOutcomes": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "RASv1MutateCampaignFailureItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "RASv1MutateCampaignSuccessItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1BulkMutateProductAdsOutcomes": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "RASv1MutateProductAdFailureItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "RASv1MutateProductAdSuccessItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1BulkMutateTargetsOutcomes": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "RASv1MutateTargetFailureItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "RASv1MutateTargetSuccessItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1CampaignAccessError": {
+   "properties": {
+    "errorType": {
+     "description": "The type of the error",
+     "type": "string"
+    },
+    "errorValue": {
+     "$ref": "RASv1CampaignAccessErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "RASv1CampaignAccessErrorSelector": {
+   "properties": {
+    "dateError": {
+     "$ref": "RASv1DateError"
+    },
+    "entityNotFoundError": {
+     "$ref": "RASv1EntityNotFoundError"
+    },
+    "internalServerError": {
+     "$ref": "RASv1InternalServerError"
+    },
+    "malformedValueError": {
+     "$ref": "RASv1MalformedValueError"
+    },
+    "missingValueError": {
+     "$ref": "RASv1MissingValueError"
+    },
+    "otherError": {
+     "$ref": "RASv1OtherError"
+    },
+    "rangeError": {
+     "$ref": "RASv1RangeError"
+    },
+    "throttledError": {
+     "$ref": "RASv1ThrottledError"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1CampaignAccessExceptionResponseContent": {
+   "description": "Exception resulting in accessing ad group entities",
+   "properties": {
+    "code": {
+     "$ref": "RASv1InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "RASv1CampaignAccessError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RASv1CampaignExtendedData": {
+   "properties": {
+    "creationDateTime": {
+     "description": "Creation date in ISO 8601.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdateDateTime": {
+     "description": "Last updated date in ISO 8601.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "servingStatus": {
+     "$ref": "RASv1CampaignServingStatus"
+    },
+    "servingStatusDetails": {
+     "description": "The serving status reasons of the Campaign",
+     "items": {
+      "$ref": "RASv1CampaignServingStatusDetailItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1CampaignMutationError": {
+   "properties": {
+    "errorType": {
+     "description": "The type of the error",
+     "type": "string"
+    },
+    "errorValue": {
+     "$ref": "RASv1CampaignMutationErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "RASv1CampaignMutationErrorSelector": {
+   "properties": {
+    "biddingError": {
+     "$ref": "RASv1BiddingError"
+    },
+    "budgetError": {
+     "$ref": "RASv1BudgetError"
+    },
+    "dateError": {
+     "$ref": "RASv1DateError"
+    },
+    "duplicateValueError": {
+     "$ref": "RASv1DuplicateValueError"
+    },
+    "entityNotFoundError": {
+     "$ref": "RASv1EntityNotFoundError"
+    },
+    "entityStateError": {
+     "$ref": "RASv1EntityStateError"
+    },
+    "internalServerError": {
+     "$ref": "RASv1InternalServerError"
+    },
+    "malformedValueError": {
+     "$ref": "RASv1MalformedValueError"
+    },
+    "missingValueError": {
+     "$ref": "RASv1MissingValueError"
+    },
+    "otherError": {
+     "$ref": "RASv1OtherError"
+    },
+    "parentEntityError": {
+     "$ref": "RASv1ParentEntityError"
+    },
+    "rangeError": {
+     "$ref": "RASv1RangeError"
+    },
+    "throttledError": {
+     "$ref": "RASv1ThrottledError"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1CampaignMutationExceptionResponseContent": {
+   "description": "Exception resulting in mutating Campaign management entities",
+   "properties": {
+    "code": {
+     "$ref": "RASv1InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "RASv1CampaignMutationError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RASv1CampaignOutput": {
+   "properties": {
+    "budget": {
+     "$ref": "RASv1BudgetOutput"
+    },
+    "campaignId": {
+     "description": "The identifier of the Campaign.",
+     "type": "string"
+    },
+    "dynamicBidding": {
+     "$ref": "RASv1RequiredDynamicBidding"
+    },
+    "endDate": {
+     "description": "Campaign end date",
+     "format": "date",
+     "nullable": true,
+     "type": "string"
+    },
+    "extendedData": {
+     "$ref": "RASv1CampaignExtendedData"
+    },
+    "name": {
+     "description": "The name of the campaign.",
+     "type": "string"
+    },
+    "portfolioId": {
+     "description": "The identifier of an existing portfolio to which the campaign is associated.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "Campaign start date. Default: today&#39;s date. The format of the date is YYYY-MM-DD.",
+     "format": "date",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    },
+    "tags": {
+     "description": "A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.",
+     "items": {
+      "$ref": "RASv1Tag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingType": {
+     "$ref": "RASv1TargetingType"
+    }
+   },
+   "required": [
+    "budget",
+    "campaignId",
+    "dynamicBidding",
+    "name",
+    "startDate",
+    "state",
+    "targetingType"
+   ],
+   "type": "object"
+  },
+  "RASv1CampaignServingStatus": {
+   "enum": [
+    "ACCOUNT_OUT_OF_BUDGET",
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_OUT_OF_BUDGET",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_POLICING_PENDING_REVIEW",
+    "ADVERTISER_POLICING_SUSPENDED",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_STATUS_ENABLED",
+    "ENDED",
+    "OTHER",
+    "PENDING_REVIEW",
+    "PENDING_START_DATE",
+    "PORTFOLIO_ARCHIVED",
+    "PORTFOLIO_ENDED",
+    "PORTFOLIO_OUT_OF_BUDGET",
+    "PORTFOLIO_PAUSED",
+    "PORTFOLIO_PENDING_START_DATE",
+    "PORTFOLIO_STATUS_ENABLED",
+    "REJECTED"
+   ],
+   "type": "string"
+  },
+  "RASv1CampaignServingStatusDetailItem": {
+   "properties": {
+    "helpUrl": {
+     "description": "A URL with additional information about the status identifier.",
+     "type": "string"
+    },
+    "message": {
+     "description": "A human-readable description of the status identifier specified in the name field.",
+     "type": "string"
+    },
+    "name": {
+     "$ref": "RASv1CampaignServingStatusReason"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1CampaignServingStatusReason": {
+   "enum": [
+    "ACCOUNT_OUT_OF_BUDGET_DETAIL",
+    "ADVERTISER_ARCHIVED_DETAIL",
+    "ADVERTISER_OUT_OF_BUDGET_DETAIL",
+    "ADVERTISER_PAUSED_DETAIL",
+    "ADVERTISER_PAYMENT_FAILURE_DETAIL",
+    "ADVERTISER_POLICING_PENDING_REVIEW_DETAIL",
+    "ADVERTISER_POLICING_SUSPENDED_DETAIL",
+    "CAMPAIGN_ARCHIVED_DETAIL",
+    "CAMPAIGN_INCOMPLETE_DETAIL",
+    "CAMPAIGN_OUT_OF_BUDGET_DETAIL",
+    "CAMPAIGN_PAUSED_DETAIL",
+    "CAMPAIGN_STATUS_ENABLED_DETAIL",
+    "ENDED_DETAIL",
+    "OTHER",
+    "PENDING_REVIEW_DETAIL",
+    "PENDING_START_DATE_DETAIL",
+    "PORTFOLIO_ARCHIVED_DETAIL",
+    "PORTFOLIO_ENDED_DETAIL",
+    "PORTFOLIO_OUT_OF_BUDGET_DETAIL",
+    "PORTFOLIO_PAUSED_DETAIL",
+    "PORTFOLIO_PENDING_START_DATE_DETAIL",
+    "PORTFOLIO_STATUS_ENABLED_DETAIL",
+    "REJECTED_DETAIL"
+   ],
+   "type": "string"
+  },
+  "RASv1CreateAdGroupInput": {
+   "properties": {
+    "campaignId": {
+     "description": "The identifier of the campaign.",
+     "type": "string"
+    },
+    "defaultBid": {
+     "description": "A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-co…",
+     "format": "double",
+     "type": "number"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "retailerId": {
+     "description": "Id of retailer targeted by the ad group",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    }
+   },
+   "required": [
+    "campaignId",
+    "defaultBid",
+    "name",
+    "retailerId",
+    "state"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateAdGroupOutput": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the AdGroup.",
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "The identifier of the campaign.",
+     "type": "string"
+    },
+    "defaultBid": {
+     "description": "A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-co…",
+     "format": "double",
+     "type": "number"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "retailerId": {
+     "description": "Id of retailer targeted by the ad group",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "campaignId",
+    "defaultBid",
+    "name",
+    "retailerId",
+    "state"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateAdGroupSuccessItem": {
+   "properties": {
+    "adGroup": {
+     "$ref": "RASv1CreateAdGroupOutput"
+    },
+    "adGroupId": {
+     "description": "The identifier of the AdGroup.",
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the AdGroup in the array from the request body",
+     "format": "int32",
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateAdGroupsRequestContent": {
+   "properties": {
+    "adGroups": {
+     "description": "List of AdGroups to create",
+     "items": {
+      "$ref": "RASv1CreateAdGroupInput"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateAdGroupsResponseContent": {
+   "properties": {
+    "adGroups": {
+     "$ref": "RASv1BulkCreateAdGroupsOutcomes"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateCampaignInput": {
+   "properties": {
+    "budget": {
+     "$ref": "RASv1BudgetInput"
+    },
+    "dynamicBidding": {
+     "$ref": "RASv1RequiredDynamicBidding"
+    },
+    "endDate": {
+     "description": "Campaign end date",
+     "format": "date",
+     "nullable": true,
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the campaign.",
+     "type": "string"
+    },
+    "portfolioId": {
+     "description": "The identifier of an existing portfolio to which the campaign is associated.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "Campaign start date. Default: today&#39;s date. The format of the date is YYYY-MM-DD.",
+     "format": "date",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    },
+    "tags": {
+     "description": "A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.",
+     "items": {
+      "$ref": "RASv1Tag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingType": {
+     "$ref": "RASv1TargetingType"
+    }
+   },
+   "required": [
+    "budget",
+    "dynamicBidding",
+    "name",
+    "state",
+    "targetingType"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateCampaignOutput": {
+   "properties": {
+    "budget": {
+     "$ref": "RASv1BudgetOutput"
+    },
+    "campaignId": {
+     "description": "The identifier of the Campaign.",
+     "type": "string"
+    },
+    "dynamicBidding": {
+     "$ref": "RASv1RequiredDynamicBidding"
+    },
+    "endDate": {
+     "description": "Campaign end date",
+     "format": "date",
+     "nullable": true,
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the campaign.",
+     "type": "string"
+    },
+    "portfolioId": {
+     "description": "The identifier of an existing portfolio to which the campaign is associated.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "Campaign start date. Default: today&#39;s date. The format of the date is YYYY-MM-DD.",
+     "format": "date",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    },
+    "tags": {
+     "description": "A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.",
+     "items": {
+      "$ref": "RASv1Tag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingType": {
+     "$ref": "RASv1TargetingType"
+    }
+   },
+   "required": [
+    "budget",
+    "campaignId",
+    "dynamicBidding",
+    "name",
+    "startDate",
+    "state",
+    "targetingType"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateCampaignSuccessItem": {
+   "properties": {
+    "campaign": {
+     "$ref": "RASv1CreateCampaignOutput"
+    },
+    "campaignId": {
+     "description": "The identifier of the Campaign.",
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the Campaign in the array from the request body",
+     "format": "int32",
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateCampaignsRequestContent": {
+   "properties": {
+    "campaigns": {
+     "description": "List of Campaigns to create",
+     "items": {
+      "$ref": "RASv1CreateCampaignInput"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaigns"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateCampaignsResponseContent": {
+   "properties": {
+    "campaigns": {
+     "$ref": "RASv1BulkCreateCampaignsOutcomes"
+    }
+   },
+   "required": [
+    "campaigns"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateProductAdInput": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the ad group.",
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "The identifier of the campaign.",
+     "type": "string"
+    },
+    "retailerId": {
+     "description": "Id of a retailer owning the offer to be advertised",
+     "type": "string"
+    },
+    "retailerOfferId": {
+     "description": "Id of the offer to be advertised, must belong to retailer identified by retailerId field",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "campaignId",
+    "retailerId",
+    "retailerOfferId",
+    "state"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateProductAdOutput": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the ad group.",
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "The identifier of the campaign.",
+     "type": "string"
+    },
+    "productAdId": {
+     "description": "The identifier of the ProductAd.",
+     "type": "string"
+    },
+    "retailerId": {
+     "description": "Id of a retailer owning the offer to be advertised",
+     "type": "string"
+    },
+    "retailerOfferId": {
+     "description": "Id of the offer to be advertised, must belong to retailer identified by retailerId field",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "campaignId",
+    "productAdId",
+    "retailerId",
+    "retailerOfferId",
+    "state"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateProductAdSuccessItem": {
+   "properties": {
+    "index": {
+     "description": "The index of the ProductAd in the array from the request body",
+     "format": "int32",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "productAd": {
+     "$ref": "RASv1CreateProductAdOutput"
+    },
+    "productAdId": {
+     "description": "The identifier of the ProductAd.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateProductAdsRequestContent": {
+   "properties": {
+    "productAds": {
+     "description": "List of ProductAds to create",
+     "items": {
+      "$ref": "RASv1CreateProductAdInput"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "productAds"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateProductAdsResponseContent": {
+   "properties": {
+    "productAds": {
+     "$ref": "RASv1BulkCreateProductAdsOutcomes"
+    }
+   },
+   "required": [
+    "productAds"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateTargetInput": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the ad group.",
+     "type": "string"
+    },
+    "bid": {
+     "$ref": "RASv1TargetBidInput"
+    },
+    "campaignId": {
+     "description": "The identifier of the campaign.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Indicates whether the target is negative or not.",
+     "type": "boolean"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    },
+    "targetDetails": {
+     "$ref": "RASv1TargetDetails"
+    },
+    "targetType": {
+     "$ref": "RASv1TargetType"
+    }
+   },
+   "required": [
+    "campaignId",
+    "negative",
+    "state",
+    "targetDetails",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateTargetOutput": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the ad group.",
+     "type": "string"
+    },
+    "bid": {
+     "$ref": "RASv1TargetBidOutput"
+    },
+    "campaignId": {
+     "description": "The identifier of the campaign.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Indicates whether the target is negative or not.",
+     "type": "boolean"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    },
+    "targetDetails": {
+     "$ref": "RASv1TargetDetails"
+    },
+    "targetId": {
+     "description": "The identifier of the Target.",
+     "type": "string"
+    },
+    "targetLevel": {
+     "$ref": "RASv1TargetLevel"
+    },
+    "targetType": {
+     "$ref": "RASv1TargetType"
+    }
+   },
+   "required": [
+    "campaignId",
+    "negative",
+    "state",
+    "targetDetails",
+    "targetId",
+    "targetLevel",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateTargetSuccessItem": {
+   "properties": {
+    "index": {
+     "description": "The index of the Target in the array from the request body",
+     "format": "int32",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "target": {
+     "$ref": "RASv1CreateTargetOutput"
+    },
+    "targetId": {
+     "description": "The identifier of the Target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateTargetsRequestContent": {
+   "properties": {
+    "targets": {
+     "description": "List of Targets to create",
+     "items": {
+      "$ref": "RASv1CreateTargetInput"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "RASv1CreateTargetsResponseContent": {
+   "properties": {
+    "targets": {
+     "$ref": "RASv1BulkCreateTargetsOutcomes"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "RASv1CurrencyCode": {
+   "enum": [
+    "USD"
+   ],
+   "type": "string"
+  },
+  "RASv1DateError": {
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1DateErrorReason"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1DateErrorReason": {
+   "enum": [
+    "END_DATE_EARLIER_THAN_TODAY",
+    "END_DATE_LATER_THAN_MAXIMUM",
+    "INVALID_DATE",
+    "START_DATE_AFTER_END_DATE",
+    "START_DATE_EARLIER_THAN_TODAY",
+    "START_DATE_LATER_THAN_MAXIMUM",
+    "UPDATING_ENDED_CAMPAIGN_WITHOUT_EXTENSION",
+    "UPDATING_READ_ONLY_END_DATE",
+    "UPDATING_READ_ONLY_START_DATE"
+   ],
+   "type": "string"
+  },
+  "RASv1DeleteAdGroupsRequestContent": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "RASv1EntityIdFilter"
+    }
+   },
+   "required": [
+    "adGroupIdFilter"
+   ],
+   "type": "object"
+  },
+  "RASv1DeleteAdGroupsResponseContent": {
+   "properties": {
+    "adGroups": {
+     "$ref": "RASv1BulkMutateAdGroupsOutcomes"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "RASv1DeleteCampaignsRequestContent": {
+   "properties": {
+    "campaignIdFilter": {
+     "$ref": "RASv1EntityIdFilter"
+    }
+   },
+   "required": [
+    "campaignIdFilter"
+   ],
+   "type": "object"
+  },
+  "RASv1DeleteCampaignsResponseContent": {
+   "properties": {
+    "campaigns": {
+     "$ref": "RASv1BulkMutateCampaignsOutcomes"
+    }
+   },
+   "required": [
+    "campaigns"
+   ],
+   "type": "object"
+  },
+  "RASv1DeleteProductAdsRequestContent": {
+   "properties": {
+    "productAdIdFilter": {
+     "$ref": "RASv1EntityIdFilter"
+    }
+   },
+   "required": [
+    "productAdIdFilter"
+   ],
+   "type": "object"
+  },
+  "RASv1DeleteProductAdsResponseContent": {
+   "properties": {
+    "productAds": {
+     "$ref": "RASv1BulkMutateProductAdsOutcomes"
+    }
+   },
+   "required": [
+    "productAds"
+   ],
+   "type": "object"
+  },
+  "RASv1DeleteTargetsRequestContent": {
+   "properties": {
+    "targetIdFilter": {
+     "$ref": "RASv1EntityIdFilter"
+    }
+   },
+   "required": [
+    "targetIdFilter"
+   ],
+   "type": "object"
+  },
+  "RASv1DeleteTargetsResponseContent": {
+   "properties": {
+    "targets": {
+     "$ref": "RASv1BulkMutateTargetsOutcomes"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "RASv1DuplicateValueError": {
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "marketplace": {
+     "$ref": "RASv1Marketplace"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1DuplicateValueErrorReason"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1DuplicateValueErrorReason": {
+   "enum": [
+    "DUPLICATE_VALUE"
+   ],
+   "type": "string"
+  },
+  "RASv1EntityIdFilter": {
+   "description": "Filter entities by the list of objectIds",
+   "properties": {
+    "include": {
+     "items": {
+      "description": "Resource identifier",
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "RASv1EntityNotFoundError": {
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "entityId": {
+     "description": "The entity id in the request",
+     "type": "string"
+    },
+    "entityType": {
+     "$ref": "RASv1EntityType"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1EntityNotFoundErrorReason"
+    }
+   },
+   "required": [
+    "entityId",
+    "entityType",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1EntityNotFoundErrorReason": {
+   "enum": [
+    "ENTITY_NOT_FOUND"
+   ],
+   "type": "string"
+  },
+  "RASv1EntityProductId": {
+   "properties": {
+    "retailerId": {
+     "description": "Id of a retailer owning the offer to be advertised",
+     "type": "string"
+    },
+    "retailerOfferId": {
+     "description": "Id of the offer to be advertised, must belong to retailer identified by retailerId field",
+     "type": "string"
+    }
+   },
+   "required": [
+    "retailerId",
+    "retailerOfferId"
+   ],
+   "type": "object"
+  },
+  "RASv1EntityState": {
+   "description": "The current resource state. | State | Description | | --- | --- | | `ENABLED` | Enabled State | | `PAUSED` | Paused State | | `ARCHIVED` | ARCHIVED State |",
+   "enum": [
+    "ARCHIVED",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "RASv1EntityStateError": {
+   "description": "entity state update errors",
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "marketplace": {
+     "$ref": "RASv1Marketplace"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1EntityStateErrorReason"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1EntityStateErrorReason": {
+   "enum": [
+    "ARCHIVED_ENTITY_CANNOT_BE_MODIFIED",
+    "PARENT_ARCHIVED_FORBIDS_UPDATES",
+    "PARENT_ENTITY_FORBIDS_CREATION",
+    "PARENT_STATUS_FORBIDS_UPDATES_AND_CREATES"
+   ],
+   "type": "string"
+  },
+  "RASv1EntityType": {
+   "enum": [
+    "AD_GROUP",
+    "CAMPAIGN",
+    "CAMPAIGN_NEGATIVE_KEYWORD",
+    "CAMPAIGN_NEGATIVE_TARGETING_CLAUSE",
+    "KEYWORD",
+    "NEGATIVE_KEYWORD",
+    "NEGATIVE_TARGETING_CLAUSE",
+    "PRODUCT_AD",
+    "TARGETING_CLAUSE"
+   ],
+   "type": "string"
+  },
+  "RASv1ErrorCause": {
+   "description": "Structure describing error cause - location in the payload and data causing error",
+   "properties": {
+    "location": {
+     "description": "Error location, JSON Path expression specifying element of API payload causing error",
+     "type": "string"
+    },
+    "trigger": {
+     "description": "optional value causing error",
+     "type": "string"
+    }
+   },
+   "required": [
+    "location"
+   ],
+   "type": "object"
+  },
+  "RASv1GatewayTimeoutExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "description": "Error code",
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable response message",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1InternalErrorErrorCode": {
+   "enum": [
+    "INTERNAL_ERROR"
+   ],
+   "type": "string"
+  },
+  "RASv1InternalServerError": {
+   "description": "Error that represents non-retryable API service error. Sending the same request will result in another error.",
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1InternalServerErrorReason"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1InternalServerErrorReason": {
+   "enum": [
+    "INTERNAL_ERROR"
+   ],
+   "type": "string"
+  },
+  "RASv1InternalServerExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "RASv1InternalErrorErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RASv1InvalidArgumentErrorCode": {
+   "enum": [
+    "INVALID_ARGUMENT"
+   ],
+   "type": "string"
+  },
+  "RASv1KeywordFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "RASv1QueryTermMatchType"
+    }
+   },
+   "required": [
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "RASv1KeywordMatchType": {
+   "enum": [
+    "BROAD",
+    "EXACT",
+    "PHRASE"
+   ],
+   "type": "string"
+  },
+  "RASv1KeywordTarget": {
+   "properties": {
+    "keyword": {
+     "type": "string"
+    },
+    "matchType": {
+     "$ref": "RASv1KeywordMatchType"
+    }
+   },
+   "required": [
+    "keyword",
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "RASv1ListAdGroupsRequestContent": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "RASv1EntityIdFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "RASv1ReducedEntityIdFilter"
+    },
+    "maxResults": {
+     "default": 1000,
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API",
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "RASv1NameFilter"
+    },
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "RASv1StateFilter"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1ListAdGroupsResponseContent": {
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "RASv1AdGroupOutput"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of entities",
+     "format": "int64",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1ListCampaignsRequestContent": {
+   "properties": {
+    "campaignIdFilter": {
+     "$ref": "RASv1EntityIdFilter"
+    },
+    "maxResults": {
+     "default": 1000,
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API",
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "RASv1NameFilter"
+    },
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "portfolioIdFilter": {
+     "$ref": "RASv1ReducedEntityIdFilter"
+    },
+    "stateFilter": {
+     "$ref": "RASv1StateFilter"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1ListCampaignsResponseContent": {
+   "properties": {
+    "campaigns": {
+     "items": {
+      "$ref": "RASv1CampaignOutput"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of entities",
+     "format": "int64",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1ListProductAdsRequestContent": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "RASv1ReducedEntityIdFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "RASv1ReducedEntityIdFilter"
+    },
+    "maxResults": {
+     "default": 1000,
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API",
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "productAdIdFilter": {
+     "$ref": "RASv1EntityIdFilter"
+    },
+    "stateFilter": {
+     "$ref": "RASv1StateFilter"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1ListProductAdsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "productAds": {
+     "items": {
+      "$ref": "RASv1ProductAdOutput"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of entities",
+     "format": "int64",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1ListTargetsRequestContent": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "RASv1ReducedEntityIdFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "RASv1ReducedEntityIdFilter"
+    },
+    "keywordFilter": {
+     "$ref": "RASv1KeywordFilter"
+    },
+    "matchTypeFilter": {
+     "description": "Only keywords with match type that is in this list will be listed",
+     "items": {
+      "$ref": "RASv1KeywordMatchType"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "default": 1000,
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API",
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "negativeFilter": {
+     "$ref": "RASv1NegativeTargetFilter"
+    },
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "productIdFilter": {
+     "$ref": "RASv1ProductIdFilter"
+    },
+    "stateFilter": {
+     "$ref": "RASv1StateFilter"
+    },
+    "targetIdFilter": {
+     "$ref": "RASv1EntityIdFilter"
+    },
+    "targetLevelFilter": {
+     "$ref": "RASv1TargetLevelFilter"
+    },
+    "targetTypeFilter": {
+     "description": "Only targets of specified types will be listed",
+     "items": {
+      "$ref": "RASv1TargetType"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1ListTargetsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "targets": {
+     "items": {
+      "$ref": "RASv1TargetOutput"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of entities",
+     "format": "int64",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1MalformedValueError": {
+   "description": "Errors being used to represent malformed values e.g. containing not allowed characters, not following patters etc",
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "fragment": {
+     "description": "fragment of the value which is wrong",
+     "type": "string"
+    },
+    "marketplace": {
+     "$ref": "RASv1Marketplace"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1MalformedValueErrorReason"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1MalformedValueErrorReason": {
+   "enum": [
+    "BLANK",
+    "FORBIDDEN_CHARS",
+    "LEADING_OR_TRAILING_WHITESPACE",
+    "PATTERN_NOT_MATCHED",
+    "TOO_LONG",
+    "TOO_SHORT"
+   ],
+   "type": "string"
+  },
+  "RASv1Marketplace": {
+   "enum": [
+    "US"
+   ],
+   "type": "string"
+  },
+  "RASv1MissingValueError": {
+   "description": "Error describing missing values in API payloads",
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "marketplace": {
+     "$ref": "RASv1Marketplace"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1MissingValueErrorReason"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1MissingValueErrorReason": {
+   "enum": [
+    "MISSING_VALUE"
+   ],
+   "type": "string"
+  },
+  "RASv1MutateAdGroupFailureItem": {
+   "properties": {
+    "errors": {
+     "description": "A list of validation errors",
+     "items": {
+      "$ref": "RASv1AdGroupMutationError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the AdGroup in the array from the request body",
+     "format": "int32",
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "RASv1MutateAdGroupSuccessItem": {
+   "properties": {
+    "adGroup": {
+     "$ref": "RASv1AdGroupOutput"
+    },
+    "adGroupId": {
+     "description": "The identifier of the AdGroup.",
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the AdGroup in the array from the request body",
+     "format": "int32",
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "RASv1MutateCampaignFailureItem": {
+   "properties": {
+    "errors": {
+     "description": "A list of validation errors",
+     "items": {
+      "$ref": "RASv1CampaignMutationError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the Campaign in the array from the request body",
+     "format": "int32",
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "RASv1MutateCampaignSuccessItem": {
+   "properties": {
+    "campaign": {
+     "$ref": "RASv1CampaignOutput"
+    },
+    "campaignId": {
+     "description": "The identifier of the Campaign.",
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the Campaign in the array from the request body",
+     "format": "int32",
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "RASv1MutateProductAdFailureItem": {
+   "properties": {
+    "errors": {
+     "description": "A list of validation errors",
+     "items": {
+      "$ref": "RASv1ProductAdMutationError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the ProductAd in the array from the request body",
+     "format": "int32",
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "RASv1MutateProductAdSuccessItem": {
+   "properties": {
+    "index": {
+     "description": "The index of the ProductAd in the array from the request body",
+     "format": "int32",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "productAd": {
+     "$ref": "RASv1ProductAdOutput"
+    },
+    "productAdId": {
+     "description": "The identifier of the ProductAd.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "RASv1MutateTargetFailureItem": {
+   "properties": {
+    "errors": {
+     "description": "A list of validation errors",
+     "items": {
+      "$ref": "RASv1TargetMutationError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the Target in the array from the request body",
+     "format": "int32",
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "RASv1MutateTargetSuccessItem": {
+   "properties": {
+    "index": {
+     "description": "The index of the Target in the array from the request body",
+     "format": "int32",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "target": {
+     "$ref": "RASv1TargetOutput"
+    },
+    "targetId": {
+     "description": "The identifier of the Target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "RASv1NameFilter": {
+   "description": "Filter entities by name",
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "RASv1QueryTermMatchType"
+    }
+   },
+   "required": [
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "RASv1NegativeTargetFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "boolean"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1OptionalDynamicBidding": {
+   "properties": {
+    "placementBidding": {
+     "items": {
+      "$ref": "RASv1PlacementBidAdjustment"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "strategy": {
+     "$ref": "RASv1BiddingStrategy"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1OtherError": {
+   "description": "Errors not related to any of the other error types",
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "marketplace": {
+     "$ref": "RASv1Marketplace"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1OtherErrorReason"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1OtherErrorReason": {
+   "enum": [
+    "OTHER_ERROR"
+   ],
+   "type": "string"
+  },
+  "RASv1ParentEntityError": {
+   "description": "Errors related to parent entity",
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1ParentEntityErrorReason"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1ParentEntityErrorReason": {
+   "enum": [
+    "PARENT_ENTITY_NOT_FOUND"
+   ],
+   "type": "string"
+  },
+  "RASv1Placement": {
+   "description": "You can enable controls to adjust your bid based on the placement location. Specify a location where you want to use bid controls. The percentage value set is the percentage of the original bid for which you want to hav…",
+   "enum": [
+    "PLACEMENT_BROWSE_OTHER",
+    "PLACEMENT_PRODUCT_PAGE",
+    "PLACEMENT_REST_OF_SEARCH",
+    "PLACEMENT_TOP",
+    "PLACEMENT_TOP_BROWSE"
+   ],
+   "type": "string"
+  },
+  "RASv1PlacementBidAdjustment": {
+   "properties": {
+    "percentage": {
+     "format": "int32",
+     "maximum": 900,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "placement": {
+     "$ref": "RASv1Placement"
+    }
+   },
+   "required": [
+    "percentage",
+    "placement"
+   ],
+   "type": "object"
+  },
+  "RASv1ProductAdAccessError": {
+   "properties": {
+    "errorType": {
+     "description": "The type of the error",
+     "type": "string"
+    },
+    "errorValue": {
+     "$ref": "RASv1ProductAdAccessErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "RASv1ProductAdAccessErrorSelector": {
+   "properties": {
+    "entityNotFoundError": {
+     "$ref": "RASv1EntityNotFoundError"
+    },
+    "internalServerError": {
+     "$ref": "RASv1InternalServerError"
+    },
+    "malformedValueError": {
+     "$ref": "RASv1MalformedValueError"
+    },
+    "missingValueError": {
+     "$ref": "RASv1MissingValueError"
+    },
+    "otherError": {
+     "$ref": "RASv1OtherError"
+    },
+    "rangeError": {
+     "$ref": "RASv1RangeError"
+    },
+    "throttledError": {
+     "$ref": "RASv1ThrottledError"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1ProductAdAccessExceptionResponseContent": {
+   "description": "Exception resulting in accessing ad group entities",
+   "properties": {
+    "code": {
+     "$ref": "RASv1InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "RASv1ProductAdAccessError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RASv1ProductAdExtendedData": {
+   "properties": {
+    "creationDateTime": {
+     "description": "Creation date in ISO 8601.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdateDateTime": {
+     "description": "Last updated date in ISO 8601.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "servingStatus": {
+     "$ref": "RASv1ProductAdServingStatus"
+    },
+    "servingStatusDetails": {
+     "description": "The serving status reasons of the ProductAd",
+     "items": {
+      "$ref": "RASv1ProductAdServingStatusDetailItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1ProductAdMutationError": {
+   "properties": {
+    "errorType": {
+     "description": "The type of the error",
+     "type": "string"
+    },
+    "errorValue": {
+     "$ref": "RASv1ProductAdMutationErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "RASv1ProductAdMutationErrorSelector": {
+   "properties": {
+    "adEligibilityError": {
+     "$ref": "RASv1AdEligibilityError"
+    },
+    "duplicateValueError": {
+     "$ref": "RASv1DuplicateValueError"
+    },
+    "entityNotFoundError": {
+     "$ref": "RASv1EntityNotFoundError"
+    },
+    "entityStateError": {
+     "$ref": "RASv1EntityStateError"
+    },
+    "internalServerError": {
+     "$ref": "RASv1InternalServerError"
+    },
+    "malformedValueError": {
+     "$ref": "RASv1MalformedValueError"
+    },
+    "missingValueError": {
+     "$ref": "RASv1MissingValueError"
+    },
+    "otherError": {
+     "$ref": "RASv1OtherError"
+    },
+    "parentEntityError": {
+     "$ref": "RASv1ParentEntityError"
+    },
+    "rangeError": {
+     "$ref": "RASv1RangeError"
+    },
+    "throttledError": {
+     "$ref": "RASv1ThrottledError"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1ProductAdMutationExceptionResponseContent": {
+   "description": "Exception resulting in mutating ProductAd management entities",
+   "properties": {
+    "code": {
+     "$ref": "RASv1InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "RASv1ProductAdMutationError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RASv1ProductAdOutput": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the ad group.",
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "The identifier of the campaign.",
+     "type": "string"
+    },
+    "extendedData": {
+     "$ref": "RASv1ProductAdExtendedData"
+    },
+    "productAdId": {
+     "description": "The identifier of the ProductAd.",
+     "type": "string"
+    },
+    "retailerId": {
+     "description": "Id of a retailer owning the offer to be advertised",
+     "type": "string"
+    },
+    "retailerOfferId": {
+     "description": "Id of the offer to be advertised, must belong to retailer identified by retailerId field",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "campaignId",
+    "productAdId",
+    "retailerId",
+    "retailerOfferId",
+    "state"
+   ],
+   "type": "object"
+  },
+  "RASv1ProductAdServingStatus": {
+   "enum": [
+    "ACCOUNT_OUT_OF_BUDGET",
+    "ADVERTISER_ACCOUNT_OUT_OF_BUDGET",
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_EXCEED_SPENDS_LIMIT",
+    "ADVERTISER_OUT_OF_BUDGET",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_POLICING_PENDING_REVIEW",
+    "ADVERTISER_POLICING_SUSPENDED",
+    "ADVERTISER_STATUS_ENABLED",
+    "AD_ARCHIVED",
+    "AD_CREATION_FAILED",
+    "AD_CREATION_OFFLINE_FAILED",
+    "AD_CREATION_OFFLINE_IN_PROGRESS",
+    "AD_CREATION_OFFLINE_PENDING",
+    "AD_ELIGIBLE",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_INCOMPLETE",
+    "AD_GROUP_LOW_BID",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_POLICING_CREATIVE_REJECTED",
+    "AD_GROUP_POLICING_PENDING_REVIEW",
+    "AD_GROUP_STATUS_ENABLED",
+    "AD_INELIGIBLE",
+    "AD_LANDING_PAGE_NOT_AVAILABLE",
+    "AD_MISSING_DECORATION",
+    "AD_MISSING_IMAGE",
+    "AD_NOT_BUYABLE",
+    "AD_NOT_IN_BUYBOX",
+    "AD_NO_PURCHASABLE_OFFER",
+    "AD_OUT_OF_STOCK",
+    "AD_PAUSED",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "AD_STATUS_LIVE",
+    "CAMPAIGN_ADS_NOT_DELIVERING",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_ENDED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_STATUS_ENABLED",
+    "ELIGIBLE",
+    "ENDED",
+    "INELIGIBLE",
+    "LANDING_PAGE_NOT_AVAILABLE",
+    "MISSING_DECORATION",
+    "MISSING_IMAGE",
+    "NOT_BUYABLE",
+    "NOT_IN_BUYBOX",
+    "NO_INVENTORY",
+    "NO_PURCHASABLE_OFFER",
+    "OTHER",
+    "OUT_OF_STOCK",
+    "PENDING_REVIEW",
+    "PENDING_START_DATE",
+    "PIR_RULE_EXCLUDED",
+    "PORTFOLIO_ARCHIVED",
+    "PORTFOLIO_ENDED",
+    "PORTFOLIO_OUT_OF_BUDGET",
+    "PORTFOLIO_PAUSED",
+    "PORTFOLIO_PENDING_START_DATE",
+    "PORTFOLIO_STATUS_ENABLED",
+    "REJECTED",
+    "SECURITY_SCAN_PENDING_REVIEW",
+    "SECURITY_SCAN_REJECTED",
+    "STATUS_UNAVAILABLE",
+    "TARGETING_CLAUSE_ARCHIVED",
+    "TARGETING_CLAUSE_BLOCKED",
+    "TARGETING_CLAUSE_PAUSED",
+    "TARGETING_CLAUSE_POLICING_SUSPENDED",
+    "TARGETING_CLAUSE_STATUS_LIVE"
+   ],
+   "type": "string"
+  },
+  "RASv1ProductAdServingStatusDetailItem": {
+   "properties": {
+    "helpUrl": {
+     "description": "A URL with additional information about the status identifier.",
+     "type": "string"
+    },
+    "message": {
+     "description": "A human-readable description of the status identifier specified in the name field.",
+     "type": "string"
+    },
+    "name": {
+     "$ref": "RASv1ProductAdServingStatusReason"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1ProductAdServingStatusReason": {
+   "enum": [
+    "ACCOUNT_OUT_OF_BUDGET_DETAIL",
+    "ADULT_PRODUCT",
+    "ADVERTISER_ACCOUNT_OUT_OF_BUDGET_DETAIL",
+    "ADVERTISER_ARCHIVED_DETAIL",
+    "ADVERTISER_EXCEED_SPENDS_LIMIT_DETAIL",
+    "ADVERTISER_OUT_OF_BUDGET_DETAIL",
+    "ADVERTISER_PAUSED_DETAIL",
+    "ADVERTISER_PAYMENT_FAILURE_DETAIL",
+    "ADVERTISER_POLICING_PENDING_REVIEW_DETAIL",
+    "ADVERTISER_POLICING_SUSPENDED_DETAIL",
+    "ADVERTISER_STATUS_ENABLED_DETAIL",
+    "AD_ARCHIVED_DETAIL",
+    "AD_CREATION_OFFLINE_FAILED",
+    "AD_CREATION_OFFLINE_IN_PROGRESS",
+    "AD_CREATION_OFFLINE_PENDING",
+    "AD_GROUP_ARCHIVED_DETAIL",
+    "AD_GROUP_INCOMPLETE_DETAIL",
+    "AD_GROUP_LOW_BID_DETAIL",
+    "AD_GROUP_PAUSED_DETAIL",
+    "AD_GROUP_POLICING_CREATIVE_REJECTED_DETAIL",
+    "AD_GROUP_POLICING_PENDING_REVIEW_DETAIL",
+    "AD_GROUP_STATUS_ENABLED_DETAIL",
+    "AD_PAUSED_DETAIL",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_PENDING_REVIEW_DETAIL",
+    "AD_POLICING_SUSPENDED_DETAIL",
+    "AD_STATUS_LIVE_DETAIL",
+    "BRAND_REMOVED",
+    "CAMPAIGN_ADS_NOT_DELIVERING_DETAIL",
+    "CAMPAIGN_ARCHIVED_DETAIL",
+    "CAMPAIGN_INCOMPLETE_DETAIL",
+    "CAMPAIGN_OUT_OF_BUDGET_DETAIL",
+    "CAMPAIGN_PAUSED_DETAIL",
+    "CAMPAIGN_STATUS_ENABLED_DETAIL",
+    "CBA_NOT_SUPPORTED",
+    "CLOSED_GL",
+    "CP_INELIGIBLE",
+    "CP_INELIGIBLE_ASIN",
+    "CP_INELIGIBLE_UNKNOWN",
+    "CP_INELIGIBLE_VENDOR",
+    "ELIGIBLE_DETAIL",
+    "ENDED_DETAIL",
+    "INELIGIBLE_CONDITION",
+    "INVENTORY_INCOMPLETE",
+    "ITEM_MISSING",
+    "LANDING_PAGE_INELIGIBLE",
+    "LANDING_PAGE_NOT_AVAILABLE_DETAIL",
+    "MISSING_DECORATION_DETAIL",
+    "MISSING_IMAGE_DETAIL",
+    "MODERATION_ADULT_NOVELTY_PV_DETAIL",
+    "MODERATION_ADULT_PRODUCT_PV_DETAIL",
+    "MODERATION_ADULT_SOFTLINES_PV_DETAIL",
+    "MODERATION_CLAIM_WEIGHTLOSS_PV_DETAIL",
+    "MODERATION_CONTENT_NUDITY_PV_DETAIL",
+    "MODERATION_CONTENT_PROVOCATIVE_PV_DETAIL",
+    "MODERATION_CONTENT_SMOKING_PV_DETAIL",
+    "MODERATION_CRITICAL_EVENTS_PV_DETAIL",
+    "MODERATION_ERROR_404_PV_DETAIL",
+    "MODERATION_GRAPHICAL_SEXUAL_IMAGES_PV_DETAIL",
+    "MODERATION_HFSS_PRODUCT_PV_DETAIL",
+    "MODERATION_LANGUAGE_OFFENSIVE_PV_DETAIL",
+    "MODERATION_NOT_COMPLIANT_TO_AD_POLICY_PV_DETAIL",
+    "MODERATION_SMOKING_RELATED_PV_DETAIL",
+    "NOT_BUYABLE_DETAIL",
+    "NOT_IN_BUYBOX_DETAIL",
+    "NO_INVENTORY_DETAIL",
+    "NO_PURCHASABLE_OFFER_DETAIL",
+    "OFFER_MISSING_DETAIL",
+    "OTHER",
+    "OUT_OF_STOCK_DETAIL",
+    "PENDING_REVIEW_DETAIL",
+    "PENDING_START_DATE_DETAIL",
+    "PIR_RULE_EXCLUDED",
+    "PORTFOLIO_ARCHIVED_DETAIL",
+    "PORTFOLIO_ENDED_DETAIL",
+    "PORTFOLIO_OUT_OF_BUDGET_DETAIL",
+    "PORTFOLIO_PAUSED_DETAIL",
+    "PORTFOLIO_PENDING_START_DATE_DETAIL",
+    "PORTFOLIO_STATUS_ENABLED_DETAIL",
+    "REJECTED_DETAIL",
+    "RESTRICTED_GL",
+    "SECURITY_SCAN_PENDING_REVIEW",
+    "SECURITY_SCAN_REJECTED",
+    "STATUS_UNAVAILABLE",
+    "TARGETING_CLAUSE_ARCHIVED_DETAIL",
+    "TARGETING_CLAUSE_BLOCKED_DETAIL",
+    "TARGETING_CLAUSE_PAUSED_DETAIL",
+    "TARGETING_CLAUSE_POLICING_SUSPENDED_DETAIL",
+    "TARGETING_CLAUSE_STATUS_LIVE_DETAIL",
+    "VARIATION_PARENT"
+   ],
+   "type": "string"
+  },
+  "RASv1ProductCategoryRefinement": {
+   "properties": {
+    "productCategoryId": {
+     "description": "The product category ID to target",
+     "type": "string"
+    },
+    "productCategoryIdResolved": {
+     "description": "The resolved product category",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1ProductCategoryRefinementValue": {
+   "properties": {
+    "productCategoryRefinement": {
+     "$ref": "RASv1ProductCategoryRefinement"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1ProductCategoryTarget": {
+   "properties": {
+    "productCategoryRefinement": {
+     "$ref": "RASv1ProductCategoryRefinementValue"
+    }
+   },
+   "required": [
+    "productCategoryRefinement"
+   ],
+   "type": "object"
+  },
+  "RASv1ProductIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "RASv1EntityProductId"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "RASv1ProductIdType": {
+   "enum": [
+    "RETAILER_OFFER"
+   ],
+   "type": "string"
+  },
+  "RASv1ProductMatchType": {
+   "enum": [
+    "PRODUCT_EXACT"
+   ],
+   "type": "string"
+  },
+  "RASv1ProductTarget": {
+   "properties": {
+    "matchType": {
+     "$ref": "RASv1ProductMatchType"
+    },
+    "productId": {
+     "description": "Resource identifier",
+     "type": "string"
+    },
+    "productIdType": {
+     "$ref": "RASv1ProductIdType"
+    },
+    "retailerId": {
+     "description": "Resource identifier",
+     "type": "string"
+    }
+   },
+   "required": [
+    "matchType",
+    "productId",
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "RASv1QueryTermMatchType": {
+   "description": "Match type for query filters. | Value | Description | |-----------|------------| | `BROAD_MATCH` | Match if the queried value contains the filter value. (substring matching) | | `EXACT_MATCH` | Match if the queried valu…",
+   "enum": [
+    "BROAD_MATCH",
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "RASv1RangeError": {
+   "description": "Errors related to range constraints violations",
+   "properties": {
+    "allowed": {
+     "description": "allowed values",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "lowerLimit": {
+     "description": "optional lower limit",
+     "type": "string"
+    },
+    "marketplace": {
+     "$ref": "RASv1Marketplace"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1ValueLimitErrorReason"
+    },
+    "upperLimit": {
+     "description": "optional upper limit",
+     "type": "string"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1ReducedEntityIdFilter": {
+   "description": "Filter entities by the list of objectIds",
+   "properties": {
+    "include": {
+     "items": {
+      "description": "Resource identifier",
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "RASv1RequiredDynamicBidding": {
+   "properties": {
+    "placementBidding": {
+     "items": {
+      "$ref": "RASv1PlacementBidAdjustment"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "strategy": {
+     "$ref": "RASv1BiddingStrategy"
+    }
+   },
+   "required": [
+    "strategy"
+   ],
+   "type": "object"
+  },
+  "RASv1ServiceUnavailableExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "description": "Error code",
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable response message",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1StateFilter": {
+   "description": "Filter entities by state",
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "RASv1EntityState"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "RASv1Tag": {
+   "properties": {
+    "key": {
+     "type": "string"
+    },
+    "value": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "RASv1TargetAccessError": {
+   "properties": {
+    "errorType": {
+     "description": "The type of the error",
+     "type": "string"
+    },
+    "errorValue": {
+     "$ref": "RASv1TargetAccessErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "RASv1TargetAccessErrorSelector": {
+   "properties": {
+    "entityNotFoundError": {
+     "$ref": "RASv1EntityNotFoundError"
+    },
+    "internalServerError": {
+     "$ref": "RASv1InternalServerError"
+    },
+    "malformedValueError": {
+     "$ref": "RASv1MalformedValueError"
+    },
+    "missingValueError": {
+     "$ref": "RASv1MissingValueError"
+    },
+    "otherError": {
+     "$ref": "RASv1OtherError"
+    },
+    "rangeError": {
+     "$ref": "RASv1RangeError"
+    },
+    "throttledError": {
+     "$ref": "RASv1ThrottledError"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1TargetAccessExceptionResponseContent": {
+   "description": "Exception resulting in accessing ad group entities",
+   "properties": {
+    "code": {
+     "$ref": "RASv1InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "RASv1TargetAccessError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RASv1TargetBidInput": {
+   "properties": {
+    "bid": {
+     "description": "The maximum bid for a target.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "bid"
+   ],
+   "type": "object"
+  },
+  "RASv1TargetBidOutput": {
+   "properties": {
+    "bid": {
+     "description": "The maximum bid for a target.",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "$ref": "RASv1CurrencyCode"
+    }
+   },
+   "required": [
+    "bid",
+    "currencyCode"
+   ],
+   "type": "object"
+  },
+  "RASv1TargetDetails": {
+   "properties": {
+    "autoTarget": {
+     "$ref": "RASv1AutoTarget"
+    },
+    "keywordTarget": {
+     "$ref": "RASv1KeywordTarget"
+    },
+    "productCategoryTarget": {
+     "$ref": "RASv1ProductCategoryTarget"
+    },
+    "productTarget": {
+     "$ref": "RASv1ProductTarget"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1TargetExtendedData": {
+   "properties": {
+    "creationDateTime": {
+     "description": "Creation date in ISO 8601.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdateDateTime": {
+     "description": "Last updated date in ISO 8601.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "servingStatus": {
+     "$ref": "RASv1TargetServingStatus"
+    },
+    "servingStatusDetails": {
+     "description": "The serving status reasons of the Target",
+     "items": {
+      "$ref": "RASv1TargetServingStatusDetailItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1TargetLevel": {
+   "enum": [
+    "AD_GROUP",
+    "CAMPAIGN"
+   ],
+   "type": "string"
+  },
+  "RASv1TargetLevelFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "RASv1TargetLevel"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1TargetMutationError": {
+   "properties": {
+    "errorType": {
+     "description": "The type of the error",
+     "type": "string"
+    },
+    "errorValue": {
+     "$ref": "RASv1TargetMutationErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "RASv1TargetMutationErrorSelector": {
+   "properties": {
+    "duplicateValueError": {
+     "$ref": "RASv1DuplicateValueError"
+    },
+    "entityNotFoundError": {
+     "$ref": "RASv1EntityNotFoundError"
+    },
+    "entityStateError": {
+     "$ref": "RASv1EntityStateError"
+    },
+    "internalServerError": {
+     "$ref": "RASv1InternalServerError"
+    },
+    "malformedValueError": {
+     "$ref": "RASv1MalformedValueError"
+    },
+    "missingValueError": {
+     "$ref": "RASv1MissingValueError"
+    },
+    "otherError": {
+     "$ref": "RASv1OtherError"
+    },
+    "parentEntityError": {
+     "$ref": "RASv1ParentEntityError"
+    },
+    "rangeError": {
+     "$ref": "RASv1RangeError"
+    },
+    "targetingClauseSetupError": {
+     "$ref": "RASv1TargetingClauseSetupError"
+    },
+    "throttledError": {
+     "$ref": "RASv1ThrottledError"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1TargetMutationExceptionResponseContent": {
+   "description": "Exception resulting in mutating Target management entities",
+   "properties": {
+    "code": {
+     "$ref": "RASv1InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "RASv1TargetMutationError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RASv1TargetOutput": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the ad group.",
+     "type": "string"
+    },
+    "bid": {
+     "$ref": "RASv1TargetBidOutput"
+    },
+    "campaignId": {
+     "description": "The identifier of the campaign.",
+     "type": "string"
+    },
+    "extendedData": {
+     "$ref": "RASv1TargetExtendedData"
+    },
+    "negative": {
+     "description": "Indicates whether the target is negative or not.",
+     "type": "boolean"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    },
+    "targetDetails": {
+     "$ref": "RASv1TargetDetails"
+    },
+    "targetId": {
+     "description": "The identifier of the Target.",
+     "type": "string"
+    },
+    "targetLevel": {
+     "$ref": "RASv1TargetLevel"
+    },
+    "targetType": {
+     "$ref": "RASv1TargetType"
+    }
+   },
+   "required": [
+    "campaignId",
+    "negative",
+    "state",
+    "targetDetails",
+    "targetId",
+    "targetLevel",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "RASv1TargetServingStatus": {
+   "enum": [
+    "ACCOUNT_OUT_OF_BUDGET",
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_OUT_OF_BUDGET",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_POLICING_PENDING_REVIEW",
+    "ADVERTISER_POLICING_SUSPENDED",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_INCOMPLETE",
+    "AD_GROUP_LOW_BID",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_POLICING_CREATIVE_REJECTED",
+    "AD_GROUP_POLICING_PENDING_REVIEW",
+    "AD_GROUP_STATUS_ENABLED",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_STATUS_ENABLED",
+    "ENDED",
+    "OTHER",
+    "PENDING_REVIEW",
+    "PENDING_START_DATE",
+    "PORTFOLIO_ARCHIVED",
+    "PORTFOLIO_ENDED",
+    "PORTFOLIO_OUT_OF_BUDGET",
+    "PORTFOLIO_PAUSED",
+    "PORTFOLIO_PENDING_START_DATE",
+    "PORTFOLIO_STATUS_ENABLED",
+    "REJECTED",
+    "TARGETING_CLAUSE_ARCHIVED",
+    "TARGETING_CLAUSE_BLOCKED",
+    "TARGETING_CLAUSE_PAUSED",
+    "TARGETING_CLAUSE_POLICING_SUSPENDED",
+    "TARGETING_CLAUSE_STATUS_LIVE"
+   ],
+   "type": "string"
+  },
+  "RASv1TargetServingStatusDetailItem": {
+   "properties": {
+    "helpUrl": {
+     "description": "A URL with additional information about the status identifier.",
+     "type": "string"
+    },
+    "message": {
+     "description": "A human-readable description of the status identifier specified in the name field.",
+     "type": "string"
+    },
+    "name": {
+     "$ref": "RASv1TargetServingStatusReason"
+    }
+   },
+   "type": "object"
+  },
+  "RASv1TargetServingStatusReason": {
+   "enum": [
+    "ACCOUNT_OUT_OF_BUDGET_DETAIL",
+    "ADVERTISER_ARCHIVED_DETAIL",
+    "ADVERTISER_OUT_OF_BUDGET_DETAIL",
+    "ADVERTISER_PAUSED_DETAIL",
+    "ADVERTISER_PAYMENT_FAILURE_DETAIL",
+    "ADVERTISER_POLICING_PENDING_REVIEW_DETAIL",
+    "ADVERTISER_POLICING_SUSPENDED_DETAIL",
+    "AD_GROUP_ARCHIVED_DETAIL",
+    "AD_GROUP_INCOMPLETE_DETAIL",
+    "AD_GROUP_LOW_BID_DETAIL",
+    "AD_GROUP_PAUSED_DETAIL",
+    "AD_GROUP_POLICING_CREATIVE_REJECTED_DETAIL",
+    "AD_GROUP_POLICING_PENDING_REVIEW_DETAIL",
+    "AD_GROUP_STATUS_ENABLED_DETAIL",
+    "CAMPAIGN_ARCHIVED_DETAIL",
+    "CAMPAIGN_INCOMPLETE_DETAIL",
+    "CAMPAIGN_OUT_OF_BUDGET_DETAIL",
+    "CAMPAIGN_PAUSED_DETAIL",
+    "CAMPAIGN_STATUS_ENABLED_DETAIL",
+    "ENDED_DETAIL",
+    "OTHER",
+    "PENDING_REVIEW_DETAIL",
+    "PENDING_START_DATE_DETAIL",
+    "PORTFOLIO_ARCHIVED_DETAIL",
+    "PORTFOLIO_ENDED_DETAIL",
+    "PORTFOLIO_OUT_OF_BUDGET_DETAIL",
+    "PORTFOLIO_PAUSED_DETAIL",
+    "PORTFOLIO_PENDING_START_DATE_DETAIL",
+    "PORTFOLIO_STATUS_ENABLED_DETAIL",
+    "REJECTED_DETAIL",
+    "TARGETING_CLAUSE_ARCHIVED_DETAIL",
+    "TARGETING_CLAUSE_BLOCKED_DETAIL",
+    "TARGETING_CLAUSE_PAUSED_DETAIL",
+    "TARGETING_CLAUSE_POLICING_SUSPENDED_DETAIL",
+    "TARGETING_CLAUSE_STATUS_LIVE_DETAIL"
+   ],
+   "type": "string"
+  },
+  "RASv1TargetType": {
+   "enum": [
+    "AUTO",
+    "KEYWORD",
+    "PRODUCT",
+    "PRODUCT_CATEGORY"
+   ],
+   "type": "string"
+  },
+  "RASv1TargetingClauseSetupError": {
+   "description": "Errors related to targeting clause setup",
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "marketplace": {
+     "$ref": "RASv1Marketplace"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1TargetingClauseSetupErrorReason"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1TargetingClauseSetupErrorReason": {
+   "enum": [
+    "AUTO_TARGETING_CLAUSE_CANNOT_BE_CREATED_MANUALLY",
+    "TARGETING_EXPRESSION_INVALID_VALUE",
+    "TARGETING_TYPE_NOT_ALLOWED_FOR_AUTO_TARGETING_CAMPAIGN",
+    "TYPE_CONFLICT_IN_AD_GROUP"
+   ],
+   "type": "string"
+  },
+  "RASv1TargetingType": {
+   "enum": [
+    "AUTO",
+    "MANUAL"
+   ],
+   "type": "string"
+  },
+  "RASv1ThrottledError": {
+   "description": "Error that represents failure due to API caller exceeding allowed service limits.",
+   "properties": {
+    "cause": {
+     "$ref": "RASv1ErrorCause"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RASv1ThrottledErrorReason"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RASv1ThrottledErrorCode": {
+   "enum": [
+    "THROTTLED"
+   ],
+   "type": "string"
+  },
+  "RASv1ThrottledErrorReason": {
+   "enum": [
+    "THROTTLED"
+   ],
+   "type": "string"
+  },
+  "RASv1ThrottlingExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "RASv1ThrottledErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RASv1UnauthorizedErrorCode": {
+   "enum": [
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "RASv1UnauthorizedExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "RASv1UnauthorizedErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RASv1UpdateAdGroupInput": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the AdGroup.",
+     "type": "string"
+    },
+    "defaultBid": {
+     "description": "A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-co…",
+     "format": "double",
+     "type": "number"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    }
+   },
+   "required": [
+    "adGroupId"
+   ],
+   "type": "object"
+  },
+  "RASv1UpdateAdGroupsRequestContent": {
+   "properties": {
+    "adGroups": {
+     "description": "List of AdGroup to update",
+     "items": {
+      "$ref": "RASv1UpdateAdGroupInput"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "RASv1UpdateAdGroupsResponseContent": {
+   "properties": {
+    "adGroups": {
+     "$ref": "RASv1BulkMutateAdGroupsOutcomes"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "RASv1UpdateCampaignInput": {
+   "properties": {
+    "budget": {
+     "$ref": "RASv1BudgetInput"
+    },
+    "campaignId": {
+     "description": "The identifier of the Campaign.",
+     "type": "string"
+    },
+    "dynamicBidding": {
+     "$ref": "RASv1OptionalDynamicBidding"
+    },
+    "endDate": {
+     "description": "Campaign end date",
+     "format": "date",
+     "nullable": true,
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the campaign.",
+     "type": "string"
+    },
+    "portfolioId": {
+     "description": "The identifier of an existing portfolio to which the campaign is associated.",
+     "nullable": true,
+     "type": "string"
+    },
+    "startDate": {
+     "description": "Campaign start date. Default: today&#39;s date. The format of the date is YYYY-MM-DD.",
+     "format": "date",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    },
+    "tags": {
+     "description": "A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.",
+     "items": {
+      "$ref": "RASv1Tag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaignId"
+   ],
+   "type": "object"
+  },
+  "RASv1UpdateCampaignsRequestContent": {
+   "properties": {
+    "campaigns": {
+     "description": "List of Campaign to update",
+     "items": {
+      "$ref": "RASv1UpdateCampaignInput"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaigns"
+   ],
+   "type": "object"
+  },
+  "RASv1UpdateCampaignsResponseContent": {
+   "properties": {
+    "campaigns": {
+     "$ref": "RASv1BulkMutateCampaignsOutcomes"
+    }
+   },
+   "required": [
+    "campaigns"
+   ],
+   "type": "object"
+  },
+  "RASv1UpdateProductAdInput": {
+   "properties": {
+    "productAdId": {
+     "description": "The identifier of the ProductAd.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    }
+   },
+   "required": [
+    "productAdId"
+   ],
+   "type": "object"
+  },
+  "RASv1UpdateProductAdsRequestContent": {
+   "properties": {
+    "productAds": {
+     "description": "List of ProductAd to update",
+     "items": {
+      "$ref": "RASv1UpdateProductAdInput"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "productAds"
+   ],
+   "type": "object"
+  },
+  "RASv1UpdateProductAdsResponseContent": {
+   "properties": {
+    "productAds": {
+     "$ref": "RASv1BulkMutateProductAdsOutcomes"
+    }
+   },
+   "required": [
+    "productAds"
+   ],
+   "type": "object"
+  },
+  "RASv1UpdateTargetInput": {
+   "properties": {
+    "bid": {
+     "$ref": "RASv1TargetBidInput"
+    },
+    "state": {
+     "$ref": "RASv1EntityState"
+    },
+    "targetId": {
+     "description": "The identifier of the Target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "targetId"
+   ],
+   "type": "object"
+  },
+  "RASv1UpdateTargetsRequestContent": {
+   "properties": {
+    "targets": {
+     "description": "List of Target to update",
+     "items": {
+      "$ref": "RASv1UpdateTargetInput"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "RASv1UpdateTargetsResponseContent": {
+   "properties": {
+    "targets": {
+     "$ref": "RASv1BulkMutateTargetsOutcomes"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "RASv1ValueLimitErrorReason": {
+   "enum": [
+    "INVALID_ENUM_VALUE",
+    "NOT_IN_LIST",
+    "TOO_HIGH",
+    "TOO_LOW"
+   ],
+   "type": "string"
+  }
+ }
+}

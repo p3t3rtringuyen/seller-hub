@@ -1,0 +1,650 @@
+{
+  "ASINPrepInstructions": {
+    "description": "Item preparation instructions to help with item sourcing decisions.",
+    "properties": {
+      "ASIN": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      },
+      "BarcodeInstruction": {
+        "ref": "BarcodeInstruction"
+      },
+      "PrepGuidance": {
+        "ref": "PrepGuidance"
+      },
+      "PrepInstructionList": {
+        "ref": "PrepInstructionList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ASINPrepInstructionsList": {
+    "description": "A list of item preparation instructions.",
+    "properties": {},
+    "ref": "ASINPrepInstructions",
+    "required": [],
+    "type": "array"
+  },
+  "Address": {
+    "description": "Specific details to identify a place.",
+    "properties": {
+      "AddressLine1": {
+        "description": "The street address information.",
+        "type": "string"
+      },
+      "AddressLine2": {
+        "description": "Additional street address information, if required.",
+        "type": "string"
+      },
+      "City": {
+        "description": "The city.",
+        "type": "string"
+      },
+      "CountryCode": {
+        "description": "The country code in two-character ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "DistrictOrCounty": {
+        "description": "The district or county.",
+        "type": "string"
+      },
+      "Name": {
+        "description": "Name of the individual or business.",
+        "type": "string"
+      },
+      "PostalCode": {
+        "description": "The postal code.",
+        "type": "string"
+      },
+      "StateOrProvinceCode": {
+        "description": "The state or province code.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "AddressLine1",
+      "City",
+      "CountryCode",
+      "Name",
+      "PostalCode",
+      "StateOrProvinceCode"
+    ],
+    "type": "object"
+  },
+  "AmazonPrepFeesDetails": {
+    "description": "The fees for Amazon to prep goods for shipment.",
+    "properties": {
+      "FeePerUnit": {
+        "description": "The fee for Amazon to prepare 1 unit.",
+        "ref": "Amount"
+      },
+      "PrepInstruction": {
+        "ref": "PrepInstruction"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AmazonPrepFeesDetailsList": {
+    "description": "A list of preparation instructions and fees for Amazon to prep goods for shipment.",
+    "properties": {},
+    "ref": "AmazonPrepFeesDetails",
+    "required": [],
+    "type": "array"
+  },
+  "Amount": {
+    "description": "The monetary value.",
+    "properties": {
+      "CurrencyCode": {
+        "ref": "CurrencyCode"
+      },
+      "Value": {
+        "description": "The amount.",
+        "ref": "BigDecimalType"
+      }
+    },
+    "required": [
+      "CurrencyCode",
+      "Value"
+    ],
+    "type": "object"
+  },
+  "BarcodeInstruction": {
+    "description": "Labeling requirements for the item.",
+    "enum": [
+      "CanUseOriginalBarcode",
+      "MustProvideSellerSKU",
+      "RequiresFNSKULabel"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "BigDecimalType": {
+    "description": "Number format that supports decimal.",
+    "format": "double",
+    "properties": {},
+    "required": [],
+    "type": "number"
+  },
+  "BillOfLadingDownloadURL": {
+    "description": "Download URL for the bill of lading.",
+    "properties": {
+      "DownloadURL": {
+        "description": "URL to download the bill of lading for the package.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BoxContentsFeeDetails": {
+    "description": "The manual processing fee per unit and total fee for a shipment.",
+    "properties": {
+      "FeePerUnit": {
+        "description": "The manual processing fee per unit.",
+        "ref": "Amount"
+      },
+      "TotalFee": {
+        "description": "The total manual processing fee for the shipment.",
+        "ref": "Amount"
+      },
+      "TotalUnits": {
+        "description": "The number of units to ship.",
+        "ref": "Quantity"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BoxContentsSource": {
+    "description": "Where the seller provided box contents information for a shipment.",
+    "enum": [
+      "2D_BARCODE",
+      "FEED",
+      "INTERACTIVE",
+      "NONE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CurrencyCode": {
+    "description": "The currency code.",
+    "enum": [
+      "GBP",
+      "USD"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "DateStringType": {
+    "description": "Type containing date in string format",
+    "format": "date",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occured.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition in a human-readable form.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "ErrorReason": {
+    "description": "The reason that the ASIN is invalid.",
+    "enum": [
+      "DoesNotExist",
+      "InvalidASIN"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "GetBillOfLadingResponse": {
+    "description": "The response schema for the getBillOfLading operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the getBillOfLading operation.",
+        "ref": "BillOfLadingDownloadURL"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetLabelsResponse": {
+    "description": "The response schema for the getLabels operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the getLabels operation.",
+        "ref": "LabelDownloadURL"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetPrepInstructionsResponse": {
+    "description": "The response schema for the getPrepInstructions operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the getPrepInstructions operation.",
+        "ref": "GetPrepInstructionsResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetPrepInstructionsResult": {
+    "description": "Result for the get prep instructions operation",
+    "properties": {
+      "ASINPrepInstructionsList": {
+        "ref": "ASINPrepInstructionsList"
+      },
+      "InvalidASINList": {
+        "ref": "InvalidASINList"
+      },
+      "InvalidSKUList": {
+        "ref": "InvalidSKUList"
+      },
+      "SKUPrepInstructionsList": {
+        "ref": "SKUPrepInstructionsList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetShipmentItemsResponse": {
+    "description": "The response schema for the getShipmentItems operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the getShipmentItems operation.",
+        "ref": "GetShipmentItemsResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetShipmentItemsResult": {
+    "description": "Result for the get shipment items operation",
+    "properties": {
+      "ItemData": {
+        "description": "A list of item information for an inbound shipment.",
+        "ref": "InboundShipmentItemList"
+      },
+      "NextToken": {
+        "description": "When present and not empty, pass this string token in the next request to return the next response page.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetShipmentsResponse": {
+    "description": "The response schema for the getShipments operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the getShipments operation.",
+        "ref": "GetShipmentsResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetShipmentsResult": {
+    "description": "Result for the get shipments operation",
+    "properties": {
+      "NextToken": {
+        "description": "When present and not empty, pass this string token in the next request to return the next response page.",
+        "type": "string"
+      },
+      "ShipmentData": {
+        "description": "Information about your inbound shipments.",
+        "ref": "InboundShipmentList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InboundShipmentInfo": {
+    "description": "Information about the seller's inbound shipments.",
+    "properties": {
+      "AreCasesRequired": {
+        "description": "Indicates whether or not an inbound shipment contains case-packed boxes.",
+        "type": "boolean"
+      },
+      "BoxContentsSource": {
+        "ref": "BoxContentsSource"
+      },
+      "ConfirmedNeedByDate": {
+        "description": "Date by which the shipment must arrive at the Amazon fulfillment center to avoid delivery promise breaks for pre-ordered items.",
+        "ref": "DateStringType"
+      },
+      "DestinationFulfillmentCenterId": {
+        "description": "An Amazon fulfillment center identifier created by Amazon.",
+        "type": "string"
+      },
+      "EstimatedBoxContentsFee": {
+        "description": "An estimate of the manual processing fee charged by Amazon for boxes without box content information.",
+        "ref": "BoxContentsFeeDetails"
+      },
+      "LabelPrepType": {
+        "ref": "LabelPrepType"
+      },
+      "ShipFromAddress": {
+        "description": "The return address.",
+        "ref": "Address"
+      },
+      "ShipmentId": {
+        "description": "The shipment identifier submitted in the request.",
+        "type": "string"
+      },
+      "ShipmentName": {
+        "description": "The name for the inbound shipment.",
+        "type": "string"
+      },
+      "ShipmentStatus": {
+        "ref": "ShipmentStatus"
+      }
+    },
+    "required": [
+      "AreCasesRequired",
+      "ShipFromAddress"
+    ],
+    "type": "object"
+  },
+  "InboundShipmentItem": {
+    "description": "Item information for an inbound shipment.",
+    "properties": {
+      "FulfillmentNetworkSKU": {
+        "description": "Amazon's fulfillment network SKU of the item.",
+        "type": "string"
+      },
+      "PrepDetailsList": {
+        "ref": "PrepDetailsList"
+      },
+      "QuantityInCase": {
+        "description": "The item quantity in each case, for case-packed items.",
+        "ref": "Quantity"
+      },
+      "QuantityReceived": {
+        "description": "The item quantity that has been received at an Amazon fulfillment center.",
+        "ref": "Quantity"
+      },
+      "QuantityShipped": {
+        "description": "The item quantity that you are shipping.",
+        "ref": "Quantity"
+      },
+      "ReleaseDate": {
+        "description": "The date that a pre-order item will be available for sale.",
+        "ref": "DateStringType"
+      },
+      "SellerSKU": {
+        "description": "The seller SKU of the item.",
+        "type": "string"
+      },
+      "ShipmentId": {
+        "description": "A shipment identifier originally returned by the createInboundShipmentPlan operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "QuantityShipped",
+      "SellerSKU"
+    ],
+    "type": "object"
+  },
+  "InboundShipmentItemList": {
+    "description": "A list of inbound shipment item information.",
+    "properties": {},
+    "ref": "InboundShipmentItem",
+    "required": [],
+    "type": "array"
+  },
+  "InboundShipmentList": {
+    "description": "A list of inbound shipment information.",
+    "properties": {},
+    "ref": "InboundShipmentInfo",
+    "required": [],
+    "type": "array"
+  },
+  "InvalidASIN": {
+    "description": "Contains details about an invalid ASIN",
+    "properties": {
+      "ASIN": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      },
+      "ErrorReason": {
+        "description": "The reason that the ASIN is invalid.",
+        "ref": "ErrorReason"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InvalidASINList": {
+    "description": "A list of invalid ASIN values and the reasons they are invalid.",
+    "properties": {},
+    "ref": "InvalidASIN",
+    "required": [],
+    "type": "array"
+  },
+  "InvalidSKU": {
+    "description": "Contains detail about an invalid SKU",
+    "properties": {
+      "ErrorReason": {
+        "description": "The reason why the seller SKU is invalid.",
+        "ref": "ErrorReason"
+      },
+      "SellerSKU": {
+        "description": "The seller SKU of the item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InvalidSKUList": {
+    "description": "A list of invalid SKU values and the reason they are invalid.",
+    "properties": {},
+    "ref": "InvalidSKU",
+    "required": [],
+    "type": "array"
+  },
+  "LabelDownloadURL": {
+    "description": "Download URL for a label",
+    "properties": {
+      "DownloadURL": {
+        "description": "URL to download the label for the package.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "LabelPrepType": {
+    "description": "The type of label preparation that is required for the inbound shipment.",
+    "enum": [
+      "AMAZON_LABEL",
+      "NO_LABEL",
+      "SELLER_LABEL"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PrepDetails": {
+    "description": "Preparation instructions and who is responsible for the preparation.",
+    "properties": {
+      "PrepInstruction": {
+        "ref": "PrepInstruction"
+      },
+      "PrepOwner": {
+        "ref": "PrepOwner"
+      }
+    },
+    "required": [
+      "PrepInstruction",
+      "PrepOwner"
+    ],
+    "type": "object"
+  },
+  "PrepDetailsList": {
+    "description": "A list of preparation instructions and who is responsible for that preparation.",
+    "properties": {},
+    "ref": "PrepDetails",
+    "required": [],
+    "type": "array"
+  },
+  "PrepGuidance": {
+    "description": "Item preparation instructions.",
+    "enum": [
+      "ConsultHelpDocuments",
+      "NoAdditionalPrepRequired",
+      "SeePrepInstructionsList"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PrepInstruction": {
+    "description": "Preparation instructions for shipping an item to Amazon's fulfillment network.",
+    "enum": [
+      "BlackShrinkWrapping",
+      "BlankStickering",
+      "Boxing",
+      "BubbleWrapping",
+      "CapSealing",
+      "Debundle",
+      "HangGarment",
+      "Labeling",
+      "NoPrep",
+      "Polybagging",
+      "RemoveFromHanger",
+      "SetCreation",
+      "SetStickering",
+      "ShipsInProductPackaging",
+      "SuffocationStickering",
+      "Taping"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PrepInstructionList": {
+    "description": "A list of preparation instructions to help with item sourcing decisions.",
+    "properties": {},
+    "ref": "PrepInstruction",
+    "required": [],
+    "type": "array"
+  },
+  "PrepOwner": {
+    "description": "Indicates who will prepare the item.",
+    "enum": [
+      "AMAZON",
+      "SELLER"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Quantity": {
+    "description": "The item quantity.",
+    "format": "int32",
+    "properties": {},
+    "required": [],
+    "type": "integer"
+  },
+  "SKUPrepInstructions": {
+    "description": "Labeling requirements and item preparation instructions to help you prepare items for shipment to Amazon's fulfillment network.",
+    "properties": {
+      "ASIN": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      },
+      "AmazonPrepFeesDetailsList": {
+        "ref": "AmazonPrepFeesDetailsList"
+      },
+      "BarcodeInstruction": {
+        "ref": "BarcodeInstruction"
+      },
+      "PrepGuidance": {
+        "ref": "PrepGuidance"
+      },
+      "PrepInstructionList": {
+        "ref": "PrepInstructionList"
+      },
+      "SellerSKU": {
+        "description": "The seller SKU of the item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SKUPrepInstructionsList": {
+    "description": "A list of SKU labeling requirements and item preparation instructions.",
+    "properties": {},
+    "ref": "SKUPrepInstructions",
+    "required": [],
+    "type": "array"
+  },
+  "ShipmentStatus": {
+    "description": "Indicates the status of the inbound shipment.",
+    "enum": [
+      "CANCELLED",
+      "CHECKED_IN",
+      "CLOSED",
+      "DELETED",
+      "DELIVERED",
+      "ERROR",
+      "IN_TRANSIT",
+      "RECEIVING",
+      "SHIPPED",
+      "WORKING"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  }
+}

@@ -1,0 +1,508 @@
+{
+ "api": "AmazonAdsAPIALLGeoLocationsContract",
+ "file": "specs/dest/AmazonAdsAPIALLGeoLocationsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateGeoLocationCoordinates": {
+   "description": "Coordinates for a point of interest",
+   "properties": {
+    "latitude": {
+     "description": "Latitude coordinate. Example 47.6157",
+     "format": "double",
+     "type": "number"
+    },
+    "longitude": {
+     "description": "Longitude coordinate. Example 122.339",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "latitude",
+    "longitude"
+   ],
+   "type": "object"
+  },
+  "CreateGeoLocationRequest": {
+   "properties": {
+    "geoLocations": {
+     "items": {
+      "$ref": "GeoLocationCreate"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "geoLocations"
+   ],
+   "type": "object"
+  },
+  "CreateGeoLocationUnion": {
+   "oneOf": [
+    {
+     "properties": {
+      "radiusLocation": {
+       "$ref": "CreateRadiusLocation"
+      }
+     },
+     "required": [
+      "radiusLocation"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "smartLocation": {
+       "$ref": "CreateSmartLocation"
+      }
+     },
+     "required": [
+      "smartLocation"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateRadiusLocation": {
+   "description": "Configuration for a radius-based location. A minimum radius of 0.37 miles (2000 ft, 0.6km) is required.",
+   "properties": {
+    "coordinates": {
+     "$ref": "CreateGeoLocationCoordinates"
+    },
+    "pointOfInterestAddress": {
+     "description": "Address. Example '2111 7th Ave, Seattle, WA 98121, United States' or 'Amazon Spheres'",
+     "type": "string"
+    },
+    "pointOfInterestRadius": {
+     "description": "Radius of circle in kilometers or miles",
+     "format": "double",
+     "type": "number"
+    },
+    "units": {
+     "$ref": "DistanceUnit"
+    }
+   },
+   "required": [
+    "pointOfInterestRadius",
+    "units"
+   ],
+   "type": "object"
+  },
+  "CreateSmartLocation": {
+   "description": "A smart location targets postal codes based on a sales index.",
+   "properties": {
+    "locationIndexId": {
+     "description": "The ID of the index used for this smart location.",
+     "type": "string"
+    },
+    "maxIndexValuePercentile": {
+     "description": "Maximum percentile value (0-100). Must be greater than minIndexValuePercentile. Null will be treated as 0.",
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "minIndexValuePercentile": {
+     "description": "Minimum percentile value (0-100). Must be less than maxIndexValuePercentile. Null will be treated as 0.",
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "name": {
+     "description": "Name for the smart location.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "locationIndexId",
+    "name"
+   ],
+   "type": "object"
+  },
+  "DistanceUnit": {
+   "description": "**DistanceUnit Enum:** | DistanceUnit | Description | | --- | --- | | `KILOMETERS` | Distance in kilometers | | `MILES` | Distance in miles |",
+   "enum": [
+    "KILOMETERS",
+    "MILES"
+   ],
+   "type": "string"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "FEATURE_NOT_AVAILABLE",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GeoLocation": {
+   "properties": {
+    "geoLocationId": {
+     "description": "The identifier of the geo location.",
+     "type": "string"
+    },
+    "location": {
+     "$ref": "GeoLocationUnion"
+    }
+   },
+   "required": [
+    "geoLocationId",
+    "location"
+   ],
+   "type": "object"
+  },
+  "GeoLocationCoordinates": {
+   "description": "Coordinates for a point of interest",
+   "properties": {
+    "latitude": {
+     "description": "Latitude coordinate. Example 47.6157",
+     "format": "double",
+     "type": "number"
+    },
+    "longitude": {
+     "description": "Longitude coordinate. Example 122.339",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "latitude",
+    "longitude"
+   ],
+   "type": "object"
+  },
+  "GeoLocationCreate": {
+   "properties": {
+    "location": {
+     "$ref": "CreateGeoLocationUnion"
+    }
+   },
+   "required": [
+    "location"
+   ],
+   "type": "object"
+  },
+  "GeoLocationMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "GeoLocationMultiStatusSuccess"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "GeoLocationMultiStatusSuccess": {
+   "properties": {
+    "geoLocation": {
+     "$ref": "GeoLocation"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "geoLocation",
+    "index"
+   ],
+   "type": "object"
+  },
+  "GeoLocationUnion": {
+   "oneOf": [
+    {
+     "properties": {
+      "radiusLocation": {
+       "$ref": "RadiusLocation"
+      }
+     },
+     "required": [
+      "radiusLocation"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "smartLocation": {
+       "$ref": "SmartLocation"
+      }
+     },
+     "required": [
+      "smartLocation"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RadiusLocation": {
+   "description": "Configuration for a radius-based location. A minimum radius of 0.37 miles (2000 ft, 0.6km) is required.",
+   "properties": {
+    "coordinates": {
+     "$ref": "GeoLocationCoordinates"
+    },
+    "pointOfInterestAddress": {
+     "description": "Address. Example '2111 7th Ave, Seattle, WA 98121, United States' or 'Amazon Spheres'",
+     "type": "string"
+    },
+    "pointOfInterestRadius": {
+     "description": "Radius of circle in kilometers or miles",
+     "format": "double",
+     "type": "number"
+    },
+    "units": {
+     "$ref": "DistanceUnit"
+    }
+   },
+   "required": [
+    "pointOfInterestRadius",
+    "units"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SmartLocation": {
+   "description": "A smart location targets postal codes based on a sales index.",
+   "properties": {
+    "locationIndexId": {
+     "description": "The ID of the index used for this smart location.",
+     "type": "string"
+    },
+    "maxIndexValuePercentile": {
+     "description": "Maximum percentile value (0-100). Must be greater than minIndexValuePercentile. Null will be treated as 0.",
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "minIndexValuePercentile": {
+     "description": "Minimum percentile value (0-100). Must be less than maxIndexValuePercentile. Null will be treated as 0.",
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "name": {
+     "description": "Name for the smart location.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "locationIndexId",
+    "name"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

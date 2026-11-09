@@ -1,0 +1,97 @@
+{
+  "CreateSandboxLocationRequest": {
+    "description": "The request object for creating a sandbox location.",
+    "properties": {
+      "channels": {
+        "description": "The list of channels to enable for the location.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "locationName": {
+        "description": "The name for the sandbox location.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "ref": "MarketplaceId"
+      },
+      "merchantIds": {
+        "description": "The list of merchant identifiers to create the location for.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "locationName",
+      "marketplaceId",
+      "merchantIds"
+    ],
+    "type": "object"
+  },
+  "CreateSandboxLocationResponse": {
+    "description": "The response object for creating a sandbox location.",
+    "properties": {
+      "locationIds": {
+        "ref": "LocationIdMap"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "An error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "LocationIdMap": {
+    "description": "A map of channel to location identifier.",
+    "properties": {
+      "FBA": {
+        "description": "The location identifier for the FBA channel.",
+        "type": "string"
+      },
+      "MFN": {
+        "description": "The location identifier for the MFN channel.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "MarketplaceId": {
+    "description": "The identifier for the marketplace.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  }
+}

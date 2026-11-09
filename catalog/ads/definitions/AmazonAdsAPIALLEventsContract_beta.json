@@ -1,0 +1,1052 @@
+{
+ "api": "AmazonAdsAPIALLEventsContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLEventsContract_prod_3p_BETA.json",
+ "schemas": {
+  "AmazonConsentFormat": {
+   "description": "Captures information as to whether a user has consented to their data being used for advertising purposes.",
+   "properties": {
+    "amznAdStorage": {
+     "$ref": "ConsentStatus"
+    },
+    "amznUserData": {
+     "$ref": "ConsentStatus"
+    }
+   },
+   "required": [
+    "amznUserData"
+   ],
+   "type": "object"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Consent": {
+   "description": "Describes consent given by the user associated with the conversion event to have their data used for advertising purposes. For EU advertisers, it is required to provide one of geo, amazonConsent, tcf, or gpp.",
+   "properties": {
+    "amazonConsent": {
+     "$ref": "AmazonConsentFormat"
+    },
+    "geo": {
+     "$ref": "GeographicConsentData"
+    },
+    "gpp": {
+     "description": "An encoded Global Privacy Platform (GPP) string describing what the user has consented to. This string encapsulates user privacy preferences and consent information in a compact format.",
+     "type": "string"
+    },
+    "tcf": {
+     "description": "An encoded Transparency and Consent Framework (TCF) string describing what the user has consented to. This string contains information about user consent choices in a compressed format.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ConsentStatus": {
+   "description": "**ConsentStatus Enum:** | ConsentStatus | Description | | --- | --- | | `GRANTED` | Consent has been granted. | | `DENIED` | Consent has been denied. |",
+   "enum": [
+    "DENIED",
+    "GRANTED"
+   ],
+   "type": "string"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ConversionType": {
+   "description": "**ConversionType Enum:** | ConversionType | Description | | --- | --- | | `ADD_TO_SHOPPING_CART` | When customers add a product to their shopping cart. | | `APPLICATION` | When customers submit an application. | | `CHEC…",
+   "enum": [
+    "ADD_TO_SHOPPING_CART",
+    "APPLICATION",
+    "CHECKOUT",
+    "CONTACT",
+    "LEAD",
+    "MOBILE_APP_FIRST_START",
+    "OFF_AMAZON_PURCHASES",
+    "OTHER",
+    "PAGE_VIEW",
+    "SEARCH",
+    "SIGN_UP",
+    "SUBSCRIBE"
+   ],
+   "type": "string"
+  },
+  "CountryCode": {
+   "enum": [
+    "AD",
+    "AE",
+    "AF",
+    "AG",
+    "AI",
+    "AL",
+    "AM",
+    "AO",
+    "AQ",
+    "AR",
+    "AS",
+    "AT",
+    "AU",
+    "AW",
+    "AX",
+    "AZ",
+    "BA",
+    "BB",
+    "BD",
+    "BE",
+    "BF",
+    "BG",
+    "BH",
+    "BI",
+    "BJ",
+    "BL",
+    "BM",
+    "BN",
+    "BO",
+    "BQ",
+    "BR",
+    "BS",
+    "BT",
+    "BV",
+    "BW",
+    "BY",
+    "BZ",
+    "CA",
+    "CC",
+    "CD",
+    "CF",
+    "CG",
+    "CH",
+    "CI",
+    "CK",
+    "CL",
+    "CM",
+    "CN",
+    "CO",
+    "CR",
+    "CU",
+    "CV",
+    "CW",
+    "CX",
+    "CY",
+    "CZ",
+    "DE",
+    "DJ",
+    "DK",
+    "DM",
+    "DO",
+    "DZ",
+    "EC",
+    "EE",
+    "EG",
+    "EH",
+    "ER",
+    "ES",
+    "ET",
+    "FI",
+    "FJ",
+    "FK",
+    "FM",
+    "FO",
+    "FR",
+    "GA",
+    "GB",
+    "GD",
+    "GE",
+    "GF",
+    "GG",
+    "GH",
+    "GI",
+    "GL",
+    "GM",
+    "GN",
+    "GP",
+    "GQ",
+    "GR",
+    "GS",
+    "GT",
+    "GU",
+    "GW",
+    "GY",
+    "HK",
+    "HM",
+    "HN",
+    "HR",
+    "HT",
+    "HU",
+    "ID",
+    "IE",
+    "IL",
+    "IM",
+    "IN",
+    "IO",
+    "IQ",
+    "IR",
+    "IS",
+    "IT",
+    "JE",
+    "JM",
+    "JO",
+    "JP",
+    "KE",
+    "KG",
+    "KH",
+    "KI",
+    "KM",
+    "KN",
+    "KP",
+    "KR",
+    "KW",
+    "KY",
+    "KZ",
+    "LA",
+    "LB",
+    "LC",
+    "LI",
+    "LK",
+    "LR",
+    "LS",
+    "LT",
+    "LU",
+    "LV",
+    "LY",
+    "MA",
+    "MC",
+    "MD",
+    "ME",
+    "MF",
+    "MG",
+    "MH",
+    "MK",
+    "ML",
+    "MM",
+    "MN",
+    "MO",
+    "MP",
+    "MQ",
+    "MR",
+    "MS",
+    "MT",
+    "MU",
+    "MV",
+    "MW",
+    "MX",
+    "MY",
+    "MZ",
+    "NA",
+    "NC",
+    "NE",
+    "NF",
+    "NG",
+    "NI",
+    "NL",
+    "NO",
+    "NP",
+    "NR",
+    "NU",
+    "NZ",
+    "OM",
+    "PA",
+    "PE",
+    "PF",
+    "PG",
+    "PH",
+    "PK",
+    "PL",
+    "PM",
+    "PN",
+    "PR",
+    "PS",
+    "PT",
+    "PW",
+    "PY",
+    "QA",
+    "RE",
+    "RO",
+    "RS",
+    "RU",
+    "RW",
+    "SA",
+    "SB",
+    "SC",
+    "SD",
+    "SE",
+    "SG",
+    "SH",
+    "SI",
+    "SJ",
+    "SK",
+    "SL",
+    "SM",
+    "SN",
+    "SO",
+    "SR",
+    "SS",
+    "ST",
+    "SV",
+    "SX",
+    "SY",
+    "SZ",
+    "TC",
+    "TD",
+    "TF",
+    "TG",
+    "TH",
+    "TJ",
+    "TK",
+    "TL",
+    "TM",
+    "TN",
+    "TO",
+    "TR",
+    "TT",
+    "TV",
+    "TW",
+    "TZ",
+    "UA",
+    "UG",
+    "UM",
+    "US",
+    "UY",
+    "UZ",
+    "VA",
+    "VC",
+    "VE",
+    "VG",
+    "VI",
+    "VN",
+    "VU",
+    "WF",
+    "WS",
+    "YE",
+    "YT",
+    "ZA",
+    "ZM",
+    "ZW",
+    "ZZ"
+   ],
+   "type": "string"
+  },
+  "CreateAmazonConsentFormat": {
+   "description": "Captures information as to whether a user has consented to their data being used for advertising purposes.",
+   "properties": {
+    "amznAdStorage": {
+     "$ref": "ConsentStatus"
+    },
+    "amznUserData": {
+     "$ref": "ConsentStatus"
+    }
+   },
+   "required": [
+    "amznUserData"
+   ],
+   "type": "object"
+  },
+  "CreateConsent": {
+   "description": "Describes consent given by the user associated with the conversion event to have their data used for advertising purposes. For EU advertisers, it is required to provide one of geo, amazonConsent, tcf, or gpp.",
+   "properties": {
+    "amazonConsent": {
+     "$ref": "CreateAmazonConsentFormat"
+    },
+    "geo": {
+     "$ref": "CreateGeographicConsentData"
+    },
+    "gpp": {
+     "description": "An encoded Global Privacy Platform (GPP) string describing what the user has consented to. This string encapsulates user privacy preferences and consent information in a compact format.",
+     "type": "string"
+    },
+    "tcf": {
+     "description": "An encoded Transparency and Consent Framework (TCF) string describing what the user has consented to. This string contains information about user consent choices in a compressed format.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CreateCustomData": {
+   "description": "Custom data associated with the event to provide additional context.",
+   "properties": {
+    "dataType": {
+     "$ref": "DataType"
+    },
+    "name": {
+     "description": "Name of the custom attribute. Only letters, numbers and the underscore character are allowed. e.g. brand, category, productId.",
+     "type": "string"
+    },
+    "value": {
+     "description": "Value of the custom attribute. Only letters, numbers and the underscore character are allowed.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "name",
+    "value"
+   ],
+   "type": "object"
+  },
+  "CreateDataProcessingOptions": {
+   "description": "A list of data processing options.",
+   "properties": {
+    "options": {
+     "$ref": "DataProcessingOption"
+    }
+   },
+   "type": "object"
+  },
+  "CreateDeviceInfo": {
+   "description": "Device information associated with the conversion event.",
+   "properties": {
+    "userAgent": {
+     "description": "Raw user agent string from the browser or app at the time of the event. Max 512 characters.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CreateEventDescription": {
+   "description": "The composite key that uniquely identifies an event.",
+   "properties": {
+    "conversionType": {
+     "$ref": "ConversionType"
+    },
+    "dataSetName": {
+     "description": "Event DataSet name to which this event should be added to.",
+     "type": "string"
+    },
+    "eventIngestionMethod": {
+     "$ref": "EventIngestionMethod"
+    },
+    "eventSource": {
+     "$ref": "EventSource"
+    },
+    "name": {
+     "description": "The name of the imported event.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "conversionType",
+    "eventIngestionMethod",
+    "eventSource",
+    "name"
+   ],
+   "type": "object"
+  },
+  "CreateEventRequest": {
+   "properties": {
+    "events": {
+     "items": {
+      "$ref": "EventCreate"
+     },
+     "maxItems": 500,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "events"
+   ],
+   "type": "object"
+  },
+  "CreateGeographicConsentData": {
+   "description": "Captures the user's geographic information for purposes of consent checking.",
+   "properties": {
+    "ipAddress": {
+     "description": "IP address of the user associated with the conversion event.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "ipAddress"
+   ],
+   "type": "object"
+  },
+  "CreateMatchKey": {
+   "description": "The identifier used to match people for attribution. PII-based match key data needs to be normalized and hashed (SHA-256). REAL_ID, MERKLE_ID, KANTAR_ID, FIP, and AREF_TOKEN accept raw identifier values. Email addresses…",
+   "properties": {
+    "type": {
+     "$ref": "MatchKeyType"
+    },
+    "values": {
+     "description": "Identifier value of the customer who performed the event. SHA-256 hashed for PII-based keys; raw value for REAL_ID, MERKLE_ID, KANTAR_ID, FIP, and AREF_TOKEN.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "type",
+    "values"
+   ],
+   "type": "object"
+  },
+  "CurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | | --- | --- | | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `CNY` | Chinese Yuan | |…",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CNY",
+    "DKK",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "NOK",
+    "NZD",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "CustomData": {
+   "description": "Custom data associated with the event to provide additional context.",
+   "properties": {
+    "dataType": {
+     "$ref": "DataType"
+    },
+    "name": {
+     "description": "Name of the custom attribute. Only letters, numbers and the underscore character are allowed. e.g. brand, category, productId.",
+     "type": "string"
+    },
+    "value": {
+     "description": "Value of the custom attribute. Only letters, numbers and the underscore character are allowed.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "name",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DataProcessingOption": {
+   "description": "**DataProcessingOption Enum:** | DataProcessingOption | Description | | --- | --- | | `LIMITED_DATA_USE` | Indicates that the event should be processed with limited data use. |",
+   "enum": [
+    "LIMITED_DATA_USE"
+   ],
+   "type": "string"
+  },
+  "DataProcessingOptions": {
+   "description": "A list of data processing options.",
+   "properties": {
+    "options": {
+     "$ref": "DataProcessingOption"
+    }
+   },
+   "type": "object"
+  },
+  "DataType": {
+   "description": "**DataType Enum:** | DataType | Description | | --- | --- | | `STRING` | String data type. | | `INTEGER` | 32-bit signed integer data type. | | `TIMESTAMP` | Timestamp data type. |",
+   "enum": [
+    "INTEGER",
+    "STRING",
+    "TIMESTAMP"
+   ],
+   "type": "string"
+  },
+  "DeviceInfo": {
+   "description": "Device information associated with the conversion event.",
+   "properties": {
+    "userAgent": {
+     "description": "Raw user agent string from the browser or app at the time of the event. Max 512 characters.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 499,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "Event": {
+   "properties": {
+    "amazonAdEventKey": {
+     "description": "Amazon Traffic identifier for post attributed events (if applicable).",
+     "type": "string"
+    },
+    "consent": {
+     "$ref": "Consent"
+    },
+    "countryCode": {
+     "$ref": "CountryCode"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "customData": {
+     "description": "Custom data associated with the event.",
+     "items": {
+      "$ref": "CustomData"
+     },
+     "maxItems": 13,
+     "minItems": 0,
+     "type": "array"
+    },
+    "dataProcessingOptions": {
+     "$ref": "DataProcessingOptions"
+    },
+    "deviceInfo": {
+     "$ref": "DeviceInfo"
+    },
+    "eventDescription": {
+     "$ref": "EventDescription"
+    },
+    "eventId": {
+     "description": "The client specified id for the event. For events with the same eventId only the latest event will be kept.",
+     "type": "string"
+    },
+    "eventTime": {
+     "description": "The reported timestamp of when the event occurred.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "matchKeys": {
+     "description": "Array representing the user and device identifier types/values to be used for attribution to traffic events. Match key value must be normalized and hashed, except for MAID, RAMP_ID, MATCH_ID, REAL_ID, MERKLE_ID, KANTAR_…",
+     "items": {
+      "$ref": "MatchKey"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    },
+    "partner": {
+     "description": "The name of the third-party service used to deliver the conversions (if applicable).",
+     "type": "string"
+    },
+    "unitsSold": {
+     "description": "The number of items purchased. Only applicable for OFF_AMAZON_PURCHASES event type. If not provided on the event, a default of 1 will be applied.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "value": {
+     "description": "Represents value of the event. For OFF_AMAZON_PURCHASES conversionType, represents monetary value (min 0, max 2 decimals). For other conversionTypes, represents non-monetary value on your chosen scale (can be negative, …",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "countryCode",
+    "eventDescription",
+    "eventTime",
+    "matchKeys"
+   ],
+   "type": "object"
+  },
+  "EventCreate": {
+   "properties": {
+    "amazonAdEventKey": {
+     "description": "Amazon Traffic identifier for post attributed events (if applicable).",
+     "type": "string"
+    },
+    "consent": {
+     "$ref": "CreateConsent"
+    },
+    "countryCode": {
+     "$ref": "CountryCode"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "customData": {
+     "description": "Custom data associated with the event.",
+     "items": {
+      "$ref": "CreateCustomData"
+     },
+     "maxItems": 13,
+     "minItems": 0,
+     "type": "array"
+    },
+    "dataProcessingOptions": {
+     "$ref": "CreateDataProcessingOptions"
+    },
+    "deviceInfo": {
+     "$ref": "CreateDeviceInfo"
+    },
+    "eventDescription": {
+     "$ref": "CreateEventDescription"
+    },
+    "eventId": {
+     "description": "The client specified id for the event. For events with the same eventId only the latest event will be kept.",
+     "type": "string"
+    },
+    "eventTime": {
+     "description": "The reported timestamp of when the event occurred.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "matchKeys": {
+     "description": "Array representing the user and device identifier types/values to be used for attribution to traffic events. Match key value must be normalized and hashed, except for MAID, RAMP_ID, MATCH_ID, REAL_ID, MERKLE_ID, KANTAR_…",
+     "items": {
+      "$ref": "CreateMatchKey"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    },
+    "partner": {
+     "description": "The name of the third-party service used to deliver the conversions (if applicable).",
+     "type": "string"
+    },
+    "unitsSold": {
+     "description": "The number of items purchased. Only applicable for OFF_AMAZON_PURCHASES event type. If not provided on the event, a default of 1 will be applied.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "value": {
+     "description": "Represents value of the event. For OFF_AMAZON_PURCHASES conversionType, represents monetary value (min 0, max 2 decimals). For other conversionTypes, represents non-monetary value on your chosen scale (can be negative, …",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "countryCode",
+    "eventDescription",
+    "eventTime",
+    "matchKeys"
+   ],
+   "type": "object"
+  },
+  "EventDescription": {
+   "description": "The composite key that uniquely identifies an event.",
+   "properties": {
+    "conversionType": {
+     "$ref": "ConversionType"
+    },
+    "dataSetName": {
+     "description": "Event DataSet name to which this event should be added to.",
+     "type": "string"
+    },
+    "eventIngestionMethod": {
+     "$ref": "EventIngestionMethod"
+    },
+    "eventSource": {
+     "$ref": "EventSource"
+    },
+    "name": {
+     "description": "The name of the imported event.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "conversionType",
+    "eventIngestionMethod",
+    "eventSource",
+    "name"
+   ],
+   "type": "object"
+  },
+  "EventIngestionMethod": {
+   "description": "**EventIngestionMethod Enum:** | EventIngestionMethod | Description | | --- | --- | | `SERVER_TO_SERVER` | Events tracked with the events import API. |",
+   "enum": [
+    "SERVER_TO_SERVER"
+   ],
+   "type": "string"
+  },
+  "EventMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "EventMultiStatusSuccess"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "EventMultiStatusSuccess": {
+   "properties": {
+    "event": {
+     "$ref": "Event"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 499,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "event",
+    "index"
+   ],
+   "type": "object"
+  },
+  "EventSource": {
+   "description": "**EventSource Enum:** | EventSource | Description | | --- | --- | | `ANDROID` | Events from a mobile application on the Android operating system. | | `FIRE_TV` | Events from a mobile application on the Fire TV operating…",
+   "enum": [
+    "ANDROID",
+    "FIRE_TV",
+    "IOS",
+    "MEASUREMENT_ATTRIBUTION_PARTNER",
+    "OFFLINE",
+    "WEBSITE"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GeographicConsentData": {
+   "description": "Captures the user's geographic information for purposes of consent checking.",
+   "properties": {
+    "ipAddress": {
+     "description": "IP address of the user associated with the conversion event.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "ipAddress"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "MatchKey": {
+   "description": "The identifier used to match people for attribution. PII-based match key data needs to be normalized and hashed (SHA-256). REAL_ID, MERKLE_ID, KANTAR_ID, FIP, and AREF_TOKEN accept raw identifier values. Email addresses…",
+   "properties": {
+    "type": {
+     "$ref": "MatchKeyType"
+    },
+    "values": {
+     "description": "Identifier value of the customer who performed the event. SHA-256 hashed for PII-based keys; raw value for REAL_ID, MERKLE_ID, KANTAR_ID, FIP, and AREF_TOKEN.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "type",
+    "values"
+   ],
+   "type": "object"
+  },
+  "MatchKeyType": {
+   "description": "**MatchKeyType Enum:** | MatchKeyType | Description | | --- | --- | | `EMAIL` | Email address match key type. | | `PHONE` | Phone number match key type. | | `FIRST_NAME` | First name match key type. | | `LAST_NAME` | La…",
+   "enum": [
+    "ADDRESS",
+    "CITY",
+    "EMAIL",
+    "FIP",
+    "FIRST_NAME",
+    "KANTAR_ID",
+    "LAST_NAME",
+    "MAID",
+    "MATCH_ID",
+    "MERKLE_ID",
+    "PHONE",
+    "POSTAL",
+    "RAMP_ID",
+    "REAL_ID",
+    "STATE"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

@@ -1,0 +1,379 @@
+{
+ "api": "AmazonAdsAPIALLLinearTvDaypartsContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLLinearTvDaypartsContract_prod_3p_BETA.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DayOfWeek": {
+   "description": "**DayOfWeek Enum:** | DayOfWeek | Description | | --- | --- | | `MONDAY` | Monday. | | `TUESDAY` | Tuesday. | | `WEDNESDAY` | Wednesday. | | `THURSDAY` | Thursday. | | `FRIDAY` | Friday. | | `SATURDAY` | Saturday. | | `…",
+   "enum": [
+    "FRIDAY",
+    "MONDAY",
+    "SATURDAY",
+    "SUNDAY",
+    "THURSDAY",
+    "TUESDAY",
+    "WEDNESDAY"
+   ],
+   "type": "string"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "LinearTvDaypart": {
+   "properties": {
+    "daypartType": {
+     "$ref": "LinearTvDaypartType"
+    },
+    "description": {
+     "description": "Description of the daypart.",
+     "type": "string"
+    },
+    "linearTvDaypartId": {
+     "description": "A unique identifier for a daypart.",
+     "type": "string"
+    },
+    "marketplaceDefinitions": {
+     "description": "Definition of the daypart by marketplace.",
+     "items": {
+      "$ref": "LinearTvDaypartMarketplaceDefinition"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "name": {
+     "$ref": "LinearTvDaypartName"
+    }
+   },
+   "required": [
+    "daypartType",
+    "linearTvDaypartId",
+    "marketplaceDefinitions",
+    "name"
+   ],
+   "type": "object"
+  },
+  "LinearTvDaypartLinearTvDaypartNameFilter": {
+   "properties": {
+    "include": {
+     "description": "**Name Enum:** | Name | Description | | --- | --- | | `EARLY_FRINGE` | The time period in the early evening, typically from 4:30 PM to 7:30 PM, leading into prime time. This daypart often features local news, syndicated…",
+     "items": {
+      "$ref": "LinearTvDaypartName"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "LinearTvDaypartMarketplaceDefinition": {
+   "properties": {
+    "endDayOfWeek": {
+     "$ref": "DayOfWeek"
+    },
+    "endHourOfDay": {
+     "description": "Hour of the end time (local time zone) targeted by the daypart.",
+     "format": "int32",
+     "maximum": 23,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "endMinuteOfDay": {
+     "description": "Minute of the end time (local time zone) targeted by the daypart.",
+     "format": "int32",
+     "maximum": 59,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "marketplace": {
+     "$ref": "Marketplace"
+    },
+    "startDayOfWeek": {
+     "$ref": "DayOfWeek"
+    },
+    "startHourOfDay": {
+     "description": "Hour of the start time (local time zone) targeted by the daypart.",
+     "format": "int32",
+     "maximum": 23,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "startMinuteOfDay": {
+     "description": "Minute of the start time (local time zone) targeted by the daypart.",
+     "format": "int32",
+     "maximum": 59,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "endDayOfWeek",
+    "endHourOfDay",
+    "endMinuteOfDay",
+    "marketplace",
+    "startDayOfWeek",
+    "startHourOfDay",
+    "startMinuteOfDay"
+   ],
+   "type": "object"
+  },
+  "LinearTvDaypartMarketplaceFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "Marketplace"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "LinearTvDaypartName": {
+   "description": "**LinearTvDaypartName Enum:** | LinearTvDaypartName | Description | | --- | --- | | `EARLY_FRINGE` | The time period in the early evening, typically from 4:30 PM to 7:30 PM, leading into prime time. This daypart often f…",
+   "enum": [
+    "ALL_DAY",
+    "EARLY_FRINGE",
+    "LATE_FRINGE",
+    "PRIME_TIME",
+    "WEEKDAY_DAYTIME",
+    "WEEKDAY_MORNING",
+    "WEEKEND_DAYTIME"
+   ],
+   "type": "string"
+  },
+  "LinearTvDaypartSuccessResponse": {
+   "properties": {
+    "linearTvDayparts": {
+     "items": {
+      "$ref": "LinearTvDaypart"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "LinearTvDaypartType": {
+   "description": "**LinearTvDaypartType Enum:** | LinearTvDaypartType | Description | | --- | --- | | `STANDARD` | Industry-standard Linear TV daypart |",
+   "enum": [
+    "STANDARD"
+   ],
+   "type": "string"
+  },
+  "Marketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "SA",
+    "SE",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryLinearTvDaypartRequest": {
+   "properties": {
+    "marketplaceFilter": {
+     "$ref": "LinearTvDaypartMarketplaceFilter"
+    },
+    "maxResults": {
+     "default": 20,
+     "format": "int32",
+     "maximum": 20,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "LinearTvDaypartLinearTvDaypartNameFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

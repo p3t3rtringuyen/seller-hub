@@ -1,0 +1,2823 @@
+{
+  "AccessPoint": {
+    "description": "Access point details",
+    "properties": {
+      "accessPointId": {
+        "ref": "AccessPointId"
+      },
+      "accessibilityAttributes": {
+        "ref": "AccessibilityAttributes"
+      },
+      "address": {
+        "ref": "Address"
+      },
+      "assistanceType": {
+        "description": "Assistance type enum for Access point i.e.",
+        "enum": [
+          "SELF_ASSISTED",
+          "STAFF_ASSISTED"
+        ],
+        "type": "string"
+      },
+      "exceptionOperatingHours": {
+        "description": "Exception operating hours for Access Point",
+        "ref": "ExceptionOperatingHours",
+        "type": "array"
+      },
+      "name": {
+        "description": "Name of entity (store/hub etc) where this access point is located",
+        "type": "string"
+      },
+      "score": {
+        "description": "The score of access point, based on proximity to postal code and sorting preference.",
+        "type": "string"
+      },
+      "standardOperatingHours": {
+        "ref": "DayOfWeekTimeMap"
+      },
+      "timezone": {
+        "description": "Timezone of access point",
+        "type": "string"
+      },
+      "type": {
+        "ref": "AccessPointType"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AccessPointDetails": {
+    "description": "AccessPointDetails object",
+    "properties": {
+      "accessPointId": {
+        "ref": "AccessPointId"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AccessPointId": {
+    "description": "Unique identifier for the access point",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AccessPointList": {
+    "description": "List of relevant Access points requested by shipper.",
+    "properties": {},
+    "ref": "AccessPoint",
+    "required": [],
+    "type": "array"
+  },
+  "AccessPointType": {
+    "description": "The type of access point, like counter (HELIX), lockers, etc.",
+    "enum": [
+      "3P",
+      "CAMPUS_LOCKER",
+      "CAMPUS_ROOM",
+      "CORE_LOCKER",
+      "DOBBY_LOCKER",
+      "HELIX",
+      "ODIN_LOCKER",
+      "OMNI_LOCKER"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AccessPointsMap": {
+    "description": "Map of type of access point to list of access points",
+    "properties": {},
+    "ref": "AccessPointList",
+    "required": [],
+    "type": "object"
+  },
+  "AccessibilityAttributes": {
+    "description": "Defines the accessibility details of the access point.",
+    "properties": {
+      "distance": {
+        "description": "The approximate distance of access point from input postalCode's centroid.",
+        "type": "string"
+      },
+      "driveTime": {
+        "description": "The approximate (static) drive time from input postal code's centroid.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AccountId": {
+    "description": "Identifier for the seller's carrier account.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AccountStatus": {
+    "description": "Account Status.",
+    "enum": [
+      "ACTIVE",
+      "INACTIVE",
+      "PENDING",
+      "SUSPENDED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AccountType": {
+    "description": "Shipper Account Type.",
+    "enum": [
+      "AMAZON_ACCOUNT",
+      "SHIPPER_ACCOUNT",
+      "SHIPPER_ACCOUNT_WITH_INVOICE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ActiveAccount": {
+    "description": "Active Account Details",
+    "properties": {
+      "accountId": {
+        "ref": "AccountId"
+      },
+      "carrierId": {
+        "ref": "CarrierId"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ActiveAccounts": {
+    "description": "A list of ActiveAccount",
+    "properties": {},
+    "ref": "ActiveAccount",
+    "required": [],
+    "type": "array"
+  },
+  "AdditionalAddressNotes": {
+    "description": "Address notes to re-attempt delivery with.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Address": {
+    "description": "The address.",
+    "properties": {
+      "addressLine1": {
+        "description": "The first line of the address.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "addressLine3": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "city": {
+        "ref": "City"
+      },
+      "companyName": {
+        "description": "The name of the business or institution associated with the address.",
+        "type": "string"
+      },
+      "countryCode": {
+        "ref": "CountryCode"
+      },
+      "email": {
+        "description": "The email address of the contact associated with the address.",
+        "type": "string"
+      },
+      "geocode": {
+        "ref": "Geocode"
+      },
+      "name": {
+        "description": "The name of the person, business or institution at the address.",
+        "type": "string"
+      },
+      "phoneNumber": {
+        "description": "The phone number of the person, business or institution located at that address, including the country calling code.",
+        "type": "string"
+      },
+      "postalCode": {
+        "ref": "PostalCode"
+      },
+      "stateOrRegion": {
+        "ref": "StateOrRegion"
+      }
+    },
+    "required": [
+      "addressLine1",
+      "city",
+      "countryCode",
+      "name",
+      "postalCode",
+      "stateOrRegion"
+    ],
+    "type": "object"
+  },
+  "AlternateLegTrackingId": {
+    "description": "The carrier generated reverse identifier for a returned package in a purchased shipment.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AmazonOrderDetails": {
+    "description": "Amazon order information.",
+    "properties": {
+      "orderId": {
+        "description": "The Amazon order ID associated with the Amazon order fulfilled by this shipment.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "orderId"
+    ],
+    "type": "object"
+  },
+  "AmazonShipmentDetails": {
+    "description": "Amazon shipment information.",
+    "properties": {
+      "shipmentId": {
+        "description": "This attribute is required only for a Direct Fulfillment shipment.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "shipmentId"
+    ],
+    "type": "object"
+  },
+  "AvailableValueAddedServiceGroup": {
+    "description": "The value-added services available for purchase with a shipping service offering.",
+    "properties": {
+      "groupDescription": {
+        "description": "The name of the value-added service group.",
+        "type": "string"
+      },
+      "groupId": {
+        "description": "The type of the value-added service group.",
+        "type": "string"
+      },
+      "isRequired": {
+        "description": "When true, one or more of the value-added services listed must be specified.",
+        "type": "boolean"
+      },
+      "valueAddedServices": {
+        "description": "A list of optional value-added services available for purchase with a shipping service offering.",
+        "ref": "ValueAddedService",
+        "type": "array"
+      }
+    },
+    "required": [
+      "groupDescription",
+      "groupId",
+      "isRequired"
+    ],
+    "type": "object"
+  },
+  "AvailableValueAddedServiceGroupList": {
+    "description": "A list of value-added services available for a shipping service offering.",
+    "properties": {},
+    "ref": "AvailableValueAddedServiceGroup",
+    "required": [],
+    "type": "array"
+  },
+  "Benefits": {
+    "description": "Benefits that are included and excluded for each shipping offer.",
+    "properties": {
+      "excludedBenefits": {
+        "ref": "ExcludedBenefits"
+      },
+      "includedBenefits": {
+        "ref": "IncludedBenefits"
+      }
+    },
+    "required": [
+      "excludedBenefits",
+      "includedBenefits"
+    ],
+    "type": "object"
+  },
+  "CancelShipmentResponse": {
+    "description": "Response schema for the cancelShipment operation.",
+    "properties": {
+      "payload": {
+        "ref": "CancelShipmentResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CancelShipmentResult": {
+    "description": "The payload for the cancelShipment operation.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "Carrier": {
+    "description": "Carrier Related Info",
+    "properties": {
+      "id": {
+        "ref": "CarrierId"
+      },
+      "name": {
+        "ref": "CarrierName"
+      }
+    },
+    "required": [
+      "id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "CarrierAccount": {
+    "description": "Carrier Account details used to fetch rates.",
+    "properties": {
+      "carrierAccountId": {
+        "ref": "AccountId"
+      },
+      "carrierId": {
+        "ref": "CarrierId"
+      }
+    },
+    "required": [
+      "carrierAccountId",
+      "carrierId"
+    ],
+    "type": "object"
+  },
+  "CarrierAccountAttribute": {
+    "description": "Attribute Properties required by carrier",
+    "properties": {
+      "attributeName": {
+        "description": "Attribute Name .",
+        "type": "string"
+      },
+      "propertyGroup": {
+        "description": "Property Group.",
+        "type": "string"
+      },
+      "value": {
+        "description": "Value .",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CarrierAccountAttributes": {
+    "description": "A list of all attributes required by the carrier in order to successfully link the merchant's account",
+    "properties": {},
+    "ref": "CarrierAccountAttribute",
+    "required": [],
+    "type": "array"
+  },
+  "CarrierAccountInput": {
+    "description": "Info About CarrierAccountInput",
+    "properties": {
+      "descriptionLocalizationKey": {
+        "description": "descriptionLocalizationKey value .",
+        "type": "string"
+      },
+      "groupName": {
+        "description": "groupName value .",
+        "type": "string"
+      },
+      "inputType": {
+        "ref": "InputType"
+      },
+      "isConfidential": {
+        "description": "is value is Confidential .",
+        "type": "boolean"
+      },
+      "isHidden": {
+        "description": "is value is hidden .",
+        "type": "boolean"
+      },
+      "isMandatory": {
+        "description": "mandatory or not value .",
+        "type": "boolean"
+      },
+      "name": {
+        "description": "name value .",
+        "type": "string"
+      },
+      "validationMetadata": {
+        "ref": "ValidationMetadataList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CarrierAccountInputsList": {
+    "description": "A list of CarrierAccountInput",
+    "properties": {},
+    "ref": "CarrierAccountInput",
+    "required": [],
+    "type": "array"
+  },
+  "CarrierAccountType": {
+    "description": "CarrierAccountType associated with account.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CarrierAccounts": {
+    "description": "A list of CarrierAccounts",
+    "properties": {},
+    "ref": "CarrierAccount",
+    "required": [],
+    "type": "array"
+  },
+  "CarrierId": {
+    "description": "The carrier identifier for the offering, provided by the carrier.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CarrierName": {
+    "description": "The carrier name for the offering.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ChannelDetails": {
+    "description": "Shipment source channel related information.",
+    "properties": {
+      "amazonOrderDetails": {
+        "ref": "AmazonOrderDetails"
+      },
+      "amazonShipmentDetails": {
+        "ref": "AmazonShipmentDetails"
+      },
+      "channelType": {
+        "ref": "ChannelType"
+      }
+    },
+    "required": [
+      "channelType"
+    ],
+    "type": "object"
+  },
+  "ChannelType": {
+    "description": "The shipment source channel type.",
+    "enum": [
+      "AMAZON",
+      "EXTERNAL"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ChargeComponent": {
+    "description": "The type and amount of a charge applied on a package.",
+    "properties": {
+      "amount": {
+        "ref": "Currency"
+      },
+      "chargeType": {
+        "description": "The type of charge.",
+        "enum": [
+          "DISCOUNT",
+          "TAX"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ChargeList": {
+    "description": "A list of charges based on the shipping service charges applied on a package.",
+    "properties": {},
+    "ref": "ChargeComponent",
+    "required": [],
+    "type": "array"
+  },
+  "City": {
+    "description": "The city or town where the person, business or institution is located.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ClaimId": {
+    "description": "The claim identifier originally returned by the createClaim operation.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ClaimProofURLs": {
+    "description": "A list of proof URLs for a claim.",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "ClaimReason": {
+    "description": "The reason for which shipper is filing the claim for a particular shipment.",
+    "enum": [
+      "COD_ABUSE",
+      "DAMAGED_IN_TRANSIT",
+      "DELIVERED_NOT_RECEIVED",
+      "ITEM_MISSING_SWITCHEROO",
+      "LOST_IN_TRANSIT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ClientReferenceDetail": {
+    "description": "Client Reference Details",
+    "properties": {
+      "clientReferenceId": {
+        "description": "The Client Reference Id.",
+        "type": "string"
+      },
+      "clientReferenceType": {
+        "description": "Client Reference type.",
+        "enum": [
+          "IntegratorMerchantId",
+          "IntegratorShipperId"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "clientReferenceId",
+      "clientReferenceType"
+    ],
+    "type": "object"
+  },
+  "ClientReferenceDetails": {
+    "description": "Object to pass additional information about the MCI Integrator shipperType: List of ClientReferenceDetail",
+    "properties": {},
+    "ref": "ClientReferenceDetail",
+    "required": [],
+    "type": "array"
+  },
+  "CollectOnDelivery": {
+    "description": "The amount to collect on delivery.",
+    "properties": {
+      "amount": {
+        "ref": "Currency"
+      }
+    },
+    "required": [
+      "amount"
+    ],
+    "type": "object"
+  },
+  "CollectionFormId": {
+    "description": "Collection Form Id for Reprint .",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CollectionFormsHistoryRecord": {
+    "description": "Active Account Details",
+    "properties": {
+      "carrierName": {
+        "ref": "CarrierName"
+      },
+      "collectionFormId": {
+        "ref": "CollectionFormId"
+      },
+      "creationDate": {
+        "description": "Creation Time for this account.",
+        "format": "dateTime",
+        "type": "string"
+      },
+      "generationStatus": {
+        "ref": "GenerationStatus"
+      },
+      "shipFromAddress": {
+        "ref": "Address"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CollectionFormsHistoryRecordList": {
+    "description": "A list of CollectionFormsHistoryRecord",
+    "properties": {},
+    "ref": "CollectionFormsHistoryRecord",
+    "required": [],
+    "type": "array"
+  },
+  "CollectionsFormDocument": {
+    "description": "Collection Form Document Details",
+    "properties": {
+      "base64EncodedContent": {
+        "description": "Base64 document Value of Collection.",
+        "type": "string"
+      },
+      "documentFormat": {
+        "description": "Collection Document format is PDF.",
+        "format": "application/pdf",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Contents": {
+    "description": "A Base64 encoded string of the file contents.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CountryCode": {
+    "description": "The two digit country code.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CreateClaimRequest": {
+    "description": "The request schema for the CreateClaim operation",
+    "properties": {
+      "claimReason": {
+        "ref": "ClaimReason"
+      },
+      "declaredValue": {
+        "description": "This is required for off-Amazon shipments to determine value of shipments",
+        "ref": "Currency"
+      },
+      "isReplacementPackageSent": {
+        "description": "Applicable for only On Amazon shipments to identify if replacement was sent",
+        "type": "boolean"
+      },
+      "proofs": {
+        "ref": "ClaimProofURLs"
+      },
+      "settlementType": {
+        "ref": "SettlementType"
+      },
+      "trackingId": {
+        "ref": "TrackingId"
+      }
+    },
+    "required": [
+      "claimReason",
+      "settlementType",
+      "trackingId"
+    ],
+    "type": "object"
+  },
+  "CreateClaimResponse": {
+    "description": "The response schema for the createClaim operation.",
+    "properties": {
+      "claimId": {
+        "ref": "ClaimId"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Currency": {
+    "description": "The monetary value in the currency indicated, in ISO 4217 standard format.",
+    "properties": {
+      "unit": {
+        "description": "The ISO 4217 format 3-character currency code.",
+        "type": "string"
+      },
+      "value": {
+        "description": "The monetary value.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "unit",
+      "value"
+    ],
+    "type": "object"
+  },
+  "DangerousGoodsDetails": {
+    "description": "Details related to any dangerous goods/items that are being shipped.",
+    "properties": {
+      "packingGroup": {
+        "description": "The specific packaging group of the item being shipped.",
+        "enum": [
+          "I",
+          "II",
+          "III"
+        ],
+        "type": "string"
+      },
+      "packingInstruction": {
+        "description": "The specific packing instruction of the item being shipped.",
+        "enum": [
+          "PI965_SECTION_IA",
+          "PI965_SECTION_IB",
+          "PI965_SECTION_II",
+          "PI966_SECTION_I",
+          "PI966_SECTION_II",
+          "PI967_SECTION_I",
+          "PI967_SECTION_II",
+          "PI968_SECTION_IA",
+          "PI968_SECTION_IB",
+          "PI969_SECTION_I",
+          "PI969_SECTION_II",
+          "PI970_SECTION_I",
+          "PI970_SECTION_II"
+        ],
+        "type": "string"
+      },
+      "transportationRegulatoryClass": {
+        "description": "The specific regulatory class of the item being shipped.",
+        "type": "string"
+      },
+      "unitedNationsRegulatoryId": {
+        "description": "The specific UNID of the item being shipped.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DateRange": {
+    "description": "Date Range for query the results.",
+    "properties": {
+      "endDate": {
+        "description": "end date for query.",
+        "format": "dateTime",
+        "type": "string"
+      },
+      "startDate": {
+        "description": "Start Date for query .",
+        "format": "dateTime",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DayOfWeekTimeMap": {
+    "description": "Map of day of the week to operating hours of that day",
+    "properties": {},
+    "ref": "OperatingHours",
+    "required": [],
+    "type": "object"
+  },
+  "DetailCodes": {
+    "description": "A list of codes used to provide additional shipment information.",
+    "enum": [
+      "AddressNotFound",
+      "ArrivedAtLocalFacility",
+      "BusinessClosed",
+      "CancelledByRecipient",
+      "CustomerUnavailable",
+      "Damaged",
+      "DeliveredToBehindWheelieBin",
+      "DeliveredToGarage",
+      "DeliveredToGarden",
+      "DeliveredToGreenhouse",
+      "DeliveredToMailRoom",
+      "DeliveredToMailSlot",
+      "DeliveredToNeighbor",
+      "DeliveredToPorch",
+      "DeliveredToRearDoor",
+      "DeliveredToReceptionist",
+      "DeliveredToShed",
+      "DeliveredWithOTP",
+      "DeliveryAttempted",
+      "HazmatShipment",
+      "IncorrectItems",
+      "NotRequired",
+      "OtpNotAvailable",
+      "PaymentNotReady",
+      "Rejected",
+      "RejectedByRecipientWithVerification",
+      "Signed",
+      "UnableToAccess",
+      "UnableToContactRecipient",
+      "Undeliverable"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Dimensions": {
+    "description": "A set of measurements for a three-dimensional object.",
+    "properties": {
+      "height": {
+        "description": "The height of the package.",
+        "type": "number"
+      },
+      "length": {
+        "description": "The length of the package.",
+        "type": "number"
+      },
+      "unit": {
+        "description": "The unit of measurement.",
+        "enum": [
+          "CENTIMETER",
+          "INCH"
+        ],
+        "type": "string"
+      },
+      "width": {
+        "description": "The width of the package.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "height",
+      "length",
+      "unit",
+      "width"
+    ],
+    "type": "object"
+  },
+  "DirectFulfillmentItemIdentifiers": {
+    "description": "Item identifiers for an item in a direct fulfillment shipment.",
+    "properties": {
+      "lineItemID": {
+        "description": "A unique identifier for an item provided by the client for a direct fulfillment shipment.",
+        "type": "string"
+      },
+      "pieceNumber": {
+        "description": "A unique identifier for an item provided by the client for a direct fulfillment shipment.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "lineItemID"
+    ],
+    "type": "object"
+  },
+  "DirectPurchaseRequest": {
+    "description": "The request schema for the directPurchaseShipment operation.",
+    "properties": {
+      "channelDetails": {
+        "ref": "ChannelDetails"
+      },
+      "labelSpecifications": {
+        "description": "The document (label) specifications requested.",
+        "ref": "RequestedDocumentSpecification"
+      },
+      "packages": {
+        "ref": "PackageList"
+      },
+      "returnTo": {
+        "description": "The address where the package will be returned if it cannot be delivered.",
+        "ref": "Address"
+      },
+      "shipFrom": {
+        "description": "The address where the package will be picked up.",
+        "ref": "Address"
+      },
+      "shipTo": {
+        "description": "The address where the shipment will be delivered.",
+        "ref": "Address"
+      }
+    },
+    "required": [
+      "channelDetails"
+    ],
+    "type": "object"
+  },
+  "DirectPurchaseResponse": {
+    "description": "The response schema for the directPurchaseShipment operation.",
+    "properties": {
+      "payload": {
+        "ref": "DirectPurchaseResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DirectPurchaseResult": {
+    "description": "The payload for the directPurchaseShipment operation.",
+    "properties": {
+      "packageDocumentDetailList": {
+        "ref": "PackageDocumentDetailList"
+      },
+      "shipmentId": {
+        "ref": "ShipmentId"
+      }
+    },
+    "required": [
+      "shipmentId"
+    ],
+    "type": "object"
+  },
+  "DocumentFormat": {
+    "description": "The file format of the document.",
+    "enum": [
+      "PDF",
+      "PNG",
+      "ZPL"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "DocumentSize": {
+    "description": "The size dimensions of the label.",
+    "properties": {
+      "length": {
+        "description": "The length of the document measured in the units specified.",
+        "type": "number"
+      },
+      "unit": {
+        "description": "The unit of measurement.",
+        "enum": [
+          "CENTIMETER",
+          "INCH"
+        ],
+        "type": "string"
+      },
+      "width": {
+        "description": "The width of the document measured in the units specified.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "length",
+      "unit",
+      "width"
+    ],
+    "type": "object"
+  },
+  "DocumentType": {
+    "description": "The type of shipping document.",
+    "enum": [
+      "CUSTOM_FORM",
+      "LABEL",
+      "PACKSLIP",
+      "RECEIPT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Dpi": {
+    "description": "The dots per inch (DPI) value used in printing.",
+    "properties": {},
+    "required": [],
+    "type": "integer"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "Array of Errors",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "Event": {
+    "description": "A tracking event.",
+    "properties": {
+      "eventCode": {
+        "ref": "EventCode"
+      },
+      "eventTime": {
+        "description": "The ISO 8601 formatted timestamp of the event.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "location": {
+        "ref": "Location"
+      },
+      "shipmentType": {
+        "ref": "ShipmentType"
+      }
+    },
+    "required": [
+      "eventCode",
+      "eventTime"
+    ],
+    "type": "object"
+  },
+  "EventCode": {
+    "description": "The tracking event type.",
+    "enum": [
+      "ArrivedAtCarrierFacility",
+      "AvailableForPickup",
+      "Delivered",
+      "DeliveryAttempted",
+      "Departed",
+      "Lost",
+      "OutForDelivery",
+      "PickupCancelled",
+      "PickupDone",
+      "ReadyForReceive",
+      "RecipientRequestedAlternateDeliveryTiming",
+      "Rejected",
+      "ReturnInitiated",
+      "Undeliverable"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ExceptionOperatingHours": {
+    "description": "Defines exceptions to standard operating hours for certain date ranges.",
+    "properties": {
+      "dateRange": {
+        "ref": "DateRange"
+      },
+      "operatingHours": {
+        "ref": "OperatingHours"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ExcludedBenefit": {
+    "description": "Object representing a benefit that is excluded for a shipping offer or rate.",
+    "properties": {
+      "benefit": {
+        "description": "benefit",
+        "type": "string"
+      },
+      "reasonCodes": {
+        "ref": "ExcludedBenefitReasonCodes"
+      }
+    },
+    "required": [
+      "benefit"
+    ],
+    "type": "object"
+  },
+  "ExcludedBenefitReasonCodes": {
+    "description": "List of reasons (eg.",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "ExcludedBenefits": {
+    "description": "A list of excluded benefit.",
+    "properties": {},
+    "ref": "ExcludedBenefit",
+    "required": [],
+    "type": "array"
+  },
+  "GenerateCollectionFormRequest": {
+    "description": "The request schema Call to generate the collection form.",
+    "properties": {
+      "carrierId": {
+        "ref": "CarrierId"
+      },
+      "clientReferenceDetails": {
+        "ref": "ClientReferenceDetails"
+      },
+      "shipFromAddress": {
+        "ref": "Address"
+      }
+    },
+    "required": [
+      "carrierId"
+    ],
+    "type": "object"
+  },
+  "GenerateCollectionFormResponse": {
+    "description": "The Response for the GenerateCollectionFormResponse operation.",
+    "properties": {
+      "collectionsFormDocument": {
+        "ref": "CollectionsFormDocument"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GenerationStatus": {
+    "description": "Generation Status.",
+    "enum": [
+      "Completed",
+      "InProgress"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Geocode": {
+    "description": "Defines the latitude and longitude of the access point.",
+    "properties": {
+      "latitude": {
+        "description": "The latitude of access point.",
+        "type": "string"
+      },
+      "longitude": {
+        "description": "The longitude of access point.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetAccessPointsResponse": {
+    "description": "The response schema for the GetAccessPoints operation.",
+    "properties": {
+      "payload": {
+        "ref": "GetAccessPointsResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetAccessPointsResult": {
+    "description": "The payload for the GetAccessPoints API.",
+    "properties": {
+      "accessPointsMap": {
+        "ref": "AccessPointsMap"
+      }
+    },
+    "required": [
+      "accessPointsMap"
+    ],
+    "type": "object"
+  },
+  "GetAdditionalInputsResponse": {
+    "description": "The response schema for the getAdditionalInputs operation.",
+    "properties": {
+      "payload": {
+        "ref": "GetAdditionalInputsResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetAdditionalInputsResult": {
+    "description": "The JSON schema to use to provide additional inputs when required to purchase a shipping offering.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "GetCarrierAccountFormInputsResponse": {
+    "description": "The Response for the GetCarrierAccountFormInputsResponse operation.",
+    "properties": {
+      "linkableCarriersList": {
+        "ref": "LinkableCarriersList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetCarrierAccountsRequest": {
+    "description": "The request schema for the GetCarrierAccounts operation.",
+    "properties": {
+      "clientReferenceDetails": {
+        "ref": "ClientReferenceDetails"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetCarrierAccountsResponse": {
+    "description": "The Response for the GetCarrierAccountsResponse operation.",
+    "properties": {
+      "activeAccounts": {
+        "ref": "ActiveAccounts"
+      }
+    },
+    "required": [
+      "activeAccounts"
+    ],
+    "type": "object"
+  },
+  "GetCollectionFormHistoryRequest": {
+    "description": "The request schema to get query collections form history API .",
+    "properties": {
+      "carrierId": {
+        "ref": "CarrierId"
+      },
+      "clientReferenceDetails": {
+        "ref": "ClientReferenceDetails"
+      },
+      "dateRange": {
+        "ref": "DateRange"
+      },
+      "maxResults": {
+        "description": "max Number of Results for query .",
+        "type": "integer"
+      },
+      "shipFromAddress": {
+        "ref": "Address"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetCollectionFormHistoryResponse": {
+    "description": "The Response for the GetCollectionFormHistoryResponse operation.",
+    "properties": {
+      "collectionFormsHistoryRecordList": {
+        "ref": "CollectionFormsHistoryRecordList"
+      },
+      "lastRefreshedDate": {
+        "description": "Last Refereshed Date of collection",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetCollectionFormResponse": {
+    "description": "The Response for the GetCollectionFormResponse operation.",
+    "properties": {
+      "collectionsFormDocument": {
+        "ref": "CollectionsFormDocument"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetRatesRequest": {
+    "description": "The request schema for the getRates operation.",
+    "properties": {
+      "carrierAccounts": {
+        "ref": "CarrierAccounts"
+      },
+      "channelDetails": {
+        "ref": "ChannelDetails"
+      },
+      "clientReferenceDetails": {
+        "ref": "ClientReferenceDetails"
+      },
+      "destinationAccessPointDetails": {
+        "ref": "AccessPointDetails"
+      },
+      "packages": {
+        "ref": "PackageList"
+      },
+      "returnTo": {
+        "description": "The return to address.",
+        "ref": "Address"
+      },
+      "shipDate": {
+        "description": "The ship date and time (the requested pickup).",
+        "format": "date-time",
+        "type": "string"
+      },
+      "shipFrom": {
+        "description": "The ship from address.",
+        "ref": "Address"
+      },
+      "shipTo": {
+        "description": "The ship to address.",
+        "ref": "Address"
+      },
+      "shipmentType": {
+        "ref": "ShipmentType"
+      },
+      "shipperInstruction": {
+        "description": "This field describe shipper instruction.",
+        "ref": "ShipperInstruction"
+      },
+      "taxDetails": {
+        "ref": "TaxDetailList"
+      },
+      "valueAddedServices": {
+        "ref": "ValueAddedServiceDetails"
+      }
+    },
+    "required": [
+      "channelDetails",
+      "packages",
+      "shipFrom"
+    ],
+    "type": "object"
+  },
+  "GetRatesResponse": {
+    "description": "The response schema for the getRates operation.",
+    "properties": {
+      "payload": {
+        "ref": "GetRatesResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetRatesResult": {
+    "description": "The payload for the getRates operation.",
+    "properties": {
+      "ineligibleRates": {
+        "ref": "IneligibleRateList"
+      },
+      "rates": {
+        "ref": "RateList"
+      },
+      "requestToken": {
+        "ref": "RequestToken"
+      }
+    },
+    "required": [
+      "rates",
+      "requestToken"
+    ],
+    "type": "object"
+  },
+  "GetShipmentDocumentsResponse": {
+    "description": "The response schema for the the getShipmentDocuments operation.",
+    "properties": {
+      "payload": {
+        "ref": "GetShipmentDocumentsResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetShipmentDocumentsResult": {
+    "description": "The payload for the getShipmentDocuments operation.",
+    "properties": {
+      "benefits": {
+        "ref": "Benefits"
+      },
+      "packageDocumentDetail": {
+        "ref": "PackageDocumentDetail"
+      },
+      "shipmentId": {
+        "ref": "ShipmentId"
+      }
+    },
+    "required": [
+      "packageDocumentDetail",
+      "shipmentId"
+    ],
+    "type": "object"
+  },
+  "GetTrackingResponse": {
+    "description": "The response schema for the getTracking operation.",
+    "properties": {
+      "payload": {
+        "ref": "GetTrackingResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetTrackingResult": {
+    "description": "The payload for the getTracking operation.",
+    "properties": {
+      "alternateLegTrackingId": {
+        "ref": "AlternateLegTrackingId"
+      },
+      "eventHistory": {
+        "description": "A list of tracking events.",
+        "ref": "Event",
+        "type": "array"
+      },
+      "promisedDeliveryDate": {
+        "description": "The date and time by which the shipment is promised to be delivered.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "summary": {
+        "ref": "TrackingSummary"
+      },
+      "trackingId": {
+        "ref": "TrackingId"
+      }
+    },
+    "required": [
+      "alternateLegTrackingId",
+      "eventHistory",
+      "promisedDeliveryDate",
+      "summary",
+      "trackingId"
+    ],
+    "type": "object"
+  },
+  "GetUnmanifestedShipmentsRequest": {
+    "description": "The request schema for the GetUnmanifestedShipmentsRequest operation.",
+    "properties": {
+      "clientReferenceDetails": {
+        "ref": "ClientReferenceDetails"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetUnmanifestedShipmentsResponse": {
+    "description": "The Response for the GetUnmanifestedShipmentsResponse operation.",
+    "properties": {
+      "unmanifestedCarrierInformationList": {
+        "ref": "UnmanifestedCarrierInformationList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GoodsOwner": {
+    "description": "The seller owning the goods before handing them over to the carrier",
+    "properties": {
+      "merchantId": {
+        "description": "The Amazon Merchant Identifier (merchantId) of the seller owning the goods before handing them over to the carrier",
+        "ref": "MerchantId"
+      }
+    },
+    "required": [
+      "merchantId"
+    ],
+    "type": "object"
+  },
+  "IncludedBenefits": {
+    "description": "A list of included benefits.",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "IneligibilityReason": {
+    "description": "The reason why a shipping service offering is ineligible.",
+    "properties": {
+      "code": {
+        "ref": "IneligibilityReasonCode"
+      },
+      "message": {
+        "description": "The ineligibility reason.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "IneligibilityReasonCode": {
+    "description": "Reasons that make a shipment service offering ineligible.",
+    "enum": [
+      "LATE_DELIVERY",
+      "NO_COVERAGE",
+      "PICKUP_SLOT_RESTRICTION",
+      "PROGRAM_CONSTRAINTS",
+      "SIZE_RESTRICTIONS",
+      "TERMS_AND_CONDITIONS_NOT_ACCEPTED",
+      "UNKNOWN",
+      "UNSUPPORTED_VAS",
+      "VAS_COMBINATION_RESTRICTION",
+      "WEIGHT_RESTRICTIONS"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "IneligibleRate": {
+    "description": "Detailed information for an ineligible shipping service offering.",
+    "properties": {
+      "carrierId": {
+        "ref": "CarrierId"
+      },
+      "carrierName": {
+        "ref": "CarrierName"
+      },
+      "ineligibilityReasons": {
+        "description": "A list of reasons why a shipping service offering is ineligible.",
+        "ref": "IneligibilityReason",
+        "type": "array"
+      },
+      "serviceId": {
+        "ref": "ServiceId"
+      },
+      "serviceName": {
+        "ref": "ServiceName"
+      }
+    },
+    "required": [
+      "carrierId",
+      "carrierName",
+      "ineligibilityReasons",
+      "serviceId",
+      "serviceName"
+    ],
+    "type": "object"
+  },
+  "IneligibleRateList": {
+    "description": "A list of ineligible shipping service offerings.",
+    "properties": {},
+    "ref": "IneligibleRate",
+    "required": [],
+    "type": "array"
+  },
+  "InputType": {
+    "description": "Type of Input.",
+    "enum": [
+      "PASSWORD",
+      "TEXTBOX"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "InvoiceDetails": {
+    "description": "The invoice details for charges associated with the goods in the package.",
+    "properties": {
+      "invoiceDate": {
+        "description": "The invoice date of the item in ISO 8061 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "invoiceNumber": {
+        "description": "The invoice number of the item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Item": {
+    "description": "An item in a package.",
+    "properties": {
+      "dangerousGoodsDetails": {
+        "ref": "DangerousGoodsDetails"
+      },
+      "description": {
+        "description": "The product description of the item.",
+        "type": "string"
+      },
+      "directFulfillmentItemIdentifiers": {
+        "ref": "DirectFulfillmentItemIdentifiers"
+      },
+      "invoiceDetails": {
+        "ref": "InvoiceDetails"
+      },
+      "isHazmat": {
+        "description": "When true, the item qualifies as hazardous materials (hazmat).",
+        "type": "boolean"
+      },
+      "itemIdentifier": {
+        "description": "A unique identifier for an item provided by the client.",
+        "type": "string"
+      },
+      "itemValue": {
+        "ref": "Currency"
+      },
+      "liquidVolume": {
+        "ref": "LiquidVolume"
+      },
+      "productType": {
+        "description": "The product type of the item.",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "The number of units.",
+        "type": "integer"
+      },
+      "serialNumbers": {
+        "description": "A list of unique serial numbers in an Amazon package that can be used to guarantee non-fraudulent items.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "weight": {
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "quantity"
+    ],
+    "type": "object"
+  },
+  "ItemList": {
+    "description": "A list of items.",
+    "properties": {},
+    "ref": "Item",
+    "required": [],
+    "type": "array"
+  },
+  "LabelAttribute": {
+    "description": "Enumerates the attributes supported to be printed on a shipping label.",
+    "enum": [
+      "COLLECT_ON_DELIVERY_AMOUNT",
+      "PACKAGE_CLIENT_REFERENCE_ID",
+      "SELLER_DISPLAY_NAME"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "LinkCarrierAccountRequest": {
+    "description": "The request schema for verify and add the merchant's account with a certain carrier.",
+    "properties": {
+      "carrierAccountAttributes": {
+        "ref": "CarrierAccountAttributes"
+      },
+      "carrierAccountType": {
+        "ref": "CarrierAccountType"
+      },
+      "clientReferenceDetails": {
+        "ref": "ClientReferenceDetails"
+      },
+      "encryptedCarrierAccountAttributes": {
+        "ref": "CarrierAccountAttributes"
+      }
+    },
+    "required": [
+      "carrierAccountAttributes",
+      "carrierAccountType"
+    ],
+    "type": "object"
+  },
+  "LinkCarrierAccountResponse": {
+    "description": "The Response for the LinkCarrierAccount operation.",
+    "properties": {
+      "accountId": {
+        "ref": "AccountId"
+      },
+      "registrationStatus": {
+        "ref": "AccountStatus"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "LinkableAccountType": {
+    "description": "Info About Linkable Account Type",
+    "properties": {
+      "accountType": {
+        "ref": "AccountType"
+      },
+      "carrierAccountInputs": {
+        "ref": "CarrierAccountInputsList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "LinkableAccountTypeList": {
+    "description": "A list of LinkableAccountType",
+    "properties": {},
+    "ref": "LinkableAccountType",
+    "required": [],
+    "type": "array"
+  },
+  "LinkableCarrier": {
+    "description": "Info About Linkable Carrier",
+    "properties": {
+      "carrierId": {
+        "ref": "CarrierId"
+      },
+      "linkableAccountTypes": {
+        "ref": "LinkableAccountTypeList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "LinkableCarriersList": {
+    "description": "A list of LinkableCarrier",
+    "properties": {},
+    "ref": "LinkableCarrier",
+    "required": [],
+    "type": "array"
+  },
+  "LiquidVolume": {
+    "description": "Liquid Volume.",
+    "properties": {
+      "unit": {
+        "description": "The unit of measurement.",
+        "enum": [
+          "C",
+          "FL_OZ",
+          "GAL",
+          "L",
+          "ML",
+          "PT",
+          "QT"
+        ],
+        "type": "string"
+      },
+      "value": {
+        "description": "The measurement value.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "unit",
+      "value"
+    ],
+    "type": "object"
+  },
+  "Location": {
+    "description": "The location where the person, business or institution is located.",
+    "properties": {
+      "city": {
+        "ref": "City"
+      },
+      "countryCode": {
+        "ref": "CountryCode"
+      },
+      "postalCode": {
+        "ref": "PostalCode"
+      },
+      "stateOrRegion": {
+        "ref": "StateOrRegion"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "MerchantId": {
+    "description": "merchant Id of provided merchant",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "NdrAction": {
+    "description": "The type of NDR action shipper wants to take for a particular shipment.",
+    "enum": [
+      "REATTEMPT",
+      "RESCHEDULE",
+      "RTO"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "NdrRequestData": {
+    "description": "Additional information required for the NDR action that has been filed.",
+    "properties": {
+      "additionalAddressNotes": {
+        "ref": "AdditionalAddressNotes"
+      },
+      "rescheduleDate": {
+        "description": "The date on which the Seller wants to reschedule shipment delivery, in ISO-8601 date/time format",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "NeedFileJoining": {
+    "description": "When true, files should be stitched together.",
+    "properties": {},
+    "required": [],
+    "type": "boolean"
+  },
+  "OneClickShipmentRequest": {
+    "description": "The request schema for the OneClickShipment operation.",
+    "properties": {
+      "channelDetails": {
+        "ref": "ChannelDetails"
+      },
+      "destinationAccessPointDetails": {
+        "ref": "AccessPointDetails"
+      },
+      "goodsOwner": {
+        "description": "The seller owning the goods before handing them over to the carrier",
+        "ref": "GoodsOwner"
+      },
+      "labelSpecifications": {
+        "ref": "RequestedDocumentSpecification"
+      },
+      "packages": {
+        "ref": "PackageList"
+      },
+      "returnTo": {
+        "description": "The return to address.",
+        "ref": "Address"
+      },
+      "serviceSelection": {
+        "ref": "ServiceSelection"
+      },
+      "shipDate": {
+        "description": "The ship date and time (the requested pickup).",
+        "format": "date-time",
+        "type": "string"
+      },
+      "shipFrom": {
+        "description": "The ship from address.",
+        "ref": "Address"
+      },
+      "shipTo": {
+        "description": "The ship to address.",
+        "ref": "Address"
+      },
+      "shipperInstruction": {
+        "description": "Optional field for shipper instruction.",
+        "ref": "ShipperInstruction"
+      },
+      "taxDetails": {
+        "ref": "TaxDetailList"
+      },
+      "valueAddedServicesDetails": {
+        "ref": "OneClickShipmentValueAddedServiceDetails"
+      }
+    },
+    "required": [
+      "channelDetails",
+      "labelSpecifications",
+      "packages",
+      "serviceSelection",
+      "shipFrom"
+    ],
+    "type": "object"
+  },
+  "OneClickShipmentResponse": {
+    "description": "The response schema for the OneClickShipment operation.",
+    "properties": {
+      "payload": {
+        "ref": "OneClickShipmentResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OneClickShipmentResult": {
+    "description": "The payload for the OneClickShipment API.",
+    "properties": {
+      "carrier": {
+        "ref": "Carrier"
+      },
+      "packageDocumentDetails": {
+        "ref": "PackageDocumentDetailList"
+      },
+      "promise": {
+        "ref": "Promise"
+      },
+      "service": {
+        "ref": "Service"
+      },
+      "shipmentId": {
+        "ref": "ShipmentId"
+      },
+      "totalCharge": {
+        "ref": "Currency"
+      }
+    },
+    "required": [
+      "carrier",
+      "packageDocumentDetails",
+      "promise",
+      "service",
+      "shipmentId",
+      "totalCharge"
+    ],
+    "type": "object"
+  },
+  "OneClickShipmentValueAddedService": {
+    "description": "A value-added service to be applied to a shipping service purchase.",
+    "properties": {
+      "amount": {
+        "ref": "Currency"
+      },
+      "id": {
+        "description": "The identifier of the selected value-added service.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id"
+    ],
+    "type": "object"
+  },
+  "OneClickShipmentValueAddedServiceDetails": {
+    "description": "The value-added services to be added to a shipping service purchase.",
+    "properties": {},
+    "ref": "OneClickShipmentValueAddedService",
+    "required": [],
+    "type": "array"
+  },
+  "OperatingHours": {
+    "description": "The hours in which the access point shall remain operational",
+    "properties": {
+      "closingTime": {
+        "ref": "TimeOfDay"
+      },
+      "midDayClosures": {
+        "description": "midDayClosures operating hours array",
+        "ref": "TimeOfDay",
+        "type": "array"
+      },
+      "openingTime": {
+        "ref": "TimeOfDay"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Package": {
+    "description": "A package to be shipped through a shipping service offering.",
+    "properties": {
+      "charges": {
+        "ref": "ChargeList"
+      },
+      "dimensions": {
+        "ref": "Dimensions"
+      },
+      "insuredValue": {
+        "ref": "Currency"
+      },
+      "isHazmat": {
+        "description": "When true, the package contains hazardous materials.",
+        "type": "boolean"
+      },
+      "items": {
+        "ref": "ItemList"
+      },
+      "packageClientReferenceId": {
+        "ref": "PackageClientReferenceId"
+      },
+      "sellerDisplayName": {
+        "description": "The seller name displayed on the label.",
+        "type": "string"
+      },
+      "weight": {
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "dimensions",
+      "insuredValue",
+      "items",
+      "packageClientReferenceId",
+      "weight"
+    ],
+    "type": "object"
+  },
+  "PackageClientReferenceId": {
+    "description": "A client provided unique identifier for a package being shipped.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PackageDocument": {
+    "description": "A document related to a package.",
+    "properties": {
+      "contents": {
+        "ref": "Contents"
+      },
+      "format": {
+        "ref": "DocumentFormat"
+      },
+      "type": {
+        "ref": "DocumentType"
+      }
+    },
+    "required": [
+      "contents",
+      "format",
+      "type"
+    ],
+    "type": "object"
+  },
+  "PackageDocumentDetail": {
+    "description": "The post-purchase details of a package that will be shipped using a shipping service.",
+    "properties": {
+      "packageClientReferenceId": {
+        "ref": "PackageClientReferenceId"
+      },
+      "packageDocuments": {
+        "ref": "PackageDocumentList"
+      },
+      "trackingId": {
+        "ref": "TrackingId"
+      }
+    },
+    "required": [
+      "packageClientReferenceId",
+      "packageDocuments"
+    ],
+    "type": "object"
+  },
+  "PackageDocumentDetailList": {
+    "description": "A list of post-purchase details about a package that will be shipped using a shipping service.",
+    "properties": {},
+    "ref": "PackageDocumentDetail",
+    "required": [],
+    "type": "array"
+  },
+  "PackageDocumentList": {
+    "description": "A list of documents related to a package.",
+    "properties": {},
+    "ref": "PackageDocument",
+    "required": [],
+    "type": "array"
+  },
+  "PackageList": {
+    "description": "A list of packages to be shipped through a shipping service offering.",
+    "properties": {},
+    "ref": "Package",
+    "required": [],
+    "type": "array"
+  },
+  "PageLayout": {
+    "description": "Indicates the position of the label on the paper.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PaymentType": {
+    "description": "Payment type of the purchase.",
+    "enum": [
+      "PAY_DIRECT_TO_CARRIER",
+      "PAY_THROUGH_AMAZON"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PostalCode": {
+    "description": "The postal code of that address.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PrintOption": {
+    "description": "The format options available for a label.",
+    "properties": {
+      "supportedDPIs": {
+        "description": "A list of the supported DPI options for a document.",
+        "ref": "Dpi",
+        "type": "array"
+      },
+      "supportedDocumentDetails": {
+        "description": "A list of the supported documented details.",
+        "ref": "SupportedDocumentDetail",
+        "type": "array"
+      },
+      "supportedFileJoiningOptions": {
+        "description": "A list of the supported needFileJoining boolean values for a document.",
+        "ref": "NeedFileJoining",
+        "type": "array"
+      },
+      "supportedPageLayouts": {
+        "description": "A list of the supported page layout options for a document.",
+        "ref": "PageLayout",
+        "type": "array"
+      }
+    },
+    "required": [
+      "supportedDocumentDetails",
+      "supportedFileJoiningOptions",
+      "supportedPageLayouts"
+    ],
+    "type": "object"
+  },
+  "PrintOptionList": {
+    "description": "A list of the format options for a label.",
+    "properties": {},
+    "ref": "PrintOption",
+    "required": [],
+    "type": "array"
+  },
+  "Promise": {
+    "description": "The time windows promised for pickup and delivery events.",
+    "properties": {
+      "deliveryWindow": {
+        "ref": "TimeWindow"
+      },
+      "pickupWindow": {
+        "ref": "TimeWindow"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PurchaseShipmentRequest": {
+    "description": "The request schema for the purchaseShipment operation.",
+    "properties": {
+      "additionalInputs": {
+        "description": "The additional inputs required to purchase a shipping offering, in JSON format.",
+        "type": "object"
+      },
+      "rateId": {
+        "ref": "RateId"
+      },
+      "requestToken": {
+        "ref": "RequestToken"
+      },
+      "requestedDocumentSpecification": {
+        "ref": "RequestedDocumentSpecification"
+      },
+      "requestedValueAddedServices": {
+        "ref": "RequestedValueAddedServiceList"
+      }
+    },
+    "required": [
+      "rateId",
+      "requestToken",
+      "requestedDocumentSpecification"
+    ],
+    "type": "object"
+  },
+  "PurchaseShipmentResponse": {
+    "description": "The response schema for the purchaseShipment operation.",
+    "properties": {
+      "payload": {
+        "ref": "PurchaseShipmentResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PurchaseShipmentResult": {
+    "description": "The payload for the purchaseShipment operation.",
+    "properties": {
+      "benefits": {
+        "ref": "Benefits"
+      },
+      "packageDocumentDetails": {
+        "ref": "PackageDocumentDetailList"
+      },
+      "promise": {
+        "ref": "Promise"
+      },
+      "shipmentId": {
+        "ref": "ShipmentId"
+      }
+    },
+    "required": [
+      "packageDocumentDetails",
+      "promise",
+      "shipmentId"
+    ],
+    "type": "object"
+  },
+  "Rate": {
+    "description": "The details of a shipping service offering.",
+    "properties": {
+      "availableValueAddedServiceGroups": {
+        "ref": "AvailableValueAddedServiceGroupList"
+      },
+      "benefits": {
+        "ref": "Benefits"
+      },
+      "billedWeight": {
+        "ref": "Weight"
+      },
+      "carrierId": {
+        "ref": "CarrierId"
+      },
+      "carrierName": {
+        "ref": "CarrierName"
+      },
+      "paymentType": {
+        "ref": "PaymentType"
+      },
+      "promise": {
+        "ref": "Promise"
+      },
+      "rateId": {
+        "ref": "RateId"
+      },
+      "rateItemList": {
+        "ref": "RateItemList"
+      },
+      "requiresAdditionalInputs": {
+        "description": "When true, indicates that additional inputs are required to purchase this shipment service.",
+        "type": "boolean"
+      },
+      "serviceId": {
+        "ref": "ServiceId"
+      },
+      "serviceName": {
+        "ref": "ServiceName"
+      },
+      "supportedDocumentSpecifications": {
+        "ref": "SupportedDocumentSpecificationList"
+      },
+      "totalCharge": {
+        "ref": "Currency"
+      }
+    },
+    "required": [
+      "carrierId",
+      "carrierName",
+      "promise",
+      "rateId",
+      "requiresAdditionalInputs",
+      "serviceId",
+      "serviceName",
+      "supportedDocumentSpecifications",
+      "totalCharge"
+    ],
+    "type": "object"
+  },
+  "RateId": {
+    "description": "An identifier for the rate (shipment offering) provided by a shipping service provider.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "RateItem": {
+    "description": "Rate Item for shipping (base cost, transaction fee, confirmation, insurance, etc.) Data source definition:",
+    "properties": {
+      "rateItemCharge": {
+        "ref": "Currency"
+      },
+      "rateItemID": {
+        "ref": "RateItemID"
+      },
+      "rateItemNameLocalization": {
+        "description": "Used for the localization.",
+        "type": "string"
+      },
+      "rateItemType": {
+        "ref": "RateItemType"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RateItemID": {
+    "description": "Unique ID for the rateItem.",
+    "enum": [
+      "ADDITIONAL_SURCHARGE",
+      "ADULT_SIGNATURE_CONFIRMATION",
+      "AMAZON_SPONSORED_DISCOUNT",
+      "BASE_RATE",
+      "COD",
+      "CONGESTION_CHARGE",
+      "DECLARED_VALUE",
+      "DELIVERY_AREA_SURCHARGE",
+      "DELIVERY_CONFIRMATION",
+      "DEMAND_SURCHARGE",
+      "FUEL_SURCHARGE",
+      "HIDDEN_POSTAGE",
+      "HIGH_CUBE_SURCHARGE",
+      "HIGH_LENGTH_SURCHARGE",
+      "HIGH_WIDTH_SURCHARGE",
+      "IMPLIED_LIABILITY",
+      "IMPORT_DUTY_CHARGE",
+      "INSPECTION_CHARGE",
+      "INSURANCE",
+      "INTEGRATOR_SPONSORED_DISCOUNT",
+      "NONSTANDARD_FEE",
+      "NO_CONFIRMATION",
+      "NO_SATURDAY_DELIVERY",
+      "OVERSIZE_SURCHARGE",
+      "REBATE",
+      "RESIDENTIAL_SURCHARGE",
+      "SIGNATURE_CONFIRMATION",
+      "SUNDAY_HOLIDAY_DELIVERY",
+      "SURCHARGE",
+      "TRANSACTION_FEE",
+      "VAT",
+      "WAIVE_SIGNATURE",
+      "WAYBILL_CHARGE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "RateItemList": {
+    "description": "A list of RateItem",
+    "properties": {},
+    "ref": "RateItem",
+    "required": [],
+    "type": "array"
+  },
+  "RateItemType": {
+    "description": "Type of the rateItem.",
+    "enum": [
+      "INCLUDED",
+      "MANDATORY",
+      "OPTIONAL"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "RateList": {
+    "description": "A list of eligible shipping service offerings.",
+    "properties": {},
+    "ref": "Rate",
+    "required": [],
+    "type": "array"
+  },
+  "RequestAttributes": {
+    "description": "Specify the type of attributes to be added on a label.",
+    "properties": {},
+    "ref": "LabelAttribute",
+    "required": [],
+    "type": "array"
+  },
+  "RequestToken": {
+    "description": "A unique token generated to identify a getRates operation.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "RequestedDocumentSpecification": {
+    "description": "The document specifications requested.",
+    "properties": {
+      "dpi": {
+        "ref": "Dpi"
+      },
+      "format": {
+        "ref": "DocumentFormat"
+      },
+      "needFileJoining": {
+        "ref": "NeedFileJoining"
+      },
+      "pageLayout": {
+        "ref": "PageLayout"
+      },
+      "requestedDocumentTypes": {
+        "description": "A list of the document types requested.",
+        "ref": "DocumentType",
+        "type": "array"
+      },
+      "requestedLabelCustomization": {
+        "ref": "RequestedLabelCustomization"
+      },
+      "size": {
+        "ref": "DocumentSize"
+      }
+    },
+    "required": [
+      "format",
+      "needFileJoining",
+      "requestedDocumentTypes",
+      "size"
+    ],
+    "type": "object"
+  },
+  "RequestedLabelCustomization": {
+    "description": "Object contains customised data requested by a shipper to be printed on a shipping label.",
+    "properties": {
+      "requestAttributes": {
+        "ref": "RequestAttributes"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RequestedValueAddedService": {
+    "description": "A value-added service to be applied to a shipping service purchase.",
+    "properties": {
+      "id": {
+        "description": "The identifier of the selected value-added service.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id"
+    ],
+    "type": "object"
+  },
+  "RequestedValueAddedServiceList": {
+    "description": "The value-added services to be added to a shipping service purchase.",
+    "properties": {},
+    "ref": "RequestedValueAddedService",
+    "required": [],
+    "type": "array"
+  },
+  "Service": {
+    "description": "Service Related Info",
+    "properties": {
+      "id": {
+        "ref": "ServiceId"
+      },
+      "name": {
+        "ref": "ServiceName"
+      }
+    },
+    "required": [
+      "id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "ServiceId": {
+    "description": "An identifier for the shipping service.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ServiceIds": {
+    "description": "A list of ServiceId.",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "ServiceName": {
+    "description": "The name of the shipping service.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ServiceSelection": {
+    "description": "Service Selection Criteria.",
+    "properties": {
+      "serviceId": {
+        "ref": "ServiceIds"
+      }
+    },
+    "required": [
+      "serviceId"
+    ],
+    "type": "object"
+  },
+  "SettlementType": {
+    "description": "Type of settlement the shipper wants to receive for a particular shipment.",
+    "enum": [
+      "CERTIFICATE_OF_FACT",
+      "REFUND"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ShipmentId": {
+    "description": "The unique shipment identifier provided by a shipping service.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ShipmentType": {
+    "description": "Shipment type.",
+    "enum": [
+      "FORWARD",
+      "RETURNS"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ShipperInstruction": {
+    "description": "The shipper instruction.",
+    "properties": {
+      "deliveryNotes": {
+        "description": "The delivery notes for the shipment",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StateOrRegion": {
+    "description": "The state, county or region where the person, business or institution is located.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Status": {
+    "description": "The status of the package being shipped.",
+    "enum": [
+      "AwaitingCustomerPickup",
+      "Delivered",
+      "DeliveryAttempted",
+      "InTransit",
+      "Lost",
+      "OutForDelivery",
+      "PickupCancelled",
+      "PreTransit",
+      "Rejected",
+      "Undeliverable"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "SubmitNdrFeedbackRequest": {
+    "description": "The request schema for the NdrFeedback operation",
+    "properties": {
+      "ndrAction": {
+        "ref": "NdrAction"
+      },
+      "ndrRequestData": {
+        "ref": "NdrRequestData"
+      },
+      "trackingId": {
+        "ref": "TrackingId"
+      }
+    },
+    "required": [
+      "ndrAction",
+      "trackingId"
+    ],
+    "type": "object"
+  },
+  "SupportedDocumentDetail": {
+    "description": "The supported document types for a service offering.",
+    "properties": {
+      "isMandatory": {
+        "description": "When true, the supported document type is required.",
+        "type": "boolean"
+      },
+      "name": {
+        "ref": "DocumentType"
+      }
+    },
+    "required": [
+      "isMandatory",
+      "name"
+    ],
+    "type": "object"
+  },
+  "SupportedDocumentSpecification": {
+    "description": "Document specification that is supported for a service offering.",
+    "properties": {
+      "format": {
+        "ref": "DocumentFormat"
+      },
+      "printOptions": {
+        "ref": "PrintOptionList"
+      },
+      "size": {
+        "ref": "DocumentSize"
+      }
+    },
+    "required": [
+      "format",
+      "printOptions",
+      "size"
+    ],
+    "type": "object"
+  },
+  "SupportedDocumentSpecificationList": {
+    "description": "A list of the document specifications supported for a shipment service offering.",
+    "properties": {},
+    "ref": "SupportedDocumentSpecification",
+    "required": [],
+    "type": "array"
+  },
+  "TaxDetail": {
+    "description": "Indicates the tax specifications associated with the shipment for customs compliance purposes in certain regions.",
+    "properties": {
+      "taxRegistrationNumber": {
+        "description": "The shipper's tax registration number associated with the shipment for customs compliance purposes in certain regions.",
+        "type": "string"
+      },
+      "taxType": {
+        "ref": "TaxType"
+      }
+    },
+    "required": [
+      "taxRegistrationNumber",
+      "taxType"
+    ],
+    "type": "object"
+  },
+  "TaxDetailList": {
+    "description": "A list of tax detail information.",
+    "properties": {},
+    "ref": "TaxDetail",
+    "required": [],
+    "type": "array"
+  },
+  "TaxType": {
+    "description": "Indicates the type of tax.",
+    "enum": [
+      "GST"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "TimeOfDay": {
+    "description": "Denotes time of the day, used for defining opening or closing time of access points",
+    "properties": {
+      "hourOfDay": {
+        "description": "Denotes hour of the day, used for defining opening or closing time of access points",
+        "type": "integer"
+      },
+      "minuteOfHour": {
+        "description": "Denotes minute of the hour, used for defining opening or closing time of access points",
+        "type": "integer"
+      },
+      "secondOfMinute": {
+        "description": "Denotes second of the minute, used for defining opening or closing time of access points",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TimeWindow": {
+    "description": "The start and end time that specifies the time interval of an event.",
+    "properties": {
+      "end": {
+        "description": "The end time of the time window.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "start": {
+        "description": "The start time of the time window.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TrackingDetailCodes": {
+    "description": "Contains detail codes that provide additional details related to the forward and return leg of the shipment.",
+    "properties": {
+      "forward": {
+        "description": "Contains detail codes that provide additional details related to the forward leg of the shipment.",
+        "ref": "DetailCodes",
+        "type": "array"
+      },
+      "returns": {
+        "description": "Contains detail codes that provide additional details related to the return leg of the shipment.",
+        "ref": "DetailCodes",
+        "type": "array"
+      }
+    },
+    "required": [
+      "forward",
+      "returns"
+    ],
+    "type": "object"
+  },
+  "TrackingId": {
+    "description": "The carrier generated identifier for a package in a purchased shipment.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "TrackingSummary": {
+    "description": "A package status summary.",
+    "properties": {
+      "status": {
+        "ref": "Status"
+      },
+      "trackingDetailCodes": {
+        "ref": "TrackingDetailCodes"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UnlinkCarrierAccountRequest": {
+    "description": "The request schema for remove the Carrier Account associated with the provided merchant.",
+    "properties": {
+      "accountId": {
+        "ref": "AccountId"
+      },
+      "clientReferenceDetails": {
+        "ref": "ClientReferenceDetails"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UnlinkCarrierAccountResponse": {
+    "description": "The Response for the UnlinkCarrierAccountResponse operation.",
+    "properties": {
+      "isUnlinked": {
+        "description": "Is Carrier unlinked from Merchant",
+        "type": "boolean"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UnmanifestedCarrierInformation": {
+    "description": "UnmanifestedCarrierInformation like carrierId CarrierName and Location",
+    "properties": {
+      "carrierId": {
+        "ref": "CarrierId"
+      },
+      "carrierName": {
+        "ref": "CarrierName"
+      },
+      "unmanifestedShipmentLocationList": {
+        "ref": "UnmanifestedShipmentLocationList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UnmanifestedCarrierInformationList": {
+    "description": "A list of UnmanifestedCarrierInformation",
+    "properties": {},
+    "ref": "UnmanifestedCarrierInformation",
+    "required": [],
+    "type": "array"
+  },
+  "UnmanifestedShipmentLocation": {
+    "description": "UnmanifestedShipmentLocation info",
+    "properties": {
+      "address": {
+        "ref": "Address"
+      },
+      "lastManifestDate": {
+        "description": "Its Last Manifest Date.",
+        "format": "dateTime",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UnmanifestedShipmentLocationList": {
+    "description": "A list of UnmanifestedShipmentLocation",
+    "properties": {},
+    "ref": "UnmanifestedShipmentLocation",
+    "required": [],
+    "type": "array"
+  },
+  "ValidationMetadata": {
+    "description": "ValidationMetadata Details",
+    "properties": {
+      "errorMessage": {
+        "description": "errorMessage for the error.",
+        "type": "string"
+      },
+      "validationStrategy": {
+        "description": "validationStrategy for the error.",
+        "type": "string"
+      },
+      "value": {
+        "description": "Value.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ValidationMetadataList": {
+    "description": "A list of ValidationMetadata",
+    "properties": {},
+    "ref": "ValidationMetadata",
+    "required": [],
+    "type": "array"
+  },
+  "ValueAddedService": {
+    "description": "A value-added service available for purchase with a shipment service offering.",
+    "properties": {
+      "cost": {
+        "description": "The cost of the value-added service.",
+        "ref": "Currency"
+      },
+      "id": {
+        "description": "The identifier for the value-added service.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the value-added service.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "cost",
+      "id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "ValueAddedServiceDetails": {
+    "description": "A collection of supported value-added services.",
+    "properties": {
+      "collectOnDelivery": {
+        "ref": "CollectOnDelivery"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Weight": {
+    "description": "The weight in the units indicated.",
+    "properties": {
+      "unit": {
+        "description": "The unit of measurement.",
+        "enum": [
+          "GRAM",
+          "KILOGRAM",
+          "OUNCE",
+          "POUND"
+        ],
+        "type": "string"
+      },
+      "value": {
+        "description": "The measurement value.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "unit",
+      "value"
+    ],
+    "type": "object"
+  }
+}

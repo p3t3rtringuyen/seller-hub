@@ -1,0 +1,316 @@
+{
+ "api": "AmazonAdsAPIALLLabelsContract",
+ "file": "specs/dest/AmazonAdsAPIALLLabelsContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `FORBIDDEN` | The caller is not author…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Label": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "labelId": {
+     "description": "A unique identifier for the label.",
+     "type": "string"
+    },
+    "labelName": {
+     "description": "The human-readable display name of the label.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "labelId",
+    "labelName"
+   ],
+   "type": "object"
+  },
+  "LabelAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+     "items": {
+      "$ref": "AdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "LabelLabelIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "LabelLabelNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "LabelLabelObjectTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**LabelObjectType Enum:** | LabelObjectType | Description | | --- | --- | | `AD_GROUP` | An ad group within a campaign. | | `CAMPAIGN` | A campaign managed through campaign management. | | `DEAL` | An advertising deal i…",
+     "items": {
+      "$ref": "LabelObjectType"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "LabelObjectType": {
+   "description": "The types of advertising objects that labels can be applied to. **LabelObjectType Enum:** | LabelObjectType | Description | | --- | --- | | `AD_GROUP` | An ad group within a campaign. | | `CAMPAIGN` | A campaign managed…",
+   "enum": [
+    "AD_GROUP",
+    "CAMPAIGN",
+    "DEAL",
+    "INVENTORY_GROUP"
+   ],
+   "type": "string"
+  },
+  "LabelSuccessResponse": {
+   "properties": {
+    "labels": {
+     "items": {
+      "$ref": "Label"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryLabelRequest": {
+   "properties": {
+    "adProductFilter": {
+     "$ref": "LabelAdProductFilter"
+    },
+    "labelIdFilter": {
+     "$ref": "LabelLabelIdFilter"
+    },
+    "labelNameFilter": {
+     "$ref": "LabelLabelNameFilter"
+    },
+    "labelObjectTypeFilter": {
+     "$ref": "LabelLabelObjectTypeFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "labelObjectTypeFilter"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

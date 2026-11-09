@@ -1,0 +1,2877 @@
+{
+ "api": "AdsDataManager",
+ "file": "specs/dest/AdsDataManager_prod_3p.json",
+ "schemas": {
+  "Action": {
+   "enum": [
+    "CREATE",
+    "DELETE"
+   ],
+   "type": "string"
+  },
+  "AdsCdxBadRequestExceptionResponseContent": {
+   "description": "Bad Request.",
+   "properties": {
+    "code": {
+     "description": "HTTP status code of the error encountered.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "List of detailed errors, if any.",
+     "items": {
+      "$ref": "DetailedError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Error message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdsCdxForbiddenRequestExceptionResponseContent": {
+   "description": "Forbidden. The request failed because the user does not have access to the specified resource.",
+   "properties": {
+    "code": {
+     "description": "HTTP status code of the error encountered.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "List of detailed errors, if any.",
+     "items": {
+      "$ref": "DetailedError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Error message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdsCdxResourceNotFoundExceptionResponseContent": {
+   "description": "Not Found. The requested resource does not exist or is not visible for the user.",
+   "properties": {
+    "code": {
+     "description": "HTTP status code of the error encountered.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "List of detailed errors, if any.",
+     "items": {
+      "$ref": "DetailedError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Error message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdsCdxServerExceptionResponseContent": {
+   "description": "Internal server error. Retry later. Contact support if this response persists.",
+   "properties": {
+    "code": {
+     "description": "HTTP status code of the error encountered.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "List of detailed errors, if any.",
+     "items": {
+      "$ref": "DetailedError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdsCdxServerUnavailableExceptionResponseContent": {
+   "description": "Error information.",
+   "properties": {
+    "code": {
+     "description": "HTTP status code of the error encountered.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "List of detailed errors, if any.",
+     "items": {
+      "$ref": "DetailedError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdsCdxSolCreateAudienceRequestContent": {
+   "description": "Create Audience DataSet Request.",
+   "properties": {
+    "countryCode": {
+     "$ref": "CountryCode"
+    },
+    "description": {
+     "description": "A description of the DataSet.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "idRetention": {
+     "description": "Determines retention of hashed data for 90 days and refresh of UID tokens.",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "The name of the DataSet.",
+     "maxLength": 100,
+     "type": "string"
+    }
+   },
+   "required": [
+    "countryCode",
+    "name"
+   ],
+   "type": "object"
+  },
+  "AdsCdxSolCreateAudienceResponseContent": {
+   "description": "Create Audience DataSet Response.",
+   "properties": {
+    "clientName": {
+     "description": "Identification of the source that created the DataSet.",
+     "type": "string"
+    },
+    "countryCode": {
+     "$ref": "CountryCode"
+    },
+    "createdBy": {
+     "description": "Identifier of the user who created the DataSet.",
+     "type": "string"
+    },
+    "dataSetId": {
+     "type": "string"
+    },
+    "dataSetType": {
+     "$ref": "SchemaType"
+    },
+    "dateCreated": {
+     "description": "The Date Time that the DataSet was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "description": {
+     "description": "A description of the DataSet.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "idRetention": {
+     "description": "Determines retention of hashed data for 90 days and refresh of UID tokens.",
+     "type": "boolean"
+    },
+    "lastModified": {
+     "description": "The Date time the DataSet was last modified",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastModifiedBy": {
+     "description": "Identifier of the user who most recently modified the DataSet.",
+     "type": "string"
+    },
+    "metadata": {
+     "$ref": "Metadata"
+    },
+    "name": {
+     "description": "The name of the DataSet.",
+     "maxLength": 100,
+     "type": "string"
+    },
+    "partitionedBy": {
+     "$ref": "PartitionedByEnum"
+    },
+    "schema": {
+     "description": "The list of columns that make up the DataSet Schema.",
+     "items": {
+      "$ref": "DataSetColumn"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "clientName",
+    "countryCode",
+    "createdBy",
+    "dataSetType",
+    "dateCreated",
+    "lastModified",
+    "lastModifiedBy",
+    "name",
+    "schema"
+   ],
+   "type": "object"
+  },
+  "AdsCdxSolDuplicateDatasetNameExceptionResponseContent": {
+   "description": "Dataset with this name already exists.",
+   "properties": {
+    "code": {
+     "description": "HTTP status code of the error encountered.",
+     "type": "string"
+    },
+    "datasetId": {
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "List of detailed errors, if any.",
+     "items": {
+      "$ref": "DetailedError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdsCdxSolGetAudienceResponseContent": {
+   "description": "Get Audience DataSet Response.",
+   "properties": {
+    "clientName": {
+     "description": "Identification of the source that created the DataSet.",
+     "type": "string"
+    },
+    "countryCode": {
+     "$ref": "CountryCode"
+    },
+    "createdBy": {
+     "description": "Identifier of the user who created the DataSet.",
+     "type": "string"
+    },
+    "dataSetId": {
+     "type": "string"
+    },
+    "dataSetType": {
+     "$ref": "SchemaType"
+    },
+    "dateCreated": {
+     "description": "The Date Time that the DataSet was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "description": {
+     "description": "A description of the DataSet.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "idRetention": {
+     "description": "Determines retention of hashed data for 90 days and refresh of UID tokens.",
+     "type": "boolean"
+    },
+    "lastModified": {
+     "description": "The Date time the DataSet was last modified",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastModifiedBy": {
+     "description": "Identifier of the user who most recently modified the DataSet.",
+     "type": "string"
+    },
+    "metadata": {
+     "$ref": "Metadata"
+    },
+    "name": {
+     "description": "The name of the DataSet.",
+     "maxLength": 100,
+     "type": "string"
+    },
+    "partitionedBy": {
+     "$ref": "PartitionedByEnum"
+    },
+    "schema": {
+     "description": "The list of columns that make up the DataSet Schema.",
+     "items": {
+      "$ref": "DataSetColumn"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "clientName",
+    "countryCode",
+    "createdBy",
+    "dataSetType",
+    "dateCreated",
+    "lastModified",
+    "lastModifiedBy",
+    "name",
+    "schema"
+   ],
+   "type": "object"
+  },
+  "AdsCdxSolGetTermsResponseContent": {
+   "description": "Get Terms Response",
+   "properties": {
+    "agreementContent": {
+     "description": "The Terms and Conditions agreement content.",
+     "type": "string"
+    },
+    "agreementToken": {
+     "description": "The terms and conditions agreement token. Required to accept an agreement.",
+     "type": "string"
+    },
+    "hasAccepted": {
+     "description": "Flag indicating whether the customer has accepted the Ads Data Manager Terms and Conditions.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "hasAccepted"
+   ],
+   "type": "object"
+  },
+  "AdsCdxSolListAudienceResponseContent": {
+   "description": "List Audience DataSet Response.",
+   "properties": {
+    "dataSets": {
+     "items": {
+      "$ref": "CdxDataSetWithoutSchema"
+     },
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token to receive next page of results.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdsCdxSolSetTermsAcceptanceRequestContent": {
+   "description": "Set Terms request.",
+   "properties": {
+    "agreementToken": {
+     "description": "The terms and conditions agreement token.",
+     "type": "string"
+    },
+    "hasAccepted": {
+     "description": "Flag indicating whether the Customer has accepted the Ads Data Manager Terms and conditions.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "agreementToken",
+    "hasAccepted"
+   ],
+   "type": "object"
+  },
+  "AdsCdxTooManyRequestsExceptionResponseContent": {
+   "description": "Too Many Requests. The request was rate-limited. Retry later.",
+   "properties": {
+    "code": {
+     "description": "HTTP status code of the error encountered.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "List of detailed errors, if any.",
+     "items": {
+      "$ref": "DetailedError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Error message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdsCdxUnauthorizedRequestExceptionResponseContent": {
+   "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+   "properties": {
+    "code": {
+     "description": "HTTP status code of the error encountered.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "List of detailed errors, if any.",
+     "items": {
+      "$ref": "DetailedError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Error message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AmcMetadata": {
+   "properties": {
+    "amcInstanceId": {
+     "type": "string"
+    },
+    "amcInstanceName": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "amcInstanceId"
+   ],
+   "type": "object"
+  },
+  "AmznConsent": {
+   "properties": {
+    "amznAdStorage": {
+     "$ref": "ConsentEnums"
+    },
+    "amznUserData": {
+     "$ref": "ConsentEnums"
+    }
+   },
+   "type": "object"
+  },
+  "ApplicationId": {
+   "description": "Unique identifier for applications integrating with Ads Data Manager.",
+   "enum": [
+    "AMAZON_MARKETING_CLOUD",
+    "AUDIENCE_HUB",
+    "DSP_AUDIENCES",
+    "EVENTS_MANAGER",
+    "GEO_LOCATIONS",
+    "PG_DEALS"
+   ],
+   "type": "string"
+  },
+  "AudienceFees": {
+   "description": "Audience fee — CPM in cents plus ISO 4217 currency code. Sent to DP under the `audienceFees` metadata field for `AUDIENCE_DATA_STORE`. Note: `currency` is typed as the shared [CurrencyCode] enum from `AdsCdxCommonModel`…",
+   "properties": {
+    "cpmCents": {
+     "description": "CPM in cents.",
+     "type": "number"
+    },
+    "currency": {
+     "$ref": "CurrencyCode"
+    }
+   },
+   "required": [
+    "cpmCents",
+    "currency"
+   ],
+   "type": "object"
+  },
+  "AudienceHubMetadata": {
+   "description": "A structure to represent the metadata required to create an Audience Hub audience. Audience Hub audiences are syndicated to Amazon DSP via the DP API using `type=AUDIENCE_DATA_STORE`. All fields align with the DP API's …",
+   "properties": {
+    "audienceFees": {
+     "$ref": "AudienceFees"
+    },
+    "audienceName": {
+     "description": "The name of the audience.",
+     "maxLength": 127,
+     "type": "string"
+    },
+    "dataProviderId": {
+     "description": "Unique identifier for the data provider that owns this audience. The DMP receives this value from Amazon during their ADS onboarding process. Must be consistent across all audiences under the same data-provider identity…",
+     "type": "string"
+    },
+    "dataProviderName": {
+     "description": "The name of the data provider that owns this audience (e.g., \"Attain\", \"Comscore\"). Set by the DMP during ADS onboarding, must be consistent across all their ADS audiences. Per DP guide regex: [-_0-9a-zA-Z]{5,50}",
+     "type": "string"
+    },
+    "description": {
+     "description": "Optional description of the audience.",
+     "type": "string"
+    },
+    "externalAudienceId": {
+     "description": "External audience ID assigned by the DMP. Per DP guide regex: [-_0-9a-zA-Z]{5,50}",
+     "type": "string"
+    },
+    "taxonomy": {
+     "description": "Taxonomy path(s) for the audience. Each entry uses \">\" as separator (e.g., \"IRI > IRI ProScores CPG Audiences\"). An audience can have multiple taxonomy paths.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "audienceFees",
+    "audienceName",
+    "dataProviderId",
+    "dataProviderName",
+    "externalAudienceId",
+    "taxonomy"
+   ],
+   "type": "object"
+  },
+  "AudienceHubResponseMetadata": {
+   "description": "Response metadata for an Audience Hub audience, returned by `GetSharingRule` and `ListSharingRules`.",
+   "properties": {
+    "audienceId": {
+     "type": "string"
+    },
+    "audienceName": {
+     "type": "string"
+    },
+    "dataProviderId": {
+     "type": "string"
+    },
+    "dataProviderName": {
+     "type": "string"
+    },
+    "externalAudienceId": {
+     "type": "string"
+    },
+    "taxonomy": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "audienceId",
+    "audienceName",
+    "dataProviderId",
+    "dataProviderName",
+    "externalAudienceId",
+    "taxonomy"
+   ],
+   "type": "object"
+  },
+  "AudienceMember": {
+   "properties": {
+    "action": {
+     "$ref": "Action"
+    },
+    "externalUserId": {
+     "description": "This is an external user identifier defined by the data owner. Each unique user should have a unique external user identifier.",
+     "type": "string"
+    },
+    "userConsent": {
+     "$ref": "UserConsent"
+    },
+    "userIdentity": {
+     "$ref": "Identity"
+    }
+   },
+   "required": [
+    "action",
+    "externalUserId",
+    "userIdentity"
+   ],
+   "type": "object"
+  },
+  "AudienceMetadata": {
+   "description": "A structure to represent the metadata required to create a DSP Audience.",
+   "properties": {
+    "audienceName": {
+     "maxLength": 127,
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "externalAudienceId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceName"
+   ],
+   "type": "object"
+  },
+  "AudienceResponseMetadata": {
+   "description": "A structure that represents the audience-specific metadata provided to API consumers.",
+   "properties": {
+    "audienceId": {
+     "type": "string"
+    },
+    "audienceIdV2": {
+     "type": "string"
+    },
+    "audienceName": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceId",
+    "audienceIdV2",
+    "audienceName"
+   ],
+   "type": "object"
+  },
+  "AwsRegion": {
+   "description": "Available AWS regions",
+   "enum": [
+    "eu-west-1",
+    "us-east-1",
+    "us-west-2"
+   ],
+   "type": "string"
+  },
+  "CdxDataSetWithoutSchema": {
+   "properties": {
+    "clientName": {
+     "description": "Identification of the source that created the DataSet.",
+     "type": "string"
+    },
+    "countryCode": {
+     "$ref": "CountryCode"
+    },
+    "createdBy": {
+     "description": "Identifier of the user who created the DataSet.",
+     "type": "string"
+    },
+    "dataSetId": {
+     "description": "Unique identifier that represent the DataSet.",
+     "type": "string"
+    },
+    "dataSetType": {
+     "$ref": "SchemaType"
+    },
+    "dateCreated": {
+     "description": "The Date Time that the DataSet was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "description": {
+     "description": "A description of the DataSet.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "idRetention": {
+     "description": "Determines retention of hashed data for 90 days and refresh of UID tokens.",
+     "type": "boolean"
+    },
+    "lastModified": {
+     "description": "The Date time the DataSet was last modified",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastModifiedBy": {
+     "description": "Identifier of the user who most recently modified the DataSet.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the DataSet.",
+     "maxLength": 100,
+     "type": "string"
+    }
+   },
+   "required": [
+    "clientName",
+    "countryCode",
+    "createdBy",
+    "dataSetId",
+    "dataSetType",
+    "dateCreated",
+    "lastModified",
+    "lastModifiedBy",
+    "name"
+   ],
+   "type": "object"
+  },
+  "ColumnType": {
+   "enum": [
+    "DIMENSION",
+    "METRIC"
+   ],
+   "type": "string"
+  },
+  "Consent": {
+   "properties": {
+    "amzn": {
+     "$ref": "AmznConsent"
+    },
+    "gpp": {
+     "description": "A field to hold a 'Global Privacy Platform (GPP)' string. Optional.",
+     "type": "string"
+    },
+    "tcf": {
+     "description": "A field to hold the 'Transparency and Consent Framework (TCF)' string. Optional.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ConsentEnums": {
+   "enum": [
+    "DENIED",
+    "GRANTED",
+    "NOT_APPLICABLE",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "ConversionDefinitionCountingMethodV1": {
+   "enum": [
+    "EVERY",
+    "FIRST"
+   ],
+   "type": "string"
+  },
+  "ConversionDefinitionMetadata": {
+   "description": "Base metadata related to a Conversion Definition, typically used in CD creation requests.",
+   "properties": {
+    "conversionType": {
+     "$ref": "ConversionDefinitionTypeV1"
+    },
+    "countingMethod": {
+     "$ref": "ConversionDefinitionCountingMethodV1"
+    },
+    "name": {
+     "type": "string"
+    },
+    "partner": {
+     "type": "string"
+    },
+    "source": {
+     "$ref": "ConversionDefinitionSourceV1"
+    },
+    "sourceType": {
+     "$ref": "ConversionDefinitionSourceTypeV1"
+    },
+    "value": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "conversionType",
+    "countingMethod",
+    "name",
+    "source",
+    "sourceType",
+    "value"
+   ],
+   "type": "object"
+  },
+  "ConversionDefinitionResponseMetadata": {
+   "description": "Metadata for an Conversion Definition response i.e., including a CD id and fields.",
+   "properties": {
+    "conversionDefinitionId": {
+     "type": "string"
+    },
+    "conversionDefinitionName": {
+     "type": "string"
+    },
+    "conversionType": {
+     "$ref": "ConversionDefinitionTypeV1"
+    },
+    "countingMethod": {
+     "$ref": "ConversionDefinitionCountingMethodV1"
+    },
+    "name": {
+     "type": "string"
+    },
+    "partner": {
+     "type": "string"
+    },
+    "source": {
+     "$ref": "ConversionDefinitionSourceV1"
+    },
+    "sourceType": {
+     "$ref": "ConversionDefinitionSourceTypeV1"
+    },
+    "value": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "conversionDefinitionId",
+    "conversionDefinitionName",
+    "conversionType",
+    "countingMethod",
+    "name",
+    "source",
+    "sourceType",
+    "value"
+   ],
+   "type": "object"
+  },
+  "ConversionDefinitionSourceTypeV1": {
+   "enum": [
+    "ANDROID",
+    "FIRE_TABLET",
+    "FIRE_TV",
+    "IOS",
+    "OFFLINE",
+    "WEBSITE"
+   ],
+   "type": "string"
+  },
+  "ConversionDefinitionSourceV1": {
+   "enum": [
+    "AMAZON_AD_TAG",
+    "MMP",
+    "SERVER_TO_SERVER"
+   ],
+   "type": "string"
+  },
+  "ConversionDefinitionTypeV1": {
+   "enum": [
+    "ADD_TO_SHOPPING_CART",
+    "APPLICATION",
+    "CHECKOUT",
+    "CONTACT",
+    "LEAD",
+    "OFF_AMAZON_PURCHASES",
+    "OTHER",
+    "PAGE_VIEW",
+    "SEARCH",
+    "SIGN_UP",
+    "SUBSCRIBE"
+   ],
+   "type": "string"
+  },
+  "CountryCode": {
+   "description": "Country Code. Two letter ISO 3166-1 alpha-2",
+   "enum": [
+    "AD",
+    "AE",
+    "AF",
+    "AG",
+    "AI",
+    "AL",
+    "AM",
+    "AN",
+    "AO",
+    "AQ",
+    "AR",
+    "AS",
+    "AT",
+    "AU",
+    "AW",
+    "AX",
+    "AZ",
+    "BA",
+    "BB",
+    "BD",
+    "BE",
+    "BF",
+    "BG",
+    "BH",
+    "BI",
+    "BJ",
+    "BL",
+    "BM",
+    "BN",
+    "BO",
+    "BQ",
+    "BR",
+    "BS",
+    "BT",
+    "BV",
+    "BW",
+    "BY",
+    "BZ",
+    "CA",
+    "CC",
+    "CD",
+    "CF",
+    "CG",
+    "CH",
+    "CI",
+    "CK",
+    "CL",
+    "CM",
+    "CN",
+    "CO",
+    "CR",
+    "CU",
+    "CV",
+    "CW",
+    "CX",
+    "CY",
+    "CZ",
+    "DE",
+    "DJ",
+    "DK",
+    "DM",
+    "DO",
+    "DZ",
+    "EC",
+    "EE",
+    "EG",
+    "EH",
+    "ER",
+    "ES",
+    "ET",
+    "FI",
+    "FJ",
+    "FK",
+    "FM",
+    "FO",
+    "FR",
+    "GA",
+    "GB",
+    "GD",
+    "GE",
+    "GF",
+    "GG",
+    "GH",
+    "GI",
+    "GL",
+    "GM",
+    "GN",
+    "GP",
+    "GQ",
+    "GR",
+    "GS",
+    "GT",
+    "GU",
+    "GW",
+    "GY",
+    "HK",
+    "HM",
+    "HN",
+    "HR",
+    "HT",
+    "HU",
+    "ID",
+    "IE",
+    "IL",
+    "IM",
+    "IN",
+    "IO",
+    "IQ",
+    "IR",
+    "IS",
+    "IT",
+    "JE",
+    "JM",
+    "JO",
+    "JP",
+    "KE",
+    "KG",
+    "KH",
+    "KI",
+    "KM",
+    "KN",
+    "KP",
+    "KR",
+    "KW",
+    "KY",
+    "KZ",
+    "LA",
+    "LB",
+    "LC",
+    "LI",
+    "LK",
+    "LR",
+    "LS",
+    "LT",
+    "LU",
+    "LV",
+    "LY",
+    "MA",
+    "MC",
+    "MD",
+    "ME",
+    "MF",
+    "MG",
+    "MH",
+    "MK",
+    "ML",
+    "MM",
+    "MN",
+    "MO",
+    "MP",
+    "MQ",
+    "MR",
+    "MS",
+    "MT",
+    "MU",
+    "MV",
+    "MW",
+    "MX",
+    "MY",
+    "MZ",
+    "NA",
+    "NC",
+    "NE",
+    "NF",
+    "NG",
+    "NI",
+    "NL",
+    "NO",
+    "NP",
+    "NR",
+    "NU",
+    "NZ",
+    "OM",
+    "PA",
+    "PE",
+    "PF",
+    "PG",
+    "PH",
+    "PK",
+    "PL",
+    "PM",
+    "PN",
+    "PR",
+    "PS",
+    "PT",
+    "PW",
+    "PY",
+    "QA",
+    "RE",
+    "RO",
+    "RS",
+    "RU",
+    "RW",
+    "SA",
+    "SB",
+    "SC",
+    "SD",
+    "SE",
+    "SG",
+    "SH",
+    "SI",
+    "SJ",
+    "SK",
+    "SL",
+    "SM",
+    "SN",
+    "SO",
+    "SR",
+    "SS",
+    "ST",
+    "SV",
+    "SX",
+    "SY",
+    "SZ",
+    "TC",
+    "TD",
+    "TF",
+    "TG",
+    "TH",
+    "TJ",
+    "TK",
+    "TL",
+    "TM",
+    "TN",
+    "TO",
+    "TR",
+    "TT",
+    "TV",
+    "TW",
+    "TZ",
+    "UA",
+    "UG",
+    "UM",
+    "UNKNOWN",
+    "US",
+    "UY",
+    "UZ",
+    "VA",
+    "VC",
+    "VE",
+    "VG",
+    "VI",
+    "VN",
+    "VU",
+    "WF",
+    "WS",
+    "XK",
+    "YE",
+    "YT",
+    "ZA",
+    "ZM",
+    "ZW",
+    "ZZ"
+   ],
+   "type": "string"
+  },
+  "CreateDataroomResponseContent": {
+   "properties": {
+    "accountId": {
+     "description": "The owner of this Data room",
+     "type": "string"
+    },
+    "assignedToAccountId": {
+     "description": "The Ads AccountId to which this dataroom is assigned to",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "An ISO UTC Timestamp value representing the time the dataroom was created",
+     "format": "date-time",
+     "type": "string"
+    },
+    "region": {
+     "$ref": "AwsRegion"
+    }
+   },
+   "required": [
+    "accountId",
+    "creationDateTime"
+   ],
+   "type": "object"
+  },
+  "CreateSharingRuleRequestContent": {
+   "description": "The input parameters to create a Sharing Rule.",
+   "properties": {
+    "accountEntityId": {
+     "description": "The account (e.g., DSP Advertiser Account) entityId. This is different from 'destinationEntityId'. This is also known as \"parent entity id\".",
+     "type": "string"
+    },
+    "application": {
+     "$ref": "ApplicationId"
+    },
+    "dataSetId": {
+     "description": "Data set which is being shared via the sharing rule. The minimum length of the datasetId is 1 to ensure that it's not an empty string",
+     "type": "string"
+    },
+    "destinationAccountId": {
+     "description": "Account to which data is shared.",
+     "type": "string"
+    },
+    "marketplaceId": {
+     "description": "Marketplace to which data is shared.",
+     "type": "string"
+    },
+    "metadata": {
+     "$ref": "SharingRuleMetadata"
+    }
+   },
+   "required": [
+    "application",
+    "dataSetId",
+    "destinationAccountId",
+    "marketplaceId",
+    "metadata"
+   ],
+   "type": "object"
+  },
+  "CreateSharingRuleResponseContent": {
+   "description": "Output of a create sharing rule request, decoupled from sharing rule model.",
+   "properties": {
+    "accountEntityId": {
+     "description": "The account (e.g., DSP Advertiser Account) entityId. This is different from 'destinationEntityId'. This is also known as \"parent entity id\".",
+     "type": "string"
+    },
+    "activationTime": {
+     "description": "The timestamp when the sharing rule was activated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "application": {
+     "$ref": "ApplicationId"
+    },
+    "creationTime": {
+     "description": "Timestamp for time of creation in UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "dataSetId": {
+     "description": "Data set which is being shared via the sharing rule. The minimum length of the datasetId is 1 to ensure that it's not an empty string",
+     "type": "string"
+    },
+    "dataSetName": {
+     "description": "The name of the DataSet part of this sharing rule.",
+     "type": "string"
+    },
+    "destinationAccountId": {
+     "description": "Account to which data is shared.",
+     "type": "string"
+    },
+    "destinationEntityName": {
+     "description": "The display name of the destination entity.",
+     "type": "string"
+    },
+    "marketplaceId": {
+     "description": "Marketplace to which data is shared.",
+     "type": "string"
+    },
+    "metadata": {
+     "$ref": "SharingRuleResponseMetadata"
+    },
+    "revokedBy": {
+     "description": "The reason a rule was revoked, or NONE if rule is not revoked.",
+     "type": "string"
+    },
+    "revokedTime": {
+     "description": "The timestamp when the sharing rule was revoked.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "sharingRuleId": {
+     "description": "Unique ID for a sharing rule.",
+     "maxLength": 100,
+     "type": "string"
+    },
+    "status": {
+     "$ref": "SharingRuleStatus"
+    }
+   },
+   "required": [
+    "application",
+    "creationTime",
+    "dataSetId",
+    "destinationAccountId",
+    "marketplaceId",
+    "sharingRuleId",
+    "status"
+   ],
+   "type": "object"
+  },
+  "Currency": {
+   "description": "ISO 4217 currency codes. Mirrors PubTech's TaxonomyFeeCurrency.",
+   "enum": [
+    "AED",
+    "AFN",
+    "ALL",
+    "AMD",
+    "AOA",
+    "ARS",
+    "AUD",
+    "AWG",
+    "AZN",
+    "BAM",
+    "BBD",
+    "BDT",
+    "BHD",
+    "BIF",
+    "BMD",
+    "BND",
+    "BOB",
+    "BRL",
+    "BSD",
+    "BTN",
+    "BWP",
+    "BYN",
+    "BZD",
+    "CAD",
+    "CDF",
+    "CHF",
+    "CLP",
+    "CNY",
+    "COP",
+    "CRC",
+    "CUP",
+    "CVE",
+    "CZK",
+    "DJF",
+    "DKK",
+    "DOP",
+    "DZD",
+    "EGP",
+    "ERN",
+    "ETB",
+    "EUR",
+    "FJD",
+    "FKP",
+    "GBP",
+    "GEL",
+    "GHS",
+    "GIP",
+    "GMD",
+    "GNF",
+    "GTQ",
+    "GYD",
+    "HKD",
+    "HNL",
+    "HTG",
+    "HUF",
+    "IDR",
+    "ILS",
+    "INR",
+    "IQD",
+    "IRR",
+    "ISK",
+    "JMD",
+    "JOD",
+    "JPY",
+    "KES",
+    "KGS",
+    "KHR",
+    "KMF",
+    "KPW",
+    "KRW",
+    "KWD",
+    "KYD",
+    "KZT",
+    "LAK",
+    "LBP",
+    "LKR",
+    "LRD",
+    "LSL",
+    "LYD",
+    "MAD",
+    "MDL",
+    "MGA",
+    "MKD",
+    "MMK",
+    "MNT",
+    "MOP",
+    "MRU",
+    "MUR",
+    "MVR",
+    "MWK",
+    "MXN",
+    "MYR",
+    "MZN",
+    "NAD",
+    "NGN",
+    "NIO",
+    "NOK",
+    "NPR",
+    "NZD",
+    "OMR",
+    "PAB",
+    "PEN",
+    "PGK",
+    "PHP",
+    "PKR",
+    "PLN",
+    "PYG",
+    "QAR",
+    "RON",
+    "RSD",
+    "RUB",
+    "RWF",
+    "SAR",
+    "SBD",
+    "SCR",
+    "SDG",
+    "SEK",
+    "SGD",
+    "SLE",
+    "SOS",
+    "SRD",
+    "SSP",
+    "STN",
+    "SVC",
+    "SYP",
+    "SZL",
+    "THB",
+    "TJS",
+    "TMT",
+    "TND",
+    "TOP",
+    "TRY",
+    "TTD",
+    "TWD",
+    "TZS",
+    "UAH",
+    "UGX",
+    "USD",
+    "UYU",
+    "UYW",
+    "UZS",
+    "VED",
+    "VES",
+    "VND",
+    "VUV",
+    "WST",
+    "YER",
+    "ZAR",
+    "ZMW",
+    "ZWG"
+   ],
+   "type": "string"
+  },
+  "CurrencyCode": {
+   "description": "The currency code. Three letter ISO-4217 code.",
+   "enum": [
+    "AED",
+    "AFN",
+    "ALL",
+    "AMD",
+    "ANG",
+    "AOA",
+    "ARS",
+    "AUD",
+    "AWG",
+    "AZN",
+    "BAM",
+    "BBD",
+    "BDT",
+    "BGN",
+    "BHD",
+    "BIF",
+    "BMD",
+    "BND",
+    "BOB",
+    "BOV",
+    "BRL",
+    "BSD",
+    "BTN",
+    "BWP",
+    "BYN",
+    "BZD",
+    "CAD",
+    "CDF",
+    "CHE",
+    "CHF",
+    "CHW",
+    "CLF",
+    "CLP",
+    "CNY",
+    "COP",
+    "COU",
+    "CRC",
+    "CUC",
+    "CUP",
+    "CVE",
+    "CZK",
+    "DJF",
+    "DKK",
+    "DOP",
+    "DZD",
+    "EGP",
+    "ERN",
+    "ETB",
+    "EUR",
+    "FJD",
+    "FKP",
+    "GBP",
+    "GEL",
+    "GHS",
+    "GIP",
+    "GMD",
+    "GNF",
+    "GTQ",
+    "GYD",
+    "HKD",
+    "HNL",
+    "HTG",
+    "HUF",
+    "IDR",
+    "ILS",
+    "INR",
+    "IQD",
+    "IRR",
+    "ISK",
+    "JMD",
+    "JOD",
+    "JPY",
+    "KES",
+    "KGS",
+    "KHR",
+    "KMF",
+    "KPW",
+    "KRW",
+    "KWD",
+    "KYD",
+    "KZT",
+    "LAK",
+    "LBP",
+    "LKR",
+    "LRD",
+    "LSL",
+    "LYD",
+    "MAD",
+    "MDL",
+    "MGA",
+    "MKD",
+    "MMK",
+    "MNT",
+    "MOP",
+    "MRU",
+    "MUR",
+    "MVR",
+    "MWK",
+    "MXN",
+    "MXV",
+    "MYR",
+    "MZN",
+    "NAD",
+    "NGN",
+    "NIO",
+    "NOK",
+    "NPR",
+    "NZD",
+    "OMR",
+    "PAB",
+    "PEN",
+    "PGK",
+    "PHP",
+    "PKR",
+    "PLN",
+    "PYG",
+    "QAR",
+    "RON",
+    "RSD",
+    "RUB",
+    "RWF",
+    "SAR",
+    "SBD",
+    "SCR",
+    "SDG",
+    "SEK",
+    "SGD",
+    "SHP",
+    "SLE",
+    "SLL",
+    "SOS",
+    "SRD",
+    "SSP",
+    "STN",
+    "SVC",
+    "SYP",
+    "SZL",
+    "THB",
+    "TJS",
+    "TMT",
+    "TND",
+    "TOP",
+    "TRY",
+    "TTD",
+    "TWD",
+    "TZS",
+    "UAH",
+    "UGX",
+    "USD",
+    "USN",
+    "UYI",
+    "UYU",
+    "UYW",
+    "UZS",
+    "VED",
+    "VES",
+    "VND",
+    "VUV",
+    "WST",
+    "XAF",
+    "XAG",
+    "XAU",
+    "XBA",
+    "XBB",
+    "XBC",
+    "XBD",
+    "XCD",
+    "XDR",
+    "XOF",
+    "XPD",
+    "XPF",
+    "XPT",
+    "XSU",
+    "XTS",
+    "XUA",
+    "XXX",
+    "YER",
+    "ZAR",
+    "ZMW",
+    "ZWL"
+   ],
+   "type": "string"
+  },
+  "DataSetColumn": {
+   "properties": {
+    "columnType": {
+     "$ref": "ColumnType"
+    },
+    "dataType": {
+     "$ref": "DataTypeEnum"
+    },
+    "description": {
+     "description": "The description of the column.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "isRequired": {
+     "description": "Boolean to determine if the column is required or not.",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "The name of the column.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "requiresOneWayHashing": {
+     "description": "Indicates whether the data in the column should be one-way hashed.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "dataType",
+    "name"
+   ],
+   "type": "object"
+  },
+  "DataSetType": {
+   "description": "Type of a DataSet.",
+   "enum": [
+    "AUDIENCE",
+    "CUSTOM",
+    "EVENT",
+    "GEO_LOCATIONS"
+   ],
+   "type": "string"
+  },
+  "DataTypeEnum": {
+   "description": "enum used to verify the different datatypes supported in ADM",
+   "enum": [
+    "ACTION",
+    "AMZN_AD_STORAGE",
+    "AMZN_USER_DATA",
+    "ARRAY",
+    "CONVERSION_TYPE",
+    "COUNTING_METHOD",
+    "COUNTRY_CODE",
+    "CURRENCY_CODE",
+    "DATE",
+    "DECIMAL",
+    "DEDUPE_ID",
+    "EVENT_COUNT",
+    "EVENT_NAME",
+    "EVENT_SOURCE",
+    "EVENT_VALUE",
+    "EXPERIAN_ID",
+    "EXTERNAL_ID",
+    "GPP",
+    "HASHED_ADDRESS",
+    "HASHED_CITY",
+    "HASHED_COUNTRY_CODE",
+    "HASHED_EMAIL_ADDRESS",
+    "HASHED_FIRST_NAME",
+    "HASHED_LAST_NAME",
+    "HASHED_PHONE_NUMBER",
+    "HASHED_STATE",
+    "HASHED_ZIP_CODE",
+    "INTEGER",
+    "IP_ADDRESS",
+    "KANTAR_ID",
+    "LAST_ACTIVITY",
+    "LONG",
+    "MAID",
+    "MAIN_EVENT_TIME",
+    "MERKLE_ID",
+    "MERKURY_ID",
+    "NEUSTAR_ID",
+    "RAMP_ID",
+    "REAL_ID",
+    "SAMBA_TV_ID",
+    "STRING",
+    "TCF",
+    "TIMESTAMP",
+    "TRANSUNION_ID",
+    "UNITS_SOLD"
+   ],
+   "type": "string"
+  },
+  "DatasetMetadata": {
+   "properties": {
+    "actions": {
+     "description": "The list of actions available for the dataset",
+     "items": {
+      "description": "An action available for the dataset",
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "activeDestinations": {
+     "description": "The active destinations for the dataset",
+     "type": "number"
+    },
+    "countryCode": {
+     "description": "Default Country Code to fall back to for the records in this Dataset. Country Code should be represented in ISO 3166-1 alpha-2 format.",
+     "type": "string"
+    },
+    "createdAt": {
+     "description": "The timestamp when the dataset was created",
+     "format": "date-time",
+     "type": "string"
+    },
+    "datasetId": {
+     "description": "Id of a DataSet.",
+     "type": "string"
+    },
+    "description": {
+     "description": "Description of the dataset",
+     "type": "string"
+    },
+    "externalReferenceId": {
+     "description": "An internal Id generated from external source",
+     "type": "string"
+    },
+    "externalReferenceType": {
+     "$ref": "ExternalReferenceType"
+    },
+    "idRetention": {
+     "description": "Determines retention of hashed data for 90 days and refresh of UID tokens.",
+     "type": "boolean"
+    },
+    "lastModified": {
+     "description": "The Date time the DataSet was last modified",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastModifiedBy": {
+     "description": "Identifier of the user who most recently modified the DataSet.",
+     "type": "string"
+    },
+    "metadata": {
+     "$ref": "Metadata"
+    },
+    "name": {
+     "description": "The name of the dataset",
+     "type": "string"
+    },
+    "records": {
+     "description": "The number of records in the dataset",
+     "type": "number"
+    },
+    "schema": {
+     "description": "The schema of the dataset",
+     "type": "string"
+    },
+    "source": {
+     "$ref": "DatasetUploadSourceType"
+    },
+    "ttl": {
+     "description": "Time-to-live in seconds. The amount of time the record is associated with the DataSet. Max is 12.5 months.",
+     "maximum": 32850000,
+     "minimum": 0,
+     "type": "number"
+    },
+    "updatedAt": {
+     "description": "The timestamp when the dataset was last updated",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "actions",
+    "activeDestinations",
+    "countryCode",
+    "createdAt",
+    "datasetId",
+    "lastModified",
+    "lastModifiedBy",
+    "name",
+    "records",
+    "schema",
+    "source",
+    "updatedAt"
+   ],
+   "type": "object"
+  },
+  "DatasetMetric": {
+   "description": "The types of metrics that can be aggregated for a dataset",
+   "enum": [
+    "CONSENTED",
+    "RECEIVED",
+    "RESOLVED",
+    "VALID"
+   ],
+   "type": "string"
+  },
+  "DatasetMetricsValues": {
+   "additionalProperties": {
+    "format": "float",
+    "type": "number"
+   },
+   "type": "object"
+  },
+  "DatasetTimeSeries": {
+   "additionalProperties": {
+    "$ref": "DatasetMetricsValues"
+   },
+   "description": "A time series of dataset metrics, keyed by timestamp",
+   "type": "object"
+  },
+  "DatasetUploadSourceType": {
+   "description": "The possible sources from which a dataset can be uploaded.",
+   "enum": [
+    "API",
+    "S3",
+    "UI"
+   ],
+   "type": "string"
+  },
+  "DeleteIdentityRequestContent": {
+   "description": "The DeleteIdentityRequest represents a request to delete one or more user identities. It includes a list of target identities to be deleted, along with common headers.",
+   "properties": {
+    "targetIdentities": {
+     "description": "A list of identities to be deleted from manager account id. Each identity is either a single supported ExternalUserId or a collection of externalIdentities , maid or Hashed PII values representing a single user.",
+     "items": {
+      "$ref": "TargetIdentity"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targetIdentities"
+   ],
+   "type": "object"
+  },
+  "DetailedError": {
+   "description": "Detailed individual error information.",
+   "properties": {
+    "errorCode": {
+     "type": "number"
+    },
+    "errorMessage": {
+     "type": "string"
+    },
+    "errorType": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ExternalIdentity": {
+   "description": "Support for externalIdentity is planned for the future.",
+   "format": "password",
+   "properties": {
+    "experianId": {
+     "description": "User identifier provided by Experian",
+     "format": "password",
+     "type": "string"
+    },
+    "kantarId": {
+     "description": "User identifier provided by Kantar",
+     "format": "password",
+     "type": "string"
+    },
+    "liveRampId": {
+     "description": "User identifier provided by LiveRamp",
+     "format": "password",
+     "type": "string"
+    },
+    "maId": {
+     "description": "Mobile advertising identifier (IDFA for iOS or GAID for Android)",
+     "format": "password",
+     "type": "string"
+    },
+    "merkleId": {
+     "description": "User identifier provided by Merkle",
+     "format": "password",
+     "type": "string"
+    },
+    "merkuryId": {
+     "description": "User identifier provided by Merkle Merkury",
+     "format": "password",
+     "type": "string"
+    },
+    "neustarId": {
+     "description": "User identifier provided by Neustar",
+     "format": "password",
+     "type": "string"
+    },
+    "realId": {
+     "description": "User identifier provided by RealId",
+     "format": "password",
+     "type": "string"
+    },
+    "sambaTvId": {
+     "description": "User identifier provided by Samba TV",
+     "format": "password",
+     "type": "string"
+    },
+    "transunionId": {
+     "description": "User identifier provided by TransUnion",
+     "format": "password",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ExternalReferenceType": {
+   "description": "Type of dataset external reference ID",
+   "enum": [
+    "AMAZON_AD_TAG",
+    "CUSTOMER_PROVIDED",
+    "MMP"
+   ],
+   "type": "string"
+  },
+  "FeeMetadata": {
+   "description": "Fee metadata for an audience, modeled on the ADSP fee representation. ADM does not store or interpret this fee; it is passed through opaquely to the destination (e.g. PubTech) on audience creation. Fees are keyed by sup…",
+   "properties": {
+    "supplyTypes": {
+     "$ref": "SupplyTypeFees"
+    }
+   },
+   "type": "object"
+  },
+  "Geo": {
+   "properties": {
+    "countryCode": {
+     "$ref": "CountryCode"
+    },
+    "ipAddress": {
+     "description": "A String value holding an ipAddress used to determine country for members in this audience. Optional.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetDataSetMetricsResponseContent": {
+   "properties": {
+    "acceptedCount": {
+     "description": "The number of accepted records in the dataset",
+     "type": "number"
+    },
+    "accountId": {
+     "description": "Identifier for the MA or AA that owns this DataSet.",
+     "type": "string"
+    },
+    "clientName": {
+     "description": "Identifier of the user who created the DataSet.",
+     "type": "string"
+    },
+    "countryCode": {
+     "$ref": "CountryCode"
+    },
+    "createdBy": {
+     "description": "Identifier of the user who created the DataSet.",
+     "type": "string"
+    },
+    "dataSetId": {
+     "description": "The ID of the dataset",
+     "type": "string"
+    },
+    "dataSetSource": {
+     "description": "The source of the dataset",
+     "type": "string"
+    },
+    "dataSetType": {
+     "$ref": "DataSetType"
+    },
+    "dateCreated": {
+     "description": "The timestamp when the dataset was created",
+     "format": "date-time",
+     "type": "string"
+    },
+    "description": {
+     "description": "The description of the dataset",
+     "type": "string"
+    },
+    "externalReferenceId": {
+     "description": "An internal Id generated from external source",
+     "type": "string"
+    },
+    "externalReferenceType": {
+     "$ref": "ExternalReferenceType"
+    },
+    "idRetention": {
+     "description": "Determines retention of hashed data for 90 days and refresh of UID tokens.",
+     "type": "boolean"
+    },
+    "invalidRecordCount": {
+     "description": "The number of invalid records in the dataset",
+     "type": "number"
+    },
+    "lastModified": {
+     "description": "The timestamp when the dataset was last modified",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastModifiedBy": {
+     "description": "Identifier of the user who most recently modified the DataSet.",
+     "type": "string"
+    },
+    "matchRecordPercentage": {
+     "description": "The percentage of records successfully matched in the dataset",
+     "format": "float",
+     "type": "number"
+    },
+    "metadata": {
+     "$ref": "Metadata"
+    },
+    "name": {
+     "description": "The name of the dataset",
+     "type": "string"
+    },
+    "recordsResolved": {
+     "description": "The number of records successfully resolved in the dataset",
+     "type": "number"
+    },
+    "recordsWithIdentity": {
+     "description": "The number of records with identity information in the dataset",
+     "type": "number"
+    },
+    "ttl": {
+     "description": "Time-to-live in seconds. The amount of time the record is associated with the DataSet. Max is 12.5 months.",
+     "maximum": 32850000,
+     "minimum": 0,
+     "type": "number"
+    },
+    "uploadCount": {
+     "description": "The total number of uploads for the dataset",
+     "type": "number"
+    }
+   },
+   "required": [
+    "acceptedCount",
+    "dataSetId",
+    "dataSetSource",
+    "dataSetType",
+    "dateCreated",
+    "description",
+    "invalidRecordCount",
+    "lastModified",
+    "matchRecordPercentage",
+    "name",
+    "recordsResolved",
+    "recordsWithIdentity",
+    "uploadCount"
+   ],
+   "type": "object"
+  },
+  "GetDataroomMetadataResponseContent": {
+   "properties": {
+    "activeDestinations": {
+     "description": "The number of active destinations for the datasets",
+     "type": "number"
+    },
+    "dataSetsInUse": {
+     "description": "The number of datasets currently in use",
+     "type": "number"
+    },
+    "linkedAccounts": {
+     "description": "The number of linked accounts associated with the datasets",
+     "type": "number"
+    },
+    "totalDataSets": {
+     "description": "The total number of datasets",
+     "type": "number"
+    }
+   },
+   "required": [
+    "activeDestinations",
+    "dataSetsInUse",
+    "linkedAccounts",
+    "totalDataSets"
+   ],
+   "type": "object"
+  },
+  "GetDataroomResponseContent": {
+   "properties": {
+    "accountId": {
+     "description": "The owner of this Data room",
+     "type": "string"
+    },
+    "assignedToAccountId": {
+     "description": "The Ads AccountId to which this dataroom is assigned to",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "An ISO UTC Timestamp value representing the time the dataroom was created",
+     "format": "date-time",
+     "type": "string"
+    },
+    "region": {
+     "$ref": "AwsRegion"
+    }
+   },
+   "required": [
+    "accountId",
+    "creationDateTime"
+   ],
+   "type": "object"
+  },
+  "GetDatasetAggregatesRequestContent": {
+   "description": "List of Common Headers that could be added to any api with optional customerId and AdvertiserId",
+   "properties": {
+    "endDate": {
+     "description": "The end date for the metrics aggregation window, in UTC",
+     "format": "date-time",
+     "type": "string"
+    },
+    "metrics": {
+     "description": "The list of metrics to retrieve for the dataset",
+     "items": {
+      "$ref": "DatasetMetric"
+     },
+     "type": "array"
+    },
+    "startDate": {
+     "description": "The start date for the metrics aggregation window, in UTC",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetDatasetAggregatesResponseContent": {
+   "properties": {
+    "metrics": {
+     "$ref": "DatasetTimeSeries"
+    }
+   },
+   "type": "object"
+  },
+  "HashedPii": {
+   "description": "Structure representing hashed personally identifiable information (PII).",
+   "format": "password",
+   "properties": {
+    "ad": {
+     "description": "Normalized and SHA-256 hashed street address",
+     "type": "string"
+    },
+    "cty": {
+     "description": "Normalized and SHA-256 hashed city name",
+     "type": "string"
+    },
+    "em": {
+     "description": "Normalized and SHA-256 hashed email address",
+     "type": "string"
+    },
+    "fn": {
+     "description": "Normalized and SHA-256 hashed first name",
+     "type": "string"
+    },
+    "ln": {
+     "description": "Normalized and SHA-256 hashed last name",
+     "type": "string"
+    },
+    "ph": {
+     "description": "Normalized and SHA-256 hashed phone number",
+     "type": "string"
+    },
+    "st": {
+     "description": "Normalized and SHA-256 hashed state or region code",
+     "type": "string"
+    },
+    "zip": {
+     "description": "Normalized and SHA-256 hashed postal or zip code",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Identity": {
+   "description": "Either one hashedPII object or external identity object is required",
+   "format": "password",
+   "properties": {
+    "externalIdentities": {
+     "items": {
+      "$ref": "ExternalIdentity"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "hashedPiis": {
+     "description": "List of hashed personally-identifiable information records to be matched with Amazon identities for future use. All inputs must be properly normalized and SHA-256 hashed.",
+     "items": {
+      "$ref": "HashedPii"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "IngestAudiencesRequestContent": {
+   "description": "List of Common Headers that could be added to any api in Bifrost service",
+   "properties": {
+    "members": {
+     "items": {
+      "$ref": "AudienceMember"
+     },
+     "maxItems": 10000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "members"
+   ],
+   "type": "object"
+  },
+  "IngestAudiencesResponseContent": {
+   "properties": {
+    "errors": {
+     "description": "List of Validation Errors in the AudienceMembers, which are rejected from the request.",
+     "items": {
+      "$ref": "ValidationError"
+     },
+     "maxItems": 10000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "ingressId": {
+     "description": "Unique identifier for data ingestion flow generated at the server side when an events data are uploaded . When `POST` method is invoked to upload event data, a unique identifier is returned.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListDatasetDetailsRequestContent": {
+   "description": "List of Common Headers that could be added to any api with optional customerId and AdvertiserId",
+   "properties": {
+    "datasetIds": {
+     "description": "A set of datasetIds to retrieve data for",
+     "items": {
+      "description": "A dataset id",
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListDatasetDetailsResponseContent": {
+   "properties": {
+    "datasets": {
+     "description": "The list of dataset metadata objects",
+     "items": {
+      "$ref": "DatasetMetadata"
+     },
+     "maxItems": 100,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "A token to retrieve the next page of results, if applicable",
+     "type": "string"
+    }
+   },
+   "required": [
+    "datasets"
+   ],
+   "type": "object"
+  },
+  "ListSharingRulesRequestContent": {
+   "description": "Fields for external ListSharingRules call, including filter expressions and common headers.",
+   "properties": {
+    "activatedAfter": {
+     "description": "The UTC date-time on or after which the sharing rule was activated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "activatedBefore": {
+     "description": "The UTC date-time on or before which the sharing rule was activated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "application": {
+     "$ref": "ApplicationId"
+    },
+    "datasetIds": {
+     "description": "The list of dataset ids to filter sharing rules by.",
+     "items": {
+      "description": "Id of a DataSet.",
+      "type": "string"
+     },
+     "minItems": 1,
+     "type": "array"
+    },
+    "destinationAccountId": {
+     "description": "The account id to filter receiver of the sharing rule.",
+     "type": "string"
+    },
+    "maxResults": {
+     "description": "The maximum number of sharing rule results to return within one response.",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "nextToken is used for pagination.",
+     "type": "string"
+    },
+    "statuses": {
+     "description": "The list of statuses to filter sharing rules by. Exclusive filter if included, if not provided, all rules with any status are returned.",
+     "items": {
+      "$ref": "SharingRuleStatus"
+     },
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListSharingRulesResponseContent": {
+   "description": "The response consisting of a list of sharing rules.",
+   "properties": {
+    "nextToken": {
+     "description": "Token to get next page in a paginated response.",
+     "type": "string"
+    },
+    "sharingRules": {
+     "description": "The list of sharing rules matching the input request.",
+     "items": {
+      "$ref": "SharingRuleListItem"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "MMPMetadata": {
+   "description": "A structure to represent the metadata required for Mobile Measurement Partner (MMP) entities.",
+   "properties": {
+    "mmpAppId": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "mmpAppId"
+   ],
+   "type": "object"
+  },
+  "MarketplaceFee": {
+   "description": "The fee charged for a supply type in a specific marketplace.",
+   "properties": {
+    "currency": {
+     "$ref": "Currency"
+    },
+    "value": {
+     "description": "The fee amount as a decimal in the given currency. For example, a $0.50 CPM is 0.5.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currency",
+    "value"
+   ],
+   "type": "object"
+  },
+  "MarketplaceFees": {
+   "additionalProperties": {
+    "$ref": "MarketplaceFee"
+   },
+   "description": "Map of internal marketplace id to the fee charged in that marketplace.",
+   "type": "object"
+  },
+  "Metadata": {
+   "description": "Container for dataset metadata",
+   "properties": {
+    "mmpMetadata": {
+     "$ref": "MmpMetadata"
+    }
+   },
+   "type": "object"
+  },
+  "MmpMetadata": {
+   "description": "MMP (Mobile Measurement Partner) metadata for dataset tracking",
+   "properties": {
+    "appName": {
+     "description": "User-defined application name for MMP Registration",
+     "maxLength": 100,
+     "type": "string"
+    },
+    "bundleId": {
+     "description": "Bundle ID parsed from app store URL",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "isExistingApp": {
+     "description": "Whether the app was already registered prior to migration",
+     "type": "boolean"
+    },
+    "mmpAppId": {
+     "description": "Unique app registration ID generated by Amazon",
+     "type": "string"
+    },
+    "mmpName": {
+     "$ref": "MmpName"
+    },
+    "platform": {
+     "$ref": "MmpPlatform"
+    },
+    "skAdNetworkReference": {
+     "description": "SKAdNetwork enablement reference",
+     "type": "boolean"
+    },
+    "sourceAdvertiserAccountId": {
+     "description": "Advertiser account ID of the source system prior to migration",
+     "type": "string"
+    }
+   },
+   "required": [
+    "appName",
+    "bundleId",
+    "mmpName",
+    "platform"
+   ],
+   "type": "object"
+  },
+  "MmpName": {
+   "description": "Supported Mobile Measurement Partner names",
+   "enum": [
+    "ADJUST",
+    "AIRBRIDGE",
+    "APPSFLYER",
+    "BRANCH",
+    "KOCHAVA",
+    "SINGULAR",
+    "TENJIN"
+   ],
+   "type": "string"
+  },
+  "MmpPlatform": {
+   "description": "Supported mobile platforms for MMP tracking",
+   "enum": [
+    "ANDROID",
+    "FIRE_TABLET",
+    "FIRE_TV",
+    "IOS"
+   ],
+   "type": "string"
+  },
+  "PartitionedByEnum": {
+   "enum": [
+    "DAY",
+    "HOUR",
+    "MONTH",
+    "YEAR"
+   ],
+   "type": "string"
+  },
+  "PubTechMetadata": {
+   "description": "Metadata specific to PubTech, including audience information. Data provider ID and name are stored on the ADM Sharing Grant. The data provider reporting ID is supplied per audience in this structure.",
+   "properties": {
+    "allowedCountries": {
+     "description": "The countries in which the audience may be used. Required when creating a new audience.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "audienceName": {
+     "description": "The name of the audience. Required when creating a new audience.",
+     "type": "string"
+    },
+    "dataProviderReportingId": {
+     "description": "An external ID supplied by the data provider for the audience, used in usage reports sent to the data provider. Required when creating a new audience. Must not be passed on reshare.",
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "existingAudienceTargetingValue": {
+     "description": "The targeting value for an existing PubTech audience. This maps to the `customExecutionId` of a TaxonomyNode. This is the value that is put on the ad request and used in deal targeting. Required for reshare.",
+     "type": "string"
+    },
+    "fee": {
+     "$ref": "FeeMetadata"
+    }
+   },
+   "type": "object"
+  },
+  "PubTechResponseMetadata": {
+   "description": "Response metadata returned by PubTech after processing a sharing rule event.",
+   "properties": {
+    "audienceName": {
+     "type": "string"
+    },
+    "audienceTargetingValue": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceName",
+    "audienceTargetingValue"
+   ],
+   "type": "object"
+  },
+  "SchemaType": {
+   "enum": [
+    "AUDIENCE",
+    "CUSTOM",
+    "EVENT"
+   ],
+   "type": "string"
+  },
+  "SharingRuleListItem": {
+   "description": "Intermediate structure to allow use of SharingRule in SharingRuleList",
+   "properties": {
+    "accountEntityId": {
+     "description": "The account (e.g., DSP Advertiser Account) entityId. This is different from 'destinationEntityId'. This is also known as \"parent entity id\".",
+     "type": "string"
+    },
+    "activationTime": {
+     "description": "The timestamp when the sharing rule was activated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "application": {
+     "$ref": "ApplicationId"
+    },
+    "creationTime": {
+     "description": "Timestamp for time of creation in UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "dataSetId": {
+     "description": "Data set which is being shared via the sharing rule. The minimum length of the datasetId is 1 to ensure that it's not an empty string",
+     "type": "string"
+    },
+    "dataSetName": {
+     "description": "The name of the DataSet part of this sharing rule.",
+     "type": "string"
+    },
+    "destinationAccountId": {
+     "description": "Account to which data is shared.",
+     "type": "string"
+    },
+    "destinationEntityName": {
+     "description": "The display name of the destination entity.",
+     "type": "string"
+    },
+    "marketplaceId": {
+     "description": "Marketplace to which data is shared.",
+     "type": "string"
+    },
+    "metadata": {
+     "$ref": "SharingRuleResponseMetadata"
+    },
+    "revokedBy": {
+     "description": "The reason a rule was revoked, or NONE if rule is not revoked.",
+     "type": "string"
+    },
+    "revokedTime": {
+     "description": "The timestamp when the sharing rule was revoked.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "sharingRuleId": {
+     "description": "Unique ID for a sharing rule.",
+     "maxLength": 100,
+     "type": "string"
+    },
+    "status": {
+     "$ref": "SharingRuleStatus"
+    }
+   },
+   "required": [
+    "application",
+    "creationTime",
+    "dataSetId",
+    "destinationAccountId",
+    "marketplaceId",
+    "sharingRuleId",
+    "status"
+   ],
+   "type": "object"
+  },
+  "SharingRuleMetadata": {
+   "description": "A union to capture application specific metadata. Going forward, this will include Events Manager metadata, AMC metadata etc..",
+   "oneOf": [
+    {
+     "properties": {
+      "audienceMetadata": {
+       "$ref": "AudienceMetadata"
+      }
+     },
+     "required": [
+      "audienceMetadata"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "conversionDefinitionMetadata": {
+       "$ref": "ConversionDefinitionMetadata"
+      }
+     },
+     "required": [
+      "conversionDefinitionMetadata"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "conversionDefinitionId": {
+       "description": "conversionDefinitionId used for reshare",
+       "type": "string"
+      }
+     },
+     "required": [
+      "conversionDefinitionId"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amcMetadata": {
+       "$ref": "AmcMetadata"
+      }
+     },
+     "required": [
+      "amcMetadata"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "mmpMetadata": {
+       "$ref": "MMPMetadata"
+      }
+     },
+     "required": [
+      "mmpMetadata"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "pubTechMetadata": {
+       "$ref": "PubTechMetadata"
+      }
+     },
+     "required": [
+      "pubTechMetadata"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "audienceHubMetadata": {
+       "$ref": "AudienceHubMetadata"
+      }
+     },
+     "required": [
+      "audienceHubMetadata"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SharingRuleResponseMetadata": {
+   "description": "A union to capture application specific metadata that is exposed to API consumers. Eventually, this will involve other applications' metadata.",
+   "oneOf": [
+    {
+     "properties": {
+      "audienceMetadata": {
+       "$ref": "AudienceResponseMetadata"
+      }
+     },
+     "required": [
+      "audienceMetadata"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "conversionDefinitionMetadata": {
+       "$ref": "ConversionDefinitionResponseMetadata"
+      }
+     },
+     "required": [
+      "conversionDefinitionMetadata"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amcMetadata": {
+       "$ref": "AmcMetadata"
+      }
+     },
+     "required": [
+      "amcMetadata"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "mmpMetadata": {
+       "$ref": "MMPMetadata"
+      }
+     },
+     "required": [
+      "mmpMetadata"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "pubTechMetadata": {
+       "$ref": "PubTechResponseMetadata"
+      }
+     },
+     "required": [
+      "pubTechMetadata"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "audienceHubMetadata": {
+       "$ref": "AudienceHubResponseMetadata"
+      }
+     },
+     "required": [
+      "audienceHubMetadata"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "noMetadata": {
+       "$ref": "Unit"
+      }
+     },
+     "required": [
+      "noMetadata"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SharingRuleStatus": {
+   "description": "Customer facing enum for SharingRule status.",
+   "enum": [
+    "ACTIVE",
+    "PENDING",
+    "REVOKED_BY_DATASET",
+    "REVOKED_BY_SHARING_GRANT",
+    "REVOKED_BY_USER",
+    "SHADOW"
+   ],
+   "type": "string"
+  },
+  "SupplyTypeFee": {
+   "description": "Fees for a single supply type, keyed by marketplace.",
+   "properties": {
+    "marketplaceFees": {
+     "$ref": "MarketplaceFees"
+    }
+   },
+   "type": "object"
+  },
+  "SupplyTypeFees": {
+   "additionalProperties": {
+    "$ref": "SupplyTypeFee"
+   },
+   "description": "Map of supply type to the fees that apply to it.",
+   "type": "object"
+  },
+  "TargetIdentity": {
+   "description": "The user identity to be deleted. Either an ExternalUserId or a collection of externalIdentities , maid or Hashed PII values representing a single user.",
+   "oneOf": [
+    {
+     "properties": {
+      "externalUserId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "externalUserId"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "identity": {
+       "$ref": "Identity"
+      }
+     },
+     "required": [
+      "identity"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "Unit": {
+   "type": "object"
+  },
+  "UserConsent": {
+   "properties": {
+    "consent": {
+     "$ref": "Consent"
+    },
+    "geo": {
+     "$ref": "Geo"
+    }
+   },
+   "type": "object"
+  },
+  "ValidationError": {
+   "description": "Error Details for Each Member in the Ingest Request Payload.",
+   "properties": {
+    "code": {
+     "description": "HTTP status code of the error encountered.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "List of detailed errors, if any.",
+     "items": {
+      "$ref": "DetailedError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "Index of the Member in the Request Payload List.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

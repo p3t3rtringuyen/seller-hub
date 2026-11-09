@@ -1,0 +1,1546 @@
+{
+  "AddressExtendedFields": {
+    "description": "Additional address components that provide more detailed location information, helping with precise delivery routing.",
+    "properties": {
+      "complement": {
+        "description": "The floor number / unit number.",
+        "type": "string"
+      },
+      "neighborhood": {
+        "description": "The neighborhood.",
+        "type": "string"
+      },
+      "streetName": {
+        "description": "The name of the street.",
+        "type": "string"
+      },
+      "streetNumber": {
+        "description": "The house, building, or property number associated with the location's street address.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Alias": {
+    "description": "An alternative identifier that provides a different way to reference the same order.",
+    "properties": {
+      "aliasId": {
+        "description": "The alternative identifier value that can be used to reference this order.",
+        "type": "string"
+      },
+      "aliasType": {
+        "description": "The kind of alternative identifier this represents.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "aliasId",
+      "aliasType"
+    ],
+    "type": "object"
+  },
+  "Asin": {
+    "description": "The Amazon Standard Identification Number (ASIN), which uniquely identifies a product (catalog item).",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AssociatedOrder": {
+    "description": "Another order that has a direct business relationship with the current order, such as replacements or exchanges.",
+    "properties": {
+      "associationType": {
+        "description": "The relationship between the current order and the associated order.",
+        "type": "string"
+      },
+      "orderId": {
+        "description": "The unique identifier of the related order that is associated with the current order.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AssociatedOrderItem": {
+    "description": "An associated order item that a customer has purchased with the product.",
+    "properties": {
+      "asin": {
+        "description": "The ASIN of the associated order item.",
+        "type": "string"
+      },
+      "associationType": {
+        "description": "The type of association between the order items.",
+        "type": "string"
+      },
+      "orderId": {
+        "description": "The order identifier of the associated order item.",
+        "type": "string"
+      },
+      "orderItemId": {
+        "description": "The order item identifier of the associated order item.",
+        "type": "string"
+      },
+      "purchasePrice": {
+        "description": "The purchase price of the associated order item (the amount the customer paid, excluding shipping, tax, gift wrap, and promotions).",
+        "ref": "Money"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BusinessHour": {
+    "description": "Business days and hours when the destination is open for deliveries.",
+    "properties": {
+      "dayOfWeek": {
+        "description": "Specific day of the week for which operating hours are being defined.",
+        "enum": [
+          "FRI",
+          "MON",
+          "SAT",
+          "SUN",
+          "THU",
+          "TUE",
+          "WED"
+        ],
+        "type": "string"
+      },
+      "timeWindows": {
+        "description": "Collection of time windows during which the location is available for deliveries on the specified day.",
+        "ref": "TimeWindow",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Buyer": {
+    "description": "Information about the customer who purchased the order.",
+    "properties": {
+      "buyerCompanyName": {
+        "description": "The name of the company or organization for a business order.",
+        "type": "string"
+      },
+      "buyerEmail": {
+        "description": "The anonymized email address of the buyer.",
+        "type": "string"
+      },
+      "buyerName": {
+        "description": "The full name of the customer who placed the order.",
+        "type": "string"
+      },
+      "buyerPurchaseOrderNumber": {
+        "description": "The purchase order (PO) number entered by the buyer at checkout.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ConstraintType": {
+    "description": "Classification of the enforcement level required for shipping and delivery constraints.",
+    "enum": [
+      "MANDATORY"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CustomerAddress": {
+    "description": "The physical address of the customer.",
+    "properties": {
+      "addressLine1": {
+        "description": "The primary street address.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional address information.",
+        "type": "string"
+      },
+      "addressLine3": {
+        "description": "Additional address information.",
+        "type": "string"
+      },
+      "addressType": {
+        "description": "The type of location.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city of the address.",
+        "type": "string"
+      },
+      "companyName": {
+        "description": "The name of the business or organization at this address.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two-letter country code identifying the country of the address, in ISO 3166-1 format.",
+        "type": "string"
+      },
+      "districtOrCounty": {
+        "description": "The district or county of the address.",
+        "type": "string"
+      },
+      "extendedFields": {
+        "description": "Additional address components specific to certain countries that provide more detailed location information.",
+        "ref": "AddressExtendedFields"
+      },
+      "municipality": {
+        "description": "The municipality of the address.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The full name of the person who will receive the delivery at this address.",
+        "type": "string"
+      },
+      "phone": {
+        "description": "The contact phone number for delivery coordination and customer communication.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "The postal code, ZIP code, or equivalent mailing code of the address.",
+        "type": "string"
+      },
+      "stateOrRegion": {
+        "description": "The state, province, or region of the address.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DateTimeRange": {
+    "description": "A time period with start and end boundaries.",
+    "properties": {
+      "earliestDateTime": {
+        "description": "The beginning of the time period, in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "latestDateTime": {
+        "description": "The end of the time period, in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Decimal": {
+    "description": "A decimal number with no loss of precision.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "DeliveryPreference": {
+    "description": "Contains all delivery instructions that the customer provides for the shipping address.",
+    "properties": {
+      "addressInstruction": {
+        "description": "Building instructions, nearby landmark, or navigation instructions.",
+        "type": "string"
+      },
+      "deliveryCapabilities": {
+        "description": "A list of miscellaneous delivery capabilities associated with the shipping address.",
+        "ref": "PreferredDeliveryCapability",
+        "type": "array"
+      },
+      "deliveryTime": {
+        "description": "Business hours and days when the delivery is preferred.",
+        "ref": "PreferredDeliveryTime"
+      },
+      "dropOffLocation": {
+        "description": "The drop-off location selected by the customer.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of errors.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "ExceptionDate": {
+    "description": "Special dates when normal business hours are modified or suspended, requiring different delivery scheduling.",
+    "properties": {
+      "exceptionDate": {
+        "description": "Specific calendar date when normal operating hours do not apply.",
+        "format": "date",
+        "type": "string"
+      },
+      "exceptionDateType": {
+        "description": "Operational status of the business on the specified exception date.",
+        "enum": [
+          "CLOSED",
+          "OPEN"
+        ],
+        "type": "string"
+      },
+      "timeWindows": {
+        "description": "Alternative operating hours that apply specifically to this exception date.",
+        "ref": "TimeWindow",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "FulfillmentOrder": {
+    "description": "Information about a fulfillment order associated with a customer order.",
+    "properties": {
+      "fulfillmentOrderId": {
+        "description": "The Fulfillment Order ID assigned by Amazon after fulfillment planning.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "fulfillmentOrderId"
+    ],
+    "type": "object"
+  },
+  "FulfillmentStatus": {
+    "description": "The current fulfillment status of an order, indicating where the order is in the fulfillment process from placement to handover to carrier.",
+    "enum": [
+      "CANCELLED",
+      "PARTIALLY_SHIPPED",
+      "PENDING",
+      "PENDING_AVAILABILITY",
+      "SHIPPED",
+      "UNFULFILLABLE",
+      "UNSHIPPED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "GetOrderResponse": {
+    "description": "Order details.",
+    "properties": {
+      "order": {
+        "description": "All available information about the requested order.",
+        "ref": "Order"
+      }
+    },
+    "required": [
+      "order"
+    ],
+    "type": "object"
+  },
+  "GiftOption": {
+    "description": "Gift wrapping and personalization options selected by the customer for an order item.",
+    "properties": {
+      "giftMessage": {
+        "description": "Personal message from the buyer to be included with the gift-wrapped item.",
+        "type": "string"
+      },
+      "giftWrapLevel": {
+        "description": "Type or quality level of gift wrapping service selected by the customer.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "HourMinute": {
+    "description": "The time when the business opens or closes.",
+    "properties": {
+      "hour": {
+        "description": "The hour when the business opens or closes, in 24-hour format (0-23).",
+        "type": "integer"
+      },
+      "minute": {
+        "description": "The minute when the business opens or closes.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemCancellation": {
+    "description": "The cancellation information of the order item.",
+    "properties": {
+      "cancellationExecution": {
+        "description": "Details about how the cancellation request was processed for this order item.",
+        "ref": "ItemCancellationExecution"
+      },
+      "cancellationRequest": {
+        "description": "Details of the cancellation request submitted for this order item.",
+        "ref": "ItemCancellationRequest"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemCancellationExecution": {
+    "description": "Detailed information about how the cancellation was processed for a specific order item.",
+    "properties": {
+      "cancelReason": {
+        "description": "The provided explanation for why the cancellation occurred.",
+        "type": "string"
+      },
+      "cancelledBy": {
+        "description": "The entity that executed the cancellation for this item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemCancellationRequest": {
+    "description": "Detailed information about a cancellation request submitted for a specific order item.",
+    "properties": {
+      "cancelReason": {
+        "description": "Explanation provided for why the cancellation was requested.",
+        "type": "string"
+      },
+      "requester": {
+        "description": "Entity that initiated the cancellation request for this item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemCondition": {
+    "description": "Detailed information about the physical condition and quality state of the item being sold.",
+    "properties": {
+      "conditionNote": {
+        "description": "Additional details provided by the seller to describe the specific condition of this particular item.",
+        "type": "string"
+      },
+      "conditionSubtype": {
+        "description": "A more specific condition classification that provides additional detail about the item's quality within the main condition type.",
+        "type": "string"
+      },
+      "conditionType": {
+        "description": "The primary condition category that broadly describes the item's state.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemCustomization": {
+    "description": "Information about any personalization, customization, or special modifications applied to this order item.",
+    "properties": {
+      "customizedUrl": {
+        "description": "The URL of the customized data for custom orders from the Amazon Custom program.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemExpense": {
+    "description": "The expense information related to this specific item.",
+    "properties": {
+      "pointsCost": {
+        "description": "The cost of points.",
+        "ref": "ItemPointsCost"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemFulfillment": {
+    "description": "Information about how the order item should be processed, packed, and shipped to the customer.",
+    "properties": {
+      "packing": {
+        "description": "Information related to the packaging process for this item.",
+        "ref": "ItemPacking"
+      },
+      "picking": {
+        "description": "Information related to the warehouse picking process for this item.",
+        "ref": "ItemPicking"
+      },
+      "quantityFulfilled": {
+        "description": "The number of units of this item that have been successfully processed and shipped.",
+        "type": "integer"
+      },
+      "quantityUnfulfilled": {
+        "description": "The number of units of this item that remain to be processed and shipped.",
+        "type": "integer"
+      },
+      "shipping": {
+        "description": "Information related to the shipping and delivery process for this item.",
+        "ref": "ItemShipping"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemInternationalShipping": {
+    "description": "Additional requirements needed for cross-border shipping of an order item.",
+    "properties": {
+      "iossNumber": {
+        "description": "Import One-Stop Shop registration number required for EU VAT compliance when shipping from outside the European Union.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemPacking": {
+    "description": "Information related to the packaging process for an order item.",
+    "properties": {
+      "giftOption": {
+        "description": "Gift wrapping and messaging specified for this item.",
+        "ref": "GiftOption"
+      },
+      "serialNumberRequirement": {
+        "description": "Whether serial numbers must be provided for this line item.",
+        "ref": "SerialNumberRequirement"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemPicking": {
+    "description": "Information related to the warehouse picking process for an order item.",
+    "properties": {
+      "substitutionPreference": {
+        "description": "Substitution preference for an order item when it becomes unavailable during fulfillment.",
+        "ref": "ItemSubstitutionPreference"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemPointsCost": {
+    "description": "Information about Amazon Points granted with the purchase of an item, including both quantity and monetary equivalent value.",
+    "properties": {
+      "pointsGranted": {
+        "description": "Details of the Amazon Points granted, including count and monetary value.",
+        "ref": "PointsGranted"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemPrice": {
+    "description": "Pricing information for the order item.",
+    "properties": {
+      "priceDesignation": {
+        "description": "Indicates that the selling price is a special price that is only available for Amazon Business orders.",
+        "type": "string"
+      },
+      "unitPrice": {
+        "description": "The price charged for a single unit of this product, before any quantity-based calculations.",
+        "ref": "Money"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemProceeds": {
+    "description": "The money that the seller receives from the sale of this specific item.",
+    "properties": {
+      "breakdowns": {
+        "description": "The breakdown of proceeds.",
+        "ref": "ItemProceedsBreakdown",
+        "type": "array"
+      },
+      "proceedsTotal": {
+        "description": "The total monetary amount for this order item.",
+        "ref": "Money"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemProceedsBreakdown": {
+    "description": "Detailed proceeds breakdown for a specific order item.",
+    "properties": {
+      "detailedBreakdowns": {
+        "description": "Further granular breakdown of the subtotal.",
+        "ref": "ItemProceedsDetailedBreakdown",
+        "type": "array"
+      },
+      "subtotal": {
+        "description": "Monetary amount for the proceeds breakdown.",
+        "ref": "Money"
+      },
+      "type": {
+        "description": "Category classification of the proceeds breakdown.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "subtotal",
+      "type"
+    ],
+    "type": "object"
+  },
+  "ItemProceedsDetailedBreakdown": {
+    "description": "Further granular breakdown of the subtotal of the proceeds breakdown, only available for TAX and DISCOUNT proceeds types.",
+    "properties": {
+      "subtype": {
+        "description": "Specific classification of the further granular breakdown.",
+        "type": "string"
+      },
+      "value": {
+        "description": "Monetary amount for the further granular breakdown.",
+        "ref": "Money"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemProduct": {
+    "description": "Product information for an order item.",
+    "properties": {
+      "asin": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "ref": "Asin"
+      },
+      "condition": {
+        "description": "Information about the physical condition and quality of the item being sold.",
+        "ref": "ItemCondition"
+      },
+      "customization": {
+        "description": "Information about any personalization or customization applied to this product.",
+        "ref": "ItemCustomization"
+      },
+      "price": {
+        "description": "Pricing information for this product.",
+        "ref": "ItemPrice"
+      },
+      "sellerSku": {
+        "description": "The item's seller stock keeping unit (SKU).",
+        "ref": "SKU"
+      },
+      "serialNumbers": {
+        "description": "Unique serial numbers for products that require individual tracking, typically provided for FBA orders.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "title": {
+        "description": "The product name or title as displayed to customers in the marketplace.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemPromotion": {
+    "description": "Details about any discounts, coupons, or promotional offers applied to this item.",
+    "properties": {
+      "breakdowns": {
+        "description": "A list of promotions applied to the order item.",
+        "ref": "ItemPromotionBreakdown",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemPromotionBreakdown": {
+    "description": "Detailed information about a specific promotional offer applied to an order item.",
+    "properties": {
+      "promotionId": {
+        "description": "Unique identifier for the promotion applied to this item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemShipping": {
+    "description": "Information related to the shipping and delivery process for an order item.",
+    "properties": {
+      "internationalShipping": {
+        "description": "Additional information needed for cross-border delivery of this item.",
+        "ref": "ItemInternationalShipping"
+      },
+      "scheduledDeliveryWindow": {
+        "description": "When this item is expected to be delivered to the customer.",
+        "ref": "DateTimeRange"
+      },
+      "shippingConstraints": {
+        "description": "Special shipping requirements and restrictions that apply to this item.",
+        "ref": "ItemShippingConstraints"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemShippingConstraints": {
+    "description": "Special shipping requirements and restrictions that must be observed when shipping an order item.",
+    "properties": {
+      "cashOnDelivery": {
+        "description": "Payment must be collected from the customer at the time of delivery.",
+        "ref": "ConstraintType"
+      },
+      "palletDelivery": {
+        "description": "The line item must be delivered by pallet.",
+        "ref": "ConstraintType"
+      },
+      "recipientAgeVerification": {
+        "description": "The carrier must confirm that the recipient is of the legal age to receive the line item upon delivery.",
+        "ref": "ConstraintType"
+      },
+      "recipientIdentityVerification": {
+        "description": "The person receiving the line item must be the same as the intended recipient of the order.",
+        "ref": "ConstraintType"
+      },
+      "signatureConfirmation": {
+        "description": "The recipient of the line item must sign to confirm its delivery.",
+        "ref": "ConstraintType"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemSubstitutionOption": {
+    "description": "Alternative product that can be substituted for an original order item when it becomes unavailable during fulfillment.",
+    "properties": {
+      "asin": {
+        "description": "Amazon Standard Identification Number of the substitute product.",
+        "type": "string"
+      },
+      "measurement": {
+        "description": "Unit of measure and quantity specifications for the substitute product.",
+        "ref": "Measurement"
+      },
+      "quantityOrdered": {
+        "description": "Number of units of the substitute item to be selected if substitution occurs.",
+        "type": "integer"
+      },
+      "sellerSku": {
+        "description": "The item's seller stock keeping unit (SKU).",
+        "type": "string"
+      },
+      "title": {
+        "description": "Product name or title of the substitute item as displayed to customers.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemSubstitutionPreference": {
+    "description": "Substitution preference for an order item when it becomes unavailable during fulfillment.",
+    "properties": {
+      "substitutionOptions": {
+        "description": "List of alternative products that can be substituted for the original item if it becomes unavailable.",
+        "ref": "ItemSubstitutionOption",
+        "type": "array"
+      },
+      "substitutionType": {
+        "description": "Source and nature of the substitution preferences for this item.",
+        "enum": [
+          "AMAZON_RECOMMENDED",
+          "CUSTOMER_PREFERENCE",
+          "DO_NOT_SUBSTITUTE"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "substitutionType"
+    ],
+    "type": "object"
+  },
+  "ItemTax": {
+    "description": "Tax information for an order item.",
+    "properties": {
+      "taxCalculationBreakdowns": {
+        "description": "A list of tax calculation breakdowns for the order item.",
+        "ref": "ItemTaxCalculationBreakdown",
+        "type": "array"
+      },
+      "taxCollections": {
+        "description": "A list of tax collections for the order item.",
+        "ref": "ItemTaxCollection",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemTaxCalculationBreakdown": {
+    "description": "Tax calculation breakdowns for an order item.",
+    "properties": {
+      "reportingScheme": {
+        "description": "The tax reporting scheme applied to this order item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemTaxCollection": {
+    "description": "Tax collection information for an order item.",
+    "properties": {
+      "model": {
+        "description": "The tax collection model applied to the item.",
+        "type": "string"
+      },
+      "responsibleParty": {
+        "description": "The party responsible for withholding the taxes and remitting them to the taxing authority.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Measurement": {
+    "description": "Specifies the unit of measure and quantity for items that are sold by weight, volume, length, or other measurements rather than simple count.",
+    "properties": {
+      "unit": {
+        "description": "The specific unit of measurement used to quantify this item.",
+        "enum": [
+          "CENTIMETERS",
+          "COUNT",
+          "CUBIC_CENTIMETERS",
+          "CUBIC_FEET",
+          "CUBIC_INCHES",
+          "CUBIC_METERS",
+          "FEET",
+          "FLUID_OUNCES",
+          "GALLONS",
+          "GRAMS",
+          "INCHES",
+          "KILOGRAMS",
+          "LITERS",
+          "METERS",
+          "MILLIGRAMS",
+          "MILLIMETERS",
+          "OUNCES",
+          "PINTS",
+          "POUNDS",
+          "QUARTS",
+          "SQUARE_CENTIMETERS",
+          "SQUARE_FEET",
+          "SQUARE_INCHES",
+          "SQUARE_METERS"
+        ],
+        "type": "string"
+      },
+      "value": {
+        "description": "The numerical quantity or amount being measured in the specified unit.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "unit",
+      "value"
+    ],
+    "type": "object"
+  },
+  "MerchantAddress": {
+    "description": "The physical address of the merchant.",
+    "properties": {
+      "addressLine1": {
+        "description": "The primary street address of the merchant's location.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional address information.",
+        "type": "string"
+      },
+      "addressLine3": {
+        "description": "Additional address information.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city of the address.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two-letter country code for the address, in ISO 3166-1 format.",
+        "type": "string"
+      },
+      "districtOrCounty": {
+        "description": "The district or county of the address.",
+        "type": "string"
+      },
+      "municipality": {
+        "description": "The municipality of the address.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the business or facility at this address.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "The postal code or ZIP code of the address.",
+        "type": "string"
+      },
+      "stateOrRegion": {
+        "description": "The state, province, or region of the address.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Money": {
+    "description": "An amount of money, including units in the form of currency.",
+    "properties": {
+      "amount": {
+        "ref": "Decimal"
+      },
+      "currencyCode": {
+        "description": "The three-letter currency code that identifies the currency type, following ISO 4217 international standards.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "amount",
+      "currencyCode"
+    ],
+    "type": "object"
+  },
+  "Order": {
+    "description": "Comprehensive information about a customer order.",
+    "properties": {
+      "associatedOrders": {
+        "description": "Other orders that have a direct relationship to this order, such as replacement or exchange orders.",
+        "ref": "AssociatedOrder",
+        "type": "array"
+      },
+      "buyer": {
+        "description": "Information about the customer who purchased this order.",
+        "ref": "Buyer"
+      },
+      "createdTime": {
+        "description": "The time when the customer placed the order.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "fulfillment": {
+        "description": "Information about how this order is being processed and shipped.",
+        "ref": "OrderFulfillment"
+      },
+      "fulfillmentOrders": {
+        "description": "The list of fulfillment orders associated with this customer order.",
+        "ref": "FulfillmentOrder",
+        "type": "array"
+      },
+      "lastUpdatedTime": {
+        "description": "The most recent time when any aspect of this order was modified by Amazon or the seller.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "orderAliases": {
+        "description": "Alternative identifiers that can be used to reference this order, such as seller-defined order numbers.",
+        "ref": "Alias",
+        "type": "array"
+      },
+      "orderId": {
+        "description": "An Amazon-defined order identifier.",
+        "type": "string"
+      },
+      "orderItems": {
+        "description": "The list of all order items included in this order.",
+        "ref": "OrderItem",
+        "type": "array"
+      },
+      "packages": {
+        "description": "Shipping packages created for this order, including tracking information.",
+        "ref": "OrderPackage",
+        "type": "array"
+      },
+      "payment": {
+        "description": "Payment information for the order.",
+        "ref": "OrderPayment"
+      },
+      "proceeds": {
+        "description": "Financial information about this order.",
+        "ref": "OrderProceeds"
+      },
+      "programs": {
+        "description": "Special programs associated with this order that may affect fulfillment or customer experience.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "recipient": {
+        "description": "Information about the person or location where this order should be delivered.",
+        "ref": "Recipient"
+      },
+      "salesChannel": {
+        "description": "Information about where this order was placed.",
+        "ref": "SalesChannel"
+      },
+      "tax": {
+        "description": "Tax-related information for the order.",
+        "ref": "OrderTax"
+      }
+    },
+    "required": [
+      "createdTime",
+      "lastUpdatedTime",
+      "orderId",
+      "orderItems",
+      "salesChannel"
+    ],
+    "type": "object"
+  },
+  "OrderFulfillment": {
+    "description": "Information about how the order is being processed, packed, and shipped to the customer.",
+    "properties": {
+      "deliverByWindow": {
+        "description": "The promised time period within which the order should be delivered to the customer.",
+        "ref": "DateTimeRange"
+      },
+      "fulfilledBy": {
+        "description": "Specifies whether Amazon or the merchant is responsible for fulfilling this order.",
+        "type": "string"
+      },
+      "fulfillmentServiceLevel": {
+        "description": "The category of the shipping speed option selected by the customer at checkout.",
+        "type": "string"
+      },
+      "fulfillmentStatus": {
+        "description": "The current status of the order in the fulfillment process, from pending to handover to carrier.",
+        "ref": "FulfillmentStatus"
+      },
+      "labelPrintingWindow": {
+        "description": "The earliest time available to print the shipping label for the order.",
+        "ref": "DateTimeRange"
+      },
+      "promiseCalculationInputs": {
+        "description": "The inputs used to calculate a promise date for this order.",
+        "ref": "PromiseCalculationInputs"
+      },
+      "shipByWindow": {
+        "description": "The promised time period within which the order must be shipped to meet the customer's delivery expectations.",
+        "ref": "DateTimeRange"
+      }
+    },
+    "required": [
+      "fulfillmentStatus"
+    ],
+    "type": "object"
+  },
+  "OrderItem": {
+    "description": "Information about a single product within an order.",
+    "properties": {
+      "associatedOrderItems": {
+        "description": "A list of order items associated with this item.",
+        "ref": "AssociatedOrderItem",
+        "type": "array"
+      },
+      "cancellation": {
+        "description": "The cancellation information of the order item.",
+        "ref": "ItemCancellation"
+      },
+      "expense": {
+        "description": "The expense information related to this specific item.",
+        "ref": "ItemExpense"
+      },
+      "fulfillment": {
+        "description": "Information about how the order item should be processed, packed, and shipped to the customer.",
+        "ref": "ItemFulfillment"
+      },
+      "measurement": {
+        "description": "The unit of measure and value for items sold by weight, volume, or other measurements rather than simple count.",
+        "ref": "Measurement"
+      },
+      "orderItemId": {
+        "description": "A unique identifier for this specific item within the order.",
+        "type": "string"
+      },
+      "proceeds": {
+        "description": "The money that the seller receives from the sale of this specific item.",
+        "ref": "ItemProceeds"
+      },
+      "product": {
+        "description": "Information about the product being ordered.",
+        "ref": "ItemProduct"
+      },
+      "programs": {
+        "description": "Special programs that apply specifically to this item within the order.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "promotion": {
+        "description": "Details about any discounts, coupons, or promotional offers applied to this item.",
+        "ref": "ItemPromotion"
+      },
+      "quantityOrdered": {
+        "description": "The number of units of this item that the customer ordered.",
+        "type": "integer"
+      },
+      "tax": {
+        "description": "Tax-related information for this order item.",
+        "ref": "ItemTax"
+      }
+    },
+    "required": [
+      "orderItemId",
+      "product",
+      "quantityOrdered"
+    ],
+    "type": "object"
+  },
+  "OrderPackage": {
+    "description": "Information about a physical shipping package, including tracking details.",
+    "properties": {
+      "carrier": {
+        "description": "The carrier responsible for transporting this package to the customer.",
+        "type": "string"
+      },
+      "createdTime": {
+        "description": "The exact time when this shipping package was created and prepared for shipment.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "packageItems": {
+        "description": "A list of all order items included in this specific package.",
+        "ref": "PackageItem",
+        "type": "array"
+      },
+      "packageReferenceId": {
+        "description": "A unique identifier for this package within the context of the order.",
+        "type": "string"
+      },
+      "packageStatus": {
+        "description": "The current status of this package.",
+        "ref": "PackageStatus"
+      },
+      "shipFromAddress": {
+        "description": "The physical address from which this package was shipped, typically the merchant's warehouse or fulfillment center.",
+        "ref": "MerchantAddress"
+      },
+      "shipTime": {
+        "description": "The exact time when this package was handed over to the carrier and began its journey to the customer.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "shippingService": {
+        "description": "The specific shipping method or service used for delivering this package.",
+        "type": "string"
+      },
+      "trackingNumber": {
+        "description": "The carrier-provided tracking number that customers can use to monitor the package's delivery progress.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "packageReferenceId"
+    ],
+    "type": "object"
+  },
+  "OrderPayment": {
+    "description": "Payment information about the order.",
+    "properties": {
+      "paymentExecutions": {
+        "description": "A list of payment executions for the order.",
+        "ref": "PaymentExecution",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderProceeds": {
+    "description": "The money that the seller receives from the sale of the order.",
+    "properties": {
+      "breakdowns": {
+        "description": "Categorized proceeds for the order.",
+        "ref": "OrderProceedsBreakdown",
+        "type": "array"
+      },
+      "grandTotal": {
+        "description": "The total amount that the seller receives from the sale of the order.",
+        "ref": "Money"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderProceedsBreakdown": {
+    "description": "An entry detailing proceeds information.",
+    "properties": {
+      "status": {
+        "description": "The processing status of the charge.",
+        "type": "string"
+      },
+      "subtotal": {
+        "description": "The monetary amount for the proceeds category.",
+        "ref": "Money"
+      },
+      "type": {
+        "description": "The proceeds category.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "subtotal",
+      "type"
+    ],
+    "type": "object"
+  },
+  "OrderTax": {
+    "description": "Tax information about the order.",
+    "properties": {
+      "taxInvoicing": {
+        "description": "Tax invoicing information for the order.",
+        "ref": "OrderTaxInvoicing"
+      },
+      "taxRegistrations": {
+        "description": "A list of tax registrations associated with the order.",
+        "ref": "OrderTaxRegistration",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderTaxInvoicing": {
+    "description": "Tax invoicing information for the order.",
+    "properties": {
+      "buyerInvoicePreference": {
+        "description": "The buyer's invoicing preference, which indicates whether the seller should issue an individual or a business invoice to the buyer.",
+        "type": "string"
+      },
+      "invoiceStatus": {
+        "description": "The status of the invoice.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderTaxRegistration": {
+    "description": "Tax registration information for an entity associated with the order.",
+    "properties": {
+      "entityType": {
+        "description": "The type of entity that the tax registration belongs to.",
+        "type": "string"
+      },
+      "legalName": {
+        "description": "The legal name associated with the tax registration.",
+        "type": "string"
+      },
+      "taxRegistrationAddress": {
+        "description": "The address associated with the tax registration.",
+        "ref": "CustomerAddress"
+      },
+      "taxRegistrationAttributes": {
+        "description": "Additional attributes related to the tax registration.",
+        "ref": "TaxRegistrationAttribute",
+        "type": "array"
+      },
+      "taxRegistrationNumber": {
+        "description": "The tax registration number that identifies the entity for tax purposes.",
+        "type": "string"
+      },
+      "taxRegistrationType": {
+        "description": "The type of the tax registration number.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PackageItem": {
+    "description": "Individual order item contained within a shipping package.",
+    "properties": {
+      "orderItemId": {
+        "description": "Unique identifier of the order item included in this package.",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "Number of units of this item included in the package shipment.",
+        "type": "integer"
+      },
+      "transparencyCodes": {
+        "description": "The transparency codes associated with this item for product authentication.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "orderItemId",
+      "quantity"
+    ],
+    "type": "object"
+  },
+  "PackageStatus": {
+    "description": "Current status and detailed tracking information for a shipping package throughout the delivery process.",
+    "properties": {
+      "detailedStatus": {
+        "description": "Granular status information providing specific details about the package's current location and handling stage.",
+        "type": "string"
+      },
+      "status": {
+        "description": "Primary status classification of the package in the shipping workflow.",
+        "enum": [
+          "CANCELLED",
+          "DELIVERED",
+          "IN_TRANSIT",
+          "PENDING",
+          "SHIPPED",
+          "UNDELIVERABLE"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "status"
+    ],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "Pagination occurs when a request has results that exceed the response limit.",
+    "properties": {
+      "nextToken": {
+        "description": "A token that can be used to fetch the next page of results.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PaymentExecution": {
+    "description": "Payment execution details for an order.",
+    "properties": {
+      "acquirerId": {
+        "description": "The unique identifier of the payment processor or acquiring bank that authorizes the payment.",
+        "type": "string"
+      },
+      "authorizationCode": {
+        "description": "The unique code that confirms the payment authorization.",
+        "type": "string"
+      },
+      "cardBrand": {
+        "description": "The card network or brand used in the payment transaction (for example, Visa or Mastercard).",
+        "type": "string"
+      },
+      "paymentAmount": {
+        "description": "The monetary value of the payment execution.",
+        "ref": "Money"
+      },
+      "paymentMethod": {
+        "description": "The payment method used for this payment execution (for example, CashOnDelivery, ConvenienceStore, CreditCard, Invoice, Pix, and so on).",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PointsGranted": {
+    "description": "Information about Amazon Points awarded with an item purchase.",
+    "properties": {
+      "pointsMonetaryValue": {
+        "description": "Cash equivalent value of the awarded Amazon Points.",
+        "ref": "Money"
+      },
+      "pointsNumber": {
+        "description": "Total number of Amazon Points granted to the customer's account for this item purchase.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PreferredDeliveryCapability": {
+    "description": "Special delivery capabilities available at the shipping address that may affect delivery options and methods.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PreferredDeliveryTime": {
+    "description": "Customer-specified time preferences for when deliveries should be attempted at the destination address.",
+    "properties": {
+      "businessHours": {
+        "description": "Business hours when the business is open for deliveries.",
+        "ref": "BusinessHour",
+        "type": "array"
+      },
+      "exceptionDates": {
+        "description": "Specific dates within the next 30 days when normal business hours do not apply.",
+        "ref": "ExceptionDate",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PromiseCalculationInputs": {
+    "description": "The inputs used to calculate a promise date.",
+    "properties": {
+      "transitTime": {
+        "description": "The transit time used to calculate the promise date.",
+        "ref": "TransitTimeInput"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Recipient": {
+    "description": "Information about the recipient to whom the order should be delivered.",
+    "properties": {
+      "deliveryAddress": {
+        "description": "The address where the order should be delivered to the customer.",
+        "ref": "CustomerAddress"
+      },
+      "deliveryPreference": {
+        "description": "Special instructions and preferences that the customer specifies for how the order should be delivered.",
+        "ref": "DeliveryPreference"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SKU": {
+    "description": "The seller SKU of a product (catalog item).",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "SalesChannel": {
+    "description": "Information about where the customer placed this order.",
+    "properties": {
+      "channelName": {
+        "description": "The name of the sales platform or channel where the customer placed this order.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The unique identifier for the specific marketplace within the sales channel where this order was placed.",
+        "type": "string"
+      },
+      "marketplaceName": {
+        "description": "The human-readable name of the marketplace where this order was placed.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "channelName"
+    ],
+    "type": "object"
+  },
+  "SearchOrdersResponse": {
+    "description": "A list of orders.",
+    "properties": {
+      "createdBefore": {
+        "description": "Only orders placed before the specified time are returned.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "lastUpdatedBefore": {
+        "description": "Only orders updated before the specified time are returned.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "orders": {
+        "description": "An array containing all orders that match the search criteria.",
+        "ref": "Order",
+        "type": "array"
+      },
+      "pagination": {
+        "description": "Pagination occurs when a request has results that exceed the response limit.",
+        "ref": "Pagination"
+      }
+    },
+    "required": [
+      "orders"
+    ],
+    "type": "object"
+  },
+  "SerialNumberRequirement": {
+    "description": "Whether serial numbers must be provided for this line item.",
+    "properties": {
+      "requirementType": {
+        "description": "The requirement type for this request.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TaxRegistrationAttribute": {
+    "description": "An additional attribute associated with a tax registration.",
+    "properties": {
+      "key": {
+        "description": "The name of the tax registration attribute.",
+        "type": "string"
+      },
+      "value": {
+        "description": "The value of the tax registration attribute.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TimeWindow": {
+    "description": "Specific time interval defining the start and end times.",
+    "properties": {
+      "endTime": {
+        "description": "The end of the time window.",
+        "ref": "HourMinute"
+      },
+      "startTime": {
+        "description": "The beginning of the time window.",
+        "ref": "HourMinute"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TransitTimeInput": {
+    "description": "The carrier data that determined the transit time, and the source that supplied the data.",
+    "properties": {
+      "dataSource": {
+        "description": "The source of the transit time data.",
+        "type": "string"
+      },
+      "details": {
+        "description": "The carrier and shipping service used to calculate the transit time.",
+        "ref": "TransitTimeInputDetails"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TransitTimeInputDetails": {
+    "description": "Details about the carrier and shipping service used to calculate the transit time.",
+    "properties": {
+      "carrier": {
+        "description": "The carrier name.",
+        "type": "string"
+      },
+      "shippingService": {
+        "description": "The shipping service.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

@@ -1,0 +1,3243 @@
+{
+ "api": "AmazonAdsAPIALLSupplierProposedDealForecastsContract",
+ "file": "specs/dest/AmazonAdsAPIALLSupplierProposedDealForecastsContract_prod_3p.json",
+ "schemas": {
+  "AdvertisingDealPrice": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "priceType": {
+     "$ref": "AdvertisingDealPriceType"
+    },
+    "value": {
+     "description": "The monetary amount of the price in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "priceType",
+    "value"
+   ],
+   "type": "object"
+  },
+  "AdvertisingDealPriceType": {
+   "description": "**AdvertisingDealPriceType Enum:** | AdvertisingDealPriceType | Description | | --- | --- | | `FLAT_FEE` | This value is deprecated. Please use FIXED_PRICE. | | `FIXED_PRICE` | Sale price for a specific ad placement reg…",
+   "enum": [
+    "FIXED_CPM",
+    "FIXED_PRICE",
+    "FLAT_FEE",
+    "FLOOR_RATE"
+   ],
+   "type": "string"
+  },
+  "AdvertisingDealTerms": {
+   "description": "Terms for a deal. Supports PA & PD deals along with both spend-based guarantees (standard PG) and share-of-voice based guarantees (PG-SOV).",
+   "properties": {
+    "budget": {
+     "$ref": "MonetaryBudget"
+    },
+    "guaranteed": {
+     "description": "If true, deal is PG Deal.",
+     "type": "boolean"
+    },
+    "impressions": {
+     "description": "Representing the number of impressions for the deal. If the deal is guaranteed, this number should be provided. If the deal is non-guaranteed, this can be used to indicate how many impressions can be expected for the de…",
+     "format": "int32",
+     "type": "integer"
+    },
+    "marketplaceDeal": {
+     "description": "If true, deal is available to all Amazon DSP entities globally. Marketplace deals cannot be edited by individual buyers.",
+     "type": "boolean"
+    },
+    "price": {
+     "$ref": "AdvertisingDealPrice"
+    },
+    "shareOfVoicePercentage": {
+     "description": "Guaranteed Share-of-voice Percentage of the advertising deal. Used for SOV-based PG deals. Value must be > 0 and <= 100. Mutually exclusive with budget.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "guaranteed",
+    "marketplaceDeal",
+    "price"
+   ],
+   "type": "object"
+  },
+  "AdvertisingDealType": {
+   "enum": [
+    "PREFERRED",
+    "PRIVATE_AUCTION",
+    "PROGRAMMATIC_GUARANTEED",
+    "SHARE_OF_VOICE"
+   ],
+   "type": "string"
+  },
+  "AmazonMediaProposedDealExtension": {
+   "description": "Amazon Media specific proposed deal attributes.",
+   "properties": {
+    "brandName": {
+     "description": "The brand name associated with the deals buyer.",
+     "type": "string"
+    },
+    "productCategoryId": {
+     "description": "A list of ADSP product categories. Only required for PG deals.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonPublisherCloudDeliveryIntentGoals": {
+   "description": "Amazon Publisher Cloud specific goals.",
+   "properties": {
+    "goals": {
+     "description": "List of goal details for APC.",
+     "items": {
+      "$ref": "AmazonPublisherServicesGoalDetails"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonPublisherDirectDeliveryIntentGoals": {
+   "description": "Amazon Publisher Direct specific goals.",
+   "properties": {
+    "goals": {
+     "description": "List of goal details for APD.",
+     "items": {
+      "$ref": "AmazonPublisherServicesGoalDetails"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonPublisherServicesGoalDetails": {
+   "description": "Goal details including type, target, and unit.",
+   "properties": {
+    "target": {
+     "description": "The target value for the goal.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "type": {
+     "$ref": "AmazonPublisherServicesGoalTypes"
+    },
+    "unit": {
+     "$ref": "AmazonPublisherServicesGoalTargetUnit"
+    }
+   },
+   "required": [
+    "type"
+   ],
+   "type": "object"
+  },
+  "AmazonPublisherServicesGoalTargetUnit": {
+   "enum": [
+    "MILLICENT",
+    "PERCENTAGE"
+   ],
+   "type": "string"
+  },
+  "AmazonPublisherServicesGoalTypes": {
+   "description": "AmazonPublisherServicesGoalTypes is an enum representing the goal types that are supported in AmazonPublisherService. ON_TARGET_REACH: On-target reach, the absolute number of people in your target audience that is being…",
+   "enum": [
+    "CLICK_THROUGH_RATE",
+    "ON_TARGET_REACH",
+    "VIDEO_COMPLETION_RATE",
+    "VIEW_THROUGH_RATE"
+   ],
+   "type": "string"
+  },
+  "AudioCreativeRequirements": {
+   "description": "Audio creative requirements.",
+   "properties": {
+    "durationMs": {
+     "description": "Required duration for audio creatives in milliseconds.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CountryCode": {
+   "enum": [
+    "AD",
+    "AE",
+    "AF",
+    "AG",
+    "AI",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IT",
+    "JP",
+    "KR",
+    "MX",
+    "US"
+   ],
+   "type": "string"
+  },
+  "CreateAdvertisingDealPrice": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "priceType": {
+     "$ref": "AdvertisingDealPriceType"
+    },
+    "value": {
+     "description": "The monetary amount of the price in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "priceType",
+    "value"
+   ],
+   "type": "object"
+  },
+  "CreateAdvertisingDealTerms": {
+   "description": "Terms for a deal. Supports PA & PD deals along with both spend-based guarantees (standard PG) and share-of-voice based guarantees (PG-SOV).",
+   "properties": {
+    "budget": {
+     "$ref": "CreateMonetaryBudget"
+    },
+    "guaranteed": {
+     "description": "If true, deal is PG Deal.",
+     "type": "boolean"
+    },
+    "impressions": {
+     "description": "Representing the number of impressions for the deal. If the deal is guaranteed, this number should be provided. If the deal is non-guaranteed, this can be used to indicate how many impressions can be expected for the de…",
+     "format": "int32",
+     "type": "integer"
+    },
+    "marketplaceDeal": {
+     "description": "If true, deal is available to all Amazon DSP entities globally. Marketplace deals cannot be edited by individual buyers.",
+     "type": "boolean"
+    },
+    "price": {
+     "$ref": "CreateAdvertisingDealPrice"
+    },
+    "shareOfVoicePercentage": {
+     "description": "Guaranteed Share-of-voice Percentage of the advertising deal. Used for SOV-based PG deals. Value must be > 0 and <= 100. Mutually exclusive with budget.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "guaranteed",
+    "marketplaceDeal",
+    "price"
+   ],
+   "type": "object"
+  },
+  "CreateAmazonMediaProposedDealExtension": {
+   "description": "Amazon Media specific proposed deal attributes.",
+   "properties": {
+    "brandName": {
+     "description": "The brand name associated with the deals buyer.",
+     "type": "string"
+    },
+    "productCategoryId": {
+     "description": "A list of ADSP product categories. Only required for PG deals.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateAmazonPublisherCloudDeliveryIntentGoals": {
+   "description": "Amazon Publisher Cloud specific goals.",
+   "properties": {
+    "goals": {
+     "description": "List of goal details for APC.",
+     "items": {
+      "$ref": "CreateAmazonPublisherServicesGoalDetails"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateAmazonPublisherDirectDeliveryIntentGoals": {
+   "description": "Amazon Publisher Direct specific goals.",
+   "properties": {
+    "goals": {
+     "description": "List of goal details for APD.",
+     "items": {
+      "$ref": "CreateAmazonPublisherServicesGoalDetails"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateAmazonPublisherServicesGoalDetails": {
+   "description": "Goal details including type, target, and unit.",
+   "properties": {
+    "target": {
+     "description": "The target value for the goal.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "type": {
+     "$ref": "AmazonPublisherServicesGoalTypes"
+    },
+    "unit": {
+     "$ref": "AmazonPublisherServicesGoalTargetUnit"
+    }
+   },
+   "required": [
+    "type"
+   ],
+   "type": "object"
+  },
+  "CreateAudioCreativeRequirements": {
+   "description": "Audio creative requirements.",
+   "properties": {
+    "durationMs": {
+     "description": "Required duration for audio creatives in milliseconds.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "CreateDeliveryIntent": {
+   "description": "Delivery control configuration for proposed deals.",
+   "properties": {
+    "frequencyCap": {
+     "$ref": "CreateFrequencyCap"
+    },
+    "goals": {
+     "$ref": "CreateDeliveryIntentGoals"
+    }
+   },
+   "type": "object"
+  },
+  "CreateDeliveryIntentGoals": {
+   "description": "Goals configuration for delivery intent.",
+   "properties": {
+    "deliveryIntentGoalsExtension": {
+     "$ref": "CreateDeliveryIntentGoalsExtension"
+    }
+   },
+   "required": [
+    "deliveryIntentGoalsExtension"
+   ],
+   "type": "object"
+  },
+  "CreateDeliveryIntentGoalsExtension": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonPublisherCloudDeliveryIntentGoals": {
+       "$ref": "CreateAmazonPublisherCloudDeliveryIntentGoals"
+      }
+     },
+     "required": [
+      "amazonPublisherCloudDeliveryIntentGoals"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherDirectDeliveryIntentGoals": {
+       "$ref": "CreateAmazonPublisherDirectDeliveryIntentGoals"
+      }
+     },
+     "required": [
+      "amazonPublisherDirectDeliveryIntentGoals"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateDisplayCreativeRequirements": {
+   "description": "Display creative requirements.",
+   "properties": {
+    "size": {
+     "$ref": "CreateSize"
+    }
+   },
+   "type": "object"
+  },
+  "CreateFrequency": {
+   "properties": {
+    "eventCount": {
+     "description": "The number of events in a given frequency cap.",
+     "format": "int32",
+     "maximum": 500,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "eventMaxCount": {
+     "description": "The maximum number of times an EventType is served per user. For ADSP ad group, maximum supported value is 500.",
+     "format": "int32",
+     "maximum": 99000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "eventType": {
+     "$ref": "EventType"
+    },
+    "extraFrequencyCapImpressionTypes": {
+     "description": "Add the additional types of impression to frequency cap. Default to empty list when not selected",
+     "items": {
+      "$ref": "ExtraFrequencyCapImpressionType"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "frequencyTargetingSetting": {
+     "$ref": "FrequencyTargetingSetting"
+    },
+    "timeCount": {
+     "description": "The value associated with the time and unit of time for this frequency cap.",
+     "format": "int32",
+     "maximum": 60,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "timeUnit": {
+     "$ref": "TimeUnit"
+    }
+   },
+   "required": [
+    "eventMaxCount",
+    "frequencyTargetingSetting"
+   ],
+   "type": "object"
+  },
+  "CreateFrequencyCap": {
+   "description": "Frequency cap configuration.",
+   "properties": {
+    "frequencyCaps": {
+     "description": "List of frequency caps for this deal.",
+     "items": {
+      "$ref": "CreateFrequency"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateMonetaryBudget": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "ruleValue": {
+     "description": "The monetary amount of the budget when a budget rule is applied.",
+     "format": "double",
+     "type": "number"
+    },
+    "value": {
+     "description": "The monetary amount of the budget cap in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "value"
+   ],
+   "type": "object"
+  },
+  "CreateNotes": {
+   "description": "Notes for an object with origin information.",
+   "properties": {
+    "note": {
+     "description": "The note content.",
+     "type": "string"
+    },
+    "origin": {
+     "$ref": "NoteOrigin"
+    }
+   },
+   "required": [
+    "note",
+    "origin"
+   ],
+   "type": "object"
+  },
+  "CreateSize": {
+   "properties": {
+    "height": {
+     "description": "The height of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "height",
+    "width"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierAppTarget": {
+   "description": "Target based on a specified app ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of apps. Only numbers formatted as strings are accepted (e.g. '1'). To add apps to a new group, choose any string not currently being used on this ad group. To add apps to an existing grou…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The app to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierAudienceAgeTarget": {
+   "description": "Target based on a specified audience age ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience ages. Only numbers formatted as strings are accepted (e.g. '1'). To add audience ages to a new group, choose any string not currently being used on this ad group. To add audien…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience age to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierAudienceEducationTarget": {
+   "description": "Target based on a specified audience education ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience educations. Only numbers formatted as strings are accepted (e.g. '1'). To add audience educations to a new group, choose any string not currently being used on this ad group. T…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience education to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierAudienceGenderTarget": {
+   "description": "Target based on a specified audience gender ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience genders. Only numbers formatted as strings are accepted (e.g. '1'). To add audience genders to a new group, choose any string not currently being used on this ad group. To add …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience gender to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierAudienceHomeownershipTarget": {
+   "description": "Target based on a specified audience homeownership ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience homeownerships. Only numbers formatted as strings are accepted (e.g. '1'). To add audience homeownerships to a new group, choose any string not currently being used on this ad …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience homeownership to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierAudienceHouseholdCompositionTarget": {
+   "description": "Target based on a specified audience household composition ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience household compositions. Only numbers formatted as strings are accepted (e.g. '1'). To add audience household compositions to a new group, choose any string not currently being …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience household composition to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierAudienceHouseholdIncomeTarget": {
+   "description": "Target based on a specified audience household income ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience household incomes. Only numbers formatted as strings are accepted (e.g. '1'). To add audience household incomes to a new group, choose any string not currently being used on th…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience household income to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierAudienceInMarketTarget": {
+   "description": "Target based on a specified audience in-market ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience in-market segments. Only numbers formatted as strings are accepted (e.g. '1'). To add audience in-market segments to a new group, choose any string not currently being used on …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience in-market segment to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierAudienceInterestsTarget": {
+   "description": "Target based on a specified audience interest ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience interests. Only numbers formatted as strings are accepted (e.g. '1'). To add audience interests to a new group, choose any string not currently being used on this ad group. To …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience interest to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierAudienceMaritalStatusTarget": {
+   "description": "Target based on a specified audience marital status ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience marital statuses. Only numbers formatted as strings are accepted (e.g. '1'). To add audience marital statuses to a new group, choose any string not currently being used on this…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience marital status to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierAudienceMoodTarget": {
+   "description": "Target based on a specified audience mood ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience moods. Only numbers formatted as strings are accepted (e.g. '1'). To add audience moods to a new group, choose any string not currently being used on this ad group. To add audi…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience mood to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierAudienceSocioeconomicGroupTarget": {
+   "description": "Target based on a specified audience socioeconomic group ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience socioeconomic groups. Only numbers formatted as strings are accepted (e.g. '1'). To add audience socioeconomic groups to a new group, choose any string not currently being used…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience socioeconomic group to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierAudienceTarget": {
+   "description": "Target based on a specified audience ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audiences. Only numbers formatted as strings are accepted (e.g. '1'). To add audiences to a new group, choose any string not currently being used on this ad group. To add audiences to a…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierContentCategoryTarget": {
+   "description": "Target based on a specified content category ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of content categories. Only numbers formatted as strings are accepted (e.g. '1'). To add content categories to a new group, choose any string not currently being used on this ad group. To …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The content category to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierContentGenreTarget": {
+   "description": "Target based on a specified content genre ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of content genres. Only numbers formatted as strings are accepted (e.g. '1'). To add content genres to a new group, choose any string not currently being used on this ad group. To add cont…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The content genre to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierContentRatingTarget": {
+   "description": "Target based on a specified content rating ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of content ratings. Only numbers formatted as strings are accepted (e.g. '1'). To add content ratings to a new group, choose any string not currently being used on this ad group. To add co…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The content rating to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierContentSensitiveCategoryTarget": {
+   "description": "Target based on a specified content sensitive category ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of content sensitive categories. Only numbers formatted as strings are accepted (e.g. '1'). To add content sensitive categories to a new group, choose any string not currently being used o…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The content sensitive category to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierDayPartDayTarget": {
+   "description": "Target based on a specified daypart day ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of daypart days. Only numbers formatted as strings are accepted (e.g. '1'). To add daypart days to a new group, choose any string not currently being used on this ad group. To add daypart …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The daypart day to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierDayPartTarget": {
+   "description": "Supplier target based on time of day.",
+   "properties": {
+    "dayOfWeek": {
+     "$ref": "DayOfWeek"
+    },
+    "timeOfDay": {
+     "$ref": "CreateTimeOfDay"
+    },
+    "timeZoneType": {
+     "$ref": "SupplierTargetingDaypartTimezoneType"
+    }
+   },
+   "required": [
+    "dayOfWeek",
+    "timeOfDay"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierDayPartTimeTarget": {
+   "description": "Target based on a specified daypart time ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of daypart times. Only numbers formatted as strings are accepted (e.g. '1'). To add daypart times to a new group, choose any string not currently being used on this ad group. To add daypar…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The daypart time to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierDeviceOperatingSystemTarget": {
+   "description": "Target based on a specified device operating system ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of device operating systems. Only numbers formatted as strings are accepted (e.g. '1'). To add device operating systems to a new group, choose any string not currently being used on this a…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The device operating system to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierDeviceTypeTarget": {
+   "description": "Target based on a specified device type ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of device types. Only numbers formatted as strings are accepted (e.g. '1'). To add device types to a new group, choose any string not currently being used on this ad group. To add device t…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The device type to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierGroupDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "supplierLocationGroup": {
+       "$ref": "CreateSupplierLocationGroup"
+      }
+     },
+     "required": [
+      "supplierLocationGroup"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateSupplierLocationGroup": {
+   "description": "Location group details for supplier.",
+   "properties": {
+    "onlyUseRealTimeLocation": {
+     "description": "Only use real-time location for this group. Targeting customers based on home location may deliver when they travel and their real-time location is outside the targeted locations. This can lead to discrepancies with int…",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "CreateSupplierLocationTarget": {
+   "description": "Location target for supplier. Multiple locations can be used.",
+   "properties": {
+    "supplierTargetItemId": {
+     "description": "The geo location values to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierPositionVideoTarget": {
+   "description": "Target based on a specified video position ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of video positions. Only numbers formatted as strings are accepted (e.g. '1'). To add video positions to a new group, choose any string not currently being used on this ad group. To add vi…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The video position to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierProposedDealCreativeRequirement": {
+   "description": "Creative requirement with inventory type.",
+   "properties": {
+    "creativeRequirement": {
+     "$ref": "CreateSupplierProposedDealCreativeRequirements"
+    },
+    "inventoryType": {
+     "$ref": "InventoryType"
+    },
+    "languages": {
+     "description": "Languages available for this creative requirement.",
+     "items": {
+      "$ref": "LanguageIso"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "creativeRequirement",
+    "inventoryType"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierProposedDealCreativeRequirements": {
+   "oneOf": [
+    {
+     "properties": {
+      "audioCreativeRequirements": {
+       "$ref": "CreateAudioCreativeRequirements"
+      }
+     },
+     "required": [
+      "audioCreativeRequirements"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoCreativeRequirements": {
+       "$ref": "CreateVideoCreativeRequirements"
+      }
+     },
+     "required": [
+      "videoCreativeRequirements"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "displayCreativeRequirements": {
+       "$ref": "CreateDisplayCreativeRequirements"
+      }
+     },
+     "required": [
+      "displayCreativeRequirements"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateSupplierProposedDealExtension": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonMediaProposedDealExtension": {
+       "$ref": "CreateAmazonMediaProposedDealExtension"
+      }
+     },
+     "required": [
+      "amazonMediaProposedDealExtension"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateSupplierProposedDealForecastDescription": {
+   "description": "The request body for a forecast should include all fields for creating a SupplierProposedDeal with exception of read-only fields.",
+   "properties": {
+    "countries": {
+     "description": "The country for the proposed deal.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeRequirements": {
+     "description": "Creative requirements for this proposed deal.",
+     "items": {
+      "$ref": "CreateSupplierProposedDealCreativeRequirement"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customPublisherDescription": {
+     "description": "Custom description of the publisher providing inventory for this deal.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "dealName": {
+     "description": "The name of the deal.",
+     "type": "string"
+    },
+    "dealType": {
+     "$ref": "AdvertisingDealType"
+    },
+    "deliveryIntent": {
+     "$ref": "CreateDeliveryIntent"
+    },
+    "description": {
+     "description": "The description of the deal.",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The delivery end date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposed deal.",
+     "items": {
+      "$ref": "CreateNotes"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "startDateTime": {
+     "description": "The delivery start date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "supplierAdProductId": {
+     "description": "The supplier ad product unique identifier.",
+     "type": "string"
+    },
+    "supplierProposalDestinationId": {
+     "description": "The supplier proposal destination id for this deal.",
+     "type": "string"
+    },
+    "supplierProposedDealExtension": {
+     "$ref": "CreateSupplierProposedDealExtension"
+    },
+    "supplierProposedDealType": {
+     "$ref": "SupplierProposedDealType"
+    },
+    "targeting": {
+     "description": "Supplier targeting configuration.",
+     "items": {
+      "$ref": "CreateSupplierTargetGroup"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "terms": {
+     "$ref": "CreateAdvertisingDealTerms"
+    }
+   },
+   "required": [
+    "dealName",
+    "dealType",
+    "endDateTime",
+    "startDateTime",
+    "supplierProposedDealExtension",
+    "terms"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierProposedDealForecastRequest": {
+   "properties": {
+    "supplierProposedDealForecasts": {
+     "items": {
+      "$ref": "SupplierProposedDealForecastCreate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "supplierProposedDealForecasts"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierTarget": {
+   "description": "Marketplace targeting configuration.",
+   "properties": {
+    "negative": {
+     "description": "Indicates whether the target is negative or not. Negative targeting allows advertisers to provide intent where they do not want to show ads. Please ensure that the supplier for this target supports negative targeting be…",
+     "type": "boolean"
+    },
+    "supplierTargetDetails": {
+     "$ref": "CreateSupplierTargetDetails"
+    },
+    "supplierTargetType": {
+     "$ref": "SupplierTargetType"
+    }
+   },
+   "required": [
+    "supplierTargetDetails",
+    "supplierTargetType"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "supplierAudienceTarget": {
+       "$ref": "CreateSupplierAudienceTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceAgeTarget": {
+       "$ref": "CreateSupplierAudienceAgeTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceAgeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceGenderTarget": {
+       "$ref": "CreateSupplierAudienceGenderTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceGenderTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceInterestsTarget": {
+       "$ref": "CreateSupplierAudienceInterestsTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceInterestsTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceMoodTarget": {
+       "$ref": "CreateSupplierAudienceMoodTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceMoodTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceInMarketTarget": {
+       "$ref": "CreateSupplierAudienceInMarketTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceInMarketTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceHouseholdIncomeTarget": {
+       "$ref": "CreateSupplierAudienceHouseholdIncomeTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceHouseholdIncomeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceEducationTarget": {
+       "$ref": "CreateSupplierAudienceEducationTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceEducationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceHomeownershipTarget": {
+       "$ref": "CreateSupplierAudienceHomeownershipTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceHomeownershipTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceHouseholdCompositionTarget": {
+       "$ref": "CreateSupplierAudienceHouseholdCompositionTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceHouseholdCompositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceMaritalStatusTarget": {
+       "$ref": "CreateSupplierAudienceMaritalStatusTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceMaritalStatusTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceSocioeconomicGroupTarget": {
+       "$ref": "CreateSupplierAudienceSocioeconomicGroupTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceSocioeconomicGroupTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierLocationTarget": {
+       "$ref": "CreateSupplierLocationTarget"
+      }
+     },
+     "required": [
+      "supplierLocationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierDayPartTarget": {
+       "$ref": "CreateSupplierDayPartTarget"
+      }
+     },
+     "required": [
+      "supplierDayPartTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierDayPartDayTarget": {
+       "$ref": "CreateSupplierDayPartDayTarget"
+      }
+     },
+     "required": [
+      "supplierDayPartDayTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierDayPartTimeTarget": {
+       "$ref": "CreateSupplierDayPartTimeTarget"
+      }
+     },
+     "required": [
+      "supplierDayPartTimeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierContentCategoryTarget": {
+       "$ref": "CreateSupplierContentCategoryTarget"
+      }
+     },
+     "required": [
+      "supplierContentCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierContentGenreTarget": {
+       "$ref": "CreateSupplierContentGenreTarget"
+      }
+     },
+     "required": [
+      "supplierContentGenreTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierContentRatingTarget": {
+       "$ref": "CreateSupplierContentRatingTarget"
+      }
+     },
+     "required": [
+      "supplierContentRatingTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierContentSensitiveCategoryTarget": {
+       "$ref": "CreateSupplierContentSensitiveCategoryTarget"
+      }
+     },
+     "required": [
+      "supplierContentSensitiveCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierDeviceTypeTarget": {
+       "$ref": "CreateSupplierDeviceTypeTarget"
+      }
+     },
+     "required": [
+      "supplierDeviceTypeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierDeviceOperatingSystemTarget": {
+       "$ref": "CreateSupplierDeviceOperatingSystemTarget"
+      }
+     },
+     "required": [
+      "supplierDeviceOperatingSystemTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierPositionVideoTarget": {
+       "$ref": "CreateSupplierPositionVideoTarget"
+      }
+     },
+     "required": [
+      "supplierPositionVideoTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAppTarget": {
+       "$ref": "CreateSupplierAppTarget"
+      }
+     },
+     "required": [
+      "supplierAppTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateSupplierTargetGroup": {
+   "properties": {
+    "groupDetails": {
+     "$ref": "CreateSupplierGroupDetails"
+    },
+    "groupName": {
+     "type": "string"
+    },
+    "groupTargets": {
+     "items": {
+      "$ref": "CreateSupplierTarget"
+     },
+     "maxItems": 49,
+     "minItems": 1,
+     "type": "array"
+    },
+    "groupType": {
+     "$ref": "SupplierGroupType"
+    }
+   },
+   "required": [
+    "groupName",
+    "groupTargets"
+   ],
+   "type": "object"
+  },
+  "CreateTimeOfDay": {
+   "properties": {
+    "endTime": {
+     "description": "Selected end time",
+     "type": "string"
+    },
+    "startTime": {
+     "description": "Selected start time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "endTime",
+    "startTime"
+   ],
+   "type": "object"
+  },
+  "CreateVideoCreativeRequirements": {
+   "description": "Video creative requirements.",
+   "properties": {
+    "durationMs": {
+     "description": "Required duration for video creatives in milliseconds.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "size": {
+     "$ref": "CreateSize"
+    }
+   },
+   "type": "object"
+  },
+  "CurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | | --- | --- | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `EUR` | Euro | | `GBP` | British Pound Sterling | | `JPY` | Japa…",
+   "enum": [
+    "AUD",
+    "BRL",
+    "CAD",
+    "EUR",
+    "GBP",
+    "JPY",
+    "KRW",
+    "MXN",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "DayOfWeek": {
+   "description": "**DayOfWeek Enum:** | DayOfWeek | Description | | --- | --- | | `MONDAY` | Monday. | | `TUESDAY` | Tuesday. | | `WEDNESDAY` | Wednesday. | | `THURSDAY` | Thursday. | | `FRIDAY` | Friday. | | `SATURDAY` | Saturday. | | `…",
+   "enum": [
+    "FRIDAY",
+    "MONDAY",
+    "SATURDAY",
+    "SUNDAY",
+    "THURSDAY",
+    "TUESDAY",
+    "WEDNESDAY"
+   ],
+   "type": "string"
+  },
+  "DeliveryIntent": {
+   "description": "Delivery control configuration for proposed deals.",
+   "properties": {
+    "frequencyCap": {
+     "$ref": "FrequencyCap"
+    },
+    "goals": {
+     "$ref": "DeliveryIntentGoals"
+    }
+   },
+   "type": "object"
+  },
+  "DeliveryIntentGoals": {
+   "description": "Goals configuration for delivery intent.",
+   "properties": {
+    "deliveryIntentGoalsExtension": {
+     "$ref": "DeliveryIntentGoalsExtension"
+    }
+   },
+   "required": [
+    "deliveryIntentGoalsExtension"
+   ],
+   "type": "object"
+  },
+  "DeliveryIntentGoalsExtension": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonPublisherCloudDeliveryIntentGoals": {
+       "$ref": "AmazonPublisherCloudDeliveryIntentGoals"
+      }
+     },
+     "required": [
+      "amazonPublisherCloudDeliveryIntentGoals"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherDirectDeliveryIntentGoals": {
+       "$ref": "AmazonPublisherDirectDeliveryIntentGoals"
+      }
+     },
+     "required": [
+      "amazonPublisherDirectDeliveryIntentGoals"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DisplayCreativeRequirements": {
+   "description": "Display creative requirements.",
+   "properties": {
+    "size": {
+     "$ref": "Size"
+    }
+   },
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 14,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "EventType": {
+   "enum": [
+    "IMPRESSION"
+   ],
+   "type": "string"
+  },
+  "ExtraFrequencyCapImpressionType": {
+   "description": "**ExtraFrequencyCapImpressionType Enum:** | ExtraFrequencyCapImpressionType | Description | | --- | --- | | `LinearTVImpression` | Indicates include LinearTV impressions for CompleteTV Order Incremental Reach goal KPI. |",
+   "enum": [
+    "LinearTVImpression"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ForecastSummary": {
+   "oneOf": [
+    {
+     "properties": {
+      "impressionsForecastSummary": {
+       "$ref": "ImpressionsForecastSummary"
+      }
+     },
+     "required": [
+      "impressionsForecastSummary"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "Frequency": {
+   "properties": {
+    "eventCount": {
+     "description": "The number of events in a given frequency cap.",
+     "format": "int32",
+     "maximum": 500,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "eventMaxCount": {
+     "description": "The maximum number of times an EventType is served per user. For ADSP ad group, maximum supported value is 500.",
+     "format": "int32",
+     "maximum": 99000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "eventType": {
+     "$ref": "EventType"
+    },
+    "extraFrequencyCapImpressionTypes": {
+     "description": "Add the additional types of impression to frequency cap. Default to empty list when not selected",
+     "items": {
+      "$ref": "ExtraFrequencyCapImpressionType"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "frequencyTargetingSetting": {
+     "$ref": "FrequencyTargetingSetting"
+    },
+    "timeCount": {
+     "description": "The value associated with the time and unit of time for this frequency cap.",
+     "format": "int32",
+     "maximum": 60,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "timeUnit": {
+     "$ref": "TimeUnit"
+    }
+   },
+   "required": [
+    "eventMaxCount",
+    "frequencyTargetingSetting"
+   ],
+   "type": "object"
+  },
+  "FrequencyCap": {
+   "description": "Frequency cap configuration.",
+   "properties": {
+    "frequencyCaps": {
+     "description": "List of frequency caps for this deal.",
+     "items": {
+      "$ref": "Frequency"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "FrequencyTargetingSetting": {
+   "description": "**FrequencyTargetingSetting Enum:** | FrequencyTargetingSetting | Description | | --- | --- | | `USER` | Control frequency an ad will be selected to a person. | | `HOUSEHOLD` | Control frequency an ad will be selected a…",
+   "enum": [
+    "HOUSEHOLD",
+    "USER"
+   ],
+   "type": "string"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ImpressionsForecastSummary": {
+   "description": "Forecast summary for impressions.",
+   "properties": {
+    "availableImpressions": {
+     "description": "The total impressions available for purchase.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "availableImpressions"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InventoryType": {
+   "description": "**InventoryType Enum:** | InventoryType | Description | | --- | --- | | `STANDARD_DISPLAY` | | | `DISPLAY` | | | `VIDEO` | | | `STREAMING_TV` | | | `ONLINE_VIDEO` | | | `AUDIO` | Audio ads that serve on streaming audio …",
+   "enum": [
+    "AUDIO",
+    "DISPLAY",
+    "ONLINE_VIDEO",
+    "STANDARD_DISPLAY",
+    "STREAMING_TV",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "LanguageIso": {
+   "description": "ISO-639-1 two-letter language codes. **LanguageIso Enum:** | LanguageIso | Description | | --- | --- | | `aa` | Afar. | | `ab` | Abkhazian. | | `ae` | Avestan. | | `af` | Afrikaans. | | `ak` | Akan. | | `am` | Amharic. …",
+   "enum": [
+    "aa",
+    "ab",
+    "ae",
+    "af",
+    "ak",
+    "am",
+    "an",
+    "ar",
+    "as",
+    "av",
+    "ay",
+    "az",
+    "ba",
+    "be",
+    "bg",
+    "bh",
+    "bi",
+    "bm",
+    "bn",
+    "bo",
+    "br",
+    "bs",
+    "ca",
+    "ce",
+    "ch",
+    "co",
+    "cr",
+    "cs",
+    "cu",
+    "cv",
+    "cy",
+    "da",
+    "de",
+    "dv",
+    "dz",
+    "ee",
+    "el",
+    "en",
+    "eo",
+    "es",
+    "et",
+    "eu",
+    "fa",
+    "ff",
+    "fi",
+    "fj",
+    "fo",
+    "fr",
+    "fy",
+    "ga",
+    "gd",
+    "gl",
+    "gn",
+    "gu",
+    "gv",
+    "ha",
+    "he",
+    "hi",
+    "ho",
+    "hr",
+    "ht",
+    "hu",
+    "hy",
+    "hz",
+    "ia",
+    "id",
+    "ie",
+    "ig",
+    "ii",
+    "ik",
+    "io",
+    "is",
+    "it",
+    "iu",
+    "ja",
+    "jv",
+    "ka",
+    "kg",
+    "ki",
+    "kj",
+    "kk",
+    "kl",
+    "km",
+    "kn",
+    "ko",
+    "kr",
+    "ks",
+    "ku",
+    "kv",
+    "kw",
+    "ky",
+    "la",
+    "lb",
+    "lg",
+    "li",
+    "ln",
+    "lo",
+    "lt",
+    "lu",
+    "lv",
+    "mg",
+    "mh",
+    "mi",
+    "mk",
+    "ml",
+    "mn",
+    "mr",
+    "ms",
+    "mt",
+    "my",
+    "na",
+    "nb",
+    "nd",
+    "ne",
+    "ng",
+    "nl",
+    "nn",
+    "no",
+    "nr",
+    "nv",
+    "ny",
+    "oc",
+    "oj",
+    "om",
+    "or",
+    "os",
+    "pa",
+    "pi",
+    "pl",
+    "ps",
+    "pt",
+    "qu",
+    "rm",
+    "rn",
+    "ro",
+    "ru",
+    "rw",
+    "sa",
+    "sc",
+    "sd",
+    "se",
+    "sg",
+    "si",
+    "sk",
+    "sl",
+    "sm",
+    "sn",
+    "so",
+    "sq",
+    "sr",
+    "ss",
+    "st",
+    "su",
+    "sv",
+    "sw",
+    "ta",
+    "te",
+    "tg",
+    "th",
+    "ti",
+    "tk",
+    "tl",
+    "tn",
+    "to",
+    "tr",
+    "ts",
+    "tt",
+    "tw",
+    "ty",
+    "ug",
+    "uk",
+    "ur",
+    "uz",
+    "ve",
+    "vi",
+    "vo",
+    "wa",
+    "wo",
+    "xh",
+    "yi",
+    "yo",
+    "za",
+    "zh",
+    "zu"
+   ],
+   "type": "string"
+  },
+  "MonetaryBudget": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "ruleValue": {
+     "description": "The monetary amount of the budget when a budget rule is applied.",
+     "format": "double",
+     "type": "number"
+    },
+    "value": {
+     "description": "The monetary amount of the budget cap in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "value"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NoteOrigin": {
+   "enum": [
+    "BUYER",
+    "SUPPLIER"
+   ],
+   "type": "string"
+  },
+  "Notes": {
+   "description": "Notes for an object with origin information.",
+   "properties": {
+    "note": {
+     "description": "The note content.",
+     "type": "string"
+    },
+    "origin": {
+     "$ref": "NoteOrigin"
+    }
+   },
+   "required": [
+    "note",
+    "origin"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Size": {
+   "properties": {
+    "height": {
+     "description": "The height of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "height",
+    "width"
+   ],
+   "type": "object"
+  },
+  "SupplierAppTarget": {
+   "description": "Target based on a specified app ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of apps. Only numbers formatted as strings are accepted (e.g. '1'). To add apps to a new group, choose any string not currently being used on this ad group. To add apps to an existing grou…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The app to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierAudienceAgeTarget": {
+   "description": "Target based on a specified audience age ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience ages. Only numbers formatted as strings are accepted (e.g. '1'). To add audience ages to a new group, choose any string not currently being used on this ad group. To add audien…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience age to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierAudienceEducationTarget": {
+   "description": "Target based on a specified audience education ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience educations. Only numbers formatted as strings are accepted (e.g. '1'). To add audience educations to a new group, choose any string not currently being used on this ad group. T…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience education to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierAudienceGenderTarget": {
+   "description": "Target based on a specified audience gender ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience genders. Only numbers formatted as strings are accepted (e.g. '1'). To add audience genders to a new group, choose any string not currently being used on this ad group. To add …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience gender to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierAudienceHomeownershipTarget": {
+   "description": "Target based on a specified audience homeownership ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience homeownerships. Only numbers formatted as strings are accepted (e.g. '1'). To add audience homeownerships to a new group, choose any string not currently being used on this ad …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience homeownership to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierAudienceHouseholdCompositionTarget": {
+   "description": "Target based on a specified audience household composition ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience household compositions. Only numbers formatted as strings are accepted (e.g. '1'). To add audience household compositions to a new group, choose any string not currently being …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience household composition to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierAudienceHouseholdIncomeTarget": {
+   "description": "Target based on a specified audience household income ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience household incomes. Only numbers formatted as strings are accepted (e.g. '1'). To add audience household incomes to a new group, choose any string not currently being used on th…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience household income to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierAudienceInMarketTarget": {
+   "description": "Target based on a specified audience in-market ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience in-market segments. Only numbers formatted as strings are accepted (e.g. '1'). To add audience in-market segments to a new group, choose any string not currently being used on …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience in-market segment to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierAudienceInterestsTarget": {
+   "description": "Target based on a specified audience interest ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience interests. Only numbers formatted as strings are accepted (e.g. '1'). To add audience interests to a new group, choose any string not currently being used on this ad group. To …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience interest to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierAudienceMaritalStatusTarget": {
+   "description": "Target based on a specified audience marital status ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience marital statuses. Only numbers formatted as strings are accepted (e.g. '1'). To add audience marital statuses to a new group, choose any string not currently being used on this…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience marital status to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierAudienceMoodTarget": {
+   "description": "Target based on a specified audience mood ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience moods. Only numbers formatted as strings are accepted (e.g. '1'). To add audience moods to a new group, choose any string not currently being used on this ad group. To add audi…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience mood to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierAudienceSocioeconomicGroupTarget": {
+   "description": "Target based on a specified audience socioeconomic group ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audience socioeconomic groups. Only numbers formatted as strings are accepted (e.g. '1'). To add audience socioeconomic groups to a new group, choose any string not currently being used…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience socioeconomic group to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierAudienceTarget": {
+   "description": "Target based on a specified audience ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of audiences. Only numbers formatted as strings are accepted (e.g. '1'). To add audiences to a new group, choose any string not currently being used on this ad group. To add audiences to a…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The audience to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierContentCategoryTarget": {
+   "description": "Target based on a specified content category ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of content categories. Only numbers formatted as strings are accepted (e.g. '1'). To add content categories to a new group, choose any string not currently being used on this ad group. To …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The content category to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierContentGenreTarget": {
+   "description": "Target based on a specified content genre ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of content genres. Only numbers formatted as strings are accepted (e.g. '1'). To add content genres to a new group, choose any string not currently being used on this ad group. To add cont…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The content genre to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierContentRatingTarget": {
+   "description": "Target based on a specified content rating ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of content ratings. Only numbers formatted as strings are accepted (e.g. '1'). To add content ratings to a new group, choose any string not currently being used on this ad group. To add co…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The content rating to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierContentSensitiveCategoryTarget": {
+   "description": "Target based on a specified content sensitive category ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of content sensitive categories. Only numbers formatted as strings are accepted (e.g. '1'). To add content sensitive categories to a new group, choose any string not currently being used o…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The content sensitive category to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierDayPartDayTarget": {
+   "description": "Target based on a specified daypart day ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of daypart days. Only numbers formatted as strings are accepted (e.g. '1'). To add daypart days to a new group, choose any string not currently being used on this ad group. To add daypart …",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The daypart day to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierDayPartTarget": {
+   "description": "Supplier target based on time of day.",
+   "properties": {
+    "dayOfWeek": {
+     "$ref": "DayOfWeek"
+    },
+    "timeOfDay": {
+     "$ref": "TimeOfDay"
+    },
+    "timeZoneType": {
+     "$ref": "SupplierTargetingDaypartTimezoneType"
+    }
+   },
+   "required": [
+    "dayOfWeek",
+    "timeOfDay"
+   ],
+   "type": "object"
+  },
+  "SupplierDayPartTimeTarget": {
+   "description": "Target based on a specified daypart time ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of daypart times. Only numbers formatted as strings are accepted (e.g. '1'). To add daypart times to a new group, choose any string not currently being used on this ad group. To add daypar…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The daypart time to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierDeviceOperatingSystemTarget": {
+   "description": "Target based on a specified device operating system ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of device operating systems. Only numbers formatted as strings are accepted (e.g. '1'). To add device operating systems to a new group, choose any string not currently being used on this a…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The device operating system to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierDeviceTypeTarget": {
+   "description": "Target based on a specified device type ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of device types. Only numbers formatted as strings are accepted (e.g. '1'). To add device types to a new group, choose any string not currently being used on this ad group. To add device t…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The device type to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierGroupDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "supplierLocationGroup": {
+       "$ref": "SupplierLocationGroup"
+      }
+     },
+     "required": [
+      "supplierLocationGroup"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SupplierGroupType": {
+   "enum": [
+    "LOCATION"
+   ],
+   "type": "string"
+  },
+  "SupplierLocationGroup": {
+   "description": "Location group details for supplier.",
+   "properties": {
+    "onlyUseRealTimeLocation": {
+     "description": "Only use real-time location for this group. Targeting customers based on home location may deliver when they travel and their real-time location is outside the targeted locations. This can lead to discrepancies with int…",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "SupplierLocationTarget": {
+   "description": "Location target for supplier. Multiple locations can be used.",
+   "properties": {
+    "supplierTargetItemId": {
+     "description": "The geo location values to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierPositionVideoTarget": {
+   "description": "Target based on a specified video position ID.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of video positions. Only numbers formatted as strings are accepted (e.g. '1'). To add video positions to a new group, choose any string not currently being used on this ad group. To add vi…",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The video position to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierTargetItemId"
+   ],
+   "type": "object"
+  },
+  "SupplierProposedDealCreativeRequirement": {
+   "description": "Creative requirement with inventory type.",
+   "properties": {
+    "creativeRequirement": {
+     "$ref": "SupplierProposedDealCreativeRequirements"
+    },
+    "inventoryType": {
+     "$ref": "InventoryType"
+    },
+    "languages": {
+     "description": "Languages available for this creative requirement.",
+     "items": {
+      "$ref": "LanguageIso"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "creativeRequirement",
+    "inventoryType"
+   ],
+   "type": "object"
+  },
+  "SupplierProposedDealCreativeRequirements": {
+   "oneOf": [
+    {
+     "properties": {
+      "audioCreativeRequirements": {
+       "$ref": "AudioCreativeRequirements"
+      }
+     },
+     "required": [
+      "audioCreativeRequirements"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoCreativeRequirements": {
+       "$ref": "VideoCreativeRequirements"
+      }
+     },
+     "required": [
+      "videoCreativeRequirements"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "displayCreativeRequirements": {
+       "$ref": "DisplayCreativeRequirements"
+      }
+     },
+     "required": [
+      "displayCreativeRequirements"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SupplierProposedDealExtension": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonMediaProposedDealExtension": {
+       "$ref": "AmazonMediaProposedDealExtension"
+      }
+     },
+     "required": [
+      "amazonMediaProposedDealExtension"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SupplierProposedDealForecast": {
+   "properties": {
+    "creationDateTime": {
+     "description": "The timestamp at which the forecast was generated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "forecastSummary": {
+     "$ref": "ForecastSummary"
+    },
+    "supplierProposedDealForecastDescription": {
+     "$ref": "SupplierProposedDealForecastDescription"
+    }
+   },
+   "required": [
+    "creationDateTime",
+    "forecastSummary",
+    "supplierProposedDealForecastDescription"
+   ],
+   "type": "object"
+  },
+  "SupplierProposedDealForecastCreate": {
+   "properties": {
+    "supplierProposedDealForecastDescription": {
+     "$ref": "CreateSupplierProposedDealForecastDescription"
+    }
+   },
+   "required": [
+    "supplierProposedDealForecastDescription"
+   ],
+   "type": "object"
+  },
+  "SupplierProposedDealForecastDescription": {
+   "description": "The request body for a forecast should include all fields for creating a SupplierProposedDeal with exception of read-only fields.",
+   "properties": {
+    "countries": {
+     "description": "The country for the proposed deal.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeRequirements": {
+     "description": "Creative requirements for this proposed deal.",
+     "items": {
+      "$ref": "SupplierProposedDealCreativeRequirement"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customPublisherDescription": {
+     "description": "Custom description of the publisher providing inventory for this deal.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "dealName": {
+     "description": "The name of the deal.",
+     "type": "string"
+    },
+    "dealType": {
+     "$ref": "AdvertisingDealType"
+    },
+    "deliveryIntent": {
+     "$ref": "DeliveryIntent"
+    },
+    "description": {
+     "description": "The description of the deal.",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The delivery end date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposed deal.",
+     "items": {
+      "$ref": "Notes"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "startDateTime": {
+     "description": "The delivery start date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "supplierAdProductId": {
+     "description": "The supplier ad product unique identifier.",
+     "type": "string"
+    },
+    "supplierProposalDestinationId": {
+     "description": "The supplier proposal destination id for this deal.",
+     "type": "string"
+    },
+    "supplierProposedDealExtension": {
+     "$ref": "SupplierProposedDealExtension"
+    },
+    "supplierProposedDealType": {
+     "$ref": "SupplierProposedDealType"
+    },
+    "targeting": {
+     "description": "Supplier targeting configuration.",
+     "items": {
+      "$ref": "SupplierTargetGroup"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "terms": {
+     "$ref": "AdvertisingDealTerms"
+    }
+   },
+   "required": [
+    "dealName",
+    "dealType",
+    "endDateTime",
+    "startDateTime",
+    "supplierProposedDealExtension",
+    "terms"
+   ],
+   "type": "object"
+  },
+  "SupplierProposedDealForecastMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "SupplierProposedDealForecastMultiStatusSuccess"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SupplierProposedDealForecastMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "supplierProposedDealForecast": {
+     "$ref": "SupplierProposedDealForecast"
+    }
+   },
+   "required": [
+    "index",
+    "supplierProposedDealForecast"
+   ],
+   "type": "object"
+  },
+  "SupplierProposedDealType": {
+   "enum": [
+    "AMAZON_MEDIA"
+   ],
+   "type": "string"
+  },
+  "SupplierTarget": {
+   "description": "Marketplace targeting configuration.",
+   "properties": {
+    "negative": {
+     "description": "Indicates whether the target is negative or not. Negative targeting allows advertisers to provide intent where they do not want to show ads. Please ensure that the supplier for this target supports negative targeting be…",
+     "type": "boolean"
+    },
+    "supplierTargetDetails": {
+     "$ref": "SupplierTargetDetails"
+    },
+    "supplierTargetType": {
+     "$ref": "SupplierTargetType"
+    }
+   },
+   "required": [
+    "supplierTargetDetails",
+    "supplierTargetType"
+   ],
+   "type": "object"
+  },
+  "SupplierTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "supplierAudienceTarget": {
+       "$ref": "SupplierAudienceTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceAgeTarget": {
+       "$ref": "SupplierAudienceAgeTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceAgeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceGenderTarget": {
+       "$ref": "SupplierAudienceGenderTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceGenderTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceInterestsTarget": {
+       "$ref": "SupplierAudienceInterestsTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceInterestsTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceMoodTarget": {
+       "$ref": "SupplierAudienceMoodTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceMoodTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceInMarketTarget": {
+       "$ref": "SupplierAudienceInMarketTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceInMarketTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceHouseholdIncomeTarget": {
+       "$ref": "SupplierAudienceHouseholdIncomeTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceHouseholdIncomeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceEducationTarget": {
+       "$ref": "SupplierAudienceEducationTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceEducationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceHomeownershipTarget": {
+       "$ref": "SupplierAudienceHomeownershipTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceHomeownershipTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceHouseholdCompositionTarget": {
+       "$ref": "SupplierAudienceHouseholdCompositionTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceHouseholdCompositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceMaritalStatusTarget": {
+       "$ref": "SupplierAudienceMaritalStatusTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceMaritalStatusTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAudienceSocioeconomicGroupTarget": {
+       "$ref": "SupplierAudienceSocioeconomicGroupTarget"
+      }
+     },
+     "required": [
+      "supplierAudienceSocioeconomicGroupTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierLocationTarget": {
+       "$ref": "SupplierLocationTarget"
+      }
+     },
+     "required": [
+      "supplierLocationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierDayPartTarget": {
+       "$ref": "SupplierDayPartTarget"
+      }
+     },
+     "required": [
+      "supplierDayPartTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierDayPartDayTarget": {
+       "$ref": "SupplierDayPartDayTarget"
+      }
+     },
+     "required": [
+      "supplierDayPartDayTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierDayPartTimeTarget": {
+       "$ref": "SupplierDayPartTimeTarget"
+      }
+     },
+     "required": [
+      "supplierDayPartTimeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierContentCategoryTarget": {
+       "$ref": "SupplierContentCategoryTarget"
+      }
+     },
+     "required": [
+      "supplierContentCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierContentGenreTarget": {
+       "$ref": "SupplierContentGenreTarget"
+      }
+     },
+     "required": [
+      "supplierContentGenreTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierContentRatingTarget": {
+       "$ref": "SupplierContentRatingTarget"
+      }
+     },
+     "required": [
+      "supplierContentRatingTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierContentSensitiveCategoryTarget": {
+       "$ref": "SupplierContentSensitiveCategoryTarget"
+      }
+     },
+     "required": [
+      "supplierContentSensitiveCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierDeviceTypeTarget": {
+       "$ref": "SupplierDeviceTypeTarget"
+      }
+     },
+     "required": [
+      "supplierDeviceTypeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierDeviceOperatingSystemTarget": {
+       "$ref": "SupplierDeviceOperatingSystemTarget"
+      }
+     },
+     "required": [
+      "supplierDeviceOperatingSystemTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierPositionVideoTarget": {
+       "$ref": "SupplierPositionVideoTarget"
+      }
+     },
+     "required": [
+      "supplierPositionVideoTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "supplierAppTarget": {
+       "$ref": "SupplierAppTarget"
+      }
+     },
+     "required": [
+      "supplierAppTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SupplierTargetGroup": {
+   "properties": {
+    "groupDetails": {
+     "$ref": "SupplierGroupDetails"
+    },
+    "groupName": {
+     "type": "string"
+    },
+    "groupTargets": {
+     "items": {
+      "$ref": "SupplierTarget"
+     },
+     "maxItems": 49,
+     "minItems": 1,
+     "type": "array"
+    },
+    "groupType": {
+     "$ref": "SupplierGroupType"
+    }
+   },
+   "required": [
+    "groupName",
+    "groupTargets"
+   ],
+   "type": "object"
+  },
+  "SupplierTargetType": {
+   "enum": [
+    "APP",
+    "AUDIENCE",
+    "AUDIENCE_AGE",
+    "AUDIENCE_EDUCATION",
+    "AUDIENCE_GENDER",
+    "AUDIENCE_HOMEOWNERSHIP",
+    "AUDIENCE_HOUSEHOLD_COMPOSITION",
+    "AUDIENCE_HOUSEHOLD_INCOME",
+    "AUDIENCE_INTERESTS",
+    "AUDIENCE_IN_MARKET",
+    "AUDIENCE_MARITAL_STATUS",
+    "AUDIENCE_MOOD",
+    "AUDIENCE_SOCIOECONOMIC_GROUP",
+    "CONTENT_CATEGORY",
+    "CONTENT_GENRE",
+    "CONTENT_RATING",
+    "CONTENT_SENSITIVE_CATEGORY",
+    "DAYPART",
+    "DAYPART_DAY",
+    "DAYPART_TIME",
+    "DEVICE_OPERATING_SYSTEM",
+    "DEVICE_TYPE",
+    "LOCATION_CITY",
+    "LOCATION_COUNTRY",
+    "LOCATION_DESIGNATED_MARKET_AREA",
+    "LOCATION_METRO",
+    "LOCATION_POSTAL_CODE",
+    "LOCATION_REGION",
+    "POSITION_VIDEO"
+   ],
+   "type": "string"
+  },
+  "SupplierTargetingDaypartTimezoneType": {
+   "description": "**SupplierTargetingDaypartTimezoneType Enum:** | SupplierTargetingDaypartTimezoneType | Description | | --- | --- | | `DEAL` | Set the daypart targeting to the timezone of the deal by the supplier | | `VIEWER` | Set the…",
+   "enum": [
+    "DEAL",
+    "VIEWER"
+   ],
+   "type": "string"
+  },
+  "TimeOfDay": {
+   "properties": {
+    "endTime": {
+     "description": "Selected end time",
+     "type": "string"
+    },
+    "startTime": {
+     "description": "Selected start time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "endTime",
+    "startTime"
+   ],
+   "type": "object"
+  },
+  "TimeUnit": {
+   "enum": [
+    "DAYS",
+    "HOURS",
+    "MINUTES"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "VideoCreativeRequirements": {
+   "description": "Video creative requirements.",
+   "properties": {
+    "durationMs": {
+     "description": "Required duration for video creatives in milliseconds.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "size": {
+     "$ref": "Size"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

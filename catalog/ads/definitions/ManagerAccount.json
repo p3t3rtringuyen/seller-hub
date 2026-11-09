@@ -1,0 +1,197 @@
+{
+ "api": "ManagerAccount",
+ "file": "specs/dest/ManagerAccount_prod_3p.json",
+ "schemas": {
+  "Account": {
+   "description": "Object representation of an Amazon Advertising account.",
+   "properties": {
+    "accountId": {
+     "description": "Id of the Amazon Advertising account.",
+     "type": "string"
+    },
+    "accountName": {
+     "description": "The name given to the Amazon Advertising account.",
+     "type": "string"
+    },
+    "accountType": {
+     "$ref": "AccountType"
+    },
+    "dspAdvertiserId": {
+     "description": "The identifier of a DSP advertiser. Note that this value is only populated for accounts with type `DSP_ADVERTISING_ACCOUNT`. It will be `null` for accounts of other types.",
+     "type": "string"
+    },
+    "marketplaceId": {
+     "description": "The identifier of the marketplace to which the account is associated. See [this table](https://docs.developer.amazonservices.com/en_US/dev_guide/DG_Endpoints.html) for `marketplaceId` mappings.",
+     "type": "string"
+    },
+    "profileId": {
+     "description": "The identifier of a profile associated with the advertiser account. Note that this value is only populated for a subset of account types: `[ SELLER, VENDOR, MARKETING_CLOUD ]`. It will be `null` for accounts of other ty…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AccountRelationshipRole": {
+   "description": "The type of a role used in account relationships.",
+   "enum": [
+    "ENTITY_OWNER",
+    "ENTITY_USER",
+    "ENTITY_VIEWER",
+    "SELLER_USER"
+   ],
+   "type": "string"
+  },
+  "AccountToUpdate": {
+   "description": "String identifier for an Amazon Advertising account or advertiser. `ACCOUNT_ID` is an identifier that is returned by the [Profiles resource](https://advertising.amazon.com/API/docs/en-us/reference/2/profiles#/Profiles/l…",
+   "properties": {
+    "id": {
+     "description": "Id of the Amazon Advertising account.",
+     "type": "string"
+    },
+    "roles": {
+     "description": "The types of role that will exist with the Amazon Advertising account. Depending on account type, the default role will be ENTITY_USER or SELLER_USER. Only one role at a time is currently supported",
+     "items": {
+      "$ref": "AccountRelationshipRole"
+     },
+     "type": "array"
+    },
+    "type": {
+     "description": "The type of the Id",
+     "enum": [
+      "ACCOUNT_ID",
+      "DSP_ADVERTISER_ID"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AccountToUpdateFailure": {
+   "description": "Object representation of an Amazon Advertising account or [DSP advertiser](https://advertising.amazon.com/API/docs/en-us/dsp-advertiser/#/) that failed to update.",
+   "properties": {
+    "account": {
+     "$ref": "AccountToUpdate"
+    },
+    "error": {
+     "$ref": "ErrorDetail"
+    }
+   },
+   "type": "object"
+  },
+  "AccountType": {
+   "description": "Type of the Amazon Advertising account.",
+   "enum": [
+    "DSP_ADVERTISING_ACCOUNT",
+    "MARKETING_CLOUD",
+    "SELLER",
+    "VENDOR"
+   ],
+   "type": "string"
+  },
+  "CreateManagerAccountRequest": {
+   "description": "Request object that defines the fields required to create a Manager account.",
+   "properties": {
+    "managerAccountName": {
+     "description": "Name of the Manager account.",
+     "type": "string"
+    },
+    "managerAccountType": {
+     "description": "Type of the Manager account, which indicates how the Manager account will be used. Use `Advertiser` if the Manager account will be used for **your own** products and services, or `Agency` if you are managing accounts **…",
+     "enum": [
+      "Advertiser",
+      "Agency"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ErrorDetail": {
+   "description": "The error response object.",
+   "properties": {
+    "code": {
+     "enum": [
+      "BAD_REQUEST",
+      "FORBIDDEN",
+      "INTERNAL_SERVICE_ERROR",
+      "TOO_MANY_REQUESTS",
+      "UNAUTHORIZED"
+     ],
+     "type": "string"
+    },
+    "message": {
+     "description": "A human-readable description of the error.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetManagerAccountsResponse": {
+   "description": "Response containing a list of Manager Accounts that a given user has access to.",
+   "properties": {
+    "managerAccounts": {
+     "description": "List of Manager Accounts that the user has access to",
+     "items": {
+      "$ref": "ManagerAccount"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ManagerAccount": {
+   "description": "Object representation of an Amazon Advertising Manager Account.",
+   "properties": {
+    "linkedAccounts": {
+     "items": {
+      "$ref": "Account"
+     },
+     "maxItems": 50,
+     "type": "array"
+    },
+    "managerAccountId": {
+     "description": "Id of the Manager Account.",
+     "type": "string"
+    },
+    "managerAccountName": {
+     "description": "The name given to a Manager Account.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateAdvertisingAccountsInManagerAccountRequest": {
+   "description": "A list of Advertising accounts or advertisers to link/unlink with [Manager Account](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8). User can pass a list with a maximum of 20…",
+   "properties": {
+    "accounts": {
+     "description": "List of Advertising accounts or advertisers to link/unlink with [Manager Account](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8). User can pass a list with a maximum of 20 a…",
+     "items": {
+      "$ref": "AccountToUpdate"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateAdvertisingAccountsInManagerAccountResponse": {
+   "description": "Link/Unlink Advertising account or advertiser Response",
+   "properties": {
+    "failedAccounts": {
+     "description": "List of Advertising accounts or advertisers failed to Link/Unlink with [Manager Account](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8).",
+     "items": {
+      "$ref": "AccountToUpdateFailure"
+     },
+     "type": "array"
+    },
+    "succeedAccounts": {
+     "description": "List of Advertising accounts or advertisers successfully Link/Unlink with [Manager Account](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8).",
+     "items": {
+      "$ref": "AccountToUpdate"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

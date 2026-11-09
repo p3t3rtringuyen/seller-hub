@@ -1,0 +1,209 @@
+{
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "ProductType": {
+    "description": "An Amazon product type with a definition available.",
+    "properties": {
+      "displayName": {
+        "description": "Human-readable and localized description of the Amazon product type.",
+        "type": "string"
+      },
+      "marketplaceIds": {
+        "description": "The Amazon marketplace identifiers for which the product type definition is available.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "name": {
+        "description": "The name of the Amazon product type.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "displayName",
+      "marketplaceIds",
+      "name"
+    ],
+    "type": "object"
+  },
+  "ProductTypeDefinition": {
+    "description": "A product type definition represents the attributes and data requirements for a product type in the Amazon catalog.",
+    "properties": {
+      "displayName": {
+        "description": "Human-readable and localized description of the Amazon product type.",
+        "type": "string"
+      },
+      "locale": {
+        "description": "Locale of the display elements contained in the product type definition.",
+        "type": "string"
+      },
+      "marketplaceIds": {
+        "description": "Amazon marketplace identifiers for which the product type definition is applicable.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "metaSchema": {
+        "description": "Link to meta-schema describing the vocabulary used by the product type schema.",
+        "ref": "SchemaLink"
+      },
+      "productType": {
+        "description": "The name of the Amazon product type that this product type definition applies to.",
+        "type": "string"
+      },
+      "productTypeVersion": {
+        "description": "The version details for the Amazon product type.",
+        "ref": "ProductTypeVersion"
+      },
+      "propertyGroups": {
+        "description": "Mapping of property group names to property groups.",
+        "ref": "PropertyGroup",
+        "type": "object"
+      },
+      "requirements": {
+        "description": "Name of the requirements set represented in this product type definition.",
+        "enum": [
+          "LISTING",
+          "LISTING_OFFER_ONLY",
+          "LISTING_PRODUCT_ONLY"
+        ],
+        "type": "string"
+      },
+      "requirementsEnforced": {
+        "description": "Identifies if the required attributes for a requirements set are enforced by the product type definition schema.",
+        "enum": [
+          "ENFORCED",
+          "NOT_ENFORCED"
+        ],
+        "type": "string"
+      },
+      "schema": {
+        "description": "Link to schema describing the attributes and requirements for the product type.",
+        "ref": "SchemaLink"
+      }
+    },
+    "required": [
+      "displayName",
+      "locale",
+      "marketplaceIds",
+      "productType",
+      "productTypeVersion",
+      "propertyGroups",
+      "requirements",
+      "requirementsEnforced",
+      "schema"
+    ],
+    "type": "object"
+  },
+  "ProductTypeList": {
+    "description": "A list of Amazon product types with definitions available.",
+    "properties": {
+      "productTypeVersion": {
+        "description": "Amazon product type version identifier.",
+        "type": "string"
+      },
+      "productTypes": {
+        "description": "A list of product types.",
+        "ref": "ProductType",
+        "type": "array"
+      }
+    },
+    "required": [
+      "productTypeVersion",
+      "productTypes"
+    ],
+    "type": "object"
+  },
+  "ProductTypeVersion": {
+    "description": "The version details for an Amazon product type.",
+    "properties": {
+      "latest": {
+        "description": "When true, the version indicated by the version identifier is the latest available for the Amazon product type.",
+        "type": "boolean"
+      },
+      "releaseCandidate": {
+        "description": "When true, the version indicated by the version identifier is the prerelease (release candidate) for the Amazon product type.",
+        "type": "boolean"
+      },
+      "version": {
+        "description": "Version identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "latest",
+      "version"
+    ],
+    "type": "object"
+  },
+  "PropertyGroup": {
+    "description": "A property group represents a logical grouping of schema properties that can be used for display or informational purposes.",
+    "properties": {
+      "description": {
+        "description": "The description of the property group.",
+        "type": "string"
+      },
+      "propertyNames": {
+        "description": "The names of the schema properties for the property group.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "title": {
+        "description": "The display label of the property group.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SchemaLink": {
+    "description": "A link to metadata schema.",
+    "properties": {
+      "checksum": {
+        "description": "Checksum hash of the schema (Base64 MD5).",
+        "type": "string"
+      },
+      "link": {
+        "description": "Link to retrieve the schema.",
+        "type": "object"
+      }
+    },
+    "required": [
+      "checksum",
+      "link"
+    ],
+    "type": "object"
+  }
+}

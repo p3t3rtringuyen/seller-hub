@@ -1,0 +1,69 @@
+{
+  "Categories": {
+    "properties": {
+      "ProductCategoryId": {
+        "description": "The identifier for the product category (or browse node).",
+        "type": "string"
+      },
+      "ProductCategoryName": {
+        "description": "The name of the product category (or browse node).",
+        "type": "string"
+      },
+      "parent": {
+        "description": "The parent product category.",
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional information that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition in a human-readable form.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "ListCatalogCategoriesResponse": {
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the listCatalogCategories operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the listCatalogCategories operation.",
+        "ref": "ListOfCategories"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListOfCategories": {
+    "properties": {},
+    "ref": "Categories",
+    "required": [],
+    "type": "array"
+  }
+}

@@ -1,0 +1,622 @@
+{
+  "Address": {
+    "description": "A physical address.",
+    "properties": {
+      "addressLine1": {
+        "description": "The first line of the address.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "The additional address information, if required.",
+        "type": "string"
+      },
+      "addressLine3": {
+        "description": "The additional address information, if required.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city where the person, business or institution is located.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two digit country code.",
+        "type": "string"
+      },
+      "county": {
+        "description": "The county where person, business or institution is located.",
+        "type": "string"
+      },
+      "district": {
+        "description": "The district where person, business or institution is located.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the person, business or institution at that address.",
+        "type": "string"
+      },
+      "phone": {
+        "description": "The phone number of the person, business or institution located at that address.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "The postal code of that address.",
+        "type": "string"
+      },
+      "stateOrRegion": {
+        "description": "The state or region where person, business or institution is located.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "addressLine1",
+      "countryCode",
+      "name",
+      "stateOrRegion"
+    ],
+    "type": "object"
+  },
+  "AddressWithContact": {
+    "description": "The address and contact details.",
+    "properties": {
+      "address": {
+        "ref": "Address"
+      },
+      "contactDetails": {
+        "ref": "ContactDetails"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ContactDetails": {
+    "description": "The contact details",
+    "properties": {
+      "primary": {
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateSupplySourceRequest": {
+    "description": "A request to create a supply source.",
+    "properties": {
+      "address": {
+        "ref": "Address"
+      },
+      "alias": {
+        "ref": "SupplySourceAlias"
+      },
+      "supplySourceCode": {
+        "ref": "SupplySourceCode"
+      }
+    },
+    "required": [
+      "address",
+      "alias",
+      "supplySourceCode"
+    ],
+    "type": "object"
+  },
+  "CreateSupplySourceResponse": {
+    "description": "The result of creating a new supply source.",
+    "properties": {
+      "supplySourceCode": {
+        "ref": "SupplySourceCode"
+      },
+      "supplySourceId": {
+        "ref": "SupplySourceId"
+      }
+    },
+    "required": [
+      "supplySourceCode",
+      "supplySourceId"
+    ],
+    "type": "object"
+  },
+  "CurbsidePickupConfiguration": {
+    "description": "The curbside pickup configuration of a supply source.",
+    "properties": {
+      "isSupported": {
+        "description": "When true, curbside pickup is supported by the supply source.",
+        "type": "boolean"
+      },
+      "operationalConfiguration": {
+        "description": "The operational configuration for the curbside pickup configuration.",
+        "ref": "OperationalConfiguration"
+      },
+      "parkingWithAddressConfiguration": {
+        "description": "The parking configuration for curbside pickup with address for customers to use.",
+        "ref": "ParkingWithAddressConfiguration"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DateTime": {
+    "description": "A date and time in the rfc3339 format.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "DeliveryChannel": {
+    "description": "The delivery channel of a supply source.",
+    "properties": {
+      "isSupported": {
+        "type": "boolean"
+      },
+      "operationalConfiguration": {
+        "ref": "OperationalConfiguration"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Duration": {
+    "description": "The duration of time.",
+    "properties": {
+      "timeUnit": {
+        "ref": "TimeUnit"
+      },
+      "value": {
+        "ref": "NonNegativeInteger"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "EmailAddress": {
+    "description": "The email address to which email messages are delivered.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Error": {
+    "description": "An error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses returned when a request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "GetSupplySourcesResponse": {
+    "description": "The paginated list of supply sources.",
+    "properties": {
+      "nextPageToken": {
+        "description": "If present, use this pagination token to retrieve the next page of supply sources.",
+        "type": "string"
+      },
+      "supplySources": {
+        "ref": "SupplySourceList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InStorePickupConfiguration": {
+    "description": "The in-store pickup configuration of a supply source.",
+    "properties": {
+      "isSupported": {
+        "description": "When true, in-store pickup is supported by the supply source (default: `isSupported` value in `PickupChannel`).",
+        "type": "boolean"
+      },
+      "parkingConfiguration": {
+        "description": "The parking configuration for in-store pickup.",
+        "ref": "ParkingConfiguration"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "NonNegativeInteger": {
+    "description": "An unsigned integer that can be only positive or zero.",
+    "properties": {},
+    "required": [],
+    "type": "integer"
+  },
+  "OperatingHour": {
+    "description": "The operating hour schema",
+    "properties": {
+      "endTime": {
+        "description": "The closing time, ISO 8601 formatted timestamp without date, HH:mm.",
+        "type": "string"
+      },
+      "startTime": {
+        "description": "The opening time, ISO 8601 formatted timestamp without date, HH:mm.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OperatingHours": {
+    "description": "A list of Operating Hours.",
+    "properties": {},
+    "ref": "OperatingHour",
+    "required": [],
+    "type": "array"
+  },
+  "OperatingHoursByDay": {
+    "description": "The operating hours per day",
+    "properties": {
+      "friday": {
+        "ref": "OperatingHours"
+      },
+      "monday": {
+        "ref": "OperatingHours"
+      },
+      "saturday": {
+        "ref": "OperatingHours"
+      },
+      "sunday": {
+        "ref": "OperatingHours"
+      },
+      "thursday": {
+        "ref": "OperatingHours"
+      },
+      "tuesday": {
+        "ref": "OperatingHours"
+      },
+      "wednesday": {
+        "ref": "OperatingHours"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OperationalConfiguration": {
+    "description": "The operational configuration of `supplySources`.",
+    "properties": {
+      "contactDetails": {
+        "ref": "ContactDetails"
+      },
+      "handlingTime": {
+        "ref": "Duration"
+      },
+      "operatingHoursByDay": {
+        "ref": "OperatingHoursByDay"
+      },
+      "throughputConfig": {
+        "ref": "ThroughputConfig"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OutboundCapability": {
+    "description": "The outbound capability of a supply source.",
+    "properties": {
+      "deliveryChannel": {
+        "ref": "DeliveryChannel"
+      },
+      "isSupported": {
+        "type": "boolean"
+      },
+      "operationalConfiguration": {
+        "ref": "OperationalConfiguration"
+      },
+      "pickupChannel": {
+        "ref": "PickupChannel"
+      },
+      "returnLocation": {
+        "ref": "ReturnLocation"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ParkingConfiguration": {
+    "description": "The parking configuration.",
+    "properties": {
+      "numberOfParkingSpots": {
+        "description": "The number of parking spots.",
+        "ref": "NonNegativeInteger"
+      },
+      "parkingCostType": {
+        "description": "The type of cost at parking location.",
+        "ref": "ParkingCostType"
+      },
+      "parkingSpotIdentificationType": {
+        "description": "The type of parking spot identification used at parking location.",
+        "ref": "ParkingSpotIdentificationType"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ParkingCostType": {
+    "description": "The parking cost type.",
+    "enum": [
+      "Free",
+      "Other"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ParkingSpotIdentificationType": {
+    "description": "The type of parking spot identification.",
+    "enum": [
+      "Numbered",
+      "Other"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ParkingWithAddressConfiguration": {
+    "allOf": [
+      "ParkingConfiguration"
+    ],
+    "description": "The parking configuration with the address.",
+    "properties": {
+      "address": {
+        "description": "The address of the parking location.",
+        "ref": "Address"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PickupChannel": {
+    "description": "The pick up channel of a supply source.",
+    "properties": {
+      "curbsidePickupConfiguration": {
+        "description": "The configuration for supporting curbside pickup.",
+        "ref": "CurbsidePickupConfiguration"
+      },
+      "inStorePickupConfiguration": {
+        "description": "The configuration for supporting in-store pickup.",
+        "ref": "InStorePickupConfiguration"
+      },
+      "inventoryHoldPeriod": {
+        "ref": "Duration"
+      },
+      "isSupported": {
+        "type": "boolean"
+      },
+      "operationalConfiguration": {
+        "ref": "OperationalConfiguration"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ReturnLocation": {
+    "description": "The address or reference to another `supplySourceId` to act as a return location.",
+    "properties": {
+      "addressWithContact": {
+        "ref": "AddressWithContact"
+      },
+      "supplySourceId": {
+        "description": "The Amazon provided `supplySourceId` where orders can be returned to.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ServicesCapability": {
+    "description": "The services capability of a supply source.",
+    "properties": {
+      "isSupported": {
+        "description": "When true, `SupplySource` supports the Service capability.",
+        "type": "boolean"
+      },
+      "operationalConfiguration": {
+        "ref": "OperationalConfiguration"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SupplySource": {
+    "description": "The supply source details, including configurations and capabilities.",
+    "properties": {
+      "address": {
+        "ref": "Address"
+      },
+      "alias": {
+        "ref": "SupplySourceAlias"
+      },
+      "capabilities": {
+        "ref": "SupplySourceCapabilities"
+      },
+      "configuration": {
+        "ref": "SupplySourceConfiguration"
+      },
+      "createdAt": {
+        "ref": "DateTime"
+      },
+      "status": {
+        "ref": "SupplySourceStatusReadOnly"
+      },
+      "supplySourceCode": {
+        "ref": "SupplySourceCode"
+      },
+      "supplySourceId": {
+        "ref": "SupplySourceId"
+      },
+      "updatedAt": {
+        "ref": "DateTime"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SupplySourceAlias": {
+    "description": "The custom alias for this supply source",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "SupplySourceCapabilities": {
+    "description": "The capabilities of a supply source.",
+    "properties": {
+      "outbound": {
+        "ref": "OutboundCapability"
+      },
+      "services": {
+        "ref": "ServicesCapability"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SupplySourceCode": {
+    "description": "The seller-provided unique supply source code.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "SupplySourceConfiguration": {
+    "description": "Includes configuration and timezone of a supply source.",
+    "properties": {
+      "operationalConfiguration": {
+        "ref": "OperationalConfiguration"
+      },
+      "timezone": {
+        "description": "Please see RFC 6557, should be a canonical time zone ID as listed here: https://www.joda.org/joda-time/timezones.html.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SupplySourceId": {
+    "description": "An Amazon generated unique supply source ID.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "SupplySourceList": {
+    "description": "The list of `SupplySource`s.",
+    "itemType": "object",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "SupplySourceStatus": {
+    "description": "The `SupplySource` status",
+    "enum": [
+      "Active",
+      "Inactive"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "SupplySourceStatusReadOnly": {
+    "description": "The `SupplySource` status.",
+    "enum": [
+      "Active",
+      "Archived",
+      "Inactive"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ThroughputCap": {
+    "description": "The throughput capacity",
+    "properties": {
+      "timeUnit": {
+        "ref": "TimeUnit"
+      },
+      "value": {
+        "ref": "NonNegativeInteger"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ThroughputConfig": {
+    "description": "The throughput configuration.",
+    "properties": {
+      "throughputCap": {
+        "ref": "ThroughputCap"
+      },
+      "throughputUnit": {
+        "ref": "ThroughputUnit"
+      }
+    },
+    "required": [
+      "throughputUnit"
+    ],
+    "type": "object"
+  },
+  "ThroughputUnit": {
+    "description": "The throughput unit",
+    "enum": [
+      "Order"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "TimeUnit": {
+    "description": "The time unit",
+    "enum": [
+      "Days",
+      "Hours",
+      "Minutes"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "UpdateSupplySourceRequest": {
+    "description": "A request to update the configuration and capabilities of a supply source.",
+    "properties": {
+      "alias": {
+        "ref": "SupplySourceAlias"
+      },
+      "capabilities": {
+        "ref": "SupplySourceCapabilities"
+      },
+      "configuration": {
+        "ref": "SupplySourceConfiguration"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UpdateSupplySourceStatusRequest": {
+    "description": "A request to update the status of a supply source.",
+    "properties": {
+      "status": {
+        "ref": "SupplySourceStatus"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

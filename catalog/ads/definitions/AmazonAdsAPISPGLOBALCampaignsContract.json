@@ -1,0 +1,1623 @@
+{
+ "api": "AmazonAdsAPISPGLOBALCampaignsContract",
+ "file": "specs/dest/AmazonAdsAPISPGLOBALCampaignsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "marketplace": {
+     "$ref": "ErrorMarketplace"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorMarketplace": {
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `SPONSORED_PRODUCTS` | Sponsored Products ad product. |",
+   "enum": [
+    "SPONSORED_PRODUCTS"
+   ],
+   "type": "string"
+  },
+  "SPGlobalAutoCreationSettings": {
+   "properties": {
+    "autoCreateTargets": {
+     "description": "Gives Amazon permission to automatically create targets associated with the campaign based on the products being advertised.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "autoCreateTargets"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAutoScaleGlobalCampaignSetting": {
+   "description": "**AutoScaleGlobalCampaignSetting Enum:** | AutoScaleGlobalCampaignSetting | Description | |------|------| | `AUTO` | Auto scale global campaign to new marketplaces | | `MANUAL` | Manually scale global campaign to new ma…",
+   "enum": [
+    "AUTO",
+    "MANUAL"
+   ],
+   "type": "string"
+  },
+  "SPGlobalBidAdjustments": {
+   "properties": {
+    "placementBidAdjustments": {
+     "description": "Bid adjustments based on ad placements. Not supported for Sponsored Brands campaigns using the SALES_UP_AND_DOWN bid strategy.",
+     "items": {
+      "$ref": "SPGlobalPlacementBidAdjustment"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalBidSettings": {
+   "properties": {
+    "bidAdjustments": {
+     "$ref": "SPGlobalBidAdjustments"
+    },
+    "bidStrategy": {
+     "$ref": "SPGlobalBidStrategy"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalBidStrategy": {
+   "description": "**BidStrategy Enum:** | BidStrategy | Description | |------|------| | `MANUAL` | Uses your exact bid and any placement adjustments you set, and is not subject to dynamic bidding. | | `NEW_TO_BRAND` | Optimizes bidding t…",
+   "enum": [
+    "MANUAL",
+    "NEW_TO_BRAND",
+    "RULE_BASED",
+    "SALES_DOWN_ONLY",
+    "SALES_UP_AND_DOWN"
+   ],
+   "type": "string"
+  },
+  "SPGlobalBudget": {
+   "properties": {
+    "budgetType": {
+     "$ref": "SPGlobalBudgetType"
+    },
+    "budgetValue": {
+     "$ref": "SPGlobalBudgetValue"
+    },
+    "recurrenceTimePeriod": {
+     "$ref": "SPGlobalRecurrence"
+    }
+   },
+   "required": [
+    "budgetType",
+    "budgetValue",
+    "recurrenceTimePeriod"
+   ],
+   "type": "object"
+  },
+  "SPGlobalBudgetType": {
+   "enum": [
+    "MONETARY"
+   ],
+   "type": "string"
+  },
+  "SPGlobalBudgetValue": {
+   "oneOf": [
+    {
+     "properties": {
+      "monetaryBudgetValue": {
+       "$ref": "SPGlobalMonetaryBudgetValue"
+      }
+     },
+     "required": [
+      "monetaryBudgetValue"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SPGlobalCampaign": {
+   "properties": {
+    "adProduct": {
+     "$ref": "SPGlobalAdProduct"
+    },
+    "autoCreationSettings": {
+     "$ref": "SPGlobalAutoCreationSettings"
+    },
+    "autoScaleGlobalCampaign": {
+     "$ref": "SPGlobalAutoScaleGlobalCampaignSetting"
+    },
+    "budgets": {
+     "description": "The object containing budget details for the campaign (for campaigns that support multiple budgets).",
+     "items": {
+      "$ref": "SPGlobalBudget"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "campaignId": {
+     "description": "A unique identifier for a campaign.",
+     "type": "string"
+    },
+    "countries": {
+     "description": "This field is used in Sponsored Ads and ADSP and impacts targeted supply. For Sponsored Ads, the campaign.countries field determines what Amazon retail supply (Amazon.com, Amazon.co.uk, Amazon.mx, etc) the campaign will…",
+     "items": {
+      "$ref": "SPGlobalCountryCode"
+     },
+     "maxItems": 249,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creationDateTime": {
+     "description": "The date time that the campaign was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The end date time for the campaign.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time that the campaign was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global campaign that enables overriding certain attributes at individual marketplace level. For example, if a global campaign is ENABLED and startDate '2024-06-01' but n…",
+     "items": {
+      "$ref": "SPGlobalMarketplaceCampaignConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaceScope": {
+     "$ref": "SPGlobalMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "This represents retail domains such as Amazon.com, Amazon.co.uk, and Amazon.mx, each corresponding to a country where an Amazon customer can shop. ADSP campaigns can be created by specifying either countries or marketpl…",
+     "items": {
+      "$ref": "SPGlobalMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the campaign.",
+     "type": "string"
+    },
+    "optimizations": {
+     "$ref": "SPGlobalCampaignOptimizations"
+    },
+    "siteRestrictions": {
+     "description": "Restrict the ad to a particular site",
+     "items": {
+      "$ref": "SPGlobalSiteRestriction"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "startDateTime": {
+     "description": "The start date time for the campaign.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SPGlobalState"
+    },
+    "status": {
+     "$ref": "SPGlobalStatus"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the campaign",
+     "items": {
+      "$ref": "SPGlobalTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adProduct",
+    "autoCreationSettings",
+    "budgets",
+    "campaignId",
+    "creationDateTime",
+    "lastUpdatedDateTime",
+    "marketplaceScope",
+    "name",
+    "startDateTime",
+    "state"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCampaignAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `SPONSORED_PRODUCTS` | Sponsored Products ad product. |",
+     "items": {
+      "$ref": "SPGlobalAdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCampaignCampaignIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCampaignCreate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "SPGlobalAdProduct"
+    },
+    "autoCreationSettings": {
+     "$ref": "SPGlobalCreateAutoCreationSettings"
+    },
+    "budgets": {
+     "description": "The object containing budget details for the campaign (for campaigns that support multiple budgets).",
+     "items": {
+      "$ref": "SPGlobalCreateBudget"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "countries": {
+     "description": "This field is used in Sponsored Ads and ADSP and impacts targeted supply. For Sponsored Ads, the campaign.countries field determines what Amazon retail supply (Amazon.com, Amazon.co.uk, Amazon.mx, etc) the campaign will…",
+     "items": {
+      "$ref": "SPGlobalCountryCode"
+     },
+     "maxItems": 249,
+     "minItems": 0,
+     "type": "array"
+    },
+    "endDateTime": {
+     "description": "The end date time for the campaign.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global campaign that enables overriding certain attributes at individual marketplace level. For example, if a global campaign is ENABLED and startDate '2024-06-01' but n…",
+     "items": {
+      "$ref": "SPGlobalCreateMarketplaceCampaignConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaceScope": {
+     "$ref": "SPGlobalMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "This represents retail domains such as Amazon.com, Amazon.co.uk, and Amazon.mx, each corresponding to a country where an Amazon customer can shop. ADSP campaigns can be created by specifying either countries or marketpl…",
+     "items": {
+      "$ref": "SPGlobalMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the campaign.",
+     "type": "string"
+    },
+    "optimizations": {
+     "$ref": "SPGlobalCreateCampaignOptimizations"
+    },
+    "siteRestrictions": {
+     "description": "Restrict the ad to a particular site",
+     "items": {
+      "$ref": "SPGlobalSiteRestriction"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "startDateTime": {
+     "description": "The start date time for the campaign.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SPGlobalCreateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the campaign",
+     "items": {
+      "$ref": "SPGlobalCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adProduct",
+    "autoCreationSettings",
+    "budgets",
+    "marketplaceScope",
+    "name",
+    "startDateTime",
+    "state"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCampaignMarketplaceScopeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "SPGlobalMarketplaceScope"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCampaignMultiStatusResponseWithPartialErrors": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "partialSuccess": {
+     "items": {
+      "$ref": "SPGlobalCampaignPartialIndex"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "SPGlobalCampaignMultiStatusSuccess"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCampaignMultiStatusSuccess": {
+   "properties": {
+    "campaign": {
+     "$ref": "SPGlobalCampaign"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "campaign",
+    "index"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCampaignNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "SPGlobalCampaignNameFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCampaignNameFilterType": {
+   "description": "**CampaignNameFilterType Enum:** | CampaignNameFilterType | Description | | --- | --- | | `EXACT_MATCH` | Filter by exact match. | | `BROAD_MATCH` | Filter by broad match. |",
+   "enum": [
+    "BROAD_MATCH",
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "SPGlobalCampaignOptimizations": {
+   "properties": {
+    "bidSettings": {
+     "$ref": "SPGlobalBidSettings"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCampaignPartialIndex": {
+   "properties": {
+    "campaign": {
+     "$ref": "SPGlobalCampaign"
+    },
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "campaign",
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCampaignStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `ENABLED` | The object is set active by user and eligible for delivery. | | `PAUSED` | The object is stopped by user and not eligible for delivery. | | `ARCHIVED` …",
+     "items": {
+      "$ref": "SPGlobalState"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCampaignSuccessResponse": {
+   "properties": {
+    "campaigns": {
+     "items": {
+      "$ref": "SPGlobalCampaign"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCampaignUpdate": {
+   "properties": {
+    "budgets": {
+     "description": "The object containing budget details for the campaign (for campaigns that support multiple budgets).",
+     "items": {
+      "$ref": "SPGlobalCreateBudget"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "campaignId": {
+     "description": "A unique identifier for a campaign.",
+     "type": "string"
+    },
+    "countries": {
+     "description": "This field is used in Sponsored Ads and ADSP and impacts targeted supply. For Sponsored Ads, the campaign.countries field determines what Amazon retail supply (Amazon.com, Amazon.co.uk, Amazon.mx, etc) the campaign will…",
+     "items": {
+      "$ref": "SPGlobalCountryCode"
+     },
+     "maxItems": 249,
+     "minItems": 0,
+     "type": "array"
+    },
+    "endDateTime": {
+     "description": "The end date time for the campaign.",
+     "format": "date-time",
+     "nullable": true,
+     "type": "string"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global campaign that enables overriding certain attributes at individual marketplace level. For example, if a global campaign is ENABLED and startDate '2024-06-01' but n…",
+     "items": {
+      "$ref": "SPGlobalCreateMarketplaceCampaignConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaces": {
+     "description": "This represents retail domains such as Amazon.com, Amazon.co.uk, and Amazon.mx, each corresponding to a country where an Amazon customer can shop. ADSP campaigns can be created by specifying either countries or marketpl…",
+     "items": {
+      "$ref": "SPGlobalMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the campaign.",
+     "type": "string"
+    },
+    "optimizations": {
+     "$ref": "SPGlobalUpdateCampaignOptimizations"
+    },
+    "siteRestrictions": {
+     "description": "Restrict the ad to a particular site",
+     "items": {
+      "$ref": "SPGlobalSiteRestriction"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "startDateTime": {
+     "description": "The start date time for the campaign.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SPGlobalUpdateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the campaign",
+     "items": {
+      "$ref": "SPGlobalCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaignId"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCountryCode": {
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MK",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "SPGlobalCreateAutoCreationSettings": {
+   "properties": {
+    "autoCreateTargets": {
+     "description": "Gives Amazon permission to automatically create targets associated with the campaign based on the products being advertised.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "autoCreateTargets"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateBidAdjustments": {
+   "properties": {
+    "placementBidAdjustments": {
+     "description": "Bid adjustments based on ad placements. Not supported for Sponsored Brands campaigns using the SALES_UP_AND_DOWN bid strategy.",
+     "items": {
+      "$ref": "SPGlobalCreatePlacementBidAdjustment"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCreateBidSettings": {
+   "properties": {
+    "bidAdjustments": {
+     "$ref": "SPGlobalCreateBidAdjustments"
+    },
+    "bidStrategy": {
+     "$ref": "SPGlobalBidStrategy"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCreateBudget": {
+   "properties": {
+    "budgetType": {
+     "$ref": "SPGlobalBudgetType"
+    },
+    "budgetValue": {
+     "$ref": "SPGlobalCreateBudgetValue"
+    },
+    "recurrenceTimePeriod": {
+     "$ref": "SPGlobalRecurrence"
+    }
+   },
+   "required": [
+    "budgetType",
+    "budgetValue",
+    "recurrenceTimePeriod"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateBudgetValue": {
+   "oneOf": [
+    {
+     "properties": {
+      "monetaryBudgetValue": {
+       "$ref": "SPGlobalCreateMonetaryBudgetValue"
+      }
+     },
+     "required": [
+      "monetaryBudgetValue"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SPGlobalCreateCampaignOptimizations": {
+   "properties": {
+    "bidSettings": {
+     "$ref": "SPGlobalCreateBidSettings"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCreateCampaignRequest": {
+   "properties": {
+    "campaigns": {
+     "items": {
+      "$ref": "SPGlobalCampaignCreate"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaigns"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateMarketplaceCampaignConfigurations": {
+   "properties": {
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    },
+    "overrides": {
+     "$ref": "SPGlobalCreateMarketplaceCampaignFieldOverrides"
+    }
+   },
+   "required": [
+    "marketplace",
+    "overrides"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateMarketplaceCampaignFieldOverrides": {
+   "properties": {
+    "endDateTime": {
+     "description": "The end date time for the campaign",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the campaign",
+     "type": "string"
+    },
+    "optimizations": {
+     "$ref": "SPGlobalCreateCampaignOptimizations"
+    },
+    "startDateTime": {
+     "description": "The start date time for the campaign",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SPGlobalState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the campaign",
+     "items": {
+      "$ref": "SPGlobalCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCreateMonetaryBudget": {
+   "properties": {
+    "value": {
+     "description": "The monetary amount of the budget cap in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "value"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateMonetaryBudgetMarketplaceSetting": {
+   "properties": {
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    },
+    "monetaryBudget": {
+     "$ref": "SPGlobalCreateMonetaryBudget"
+    }
+   },
+   "required": [
+    "marketplace",
+    "monetaryBudget"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateMonetaryBudgetValue": {
+   "properties": {
+    "marketplaceSettings": {
+     "description": "List of Monetary Budget values selectively applied at the given marketplace level",
+     "items": {
+      "$ref": "SPGlobalCreateMonetaryBudgetMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "marketplaceSettings"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreatePlacementBidAdjustment": {
+   "properties": {
+    "percentage": {
+     "description": "The selection of the percentage change associated with a given placement and bid adjustment settings.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "placement": {
+     "$ref": "SPGlobalPlacement"
+    }
+   },
+   "required": [
+    "percentage",
+    "placement"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SPGlobalCreateTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | |------|------| | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `CHF` | Swiss Franc | …",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CHF",
+    "CNY",
+    "DKK",
+    "EGP",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "MXP",
+    "NGN",
+    "NOK",
+    "NZD",
+    "PLN",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "SPGlobalDeleteCampaignRequest": {
+   "properties": {
+    "campaignIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaignIds"
+   ],
+   "type": "object"
+  },
+  "SPGlobalDeliveryReason": {
+   "description": "**DeliveryReason Enum:** | DeliveryReason | Description | |------|------| | `ADVERTISER_ARCHIVED` | | | `ADVERTISER_OUT_OF_BUDGET` | Indicates that an advertiser is out of budget for Sponsored Products campaigns for sel…",
+   "enum": [
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_OUT_OF_BUDGET",
+    "ADVERTISER_OUT_OF_POSTPAY_CREDIT_LIMIT",
+    "ADVERTISER_OUT_OF_POSTPAY_MONTHLY_BUDGET",
+    "ADVERTISER_OUT_OF_PREPAY_BALANCE",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_POLICING_PENDING_REVIEW",
+    "ADVERTISER_POLICING_SUSPENDED",
+    "AD_ARCHIVED",
+    "AD_CREATION_FAILED",
+    "AD_CREATION_IN_PROGRESS",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_INCOMPLETE",
+    "AD_GROUP_LOW_BID",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_REVIEW",
+    "AD_GROUP_POLICING_PENDING_REVIEW",
+    "AD_GROUP_REJECTED",
+    "AD_INELIGIBLE",
+    "AD_MISSING_DECORATION",
+    "AD_MISSING_IMAGE",
+    "AD_NOT_DELIVERING",
+    "AD_PAUSED",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "BRAND_INELIGIBLE",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_REVIEW",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_REJECTED",
+    "CREATIVE_MISSING_ASSET",
+    "CREATIVE_PENDING_REVIEW",
+    "CREATIVE_REJECTED",
+    "LANDING_PAGE_INELIGIBLE",
+    "LANDING_PAGE_NOT_AVAILABLE",
+    "MODERATION_ADULT_NOVELTY_POLICY_VIOLATION",
+    "MODERATION_ADULT_PRODUCT_POLICY_VIOLATION",
+    "MODERATION_ADULT_SOFTLINES_POLICY_VIOLATION",
+    "MODERATION_CLAIM_WEIGHTLOSS_POLICY_VIOLATION",
+    "MODERATION_CONTENT_NUDITY_POLICY_VIOLATION",
+    "MODERATION_CONTENT_PROVOCATIVE_POLICY_VIOLATION",
+    "MODERATION_CONTENT_SMOKING_POLICY_VIOLATION",
+    "MODERATION_CRITICAL_EVENTS_POLICY_VIOLATION",
+    "MODERATION_ERROR_404",
+    "MODERATION_GRAPHICAL_SEXUAL_IMAGES_POLICY_VIOLATION",
+    "MODERATION_HFSS_PRODUCT_POLICY_VIOLATION",
+    "MODERATION_LANGUAGE_OFFENSIVE_POLICY_VIOLATION",
+    "MODERATION_NOT_COMPLIANT_TO_AD_POLICY",
+    "MODERATION_SMOKING_RELATED_POLICY_VIOLATION",
+    "NOT_BUYABLE",
+    "NOT_IN_BUYBOX",
+    "NOT_IN_POLICY",
+    "NO_INVENTORY",
+    "NO_PURCHASABLE_OFFER",
+    "OTHER",
+    "OUT_OF_REWARD_BUDGET",
+    "OUT_OF_STOCK",
+    "PIR_RULE_EXCLUDED",
+    "PORTFOLIO_ARCHIVED",
+    "PORTFOLIO_END_DATE_REACHED",
+    "PORTFOLIO_OUT_OF_BUDGET",
+    "PORTFOLIO_PAUSED",
+    "PORTFOLIO_PENDING_START_DATE",
+    "SECURITY_SCAN_PENDING_REVIEW",
+    "SECURITY_SCAN_REJECTED",
+    "SPEND_LIMIT_EXCEEDED",
+    "STATUS_UNAVAILABLE",
+    "TARGET_ARCHIVED",
+    "TARGET_BLOCKED",
+    "TARGET_PAUSED",
+    "TARGET_POLICING_SUSPENDED"
+   ],
+   "type": "string"
+  },
+  "SPGlobalDeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | |------|------| | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplac…",
+   "enum": [
+    "DELIVERING",
+    "LIMITED",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "SPGlobalMarketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "SPGlobalMarketplaceCampaignConfigurations": {
+   "properties": {
+    "campaignId": {
+     "description": "Represents marketplace campaign id (Ex: campaignId-US) associated to global campaign (Ex: campaignId-Global)",
+     "type": "string"
+    },
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    },
+    "overrides": {
+     "$ref": "SPGlobalMarketplaceCampaignFieldOverrides"
+    }
+   },
+   "required": [
+    "campaignId",
+    "marketplace",
+    "overrides"
+   ],
+   "type": "object"
+  },
+  "SPGlobalMarketplaceCampaignFieldOverrides": {
+   "properties": {
+    "endDateTime": {
+     "description": "The end date time for the campaign",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the campaign",
+     "type": "string"
+    },
+    "optimizations": {
+     "$ref": "SPGlobalCampaignOptimizations"
+    },
+    "startDateTime": {
+     "description": "The start date time for the campaign",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SPGlobalState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the campaign",
+     "items": {
+      "$ref": "SPGlobalTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalMarketplaceScope": {
+   "enum": [
+    "GLOBAL"
+   ],
+   "type": "string"
+  },
+  "SPGlobalMonetaryBudget": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "SPGlobalCurrencyCode"
+    },
+    "ruleValue": {
+     "description": "The monetary amount of the budget when a budget rule is applied.",
+     "format": "double",
+     "type": "number"
+    },
+    "value": {
+     "description": "The monetary amount of the budget cap in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SPGlobalMonetaryBudgetMarketplaceSetting": {
+   "properties": {
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    },
+    "monetaryBudget": {
+     "$ref": "SPGlobalMonetaryBudget"
+    }
+   },
+   "required": [
+    "marketplace",
+    "monetaryBudget"
+   ],
+   "type": "object"
+  },
+  "SPGlobalMonetaryBudgetValue": {
+   "properties": {
+    "marketplaceSettings": {
+     "description": "List of Monetary Budget values selectively applied at the given marketplace level",
+     "items": {
+      "$ref": "SPGlobalMonetaryBudgetMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "marketplaceSettings"
+   ],
+   "type": "object"
+  },
+  "SPGlobalPlacement": {
+   "description": "**Placement Enum:** | Placement | Description | |------|------| | `PRODUCT_PAGE` | Placements on the product detail page, and all nonsearch placements such as the add-to-cart page. | | `REST_OF_SEARCH` | Placements on t…",
+   "enum": [
+    "PRODUCT_PAGE",
+    "REST_OF_SEARCH",
+    "TOP_OF_SEARCH"
+   ],
+   "type": "string"
+  },
+  "SPGlobalPlacementBidAdjustment": {
+   "properties": {
+    "percentage": {
+     "description": "The selection of the percentage change associated with a given placement and bid adjustment settings.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "placement": {
+     "$ref": "SPGlobalPlacement"
+    }
+   },
+   "required": [
+    "percentage",
+    "placement"
+   ],
+   "type": "object"
+  },
+  "SPGlobalQueryCampaignRequest": {
+   "properties": {
+    "adProductFilter": {
+     "$ref": "SPGlobalCampaignAdProductFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "SPGlobalCampaignCampaignIdFilter"
+    },
+    "marketplaceScopeFilter": {
+     "$ref": "SPGlobalCampaignMarketplaceScopeFilter"
+    },
+    "maxResults": {
+     "default": 1000,
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "SPGlobalCampaignNameFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "SPGlobalCampaignStateFilter"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "SPGlobalRecurrence": {
+   "enum": [
+    "DAILY"
+   ],
+   "type": "string"
+  },
+  "SPGlobalSiteRestriction": {
+   "description": "**SiteRestriction Enum:** | SiteRestriction | Description | |------|------| | `AMAZON_BUSINESS` | Restrict the ad to only show on Amazon Business. | | `AMAZON_HAUL` | Restrict the ad to only show on Amazon Haul. |",
+   "enum": [
+    "AMAZON_BUSINESS",
+    "AMAZON_HAUL"
+   ],
+   "type": "string"
+  },
+  "SPGlobalState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SPGlobalStatus": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "SPGlobalDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "SPGlobalDeliveryStatus"
+    },
+    "marketplaceSettings": {
+     "description": "The list of marketplace level delivery status and reasons of global resources, for all the marketplaces the global resource is applicable in.",
+     "items": {
+      "$ref": "SPGlobalStatusMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "deliveryStatus",
+    "marketplaceSettings"
+   ],
+   "type": "object"
+  },
+  "SPGlobalStatusMarketplaceSetting": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "SPGlobalDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "SPGlobalDeliveryStatus"
+    },
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    }
+   },
+   "required": [
+    "deliveryStatus",
+    "marketplace"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SPGlobalUpdateBidAdjustments": {
+   "properties": {
+    "placementBidAdjustments": {
+     "description": "Bid adjustments based on ad placements. Not supported for Sponsored Brands campaigns using the SALES_UP_AND_DOWN bid strategy.",
+     "items": {
+      "$ref": "SPGlobalCreatePlacementBidAdjustment"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalUpdateBidSettings": {
+   "properties": {
+    "bidAdjustments": {
+     "$ref": "SPGlobalUpdateBidAdjustments"
+    },
+    "bidStrategy": {
+     "$ref": "SPGlobalBidStrategy"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalUpdateCampaignOptimizations": {
+   "properties": {
+    "bidSettings": {
+     "$ref": "SPGlobalUpdateBidSettings"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalUpdateCampaignRequest": {
+   "properties": {
+    "campaigns": {
+     "items": {
+      "$ref": "SPGlobalCampaignUpdate"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaigns"
+   ],
+   "type": "object"
+  },
+  "SPGlobalUpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

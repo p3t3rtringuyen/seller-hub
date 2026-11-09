@@ -1,0 +1,4422 @@
+{
+ "api": "DSPAdCreativeAPI-V1",
+ "file": "specs/dest/DSPAdCreativeAPI-V1_prod_3p.json",
+ "schemas": {
+  "DspAdCreativeAdChoicesPosition": {
+   "enum": [
+    "BOTTOM_LEFT",
+    "BOTTOM_RIGHT",
+    "OTHER",
+    "TOP_LEFT",
+    "TOP_RIGHT"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeAdCopy": {
+   "description": "///////////////////////////////////////////////////////////// DspAdCreativeAdCopy // /////////////////////////////////////////////////////////////",
+   "properties": {
+    "type": {
+     "$ref": "DspAdCreativeAdCopyType"
+    },
+    "value": {
+     "description": "The text value of the ad copy being added to the creative.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DspAdCreativeAdCopyType": {
+   "enum": [
+    "BODY",
+    "BRAND_NAME",
+    "CALL_TO_ACTION",
+    "DISCLAIMER",
+    "HEADLINE"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeAssetCroppingCoordinates": {
+   "description": "///////////////////////////////////////////////////////////// DspAdCreativeAssetCroppingCoordinates // /////////////////////////////////////////////////////////////",
+   "properties": {
+    "aspectRatio": {
+     "description": "The aspectRatio for the asset, aspectRatio is calculated by taking the width and dividing by the height.",
+     "format": "double",
+     "type": "number"
+    },
+    "height": {
+     "description": "The cropped height for the asset.",
+     "format": "double",
+     "type": "number"
+    },
+    "width": {
+     "description": "The cropped width for the asset.",
+     "format": "double",
+     "type": "number"
+    },
+    "x": {
+     "description": "The following control is used to crop the image and adjust where to start the crop. The X coordinate represents where to start the cropping from the left of the image. If there is no offset from the left, use 0 in the X…",
+     "format": "double",
+     "type": "number"
+    },
+    "y": {
+     "description": "The following control is used to crop the image and adjust where to start the crop. The Y coordinate represents how far from the top of the image the crop should start. If the cropping should start at the top of the ori…",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeAttribute": {
+   "enum": [
+    "3PTRACKER_EMBEDDED",
+    "AUDIO",
+    "AUDIO_AUTO",
+    "CART_COMPLIANT",
+    "CART_NON_COMPLIANT",
+    "DEA_REC_NO_LOGO",
+    "DISPLAY_1_CLICK_PROMOTION",
+    "DISPLAY_3RD_PARTY",
+    "DISPLAY_ALEXA_DISPLAY_ADS",
+    "DISPLAY_ALL",
+    "DISPLAY_AMAZON_LIVE_VIDEO",
+    "DISPLAY_AMAZON_VIDEO_ADS",
+    "DISPLAY_ECOMMERCE",
+    "DISPLAY_IMAGE",
+    "DISPLAY_SCROLLABLE_ADS",
+    "DISPLAY_SHOPPABLE_IMAGE_ADS",
+    "EXPANDABLE",
+    "EXPANDABLE_AUTO",
+    "FLASH",
+    "FLASHING_SHAKING_FLICKERING",
+    "FRESH_COMPLIANT",
+    "HTML",
+    "HTTPS",
+    "IGNORE",
+    "ILM_COMPLIANT",
+    "ILM_NON_COMPLIANT",
+    "INTERSTITIAL",
+    "MEDIATION_AD",
+    "MRAID1",
+    "MRAID2",
+    "NON_FLASH",
+    "OTHER",
+    "PAGE_TAKEOVER",
+    "POP_COMPLIANT",
+    "POP_NON_COMPLIANT",
+    "POP_UPS_POP_UNDERS",
+    "PT_COMPLIANT",
+    "PT_NON_COMPLIANT",
+    "REQUIRES_TRANSPARENCY",
+    "RICH_MEDIA",
+    "SMILE_COMPLIANT",
+    "SMILE_NON_COMPLIANT",
+    "SURVEY_AD",
+    "TEXT",
+    "VIDEO",
+    "VIDEO_1P_BROADCASTER_VAST_2",
+    "VIDEO_1P_BROADCASTER_VAST_3",
+    "VIDEO_1P_VIDEO_VAST_2",
+    "VIDEO_1P_VIDEO_VAST_3",
+    "VIDEO_3P_BROADCASTER_VAST_2",
+    "VIDEO_3P_BROADCASTER_VAST_3",
+    "VIDEO_3P_VIDEO_VAST_2",
+    "VIDEO_3P_VIDEO_VAST_3",
+    "VIDEO_AUTO_PLAY",
+    "VIDEO_INTERSTITIAL",
+    "VIDEO_NON_VAST",
+    "VIDEO_SKIPPABLE",
+    "VIDEO_VAST_3_0",
+    "VIDEO_VCB_VAST_2",
+    "VIDEO_VCB_VAST_3",
+    "VIDEO_VPAID_FLASH",
+    "VIDEO_VPAID_JAVASCRIPT",
+    "WHOLE_FOODS_COMPLIANT",
+    "YO_COMPLIANT",
+    "YO_NON_COMPLIANT"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeAudioAsset": {
+   "description": "///////////////////////////////////////////////////////////// DspAdCreativeAsset // /////////////////////////////////////////////////////////////",
+   "properties": {
+    "assetId": {
+     "description": "The assetId from Asset Library.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The version of the asset from Asset Library",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspAudioAdExperienceType"
+    },
+    "url": {
+     "description": "The url of an asset from a legacy DSP creative. This will be provided if asset linked with the creative being read is not registered in Creative Assets API. These asset urls are on path to deprecation and it is recommen…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeAudioSize": {
+   "properties": {
+    "height": {
+     "description": "The height of the creative in pixels.",
+     "type": "number"
+    },
+    "responsive": {
+     "description": "Set to true if you would like to cycle through all available sizes for the creative in adExperiences that allow for multiple creative sizes.",
+     "type": "boolean"
+    },
+    "width": {
+     "description": "The width of the creative in pixels.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeCategory": {
+   "enum": [
+    "ALCOHOL",
+    "APP",
+    "AUDIO_BOOK",
+    "AUDIO_VIDEO",
+    "CONSUMER_LOANS",
+    "COSMETIC_PROCEDURES_BODY_MODIFICATION",
+    "DATING",
+    "DOWNLOAD",
+    "DRUGS_SUPPLEMENTS",
+    "ERROR_BOX",
+    "EXCESSIVE_ANIMATION",
+    "E_BOOK",
+    "FREE_GIFTS_QUIZZES_SURVEYS",
+    "GAMBLING",
+    "GET_RICH_QUICK",
+    "HOLIDAY",
+    "INCENTIVIZED",
+    "MAGAZINE",
+    "MALE_HEALTH",
+    "MATURE",
+    "MEMBERSHIP_CLUB",
+    "MISLEADING_CLAIMS",
+    "MOVIE",
+    "MUSIC",
+    "NEWSPAPER",
+    "POLITICAL",
+    "POLITICS",
+    "REFERENCES_SEX_SEXUALITY",
+    "RELIGION",
+    "RINGTONES_DOWNLOADABLES",
+    "SEXUAL_REPRODUCTIVE_HEALTH",
+    "SUGGESTIVE",
+    "TOBACCO",
+    "TV_SERIES",
+    "VIDEO_GAMES_CASUAL_ONLINE",
+    "WEIGHT_LOSS"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeComponentAsset": {
+   "properties": {
+    "applyBorder": {
+     "description": "Field used by certain adExperiences to add a border to images that do not have a border. Not having a border is a common rejection reason.",
+     "type": "boolean"
+    },
+    "assetCroppingCoordinates": {
+     "description": "This field contains the cropping information for creatives which want to crop their CUSTOM_IMAGE used on ads. RESPONSIVE_ECOMMERCE: Supports 3 asset cropping coordinates Wide: 1200 x 628 or larger (image must be in aspe…",
+     "items": {
+      "$ref": "DspAdCreativeAssetCroppingCoordinates"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "assetId": {
+     "description": "The assetId from Asset Library.",
+     "type": "string"
+    },
+    "assetType": {
+     "$ref": "DspComponentAssetType"
+    },
+    "assetVersion": {
+     "description": "The version of the asset from Asset Library",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspComponentAdExperienceType"
+    },
+    "url": {
+     "description": "The url of an asset from a legacy DSP creative. This will be provided if asset linked with the creative being read is not registered in Creative Assets API. These asset urls are on path to deprecation and it is recommen…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeComponentCreativeContentType": {
+   "enum": [
+    "DEFAULT",
+    "PRODUCT"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeComponentModerationRequestPayload": {
+   "properties": {
+    "adCreativeId": {
+     "description": "Creative ID.",
+     "type": "string"
+    },
+    "maxResults": {
+     "description": "Maximum count of items to return in one page.",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Token to fetch next page.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adCreativeId"
+   ],
+   "type": "object"
+  },
+  "DspAdCreativeComponentModerationStatus": {
+   "enum": [
+    "APPROVED",
+    "COMPONENT_NOT_YET_MODERATED",
+    "NOT_APPROVED"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeComponentOptimizationGoal": {
+   "enum": [
+    "CLICK_THROUGH_RATE",
+    "DETAIL_PAGE_VIEW_RATE",
+    "OTHER",
+    "PURCHASE_RATE"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeComponentRenderOptimization": {
+   "enum": [
+    "BRAND_STORE_DEALS_HEADLINE",
+    "HEADLINE",
+    "IMAGE",
+    "TITLE"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeComponentSize": {
+   "properties": {
+    "height": {
+     "description": "The height of the creative in pixels.",
+     "type": "number"
+    },
+    "responsive": {
+     "description": "Set to true if you would like to cycle through all available sizes for the creative in adExperiences that allow for multiple creative sizes.",
+     "type": "boolean"
+    },
+    "width": {
+     "description": "The width of the creative in pixels.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeComponentTargetPlacements": {
+   "enum": [
+    "DISPLAY",
+    "NATIVE",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeDisplayAsset": {
+   "properties": {
+    "applyBorder": {
+     "description": "Field used by certain adExperiences to add a border to images that do not have a border. Not having a border is a common rejection reason.",
+     "type": "boolean"
+    },
+    "assetId": {
+     "description": "The assetId from Asset Library.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The version of the asset from Asset Library",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspDisplayAdExperienceType"
+    },
+    "url": {
+     "description": "The url of an asset from a legacy DSP creative. This will be provided if asset linked with the creative being read is not registered in Creative Assets API. These asset urls are on path to deprecation and it is recommen…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeDisplaySize": {
+   "description": "///////////////////////////////////////////////////////////// DspAdCreativeSize // /////////////////////////////////////////////////////////////",
+   "properties": {
+    "height": {
+     "description": "The height of the creative in pixels.",
+     "type": "number"
+    },
+    "responsive": {
+     "description": "Set to true if you would like to cycle through all available sizes for the creative in adExperiences that allow for multiple creative sizes.",
+     "type": "boolean"
+    },
+    "width": {
+     "description": "The width of the creative in pixels.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeExperienceListItem": {
+   "properties": {
+    "adCreativeId": {
+     "type": "string"
+    },
+    "adExperiences": {
+     "items": {
+      "$ref": "DspAdExperience"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeFormatPreviewOverrides": {
+   "oneOf": [
+    {
+     "$ref": "DspDisplayAdCreativeFormatPreviewOverrides"
+    },
+    {
+     "$ref": "DspVideoAdCreativeFormatPreviewOverrides"
+    },
+    {
+     "$ref": "DspAudioAdCreativeFormatPreviewOverrides"
+    },
+    {
+     "$ref": "DspThirdPartyAdCreativeFormatPreviewOverrides"
+    },
+    {
+     "$ref": "DspComponentAdCreativeFormatPreviewOverrides"
+    }
+   ],
+   "type": "object"
+  },
+  "DspAdCreativeHostedType": {
+   "enum": [
+    "AMAZON_HOSTED",
+    "THIRD_PARTY_HOSTED"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeLanguage": {
+   "description": "The language used in the creative in ISO_639-1 standard. Note that only certain languages are supported in each marketplace. See: [Supported Languages by Marketplace](https://advertising.amazon.com/API/docs/en-us/guides…",
+   "enum": [
+    "OTHER",
+    "aa",
+    "ab",
+    "ae",
+    "af",
+    "ak",
+    "am",
+    "an",
+    "ar",
+    "as",
+    "av",
+    "ay",
+    "az",
+    "ba",
+    "be",
+    "bg",
+    "bh",
+    "bi",
+    "bm",
+    "bn",
+    "bo",
+    "br",
+    "bs",
+    "ca",
+    "ce",
+    "ch",
+    "co",
+    "cr",
+    "cs",
+    "cu",
+    "cv",
+    "cy",
+    "da",
+    "de",
+    "dv",
+    "dz",
+    "ee",
+    "el",
+    "en",
+    "eo",
+    "es",
+    "et",
+    "eu",
+    "fa",
+    "ff",
+    "fi",
+    "fj",
+    "fo",
+    "fr",
+    "fy",
+    "ga",
+    "gd",
+    "gl",
+    "gn",
+    "gu",
+    "gv",
+    "ha",
+    "he",
+    "hi",
+    "ho",
+    "hr",
+    "ht",
+    "hu",
+    "hy",
+    "hz",
+    "ia",
+    "id",
+    "ie",
+    "ig",
+    "ii",
+    "ik",
+    "in",
+    "io",
+    "is",
+    "it",
+    "iu",
+    "iw",
+    "ja",
+    "ji",
+    "jv",
+    "ka",
+    "kg",
+    "ki",
+    "kj",
+    "kk",
+    "kl",
+    "km",
+    "kn",
+    "ko",
+    "kr",
+    "ks",
+    "ku",
+    "kv",
+    "kw",
+    "ky",
+    "la",
+    "lb",
+    "lg",
+    "li",
+    "ln",
+    "lo",
+    "lt",
+    "lu",
+    "lv",
+    "mg",
+    "mh",
+    "mi",
+    "mk",
+    "ml",
+    "mn",
+    "mo",
+    "mr",
+    "ms",
+    "mt",
+    "my",
+    "na",
+    "nb",
+    "nd",
+    "ne",
+    "ng",
+    "nl",
+    "nn",
+    "no",
+    "nr",
+    "nv",
+    "ny",
+    "oc",
+    "oj",
+    "om",
+    "or",
+    "os",
+    "pa",
+    "pi",
+    "pl",
+    "ps",
+    "pt",
+    "qu",
+    "rm",
+    "rn",
+    "ro",
+    "ru",
+    "rw",
+    "sa",
+    "sc",
+    "sd",
+    "se",
+    "sg",
+    "si",
+    "sk",
+    "sl",
+    "sm",
+    "sn",
+    "so",
+    "sq",
+    "sr",
+    "ss",
+    "st",
+    "su",
+    "sv",
+    "sw",
+    "ta",
+    "te",
+    "tg",
+    "th",
+    "ti",
+    "tk",
+    "tl",
+    "tn",
+    "to",
+    "tr",
+    "ts",
+    "tt",
+    "tw",
+    "ty",
+    "ug",
+    "uk",
+    "ur",
+    "uz",
+    "ve",
+    "vi",
+    "vo",
+    "wa",
+    "wo",
+    "xh",
+    "yi",
+    "yo",
+    "za",
+    "zh",
+    "zu"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeListObject": {
+   "properties": {
+    "accessibilityText": {
+     "description": "Accessible names are the labels given to HTML elements that can be announced in assistive technologies such as screen readers",
+     "type": "string"
+    },
+    "adChoicesPosition": {
+     "$ref": "DspAdCreativeAdChoicesPosition"
+    },
+    "adCreativeAttributes": {
+     "items": {
+      "$ref": "DspAdCreativeAttribute"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "adCreativeCategories": {
+     "items": {
+      "$ref": "DspAdCreativeCategory"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "adCreativeFormatProperties": {
+     "$ref": "DspListAdCreativeProperties"
+    },
+    "adCreativeId": {
+     "type": "string"
+    },
+    "additionalHtml": {
+     "description": "Add HTML to the creative for surveys or other supplemental HTML.",
+     "maxLength": 5000,
+     "type": "string"
+    },
+    "autoLocalization": {
+     "$ref": "DspAdCreativeLocalizationProperties"
+    },
+    "country": {
+     "$ref": "DspCountry"
+    },
+    "createdDateTime": {
+     "description": "The date the creative was created. Time zone is always UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "externalId": {
+     "description": "An external ID that is associated for a creative. This can be used by advertisers to associate to a third party system or tracking.",
+     "type": "string"
+    },
+    "hostedType": {
+     "$ref": "DspAdCreativeHostedType"
+    },
+    "language": {
+     "$ref": "DspAdCreativeLanguage"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date the creative was last updated. Time zone is always UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the creative being created.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeLocalizationProperties": {
+   "description": "Configures automatic localization behavior for a creative, enabling multilingual support. Set the required localizationState to ENABLE to allow for automated localization of assets in the creative. Set localizationState…",
+   "properties": {
+    "excludedLanguages": {
+     "description": "Optional list of ISO_639-1 language codes to exclude from automatic localization. If a language in this list matches the original language of the creative or if the list contains duplicates, the request returns a valida…",
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeLanguage"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "localizationState": {
+     "$ref": "DspLocalizationState"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeModerationComponentType": {
+   "enum": [
+    "ASIN",
+    "AUDIO",
+    "IMAGE",
+    "TEXT",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeModerationResponseAdExperienceItem": {
+   "properties": {
+    "adExperience": {
+     "$ref": "DspAdExperience"
+    },
+    "moderationStatus": {
+     "$ref": "DspAdCreativeModerationStatus"
+    },
+    "reasons": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeModerationResponseComponentItem": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspAdExperience"
+    },
+    "componentId": {
+     "description": "ID of the component.",
+     "type": "string"
+    },
+    "componentType": {
+     "$ref": "DspAdCreativeModerationComponentType"
+    },
+    "componentVersion": {
+     "description": "Version of the component.",
+     "type": "string"
+    },
+    "moderationStatus": {
+     "$ref": "DspAdCreativeComponentModerationStatus"
+    },
+    "reasons": {
+     "description": "List of moderation rejection reasons of the component.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "componentId",
+    "componentType",
+    "componentVersion",
+    "moderationStatus"
+   ],
+   "type": "object"
+  },
+  "DspAdCreativeModerationStatus": {
+   "enum": [
+    "APPROVED",
+    "APPROVED_WITH_EXCEPTIONS",
+    "NOT_APPROVED",
+    "PENDING",
+    "WAITING_FOR_LINEITEM"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeModerationStatusListItem": {
+   "properties": {
+    "adCreativeId": {
+     "type": "string"
+    },
+    "adCreativeModerationStatus": {
+     "$ref": "DspAdCreativeModerationStatus"
+    },
+    "adExperiences": {
+     "items": {
+      "$ref": "DspAdCreativeModerationResponseAdExperienceItem"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativePreviewFilters": {
+   "properties": {
+    "adChoicesPositionFilter": {
+     "$ref": "DspCreateUpdateAdCreativeAdChoicesPosition"
+    },
+    "adCreativeFormatPreviewOverrides": {
+     "$ref": "DspAdCreativeFormatPreviewOverrides"
+    },
+    "languageFilter": {
+     "$ref": "DspCreateUpdateAdCreativeLanguage"
+    },
+    "previewLocationOverrides": {
+     "$ref": "DspAdCreativePreviewLocationOverrides"
+    },
+    "previewSite": {
+     "$ref": "DspPreviewSite"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativePreviewLocationOverrides": {
+   "description": "The country that you want to preview the Ad Experience in. This field should be supplied if the creative does not have a country (for users with an Advertiser Account (Beta)).",
+   "properties": {
+    "country": {
+     "$ref": "DspCountry"
+    }
+   },
+   "required": [
+    "country"
+   ],
+   "type": "object"
+  },
+  "DspAdCreativePreviewSizeFilter": {
+   "properties": {
+    "height": {
+     "type": "number"
+    },
+    "width": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeProduct": {
+   "description": "///////////////////////////////////////////////////////////// DspAdCreativeProduct // /////////////////////////////////////////////////////////////",
+   "properties": {
+    "imageUrl": {
+     "description": "A link to image of product that can be used to preview the product.",
+     "type": "string"
+    },
+    "productId": {
+     "description": "The product asin from retail",
+     "type": "string"
+    },
+    "productTitle": {
+     "description": "Can be used to override retail product title in creative. (RESPONSIVE_ECOMMERCE only for now).",
+     "type": "string"
+    },
+    "productType": {
+     "$ref": "DspAdCreativeProductType"
+    },
+    "reviewText": {
+     "description": "A portion of the review to be used in certain ad experiences.",
+     "type": "string"
+    },
+    "reviewUrl": {
+     "description": "A link to a product review that can be used in certain ad experiences.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "productId",
+    "productType"
+   ],
+   "type": "object"
+  },
+  "DspAdCreativeProductType": {
+   "enum": [
+    "ASIN",
+    "DIGITAL",
+    "THIRD_PARTY"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeRetailFormats": {
+   "description": "Retail Formats configured to display for the creative. Currently these are only used by the RESPONSIVE_ECOMMERCE ad experience. * SHOP_NOW: Clicking on the ad will take customer to the relevant product detail page. * AD…",
+   "enum": [
+    "ADD_TO_CART",
+    "COUPON",
+    "CUSTOMER_REVIEW",
+    "OTHER",
+    "SHOP_NOW"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeThirdPartySize": {
+   "properties": {
+    "height": {
+     "description": "The height of the creative in pixels.",
+     "type": "number"
+    },
+    "responsive": {
+     "description": "Set to true if you would like to cycle through all available sizes for the creative in adExperiences that allow for multiple creative sizes.",
+     "type": "boolean"
+    },
+    "width": {
+     "description": "The width of the creative in pixels.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeThirdPartyTag": {
+   "description": "///////////////////////////////////////////////////////////// DspAdCreativeThirdPartyTag // /////////////////////////////////////////////////////////////",
+   "properties": {
+    "destinationOnAmazon": {
+     "$ref": "DspDestinationAmazon"
+    },
+    "tagSource": {
+     "description": "This is the tag source for the creative. This will support all types of tags and what is accepted will be determined by the Third Party AdExperience Chosen.",
+     "type": "string"
+    },
+    "tagType": {
+     "$ref": "DspAdCreativeThirdPartyTagType"
+    }
+   },
+   "required": [
+    "destinationOnAmazon",
+    "tagSource",
+    "tagType"
+   ],
+   "type": "object"
+  },
+  "DspAdCreativeThirdPartyTagType": {
+   "enum": [
+    "AUDIO",
+    "DISPLAY",
+    "VAST_VPAID"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeTrackingUrlType": {
+   "enum": [
+    "CLICK",
+    "IMPRESSION",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeVideoAsset": {
+   "properties": {
+    "assetId": {
+     "description": "The assetId from Asset Library.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The version of the asset from Asset Library",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspVideoAdExperienceType"
+    },
+    "url": {
+     "description": "The url of an asset from a legacy DSP creative. This will be provided if asset linked with the creative being read is not registered in Creative Assets API. These asset urls are on path to deprecation and it is recommen…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdExperience": {
+   "enum": [
+    "ASSET_BASED_CREATIVE",
+    "BRAND_STORE",
+    "IMAGE",
+    "IMAGE_MOBILE_AAP",
+    "IMAGE_MOBILE_OO",
+    "LEGACY_THIRD_PARTY_DESKTOP",
+    "LEGACY_THIRD_PARTY_MOBILE_AAP",
+    "LEGACY_THIRD_PARTY_MOBILE_OO",
+    "LEGACY_THIRD_PARTY_VIDEO",
+    "LEGACY_VIDEO",
+    "ONLINE_VIDEO",
+    "RESPONSIVE_ECOMMERCE",
+    "STANDARD_AUDIO",
+    "STANDARD_DISPLAY",
+    "STREAMING_TV_VIDEO",
+    "THIRD_PARTY_DISPLAY",
+    "THIRD_PARTY_VIDEO"
+   ],
+   "type": "string"
+  },
+  "DspAdExperienceData": {
+   "properties": {
+    "adCreativeId": {
+     "type": "string"
+    },
+    "adExperiences": {
+     "items": {
+      "$ref": "DspAdExperienceItem"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adCreativeId",
+    "adExperiences"
+   ],
+   "type": "object"
+  },
+  "DspAdExperienceItem": {
+   "properties": {
+    "adExperience": {
+     "$ref": "DspAdExperience"
+    }
+   },
+   "required": [
+    "adExperience"
+   ],
+   "type": "object"
+  },
+  "DspAdExperienceValidation": {
+   "properties": {
+    "errorCode": {
+     "description": "A code for the type of error that has occurred.",
+     "type": "string"
+    },
+    "errorId": {
+     "description": "A unique identifier for the type of error that has occurred.",
+     "type": "string"
+    },
+    "errorMessage": {
+     "description": "Detailed reasoning for error.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdExperienceValidationListItem": {
+   "properties": {
+    "adExperience": {
+     "$ref": "DspAdExperience"
+    },
+    "errors": {
+     "items": {
+      "$ref": "DspAdExperienceValidation"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "validationStatus": {
+     "$ref": "DspAdExperienceValidationStatus"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdExperienceValidationStatus": {
+   "enum": [
+    "INVALID",
+    "VALID"
+   ],
+   "type": "string"
+  },
+  "DspAddToCartClickActionType": {
+   "enum": [
+    "ADD_TO_CART",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DspAddToWatchlistClickActionType": {
+   "enum": [
+    "ADD_TO_WATCHLIST",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DspAppClickActionType": {
+   "enum": [
+    "APP",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DspAudioAdCreativeFormatPreviewOverrides": {
+   "properties": {
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateAudioAdCreativeType"
+    }
+   },
+   "required": [
+    "adCreativeFormatType"
+   ],
+   "type": "object"
+  },
+  "DspAudioAdCreativeTrackingUrl": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspAudioAdExperienceType"
+    },
+    "type": {
+     "$ref": "DspAdCreativeTrackingUrlType"
+    },
+    "url": {
+     "description": "The url of the tracker.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DspAudioAdCreativeType": {
+   "enum": [
+    "AUDIO",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DspAudioAdExperienceType": {
+   "enum": [
+    "OTHER",
+    "STANDARD_AUDIO"
+   ],
+   "type": "string"
+  },
+  "DspAudioAppClickAction": {
+   "properties": {
+    "appDestination": {
+     "description": "The download URL for the app.",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspAudioAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspAppClickActionType"
+    }
+   },
+   "required": [
+    "appDestination",
+    "clickActionType"
+   ],
+   "type": "object"
+  },
+  "DspAudioClickAction": {
+   "oneOf": [
+    {
+     "$ref": "DspAudioUrlClickAction"
+    },
+    {
+     "$ref": "DspAudioAppClickAction"
+    }
+   ],
+   "type": "object"
+  },
+  "DspAudioUrlClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspAudioAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspUrlClickActionType"
+    },
+    "enableDeepLinking": {
+     "type": "boolean"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspComponentAdCreativeFormatPreviewOverrides": {
+   "properties": {
+    "adCopyFilter": {
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateComponentAdCreativeType"
+    },
+    "assetIdFilter": {
+     "items": {
+      "$ref": "DspComponentAssetIdFilter"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productFilter": {
+     "type": "string"
+    },
+    "retailFormatFilter": {
+     "$ref": "DspAdCreativeRetailFormats"
+    },
+    "sizeFilter": {
+     "$ref": "DspAdCreativePreviewSizeFilter"
+    }
+   },
+   "required": [
+    "adCreativeFormatType"
+   ],
+   "type": "object"
+  },
+  "DspComponentAdCreativeTrackingUrl": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspComponentAdExperienceType"
+    },
+    "type": {
+     "$ref": "DspAdCreativeTrackingUrlType"
+    },
+    "url": {
+     "description": "The url of the tracker.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DspComponentAdCreativeType": {
+   "enum": [
+    "COMPONENT",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DspComponentAdExperienceType": {
+   "enum": [
+    "ASSET_BASED_CREATIVE",
+    "BRAND_STORE",
+    "OTHER",
+    "RESPONSIVE_ECOMMERCE"
+   ],
+   "type": "string"
+  },
+  "DspComponentAdditionalProperties": {
+   "properties": {
+    "allowedRetailFormats": {
+     "description": "Retail Formats configured to display for the creative. Currently these are only used by the RESPONSIVE_ECOMMERCE ad experience. * SHOP_NOW: Clicking on the ad will take customer to the relevant product detail page. * AD…",
+     "items": {
+      "$ref": "DspAdCreativeRetailFormats"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "brandColor": {
+     "description": "Hex code for background color(e.g., #FFCC00). Used for creator sponsorship specific creative.",
+     "type": "string"
+    },
+    "creativeContentType": {
+     "$ref": "DspAdCreativeComponentCreativeContentType"
+    },
+    "optimizationGoal": {
+     "$ref": "DspAdCreativeComponentOptimizationGoal"
+    },
+    "renderOptimizations": {
+     "description": "Field will contain the render optimization to be used in the ad experience. * BRAND_STORE_DEALS_HEADLINE: The headline will dynamically change based on data for the brand store page. * TITLE: The title will dynamically …",
+     "items": {
+      "$ref": "DspAdCreativeComponentRenderOptimization"
+     },
+     "type": "array"
+    },
+    "streamingHostReadAdScript": {
+     "description": "Host-read ad script text. Used for creator sponsorship specific creative.",
+     "type": "string"
+    },
+    "targetPlacements": {
+     "description": "Placement types we want to target with this creative. Currently these are only used by the RESPONSIVE_ECOMMERCE ad experience. * DISPLAY: The ad can be displayed on available Display slots. * NATIVE: The ad can be displ…",
+     "items": {
+      "$ref": "DspAdCreativeComponentTargetPlacements"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspComponentAppClickAction": {
+   "properties": {
+    "appDestination": {
+     "description": "The download URL for the app.",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspComponentAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspAppClickActionType"
+    }
+   },
+   "required": [
+    "appDestination",
+    "clickActionType"
+   ],
+   "type": "object"
+  },
+  "DspComponentAssetIdFilter": {
+   "properties": {
+    "assetId": {
+     "type": "string"
+    },
+    "assetVersion": {
+     "type": "string"
+    },
+    "type": {
+     "$ref": "DspComponentAssetType"
+    }
+   },
+   "type": "object"
+  },
+  "DspComponentAssetType": {
+   "enum": [
+    "CUSTOM_IMAGE",
+    "LOGO_IMAGE",
+    "OTHER",
+    "QRCODE_IMAGE",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "DspComponentClickAction": {
+   "oneOf": [
+    {
+     "$ref": "DspComponentUrlClickAction"
+    },
+    {
+     "$ref": "DspComponentAppClickAction"
+    }
+   ],
+   "type": "object"
+  },
+  "DspComponentUrlClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspComponentAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspUrlClickActionType"
+    },
+    "enableDeepLinking": {
+     "type": "boolean"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "DspConflictExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCountry": {
+   "description": "The country code",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "OTHER",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "DspCreateAdCreativeProperties": {
+   "oneOf": [
+    {
+     "$ref": "DspCreateDisplayAdCreativeProperties"
+    },
+    {
+     "$ref": "DspCreateVideoAdCreativeProperties"
+    },
+    {
+     "$ref": "DspCreateAudioAdCreativeProperties"
+    },
+    {
+     "$ref": "DspCreateThirdPartyAdCreativeProperties"
+    },
+    {
+     "$ref": "DspCreateComponentAdCreativeProperties"
+    }
+   ],
+   "type": "object"
+  },
+  "DspCreateAdCreativeRequestContent": {
+   "properties": {
+    "accessibilityText": {
+     "description": "Accessible names are the labels given to HTML elements that can be announced in assistive technologies such as screen readers",
+     "type": "string"
+    },
+    "adChoicesPosition": {
+     "$ref": "DspCreateUpdateAdCreativeAdChoicesPosition"
+    },
+    "adCreativeAttributes": {
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeAttribute"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeCategories": {
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeCategory"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatProperties": {
+     "$ref": "DspCreateAdCreativeProperties"
+    },
+    "additionalHtml": {
+     "description": "Add HTML to the creative for surveys or other supplemental HTML.",
+     "maxLength": 5000,
+     "type": "string"
+    },
+    "autoLocalization": {
+     "$ref": "DspAdCreativeLocalizationProperties"
+    },
+    "country": {
+     "$ref": "DspCreateUpdateCountry"
+    },
+    "externalId": {
+     "description": "An external ID that is associated for a creative. This can be used by advertisers to associate to a third party system or tracking.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "hostedType": {
+     "$ref": "DspAdCreativeHostedType"
+    },
+    "language": {
+     "$ref": "DspCreateUpdateAdCreativeLanguage"
+    },
+    "name": {
+     "description": "The name of the creative being created.",
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "required": [
+    "adCreativeFormatProperties",
+    "hostedType",
+    "language",
+    "name"
+   ],
+   "type": "object"
+  },
+  "DspCreateAudioAdCreativeProperties": {
+   "properties": {
+    "adCopy": {
+     "description": "This array will contain all adCopy to be used in the ad experiences for the creative.",
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateAudioAdCreativeType"
+    },
+    "assets": {
+     "description": "This array contains information on assets that have been uploaded to the Amazon Creative Asset Library. More information on the Creative Assets API can be found here - https://advertising.amazon.com/API/docs/en-us/creat…",
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeAudioAsset"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickActions": {
+     "description": "This array contains information on where this creative/ad experiences will click and land on. You are able to associate clickthroughs to specific ad experiences if the creative has more than one ad experience and separa…",
+     "items": {
+      "$ref": "DspCreateUpdateAudioClickAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "items": {
+      "$ref": "DspAdCreativeAudioSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "products": {
+     "description": "This array contains information on products to be used/featured in ad experiences.",
+     "items": {
+      "$ref": "DspAdCreativeProduct"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspCreateUpdateAudioAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateComponentAdCreativeProperties": {
+   "properties": {
+    "adCopy": {
+     "description": "This array will contain all adCopy to be used in the ad experiences for the creative.",
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateComponentAdCreativeType"
+    },
+    "additionalAttributes": {
+     "$ref": "DspCreateUpdateComponentAdditionalProperties"
+    },
+    "assets": {
+     "description": "This array contains information on assets that have been uploaded to the Amazon Creative Asset Library. More information on the Creative Assets API can be found here - https://advertising.amazon.com/API/docs/en-us/creat…",
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeComponentAsset"
+     },
+     "maxItems": 25,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickActions": {
+     "description": "This array contains information on where this creative/ad experiences will click and land on. You are able to associate clickthroughs to specific ad experiences if the creative has more than one ad experience and separa…",
+     "items": {
+      "$ref": "DspCreateUpdateComponentClickAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "items": {
+      "$ref": "DspAdCreativeComponentSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "products": {
+     "description": "This array contains information on products to be used/featured in ad experiences.",
+     "items": {
+      "$ref": "DspAdCreativeProduct"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspCreateUpdateComponentAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateDisplayAdCreativeProperties": {
+   "properties": {
+    "adCopy": {
+     "description": "This array will contain all adCopy to be used in the ad experiences for the creative.",
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateDisplayAdCreativeType"
+    },
+    "assets": {
+     "description": "This array contains information on assets that have been uploaded to the Amazon Creative Asset Library. More information on the Creative Assets API can be found here - https://advertising.amazon.com/API/docs/en-us/creat…",
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeDisplayAsset"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickActions": {
+     "description": "This array contains information on where this creative/ad experiences will click and land on. You are able to associate clickthroughs to specific ad experiences if the creative has more than one ad experience and separa…",
+     "items": {
+      "$ref": "DspCreateUpdateDisplayClickAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "items": {
+      "$ref": "DspAdCreativeDisplaySize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "products": {
+     "description": "This array contains information on products to be used/featured in ad experiences.",
+     "items": {
+      "$ref": "DspAdCreativeProduct"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspCreateUpdateDisplayAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateThirdPartyAdCreativeProperties": {
+   "properties": {
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateThirdPartyAdCreativeType"
+    },
+    "creativeSizes": {
+     "items": {
+      "$ref": "DspAdCreativeThirdPartySize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "thirdPartyTag": {
+     "$ref": "DspAdCreativeThirdPartyTag"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspCreateUpdateThirdPartyAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateUpdateAdCreativeAdChoicesPosition": {
+   "enum": [
+    "BOTTOM_LEFT",
+    "BOTTOM_RIGHT",
+    "TOP_LEFT",
+    "TOP_RIGHT"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAdCreativeAttribute": {
+   "enum": [
+    "3PTRACKER_EMBEDDED",
+    "AUDIO",
+    "AUDIO_AUTO",
+    "CART_COMPLIANT",
+    "CART_NON_COMPLIANT",
+    "DEA_REC_NO_LOGO",
+    "DISPLAY_1_CLICK_PROMOTION",
+    "DISPLAY_3RD_PARTY",
+    "DISPLAY_ALEXA_DISPLAY_ADS",
+    "DISPLAY_ALL",
+    "DISPLAY_AMAZON_LIVE_VIDEO",
+    "DISPLAY_AMAZON_VIDEO_ADS",
+    "DISPLAY_ECOMMERCE",
+    "DISPLAY_IMAGE",
+    "DISPLAY_SCROLLABLE_ADS",
+    "DISPLAY_SHOPPABLE_IMAGE_ADS",
+    "EXPANDABLE",
+    "EXPANDABLE_AUTO",
+    "FLASH",
+    "FLASHING_SHAKING_FLICKERING",
+    "FRESH_COMPLIANT",
+    "HTML",
+    "HTTPS",
+    "IGNORE",
+    "ILM_COMPLIANT",
+    "ILM_NON_COMPLIANT",
+    "INTERSTITIAL",
+    "MEDIATION_AD",
+    "MRAID1",
+    "MRAID2",
+    "NON_FLASH",
+    "PAGE_TAKEOVER",
+    "POP_COMPLIANT",
+    "POP_NON_COMPLIANT",
+    "POP_UPS_POP_UNDERS",
+    "PT_COMPLIANT",
+    "PT_NON_COMPLIANT",
+    "REQUIRES_TRANSPARENCY",
+    "RICH_MEDIA",
+    "SMILE_COMPLIANT",
+    "SMILE_NON_COMPLIANT",
+    "SURVEY_AD",
+    "TEXT",
+    "VIDEO",
+    "VIDEO_1P_BROADCASTER_VAST_2",
+    "VIDEO_1P_BROADCASTER_VAST_3",
+    "VIDEO_1P_VIDEO_VAST_2",
+    "VIDEO_1P_VIDEO_VAST_3",
+    "VIDEO_3P_BROADCASTER_VAST_2",
+    "VIDEO_3P_BROADCASTER_VAST_3",
+    "VIDEO_3P_VIDEO_VAST_2",
+    "VIDEO_3P_VIDEO_VAST_3",
+    "VIDEO_AUTO_PLAY",
+    "VIDEO_INTERSTITIAL",
+    "VIDEO_NON_VAST",
+    "VIDEO_SKIPPABLE",
+    "VIDEO_VAST_3_0",
+    "VIDEO_VCB_VAST_2",
+    "VIDEO_VCB_VAST_3",
+    "VIDEO_VPAID_FLASH",
+    "VIDEO_VPAID_JAVASCRIPT",
+    "WHOLE_FOODS_COMPLIANT",
+    "YO_COMPLIANT",
+    "YO_NON_COMPLIANT"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAdCreativeAudioAsset": {
+   "properties": {
+    "assetId": {
+     "description": "The assetId from Asset Library.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The version of the asset from Asset Library",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateAudioAdExperienceType"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateAdCreativeCategory": {
+   "enum": [
+    "ALCOHOL",
+    "APP",
+    "AUDIO_BOOK",
+    "AUDIO_VIDEO",
+    "CONSUMER_LOANS",
+    "COSMETIC_PROCEDURES_BODY_MODIFICATION",
+    "DATING",
+    "DOWNLOAD",
+    "DRUGS_SUPPLEMENTS",
+    "ERROR_BOX",
+    "EXCESSIVE_ANIMATION",
+    "E_BOOK",
+    "FREE_GIFTS_QUIZZES_SURVEYS",
+    "GAMBLING",
+    "GET_RICH_QUICK",
+    "HOLIDAY",
+    "INCENTIVIZED",
+    "MAGAZINE",
+    "MALE_HEALTH",
+    "MATURE",
+    "MEMBERSHIP_CLUB",
+    "MISLEADING_CLAIMS",
+    "MOVIE",
+    "MUSIC",
+    "NEWSPAPER",
+    "OTHER",
+    "POLITICAL",
+    "POLITICS",
+    "REFERENCES_SEX_SEXUALITY",
+    "RELIGION",
+    "RINGTONES_DOWNLOADABLES",
+    "SEXUAL_REPRODUCTIVE_HEALTH",
+    "SUGGESTIVE",
+    "TOBACCO",
+    "TV_SERIES",
+    "VIDEO_GAMES_CASUAL_ONLINE",
+    "WEIGHT_LOSS"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAdCreativeComponentAsset": {
+   "properties": {
+    "applyBorder": {
+     "description": "Field used by certain adExperiences to add a border to images that do not have a border. Not having a border is a common rejection reason.",
+     "type": "boolean"
+    },
+    "assetCroppingCoordinates": {
+     "description": "This field contains the cropping information for creatives which want to crop their CUSTOM_IMAGE used on ads. RESPONSIVE_ECOMMERCE: Supports 3 asset cropping coordinates Wide: 1200 x 628 or larger (image must be in aspe…",
+     "items": {
+      "$ref": "DspAdCreativeAssetCroppingCoordinates"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "assetId": {
+     "description": "The assetId from Asset Library.",
+     "type": "string"
+    },
+    "assetType": {
+     "$ref": "DspComponentAssetType"
+    },
+    "assetVersion": {
+     "description": "The version of the asset from Asset Library",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateComponentAdExperienceType"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateAdCreativeComponentCreativeContentType": {
+   "enum": [
+    "DEFAULT",
+    "PRODUCT"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAdCreativeComponentOptimizationGoal": {
+   "enum": [
+    "CLICK_THROUGH_RATE",
+    "DETAIL_PAGE_VIEW_RATE",
+    "PURCHASE_RATE"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAdCreativeComponentRenderOptimization": {
+   "enum": [
+    "BRAND_STORE_DEALS_HEADLINE",
+    "HEADLINE",
+    "IMAGE",
+    "TITLE"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAdCreativeDisplayAsset": {
+   "properties": {
+    "applyBorder": {
+     "description": "Field used by certain adExperiences to add a border to images that do not have a border. Not having a border is a common rejection reason.",
+     "type": "boolean"
+    },
+    "assetId": {
+     "description": "The assetId from Asset Library.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The version of the asset from Asset Library",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateDisplayAdExperienceType"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateAdCreativeLanguage": {
+   "description": "The language used in the creative in ISO_639-1 standard.",
+   "enum": [
+    "aa",
+    "ab",
+    "ae",
+    "af",
+    "ak",
+    "am",
+    "an",
+    "ar",
+    "as",
+    "av",
+    "ay",
+    "az",
+    "ba",
+    "be",
+    "bg",
+    "bh",
+    "bi",
+    "bm",
+    "bn",
+    "bo",
+    "br",
+    "bs",
+    "ca",
+    "ce",
+    "ch",
+    "co",
+    "cr",
+    "cs",
+    "cu",
+    "cv",
+    "cy",
+    "da",
+    "de",
+    "dv",
+    "dz",
+    "ee",
+    "el",
+    "en",
+    "eo",
+    "es",
+    "et",
+    "eu",
+    "fa",
+    "ff",
+    "fi",
+    "fj",
+    "fo",
+    "fr",
+    "fy",
+    "ga",
+    "gd",
+    "gl",
+    "gn",
+    "gu",
+    "gv",
+    "ha",
+    "he",
+    "hi",
+    "ho",
+    "hr",
+    "ht",
+    "hu",
+    "hy",
+    "hz",
+    "ia",
+    "id",
+    "ie",
+    "ig",
+    "ii",
+    "ik",
+    "in",
+    "io",
+    "is",
+    "it",
+    "iu",
+    "iw",
+    "ja",
+    "ji",
+    "jv",
+    "ka",
+    "kg",
+    "ki",
+    "kj",
+    "kk",
+    "kl",
+    "km",
+    "kn",
+    "ko",
+    "kr",
+    "ks",
+    "ku",
+    "kv",
+    "kw",
+    "ky",
+    "la",
+    "lb",
+    "lg",
+    "li",
+    "ln",
+    "lo",
+    "lt",
+    "lu",
+    "lv",
+    "mg",
+    "mh",
+    "mi",
+    "mk",
+    "ml",
+    "mn",
+    "mo",
+    "mr",
+    "ms",
+    "mt",
+    "my",
+    "na",
+    "nb",
+    "nd",
+    "ne",
+    "ng",
+    "nl",
+    "nn",
+    "no",
+    "nr",
+    "nv",
+    "ny",
+    "oc",
+    "oj",
+    "om",
+    "or",
+    "os",
+    "pa",
+    "pi",
+    "pl",
+    "ps",
+    "pt",
+    "qu",
+    "rm",
+    "rn",
+    "ro",
+    "ru",
+    "rw",
+    "sa",
+    "sc",
+    "sd",
+    "se",
+    "sg",
+    "si",
+    "sk",
+    "sl",
+    "sm",
+    "sn",
+    "so",
+    "sq",
+    "sr",
+    "ss",
+    "st",
+    "su",
+    "sv",
+    "sw",
+    "ta",
+    "te",
+    "tg",
+    "th",
+    "ti",
+    "tk",
+    "tl",
+    "tn",
+    "to",
+    "tr",
+    "ts",
+    "tt",
+    "tw",
+    "ty",
+    "ug",
+    "uk",
+    "ur",
+    "uz",
+    "ve",
+    "vi",
+    "vo",
+    "wa",
+    "wo",
+    "xh",
+    "yi",
+    "yo",
+    "za",
+    "zh",
+    "zu"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAdCreativeRetailFormats": {
+   "description": "Retail Formats configured to display for the creative. Currently these are only used by the RESPONSIVE_ECOMMERCE ad experience. * SHOP_NOW: Clicking on the ad will take customer to the relevant product detail page. * AD…",
+   "enum": [
+    "ADD_TO_CART",
+    "COUPON",
+    "CUSTOMER_REVIEW",
+    "SHOP_NOW"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAdCreativeTrackingUrlType": {
+   "enum": [
+    "CLICK",
+    "IMPRESSION"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAdCreativeVideoAsset": {
+   "properties": {
+    "assetId": {
+     "description": "The assetId from Asset Library.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The version of the asset from Asset Library",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateVideoAdExperienceType"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateAddToCartClickActionType": {
+   "enum": [
+    "ADD_TO_CART"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAddToWatchlistClickActionType": {
+   "enum": [
+    "ADD_TO_WATCHLIST"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAppClickActionType": {
+   "enum": [
+    "APP"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAudioAdCreativeTrackingUrl": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateAudioAdExperienceType"
+    },
+    "type": {
+     "$ref": "DspCreateUpdateAdCreativeTrackingUrlType"
+    },
+    "url": {
+     "description": "The url of the tracker.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateAudioAdCreativeType": {
+   "enum": [
+    "AUDIO"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAudioAdExperienceType": {
+   "enum": [
+    "STANDARD_AUDIO"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateAudioAppClickAction": {
+   "properties": {
+    "appDestination": {
+     "description": "The download URL for the app.",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateAudioAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspCreateUpdateAppClickActionType"
+    }
+   },
+   "required": [
+    "appDestination",
+    "clickActionType"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateAudioClickAction": {
+   "oneOf": [
+    {
+     "$ref": "DspCreateUpdateAudioUrlClickAction"
+    },
+    {
+     "$ref": "DspCreateUpdateAudioAppClickAction"
+    }
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateAudioUrlClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateAudioAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspCreateUpdateUrlClickActionType"
+    },
+    "enableDeepLinking": {
+     "type": "boolean"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateComponentAdCreativeTrackingUrl": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateComponentAdExperienceType"
+    },
+    "type": {
+     "$ref": "DspCreateUpdateAdCreativeTrackingUrlType"
+    },
+    "url": {
+     "description": "The url of the tracker.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateComponentAdCreativeType": {
+   "enum": [
+    "COMPONENT"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateComponentAdExperienceType": {
+   "enum": [
+    "ASSET_BASED_CREATIVE",
+    "BRAND_STORE",
+    "RESPONSIVE_ECOMMERCE"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateComponentAdditionalProperties": {
+   "properties": {
+    "allowedRetailFormats": {
+     "description": "Retail Formats configured to display for the creative. Currently these are only used by the RESPONSIVE_ECOMMERCE ad experience. * SHOP_NOW: Clicking on the ad will take customer to the relevant product detail page. * AD…",
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeRetailFormats"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "brandColor": {
+     "description": "Hex code for background color(e.g., #FFCC00). Used for creator sponsorship specific creative.",
+     "type": "string"
+    },
+    "creativeContentType": {
+     "$ref": "DspCreateUpdateAdCreativeComponentCreativeContentType"
+    },
+    "optimizationGoal": {
+     "$ref": "DspCreateUpdateAdCreativeComponentOptimizationGoal"
+    },
+    "renderOptimizations": {
+     "description": "Field will contain the render optimization to be used in the ad experience. * BRAND_STORE_DEALS_HEADLINE: The headline will dynamically change based on data for the brand store page. * TITLE: The title will dynamically …",
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeComponentRenderOptimization"
+     },
+     "type": "array"
+    },
+    "streamingHostReadAdScript": {
+     "description": "Host-read ad script text. Used for creator sponsorship specific creative.",
+     "type": "string"
+    },
+    "targetPlacements": {
+     "description": "Placement types we want to target with this creative. Currently these are only used by the RESPONSIVE_ECOMMERCE ad experience. * DISPLAY: The ad can be displayed on available Display slots. * NATIVE: The ad can be displ…",
+     "items": {
+      "$ref": "DspAdCreativeComponentTargetPlacements"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateUpdateComponentAppClickAction": {
+   "properties": {
+    "appDestination": {
+     "description": "The download URL for the app.",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateComponentAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspCreateUpdateAppClickActionType"
+    }
+   },
+   "required": [
+    "appDestination",
+    "clickActionType"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateComponentClickAction": {
+   "oneOf": [
+    {
+     "$ref": "DspCreateUpdateComponentUrlClickAction"
+    },
+    {
+     "$ref": "DspCreateUpdateComponentAppClickAction"
+    }
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateComponentUrlClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateComponentAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspCreateUpdateUrlClickActionType"
+    },
+    "enableDeepLinking": {
+     "type": "boolean"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateCountry": {
+   "description": "The country code. Note that only certain creative languages are supported in each country. See: [Supported Languages by Marketplace](https://advertising.amazon.com/API/docs/en-us/guides/dsp/creative-management#supported…",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateCtaClickActionType": {
+   "enum": [
+    "CTA"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateDisplayAdCreativeTrackingUrl": {
+   "description": "///////////////////////////////////////////////////////////// DspAdCreativeTrackingUrl // /////////////////////////////////////////////////////////////",
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateDisplayAdExperienceType"
+    },
+    "type": {
+     "$ref": "DspCreateUpdateAdCreativeTrackingUrlType"
+    },
+    "url": {
+     "description": "The url of the tracker.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateDisplayAdCreativeType": {
+   "enum": [
+    "DISPLAY"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateDisplayAdExperienceType": {
+   "enum": [
+    "IMAGE",
+    "IMAGE_MOBILE_AAP",
+    "IMAGE_MOBILE_OO",
+    "STANDARD_DISPLAY"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateDisplayAppClickAction": {
+   "properties": {
+    "appDestination": {
+     "description": "The download URL for the app.",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateDisplayAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspCreateUpdateAppClickActionType"
+    }
+   },
+   "required": [
+    "appDestination",
+    "clickActionType"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateDisplayClickAction": {
+   "oneOf": [
+    {
+     "$ref": "DspCreateUpdateDisplayUrlClickAction"
+    },
+    {
+     "$ref": "DspCreateUpdateDisplayAppClickAction"
+    }
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateDisplayUrlClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateDisplayAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspCreateUpdateUrlClickActionType"
+    },
+    "enableDeepLinking": {
+     "type": "boolean"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateInteractiveVideoClickActionPosition": {
+   "enum": [
+    "LEFT",
+    "MINIMAL",
+    "RIGHT"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateLearnMoreClickActionType": {
+   "enum": [
+    "LEARN_MORE"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateProductOverlayClickActionType": {
+   "enum": [
+    "PRODUCT_OVERLAY"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateThirdPartyAdCreativeTrackingUrl": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateThirdPartyAdExperienceType"
+    },
+    "type": {
+     "$ref": "DspCreateUpdateAdCreativeTrackingUrlType"
+    },
+    "url": {
+     "description": "The url of the tracker.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateThirdPartyAdCreativeType": {
+   "enum": [
+    "THIRD_PARTY"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateThirdPartyAdExperienceType": {
+   "enum": [
+    "LEGACY_THIRD_PARTY_DESKTOP",
+    "LEGACY_THIRD_PARTY_MOBILE_AAP",
+    "LEGACY_THIRD_PARTY_MOBILE_OO",
+    "LEGACY_THIRD_PARTY_VIDEO",
+    "THIRD_PARTY_DISPLAY",
+    "THIRD_PARTY_VIDEO"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateUrlClickActionType": {
+   "enum": [
+    "URL"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateVideoAdCreativeTrackingUrl": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateVideoAdExperienceType"
+    },
+    "type": {
+     "$ref": "DspCreateUpdateAdCreativeTrackingUrlType"
+    },
+    "url": {
+     "description": "The url of the tracker.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateVideoAdCreativeType": {
+   "enum": [
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateVideoAdExperienceType": {
+   "enum": [
+    "LEGACY_VIDEO",
+    "ONLINE_VIDEO",
+    "STREAMING_TV_VIDEO"
+   ],
+   "type": "string"
+  },
+  "DspCreateUpdateVideoAddToCartClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateVideoAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspCreateUpdateAddToCartClickActionType"
+    },
+    "position": {
+     "$ref": "DspCreateUpdateInteractiveVideoClickActionPosition"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "position"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateVideoAddToWatchlistClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateVideoAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspCreateUpdateAddToWatchlistClickActionType"
+    },
+    "position": {
+     "$ref": "DspCreateUpdateInteractiveVideoClickActionPosition"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "position"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateVideoAppClickAction": {
+   "properties": {
+    "appDestination": {
+     "description": "The download URL for the app.",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateVideoAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspCreateUpdateAppClickActionType"
+    }
+   },
+   "required": [
+    "appDestination",
+    "clickActionType"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateVideoClickAction": {
+   "oneOf": [
+    {
+     "$ref": "DspCreateUpdateVideoUrlClickAction"
+    },
+    {
+     "$ref": "DspCreateUpdateVideoAppClickAction"
+    },
+    {
+     "$ref": "DspCreateUpdateVideoLearnMoreClickAction"
+    },
+    {
+     "$ref": "DspCreateUpdateVideoAddToCartClickAction"
+    },
+    {
+     "$ref": "DspCreateUpdateVideoAddToWatchlistClickAction"
+    },
+    {
+     "$ref": "DspCreateUpdateVideoProductOverlayClickAction"
+    },
+    {
+     "$ref": "DspCreateUpdateVideoCtaClickAction"
+    }
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateVideoCtaClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateVideoAdExperienceType"
+    },
+    "callout": {
+     "type": "string"
+    },
+    "clickActionType": {
+     "$ref": "DspCreateUpdateCtaClickActionType"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "callout",
+    "clickActionType",
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateVideoLearnMoreClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateVideoAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspCreateUpdateLearnMoreClickActionType"
+    },
+    "position": {
+     "$ref": "DspCreateUpdateInteractiveVideoClickActionPosition"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "position",
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateVideoProductOverlayClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateVideoAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspCreateUpdateProductOverlayClickActionType"
+    },
+    "endCard": {
+     "$ref": "DspProductOverlayEndCard"
+    },
+    "panels": {
+     "items": {
+      "$ref": "DspProductOverlayPanel"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "panels"
+   ],
+   "type": "object"
+  },
+  "DspCreateUpdateVideoUrlClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspCreateUpdateVideoAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspCreateUpdateUrlClickActionType"
+    },
+    "enableDeepLinking": {
+     "type": "boolean"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "DspCreateVideoAdCreativeProperties": {
+   "properties": {
+    "adCopy": {
+     "description": "This array will contain all adCopy to be used in the ad experiences for the creative.",
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateVideoAdCreativeType"
+    },
+    "assets": {
+     "description": "This array contains information on assets that have been uploaded to the Amazon Creative Asset Library. More information on the Creative Assets API can be found here - https://advertising.amazon.com/API/docs/en-us/creat…",
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeVideoAsset"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickActions": {
+     "description": "This array contains information on where this creative/ad experiences will click and land on. You are able to associate clickthroughs to specific ad experiences if the creative has more than one ad experience and separa…",
+     "items": {
+      "$ref": "DspCreateUpdateVideoClickAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "optimizationConfiguration": {
+     "$ref": "DspVideoCreateUpdateAdCreativeOptimizationConfiguration"
+    },
+    "products": {
+     "description": "This array contains information on products to be used/featured in ad experiences.",
+     "items": {
+      "$ref": "DspAdCreativeProduct"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "skippabilitySettings": {
+     "$ref": "SkippabilitySettings"
+    },
+    "thirdPartyVerificationUrl": {
+     "description": "This is the VAST/PAID tag URL from 3P Ad verification vendors. Advertisers can use this to utilise full 3P measurement capabilities such as Ad blocking in Amazon Hosted creatives.",
+     "type": "string"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspCreateUpdateVideoAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adCreativeFormatType"
+   ],
+   "type": "object"
+  },
+  "DspCtaClickActionType": {
+   "enum": [
+    "CTA",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DspDestinationAmazon": {
+   "enum": [
+    "OFF_AMAZON",
+    "ON_AMAZON"
+   ],
+   "type": "string"
+  },
+  "DspDisplayAdCreativeFormatPreviewOverrides": {
+   "properties": {
+    "adCopyFilter": {
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateDisplayAdCreativeType"
+    },
+    "assetIdFilter": {
+     "type": "string"
+    },
+    "productFilter": {
+     "type": "string"
+    },
+    "sizeFilter": {
+     "$ref": "DspAdCreativePreviewSizeFilter"
+    }
+   },
+   "required": [
+    "adCreativeFormatType"
+   ],
+   "type": "object"
+  },
+  "DspDisplayAdCreativeTrackingUrl": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspDisplayAdExperienceType"
+    },
+    "type": {
+     "$ref": "DspAdCreativeTrackingUrlType"
+    },
+    "url": {
+     "description": "The url of the tracker.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DspDisplayAdCreativeType": {
+   "enum": [
+    "DISPLAY",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DspDisplayAdExperienceType": {
+   "enum": [
+    "IMAGE",
+    "IMAGE_MOBILE_AAP",
+    "IMAGE_MOBILE_OO",
+    "LEGACY_THIRD_PARTY_DESKTOP",
+    "LEGACY_THIRD_PARTY_MOBILE_AAP",
+    "LEGACY_THIRD_PARTY_MOBILE_OO",
+    "OTHER",
+    "STANDARD_DISPLAY"
+   ],
+   "type": "string"
+  },
+  "DspDisplayAppClickAction": {
+   "properties": {
+    "appDestination": {
+     "description": "The download URL for the app.",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspDisplayAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspAppClickActionType"
+    }
+   },
+   "required": [
+    "appDestination",
+    "clickActionType"
+   ],
+   "type": "object"
+  },
+  "DspDisplayClickAction": {
+   "description": "///////////////////////////////////////////////////////////// DspClickAction // /////////////////////////////////////////////////////////////",
+   "oneOf": [
+    {
+     "$ref": "DspDisplayUrlClickAction"
+    },
+    {
+     "$ref": "DspDisplayAppClickAction"
+    }
+   ],
+   "type": "object"
+  },
+  "DspDisplayUrlClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspDisplayAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspUrlClickActionType"
+    },
+    "enableDeepLinking": {
+     "type": "boolean"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInteractiveVideoClickActionPosition": {
+   "enum": [
+    "LEFT",
+    "MINIMAL",
+    "OTHER",
+    "RIGHT"
+   ],
+   "type": "string"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspLearnMoreClickActionType": {
+   "enum": [
+    "LEARN_MORE",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DspListAdCreativeModerationRequestContent": {
+   "properties": {
+    "adCreativeIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API.",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListAdCreativeProperties": {
+   "oneOf": [
+    {
+     "$ref": "DspListDisplayAdCreativeProperties"
+    },
+    {
+     "$ref": "DspListVideoAdCreativeProperties"
+    },
+    {
+     "$ref": "DspListAudioAdCreativeProperties"
+    },
+    {
+     "$ref": "DspListThirdPartyAdCreativeProperties"
+    },
+    {
+     "$ref": "DspListComponentAdCreativeProperties"
+    }
+   ],
+   "type": "object"
+  },
+  "DspListAdCreativeRequestContent": {
+   "properties": {
+    "adCreativeIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API.",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListAdExperiencesRequestContent": {
+   "properties": {
+    "adCreativeIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API.",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListAudioAdCreativeProperties": {
+   "properties": {
+    "adCopy": {
+     "description": "This array will contain all adCopy to be used in the ad experiences for the creative.",
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspAudioAdCreativeType"
+    },
+    "assets": {
+     "description": "This array contains information on assets that have been uploaded to the Amazon Creative Asset Library. More information on the Creative Assets API can be found here - https://advertising.amazon.com/API/docs/en-us/creat…",
+     "items": {
+      "$ref": "DspAdCreativeAudioAsset"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickActions": {
+     "description": "This array contains information on where this creative/ad experiences will click and land on. You are able to associate clickthroughs to specific ad experiences if the creative has more than one ad experience and separa…",
+     "items": {
+      "$ref": "DspAudioClickAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "items": {
+      "$ref": "DspAdCreativeAudioSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "products": {
+     "description": "This array contains information on products to be used/featured in ad experiences.",
+     "items": {
+      "$ref": "DspAdCreativeProduct"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspAudioAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspListComponentAdCreativeProperties": {
+   "properties": {
+    "adCopy": {
+     "description": "This array will contain all adCopy to be used in the ad experiences for the creative.",
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspComponentAdCreativeType"
+    },
+    "additionalAttributes": {
+     "$ref": "DspComponentAdditionalProperties"
+    },
+    "assets": {
+     "description": "This array contains information on assets that have been uploaded to the Amazon Creative Asset Library. More information on the Creative Assets API can be found here - https://advertising.amazon.com/API/docs/en-us/creat…",
+     "items": {
+      "$ref": "DspAdCreativeComponentAsset"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickActions": {
+     "description": "This array contains information on where this creative/ad experiences will click and land on. You are able to associate clickthroughs to specific ad experiences if the creative has more than one ad experience and separa…",
+     "items": {
+      "$ref": "DspComponentClickAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "items": {
+      "$ref": "DspAdCreativeComponentSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "products": {
+     "description": "This array contains information on products to be used/featured in ad experiences.",
+     "items": {
+      "$ref": "DspAdCreativeProduct"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspComponentAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adCreativeFormatType"
+   ],
+   "type": "object"
+  },
+  "DspListDisplayAdCreativeProperties": {
+   "properties": {
+    "adCopy": {
+     "description": "This array will contain all adCopy to be used in the ad experiences for the creative.",
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspDisplayAdCreativeType"
+    },
+    "assets": {
+     "description": "This array contains information on assets that have been uploaded to the Amazon Creative Asset Library. More information on the Creative Assets API can be found here - https://advertising.amazon.com/API/docs/en-us/creat…",
+     "items": {
+      "$ref": "DspAdCreativeDisplayAsset"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickActions": {
+     "description": "This array contains information on where this creative/ad experiences will click and land on. You are able to associate clickthroughs to specific ad experiences if the creative has more than one ad experience and separa…",
+     "items": {
+      "$ref": "DspDisplayClickAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "items": {
+      "$ref": "DspAdCreativeDisplaySize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "products": {
+     "description": "This array contains information on products to be used/featured in ad experiences.",
+     "items": {
+      "$ref": "DspAdCreativeProduct"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspDisplayAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspListThirdPartyAdCreativeProperties": {
+   "properties": {
+    "adCreativeFormatType": {
+     "$ref": "DspThirdPartyAdCreativeType"
+    },
+    "creativeSizes": {
+     "items": {
+      "$ref": "DspAdCreativeThirdPartySize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "thirdPartyTag": {
+     "$ref": "DspAdCreativeThirdPartyTag"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspThirdPartyAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspListVideoAdCreativeProperties": {
+   "properties": {
+    "adCopy": {
+     "description": "This array will contain all adCopy to be used in the ad experiences for the creative.",
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspVideoAdCreativeType"
+    },
+    "assets": {
+     "description": "This array contains information on assets that have been uploaded to the Amazon Creative Asset Library. More information on the Creative Assets API can be found here - https://advertising.amazon.com/API/docs/en-us/creat…",
+     "items": {
+      "$ref": "DspAdCreativeVideoAsset"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickActions": {
+     "description": "This array contains information on where this creative/ad experiences will click and land on. You are able to associate clickthroughs to specific ad experiences if the creative has more than one ad experience and separa…",
+     "items": {
+      "$ref": "DspVideoClickAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "optimizationConfiguration": {
+     "$ref": "DspVideoAdCreativeOptimizationConfiguration"
+    },
+    "products": {
+     "description": "This array contains information on products to be used/featured in ad experiences.",
+     "items": {
+      "$ref": "DspAdCreativeProduct"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "skippabilitySettings": {
+     "$ref": "SkippabilitySettings"
+    },
+    "thirdPartyVerificationUrl": {
+     "description": "This is the VAST/PAID tag URL from 3P Ad verification vendors. Advertisers can use this to utilise full 3P measurement capabilities such as Ad blocking in Amazon Hosted creatives.",
+     "type": "string"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspVideoAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspLocalizationState": {
+   "description": "DspLocalizationState controls the state of auto-localization for the creative.",
+   "enum": [
+    "DISABLE",
+    "ENABLE"
+   ],
+   "type": "string"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspPostAdCreativeComponentModerationV1ResponseContent": {
+   "properties": {
+    "adCreativeId": {
+     "type": "string"
+    },
+    "components": {
+     "description": "Moderation results of components associated to the creative.",
+     "items": {
+      "$ref": "DspAdCreativeModerationResponseComponentItem"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token to fetch next page.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "Total count of items in the output.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspPreviewAdCreativeByIdRequestContent": {
+   "properties": {
+    "adCreativeId": {
+     "type": "string"
+    },
+    "adExperience": {
+     "$ref": "DspAdExperience"
+    },
+    "previewOverrides": {
+     "$ref": "DspAdCreativePreviewFilters"
+    }
+   },
+   "required": [
+    "adCreativeId",
+    "adExperience"
+   ],
+   "type": "object"
+  },
+  "DspPreviewAdCreativeByModelRequestContent": {
+   "properties": {
+    "adExperience": {
+     "$ref": "DspAdExperience"
+    },
+    "creative": {
+     "$ref": "DspCreateAdCreativeRequestContent"
+    },
+    "previewOverrides": {
+     "$ref": "DspAdCreativePreviewFilters"
+    }
+   },
+   "required": [
+    "adExperience",
+    "creative"
+   ],
+   "type": "object"
+  },
+  "DspPreviewAdCreativeRequestContent": {
+   "oneOf": [
+    {
+     "$ref": "DspPreviewAdCreativeByModelRequestContent"
+    },
+    {
+     "$ref": "DspPreviewAdCreativeByIdRequestContent"
+    }
+   ],
+   "type": "object"
+  },
+  "DspPreviewSite": {
+   "enum": [
+    "OFF_AMAZON",
+    "ON_AMAZON"
+   ],
+   "type": "string"
+  },
+  "DspProductOverlayClickActionType": {
+   "enum": [
+    "OTHER",
+    "PRODUCT_OVERLAY"
+   ],
+   "type": "string"
+  },
+  "DspProductOverlayEndCard": {
+   "properties": {
+    "callout": {
+     "type": "string"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "callout",
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "DspProductOverlayPanel": {
+   "properties": {
+    "product": {
+     "type": "string"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspThirdPartyAdCreativeFormatPreviewOverrides": {
+   "properties": {
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateThirdPartyAdCreativeType"
+    }
+   },
+   "required": [
+    "adCreativeFormatType"
+   ],
+   "type": "object"
+  },
+  "DspThirdPartyAdCreativeTrackingUrl": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspThirdPartyAdExperienceType"
+    },
+    "type": {
+     "$ref": "DspAdCreativeTrackingUrlType"
+    },
+    "url": {
+     "description": "The url of the tracker.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DspThirdPartyAdCreativeType": {
+   "enum": [
+    "OTHER",
+    "THIRD_PARTY"
+   ],
+   "type": "string"
+  },
+  "DspThirdPartyAdExperienceType": {
+   "enum": [
+    "LEGACY_THIRD_PARTY_VIDEO",
+    "OTHER",
+    "THIRD_PARTY_DISPLAY",
+    "THIRD_PARTY_VIDEO"
+   ],
+   "type": "string"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUpdateAdCreativeProperties": {
+   "oneOf": [
+    {
+     "$ref": "DspUpdateDisplayAdCreativeProperties"
+    },
+    {
+     "$ref": "DspUpdateVideoAdCreativeProperties"
+    },
+    {
+     "$ref": "DspUpdateAudioAdCreativeProperties"
+    },
+    {
+     "$ref": "DspUpdateThirdPartyAdCreativeProperties"
+    },
+    {
+     "$ref": "DspUpdateComponentAdCreativeProperties"
+    }
+   ],
+   "type": "object"
+  },
+  "DspUpdateAdCreativeRequestContent": {
+   "properties": {
+    "accessibilityText": {
+     "description": "Accessible names are the labels given to HTML elements that can be announced in assistive technologies such as screen readers",
+     "type": "string"
+    },
+    "adChoicesPosition": {
+     "$ref": "DspCreateUpdateAdCreativeAdChoicesPosition"
+    },
+    "adCreativeAttributes": {
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeAttribute"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeCategories": {
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeCategory"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatProperties": {
+     "$ref": "DspUpdateAdCreativeProperties"
+    },
+    "additionalHtml": {
+     "description": "Add HTML to the creative for surveys or other supplemental HTML.",
+     "maxLength": 5000,
+     "type": "string"
+    },
+    "autoLocalization": {
+     "$ref": "DspAdCreativeLocalizationProperties"
+    },
+    "country": {
+     "$ref": "DspCreateUpdateCountry"
+    },
+    "externalId": {
+     "description": "An external ID that is associated for a creative. This can be used by advertisers to associate to a third party system or tracking.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "language": {
+     "$ref": "DspCreateUpdateAdCreativeLanguage"
+    },
+    "name": {
+     "description": "The name of the creative being created.",
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUpdateAudioAdCreativeProperties": {
+   "properties": {
+    "adCopy": {
+     "description": "This array will contain all adCopy to be used in the ad experiences for the creative.",
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateAudioAdCreativeType"
+    },
+    "assets": {
+     "description": "This array contains information on assets that have been uploaded to the Amazon Creative Asset Library. More information on the Creative Assets API can be found here - https://advertising.amazon.com/API/docs/en-us/creat…",
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeAudioAsset"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickActions": {
+     "description": "This array contains information on where this creative/ad experiences will click and land on. You are able to associate clickthroughs to specific ad experiences if the creative has more than one ad experience and separa…",
+     "items": {
+      "$ref": "DspCreateUpdateAudioClickAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "items": {
+      "$ref": "DspAdCreativeAudioSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "products": {
+     "description": "This array contains information on products to be used/featured in ad experiences.",
+     "items": {
+      "$ref": "DspAdCreativeProduct"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspCreateUpdateAudioAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adCreativeFormatType"
+   ],
+   "type": "object"
+  },
+  "DspUpdateComponentAdCreativeProperties": {
+   "properties": {
+    "adCopy": {
+     "description": "This array will contain all adCopy to be used in the ad experiences for the creative.",
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateComponentAdCreativeType"
+    },
+    "additionalAttributes": {
+     "$ref": "DspCreateUpdateComponentAdditionalProperties"
+    },
+    "assets": {
+     "description": "This array contains information on assets that have been uploaded to the Amazon Creative Asset Library. More information on the Creative Assets API can be found here - https://advertising.amazon.com/API/docs/en-us/creat…",
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeComponentAsset"
+     },
+     "maxItems": 25,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickActions": {
+     "description": "This array contains information on where this creative/ad experiences will click and land on. You are able to associate clickthroughs to specific ad experiences if the creative has more than one ad experience and separa…",
+     "items": {
+      "$ref": "DspCreateUpdateComponentClickAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "items": {
+      "$ref": "DspAdCreativeComponentSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "products": {
+     "description": "This array contains information on products to be used/featured in ad experiences.",
+     "items": {
+      "$ref": "DspAdCreativeProduct"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspCreateUpdateComponentAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adCreativeFormatType"
+   ],
+   "type": "object"
+  },
+  "DspUpdateDisplayAdCreativeProperties": {
+   "properties": {
+    "adCopy": {
+     "description": "This array will contain all adCopy to be used in the ad experiences for the creative.",
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateDisplayAdCreativeType"
+    },
+    "assets": {
+     "description": "This array contains information on assets that have been uploaded to the Amazon Creative Asset Library. More information on the Creative Assets API can be found here - https://advertising.amazon.com/API/docs/en-us/creat…",
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeDisplayAsset"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickActions": {
+     "description": "This array contains information on where this creative/ad experiences will click and land on. You are able to associate clickthroughs to specific ad experiences if the creative has more than one ad experience and separa…",
+     "items": {
+      "$ref": "DspCreateUpdateDisplayClickAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "items": {
+      "$ref": "DspAdCreativeDisplaySize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "products": {
+     "description": "This array contains information on products to be used/featured in ad experiences.",
+     "items": {
+      "$ref": "DspAdCreativeProduct"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspCreateUpdateDisplayAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adCreativeFormatType"
+   ],
+   "type": "object"
+  },
+  "DspUpdateThirdPartyAdCreativeProperties": {
+   "properties": {
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateThirdPartyAdCreativeType"
+    },
+    "creativeSizes": {
+     "items": {
+      "$ref": "DspAdCreativeThirdPartySize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "thirdPartyTag": {
+     "$ref": "DspAdCreativeThirdPartyTag"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspCreateUpdateThirdPartyAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adCreativeFormatType"
+   ],
+   "type": "object"
+  },
+  "DspUpdateVideoAdCreativeProperties": {
+   "properties": {
+    "adCopy": {
+     "description": "This array will contain all adCopy to be used in the ad experiences for the creative.",
+     "items": {
+      "$ref": "DspAdCreativeAdCopy"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateVideoAdCreativeType"
+    },
+    "assets": {
+     "description": "This array contains information on assets that have been uploaded to the Amazon Creative Asset Library. More information on the Creative Assets API can be found here - https://advertising.amazon.com/API/docs/en-us/creat…",
+     "items": {
+      "$ref": "DspCreateUpdateAdCreativeVideoAsset"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickActions": {
+     "description": "This array contains information on where this creative/ad experiences will click and land on. You are able to associate clickthroughs to specific ad experiences if the creative has more than one ad experience and separa…",
+     "items": {
+      "$ref": "DspCreateUpdateVideoClickAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "optimizationConfiguration": {
+     "$ref": "DspVideoCreateUpdateAdCreativeOptimizationConfiguration"
+    },
+    "products": {
+     "description": "This array contains information on products to be used/featured in ad experiences.",
+     "items": {
+      "$ref": "DspAdCreativeProduct"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "skippabilitySettings": {
+     "$ref": "SkippabilitySettings"
+    },
+    "thirdPartyVerificationUrl": {
+     "description": "This is the VAST/PAID tag URL from 3P Ad verification vendors. Advertisers can use this to utilise full 3P measurement capabilities such as Ad blocking in Amazon Hosted creatives.",
+     "type": "string"
+    },
+    "trackingUrls": {
+     "description": "This array will contain tracking URLs to be implemented on the creative/ad experiences. Currently we accept IMPRESSION and CLICK trackers. For a list of approved vendors please visit the DSP help center.",
+     "items": {
+      "$ref": "DspCreateUpdateVideoAdCreativeTrackingUrl"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adCreativeFormatType"
+   ],
+   "type": "object"
+  },
+  "DspUrlClickActionType": {
+   "enum": [
+    "OTHER",
+    "URL"
+   ],
+   "type": "string"
+  },
+  "DspVideoAdCreativeFormatPreviewOverrides": {
+   "properties": {
+    "adCreativeFormatType": {
+     "$ref": "DspCreateUpdateVideoAdCreativeType"
+    },
+    "outputFormat": {
+     "$ref": "DspVideoPreviewOutputFormat"
+    }
+   },
+   "required": [
+    "adCreativeFormatType"
+   ],
+   "type": "object"
+  },
+  "DspVideoAdCreativeOptimizationConfiguration": {
+   "properties": {
+    "enableRenderOptimizations": {
+     "description": "Controls whether Amazon may optimize elements of your video creative at render time, such as the call to action and the metadata presented to viewers, in order to improve performance.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "enableRenderOptimizations"
+   ],
+   "type": "object"
+  },
+  "DspVideoAdCreativeTrackingUrl": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspVideoAdExperienceType"
+    },
+    "type": {
+     "$ref": "DspAdCreativeTrackingUrlType"
+    },
+    "url": {
+     "description": "The url of the tracker.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DspVideoAdCreativeType": {
+   "enum": [
+    "OTHER",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "DspVideoAdExperienceType": {
+   "enum": [
+    "LEGACY_VIDEO",
+    "ONLINE_VIDEO",
+    "OTHER",
+    "STREAMING_TV_VIDEO"
+   ],
+   "type": "string"
+  },
+  "DspVideoAddToCartClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspVideoAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspAddToCartClickActionType"
+    },
+    "position": {
+     "$ref": "DspInteractiveVideoClickActionPosition"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "position"
+   ],
+   "type": "object"
+  },
+  "DspVideoAddToWatchlistClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspVideoAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspAddToWatchlistClickActionType"
+    },
+    "position": {
+     "$ref": "DspInteractiveVideoClickActionPosition"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "position"
+   ],
+   "type": "object"
+  },
+  "DspVideoAppClickAction": {
+   "properties": {
+    "appDestination": {
+     "description": "The download URL for the app.",
+     "type": "string"
+    },
+    "associatedAdExperience": {
+     "$ref": "DspVideoAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspAppClickActionType"
+    }
+   },
+   "required": [
+    "appDestination",
+    "clickActionType"
+   ],
+   "type": "object"
+  },
+  "DspVideoClickAction": {
+   "oneOf": [
+    {
+     "$ref": "DspVideoUrlClickAction"
+    },
+    {
+     "$ref": "DspVideoAppClickAction"
+    },
+    {
+     "$ref": "DspVideoLearnMoreClickAction"
+    },
+    {
+     "$ref": "DspVideoAddToCartClickAction"
+    },
+    {
+     "$ref": "DspVideoAddToWatchlistClickAction"
+    },
+    {
+     "$ref": "DspVideoProductOverlayClickAction"
+    },
+    {
+     "$ref": "DspVideoCtaClickAction"
+    }
+   ],
+   "type": "object"
+  },
+  "DspVideoCreateUpdateAdCreativeOptimizationConfiguration": {
+   "properties": {
+    "enableRenderOptimizations": {
+     "description": "Controls whether Amazon may optimize elements of your video creative at render time, such as the call to action and the metadata presented to viewers, in order to improve performance.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "enableRenderOptimizations"
+   ],
+   "type": "object"
+  },
+  "DspVideoCtaClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspVideoAdExperienceType"
+    },
+    "callout": {
+     "type": "string"
+    },
+    "clickActionType": {
+     "$ref": "DspCtaClickActionType"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "callout",
+    "clickActionType",
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "DspVideoLearnMoreClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspVideoAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspLearnMoreClickActionType"
+    },
+    "position": {
+     "$ref": "DspInteractiveVideoClickActionPosition"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "position",
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "DspVideoPreviewOutputFormat": {
+   "enum": [
+    "HTML",
+    "VAST_2",
+    "VAST_3"
+   ],
+   "type": "string"
+  },
+  "DspVideoProductOverlayClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspVideoAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspProductOverlayClickActionType"
+    },
+    "endCard": {
+     "$ref": "DspProductOverlayEndCard"
+    },
+    "panels": {
+     "items": {
+      "$ref": "DspProductOverlayPanel"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "panels"
+   ],
+   "type": "object"
+  },
+  "DspVideoUrlClickAction": {
+   "properties": {
+    "associatedAdExperience": {
+     "$ref": "DspVideoAdExperienceType"
+    },
+    "clickActionType": {
+     "$ref": "DspUrlClickActionType"
+    },
+    "enableDeepLinking": {
+     "type": "boolean"
+    },
+    "urlDestination": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "clickActionType",
+    "urlDestination"
+   ],
+   "type": "object"
+  },
+  "ObjectIdFilter": {
+   "description": "Filter entities by the list of objectIds.",
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SkippabilitySettings": {
+   "properties": {
+    "skippableType": {
+     "$ref": "SkippableType"
+    }
+   },
+   "required": [
+    "skippableType"
+   ],
+   "type": "object"
+  },
+  "SkippableType": {
+   "enum": [
+    "NON_SKIPPABLE",
+    "SKIPPABLE"
+   ],
+   "type": "string"
+  },
+  "createAdCreativeV1ResponseContent": {
+   "properties": {
+    "adCreativeId": {
+     "description": "The id of the creative.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "listAdCreativeModerationV1ResponseContent": {
+   "properties": {
+    "adCreativeStatuses": {
+     "description": "A list of creative objects.",
+     "items": {
+      "$ref": "DspAdCreativeModerationStatusListItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of entities.",
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "listAdCreativesV1ResponseContent": {
+   "properties": {
+    "adCreatives": {
+     "description": "A list of creative objects.",
+     "items": {
+      "$ref": "DspAdCreativeListObject"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of entities.",
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "listAdExperiencesV1ResponseContent": {
+   "properties": {
+    "adCreatives": {
+     "description": "A list of creative objects.",
+     "items": {
+      "$ref": "DspAdCreativeExperienceListItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of entities.",
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "previewAdCreativeV1ResponseContent": {
+   "properties": {
+    "previewContent": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "validateAdCreativeV1ResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of entities.",
+     "minimum": 0,
+     "type": "number"
+    },
+    "validations": {
+     "items": {
+      "$ref": "DspAdExperienceValidationListItem"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

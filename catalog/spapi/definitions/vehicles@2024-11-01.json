@@ -1,0 +1,223 @@
+{
+  "EngineOutput": {
+    "description": "Engine power output of vehicle.",
+    "properties": {
+      "unit": {
+        "description": "Unit for measuring engine power.",
+        "ref": "EngineOutputUnit"
+      },
+      "value": {
+        "description": "Engine power value in specified unit.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "unit",
+      "value"
+    ],
+    "type": "object"
+  },
+  "EngineOutputUnit": {
+    "description": "Unit for measuring engine power.",
+    "enum": [
+      "HORSEPOWER",
+      "KILOWATT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "array of errors",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "Month": {
+    "description": "Month in MM format",
+    "properties": {},
+    "required": [],
+    "type": "number"
+  },
+  "MonthAndYear": {
+    "description": "Represents a month in a specific year.",
+    "properties": {
+      "month": {
+        "ref": "Month"
+      },
+      "year": {
+        "ref": "Year"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "When a request produces a response that exceeds the `pageSize`, pagination occurs.",
+    "properties": {
+      "nextToken": {
+        "description": "A token that can be used to fetch the next page.",
+        "type": "string"
+      },
+      "previousToken": {
+        "description": "A token that can be used to fetch the previous page.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Vehicle": {
+    "description": "Combinations of attributes and unique identifier that represents a vehicle in vehicle list.",
+    "properties": {
+      "bodyStyle": {
+        "description": "Body style of vehicle (example: Hatchback, Cabriolet).",
+        "type": "string"
+      },
+      "driveType": {
+        "description": "Drive type of vehicle(example: Rear wheel drive).",
+        "type": "string"
+      },
+      "energy": {
+        "description": "Energy Source for the vehicle(example: Petrol)",
+        "type": "string"
+      },
+      "engineOutput": {
+        "description": "Engine output of vehicle.",
+        "ref": "EngineOutput",
+        "type": "array"
+      },
+      "identifiers": {
+        "description": "Identifiers that can be used to identify the vehicle uniquely",
+        "ref": "VehicleIdentifiers",
+        "type": "array"
+      },
+      "lastProcessedDate": {
+        "description": "The date on which the vehicle was last updated, in ISO-8601 date/time format.",
+        "type": "string"
+      },
+      "make": {
+        "description": "Vehicle Brand.",
+        "type": "string"
+      },
+      "manufacturingStartDate": {
+        "description": "Vehicle manufacturing start date.",
+        "ref": "MonthAndYear"
+      },
+      "manufacturingStopDate": {
+        "description": "Vehicle manufacturing stop date.",
+        "ref": "MonthAndYear"
+      },
+      "model": {
+        "description": "Specific model of a vehicle.",
+        "type": "string"
+      },
+      "status": {
+        "description": "Denotes if the vehicle is active or deleted from Amazon's catalog.",
+        "ref": "VehicleStatusInCatalog"
+      },
+      "variantName": {
+        "description": "Name of the vehicle variant.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "identifiers",
+      "make",
+      "model"
+    ],
+    "type": "object"
+  },
+  "VehicleIdentifiers": {
+    "description": "Combination of vehicle standard and id that can uniquely identify a vehicle from Amazon's catalog.",
+    "properties": {
+      "standard": {
+        "description": "Vehicle standard used to uniquely identify a vehicle.",
+        "ref": "VehicleStandard"
+      },
+      "value": {
+        "description": "Id that can uniquely identify a vehicle based the vehicle identification standard.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "standard",
+      "value"
+    ],
+    "type": "object"
+  },
+  "VehicleStandard": {
+    "description": "Standard followed to uniquely identify a vehicle.",
+    "enum": [
+      "AMAZON_ID",
+      "KTYPE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "VehicleStatusInCatalog": {
+    "description": "Status of vehicle in Amazon's catalog.",
+    "enum": [
+      "ACTIVE",
+      "DELETED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "VehiclesResponse": {
+    "description": "Get paginated list of vehicle from Amazon's catalog",
+    "properties": {
+      "pagination": {
+        "description": "If available, the `nextToken` and/or `previousToken` values required to return paginated results.",
+        "ref": "Pagination"
+      },
+      "vehicles": {
+        "description": "List of vehicles from Amazon's catalog.",
+        "ref": "Vehicle",
+        "type": "array"
+      }
+    },
+    "required": [
+      "vehicles"
+    ],
+    "type": "object"
+  },
+  "Year": {
+    "description": "Year in YYYY format",
+    "properties": {},
+    "required": [],
+    "type": "number"
+  }
+}

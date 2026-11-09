@@ -1,0 +1,692 @@
+{
+ "api": "Discovery-ProductandProductCategory",
+ "file": "specs/dest/Discovery-ProductandProductCategory_prod_3p.json",
+ "schemas": {
+  "DspBadRequestExceptionResponseContent": {
+   "allOf": [
+    {
+     "$ref": "DspSubErrors"
+    }
+   ]
+  },
+  "DspBadRequestExceptionV1ResponseContent": {
+   "allOf": [
+    {
+     "$ref": "DspSubErrorsV1"
+    }
+   ]
+  },
+  "DspContextualDiscoveryStringArrayFilter": {
+   "properties": {
+    "exclude": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspContextualDiscoveryStringFilter": {
+   "properties": {
+    "exclude": {
+     "type": "string"
+    },
+    "include": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "allOf": [
+    {
+     "$ref": "DspSubErrors"
+    }
+   ]
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "allOf": [
+    {
+     "$ref": "DspSubErrors"
+    }
+   ]
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "allOf": [
+    {
+     "$ref": "DspSubErrors"
+    }
+   ]
+  },
+  "DspSubError": {
+   "description": "The sub error object.",
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "description": "The sub error object.",
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspSubErrors": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorsV1": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspTargetingTypesProductCategoryTargetingOptionsRequest": {
+   "properties": {
+    "country": {
+     "description": "The ISO Alpha-2 code for your target marketplace country. Use a two-letter code to specify your desired location. Examples: - US - United States - UK - United Kingdom - DE - Germany - FR - France - IT - Italy",
+     "maxLength": 2,
+     "type": "string"
+    },
+    "filters": {
+     "description": "The filter property provides various options for filtering categories, including categoryName for fuzzy search on category name, browseNodeId for filtering by browse node (category) identifier, parentBrowseNodeId for re…",
+     "properties": {
+      "browseNodeId": {
+       "$ref": "DspContextualDiscoveryStringArrayFilter"
+      },
+      "categoryName": {
+       "$ref": "DspContextualDiscoveryStringFilter"
+      },
+      "isEligible": {
+       "type": "boolean"
+      },
+      "parentBrowseNodeId": {
+       "$ref": "DspContextualDiscoveryStringArrayFilter"
+      }
+     },
+     "type": "object"
+    },
+    "maxResults": {
+     "default": "50",
+     "description": "Maximum number of items to fetch. Actual number returned may be less but never more.",
+     "maximum": 200,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "A token representing the state of the pagination for the results. Use this token in subsequent request to fetch the next set of results. If this field is not provided, the API returns the first set of results.",
+     "type": "string"
+    },
+    "sortBy": {
+     "default": "CATEGORY_NAME",
+     "description": "Field to sort by. - CATEGORY_NAME: sorts results alphabetically based on the categoryName field - RELEVANCE: sorts results based on relevance to search filters (most useful when using text-based filters like categoryNam…",
+     "enum": [
+      "CATEGORY_NAME",
+      "RELEVANCE"
+     ],
+     "type": "string"
+    },
+    "sortOrder": {
+     "default": "ASC",
+     "description": "Sort order.",
+     "enum": [
+      "ASC",
+      "DESC"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "country"
+   ],
+   "type": "object"
+  },
+  "DspTargetingTypesProductCategoryTargetingOptionsRequestV1": {
+   "properties": {
+    "filters": {
+     "description": "The filter property provides various options for filtering categories, including categoryName for fuzzy search on category name, browseNodeId for filtering by browse node (category) identifier, parentBrowseNodeId for re…",
+     "properties": {
+      "browseNodeId": {
+       "$ref": "StringArrayFilterV1"
+      },
+      "categoryName": {
+       "$ref": "StringFilterV1"
+      },
+      "isEligible": {
+       "type": "boolean"
+      },
+      "parentBrowseNodeId": {
+       "$ref": "StringArrayFilterV1"
+      }
+     },
+     "type": "object"
+    },
+    "maxResults": {
+     "default": "50",
+     "description": "Maximum number of items to fetch. Actual number returned may be less but never more.",
+     "maximum": 200,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "A token representing the state of the pagination for the results. Use this token in subsequent request to fetch the next set of results. If this field is not provided, the API returns the first set of results.",
+     "type": "string"
+    },
+    "sortBy": {
+     "default": "CATEGORY_NAME",
+     "description": "Field to sort by.",
+     "enum": [
+      "CATEGORY_NAME"
+     ],
+     "type": "string"
+    },
+    "sortOrder": {
+     "default": "ASC",
+     "description": "Sort order.",
+     "enum": [
+      "ASC",
+      "DESC"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspTargetingTypesProductCategoryTargetingOptionsResponse": {
+   "properties": {
+    "nextToken": {
+     "description": "A token used for pagination. Pagination token allows to fetch further results matching filter criteria.",
+     "type": "string"
+    },
+    "targetOptions": {
+     "items": {
+      "properties": {
+       "eligibility": {
+        "description": "Eligibility of given category on whether category can be used for targeting or not.",
+        "properties": {
+         "isEligible": {
+          "description": "Whether category is eligible or not to use for targeting.",
+          "type": "boolean"
+         },
+         "targetingEligibility": {
+          "description": "The targeting type allowed for the product category. See the [universal targeting API](https://advertising.amazon.com/API/docs/en-us/dsp-universal-targeting) documentation for the specific matchTypes applicable to each …",
+          "enum": [
+           "CONTEXTUAL",
+           "MULTISIGNAL"
+          ],
+          "type": "string"
+         }
+        },
+        "type": "object"
+       },
+       "metadata": {
+        "properties": {
+         "browseNodeId": {
+          "description": "Unique identifier of browse node (category).",
+          "type": "string"
+         },
+         "categoryName": {
+          "description": "Title of category.",
+          "type": "string"
+         },
+         "childCount": {
+          "description": "The number of direct child nodes under this browse node (category). Returns 0 if the node has no children.",
+          "type": "number"
+         },
+         "parentBrowseNodeId": {
+          "description": "Parent browse node identifier.",
+          "type": "string"
+         },
+         "pathNodeIds": {
+          "description": "The hierarchical path from the root browse node to this node, represented as a sequence of browse node IDs.",
+          "items": {
+           "description": "A browse node ID in the path from the root browse node.",
+           "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "type": "array"
+         },
+         "pathNodeNames": {
+          "description": "The hierarchical path from the root browse node to this node, represented as a sequence of category names.",
+          "type": "string"
+         }
+        },
+        "type": "object"
+       }
+      },
+      "type": "object"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspTargetingTypesProductCategoryTargetingOptionsResponseV1": {
+   "properties": {
+    "nextToken": {
+     "description": "A token used for pagination. Pagination token allows to fetch further results matching filter criteria.",
+     "type": "string"
+    },
+    "targetOptions": {
+     "items": {
+      "properties": {
+       "eligibility": {
+        "description": "Eligibility of given category on whether category can be used for targeting or not.",
+        "properties": {
+         "isEligible": {
+          "description": "Whether category is eligible or not to use for contextual targeting.",
+          "type": "boolean"
+         }
+        },
+        "type": "object"
+       },
+       "metadata": {
+        "properties": {
+         "browseNodeId": {
+          "description": "Unique identifier of browse node (category).",
+          "type": "string"
+         },
+         "categoryName": {
+          "description": "Title of category.",
+          "type": "string"
+         },
+         "parentBrowseNodeId": {
+          "description": "Parent browse node identifier.",
+          "type": "string"
+         }
+        },
+        "type": "object"
+       }
+      },
+      "type": "object"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspTargetingTypesProductTargetingOptionsRequest": {
+   "properties": {
+    "country": {
+     "description": "The ISO Alpha-2 code for your target marketplace country. Use a two-letter code to specify your desired location. Examples: - US - United States - UK - United Kingdom - DE - Germany - FR - France - IT - Italy",
+     "maxLength": 2,
+     "type": "string"
+    },
+    "filters": {
+     "description": "<ul><li>An array of filter objects used to refine the search results . Filters are combined using the AND operator, while multiple values within a filter are combined using the OR operator.</li><li>Should provide 'asin'…",
+     "properties": {
+      "asin": {
+       "$ref": "DspContextualDiscoveryStringArrayFilter"
+      },
+      "isEligible": {
+       "type": "boolean"
+      },
+      "title": {
+       "$ref": "DspContextualDiscoveryStringFilter"
+      }
+     },
+     "type": "object"
+    },
+    "maxResults": {
+     "default": "50",
+     "description": "Maximum number of items to fetch. Actual number returned may be less but never more.",
+     "maximum": 50,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "A token representing the state of the pagination for the results. Use this token in subsequent request to fetch the next set of results. If this field is not provided, the API returns the first set of results.",
+     "type": "string"
+    },
+    "sortBy": {
+     "default": "TITLE",
+     "description": "Field to sort by.",
+     "enum": [
+      "TITLE"
+     ],
+     "type": "string"
+    },
+    "sortOrder": {
+     "default": "ASC",
+     "description": "Sort order.",
+     "enum": [
+      "ASC",
+      "DESC"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "country",
+    "filters"
+   ],
+   "type": "object"
+  },
+  "DspTargetingTypesProductTargetingOptionsRequestV1": {
+   "properties": {
+    "filters": {
+     "description": "<ul><li>An array of filter objects used to refine the search results . Filters are combined using the AND operator, while multiple values within a filter are combined using the OR operator.</li><li>Should provide 'asin'…",
+     "properties": {
+      "asin": {
+       "$ref": "StringArrayFilterV1"
+      },
+      "isEligible": {
+       "type": "boolean"
+      },
+      "title": {
+       "$ref": "StringFilterV1"
+      }
+     },
+     "type": "object"
+    },
+    "maxResults": {
+     "default": "50",
+     "description": "Maximum number of items to fetch. Actual number returned may be less but never more.",
+     "maximum": 50,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "A token representing the state of the pagination for the results. Use this token in subsequent request to fetch the next set of results. If this field is not provided, the API returns the first set of results.",
+     "type": "string"
+    },
+    "sortBy": {
+     "default": "TITLE",
+     "description": "Field to sort by.",
+     "enum": [
+      "TITLE"
+     ],
+     "type": "string"
+    },
+    "sortOrder": {
+     "default": "ASC",
+     "description": "Sort order.",
+     "enum": [
+      "ASC",
+      "DESC"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "filters"
+   ],
+   "type": "object"
+  },
+  "DspTargetingTypesProductTargetingOptionsResponse": {
+   "properties": {
+    "nextToken": {
+     "description": "A token representing the state of the pagination for the results. Use this token in subsequent request to fetch the next set of results. If nextToken value is null it means result is exhausted.",
+     "type": "string"
+    },
+    "targetOptions": {
+     "items": {
+      "properties": {
+       "eligibility": {
+        "description": "Eligibility of given product on whether product can be used for targeting or not.",
+        "properties": {
+         "isEligible": {
+          "description": "Whether product is eligible or not to use for targeting.",
+          "type": "boolean"
+         },
+         "targetingEligibility": {
+          "description": "The targeting type allowed for the product. See the [universal targeting API](https://advertising.amazon.com/API/docs/en-us/dsp-universal-targeting) documentation for the specific matchTypes applicable to each targeting…",
+          "enum": [
+           "CONTEXTUAL",
+           "MULTISIGNAL"
+          ],
+          "type": "string"
+         }
+        },
+        "type": "object"
+       },
+       "metadata": {
+        "properties": {
+         "asin": {
+          "description": "Amazon Standard Identification Number (ASIN) is a ten-digit alphanumeric code that identifies products on Amazon.",
+          "type": "string"
+         },
+         "categoryName": {
+          "description": "The product category or subcategory in which the product is classified.",
+          "type": "string"
+         },
+         "imageUrl": {
+          "description": "The URL of the product's main image.",
+          "type": "string"
+         },
+         "title": {
+          "description": "The title or name of the product.",
+          "type": "string"
+         }
+        },
+        "type": "object"
+       }
+      },
+      "type": "object"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspTargetingTypesProductTargetingOptionsResponseV1": {
+   "properties": {
+    "nextToken": {
+     "description": "A token representing the state of the pagination for the results. Use this token in subsequent request to fetch the next set of results. If nextToken value is null it means result is exhausted.",
+     "type": "string"
+    },
+    "targetOptions": {
+     "items": {
+      "properties": {
+       "eligibility": {
+        "description": "Eligibility of given product on whether product can be used for targeting or not.",
+        "properties": {
+         "isEligible": {
+          "description": "Whether product is eligible or not to use for contextual targeting.",
+          "type": "boolean"
+         }
+        },
+        "type": "object"
+       },
+       "metadata": {
+        "properties": {
+         "asin": {
+          "description": "Amazon Standard Identification Number (ASIN) is a ten-digit alphanumeric code that identifies products on Amazon.",
+          "type": "string"
+         },
+         "categoryName": {
+          "description": "The product category or subcategory in which the product is classified.",
+          "type": "string"
+         },
+         "customerReview": {
+          "description": "An object containing information about customer reviews and ratings for the product.",
+          "properties": {
+           "rating": {
+            "description": "The average rating of the product, based on customer reviews.",
+            "maximum": 5,
+            "minimum": 0,
+            "type": "number"
+           },
+           "reviewCount": {
+            "properties": {
+             "displayString": {
+              "description": "A formatted string representing the number of customer reviews for the product.",
+              "type": "string"
+             },
+             "value": {
+              "description": "The total number of customer reviews for the product.",
+              "type": "number"
+             }
+            },
+            "type": "object"
+           }
+          },
+          "type": "object"
+         },
+         "imageUrl": {
+          "description": "The URL of the product's main image.",
+          "type": "string"
+         },
+         "price": {
+          "description": "An object containing pricing information for the product.",
+          "properties": {
+           "currency": {
+            "description": "The currency code (ISO 4217) in which the product's price is denominated.",
+            "type": "string"
+           },
+           "displayString": {
+            "description": "A formatted string representing the product's price.",
+            "type": "string"
+           },
+           "max": {
+            "description": "The maximum price of the product, if it has a price range.",
+            "type": "number"
+           },
+           "min": {
+            "description": "The minimum price of the product, if it has a price range.",
+            "type": "number"
+           }
+          },
+          "type": "object"
+         },
+         "productBrandName": {
+          "description": "The brand or manufacturer of the product.",
+          "type": "string"
+         },
+         "title": {
+          "description": "The title or name of the product.",
+          "type": "string"
+         }
+        },
+        "type": "object"
+       }
+      },
+      "type": "object"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "allOf": [
+    {
+     "$ref": "DspSubErrors"
+    }
+   ]
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "allOf": [
+    {
+     "$ref": "DspSubErrors"
+    }
+   ]
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "allOf": [
+    {
+     "$ref": "DspSubErrors"
+    }
+   ]
+  },
+  "StringArrayFilterV1": {
+   "properties": {
+    "exclude": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "StringFilterV1": {
+   "properties": {
+    "exclude": {
+     "type": "string"
+    },
+    "include": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

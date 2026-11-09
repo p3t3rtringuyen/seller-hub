@@ -1,0 +1,388 @@
+{
+ "api": "TargetableEntities",
+ "file": "specs/dest/TargetableEntities_prod_3p.json",
+ "schemas": {
+  "AccessDeniedErrorCode": {
+   "enum": [
+    "ACCESS_DENIED"
+   ],
+   "type": "string"
+  },
+  "AccessDeniedExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "AccessDeniedErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "AdProduct": {
+   "enum": [
+    "SPONSORED_BRANDS",
+    "SPONSORED_DISPLAY",
+    "SPONSORED_PRODUCTS",
+    "SPONSORED_TELEVISION"
+   ],
+   "type": "string"
+  },
+  "InternalErrorErrorCode": {
+   "enum": [
+    "INTERNAL_ERROR"
+   ],
+   "type": "string"
+  },
+  "InternalServerExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "InternalErrorErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InvalidArgumentErrorCode": {
+   "enum": [
+    "INVALID_ARGUMENT"
+   ],
+   "type": "string"
+  },
+  "InvalidArgumentExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ListTargetableEntitiesRequestContent": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "locale": {
+     "$ref": "Locale"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the paginated response.",
+     "maximum": 250,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "parentBrowseNodeIdFilter": {
+     "description": "Filter by parent browse node IDs. Returns entities whose parent category matches any of the provided IDs.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "pathsFilter": {
+     "description": "Get direct descendant sub paths that fall under the paths specified in the field value. The value is a list of paths, where each object is a path hierarchy represented as a list of strings. For Example: If you would lik…",
+     "items": {
+      "description": "Path hierarchy to filter on.",
+      "items": {
+       "type": "string"
+      },
+      "maxItems": 10,
+      "minItems": 0,
+      "type": "array"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productCategoryIdFilter": {
+     "description": "Filter by product category IDs (browse node IDs). Returns entities matching any of the provided IDs.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "searchQueryFilter": {
+     "description": "The query string used to filter targetable entities. Search for terms or phrases that are relevant to your advertising goals. For example, if you sell running shoes, you might search for \"Runners\", \"Athletic Apparel\", o…",
+     "type": "string"
+    },
+    "targetTypeFilter": {
+     "description": "A list of targeting types. If an empty list is provided, it is equivalent to passing all targeting types.",
+     "items": {
+      "$ref": "TargetType"
+     },
+     "maxItems": 4,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adProduct"
+   ],
+   "type": "object"
+  },
+  "ListTargetableEntitiesResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "targetableEntities": {
+     "description": "The list of targetable entities.",
+     "items": {
+      "$ref": "TargetableEntity"
+     },
+     "maxItems": 250,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of entities.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "ListTargetableEntityPathsRequestContent": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "locale": {
+     "$ref": "Locale"
+    },
+    "pathsFilter": {
+     "description": "Get direct descendant sub paths that fall under the paths specified in the field value. The value is a list of paths, where each object is a path hierarchy represented as a list of strings. For Example: If you would lik…",
+     "items": {
+      "description": "Path hierarchy to filter on.",
+      "items": {
+       "type": "string"
+      },
+      "maxItems": 10,
+      "minItems": 0,
+      "type": "array"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adProduct"
+   ],
+   "type": "object"
+  },
+  "ListTargetableEntityPathsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "paths": {
+     "description": "The direct descendants of the paths specified in the request's pathsFilter field.",
+     "items": {
+      "description": "A path in Amazon's taxonomy.",
+      "items": {
+       "type": "string"
+      },
+      "maxItems": 10,
+      "minItems": 0,
+      "type": "array"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of entities.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "Locale": {
+   "enum": [
+    "ar_AE",
+    "de_DE",
+    "en_AE",
+    "en_AU",
+    "en_CA",
+    "en_GB",
+    "en_IN",
+    "en_SG",
+    "en_US",
+    "en_ZA",
+    "es_ES",
+    "es_MX",
+    "fr_CA",
+    "fr_FR",
+    "hi_IN",
+    "it_IT",
+    "ja_JP",
+    "ko_KR",
+    "nl_NL",
+    "pl_PL",
+    "pt_BR",
+    "sv_SE",
+    "ta_IN",
+    "th_TH",
+    "tr_TR",
+    "vi_VN",
+    "zh_CN"
+   ],
+   "type": "string"
+  },
+  "TargetType": {
+   "description": "A targeting type",
+   "enum": [
+    "AUDIENCE",
+    "CONTENT_CATEGORY",
+    "PRODUCT_CATEGORY",
+    "PRODUCT_CATEGORY_AUDIENCE"
+   ],
+   "type": "string"
+  },
+  "TargetableEntity": {
+   "description": "A targetable entity.",
+   "properties": {
+    "audienceId": {
+     "description": "The identifier for a target of type AUDIENCE.",
+     "type": "string"
+    },
+    "audienceResolved": {
+     "description": "The resolved name of audienceId.",
+     "type": "string"
+    },
+    "audienceTooltip": {
+     "description": "The tooltip description to describe the amazon audience targetable entity.",
+     "type": "string"
+    },
+    "behaviouralTargetingEligibility": {
+     "description": "The behavioural targeting eligibility for this browse node category. Values from Tamber browse-node-targeting-policy-validation dataset: \"All\" (eligible for behavioural targeting), \"None\" (not eligible).",
+     "type": "string"
+    },
+    "childCount": {
+     "description": "The number of direct child categories.",
+     "type": "number"
+    },
+    "contentCategoryId": {
+     "description": "The identifier for a target of type CONTENT_CATEGORY.",
+     "type": "string"
+    },
+    "contentCategoryResolved": {
+     "description": "The resolved name of contentCategoryId.",
+     "type": "string"
+    },
+    "parentBrowseNodeId": {
+     "description": "The browse node ID of the parent category.",
+     "type": "string"
+    },
+    "path": {
+     "description": "The location of the targetable entity in Amazon's taxonomy.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "pathNodeIds": {
+     "description": "The browse node IDs for each segment in the path hierarchy.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productCategoryId": {
+     "description": "The identifier for a target of either type PRODUCT_CATEGORY or PRODUCT_CATEGORY_AUDIENCE.",
+     "type": "string"
+    },
+    "productCategoryResolved": {
+     "description": "The resolved name of productCategoryId.",
+     "type": "string"
+    },
+    "targetType": {
+     "$ref": "TargetType"
+    }
+   },
+   "required": [
+    "path",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "ThrottledErrorCode": {
+   "enum": [
+    "THROTTLED"
+   ],
+   "type": "string"
+  },
+  "ThrottlingExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ThrottledErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedErrorCode": {
+   "description": "Error codes reported on top level exceptions they correspond HTTP protocol level response codes",
+   "enum": [
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "UnauthorizedExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "UnauthorizedErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

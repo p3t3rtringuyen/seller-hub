@@ -1,0 +1,1070 @@
+{
+ "api": "Audiences",
+ "file": "specs/dest/Audiences_prod_3p.json",
+ "schemas": {
+  "AccessDeniedErrorCode": {
+   "enum": [
+    "ACCESS_DENIED"
+   ],
+   "type": "string"
+  },
+  "AccessDeniedExceptionResponseContent": {
+   "description": "User does not have sufficient access to perform this action.",
+   "properties": {
+    "code": {
+     "$ref": "AccessDeniedErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "RequestId of the failed request.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "AdMutationExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "RequestId of the failed request.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "AttributeType": {
+   "description": "For a given audienceType, the type of the attributes being supplied.",
+   "enum": [
+    "ASIN"
+   ],
+   "type": "string"
+  },
+  "AudienceCommonFieldsV1": {
+   "properties": {
+    "audienceId": {
+     "description": "Audience segment identifier",
+     "type": "string"
+    },
+    "audienceName": {
+     "description": "Audience name",
+     "type": "string"
+    },
+    "category": {
+     "description": "Audience segment category",
+     "type": "string"
+    },
+    "createDate": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "description": {
+     "description": "Audience description",
+     "type": "string"
+    },
+    "forecasts": {
+     "properties": {
+      "inventoryForecasts": {
+       "properties": {
+        "all": {
+         "$ref": "InventoryForecastV1"
+        }
+       },
+       "type": "object"
+      }
+     },
+     "required": [
+      "inventoryForecasts"
+     ],
+     "type": "object"
+    },
+    "status": {
+     "enum": [
+      "Active",
+      "Deactivated",
+      "Deprecated",
+      "Failed",
+      "Pending",
+      "Processing"
+     ],
+     "type": "string"
+    },
+    "subCategory": {
+     "description": "Audience segment sub-category",
+     "type": "string"
+    },
+    "updateDate": {
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceId",
+    "audienceName",
+    "category",
+    "description",
+    "forecasts",
+    "status"
+   ],
+   "type": "object"
+  },
+  "AudienceDeleteAccessDeniedExceptionResponseContent": {
+   "description": "User does not have sufficient access to perform this action.",
+   "properties": {
+    "errorResponse": {
+     "$ref": "DspAudienceDeleteResponse"
+    }
+   },
+   "required": [
+    "errorResponse"
+   ],
+   "type": "object"
+  },
+  "AudienceDeleteAdMutationExceptionResponseContent": {
+   "properties": {
+    "errorResponse": {
+     "$ref": "DspAudienceDeleteResponse"
+    }
+   },
+   "required": [
+    "errorResponse"
+   ],
+   "type": "object"
+  },
+  "AudienceDeleteBadGatewayExceptionResponseContent": {
+   "description": "Unexpected error during processing of request.",
+   "properties": {
+    "errorResponse": {
+     "$ref": "DspAudienceDeleteResponse"
+    }
+   },
+   "required": [
+    "errorResponse"
+   ],
+   "type": "object"
+  },
+  "AudienceDeleteInternalServerExceptionResponseContent": {
+   "description": "Unexpected error during processing of request.",
+   "properties": {
+    "errorResponse": {
+     "$ref": "DspAudienceDeleteResponse"
+    }
+   },
+   "required": [
+    "errorResponse"
+   ],
+   "type": "object"
+  },
+  "AudienceDeleteThrottlingExceptionResponseContent": {
+   "description": "Request was denied due to request throttling.",
+   "properties": {
+    "errorResponse": {
+     "$ref": "DspAudienceDeleteResponse"
+    }
+   },
+   "required": [
+    "errorResponse"
+   ],
+   "type": "object"
+  },
+  "AudienceDeleteUnauthorizedExceptionResponseContent": {
+   "description": "Caller does not have permissions to edit specified audience.",
+   "properties": {
+    "errorResponse": {
+     "$ref": "DspAudienceDeleteResponse"
+    }
+   },
+   "required": [
+    "errorResponse"
+   ],
+   "type": "object"
+  },
+  "AudienceErrorV1": {
+   "description": "The error response object.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "AudienceSubErrorV1"
+     },
+     "type": "array"
+    },
+    "message": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "A value created by Amazon API Gateway that uniquely identifies your request.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AudienceFilterV1": {
+   "properties": {
+    "field": {
+     "description": "Field to filter by. Supported enums are 'audienceName', 'category', 'categoryPath', 'audienceId' and 'status'. The 'audienceName' is a broad match filter but not an exact match. The 'category' enum returns all audiences…",
+     "type": "string"
+    },
+    "operator": {
+     "default": "EQ",
+     "description": "Operator to apply to the specified filter.",
+     "enum": [
+      "EQ",
+      "NOT_EQ"
+     ],
+     "type": "string"
+    },
+    "values": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AudienceSubErrorV1": {
+   "description": "The sub error object.",
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "AudienceType": {
+   "description": "Type of the audience which is being edited. This type must match the current audience type associated with the audienceId.",
+   "enum": [
+    "PRODUCT_PURCHASES",
+    "PRODUCT_SEARCH",
+    "PRODUCT_SIMS",
+    "PRODUCT_VIEWS"
+   ],
+   "type": "string"
+  },
+  "AudienceV1": {
+   "allOf": [
+    {
+     "$ref": "AudienceCommonFieldsV1"
+    },
+    {
+     "oneOf": [
+      {
+       "$ref": "DSPAudienceFieldsV1"
+      },
+      {
+       "$ref": "SDAudienceFieldsV1"
+      },
+      {
+       "$ref": "STAudienceFieldsV1"
+      }
+     ]
+    }
+   ]
+  },
+  "BadGatewayErrorCode": {
+   "enum": [
+    "BAD_GATEWAY"
+   ],
+   "type": "string"
+  },
+  "BadGatewayExceptionResponseContent": {
+   "description": "Unexpected error during processing of request.",
+   "properties": {
+    "code": {
+     "$ref": "BadGatewayErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "RequestId of the failed request.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "Clause": {
+   "description": "parameter used to include or exclude this particular rule. Currently only include is supported.",
+   "enum": [
+    "INCLUDE"
+   ],
+   "type": "string"
+  },
+  "DSPAudienceFieldsV1": {
+   "properties": {
+    "fees": {
+     "description": "Fees that will apply to this segment. Not all segments have fees. Fees may differ depending on the supply type the segment is attached to. In this case, multiple fee objects will be present.",
+     "items": {
+      "properties": {
+       "amount": {
+        "description": "Fee amount in base currency units, multiplied by scaling factor ('scale').",
+        "type": "integer"
+       },
+       "currency": {
+        "description": "Base currency, such as US Dollar.",
+        "enum": [
+         "AED",
+         "AUD",
+         "BRL",
+         "CAD",
+         "EUR",
+         "GBP",
+         "INR",
+         "JPY",
+         "KSA",
+         "MXN",
+         "SEK",
+         "TRY",
+         "USD"
+        ],
+        "type": "string"
+       },
+       "feeCalculationType": {
+        "description": "How the fee is applied.",
+        "type": "string"
+       },
+       "impressionSupplyType": {
+        "description": "To which supply types this fee applies to. The fee may be different for different supply types.",
+        "type": "string"
+       },
+       "scale": {
+        "description": "Scale of the amount relative to the base currency unit. For instance, if the scale is 1000, the currency is USD, and the amount is 500, the human-readable fee is $0.50.",
+        "type": "integer"
+       }
+      },
+      "type": "object"
+     },
+     "type": "array"
+    },
+    "providerId": {
+     "description": "The Data Management Platform provider identifier. Only applicable to Third party audience segments.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPAudienceRule": {
+   "description": "Rule to define an audience. **Rule Constraints Table**: Provides available valid combinations of parameters allowed in DspAudienceRule | audienceType | attributeType | attributeValues | max attribute values | max rules …",
+   "properties": {
+    "attributeType": {
+     "$ref": "AttributeType"
+    },
+    "attributeValues": {
+     "description": "For a given audienceType and attributeType combination, the attribute values being supplied.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "clause": {
+     "$ref": "Clause"
+    },
+    "operator": {
+     "$ref": "Operator"
+    }
+   },
+   "required": [
+    "attributeType",
+    "attributeValues",
+    "clause",
+    "operator"
+   ],
+   "type": "object"
+  },
+  "DSPInventoryForecastV1": {
+   "properties": {
+    "dailyImpressions": {
+     "$ref": "ForecastBucketV1"
+    },
+    "dailyReach": {
+     "$ref": "ForecastBucketV1"
+    }
+   },
+   "required": [
+    "dailyImpressions",
+    "dailyReach"
+   ],
+   "type": "object"
+  },
+  "DspAudienceDeleteErrorItem": {
+   "properties": {
+    "audienceId": {
+     "description": "Identifier of audience for which delete was attempted.",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "DspAudienceDeleteErrorItemError"
+     },
+     "maxItems": 7,
+     "minItems": 0,
+     "type": "array"
+    },
+    "httpStatusCode": {
+     "description": "HTTP Response Code for the request",
+     "type": "integer"
+    },
+    "index": {
+     "description": "Index of the DspAudienceDeleteRequestItem from the request. e.g. 1st item in the request will correspond to index 0 in the response.",
+     "type": "integer"
+    },
+    "message": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceId",
+    "errors",
+    "httpStatusCode",
+    "index",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "DspAudienceDeleteErrorItemError": {
+   "properties": {
+    "errorCode": {
+     "$ref": "ErrorType"
+    },
+    "errorId": {
+     "type": "integer"
+    },
+    "errorMessage": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorId",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspAudienceDeleteRequestContent": {
+   "properties": {
+    "dspAudienceDeleteRequestItems": {
+     "description": "A list of audiences to be deleted",
+     "items": {
+      "$ref": "DspAudienceDeleteRequestItem"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "dspAudienceDeleteRequestItems"
+   ],
+   "type": "object"
+  },
+  "DspAudienceDeleteRequestItem": {
+   "properties": {
+    "audienceId": {
+     "description": "The audience identifier of the audience to be actioned.",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "idempotencyKey": {
+     "description": "unique request token for this request.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceId",
+    "idempotencyKey"
+   ],
+   "type": "object"
+  },
+  "DspAudienceDeleteResponse": {
+   "description": "Holds an array of successful items and an array of error items from the request.",
+   "properties": {
+    "failed": {
+     "items": {
+      "$ref": "DspAudienceDeleteErrorItem"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "DspAudienceDeleteSuccessItem"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "failed",
+    "success"
+   ],
+   "type": "object"
+  },
+  "DspAudienceDeleteResponseContent": {
+   "description": "Holds an array of successful items and an array of error items from the request.",
+   "properties": {
+    "failed": {
+     "items": {
+      "$ref": "DspAudienceDeleteErrorItem"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "DspAudienceDeleteSuccessItem"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "failed",
+    "success"
+   ],
+   "type": "object"
+  },
+  "DspAudienceDeleteSuccessItem": {
+   "description": "The success response object.",
+   "properties": {
+    "audienceId": {
+     "description": "The audience identifier of the audience to be actioned.",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "idempotencyKey": {
+     "description": "unique request token for this request.",
+     "type": "string"
+    },
+    "index": {
+     "description": "index of the DspAudienceEditRequestItem from the request. e.g. 1st item in the request will correspond to index 0 in the response.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "audienceId",
+    "idempotencyKey",
+    "index"
+   ],
+   "type": "object"
+  },
+  "DspAudienceEditRequestContent": {
+   "properties": {
+    "dspAudienceEditRequestItems": {
+     "description": "A list of audience edit objects containing fields to be overwritten. For each object, specify fields and their values to be modified.",
+     "items": {
+      "$ref": "DspAudienceEditRequestItem"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "dspAudienceEditRequestItems"
+   ],
+   "type": "object"
+  },
+  "DspAudienceEditRequestItem": {
+   "description": "Partial audience model to be used for edit of the audience.",
+   "properties": {
+    "audienceId": {
+     "description": "The audience identifier of the audience to be actioned.",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "audienceType": {
+     "$ref": "AudienceType"
+    },
+    "description": {
+     "description": "The audience description.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "idempotencyKey": {
+     "description": "unique request token for this request.",
+     "type": "string"
+    },
+    "lookback": {
+     "description": "The specified time period (in days) to include those who performed the action in the audience. Lookback Constraints Table: Provides available valid values of lookback allowed for given audienceType | audienceType | look…",
+     "maximum": 365,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "name": {
+     "description": "The audience name.",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "rules": {
+     "description": "Set of rules to define an audience, these rules will be ORed.",
+     "items": {
+      "$ref": "DSPAudienceRule"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audienceId",
+    "audienceType",
+    "idempotencyKey"
+   ],
+   "type": "object"
+  },
+  "DspAudienceEditResponseContent": {
+   "description": "Holds an array of successful items and an array of error items from the request.",
+   "properties": {
+    "failed": {
+     "items": {
+      "$ref": "DspAudienceErrorItem"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "DspAudienceSuccessItem"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "failed",
+    "success"
+   ],
+   "type": "object"
+  },
+  "DspAudienceErrorItem": {
+   "properties": {
+    "audienceId": {
+     "description": "Identifier of audience for which edit was attempted.",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "DspAudienceErrorItemError"
+     },
+     "maxItems": 7,
+     "minItems": 0,
+     "type": "array"
+    },
+    "idempotencyKey": {
+     "description": "unique request token for this request.",
+     "type": "string"
+    },
+    "index": {
+     "description": "Index of the DspAudienceEditRequestItem from the request. e.g. 1st item in the request will correspond to index 0 in the response.",
+     "type": "integer"
+    },
+    "message": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceId",
+    "errors",
+    "idempotencyKey",
+    "index",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspAudienceErrorItemError": {
+   "properties": {
+    "errorType": {
+     "$ref": "ErrorType"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspAudienceSuccessItem": {
+   "description": "The success response object.",
+   "properties": {
+    "audienceId": {
+     "description": "The audience identifier of the audience to be actioned.",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "idempotencyKey": {
+     "description": "unique request token for this request.",
+     "type": "string"
+    },
+    "index": {
+     "description": "index of the DspAudienceEditRequestItem from the request. e.g. 1st item in the request will correspond to index 0 in the response.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "audienceId",
+    "idempotencyKey",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ErrorType": {
+   "enum": [
+    "OTHER",
+    "VALUE_INVALID",
+    "VALUE_NOT_FOUND",
+    "VALUE_OUT_OF_RANGE"
+   ],
+   "type": "string"
+  },
+  "FetchTaxonomyNodeV1": {
+   "properties": {
+    "audienceCount": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "category": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "FetchTaxonomyRequestBodyV1": {
+   "description": "The response data will have the categories that are under the given path, and main categories will be returned if no path is specified. The response data also depends on the adType specified here since ad programs may s…",
+   "properties": {
+    "adType": {
+     "enum": [
+      "DSP",
+      "SD",
+      "ST"
+     ],
+     "type": "string"
+    },
+    "categoryPath": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "countries": {
+     "description": "The ISO Alpha-2 country codes to search audiences from. This field must be specified if the advertiser does not have an associated country. Currently, it is only supported to specify a single country per request.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "FetchTaxonomyResponseV1": {
+   "properties": {
+    "categories": {
+     "items": {
+      "$ref": "FetchTaxonomyNodeV1"
+     },
+     "type": "array"
+    },
+    "categoryPath": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ForecastBucketV1": {
+   "properties": {
+    "lowerBoundInclusive": {
+     "description": "The inclusive lower bound for the bucket. If not specified, the bucket captures all values below the upper bound.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "upperBoundExclusive": {
+     "description": "The exclusive upper bound for the bucket. If not specified, the bucket captures all values above the lower bound.",
+     "format": "int64",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "InternalErrorErrorCode": {
+   "enum": [
+    "INTERNAL_ERROR"
+   ],
+   "type": "string"
+  },
+  "InternalServerExceptionResponseContent": {
+   "description": "Unexpected error during processing of request.",
+   "properties": {
+    "code": {
+     "$ref": "InternalErrorErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "RequestId of the failed request.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "InvalidArgumentErrorCode": {
+   "enum": [
+    "INVALID_ARGUMENT"
+   ],
+   "type": "string"
+  },
+  "InventoryForecastV1": {
+   "oneOf": [
+    {
+     "$ref": "DSPInventoryForecastV1"
+    },
+    {
+     "$ref": "SDInventoryForecastV1"
+    },
+    {
+     "$ref": "STInventoryForecastV1"
+    }
+   ]
+  },
+  "ListAudiencesRequestBodyV1": {
+   "description": "Resulting segments will match all specified filters",
+   "properties": {
+    "adType": {
+     "enum": [
+      "DSP",
+      "SD",
+      "ST"
+     ],
+     "type": "string"
+    },
+    "countries": {
+     "description": "The ISO Alpha-2 country codes to search audiences from. This field must be specified if the advertiser does not have an associated country. Currently, it is only supported to specify a single country per request.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "filters": {
+     "items": {
+      "$ref": "AudienceFilterV1"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListAudiencesResponseV1": {
+   "properties": {
+    "audiences": {
+     "description": "Array of segments matching given filters sorted by create time, earliest first.",
+     "items": {
+      "$ref": "AudienceV1"
+     },
+     "type": "array"
+    },
+    "matchCount": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "NotFoundErrorCode": {
+   "enum": [
+    "NOT_FOUND"
+   ],
+   "type": "string"
+  },
+  "Operator": {
+   "description": "For a given attributeType, operator used for attributeValues.",
+   "enum": [
+    "ONE_OF"
+   ],
+   "type": "string"
+  },
+  "ResourceNotFoundExceptionResponseContent": {
+   "description": "Request references a resource which does not exist.",
+   "properties": {
+    "code": {
+     "$ref": "NotFoundErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "RequestId of the failed request.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "SDAudienceFieldsV1": {
+   "type": "object"
+  },
+  "SDInventoryForecastV1": {
+   "properties": {
+    "dailyReach": {
+     "$ref": "ForecastBucketV1"
+    }
+   },
+   "required": [
+    "dailyReach"
+   ],
+   "type": "object"
+  },
+  "STAudienceFieldsV1": {
+   "type": "object"
+  },
+  "STInventoryForecastV1": {
+   "properties": {
+    "dailyReach": {
+     "$ref": "ForecastBucketV1"
+    }
+   },
+   "required": [
+    "dailyReach"
+   ],
+   "type": "object"
+  },
+  "ThrottledErrorCode": {
+   "enum": [
+    "THROTTLED"
+   ],
+   "type": "string"
+  },
+  "ThrottlingExceptionResponseContent": {
+   "description": "Request was denied due to request throttling.",
+   "properties": {
+    "code": {
+     "$ref": "ThrottledErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "RequestId of the failed request.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedErrorCode": {
+   "enum": [
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "UnauthorizedExceptionResponseContent": {
+   "description": "Caller does not have permissions to edit specified audience.",
+   "properties": {
+    "code": {
+     "$ref": "UnauthorizedErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "RequestId of the failed request.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  }
+ }
+}

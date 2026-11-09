@@ -1,0 +1,1993 @@
+{
+  "Address": {
+    "description": "The shipping address for the order.",
+    "properties": {
+      "AddressLine1": {
+        "description": "The street address.",
+        "type": "string"
+      },
+      "AddressLine2": {
+        "description": "Additional street address information, if required.",
+        "type": "string"
+      },
+      "AddressLine3": {
+        "description": "Additional street address information, if required.",
+        "type": "string"
+      },
+      "AddressType": {
+        "description": "The address type of the shipping address.",
+        "enum": [
+          "Commercial",
+          "Residential"
+        ],
+        "type": "string"
+      },
+      "City": {
+        "description": "The city.",
+        "type": "string"
+      },
+      "CompanyName": {
+        "description": "The company name of the recipient.",
+        "type": "string"
+      },
+      "CountryCode": {
+        "description": "The country code.",
+        "type": "string"
+      },
+      "County": {
+        "description": "The county.",
+        "type": "string"
+      },
+      "District": {
+        "description": "The district.",
+        "type": "string"
+      },
+      "ExtendedFields": {
+        "description": "Extended address fields for additional address components including the street name or number.",
+        "ref": "AddressExtendedFields"
+      },
+      "Municipality": {
+        "description": "The municipality.",
+        "type": "string"
+      },
+      "Name": {
+        "description": "The name.",
+        "type": "string"
+      },
+      "Phone": {
+        "description": "The phone number of the buyer.",
+        "type": "string"
+      },
+      "PostalCode": {
+        "description": "The postal code.",
+        "type": "string"
+      },
+      "StateOrRegion": {
+        "description": "The state or region.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AddressExtendedFields": {
+    "description": "Extended address fields for additional address components including the street name or number.",
+    "properties": {
+      "Complement": {
+        "description": "The floor number/unit number in the building/private house number.",
+        "type": "string"
+      },
+      "GeoCoordinates": {
+        "description": "Latitude and longitude coordinates for the shipping address using the WGS84 coordinate system.",
+        "ref": "GeoCoordinates"
+      },
+      "Neighborhood": {
+        "description": "The neighborhood.",
+        "type": "string"
+      },
+      "StreetName": {
+        "description": "The street name.",
+        "type": "string"
+      },
+      "StreetNumber": {
+        "description": "The house, building, or property number associated with the location's street address.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AmazonPrograms": {
+    "description": "Contains the list of programs that Amazon associates with an item.",
+    "properties": {
+      "Programs": {
+        "description": "A list of the programs that Amazon associates with the order item.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "Programs"
+    ],
+    "type": "object"
+  },
+  "ApprovedAlternativeDetails": {
+    "description": "Pre-approved alternative product attributes available for a rejected order.",
+    "properties": {},
+    "ref": "ApprovedAttribute",
+    "required": [],
+    "type": "array"
+  },
+  "ApprovedAttribute": {
+    "description": "An order attribute with its original value and the pre-approved alternative value suggested by the vet.",
+    "properties": {
+      "approvedValue": {
+        "description": "The pre-approved value that would result in order approval.",
+        "type": "string"
+      },
+      "attributeName": {
+        "description": "The name of the attribute requiring correction (for example, `asin`, `petWeight`).",
+        "type": "string"
+      },
+      "originalValue": {
+        "description": "The original value of the attribute in the rejected order.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "approvedValue",
+      "attributeName",
+      "originalValue"
+    ],
+    "type": "object"
+  },
+  "AssociatedItem": {
+    "description": "An item that is associated with an order item.",
+    "properties": {
+      "AssociationType": {
+        "ref": "AssociationType"
+      },
+      "OrderId": {
+        "description": "The order item's order identifier, in 3-7-7 format.",
+        "type": "string"
+      },
+      "OrderItemId": {
+        "description": "An Amazon-defined item identifier for the associated item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AssociationType": {
+    "description": "The type of association an item has with an order item.",
+    "enum": [
+      "VALUE_ADD_SERVICE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AutomatedShippingSettings": {
+    "description": "Contains information regarding the Shipping Settings Automation program, such as whether the order's shipping settings were generated automatically, and what those settings are.",
+    "properties": {
+      "AutomatedCarrier": {
+        "description": "Auto-generated carrier for SSA orders.",
+        "type": "string"
+      },
+      "AutomatedShipMethod": {
+        "description": "Auto-generated ship method for SSA orders.",
+        "type": "string"
+      },
+      "HasAutomatedShippingSettings": {
+        "description": "When true, this order has automated shipping settings generated by Amazon.",
+        "type": "boolean"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BusinessHours": {
+    "description": "Business days and hours when the destination is open for deliveries.",
+    "properties": {
+      "DayOfWeek": {
+        "description": "Day of the week.",
+        "enum": [
+          "FRI",
+          "MON",
+          "SAT",
+          "SUN",
+          "THU",
+          "TUE",
+          "WED"
+        ],
+        "type": "string"
+      },
+      "OpenIntervals": {
+        "description": "Time window during the day when the business is open.",
+        "ref": "OpenInterval",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BuyerCustomizedInfoDetail": {
+    "description": "Buyer information for custom orders from the Amazon Custom program.",
+    "properties": {
+      "CustomizedURL": {
+        "description": "The location of a ZIP file containing Amazon Custom data.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BuyerInfo": {
+    "description": "Buyer information.",
+    "properties": {
+      "BuyerCounty": {
+        "description": "The county of the buyer.",
+        "type": "string"
+      },
+      "BuyerEmail": {
+        "description": "The anonymized email address of the buyer.",
+        "type": "string"
+      },
+      "BuyerName": {
+        "description": "The buyer name or the recipient name.",
+        "type": "string"
+      },
+      "BuyerTaxInfo": {
+        "description": "Tax information about the buyer.",
+        "ref": "BuyerTaxInfo"
+      },
+      "PurchaseOrderNumber": {
+        "description": "The purchase order (PO) number entered by the buyer at checkout.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BuyerRequestedCancel": {
+    "description": "Information about whether or not a buyer requested cancellation.",
+    "properties": {
+      "BuyerCancelReason": {
+        "description": "The reason that the buyer requested cancellation.",
+        "type": "string"
+      },
+      "IsBuyerRequestedCancel": {
+        "description": "Indicate whether the buyer has requested cancellation.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BuyerTaxInfo": {
+    "description": "Tax information about the buyer.",
+    "properties": {
+      "CompanyLegalName": {
+        "description": "The legal name of the company.",
+        "type": "string"
+      },
+      "TaxClassifications": {
+        "description": "A list of tax classifications that apply to the order.",
+        "ref": "TaxClassification",
+        "type": "array"
+      },
+      "TaxingRegion": {
+        "description": "The country or region imposing the tax.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BuyerTaxInformation": {
+    "description": "Contains the business invoice tax information.",
+    "properties": {
+      "BuyerBusinessAddress": {
+        "description": "Business buyer's address.",
+        "type": "string"
+      },
+      "BuyerLegalCompanyName": {
+        "description": "Business buyer's company legal name.",
+        "type": "string"
+      },
+      "BuyerTaxOffice": {
+        "description": "Business buyer's tax office.",
+        "type": "string"
+      },
+      "BuyerTaxRegistrationId": {
+        "description": "Business buyer's tax registration ID.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ConfirmShipmentErrorResponse": {
+    "description": "The error response schema for the `confirmShipment` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `confirmShipment` operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ConfirmShipmentOrderItem": {
+    "description": "A single order item.",
+    "properties": {
+      "orderItemId": {
+        "description": "The order item's unique identifier.",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "The item's quantity.",
+        "type": "integer"
+      },
+      "transparencyCodes": {
+        "description": "The list of transparency codes.",
+        "ref": "TransparencyCodeList"
+      }
+    },
+    "required": [
+      "orderItemId",
+      "quantity"
+    ],
+    "type": "object"
+  },
+  "ConfirmShipmentOrderItemsList": {
+    "description": "A list of order items.",
+    "properties": {},
+    "ref": "ConfirmShipmentOrderItem",
+    "required": [],
+    "type": "array"
+  },
+  "ConfirmShipmentRequest": {
+    "description": "The request schema for an shipment confirmation.",
+    "properties": {
+      "codCollectionMethod": {
+        "description": "The COD collection method (only supported in the JP marketplace).",
+        "enum": [
+          "DirectPayment"
+        ],
+        "type": "string"
+      },
+      "marketplaceId": {
+        "ref": "MarketplaceId"
+      },
+      "packageDetail": {
+        "ref": "PackageDetail"
+      }
+    },
+    "required": [
+      "marketplaceId",
+      "packageDetail"
+    ],
+    "type": "object"
+  },
+  "ConstraintType": {
+    "description": "Details the importance of the constraint present on the item",
+    "enum": [
+      "MANDATORY"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "DeliveryPreferences": {
+    "description": "Contains all of the delivery instructions provided by the customer for the shipping address.",
+    "properties": {
+      "AddressInstructions": {
+        "description": "Building instructions, nearby landmark or navigation instructions.",
+        "type": "string"
+      },
+      "DropOffLocation": {
+        "description": "Drop-off location selected by the customer.",
+        "type": "string"
+      },
+      "OtherAttributes": {
+        "description": "Enumerated list of miscellaneous delivery attributes associated with the shipping address.",
+        "ref": "OtherDeliveryAttributes",
+        "type": "array"
+      },
+      "PreferredDeliveryTime": {
+        "description": "Business hours and days when the delivery is preferred.",
+        "ref": "PreferredDeliveryTime"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "EasyShipShipmentStatus": {
+    "description": "The status of the Amazon Easy Ship order.",
+    "enum": [
+      "AtDestinationFC",
+      "AtOriginFC",
+      "Damaged",
+      "Delivered",
+      "DroppedOff",
+      "LabelCanceled",
+      "Lost",
+      "OutForDelivery",
+      "PendingDropOff",
+      "PendingPickUp",
+      "PendingSchedule",
+      "PickedUp",
+      "RejectedByBuyer",
+      "ReturnedToSeller",
+      "ReturningToSeller",
+      "Undeliverable"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ElectronicInvoiceStatus": {
+    "description": "The status of the electronic invoice.",
+    "enum": [
+      "Accepted",
+      "Errored",
+      "NotFound",
+      "NotRequired",
+      "Processing"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "ExceptionDates": {
+    "description": "Dates when the business is closed or open with a different time window.",
+    "properties": {
+      "ExceptionDate": {
+        "description": "Date when the business is closed, in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date format.",
+        "type": "string"
+      },
+      "IsOpen": {
+        "description": "Boolean indicating if the business is closed or open on that date.",
+        "type": "boolean"
+      },
+      "OpenIntervals": {
+        "description": "Time window during the day when the business is open.",
+        "ref": "OpenInterval",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "FulfillmentInstruction": {
+    "description": "Contains the instructions about the fulfillment, such as the location from where you want the order filled.",
+    "properties": {
+      "FulfillmentSupplySourceId": {
+        "description": "The `sourceId` of the location from where you want the order fulfilled.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GeoCoordinates": {
+    "description": "The latitude and longitude coordinates of the shipping address using the WGS84 coordinate system.",
+    "properties": {
+      "Latitude": {
+        "description": "The latitude coordinate of the shipping address using the WGS84 coordinate system.",
+        "format": "double",
+        "type": "number"
+      },
+      "Longitude": {
+        "description": "The longitude coordinate of the shipping address using the WGS84 coordinate system.",
+        "format": "double",
+        "type": "number"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetOrderAddressResponse": {
+    "description": "The response schema for the `getOrderAddress` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `getOrderAddress` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getOrderAddress` operations.",
+        "ref": "OrderAddress"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetOrderBuyerInfoResponse": {
+    "description": "The response schema for the `getOrderBuyerInfo` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `getOrderBuyerInfo` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getOrderBuyerInfo` operation.",
+        "ref": "OrderBuyerInfo"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetOrderItemsBuyerInfoResponse": {
+    "description": "The response schema for the `getOrderItemsBuyerInfo` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `getOrderItemsBuyerInfo` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getOrderItemsBuyerInfo` operation.",
+        "ref": "OrderItemsBuyerInfoList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetOrderItemsResponse": {
+    "description": "The response schema for the `getOrderItems` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `getOrderItems` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getOrderItems` operation.",
+        "ref": "OrderItemsList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetOrderRegulatedInfoResponse": {
+    "description": "The response schema for the `getOrderRegulatedInfo` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `getOrderRegulatedInfo` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getOrderRegulatedInfo` operation.",
+        "ref": "OrderRegulatedInfo"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetOrderResponse": {
+    "description": "The response schema for the `getOrder` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `getOrder` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getOrder` operation.",
+        "ref": "Order"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetOrdersResponse": {
+    "description": "The response schema for the `getOrders` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `getOrders` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getOrders` operation.",
+        "ref": "OrdersList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InterimStatusDetail": {
+    "description": "Interim status information provided during the verification process to share granular progress updates while an order is pending verification (for example, vet contacted through email).",
+    "properties": {
+      "statusCode": {
+        "description": "The identifier for the interim status type.",
+        "type": "string"
+      },
+      "statusDateTime": {
+        "description": "The date and time when this interim status was set, in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date and time format.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "statusCode",
+      "statusDateTime"
+    ],
+    "type": "object"
+  },
+  "ItemBuyerInfo": {
+    "description": "A single item's buyer information.",
+    "properties": {
+      "BuyerCustomizedInfo": {
+        "description": "Buyer information for custom orders from the Amazon Custom program.",
+        "ref": "BuyerCustomizedInfoDetail"
+      },
+      "GiftMessageText": {
+        "description": "A gift message provided by the buyer.",
+        "type": "string"
+      },
+      "GiftWrapLevel": {
+        "description": "The gift wrap level specified by the buyer.",
+        "type": "string"
+      },
+      "GiftWrapPrice": {
+        "description": "The gift wrap price of the item.",
+        "ref": "Money"
+      },
+      "GiftWrapTax": {
+        "description": "The tax on the gift wrap price.",
+        "ref": "Money"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "MarketplaceId": {
+    "description": "The unobfuscated marketplace identifier.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "MarketplaceTaxInfo": {
+    "description": "Tax information about the marketplace.",
+    "properties": {
+      "TaxClassifications": {
+        "description": "A list of tax classifications that apply to the order.",
+        "ref": "TaxClassification",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Measurement": {
+    "description": "Measurement information for an order item.",
+    "properties": {
+      "Unit": {
+        "description": "The unit of measure.",
+        "enum": [
+          "CENTIMETERS",
+          "COUNT",
+          "CUBIC_CENTIMETERS",
+          "CUBIC_FEET",
+          "CUBIC_INCHES",
+          "CUBIC_METERS",
+          "FEET",
+          "FLUID_OUNCES",
+          "GALLONS",
+          "GRAMS",
+          "INCHES",
+          "KILOGRAMS",
+          "LITERS",
+          "METERS",
+          "MILLIGRAMS",
+          "MILLIMETERS",
+          "OUNCES",
+          "PINTS",
+          "POUNDS",
+          "QUARTS",
+          "SQUARE_CENTIMETERS",
+          "SQUARE_FEET",
+          "SQUARE_INCHES",
+          "SQUARE_METERS"
+        ],
+        "type": "string"
+      },
+      "Value": {
+        "description": "The measurement value.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "Unit",
+      "Value"
+    ],
+    "type": "object"
+  },
+  "Money": {
+    "description": "The monetary value of the order.",
+    "properties": {
+      "Amount": {
+        "description": "The currency amount.",
+        "type": "string"
+      },
+      "CurrencyCode": {
+        "description": "The three-digit currency code.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OpenInterval": {
+    "description": "The time interval for which the business is open.",
+    "properties": {
+      "EndTime": {
+        "description": "The time when the business closes.",
+        "ref": "OpenTimeInterval"
+      },
+      "StartTime": {
+        "description": "The time when the business opens.",
+        "ref": "OpenTimeInterval"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OpenTimeInterval": {
+    "description": "The time when the business opens or closes.",
+    "properties": {
+      "Hour": {
+        "description": "The hour when the business opens or closes.",
+        "type": "integer"
+      },
+      "Minute": {
+        "description": "The minute when the business opens or closes.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Order": {
+    "description": "Order information.",
+    "properties": {
+      "AmazonOrderId": {
+        "description": "An Amazon-defined order identifier, in 3-7-7 format.",
+        "type": "string"
+      },
+      "AutomatedShippingSettings": {
+        "description": "Contains information regarding the Shipping Settings Automaton program, such as whether the order's shipping settings were generated automatically, and what those settings are.",
+        "ref": "AutomatedShippingSettings"
+      },
+      "BuyerInfo": {
+        "description": "Buyer information.",
+        "ref": "BuyerInfo"
+      },
+      "BuyerInvoicePreference": {
+        "description": "The buyer's invoicing preference.",
+        "enum": [
+          "BUSINESS",
+          "INDIVIDUAL"
+        ],
+        "type": "string"
+      },
+      "BuyerTaxInformation": {
+        "description": "Contains the business invoice tax information.",
+        "ref": "BuyerTaxInformation"
+      },
+      "CbaDisplayableShippingLabel": {
+        "description": "Custom ship label for Checkout by Amazon (CBA).",
+        "type": "string"
+      },
+      "DefaultShipFromLocationAddress": {
+        "description": "The recommended location for the seller to ship the items from.",
+        "ref": "Address"
+      },
+      "EarliestDeliveryDate": {
+        "description": "The start of the time period within which you have committed to fulfill the order.",
+        "type": "string"
+      },
+      "EarliestShipDate": {
+        "description": "The start of the time period within which you have committed to ship the order.",
+        "type": "string"
+      },
+      "EasyShipShipmentStatus": {
+        "description": "The status of the Amazon Easy Ship order.",
+        "ref": "EasyShipShipmentStatus"
+      },
+      "ElectronicInvoiceStatus": {
+        "description": "The status of the electronic invoice.",
+        "ref": "ElectronicInvoiceStatus"
+      },
+      "FulfillmentChannel": {
+        "description": "Whether the order was fulfilled by Amazon (`AFN`) or by the seller (`MFN`).",
+        "enum": [
+          "AFN",
+          "MFN"
+        ],
+        "type": "string"
+      },
+      "FulfillmentInstruction": {
+        "description": "Contains the instructions about the fulfillment, such as the location from where you want the order filled.",
+        "ref": "FulfillmentInstruction"
+      },
+      "HasRegulatedItems": {
+        "description": "Whether the order contains regulated items which may require additional approval steps before being fulfilled.",
+        "type": "boolean"
+      },
+      "IsAccessPointOrder": {
+        "description": "When true, this order is marked to be delivered to an Access Point.",
+        "type": "boolean"
+      },
+      "IsBusinessOrder": {
+        "description": "When true, the order is an Amazon Business order.",
+        "type": "boolean"
+      },
+      "IsEstimatedShipDateSet": {
+        "description": "When true, the estimated ship date is set for the order.",
+        "type": "boolean"
+      },
+      "IsGlobalExpressEnabled": {
+        "description": "When true, the order is a `GlobalExpress` order.",
+        "type": "boolean"
+      },
+      "IsIBA": {
+        "description": "When true, the item within this order was bought and re-sold by Amazon Business EU SARL (ABEU).",
+        "type": "boolean"
+      },
+      "IsISPU": {
+        "description": "When true, this order is marked to be picked up from a store rather than delivered.",
+        "type": "boolean"
+      },
+      "IsPremiumOrder": {
+        "description": "When true, the order has a Premium Shipping Service Level Agreement.",
+        "type": "boolean"
+      },
+      "IsPrime": {
+        "description": "When true, the order is a seller-fulfilled Amazon Prime order.",
+        "type": "boolean"
+      },
+      "IsReplacementOrder": {
+        "description": "When true, this is a replacement order.",
+        "type": "boolean"
+      },
+      "IsSoldByAB": {
+        "description": "When true, the item within this order was bought and re-sold by Amazon Business EU SARL (ABEU).",
+        "type": "boolean"
+      },
+      "LastUpdateDate": {
+        "description": "The date when the order was last updated.",
+        "type": "string"
+      },
+      "LatestDeliveryDate": {
+        "description": "The end of the time period within which you have committed to fulfill the order.",
+        "type": "string"
+      },
+      "LatestShipDate": {
+        "description": "The end of the time period within which you have committed to ship the order.",
+        "type": "string"
+      },
+      "MarketplaceId": {
+        "description": "The identifier for the marketplace where the order was placed.",
+        "type": "string"
+      },
+      "MarketplaceTaxInfo": {
+        "description": "Tax information about the marketplace where the sale took place.",
+        "ref": "MarketplaceTaxInfo"
+      },
+      "NumberOfItemsShipped": {
+        "description": "The number of items shipped.",
+        "type": "integer"
+      },
+      "NumberOfItemsUnshipped": {
+        "description": "The number of items unshipped.",
+        "type": "integer"
+      },
+      "OrderChannel": {
+        "description": "The order channel for the first item in the order.",
+        "type": "string"
+      },
+      "OrderStatus": {
+        "description": "The current order status.",
+        "enum": [
+          "Canceled",
+          "InvoiceUnconfirmed",
+          "PartiallyShipped",
+          "Pending",
+          "PendingAvailability",
+          "Shipped",
+          "Unfulfillable",
+          "Unshipped"
+        ],
+        "type": "string"
+      },
+      "OrderTotal": {
+        "description": "The total charge for this order.",
+        "ref": "Money"
+      },
+      "OrderType": {
+        "description": "The order's type.",
+        "enum": [
+          "BackOrder",
+          "LongLeadTimeOrder",
+          "Preorder",
+          "SourcingOnDemandOrder",
+          "StandardOrder"
+        ],
+        "type": "string"
+      },
+      "PaymentExecutionDetail": {
+        "description": "Information about the sub-payment methods for an order.",
+        "ref": "PaymentExecutionDetailItemList"
+      },
+      "PaymentMethod": {
+        "description": "The payment method for the order.",
+        "enum": [
+          "COD",
+          "CVS",
+          "Other"
+        ],
+        "type": "string"
+      },
+      "PaymentMethodDetails": {
+        "description": "A list of payment methods for the order.",
+        "ref": "PaymentMethodDetailItemList"
+      },
+      "PromiseResponseDueDate": {
+        "description": "Indicates the date by which the seller must respond to the buyer with an estimated ship date.",
+        "type": "string"
+      },
+      "PurchaseDate": {
+        "description": "The date when the order was created.",
+        "type": "string"
+      },
+      "ReplacedOrderId": {
+        "description": "The order ID value for the order that is being replaced.",
+        "type": "string"
+      },
+      "SalesChannel": {
+        "description": "The sales channel for the first item in the order.",
+        "type": "string"
+      },
+      "SellerDisplayName": {
+        "description": "The seller’s friendly name registered in the marketplace where the sale took place.",
+        "type": "string"
+      },
+      "SellerOrderId": {
+        "description": "A seller-defined order identifier.",
+        "type": "string"
+      },
+      "ShipServiceLevel": {
+        "description": "The order's shipment service level.",
+        "type": "string"
+      },
+      "ShipmentServiceLevelCategory": {
+        "description": "The shipment service level category for the order.",
+        "type": "string"
+      },
+      "ShippingAddress": {
+        "description": "The shipping address for the order.",
+        "ref": "Address"
+      }
+    },
+    "required": [
+      "AmazonOrderId",
+      "LastUpdateDate",
+      "OrderStatus",
+      "PurchaseDate"
+    ],
+    "type": "object"
+  },
+  "OrderAddress": {
+    "description": "The shipping address for the order.",
+    "properties": {
+      "AmazonOrderId": {
+        "description": "An Amazon-defined order identifier, in 3-7-7 format.",
+        "type": "string"
+      },
+      "BuyerCompanyName": {
+        "description": "The company name of the contact buyer.",
+        "type": "string"
+      },
+      "DeliveryPreferences": {
+        "ref": "DeliveryPreferences"
+      },
+      "ShippingAddress": {
+        "description": "The shipping address for the order.",
+        "ref": "Address"
+      }
+    },
+    "required": [
+      "AmazonOrderId"
+    ],
+    "type": "object"
+  },
+  "OrderBuyerInfo": {
+    "description": "Buyer information for an order.",
+    "properties": {
+      "AmazonOrderId": {
+        "description": "An Amazon-defined order identifier, in 3-7-7 format.",
+        "type": "string"
+      },
+      "BuyerCounty": {
+        "description": "The county of the buyer.",
+        "type": "string"
+      },
+      "BuyerEmail": {
+        "description": "The anonymized email address of the buyer.",
+        "type": "string"
+      },
+      "BuyerName": {
+        "description": "The buyer name or the recipient name.",
+        "type": "string"
+      },
+      "BuyerTaxInfo": {
+        "description": "Tax information about the buyer.",
+        "ref": "BuyerTaxInfo"
+      },
+      "PurchaseOrderNumber": {
+        "description": "The purchase order (PO) number entered by the buyer at checkout.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "AmazonOrderId"
+    ],
+    "type": "object"
+  },
+  "OrderItem": {
+    "description": "A single order item.",
+    "properties": {
+      "ASIN": {
+        "description": "The item's Amazon Standard Identification Number (ASIN).",
+        "type": "string"
+      },
+      "AmazonPrograms": {
+        "description": "Contains the list of programs that are associated with an item.",
+        "ref": "AmazonPrograms"
+      },
+      "AssociatedItems": {
+        "description": "A list of associated items that a customer has purchased with a product.",
+        "ref": "AssociatedItem",
+        "type": "array"
+      },
+      "BuyerInfo": {
+        "description": "A single item's buyer information.",
+        "ref": "ItemBuyerInfo"
+      },
+      "BuyerRequestedCancel": {
+        "description": "Information about whether or not a buyer requested cancellation.",
+        "ref": "BuyerRequestedCancel"
+      },
+      "CODFee": {
+        "description": "The fee charged for COD service.",
+        "ref": "Money"
+      },
+      "CODFeeDiscount": {
+        "description": "The discount on the COD fee.",
+        "ref": "Money"
+      },
+      "ConditionId": {
+        "description": "The condition of the item.",
+        "type": "string"
+      },
+      "ConditionNote": {
+        "description": "The condition of the item, as described by the seller.",
+        "type": "string"
+      },
+      "ConditionSubtypeId": {
+        "description": "The subcondition of the item.",
+        "type": "string"
+      },
+      "DeemedResellerCategory": {
+        "description": "The category of deemed reseller.",
+        "enum": [
+          "IOSS",
+          "UOSS"
+        ],
+        "type": "string"
+      },
+      "IossNumber": {
+        "description": "The IOSS number of the marketplace.",
+        "type": "string"
+      },
+      "IsGift": {
+        "description": "Indicates whether the item is a gift.",
+        "type": "string"
+      },
+      "IsTransparency": {
+        "description": "When true, the ASIN is enrolled in Transparency.",
+        "type": "boolean"
+      },
+      "ItemPrice": {
+        "description": "The selling price of the order item.",
+        "ref": "Money"
+      },
+      "ItemTax": {
+        "description": "The tax on the item price.",
+        "ref": "Money"
+      },
+      "Measurement": {
+        "description": "Measurement information for the order item.",
+        "ref": "Measurement"
+      },
+      "OrderItemId": {
+        "description": "An Amazon-defined order item identifier.",
+        "type": "string"
+      },
+      "PointsGranted": {
+        "description": "The number and value of Amazon Points granted with the purchase of an item.",
+        "ref": "PointsGrantedDetail"
+      },
+      "PriceDesignation": {
+        "description": "Indicates that the selling price is a special price that is only available for Amazon Business orders.",
+        "type": "string"
+      },
+      "ProductInfo": {
+        "description": "The item's product information.",
+        "ref": "ProductInfoDetail"
+      },
+      "PromotionDiscount": {
+        "description": "The total of all promotional discounts in the offer.",
+        "ref": "Money"
+      },
+      "PromotionDiscountTax": {
+        "description": "The tax on the total of all promotional discounts in the offer.",
+        "ref": "Money"
+      },
+      "PromotionIds": {
+        "ref": "PromotionIdList"
+      },
+      "QuantityOrdered": {
+        "description": "The number of items in the order.",
+        "type": "integer"
+      },
+      "QuantityShipped": {
+        "description": "The number of items shipped.",
+        "type": "integer"
+      },
+      "ScheduledDeliveryEndDate": {
+        "description": "The end date of the scheduled delivery window in the time zone for the order destination.",
+        "type": "string"
+      },
+      "ScheduledDeliveryStartDate": {
+        "description": "The start date of the scheduled delivery window in the time zone for the order destination.",
+        "type": "string"
+      },
+      "SellerSKU": {
+        "description": "The item's seller stock keeping unit (SKU).",
+        "type": "string"
+      },
+      "SerialNumberRequired": {
+        "description": "When true, the product type for this item has a serial number.",
+        "type": "boolean"
+      },
+      "SerialNumbers": {
+        "description": "A list of serial numbers for electronic products that are shipped to customers.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "ShippingConstraints": {
+        "description": "Shipping constraints applicable to this order.",
+        "ref": "ShippingConstraints"
+      },
+      "ShippingDiscount": {
+        "description": "The discount on the shipping price.",
+        "ref": "Money"
+      },
+      "ShippingDiscountTax": {
+        "description": "The tax on the discount on the shipping price.",
+        "ref": "Money"
+      },
+      "ShippingPrice": {
+        "description": "The item's shipping price.",
+        "ref": "Money"
+      },
+      "ShippingTax": {
+        "description": "The tax on the shipping price.",
+        "ref": "Money"
+      },
+      "StoreChainStoreId": {
+        "description": "The store chain store identifier.",
+        "type": "string"
+      },
+      "SubstitutionPreferences": {
+        "description": "Substitution preferences for the order item.",
+        "ref": "SubstitutionPreferences"
+      },
+      "TaxCollection": {
+        "description": "Information about withheld taxes.",
+        "ref": "TaxCollection"
+      },
+      "Title": {
+        "description": "The item's name.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "ASIN",
+      "OrderItemId",
+      "QuantityOrdered"
+    ],
+    "type": "object"
+  },
+  "OrderItemBuyerInfo": {
+    "description": "A single order item's buyer information.",
+    "properties": {
+      "BuyerCustomizedInfo": {
+        "description": "Buyer information for custom orders from the Amazon Custom program.",
+        "ref": "BuyerCustomizedInfoDetail"
+      },
+      "GiftMessageText": {
+        "description": "A gift message provided by the buyer.",
+        "type": "string"
+      },
+      "GiftWrapLevel": {
+        "description": "The gift wrap level specified by the buyer.",
+        "type": "string"
+      },
+      "GiftWrapPrice": {
+        "description": "The gift wrap price of the item.",
+        "ref": "Money"
+      },
+      "GiftWrapTax": {
+        "description": "The tax on the gift wrap price.",
+        "ref": "Money"
+      },
+      "OrderItemId": {
+        "description": "An Amazon-defined order item identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "OrderItemId"
+    ],
+    "type": "object"
+  },
+  "OrderItemBuyerInfoList": {
+    "description": "A single order item's buyer information list.",
+    "properties": {},
+    "ref": "OrderItemBuyerInfo",
+    "required": [],
+    "type": "array"
+  },
+  "OrderItemList": {
+    "description": "A list of order items.",
+    "properties": {},
+    "ref": "OrderItem",
+    "required": [],
+    "type": "array"
+  },
+  "OrderItems": {
+    "description": "For partial shipment status updates, the list of order items and quantities to be updated.",
+    "itemType": "object",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "OrderItemsBuyerInfoList": {
+    "description": "A single order item's buyer information list with the order ID.",
+    "properties": {
+      "AmazonOrderId": {
+        "description": "An Amazon-defined order identifier, in 3-7-7 format.",
+        "type": "string"
+      },
+      "NextToken": {
+        "description": "When present and not empty, pass this string token in the next request to return the next response page.",
+        "type": "string"
+      },
+      "OrderItems": {
+        "ref": "OrderItemBuyerInfoList"
+      }
+    },
+    "required": [
+      "AmazonOrderId",
+      "OrderItems"
+    ],
+    "type": "object"
+  },
+  "OrderItemsList": {
+    "description": "The order items list along with the order ID.",
+    "properties": {
+      "AmazonOrderId": {
+        "description": "An Amazon-defined order identifier, in 3-7-7 format.",
+        "type": "string"
+      },
+      "NextToken": {
+        "description": "When present and not empty, pass this string token in the next request to return the next response page.",
+        "type": "string"
+      },
+      "OrderItems": {
+        "ref": "OrderItemList"
+      }
+    },
+    "required": [
+      "AmazonOrderId",
+      "OrderItems"
+    ],
+    "type": "object"
+  },
+  "OrderList": {
+    "description": "A list of orders.",
+    "properties": {},
+    "ref": "Order",
+    "required": [],
+    "type": "array"
+  },
+  "OrderRegulatedInfo": {
+    "description": "The order's regulated information along with its verification status.",
+    "properties": {
+      "AmazonOrderId": {
+        "description": "An Amazon-defined order identifier, in 3-7-7 format.",
+        "type": "string"
+      },
+      "RegulatedInformation": {
+        "description": "The regulated information collected during purchase and used to verify the order.",
+        "ref": "RegulatedInformation"
+      },
+      "RegulatedOrderVerificationStatus": {
+        "description": "The order's verification status.",
+        "ref": "RegulatedOrderVerificationStatus"
+      },
+      "RequiresDosageLabel": {
+        "description": "When true, the order requires attaching a dosage information label when shipped.",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "AmazonOrderId",
+      "RegulatedInformation",
+      "RegulatedOrderVerificationStatus",
+      "RequiresDosageLabel"
+    ],
+    "type": "object"
+  },
+  "OrdersList": {
+    "description": "A list of orders along with additional information to make subsequent API calls.",
+    "properties": {
+      "CreatedBefore": {
+        "description": "Use this date to select orders created before (or at) a specified time.",
+        "type": "string"
+      },
+      "LastUpdatedBefore": {
+        "description": "Use this date to select orders that were last updated before (or at) a specified time.",
+        "type": "string"
+      },
+      "NextToken": {
+        "description": "When present and not empty, pass this string token in the next request to return the next response page.",
+        "type": "string"
+      },
+      "Orders": {
+        "ref": "OrderList"
+      }
+    },
+    "required": [
+      "Orders"
+    ],
+    "type": "object"
+  },
+  "OtherDeliveryAttributes": {
+    "description": "Miscellaneous delivery attributes associated with the shipping address.",
+    "enum": [
+      "HAS_ACCESS_POINT",
+      "PALLET_DISABLED",
+      "PALLET_ENABLED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PackageDetail": {
+    "description": "Properties of packages",
+    "properties": {
+      "carrierCode": {
+        "description": "Identifies the carrier that will deliver the package.",
+        "type": "string"
+      },
+      "carrierName": {
+        "description": "Carrier name that will deliver the package.",
+        "type": "string"
+      },
+      "orderItems": {
+        "description": "The list of order items and quantities to be updated.",
+        "ref": "ConfirmShipmentOrderItemsList"
+      },
+      "packageReferenceId": {
+        "ref": "PackageReferenceId"
+      },
+      "shipDate": {
+        "description": "The shipping date for the package.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "shipFromSupplySourceId": {
+        "description": "The unique identifier for the supply source.",
+        "type": "string"
+      },
+      "shippingMethod": {
+        "description": "Ship method to be used for shipping the order.",
+        "type": "string"
+      },
+      "trackingNumber": {
+        "description": "The tracking number used to obtain tracking and delivery information.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "carrierCode",
+      "orderItems",
+      "packageReferenceId",
+      "shipDate",
+      "trackingNumber"
+    ],
+    "type": "object"
+  },
+  "PackageReferenceId": {
+    "description": "A seller-supplied identifier that uniquely identifies a package within the scope of an order.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PaymentExecutionDetailItem": {
+    "description": "Information about a sub-payment method used to pay for a COD order.",
+    "properties": {
+      "AcquirerId": {
+        "description": "The Brazilian Taxpayer Identifier (CNPJ) of the payment processor or acquiring bank that authorizes the payment.",
+        "type": "string"
+      },
+      "AuthorizationCode": {
+        "description": "The unique code that confirms the payment authorization.",
+        "type": "string"
+      },
+      "CardBrand": {
+        "description": "The card network or brand used in the payment transaction (for example, Visa or Mastercard).",
+        "type": "string"
+      },
+      "Payment": {
+        "ref": "Money"
+      },
+      "PaymentMethod": {
+        "description": "The sub-payment method for an order.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "Payment",
+      "PaymentMethod"
+    ],
+    "type": "object"
+  },
+  "PaymentExecutionDetailItemList": {
+    "description": "A list of payment execution detail items.",
+    "properties": {},
+    "ref": "PaymentExecutionDetailItem",
+    "required": [],
+    "type": "array"
+  },
+  "PaymentMethodDetailItemList": {
+    "description": "A list of payment method detail items.",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "PointsGrantedDetail": {
+    "description": "The number of Amazon Points offered with the purchase of an item, and their monetary value.",
+    "properties": {
+      "PointsMonetaryValue": {
+        "description": "The monetary value of the Amazon Points granted.",
+        "ref": "Money"
+      },
+      "PointsNumber": {
+        "description": "The number of Amazon Points granted with the purchase of an item.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PreferredDeliveryTime": {
+    "description": "The time window when the delivery is preferred.",
+    "properties": {
+      "BusinessHours": {
+        "description": "Business hours when the business is open for deliveries.",
+        "ref": "BusinessHours",
+        "type": "array"
+      },
+      "ExceptionDates": {
+        "description": "Dates when the business is closed during the next 30 days.",
+        "ref": "ExceptionDates",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PrescriptionDetail": {
+    "description": "Information about the prescription that is used to verify a regulated product.",
+    "properties": {
+      "clinicId": {
+        "description": "The identifier for the clinic which provided the prescription used to verify the regulated product.",
+        "type": "string"
+      },
+      "expirationDate": {
+        "description": "The expiration date of the prescription used to verify the regulated product, in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "prescriptionId": {
+        "description": "The identifier for the prescription used to verify the regulated product.",
+        "type": "string"
+      },
+      "refillsRemaining": {
+        "description": "The number of refills remaining for the prescription used to verify the regulated product.",
+        "type": "integer"
+      },
+      "totalRefillsAuthorized": {
+        "description": "The total number of refills written in the original prescription used to verify the regulated product.",
+        "type": "integer"
+      },
+      "usageInstructions": {
+        "description": "The instructions for the prescription as provided by the approver of the regulated product.",
+        "type": "string"
+      },
+      "writtenQuantity": {
+        "description": "The number of units in each fill as provided in the prescription.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "clinicId",
+      "expirationDate",
+      "prescriptionId",
+      "refillsRemaining",
+      "totalRefillsAuthorized",
+      "usageInstructions",
+      "writtenQuantity"
+    ],
+    "type": "object"
+  },
+  "ProductInfoDetail": {
+    "description": "Product information on the number of items.",
+    "properties": {
+      "NumberOfItems": {
+        "description": "The total number of items that are included in the ASIN.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PromotionIdList": {
+    "description": "A list of promotion identifiers provided by the seller when the promotions were created.",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "RegulatedInformation": {
+    "description": "The regulated information collected during purchase and used to verify the order.",
+    "properties": {
+      "Fields": {
+        "description": "A list of regulated information fields as collected from the regulatory form.",
+        "ref": "RegulatedInformationField",
+        "type": "array"
+      }
+    },
+    "required": [
+      "Fields"
+    ],
+    "type": "object"
+  },
+  "RegulatedInformationField": {
+    "description": "A field collected from the regulatory form.",
+    "properties": {
+      "FieldId": {
+        "description": "The unique identifier of the field.",
+        "type": "string"
+      },
+      "FieldLabel": {
+        "description": "The name of the field.",
+        "type": "string"
+      },
+      "FieldType": {
+        "description": "The type of field.",
+        "enum": [
+          "FileAttachment",
+          "Text"
+        ],
+        "type": "string"
+      },
+      "FieldValue": {
+        "description": "The content of the field as collected in regulatory form.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "FieldId",
+      "FieldLabel",
+      "FieldType",
+      "FieldValue"
+    ],
+    "type": "object"
+  },
+  "RegulatedOrderVerificationStatus": {
+    "description": "The verification status of the order, along with associated approval or rejection metadata.",
+    "properties": {
+      "ExternalReviewerId": {
+        "description": "The identifier for the order's regulated information reviewer.",
+        "type": "string"
+      },
+      "RejectionReason": {
+        "description": "The reason for rejecting the order's regulated information.",
+        "ref": "RejectionReason"
+      },
+      "RequiresMerchantAction": {
+        "description": "When true, the regulated information provided in the order requires a review by the merchant.",
+        "type": "boolean"
+      },
+      "ReviewDate": {
+        "description": "The date the order was reviewed.",
+        "type": "string"
+      },
+      "Status": {
+        "description": "The verification status of the order.",
+        "ref": "VerificationStatus"
+      },
+      "ValidInterimStatusCodes": {
+        "description": "Valid interim status codes that may be used when populating `InterimStatusDetail`.",
+        "ref": "ValidInterimStatusCode",
+        "type": "array"
+      },
+      "ValidRejectionReasons": {
+        "description": "A list of valid rejection reasons that may be used to reject the order's regulated information.",
+        "ref": "RejectionReason",
+        "type": "array"
+      },
+      "ValidVerificationDetails": {
+        "description": "A list of valid verification details that may be provided and the criteria required for when the verification detail can be provided.",
+        "ref": "ValidVerificationDetail",
+        "type": "array"
+      }
+    },
+    "required": [
+      "RequiresMerchantAction",
+      "Status",
+      "ValidRejectionReasons"
+    ],
+    "type": "object"
+  },
+  "RejectionReason": {
+    "description": "The reason for rejecting the order's regulated information.",
+    "properties": {
+      "RejectionReasonDescription": {
+        "description": "The description of this rejection reason.",
+        "type": "string"
+      },
+      "RejectionReasonId": {
+        "description": "The unique identifier for the rejection reason.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "RejectionReasonDescription",
+      "RejectionReasonId"
+    ],
+    "type": "object"
+  },
+  "ShipmentStatus": {
+    "description": "The shipment status to apply.",
+    "enum": [
+      "PickedUp",
+      "ReadyForPickup",
+      "RefusedPickup"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ShippingConstraints": {
+    "description": "Delivery constraints applicable to this order.",
+    "properties": {
+      "PalletDelivery": {
+        "description": "Indicates if the line item needs to be delivered by pallet.",
+        "ref": "ConstraintType"
+      },
+      "RecipientAgeVerification": {
+        "description": "Indicates that the carrier must confirm the recipient is of the legal age to receive the line item upon delivery.",
+        "ref": "ConstraintType"
+      },
+      "RecipientIdentityVerification": {
+        "description": "Indicates that the person receiving the line item must be the same as the intended recipient of the order.",
+        "ref": "ConstraintType"
+      },
+      "SignatureConfirmation": {
+        "description": "Indicates that the recipient of the line item must sign to confirm its delivery.",
+        "ref": "ConstraintType"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SubstitutionOption": {
+    "description": "Substitution options for an order item.",
+    "properties": {
+      "ASIN": {
+        "description": "The item's Amazon Standard Identification Number (ASIN).",
+        "type": "string"
+      },
+      "Measurement": {
+        "description": "Measurement information for the substitution option.",
+        "ref": "Measurement"
+      },
+      "QuantityOrdered": {
+        "description": "The number of items to be picked for this substitution option.",
+        "type": "integer"
+      },
+      "SellerSKU": {
+        "description": "The item's seller stock keeping unit (SKU).",
+        "type": "string"
+      },
+      "Title": {
+        "description": "The item's title.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SubstitutionOptionList": {
+    "description": "A collection of substitution options.",
+    "properties": {},
+    "ref": "SubstitutionOption",
+    "required": [],
+    "type": "array"
+  },
+  "SubstitutionPreferences": {
+    "description": "Substitution preferences for an order item.",
+    "properties": {
+      "SubstitutionOptions": {
+        "description": "Substitution options for the order item.",
+        "ref": "SubstitutionOptionList"
+      },
+      "SubstitutionType": {
+        "description": "The type of substitution that these preferences represent.",
+        "enum": [
+          "AMAZON_RECOMMENDED",
+          "CUSTOMER_PREFERENCE",
+          "DO_NOT_SUBSTITUTE"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "SubstitutionType"
+    ],
+    "type": "object"
+  },
+  "TaxClassification": {
+    "description": "The tax classification of the order.",
+    "properties": {
+      "Name": {
+        "description": "The type of tax.",
+        "type": "string"
+      },
+      "Value": {
+        "description": "The buyer's tax identifier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TaxCollection": {
+    "description": "Information about withheld taxes.",
+    "properties": {
+      "Model": {
+        "description": "The tax collection model applied to the item.",
+        "enum": [
+          "MarketplaceFacilitator"
+        ],
+        "type": "string"
+      },
+      "ResponsibleParty": {
+        "description": "The party responsible for withholding the taxes and remitting them to the taxing authority.",
+        "enum": [
+          "Amazon Services, Inc."
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TransparencyCode": {
+    "description": "The transparency code associated with the item.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "TransparencyCodeList": {
+    "description": "A list of order items.",
+    "properties": {},
+    "ref": "TransparencyCode",
+    "required": [],
+    "type": "array"
+  },
+  "UpdateShipmentStatusErrorResponse": {
+    "description": "The error response schema for the `UpdateShipmentStatus` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `UpdateShipmentStatus` operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UpdateShipmentStatusRequest": {
+    "description": "The request body for the `updateShipmentStatus` operation.",
+    "properties": {
+      "marketplaceId": {
+        "ref": "MarketplaceId"
+      },
+      "orderItems": {
+        "ref": "OrderItems"
+      },
+      "shipmentStatus": {
+        "ref": "ShipmentStatus"
+      }
+    },
+    "required": [
+      "marketplaceId",
+      "shipmentStatus"
+    ],
+    "type": "object"
+  },
+  "UpdateVerificationStatusErrorResponse": {
+    "description": "The error response schema for the `UpdateVerificationStatus` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `UpdateVerificationStatus` operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UpdateVerificationStatusRequest": {
+    "description": "The request body for the `updateVerificationStatus` operation.",
+    "properties": {
+      "regulatedOrderVerificationStatus": {
+        "description": "The updated values of the `VerificationStatus` field.",
+        "ref": "UpdateVerificationStatusRequestBody"
+      }
+    },
+    "required": [
+      "regulatedOrderVerificationStatus"
+    ],
+    "type": "object"
+  },
+  "UpdateVerificationStatusRequestBody": {
+    "description": "The updated values of the `VerificationStatus` field.",
+    "properties": {
+      "externalReviewerId": {
+        "description": "The identifier of the order's regulated information reviewer.",
+        "type": "string"
+      },
+      "rejectionReasonId": {
+        "description": "The unique identifier of the rejection reason used for rejecting the order's regulated information.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The new verification status of the order.",
+        "ref": "VerificationStatus"
+      },
+      "verificationDetails": {
+        "description": "Additional information regarding the verification of the order.",
+        "ref": "VerificationDetails"
+      }
+    },
+    "required": [
+      "externalReviewerId"
+    ],
+    "type": "object"
+  },
+  "ValidInterimStatusCode": {
+    "description": "A valid interim status code and its customer-facing description.",
+    "properties": {
+      "StatusCode": {
+        "description": "The identifier for the interim status type.",
+        "type": "string"
+      },
+      "StatusDescription": {
+        "description": "A customer-facing description of the interim status.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "StatusCode",
+      "StatusDescription"
+    ],
+    "type": "object"
+  },
+  "ValidVerificationDetail": {
+    "description": "The types of verification details that may be provided for the order and the criteria required for when the type of verification detail can be provided.",
+    "properties": {
+      "ValidVerificationStatuses": {
+        "description": "A list of valid verification statuses where the associated verification detail type may be provided.",
+        "ref": "VerificationStatus",
+        "type": "array"
+      },
+      "VerificationDetailType": {
+        "description": "A supported type of verification detail.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "ValidVerificationStatuses",
+      "VerificationDetailType"
+    ],
+    "type": "object"
+  },
+  "VerificationDetails": {
+    "description": "Additional information related to the verification of a regulated order.",
+    "properties": {
+      "approvedAlternativeDetails": {
+        "description": "Pre-approved alternative product attributes provided when a vet rejects an order but suggests a correction.",
+        "ref": "ApprovedAlternativeDetails"
+      },
+      "interimStatusDetail": {
+        "description": "Interim status information provided during the verification process.",
+        "ref": "InterimStatusDetail"
+      },
+      "prescriptionDetail": {
+        "description": "Information regarding the prescription tied to the order.",
+        "ref": "PrescriptionDetail"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "VerificationStatus": {
+    "description": "The verification status of the order.",
+    "enum": [
+      "Approved",
+      "Cancelled",
+      "Expired",
+      "Pending",
+      "Rejected"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  }
+}

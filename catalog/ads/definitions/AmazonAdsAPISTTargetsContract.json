@@ -1,0 +1,800 @@
+{
+ "api": "AmazonAdsAPISTTargetsContract",
+ "file": "specs/dest/AmazonAdsAPISTTargetsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "STAdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `SPONSORED_TELEVISION` | Sponsored Television ad product. |",
+   "enum": [
+    "SPONSORED_TELEVISION"
+   ],
+   "type": "string"
+  },
+  "STAudienceTarget": {
+   "description": "Target based on a specified audience ID.",
+   "properties": {
+    "audienceId": {
+     "$ref": "STMarketplaceStringValue"
+    },
+    "groupId": {
+     "description": "The string identifying a group of audiences. Only numbers formatted as strings are accepted (e.g. '1'). To add audiences to a new group, choose any string not currently being used on this ad group. To add audiences to a…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceId"
+   ],
+   "type": "object"
+  },
+  "STCreateAudienceTarget": {
+   "description": "Target based on a specified audience ID.",
+   "properties": {
+    "audienceId": {
+     "$ref": "STCreateMarketplaceStringValue"
+    },
+    "groupId": {
+     "description": "The string identifying a group of audiences. Only numbers formatted as strings are accepted (e.g. '1'). To add audiences to a new group, choose any string not currently being used on this ad group. To add audiences to a…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceId"
+   ],
+   "type": "object"
+  },
+  "STCreateLocationTarget": {
+   "description": "Target based on geographic location.",
+   "properties": {
+    "locationId": {
+     "description": "The ID of the geographic location to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "locationId"
+   ],
+   "type": "object"
+  },
+  "STCreateMarketplaceStringValue": {
+   "properties": {
+    "defaultValue": {
+     "description": "The default value. Either the default value or the marketplace settings should always be specified",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "STCreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "STCreateTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "audienceTarget": {
+       "$ref": "STCreateAudienceTarget"
+      }
+     },
+     "required": [
+      "audienceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "locationTarget": {
+       "$ref": "STCreateLocationTarget"
+      }
+     },
+     "required": [
+      "locationTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "STCreateTargetRequest": {
+   "properties": {
+    "targets": {
+     "items": {
+      "$ref": "STTargetCreate"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "STDeleteTargetRequest": {
+   "properties": {
+    "targetIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targetIds"
+   ],
+   "type": "object"
+  },
+  "STDeliveryReason": {
+   "enum": [
+    "AD_CREATIVES_NOT_RUNNING",
+    "AD_GROUPS_NOT_RUNNING",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_ENDED",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_START_DATE",
+    "AD_GROUP_POLICING_SUSPENDED",
+    "AD_NOT_APPROVED_FOR_ALL_AD_GROUPS",
+    "AD_NOT_ASSOCIATED_WITH_AD_GROUP",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_POLICING_SUSPENDED",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "STDeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | |------|------| | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplac…",
+   "enum": [
+    "DELIVERING",
+    "LIMITED",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "STLocationTarget": {
+   "description": "Target based on geographic location.",
+   "properties": {
+    "locationId": {
+     "description": "The ID of the geographic location to target.",
+     "type": "string"
+    },
+    "locationIdResolved": {
+     "description": "A human-readable location text. It's a read-only field.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "locationId"
+   ],
+   "type": "object"
+  },
+  "STMarketplaceStringValue": {
+   "properties": {
+    "defaultValue": {
+     "description": "The default value. Either the default value or the marketplace settings should always be specified",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "STQueryTargetRequest": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "STTargetAdGroupIdFilter"
+    },
+    "adProductFilter": {
+     "$ref": "STTargetAdProductFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "STTargetCampaignIdFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "STTargetStateFilter"
+    },
+    "targetIdFilter": {
+     "$ref": "STTargetTargetIdFilter"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "STState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "STStatus": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "STDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "STDeliveryStatus"
+    }
+   },
+   "required": [
+    "deliveryStatus"
+   ],
+   "type": "object"
+  },
+  "STTarget": {
+   "properties": {
+    "adGroupId": {
+     "description": "A unique identifier for the ad group associated with the target. Only used for ad-group level targets.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "STAdProduct"
+    },
+    "campaignId": {
+     "description": "A unique identifier for the campaign associated with the target. Only used for campaign-level targets.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date time the target was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time the target was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Indicates whether the target is negative or not.",
+     "type": "boolean"
+    },
+    "state": {
+     "$ref": "STState"
+    },
+    "status": {
+     "$ref": "STStatus"
+    },
+    "targetDetails": {
+     "$ref": "STTargetDetails"
+    },
+    "targetId": {
+     "description": "A unique identifier for the target.",
+     "type": "string"
+    },
+    "targetType": {
+     "$ref": "STTargetType"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "adProduct",
+    "campaignId",
+    "creationDateTime",
+    "lastUpdatedDateTime",
+    "negative",
+    "state",
+    "targetDetails",
+    "targetId",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "STTargetAdGroupIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STTargetAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `SPONSORED_TELEVISION` | Sponsored Television ad product. |",
+     "items": {
+      "$ref": "STAdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STTargetCampaignIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STTargetCreate": {
+   "properties": {
+    "adGroupId": {
+     "description": "A unique identifier for the ad group associated with the target. Only used for ad-group level targets.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "STAdProduct"
+    },
+    "negative": {
+     "description": "Indicates whether the target is negative or not.",
+     "type": "boolean"
+    },
+    "state": {
+     "$ref": "STCreateState"
+    },
+    "targetDetails": {
+     "$ref": "STCreateTargetDetails"
+    },
+    "targetType": {
+     "$ref": "STTargetType"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "adProduct",
+    "negative",
+    "state",
+    "targetDetails",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "STTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "audienceTarget": {
+       "$ref": "STAudienceTarget"
+      }
+     },
+     "required": [
+      "audienceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "locationTarget": {
+       "$ref": "STLocationTarget"
+      }
+     },
+     "required": [
+      "locationTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "STTargetMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "STTargetMultiStatusSuccess"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "STTargetMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "target": {
+     "$ref": "STTarget"
+    }
+   },
+   "required": [
+    "index",
+    "target"
+   ],
+   "type": "object"
+  },
+  "STTargetStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `ENABLED` | The object is set active by user and eligible for delivery. | | `PAUSED` | The object is stopped by user and not eligible for delivery. | | `ARCHIVED` …",
+     "items": {
+      "$ref": "STState"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STTargetSuccessResponse": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "targets": {
+     "items": {
+      "$ref": "STTarget"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "STTargetTargetIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STTargetType": {
+   "description": "**TargetType Enum:** | TargetType | Description | |------|------| | `AUDIENCE` | Target based on an audience segment. | | `LOCATION` | Target based on geographic location. |",
+   "enum": [
+    "AUDIENCE",
+    "LOCATION"
+   ],
+   "type": "string"
+  },
+  "STTargetUpdate": {
+   "properties": {
+    "state": {
+     "$ref": "STUpdateState"
+    },
+    "targetId": {
+     "description": "A unique identifier for the target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "targetId"
+   ],
+   "type": "object"
+  },
+  "STUpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "STUpdateTargetRequest": {
+   "properties": {
+    "targets": {
+     "items": {
+      "$ref": "STTargetUpdate"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

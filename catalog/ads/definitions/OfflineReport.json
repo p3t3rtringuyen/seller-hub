@@ -1,0 +1,224 @@
+{
+ "api": "OfflineReport",
+ "file": "specs/dest/OfflineReport_prod_3p.json",
+ "schemas": {
+  "AsyncReport": {
+   "properties": {
+    "configuration": {
+     "$ref": "AsyncReportConfiguration"
+    },
+    "createdAt": {
+     "description": "The date at which the report was created in ISO 8601 date time format.",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The end date for the reporting period in YYYY-mm-dd format.",
+     "type": "string"
+    },
+    "failureReason": {
+     "description": "Present for failed reports only. The reason why a report failed to generate.",
+     "nullable": true,
+     "type": "string"
+    },
+    "fileSize": {
+     "description": "The size of the report file, in bytes.",
+     "nullable": true,
+     "type": "number"
+    },
+    "generatedAt": {
+     "description": "The date at which the report was generated in ISO 8601 date time format.",
+     "nullable": true,
+     "type": "string"
+    },
+    "name": {
+     "description": "Optional. The name of the generated report.",
+     "nullable": true,
+     "type": "string"
+    },
+    "reportId": {
+     "description": "The identifier of the requested report.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The start date for the reporting period in YYYY-mm-dd format.",
+     "type": "string"
+    },
+    "status": {
+     "description": "The build status of the report. - `PENDING` - Report is created and awaiting processing. - `PROCESSING` - Report is processing. Please wait. - `COMPLETED` - Report has completed. Check the `url` for the output file. - `…",
+     "enum": [
+      "COMPLETED",
+      "FAILED",
+      "PENDING",
+      "PROCESSING"
+     ],
+     "type": "string"
+    },
+    "updatedAt": {
+     "description": "The date at which the report was last updated in ISO 8601 date time format.",
+     "type": "string"
+    },
+    "url": {
+     "description": "URL of the generated report.",
+     "nullable": true,
+     "type": "string"
+    },
+    "urlExpiresAt": {
+     "description": "The date at which the download URL for the generated report expires. urlExpires at this time defaults to 3600 seconds but may vary in the future.",
+     "nullable": true,
+     "type": "string"
+    }
+   },
+   "required": [
+    "configuration",
+    "createdAt",
+    "endDate",
+    "reportId",
+    "startDate",
+    "status",
+    "updatedAt"
+   ],
+   "type": "object"
+  },
+  "AsyncReportAdProduct": {
+   "description": "The advertising product.",
+   "enum": [
+    "ALL",
+    "DEMAND_SIDE_PLATFORM",
+    "SPONSORED_BRANDS",
+    "SPONSORED_DISPLAY",
+    "SPONSORED_PRODUCTS",
+    "SPONSORED_TELEVISION"
+   ],
+   "type": "string"
+  },
+  "AsyncReportConfiguration": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AsyncReportAdProduct"
+    },
+    "columns": {
+     "description": "The list of columns to be used for report. The availability of columns depends on the selection of reportTypeId. This list cannot be null or empty.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "filters": {
+     "description": "The list of filters supported by a report type. The availability of filters fields depends on the selection of reportTypeId.",
+     "items": {
+      "$ref": "AsyncReportFilter"
+     },
+     "nullable": true,
+     "type": "array"
+    },
+    "format": {
+     "description": "The report file format.",
+     "enum": [
+      "GZIP_JSON"
+     ],
+     "type": "string"
+    },
+    "groupBy": {
+     "description": "This field determines the aggregation level of the report data and also makes additional fields available for selection. This field cannot be null or empty.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "reportTypeId": {
+     "description": "The identifier of the Report Type to be generated.",
+     "type": "string"
+    },
+    "timeUnit": {
+     "description": "The aggregation level of report data. If the timeUnit is set to `SUMMARY`, the report data is aggregated at the time period specified. The availability of time unit breakdowns depends on the selection of reportTypeId.",
+     "enum": [
+      "DAILY",
+      "SUMMARY"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "adProduct",
+    "columns",
+    "format",
+    "groupBy",
+    "reportTypeId",
+    "timeUnit"
+   ],
+   "type": "object"
+  },
+  "AsyncReportFilter": {
+   "properties": {
+    "field": {
+     "description": "The field name of the filter",
+     "type": "string"
+    },
+    "values": {
+     "description": "The values to be filtered by",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AsyncReportingError": {
+   "description": "The Error Response.",
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "detail": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CreateAsyncReportRequest": {
+   "properties": {
+    "configuration": {
+     "$ref": "AsyncReportConfiguration"
+    },
+    "endDate": {
+     "description": "YYYY-MM-DD format. The maximum lookback window supported depends on the selection of reportTypeId. Most report types support `95 days` as lookback window.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the report.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "YYYY-MM-DD format. The maximum lookback window supported depends on the selection of reportTypeId. Most report types support `95 days` as lookback window.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "configuration",
+    "endDate",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "DeleteAsyncReportResponse": {
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "detail": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "reportId": {
+     "description": "The identifier of the report.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

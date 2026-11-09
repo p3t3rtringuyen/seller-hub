@@ -1,0 +1,721 @@
+{
+ "api": "AmazonAdsAPIALLCommitmentsContract",
+ "file": "specs/dest/AmazonAdsAPIALLCommitmentsContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Commitment": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertiserIds": {
+     "description": "Advertiser IDs associated with the commitment.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "campaignIds": {
+     "description": "Campaign IDs associated with the commitment.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "commitmentId": {
+     "description": "A unique identifier for the commitment.",
+     "type": "string"
+    },
+    "commitmentName": {
+     "description": "The name of the commitment.",
+     "type": "string"
+    },
+    "committedSpend": {
+     "description": "The total committed spend for the commitment.",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "dealIds": {
+     "description": "Deal IDs associated with the commitment.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "endDateTime": {
+     "description": "The end date and time of the commitment.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fulfillmentLevel": {
+     "$ref": "FulfillmentLevel"
+    },
+    "spendCalculationMode": {
+     "$ref": "SpendCalculationMode"
+    },
+    "startDateTime": {
+     "description": "The start date and time of the commitment.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "commitmentId",
+    "commitmentName",
+    "committedSpend",
+    "currencyCode",
+    "endDateTime",
+    "fulfillmentLevel",
+    "spendCalculationMode",
+    "startDateTime"
+   ],
+   "type": "object"
+  },
+  "CommitmentAdvertiserAccountIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "CommitmentAdvertisingDealIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "CommitmentCampaignIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "CommitmentCommitmentIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "CommitmentCommitmentNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "CommitmentCommitmentNameFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "CommitmentCommitmentNameFilterType": {
+   "description": "**CommitmentCommitmentNameFilterType Enum:** | CommitmentCommitmentNameFilterType | Description | | --- | --- | | `EXACT_MATCH` | Filter by exact match. | | `BROAD_MATCH` | Filter by broad match. |",
+   "enum": [
+    "BROAD_MATCH",
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "CommitmentCreate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertiserIds": {
+     "description": "Advertiser IDs associated with the commitment.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "campaignIds": {
+     "description": "Campaign IDs associated with the commitment.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "commitmentName": {
+     "description": "The name of the commitment.",
+     "type": "string"
+    },
+    "committedSpend": {
+     "description": "The total committed spend for the commitment.",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "dealIds": {
+     "description": "Deal IDs associated with the commitment.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "endDateTime": {
+     "description": "The end date and time of the commitment.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fulfillmentLevel": {
+     "$ref": "FulfillmentLevel"
+    },
+    "spendCalculationMode": {
+     "$ref": "SpendCalculationMode"
+    },
+    "startDateTime": {
+     "description": "The start date and time of the commitment.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "commitmentName",
+    "committedSpend",
+    "currencyCode",
+    "endDateTime",
+    "fulfillmentLevel",
+    "spendCalculationMode",
+    "startDateTime"
+   ],
+   "type": "object"
+  },
+  "CommitmentMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "CommitmentMultiStatusSuccess"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CommitmentMultiStatusSuccess": {
+   "properties": {
+    "commitment": {
+     "$ref": "Commitment"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "commitment",
+    "index"
+   ],
+   "type": "object"
+  },
+  "CommitmentSpendCalculationModeFilter": {
+   "properties": {
+    "include": {
+     "description": "**SpendCalculationMode Enum:** | SpendCalculationMode | Description | | --- | --- | | `MANAGER_ACCOUNT` | Spend is aggregated at the manager account level | | `ADVERTISER_ACCOUNT` | Spend is aggregated at the advertiser…",
+     "items": {
+      "$ref": "SpendCalculationMode"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "CommitmentSuccessResponse": {
+   "properties": {
+    "commitments": {
+     "items": {
+      "$ref": "Commitment"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CommitmentUpdate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertiserIds": {
+     "description": "Advertiser IDs associated with the commitment.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "campaignIds": {
+     "description": "Campaign IDs associated with the commitment.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "commitmentId": {
+     "description": "A unique identifier for the commitment.",
+     "type": "string"
+    },
+    "commitmentName": {
+     "description": "The name of the commitment.",
+     "type": "string"
+    },
+    "committedSpend": {
+     "description": "The total committed spend for the commitment.",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "dealIds": {
+     "description": "Deal IDs associated with the commitment.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "endDateTime": {
+     "description": "The end date and time of the commitment.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fulfillmentLevel": {
+     "$ref": "FulfillmentLevel"
+    },
+    "spendCalculationMode": {
+     "$ref": "SpendCalculationMode"
+    },
+    "startDateTime": {
+     "description": "The start date and time of the commitment.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "commitmentId"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateCommitmentRequest": {
+   "properties": {
+    "commitments": {
+     "items": {
+      "$ref": "CommitmentCreate"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commitments"
+   ],
+   "type": "object"
+  },
+  "CurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | |------|------| | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `DKK` | Danish Krone |…",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "DKK",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "NOK",
+    "NZD",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `CONTENT_TOO_LARGE` | The request is too large. Consider splitting it int…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "FulfillmentLevel": {
+   "description": "**FulfillmentLevel Enum:** | FulfillmentLevel | Description | |------|------| | `LEVEL_0` | Tracking-only commitments | | `LEVEL_5` | Prioritize commitment over campaign performance |",
+   "enum": [
+    "LEVEL_0",
+    "LEVEL_5"
+   ],
+   "type": "string"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryCommitmentRequest": {
+   "properties": {
+    "advertiserIdsFilter": {
+     "$ref": "CommitmentAdvertiserAccountIdFilter"
+    },
+    "campaignIdsFilter": {
+     "$ref": "CommitmentCampaignIdFilter"
+    },
+    "commitmentIdFilter": {
+     "$ref": "CommitmentCommitmentIdFilter"
+    },
+    "commitmentNameFilter": {
+     "$ref": "CommitmentCommitmentNameFilter"
+    },
+    "dealIdsFilter": {
+     "$ref": "CommitmentAdvertisingDealIdFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 10,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "spendCalculationModeFilter": {
+     "$ref": "CommitmentSpendCalculationModeFilter"
+    }
+   },
+   "type": "object"
+  },
+  "RetrieveCommitmentRequest": {
+   "properties": {
+    "commitmentIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commitmentIds"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SpendCalculationMode": {
+   "description": "**SpendCalculationMode Enum:** | SpendCalculationMode | Description | |------|------| | `ADVERTISER_ACCOUNT` | Spend is aggregated at the advertiser account level | | `CAMPAIGN` | Spend is aggregated at the campaign lev…",
+   "enum": [
+    "ADVERTISER_ACCOUNT",
+    "CAMPAIGN",
+    "MANAGER_ACCOUNT"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateCommitmentRequest": {
+   "properties": {
+    "commitments": {
+     "items": {
+      "$ref": "CommitmentUpdate"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commitments"
+   ],
+   "type": "object"
+  }
+ }
+}

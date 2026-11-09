@@ -1,0 +1,75 @@
+{
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "An array of individual error objects containing error details.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "Transaction": {
+    "description": "The transaction status details.",
+    "properties": {
+      "errors": {
+        "description": "Error code and message for the failed transaction.",
+        "ref": "ErrorList"
+      },
+      "status": {
+        "description": "Current processing status of the transaction.",
+        "enum": [
+          "Failure",
+          "Processing",
+          "Success"
+        ],
+        "type": "string"
+      },
+      "transactionId": {
+        "description": "The unique identifier sent in the 'transactionId' field in response to the post request of a specific transaction.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "status",
+      "transactionId"
+    ],
+    "type": "object"
+  },
+  "TransactionStatus": {
+    "description": "The payload for the getTransactionStatus operation.",
+    "properties": {
+      "transactionStatus": {
+        "ref": "Transaction"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

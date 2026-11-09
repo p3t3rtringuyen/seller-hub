@@ -1,0 +1,562 @@
+{
+  "AmazonOrderId": {
+    "description": "An Amazon-defined order identifier.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Code": {
+    "description": "An error code that identifies the type of error that occurred.",
+    "enum": [
+      "InternalServerError",
+      "InvalidInput",
+      "InvalidOrderState",
+      "InvalidTimeSlotId",
+      "OrderNotEligibleForRescheduling",
+      "RegionNotSupported",
+      "ResourceNotFound",
+      "RetryableAfterGettingNewSlots",
+      "ScheduleWindowExpired",
+      "ScheduledPackageAlreadyExists",
+      "TimeSlotNotAvailable"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CreateScheduledPackageRequest": {
+    "description": "The request schema for the `createScheduledPackage` operation.",
+    "properties": {
+      "amazonOrderId": {
+        "ref": "AmazonOrderId"
+      },
+      "marketplaceId": {
+        "ref": "String"
+      },
+      "packageDetails": {
+        "ref": "PackageDetails"
+      }
+    },
+    "required": [
+      "amazonOrderId",
+      "marketplaceId",
+      "packageDetails"
+    ],
+    "type": "object"
+  },
+  "CreateScheduledPackagesRequest": {
+    "description": "The request body for the POST /easyShip/2022-03-23/packages/bulk API.",
+    "properties": {
+      "labelFormat": {
+        "ref": "LabelFormat"
+      },
+      "marketplaceId": {
+        "ref": "String"
+      },
+      "orderScheduleDetailsList": {
+        "description": "An array allowing users to specify orders to be scheduled.",
+        "ref": "OrderScheduleDetails",
+        "type": "array"
+      }
+    },
+    "required": [
+      "labelFormat",
+      "marketplaceId",
+      "orderScheduleDetailsList"
+    ],
+    "type": "object"
+  },
+  "CreateScheduledPackagesResponse": {
+    "description": "The response schema for the bulk scheduling API.",
+    "properties": {
+      "printableDocumentsUrl": {
+        "ref": "URL"
+      },
+      "rejectedOrders": {
+        "description": "A list of orders we couldn't scheduled on your behalf.",
+        "ref": "RejectedOrder",
+        "type": "array"
+      },
+      "scheduledPackages": {
+        "description": "A list of packages.",
+        "ref": "Package",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DateTime": {
+    "description": "A datetime value in ISO 8601 format.",
+    "format": "date-time",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Dimension": {
+    "description": "The numerical value of the specified dimension.",
+    "format": "float",
+    "properties": {},
+    "required": [],
+    "type": "number"
+  },
+  "Dimensions": {
+    "description": "The dimensions of the scheduled package.",
+    "properties": {
+      "height": {
+        "description": "The height dimension.",
+        "ref": "Dimension"
+      },
+      "identifier": {
+        "description": "Identifier for custom package dimensions.",
+        "ref": "String"
+      },
+      "length": {
+        "description": "The length dimension.",
+        "ref": "Dimension"
+      },
+      "unit": {
+        "ref": "UnitOfLength"
+      },
+      "width": {
+        "description": "The width dimension.",
+        "ref": "Dimension"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses returned when a request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "HandoverMethod": {
+    "description": "Identifies the method by which a seller will hand a package over to Amazon Logistics.",
+    "enum": [
+      "DROPOFF",
+      "PICKUP"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "InvoiceData": {
+    "description": "Invoice number and date.",
+    "properties": {
+      "invoiceDate": {
+        "description": "The date that the invoice was generated.",
+        "ref": "DateTime"
+      },
+      "invoiceNumber": {
+        "description": "The invoice number.",
+        "ref": "String"
+      }
+    },
+    "required": [
+      "invoiceNumber"
+    ],
+    "type": "object"
+  },
+  "Item": {
+    "description": "Item identifier and serial number information.",
+    "properties": {
+      "orderItemId": {
+        "ref": "OrderItemId"
+      },
+      "orderItemSerialNumbers": {
+        "ref": "OrderItemSerialNumbers"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Items": {
+    "description": "A list of items contained in the package.",
+    "properties": {},
+    "ref": "Item",
+    "required": [],
+    "type": "array"
+  },
+  "LabelFormat": {
+    "description": "The file format in which the shipping label will be created.",
+    "enum": [
+      "PDF",
+      "ZPL"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ListHandoverSlotsRequest": {
+    "description": "The request schema for the `listHandoverSlots` operation.",
+    "properties": {
+      "amazonOrderId": {
+        "ref": "AmazonOrderId"
+      },
+      "marketplaceId": {
+        "ref": "String"
+      },
+      "packageDimensions": {
+        "ref": "Dimensions"
+      },
+      "packageWeight": {
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "amazonOrderId",
+      "marketplaceId",
+      "packageDimensions",
+      "packageWeight"
+    ],
+    "type": "object"
+  },
+  "ListHandoverSlotsResponse": {
+    "description": "The response schema for the `listHandoverSlots` operation.",
+    "properties": {
+      "amazonOrderId": {
+        "ref": "AmazonOrderId"
+      },
+      "timeSlots": {
+        "ref": "TimeSlots"
+      }
+    },
+    "required": [
+      "amazonOrderId",
+      "timeSlots"
+    ],
+    "type": "object"
+  },
+  "OrderItemId": {
+    "description": "The Amazon-defined order item identifier.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "OrderItemSerialNumber": {
+    "description": "A serial number for an item associated with the `OrderItemId` value.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "OrderItemSerialNumbers": {
+    "description": "A list of serial numbers for the items associated with the `OrderItemId` value.",
+    "properties": {},
+    "ref": "OrderItemSerialNumber",
+    "required": [],
+    "type": "array"
+  },
+  "OrderScheduleDetails": {
+    "description": "This object allows users to specify an order to be scheduled.",
+    "properties": {
+      "amazonOrderId": {
+        "ref": "AmazonOrderId"
+      },
+      "packageDetails": {
+        "ref": "PackageDetails"
+      }
+    },
+    "required": [
+      "amazonOrderId"
+    ],
+    "type": "object"
+  },
+  "Package": {
+    "description": "This object contains all the details of the scheduled Easy Ship package.",
+    "properties": {
+      "invoice": {
+        "ref": "InvoiceData"
+      },
+      "packageDimensions": {
+        "ref": "Dimensions"
+      },
+      "packageIdentifier": {
+        "ref": "PackageIdentifier"
+      },
+      "packageItems": {
+        "ref": "Items"
+      },
+      "packageStatus": {
+        "ref": "PackageStatus"
+      },
+      "packageTimeSlot": {
+        "ref": "TimeSlot"
+      },
+      "packageWeight": {
+        "ref": "Weight"
+      },
+      "scheduledPackageId": {
+        "ref": "ScheduledPackageId"
+      },
+      "trackingDetails": {
+        "ref": "TrackingDetails"
+      }
+    },
+    "required": [
+      "packageDimensions",
+      "packageTimeSlot",
+      "packageWeight",
+      "scheduledPackageId"
+    ],
+    "type": "object"
+  },
+  "PackageDetails": {
+    "description": "Package details.",
+    "properties": {
+      "packageIdentifier": {
+        "ref": "PackageIdentifier"
+      },
+      "packageItems": {
+        "ref": "Items"
+      },
+      "packageTimeSlot": {
+        "ref": "TimeSlot"
+      }
+    },
+    "required": [
+      "packageTimeSlot"
+    ],
+    "type": "object"
+  },
+  "PackageId": {
+    "description": "An Amazon-defined identifier for the scheduled package.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PackageIdentifier": {
+    "description": "Optional seller-created identifier that is printed on the shipping label to help the seller identify the package.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PackageStatus": {
+    "description": "The status of the package.",
+    "enum": [
+      "AtDestinationFC",
+      "AtOriginFC",
+      "DamagedInTransit",
+      "Delivered",
+      "LabelCanceled",
+      "LostInTransit",
+      "OutForDelivery",
+      "PickedUp",
+      "ReadyForPickup",
+      "Rejected",
+      "ReturnedToSeller",
+      "Undeliverable"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Packages": {
+    "description": "A list of packages.",
+    "properties": {
+      "packages": {
+        "description": "A list of packages.",
+        "ref": "Package",
+        "type": "array"
+      }
+    },
+    "required": [
+      "packages"
+    ],
+    "type": "object"
+  },
+  "RejectedOrder": {
+    "description": "A order which we couldn't schedule on your behalf.",
+    "properties": {
+      "amazonOrderId": {
+        "ref": "AmazonOrderId"
+      },
+      "error": {
+        "ref": "Error"
+      }
+    },
+    "required": [
+      "amazonOrderId"
+    ],
+    "type": "object"
+  },
+  "ScheduledPackageId": {
+    "description": "Identifies the scheduled package to be updated.",
+    "properties": {
+      "amazonOrderId": {
+        "ref": "AmazonOrderId"
+      },
+      "packageId": {
+        "ref": "PackageId"
+      }
+    },
+    "required": [
+      "amazonOrderId"
+    ],
+    "type": "object"
+  },
+  "String": {
+    "description": "A string of up to 255 characters.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "TimeSlot": {
+    "description": "A time window to hand over an Easy Ship package to Amazon Logistics.",
+    "properties": {
+      "endTime": {
+        "description": "The end date and time of the time slot.",
+        "ref": "DateTime"
+      },
+      "handoverMethod": {
+        "description": "The method by which a seller will hand a package over to Amazon Logistics.",
+        "ref": "HandoverMethod"
+      },
+      "slotId": {
+        "description": "An Amazon-defined identifier for a time slot.",
+        "ref": "String"
+      },
+      "startTime": {
+        "description": "The start date and time of the time slot.",
+        "ref": "DateTime"
+      }
+    },
+    "required": [
+      "slotId"
+    ],
+    "type": "object"
+  },
+  "TimeSlots": {
+    "description": "A list of time slots.",
+    "properties": {},
+    "ref": "TimeSlot",
+    "required": [],
+    "type": "array"
+  },
+  "TrackingDetails": {
+    "description": "Representation of tracking metadata.",
+    "properties": {
+      "trackingId": {
+        "description": "The tracking identifier for the scheduled package.",
+        "ref": "String"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "URL": {
+    "description": "A pre-signed URL for the zip document containing the shipping labels and the documents enabled for your marketplace.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "UnitOfLength": {
+    "description": "The unit of measurement used to measure the length.",
+    "enum": [
+      "cm"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "UnitOfWeight": {
+    "description": "The unit of measurement used to measure the weight.",
+    "enum": [
+      "g",
+      "grams"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "UpdatePackageDetails": {
+    "description": "Request to update the time slot of a package.",
+    "properties": {
+      "packageTimeSlot": {
+        "ref": "TimeSlot"
+      },
+      "scheduledPackageId": {
+        "ref": "ScheduledPackageId"
+      }
+    },
+    "required": [
+      "packageTimeSlot",
+      "scheduledPackageId"
+    ],
+    "type": "object"
+  },
+  "UpdatePackageDetailsList": {
+    "description": "A list of package update details.",
+    "properties": {},
+    "ref": "UpdatePackageDetails",
+    "required": [],
+    "type": "array"
+  },
+  "UpdateScheduledPackagesRequest": {
+    "description": "The request schema for the `updateScheduledPackages` operation.",
+    "properties": {
+      "marketplaceId": {
+        "ref": "String"
+      },
+      "updatePackageDetailsList": {
+        "ref": "UpdatePackageDetailsList"
+      }
+    },
+    "required": [
+      "marketplaceId",
+      "updatePackageDetailsList"
+    ],
+    "type": "object"
+  },
+  "Weight": {
+    "description": "The weight of the scheduled package",
+    "properties": {
+      "unit": {
+        "ref": "UnitOfWeight"
+      },
+      "value": {
+        "ref": "WeightValue"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "WeightValue": {
+    "description": "The weight of the package.",
+    "format": "float",
+    "properties": {},
+    "required": [],
+    "type": "number"
+  }
+}

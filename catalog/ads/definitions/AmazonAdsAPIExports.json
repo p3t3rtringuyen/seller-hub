@@ -1,0 +1,187 @@
+{
+ "api": "AmazonAdsAPIExports",
+ "file": "specs/dest/AmazonAdsAPIExports_prod_3p.json",
+ "schemas": {
+  "BaseUniversalApiExportRequest": {
+   "properties": {
+    "adProductFilter": {
+     "default": [
+      "SPONSORED_BRANDS",
+      "SPONSORED_DISPLAY",
+      "SPONSORED_PRODUCTS"
+     ],
+     "description": "Filters the entities returned in export only to selected ad products. In case the filter is not provided, it returns entities from all ad products.",
+     "items": {
+      "enum": [
+       "SPONSORED_BRANDS",
+       "SPONSORED_DISPLAY",
+       "SPONSORED_PRODUCTS"
+      ],
+      "type": "string"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    },
+    "stateFilter": {
+     "default": [
+      "ENABLED",
+      "PAUSED"
+     ],
+     "description": "Filters the entities returned in export only to selected states. In case the filter is not provided, it returns only `ENABLED` or `PAUSED` entities.",
+     "items": {
+      "enum": [
+       "ARCHIVED",
+       "ENABLED",
+       "PAUSED"
+      ],
+      "type": "string"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "TargetsUniversalApiExportRequest": {
+   "allOf": [
+    {
+     "$ref": "BaseUniversalApiExportRequest"
+    },
+    {
+     "properties": {
+      "negativeFilter": {
+       "default": [
+        "false",
+        "true"
+       ],
+       "description": "Filters the targets returned in export to negative or positive targets. In case the filter is not provided, it returns both negative and positive targets.",
+       "items": {
+        "type": "boolean"
+       },
+       "maxItems": 2,
+       "minItems": 1,
+       "type": "array"
+      },
+      "targetLevelFilter": {
+       "default": [
+        "AD_GROUP",
+        "CAMPAIGN"
+       ],
+       "description": "Filters the targets returned in export only to selected levels. In case the filter is not provided, it returns both `CAMPAIGN` and `AD_GROUP` level targets.",
+       "items": {
+        "enum": [
+         "AD_GROUP",
+         "CAMPAIGN"
+        ],
+        "type": "string"
+       },
+       "maxItems": 2,
+       "minItems": 1,
+       "type": "array"
+      },
+      "targetTypeFilter": {
+       "default": [
+        "AUDIENCE",
+        "AUTO",
+        "CONTENT_CATEGORY",
+        "KEYWORD",
+        "PRODUCT",
+        "PRODUCT_AUDIENCE",
+        "PRODUCT_CATEGORY",
+        "PRODUCT_CATEGORY_AUDIENCE",
+        "THEME"
+       ],
+       "description": "Filters the targets returned in exports only to selected types. In case the filter is not provided, it returns targets with all target types. Target types are only supported by certain ad products - for instance, `THEME…",
+       "items": {
+        "enum": [
+         "AUDIENCE",
+         "AUTO",
+         "CONTENT_CATEGORY",
+         "KEYWORD",
+         "PRODUCT",
+         "PRODUCT_AUDIENCE",
+         "PRODUCT_CATEGORY",
+         "PRODUCT_CATEGORY_AUDIENCE",
+         "THEME"
+        ],
+        "type": "string"
+       },
+       "maxItems": 9,
+       "minItems": 1,
+       "type": "array"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "UniversalApiError": {
+   "properties": {
+    "errorCode": {
+     "description": "- INTERNAL_ERROR: The export has failed with an internal error. If the issue persists, please contact customer support. - TIMED_OUT: The export request has timed out. For exports with millions of entities, try using fil…",
+     "enum": [
+      "INTERNAL_ERROR",
+      "TIMED_OUT"
+     ],
+     "type": "string"
+    },
+    "message": {
+     "description": "A human-readable description of the error.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "message"
+   ]
+  },
+  "UniversalApiExportResponse": {
+   "properties": {
+    "createdAt": {
+     "description": "Date of when the export request was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "error": {
+     "$ref": "UniversalApiError"
+    },
+    "exportId": {
+     "description": "The export identifier.",
+     "type": "string"
+    },
+    "fileSize": {
+     "description": "Byte size of the generated file.",
+     "type": "number"
+    },
+    "generatedAt": {
+     "description": "Date of when the export was finished generating.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "status": {
+     "description": "The generation status of the export. - PROCESSING: Export is currently in progress. - COMPLETED: Export has completed successfully. - FAILED: Export has failed. See the error message for more details.",
+     "enum": [
+      "COMPLETED",
+      "FAILED",
+      "PROCESSING"
+     ],
+     "type": "string"
+    },
+    "url": {
+     "description": "A URL for the export. It’s only available if status is COMPLETED.",
+     "type": "string"
+    },
+    "urlExpiresAt": {
+     "description": "Date at which the download URL for the generated export expires.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "exportId",
+    "status"
+   ]
+  }
+ }
+}

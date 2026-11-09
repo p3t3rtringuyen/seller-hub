@@ -1,0 +1,336 @@
+{
+ "api": "AmazonAdsAPIALLBuyerSeatsContract",
+ "file": "specs/dest/AmazonAdsAPIALLBuyerSeatsContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BuyerSeat": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "buyerSeatId": {
+     "description": "The buyer seat identifier; format varies by exchange but typically alphanumeric (e.g., 'AMZA123').",
+     "type": "string"
+    },
+    "exchangeId": {
+     "description": "The exchange where this buyer seat is registered and through which bids are submitted.",
+     "type": "string"
+    },
+    "seatType": {
+     "$ref": "BuyerSeatType"
+    }
+   },
+   "required": [
+    "buyerSeatId",
+    "seatType"
+   ],
+   "type": "object"
+  },
+  "BuyerSeatCreate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "exchangeId": {
+     "description": "The exchange where this buyer seat is registered and through which bids are submitted.",
+     "type": "string"
+    },
+    "seatType": {
+     "$ref": "BuyerSeatType"
+    }
+   },
+   "required": [
+    "seatType"
+   ],
+   "type": "object"
+  },
+  "BuyerSeatMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "BuyerSeatMultiStatusSuccess"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BuyerSeatMultiStatusSuccess": {
+   "properties": {
+    "buyerSeat": {
+     "$ref": "BuyerSeat"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "buyerSeat",
+    "index"
+   ],
+   "type": "object"
+  },
+  "BuyerSeatSuccessResponse": {
+   "properties": {
+    "buyerSeats": {
+     "items": {
+      "$ref": "BuyerSeat"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BuyerSeatType": {
+   "description": "**BuyerSeatType Enum:** | BuyerSeatType | Description | |------|------| | `DEAL_CREATION` | The ID for deal providers to identify the buyer seat when creating deals. | | `SPEND_TRACKING` | The ID passed to exchanges to …",
+   "enum": [
+    "DEAL_CREATION",
+    "SPEND_TRACKING"
+   ],
+   "type": "string"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateBuyerSeatRequest": {
+   "properties": {
+    "buyerSeats": {
+     "items": {
+      "$ref": "BuyerSeatCreate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "buyerSeats"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `FORBIDDEN` | The caller is not authorized to make the given request. | |…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

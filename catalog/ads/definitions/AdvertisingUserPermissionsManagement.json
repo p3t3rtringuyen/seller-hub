@@ -1,0 +1,547 @@
+{
+ "api": "AdvertisingUserPermissionsManagement",
+ "file": "specs/dest/AdvertisingUserPermissionsManagement_prod_3p.json",
+ "schemas": {
+  "AccessScope": {
+   "enum": [
+    "ALL",
+    "DIRECT",
+    "EFFECTIVE",
+    "INDIRECT"
+   ],
+   "type": "string"
+  },
+  "AccessScopeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "AccessScope"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BadRequestExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CountryCode": {
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "CL",
+    "CO",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NG",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "CountryCodesFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteUserPermissionsError": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "countries": {
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "userId": {
+     "description": "User ID of the user that had an error when their permissions were deleted",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteUserPermissionsRequestContent": {
+   "properties": {
+    "users": {
+     "items": {
+      "$ref": "UserId"
+     },
+     "maxItems": 200,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteUserPermissionsResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DeleteUserPermissionsError"
+     },
+     "type": "array"
+    },
+    "successes": {
+     "items": {
+      "$ref": "DeleteUserPermissionsSuccess"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteUserPermissionsSuccess": {
+   "properties": {
+    "userId": {
+     "description": "User ID of the user having their permissions deleted",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ForbiddenExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListUsersRequestContent": {
+   "properties": {
+    "accessScopeFilter": {
+     "$ref": "AccessScopeFilter"
+    },
+    "countryCodesFilter": {
+     "$ref": "CountryCodesFilter"
+    },
+    "maxResults": {
+     "description": "Max results for pagination",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "The pagination token that is required to go to the next page",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListUsersResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "users": {
+     "items": {
+      "$ref": "User"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "NotFoundExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Permission": {
+   "properties": {
+    "accessLevel": {
+     "type": "string"
+    },
+    "countryCodes": {
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "id": {
+     "type": "string"
+    },
+    "resourceType": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PermissionId": {
+   "properties": {
+    "name": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PermissionSet": {
+   "properties": {
+    "customPermissionSet": {
+     "description": "If type = CUSTOM_PERMISSION_SET, indicates the permissions of the invitation. Different permissions are supported for different account types. - Amazon DSP Advertising Accounts: campaign_edit, creatives_edit, reports_ed…",
+     "items": {
+      "$ref": "PermissionId"
+     },
+     "maxItems": 200,
+     "minItems": 1,
+     "type": "array"
+    },
+    "role": {
+     "$ref": "Role"
+    },
+    "type": {
+     "$ref": "Type"
+    }
+   },
+   "required": [
+    "type"
+   ],
+   "type": "object"
+  },
+  "QueryUserPermissionsRequestContent": {
+   "properties": {
+    "accessScopeFilter": {
+     "$ref": "AccessScopeFilter"
+    },
+    "countryCodesFilter": {
+     "$ref": "CountryCodesFilter"
+    },
+    "maxResults": {
+     "description": "Max results for pagination",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "The pagination token that is required to go to the next page",
+     "type": "string"
+    },
+    "userId": {
+     "description": "User ID for the request",
+     "maxLength": 150,
+     "type": "string"
+    }
+   },
+   "required": [
+    "userId"
+   ],
+   "type": "object"
+  },
+  "QueryUserPermissionsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "permissions": {
+     "items": {
+      "$ref": "Permission"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "QueryUserRolesRequestContent": {
+   "properties": {
+    "countryCodesFilter": {
+     "$ref": "CountryCodesFilter"
+    },
+    "maxResults": {
+     "description": "Max results for pagination",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "The pagination token that is required to go to the next page",
+     "type": "string"
+    },
+    "userId": {
+     "description": "This represents the userId of the target of the QueryUserRoles call",
+     "maxLength": 150,
+     "type": "string"
+    }
+   },
+   "required": [
+    "userId"
+   ],
+   "type": "object"
+  },
+  "QueryUserRolesResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "roles": {
+     "items": {
+      "$ref": "RoleForCountries"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "RateLimitExceededExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Role": {
+   "enum": [
+    "ADMIN",
+    "EDITOR",
+    "VIEWER"
+   ],
+   "type": "string"
+  },
+  "RoleForCountries": {
+   "properties": {
+    "countryCodes": {
+     "description": "The roles for an account are associated to a specific country/countries These roles may differ per countries",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "permissions": {
+     "description": "List of granular permission strings populated when type is CUSTOM_PERMISSION_SET and accessType is EXTERNAL.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "role": {
+     "$ref": "Role"
+    },
+    "type": {
+     "$ref": "Type"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Type": {
+   "enum": [
+    "CUSTOM_PERMISSION_SET",
+    "ROLE"
+   ],
+   "type": "string"
+  },
+  "UnauthorizedExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateUserPermissionsError": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "userId": {
+     "description": "User ID of the user having their permissions updated",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateUserPermissionsRequestContent": {
+   "properties": {
+    "userPermissions": {
+     "items": {
+      "$ref": "UserPermission"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateUserPermissionsResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "UpdateUserPermissionsError"
+     },
+     "type": "array"
+    },
+    "successes": {
+     "items": {
+      "$ref": "UpdateUserPermissionsSuccess"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateUserPermissionsSuccess": {
+   "properties": {
+    "userId": {
+     "description": "User ID of the user having their permissions updated",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "User": {
+   "properties": {
+    "countryCodes": {
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "emailAddress": {
+     "type": "string"
+    },
+    "userId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "emailAddress",
+    "userId"
+   ],
+   "type": "object"
+  },
+  "UserCannotBeRemovedExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "countries": {
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UserId": {
+   "properties": {
+    "userId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UserPermission": {
+   "properties": {
+    "countryCodes": {
+     "description": "List of two-letter ISO 3166 country codes that the user is having permissions edited for. Only valid for updates to global accounts.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "permissionSet": {
+     "$ref": "PermissionSet"
+    },
+    "userId": {
+     "description": "User ID of the user having their permissions updated",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

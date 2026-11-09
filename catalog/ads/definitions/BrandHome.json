@@ -1,0 +1,256 @@
+{
+ "api": "BrandHome",
+ "file": "specs/dest/BrandHome_prod_3p.json",
+ "schemas": {
+  "AuthorizationExceptionResponse": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestExceptionResponse": {
+   "description": "Invalid input values. Ex bad marketplaceId, missing required inputs, or requester does not have permission for API and/or resource.",
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ConflictExceptionResponse": {
+   "description": "Conflict detected",
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ForbiddenExceptionResponse": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "IdentifierType": {
+   "description": "Identifier type for requested entity/resource",
+   "enum": [
+    "ASIN",
+    "BRAND_AID_ID",
+    "ENTITY_ID",
+    "GCOR",
+    "NODE",
+    "STORE"
+   ],
+   "type": "string"
+  },
+  "ListPagesRequest": {
+   "description": "Request Object for ListPages API",
+   "properties": {
+    "identifier": {
+     "description": "Identifier for requested store. Currently supported: store's brand-/sub-entityId and storeId.",
+     "type": "string"
+    },
+    "identifierType": {
+     "$ref": "IdentifierType"
+    },
+    "maxResults": {
+     "description": "Optional: Max number of entries returned in a call. Supported values are 1-30 inclusive. Defaults to 30.",
+     "maximum": 30,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Optional: Pagination input token. If provided, returns the next paginated result of size <= `maxResults`.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "identifier",
+    "identifierType"
+   ],
+   "type": "object"
+  },
+  "ListPagesResponse": {
+   "description": "Response Object for ListPages API",
+   "properties": {
+    "nextToken": {
+     "description": "Optional: Pagination input token. If provided, returns the next paginated result of size <= `maxResults`.",
+     "type": "string"
+    },
+    "storePages": {
+     "description": "Paginated list of `StorePageInfos`'s. Result list size <= maxResults.",
+     "items": {
+      "$ref": "StorePageInfo"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListStoresRequest": {
+   "description": "Request Object for ListStores API",
+   "properties": {
+    "identifier": {
+     "description": "Optional: Identifier for requested entity. Currently supported: Advertiser entityId.",
+     "type": "string"
+    },
+    "identifierType": {
+     "$ref": "IdentifierType"
+    },
+    "maxResults": {
+     "description": "Optional: Max number of entries returned in a call. Supported values are 1-30 inclusive. Defaults to 30.",
+     "maximum": 30,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Optional: Pagination input token. If provided, returns the next paginated result of size <= `maxResults`.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListStoresResponse": {
+   "description": "Response Object for ListStores API",
+   "properties": {
+    "nextToken": {
+     "description": "Nullable. The next token to be used for paginated querying.",
+     "type": "string"
+    },
+    "stores": {
+     "description": "Paginated list of `StoreInfo`'s. Result list size <= maxResults. If advertiser has no stores, returns empty list.",
+     "items": {
+      "$ref": "StoreInfo"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "stores"
+   ],
+   "type": "object"
+  },
+  "NotFoundExceptionResponse": {
+   "description": "Requested resource not found",
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "State": {
+   "description": "Status of a resource",
+   "enum": [
+    "APPROVED",
+    "CANCELED",
+    "DRAFT",
+    "LIVE",
+    "PENDING",
+    "REJECTED",
+    "SCHEDULED"
+   ],
+   "type": "string"
+  },
+  "StoreId": {
+   "description": "The Store Identifier.",
+   "maxLength": 36,
+   "type": "string"
+  },
+  "StoreInfo": {
+   "properties": {
+    "brandEntityId": {
+     "description": "The ID of the Brand Entity associated with the store",
+     "type": "string"
+    },
+    "storeId": {
+     "$ref": "StoreId"
+    },
+    "storeName": {
+     "description": "The name of the store",
+     "type": "string"
+    },
+    "storeStatus": {
+     "$ref": "State"
+    }
+   },
+   "type": "object"
+  },
+  "StorePageInfo": {
+   "properties": {
+    "storePageId": {
+     "description": "The ID of the store page",
+     "type": "string"
+    },
+    "storePageName": {
+     "description": "The name of the store page",
+     "type": "string"
+    },
+    "storePageStatus": {
+     "$ref": "State"
+    },
+    "storePageUrl": {
+     "description": "The URL of the store page",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ThrottlingExceptionResponse": {
+   "description": "Throttling",
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

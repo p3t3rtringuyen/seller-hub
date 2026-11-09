@@ -1,0 +1,219 @@
+{
+ "api": "BrandBenchmarks",
+ "file": "specs/dest/BrandBenchmarks_prod_3p.json",
+ "schemas": {
+  "AdvertiserReportMetadata": {
+   "properties": {
+    "advertiserId": {
+     "type": "string"
+    },
+    "indexDate": {
+     "type": "string"
+    },
+    "obfuscatedMarketplaceId": {
+     "type": "string"
+    },
+    "reportType": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "SubErrorV1"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "SubErrorV1"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "SubErrorV1"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetAdvertiserReportResponseContent": {
+   "description": "The presigned S3 URL to allow clients to download the report.",
+   "properties": {
+    "downloadLink": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "InternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "SubErrorV1"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListAdvertiserReportMetadataResponseContent": {
+   "description": "The presigned S3 URL to allow clients to download the report.",
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "reportsMetadata": {
+     "items": {
+      "$ref": "AdvertiserReportMetadata"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ResourceNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "SubErrorV1"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "SubErrorV1"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "SubErrorV1"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "SubErrorV1"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

@@ -1,0 +1,2801 @@
+{
+  "Address": {
+    "description": "Specific details to identify a place.",
+    "properties": {
+      "addressLine1": {
+        "description": "Street address information.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional street address information.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city.",
+        "type": "string"
+      },
+      "companyName": {
+        "description": "The name of the business.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The country code in two-character ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "districtOrCounty": {
+        "description": "The district or county.",
+        "type": "string"
+      },
+      "email": {
+        "description": "The email address.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the individual who is the primary contact.",
+        "type": "string"
+      },
+      "phoneNumber": {
+        "description": "The phone number.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "The postal code.",
+        "type": "string"
+      },
+      "stateOrProvinceCode": {
+        "description": "The state or province code.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "addressLine1",
+      "city",
+      "countryCode",
+      "name",
+      "postalCode"
+    ],
+    "type": "object"
+  },
+  "AddressInput": {
+    "description": "Specific details to identify a place.",
+    "properties": {
+      "addressLine1": {
+        "description": "Street address information.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional street address information.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city.",
+        "type": "string"
+      },
+      "companyName": {
+        "description": "The name of the business.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The country code in two-character ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "districtOrCounty": {
+        "description": "The district or county.",
+        "type": "string"
+      },
+      "email": {
+        "description": "The email address.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the individual who is the primary contact.",
+        "type": "string"
+      },
+      "phoneNumber": {
+        "description": "The phone number.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "The postal code.",
+        "type": "string"
+      },
+      "stateOrProvinceCode": {
+        "description": "The state or province code.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "addressLine1",
+      "city",
+      "countryCode",
+      "name",
+      "phoneNumber",
+      "postalCode"
+    ],
+    "type": "object"
+  },
+  "AllOwnersConstraint": {
+    "description": "A constraint that applies to all owners.",
+    "enum": [
+      "MUST_MATCH"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AppointmentSlot": {
+    "description": "The fulfillment center appointment slot for the transportation option.",
+    "properties": {
+      "slotId": {
+        "description": "An identifier to a self-ship appointment slot.",
+        "type": "string"
+      },
+      "slotTime": {
+        "ref": "AppointmentSlotTime"
+      }
+    },
+    "required": [
+      "slotId",
+      "slotTime"
+    ],
+    "type": "object"
+  },
+  "AppointmentSlotTime": {
+    "description": "An appointment slot time with start and end.",
+    "properties": {
+      "endTime": {
+        "description": "The end timestamp of the appointment in UTC.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startTime": {
+        "description": "The start timestamp of the appointment in UTC.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "endTime",
+      "startTime"
+    ],
+    "type": "object"
+  },
+  "Box": {
+    "description": "Contains information about a box that is used in the inbound plan.",
+    "properties": {
+      "boxId": {
+        "description": "The ID provided by Amazon that identifies a given box.",
+        "type": "string"
+      },
+      "contentInformationSource": {
+        "ref": "BoxContentInformationSource"
+      },
+      "destinationRegion": {
+        "ref": "Region"
+      },
+      "dimensions": {
+        "ref": "Dimensions"
+      },
+      "externalContainerIdentifier": {
+        "description": "The external identifier for this container / box.",
+        "type": "string"
+      },
+      "externalContainerIdentifierType": {
+        "description": "Type of the external identifier used.",
+        "type": "string"
+      },
+      "items": {
+        "description": "Items contained within the box.",
+        "ref": "Item",
+        "type": "array"
+      },
+      "packageId": {
+        "description": "Primary key to uniquely identify a Package (Box or Pallet).",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "The number of containers where all other properties like weight or dimensions are identical.",
+        "type": "integer"
+      },
+      "templateName": {
+        "description": "Template name of the box.",
+        "type": "string"
+      },
+      "weight": {
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "packageId"
+    ],
+    "type": "object"
+  },
+  "BoxContentInformationSource": {
+    "description": "Indication of how box content is meant to be provided.",
+    "enum": [
+      "BARCODE_2D",
+      "BOX_CONTENT_PROVIDED",
+      "MANUAL_PROCESS"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "BoxInput": {
+    "description": "Input information for a given box.",
+    "properties": {
+      "contentInformationSource": {
+        "ref": "BoxContentInformationSource"
+      },
+      "dimensions": {
+        "ref": "Dimensions"
+      },
+      "items": {
+        "description": "The items and their quantity in the box.",
+        "ref": "ItemInput",
+        "type": "array"
+      },
+      "quantity": {
+        "description": "The number of containers where all other properties like weight or dimensions are identical.",
+        "type": "integer"
+      },
+      "weight": {
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "contentInformationSource",
+      "dimensions",
+      "quantity",
+      "weight"
+    ],
+    "type": "object"
+  },
+  "BoxRequirements": {
+    "description": "The requirements for a box in the packing option.",
+    "properties": {
+      "weight": {
+        "ref": "WeightRange"
+      }
+    },
+    "required": [
+      "weight"
+    ],
+    "type": "object"
+  },
+  "BoxUpdateInput": {
+    "description": "Input information for updating a box",
+    "properties": {
+      "contentInformationSource": {
+        "ref": "BoxContentInformationSource"
+      },
+      "dimensions": {
+        "ref": "Dimensions"
+      },
+      "items": {
+        "description": "The items and their quantity in the box.",
+        "ref": "ItemInput",
+        "type": "array"
+      },
+      "packageId": {
+        "description": "Primary key to uniquely identify a Box Package.",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "The number of containers where all other properties like weight or dimensions are identical.",
+        "type": "integer"
+      },
+      "weight": {
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "contentInformationSource",
+      "dimensions",
+      "quantity",
+      "weight"
+    ],
+    "type": "object"
+  },
+  "CancelInboundPlanResponse": {
+    "description": "The `cancelInboundPlan` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "CancelSelfShipAppointmentRequest": {
+    "description": "The `cancelSelfShipAppointment` request.",
+    "properties": {
+      "reasonComment": {
+        "ref": "ReasonComment"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CancelSelfShipAppointmentResponse": {
+    "description": "The `CancelSelfShipAppointment` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "Carrier": {
+    "description": "The carrier for the inbound shipment.",
+    "properties": {
+      "alphaCode": {
+        "description": "The carrier code.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the carrier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CarrierAppointment": {
+    "description": "Contains details for a transportation carrier appointment.",
+    "properties": {
+      "endTime": {
+        "description": "The end timestamp of the appointment in UTC.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startTime": {
+        "description": "The start timestamp of the appointment in UTC.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "endTime",
+      "startTime"
+    ],
+    "type": "object"
+  },
+  "ComplianceDetail": {
+    "description": "Contains item identifiers and related tax information.",
+    "properties": {
+      "asin": {
+        "description": "The Amazon Standard Identification Number, which identifies the detail page identifier.",
+        "type": "string"
+      },
+      "fnsku": {
+        "description": "The Fulfillment Network SKU, which identifies a real fulfillable item with catalog data and condition.",
+        "type": "string"
+      },
+      "msku": {
+        "description": "The merchant SKU, a merchant-supplied identifier for a specific SKU.",
+        "type": "string"
+      },
+      "taxDetails": {
+        "ref": "TaxDetails"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ConfirmDeliveryWindowOptionsResponse": {
+    "description": "The `confirmDeliveryWindowOptions` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "ConfirmPackingOptionResponse": {
+    "description": "The `confirmPackingOption` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "ConfirmPlacementOptionResponse": {
+    "description": "The `confirmPlacementOption` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "ConfirmShipmentContentUpdatePreviewResponse": {
+    "description": "The `confirmShipmentContentUpdatePreview` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "ConfirmTransportationOptionsRequest": {
+    "description": "The `confirmTransportationOptions` request.",
+    "properties": {
+      "transportationSelections": {
+        "description": "Information needed to confirm one of the available transportation options.",
+        "ref": "TransportationSelection",
+        "type": "array"
+      }
+    },
+    "required": [
+      "transportationSelections"
+    ],
+    "type": "object"
+  },
+  "ConfirmTransportationOptionsResponse": {
+    "description": "The `confirmTransportationOptions` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "ContactInformation": {
+    "description": "The seller's contact information.",
+    "properties": {
+      "email": {
+        "description": "The email address.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The contact's name.",
+        "type": "string"
+      },
+      "phoneNumber": {
+        "description": "The phone number.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "name",
+      "phoneNumber"
+    ],
+    "type": "object"
+  },
+  "ContentUpdatePreview": {
+    "description": "Preview of the changes that will be applied to the shipment.",
+    "properties": {
+      "contentUpdatePreviewId": {
+        "description": "Identifier of a content update preview.",
+        "type": "string"
+      },
+      "expiration": {
+        "description": "The time at which the content update expires.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "requestedUpdates": {
+        "ref": "RequestedUpdates"
+      },
+      "transportationOption": {
+        "ref": "TransportationOption"
+      }
+    },
+    "required": [
+      "contentUpdatePreviewId",
+      "expiration",
+      "requestedUpdates",
+      "transportationOption"
+    ],
+    "type": "object"
+  },
+  "CreateInboundPlanRequest": {
+    "description": "The `createInboundPlan` request.",
+    "properties": {
+      "destinationMarketplaces": {
+        "description": "Marketplaces where the items need to be shipped to.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "items": {
+        "description": "Items included in this plan.",
+        "ref": "ItemInput",
+        "type": "array"
+      },
+      "name": {
+        "description": "Name for the Inbound Plan.",
+        "type": "string"
+      },
+      "sourceAddress": {
+        "ref": "AddressInput"
+      }
+    },
+    "required": [
+      "destinationMarketplaces",
+      "items",
+      "sourceAddress"
+    ],
+    "type": "object"
+  },
+  "CreateInboundPlanResponse": {
+    "description": "The `createInboundPlan` response.",
+    "properties": {
+      "inboundPlanId": {
+        "description": "Identifier of an inbound plan.",
+        "type": "string"
+      },
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "inboundPlanId",
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "CreateMarketplaceItemLabelsRequest": {
+    "description": "The `createMarketplaceItemLabels` request.",
+    "properties": {
+      "height": {
+        "description": "The height of the item label.",
+        "type": "number"
+      },
+      "labelType": {
+        "ref": "LabelPrintType"
+      },
+      "localeCode": {
+        "description": "The locale code constructed from ISO 639 language code and ISO 3166-1 alpha-2 standard of country codes separated by an underscore character.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The Marketplace ID.",
+        "type": "string"
+      },
+      "mskuQuantities": {
+        "description": "Represents the quantity of an MSKU to print item labels for.",
+        "ref": "MskuQuantity",
+        "type": "array"
+      },
+      "pageType": {
+        "ref": "ItemLabelPageType"
+      },
+      "width": {
+        "description": "The width of the item label.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "labelType",
+      "marketplaceId",
+      "mskuQuantities"
+    ],
+    "type": "object"
+  },
+  "CreateMarketplaceItemLabelsResponse": {
+    "description": "The `createMarketplaceItemLabels` response.",
+    "properties": {
+      "documentDownloads": {
+        "description": "Resources to download the requested document.",
+        "ref": "DocumentDownload",
+        "type": "array"
+      }
+    },
+    "required": [
+      "documentDownloads"
+    ],
+    "type": "object"
+  },
+  "Currency": {
+    "description": "The type and amount of currency.",
+    "properties": {
+      "amount": {
+        "description": "Decimal value of the currency.",
+        "type": "number"
+      },
+      "code": {
+        "description": "ISO 4217 standard of a currency code.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "amount",
+      "code"
+    ],
+    "type": "object"
+  },
+  "CustomPlacementInput": {
+    "description": "Provide units going to the warehouse.",
+    "properties": {
+      "items": {
+        "description": "Items included while creating Inbound Plan.",
+        "ref": "ItemInput",
+        "type": "array"
+      },
+      "warehouseId": {
+        "description": "Warehouse Id.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "items",
+      "warehouseId"
+    ],
+    "type": "object"
+  },
+  "Dates": {
+    "description": "Specifies the date that the seller expects their shipment will be shipped.",
+    "properties": {
+      "readyToShipWindow": {
+        "ref": "Window"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DeliveryWindowOption": {
+    "description": "Contains information pertaining to a delivery window option.",
+    "properties": {
+      "availabilityType": {
+        "description": "The type of delivery window availability.",
+        "type": "string"
+      },
+      "deliveryWindowOptionId": {
+        "description": "Identifier of a delivery window option.",
+        "type": "string"
+      },
+      "discounts": {
+        "description": "Discounts for the offered option.",
+        "ref": "Incentive",
+        "type": "array"
+      },
+      "endDate": {
+        "description": "The time at which this delivery window option ends.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startDate": {
+        "description": "The time at which this delivery window option starts.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "validUntil": {
+        "description": "The time at which this window delivery option is no longer valid.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "availabilityType",
+      "deliveryWindowOptionId",
+      "endDate",
+      "startDate",
+      "validUntil"
+    ],
+    "type": "object"
+  },
+  "Dimensions": {
+    "description": "Measurement of a package's dimensions.",
+    "properties": {
+      "height": {
+        "description": "The height of a package.",
+        "type": "number"
+      },
+      "length": {
+        "description": "The length of a package.",
+        "type": "number"
+      },
+      "unitOfMeasurement": {
+        "ref": "UnitOfMeasurement"
+      },
+      "width": {
+        "description": "The width of a package.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "height",
+      "length",
+      "unitOfMeasurement",
+      "width"
+    ],
+    "type": "object"
+  },
+  "DocumentDownload": {
+    "description": "Resource to download the requested document.",
+    "properties": {
+      "downloadType": {
+        "description": "The type of download.",
+        "type": "string"
+      },
+      "expiration": {
+        "description": "The URI's expiration time.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "uri": {
+        "description": "Uniform resource identifier to identify where the document is located.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "downloadType",
+      "uri"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error object containing information about what went wrong.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "List of errors.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "FreightInformation": {
+    "description": "Freight information describes the SKUs that are in transit.",
+    "properties": {
+      "declaredValue": {
+        "ref": "Currency"
+      },
+      "freightClass": {
+        "description": "Freight class.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GenerateDeliveryWindowOptionsResponse": {
+    "description": "The `generateDeliveryWindowOptions` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "GeneratePackingOptionsResponse": {
+    "description": "The `generatePackingOptions` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "GeneratePlacementOptionsRequest": {
+    "description": "The `generatePlacementOptions` request.",
+    "properties": {
+      "customPlacement": {
+        "description": "Custom placement options you want to add to the plan.",
+        "ref": "CustomPlacementInput",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GeneratePlacementOptionsResponse": {
+    "description": "The `generatePlacementOptions` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "GenerateSelfShipAppointmentSlotsRequest": {
+    "description": "The `generateSelfShipAppointmentSlots` request.",
+    "properties": {
+      "desiredEndDate": {
+        "description": "The desired end date.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "desiredStartDate": {
+        "description": "The desired start date.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GenerateSelfShipAppointmentSlotsResponse": {
+    "description": "The `generateSelfShipAppointmentSlots` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "GenerateShipmentContentUpdatePreviewsRequest": {
+    "description": "The `GenerateShipmentContentUpdatePreviews` request.",
+    "properties": {
+      "boxes": {
+        "description": "A list of boxes that will be present in the shipment after the update.",
+        "ref": "BoxUpdateInput",
+        "type": "array"
+      },
+      "items": {
+        "description": "A list of all items that will be present in the shipment after the update.",
+        "ref": "ItemInput",
+        "type": "array"
+      }
+    },
+    "required": [
+      "boxes",
+      "items"
+    ],
+    "type": "object"
+  },
+  "GenerateShipmentContentUpdatePreviewsResponse": {
+    "description": "The `GenerateShipmentContentUpdatePreviews` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "GenerateTransportationOptionsRequest": {
+    "description": "The `generateTransportationOptions` request.",
+    "properties": {
+      "placementOptionId": {
+        "description": "The placement option to generate transportation options for.",
+        "type": "string"
+      },
+      "shipmentTransportationConfigurations": {
+        "description": "List of shipment transportation configurations.",
+        "ref": "ShipmentTransportationConfiguration",
+        "type": "array"
+      }
+    },
+    "required": [
+      "placementOptionId",
+      "shipmentTransportationConfigurations"
+    ],
+    "type": "object"
+  },
+  "GenerateTransportationOptionsResponse": {
+    "description": "The `generateTransportationOptions` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "GetDeliveryChallanDocumentResponse": {
+    "description": "The `getDeliveryChallanDocumentResponse` response.",
+    "properties": {
+      "documentDownload": {
+        "ref": "DocumentDownload"
+      }
+    },
+    "required": [
+      "documentDownload"
+    ],
+    "type": "object"
+  },
+  "GetSelfShipAppointmentSlotsResponse": {
+    "description": "The `getSelfShipAppointmentSlots` response.",
+    "properties": {
+      "pagination": {
+        "ref": "Pagination"
+      },
+      "selfShipAppointmentSlotsAvailability": {
+        "ref": "SelfShipAppointmentSlotsAvailability"
+      }
+    },
+    "required": [
+      "selfShipAppointmentSlotsAvailability"
+    ],
+    "type": "object"
+  },
+  "InboundOperationStatus": {
+    "description": "GetInboundOperationStatus response.",
+    "properties": {
+      "operation": {
+        "description": "The name of the operation in the asynchronous API call.",
+        "type": "string"
+      },
+      "operationId": {
+        "description": "The operation ID returned by the asynchronous API call.",
+        "type": "string"
+      },
+      "operationProblems": {
+        "description": "The problems in the processing of the asynchronous operation.",
+        "ref": "OperationProblem",
+        "type": "array"
+      },
+      "operationStatus": {
+        "ref": "OperationStatus"
+      }
+    },
+    "required": [
+      "operation",
+      "operationId",
+      "operationProblems",
+      "operationStatus"
+    ],
+    "type": "object"
+  },
+  "InboundPlan": {
+    "description": "Inbound plan containing details of the inbound workflow.",
+    "properties": {
+      "createdAt": {
+        "description": "The time at which the inbound plan was created.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "inboundPlanId": {
+        "description": "Identifier of an inbound plan.",
+        "type": "string"
+      },
+      "lastUpdatedAt": {
+        "description": "The time at which the inbound plan was last updated.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "marketplaceIds": {
+        "description": "A list of marketplace IDs.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "name": {
+        "description": "Human-readable name of the inbound plan.",
+        "type": "string"
+      },
+      "packingOptions": {
+        "description": "Packing options for the inbound plan.",
+        "ref": "PackingOptionSummary",
+        "type": "array"
+      },
+      "placementOptions": {
+        "description": "Placement options for the inbound plan.",
+        "ref": "PlacementOptionSummary",
+        "type": "array"
+      },
+      "shipments": {
+        "description": "A list of shipment IDs for the inbound plan.",
+        "ref": "ShipmentSummary",
+        "type": "array"
+      },
+      "sourceAddress": {
+        "ref": "Address"
+      },
+      "status": {
+        "description": "Current status of the inbound plan.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "createdAt",
+      "inboundPlanId",
+      "lastUpdatedAt",
+      "marketplaceIds",
+      "name",
+      "sourceAddress",
+      "status"
+    ],
+    "type": "object"
+  },
+  "InboundPlanSummary": {
+    "description": "A light-weight inbound plan.",
+    "properties": {
+      "createdAt": {
+        "description": "The time at which the inbound plan was created.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "inboundPlanId": {
+        "description": "Identifier of an inbound plan.",
+        "type": "string"
+      },
+      "lastUpdatedAt": {
+        "description": "The time at which the inbound plan was last updated.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "marketplaceIds": {
+        "description": "A list of marketplace IDs.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "name": {
+        "description": "Human-readable name of the inbound plan.",
+        "type": "string"
+      },
+      "sourceAddress": {
+        "ref": "Address"
+      },
+      "status": {
+        "description": "The current status of the inbound plan.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "createdAt",
+      "inboundPlanId",
+      "lastUpdatedAt",
+      "marketplaceIds",
+      "name",
+      "sourceAddress",
+      "status"
+    ],
+    "type": "object"
+  },
+  "Incentive": {
+    "description": "Contains details about cost related modifications to the placement cost.",
+    "properties": {
+      "description": {
+        "description": "Description of the incentive.",
+        "type": "string"
+      },
+      "target": {
+        "description": "Target of the incentive.",
+        "type": "string"
+      },
+      "type": {
+        "description": "Type of incentive.",
+        "type": "string"
+      },
+      "value": {
+        "ref": "Currency"
+      }
+    },
+    "required": [
+      "description",
+      "target",
+      "type",
+      "value"
+    ],
+    "type": "object"
+  },
+  "Item": {
+    "description": "Information associated with a single SKU in the seller's catalog.",
+    "properties": {
+      "asin": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      },
+      "expiration": {
+        "description": "The expiration date of the MSKU.",
+        "type": "string"
+      },
+      "fnsku": {
+        "description": "A unique identifier assigned by Amazon to products stored in and fulfilled from an Amazon fulfillment center.",
+        "type": "string"
+      },
+      "labelOwner": {
+        "description": "Specifies who will label the items.",
+        "type": "string"
+      },
+      "manufacturingLotCode": {
+        "description": "The manufacturing lot code.",
+        "type": "string"
+      },
+      "msku": {
+        "description": "The merchant-defined SKU ID.",
+        "type": "string"
+      },
+      "prepInstructions": {
+        "description": "Special preparations that are required for an item.",
+        "ref": "PrepInstruction",
+        "type": "array"
+      },
+      "quantity": {
+        "description": "The number of the specified MSKU.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "asin",
+      "fnsku",
+      "labelOwner",
+      "msku",
+      "prepInstructions",
+      "quantity"
+    ],
+    "type": "object"
+  },
+  "ItemInput": {
+    "description": "Defines an item's input parameters.",
+    "properties": {
+      "expiration": {
+        "description": "The expiration date of the MSKU.",
+        "type": "string"
+      },
+      "labelOwner": {
+        "ref": "LabelOwner"
+      },
+      "manufacturingLotCode": {
+        "description": "The manufacturing lot code.",
+        "type": "string"
+      },
+      "msku": {
+        "description": "The merchant SKU, a merchant-supplied identifier of a specific SKU.",
+        "type": "string"
+      },
+      "prepOwner": {
+        "ref": "PrepOwner"
+      },
+      "quantity": {
+        "description": "The number of units of the specified MSKU that will be shipped.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "labelOwner",
+      "msku",
+      "prepOwner",
+      "quantity"
+    ],
+    "type": "object"
+  },
+  "ItemLabelPageType": {
+    "description": "The page type to use to print the labels.",
+    "enum": [
+      "A4_21",
+      "A4_24",
+      "A4_24_64x33",
+      "A4_24_66x35",
+      "A4_24_70x36",
+      "A4_24_70x37",
+      "A4_24i",
+      "A4_27",
+      "A4_40_52x29",
+      "A4_44_48x25",
+      "Letter_30"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "LabelOwner": {
+    "description": "Specifies who will label the items.",
+    "enum": [
+      "AMAZON",
+      "NONE",
+      "SELLER"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "LabelPrintType": {
+    "description": "Indicates the type of print type for a given label.",
+    "enum": [
+      "STANDARD_FORMAT",
+      "THERMAL_PRINTING"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ListDeliveryWindowOptionsResponse": {
+    "description": "The `listDeliveryWindowOptions` response.",
+    "properties": {
+      "deliveryWindowOptions": {
+        "description": "Delivery window options generated for the placement option.",
+        "ref": "DeliveryWindowOption",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [
+      "deliveryWindowOptions"
+    ],
+    "type": "object"
+  },
+  "ListInboundPlanBoxesResponse": {
+    "description": "The `listInboundPlanBoxes` response.",
+    "properties": {
+      "boxes": {
+        "description": "A list of boxes in an inbound plan.",
+        "ref": "Box",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [
+      "boxes"
+    ],
+    "type": "object"
+  },
+  "ListInboundPlanItemsResponse": {
+    "description": "The `listInboundPlanItems` response.",
+    "properties": {
+      "items": {
+        "description": "The items in an inbound plan.",
+        "ref": "Item",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [
+      "items"
+    ],
+    "type": "object"
+  },
+  "ListInboundPlanPalletsResponse": {
+    "description": "The `listInboundPlanPallets` response.",
+    "properties": {
+      "pagination": {
+        "ref": "Pagination"
+      },
+      "pallets": {
+        "description": "The pallets in an inbound plan.",
+        "ref": "Pallet",
+        "type": "array"
+      }
+    },
+    "required": [
+      "pallets"
+    ],
+    "type": "object"
+  },
+  "ListInboundPlansResponse": {
+    "description": "The `listInboundPlans` response.",
+    "properties": {
+      "inboundPlans": {
+        "description": "A list of inbound plans with minimal information.",
+        "ref": "InboundPlanSummary",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListItemComplianceDetailsResponse": {
+    "description": "The `listItemComplianceDetails` response.",
+    "properties": {
+      "complianceDetails": {
+        "description": "List of compliance details.",
+        "ref": "ComplianceDetail",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListPackingGroupBoxesResponse": {
+    "description": "The `listPackingGroupBoxes` response.",
+    "properties": {
+      "boxes": {
+        "description": "Provides the information about the list of boxes in the packing group.",
+        "ref": "Box",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [
+      "boxes"
+    ],
+    "type": "object"
+  },
+  "ListPackingGroupItemsResponse": {
+    "description": "The `listPackingGroupItems` response.",
+    "properties": {
+      "items": {
+        "description": "Provides the information about the list of items in the packing group.",
+        "ref": "Item",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [
+      "items"
+    ],
+    "type": "object"
+  },
+  "ListPackingOptionsResponse": {
+    "description": "The `listPlacementOptions` response.",
+    "properties": {
+      "packingOptions": {
+        "description": "List of packing options.",
+        "ref": "PackingOption",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [
+      "packingOptions"
+    ],
+    "type": "object"
+  },
+  "ListPlacementOptionsResponse": {
+    "description": "The `listPlacementOptions` response.",
+    "properties": {
+      "pagination": {
+        "ref": "Pagination"
+      },
+      "placementOptions": {
+        "description": "Placement options generated for the inbound plan.",
+        "ref": "PlacementOption",
+        "type": "array"
+      }
+    },
+    "required": [
+      "placementOptions"
+    ],
+    "type": "object"
+  },
+  "ListPrepDetailsResponse": {
+    "description": "The response to the `listPrepDetails` operation.",
+    "properties": {
+      "mskuPrepDetails": {
+        "description": "A list of MSKUs and related prep details.",
+        "ref": "MskuPrepDetail",
+        "type": "array"
+      }
+    },
+    "required": [
+      "mskuPrepDetails"
+    ],
+    "type": "object"
+  },
+  "ListShipmentBoxesResponse": {
+    "description": "The `listShipmentBoxes` response.",
+    "properties": {
+      "boxes": {
+        "description": "A list of boxes in a shipment.",
+        "ref": "Box",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [
+      "boxes"
+    ],
+    "type": "object"
+  },
+  "ListShipmentContentUpdatePreviewsResponse": {
+    "description": "The `ListShipmentContentUpdatePreviews` response.",
+    "properties": {
+      "contentUpdatePreviews": {
+        "description": "A list of content update previews in a shipment.",
+        "ref": "ContentUpdatePreview",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [
+      "contentUpdatePreviews"
+    ],
+    "type": "object"
+  },
+  "ListShipmentItemsResponse": {
+    "description": "The `listShipmentItems` response.",
+    "properties": {
+      "items": {
+        "description": "The items in a shipment.",
+        "ref": "Item",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [
+      "items"
+    ],
+    "type": "object"
+  },
+  "ListShipmentPalletsResponse": {
+    "description": "The `listShipmentPallets` response.",
+    "properties": {
+      "pagination": {
+        "ref": "Pagination"
+      },
+      "pallets": {
+        "description": "The pallets in a shipment.",
+        "ref": "Pallet",
+        "type": "array"
+      }
+    },
+    "required": [
+      "pallets"
+    ],
+    "type": "object"
+  },
+  "ListTransportationOptionsResponse": {
+    "description": "The `listTransportationOptions` response.",
+    "properties": {
+      "pagination": {
+        "ref": "Pagination"
+      },
+      "transportationOptions": {
+        "description": "Transportation options generated for the placement option.",
+        "ref": "TransportationOption",
+        "type": "array"
+      }
+    },
+    "required": [
+      "transportationOptions"
+    ],
+    "type": "object"
+  },
+  "LtlTrackingDetail": {
+    "description": "Contains information related to Less-Than-Truckload (LTL) shipment tracking.",
+    "properties": {
+      "billOfLadingNumber": {
+        "description": "The number of the carrier shipment acknowledgement document.",
+        "type": "string"
+      },
+      "freightBillNumber": {
+        "description": "The number associated with the freight bill.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "LtlTrackingDetailInput": {
+    "description": "Contains input information to update Less-Than-Truckload (LTL) tracking information.",
+    "properties": {
+      "billOfLadingNumber": {
+        "description": "The number of the carrier shipment acknowledgement document.",
+        "type": "string"
+      },
+      "freightBillNumber": {
+        "description": "Number associated with the freight bill.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "freightBillNumber"
+    ],
+    "type": "object"
+  },
+  "MskuPrepDetail": {
+    "description": "An MSKU and its related prep details.",
+    "properties": {
+      "allOwnersConstraint": {
+        "ref": "AllOwnersConstraint"
+      },
+      "labelOwnerConstraint": {
+        "ref": "OwnerConstraint"
+      },
+      "msku": {
+        "description": "The merchant SKU, a merchant-supplied identifier for a specific SKU.",
+        "type": "string"
+      },
+      "prepCategory": {
+        "ref": "PrepCategory"
+      },
+      "prepOwnerConstraint": {
+        "ref": "OwnerConstraint"
+      },
+      "prepTypes": {
+        "description": "A list of preparation types associated with a preparation category.",
+        "ref": "PrepType",
+        "type": "array"
+      }
+    },
+    "required": [
+      "msku",
+      "prepCategory",
+      "prepTypes"
+    ],
+    "type": "object"
+  },
+  "MskuPrepDetailInput": {
+    "description": "An MSKU and its related prep details.",
+    "properties": {
+      "msku": {
+        "description": "The merchant SKU, a merchant-supplied identifier for a specific SKU.",
+        "type": "string"
+      },
+      "prepCategory": {
+        "ref": "PrepCategory"
+      },
+      "prepTypes": {
+        "description": "A list of preparation types associated with a preparation category.",
+        "ref": "PrepType",
+        "type": "array"
+      }
+    },
+    "required": [
+      "msku",
+      "prepCategory",
+      "prepTypes"
+    ],
+    "type": "object"
+  },
+  "MskuQuantity": {
+    "description": "Represents an MSKU and the related quantity.",
+    "properties": {
+      "msku": {
+        "description": "The merchant SKU, a merchant-supplied identifier for a specific SKU.",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "A positive integer.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "msku",
+      "quantity"
+    ],
+    "type": "object"
+  },
+  "OperationProblem": {
+    "description": "A problem with additional properties persisted to an operation.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      },
+      "severity": {
+        "description": "The severity of the problem.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message",
+      "severity"
+    ],
+    "type": "object"
+  },
+  "OperationStatus": {
+    "description": "The status of an operation.",
+    "enum": [
+      "FAILED",
+      "IN_PROGRESS",
+      "SUCCESS"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "OwnerConstraint": {
+    "description": "A constraint that can apply to an individual owner.",
+    "enum": [
+      "AMAZON_ONLY",
+      "NONE_ONLY",
+      "SELLER_ONLY"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PackageGroupingInput": {
+    "description": "Packing information for the inbound plan.",
+    "properties": {
+      "boxes": {
+        "description": "Box level information being provided.",
+        "ref": "BoxInput",
+        "type": "array"
+      },
+      "packingGroupId": {
+        "description": "The ID of the `packingGroup` that packages are grouped according to.",
+        "type": "string"
+      },
+      "shipmentId": {
+        "description": "The ID of the shipment that packages are grouped according to.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "boxes"
+    ],
+    "type": "object"
+  },
+  "PackingConfiguration": {
+    "description": "A way to configure this packing option.",
+    "properties": {
+      "boxPackingMethods": {
+        "description": "The box content information sources that are allowed.",
+        "ref": "BoxContentInformationSource",
+        "type": "array"
+      },
+      "boxRequirements": {
+        "ref": "BoxRequirements"
+      },
+      "shippingRequirements": {
+        "description": "A list of supported shipping requirements for this packing configuration.",
+        "ref": "ShippingRequirements",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PackingOption": {
+    "description": "A packing option contains a set of pack groups plus additional information about the packing option, such as any discounts or fees if it's selected.",
+    "properties": {
+      "discounts": {
+        "description": "Discount for the offered option.",
+        "ref": "Incentive",
+        "type": "array"
+      },
+      "expiration": {
+        "description": "The time at which this packing option is no longer valid.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "fees": {
+        "description": "Fee for the offered option.",
+        "ref": "Incentive",
+        "type": "array"
+      },
+      "packingGroups": {
+        "description": "Packing group IDs.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "packingOptionId": {
+        "description": "Identifier of a packing option.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The status of the packing option.",
+        "type": "string"
+      },
+      "supportedConfigurations": {
+        "description": "A list of possible configurations for this option.",
+        "ref": "PackingConfiguration",
+        "type": "array"
+      },
+      "supportedShippingConfigurations": {
+        "description": "**This field is deprecated**.",
+        "ref": "ShippingConfiguration",
+        "type": "array"
+      }
+    },
+    "required": [
+      "discounts",
+      "fees",
+      "packingGroups",
+      "packingOptionId",
+      "status",
+      "supportedConfigurations",
+      "supportedShippingConfigurations"
+    ],
+    "type": "object"
+  },
+  "PackingOptionSummary": {
+    "description": "Summary information about a packing option.",
+    "properties": {
+      "packingOptionId": {
+        "description": "Identifier of a packing option.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The status of a packing option.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "packingOptionId",
+      "status"
+    ],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "Contains tokens to fetch from a certain page.",
+    "properties": {
+      "nextToken": {
+        "description": "When present, pass this string token in the next request to return the next response page.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Pallet": {
+    "description": "Contains information about a pallet that is used in the inbound plan.",
+    "properties": {
+      "dimensions": {
+        "ref": "Dimensions"
+      },
+      "packageId": {
+        "description": "Primary key to uniquely identify a Package (Box or Pallet).",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "The number of containers where all other properties like weight or dimensions are identical.",
+        "type": "integer"
+      },
+      "stackability": {
+        "ref": "Stackability"
+      },
+      "weight": {
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "packageId"
+    ],
+    "type": "object"
+  },
+  "PalletInput": {
+    "description": "Contains input information about a pallet to be used in the inbound plan.",
+    "properties": {
+      "dimensions": {
+        "ref": "Dimensions"
+      },
+      "quantity": {
+        "description": "The number of containers where all other properties like weight or dimensions are identical.",
+        "type": "integer"
+      },
+      "stackability": {
+        "ref": "Stackability"
+      },
+      "weight": {
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "quantity"
+    ],
+    "type": "object"
+  },
+  "PlacementOption": {
+    "description": "Contains information pertaining to the placement of the contents of an inbound plan and the related costs.",
+    "properties": {
+      "discounts": {
+        "description": "Discount for the offered option.",
+        "ref": "Incentive",
+        "type": "array"
+      },
+      "expiration": {
+        "description": "The expiration date of the placement option.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "fees": {
+        "description": "The fee for the offered option.",
+        "ref": "Incentive",
+        "type": "array"
+      },
+      "placementOptionId": {
+        "description": "The identifier of a placement option.",
+        "type": "string"
+      },
+      "shipmentIds": {
+        "description": "Shipment ids.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "status": {
+        "description": "The status of a placement option.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "discounts",
+      "fees",
+      "placementOptionId",
+      "shipmentIds",
+      "status"
+    ],
+    "type": "object"
+  },
+  "PlacementOptionSummary": {
+    "description": "Summary information about a placement option.",
+    "properties": {
+      "placementOptionId": {
+        "description": "The identifier of a placement option.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The status of a placement option.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "placementOptionId",
+      "status"
+    ],
+    "type": "object"
+  },
+  "PrepCategory": {
+    "description": "The preparation category for shipping an item to Amazon's fulfillment network.",
+    "enum": [
+      "ADULT",
+      "BABY",
+      "FC_PROVIDED",
+      "FRAGILE",
+      "GRANULAR",
+      "HANGER",
+      "LIQUID",
+      "NONE",
+      "PERFORATED",
+      "SET",
+      "SHARP",
+      "SMALL",
+      "TEXTILE",
+      "UNKNOWN"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PrepInstruction": {
+    "description": "Information pertaining to the preparation of inbound goods.",
+    "properties": {
+      "fee": {
+        "ref": "Currency"
+      },
+      "prepOwner": {
+        "description": "In some situations, special preparations are required for items and this field reflects the owner of the preparations.",
+        "type": "string"
+      },
+      "prepType": {
+        "description": "Type of preparation that should be done.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PrepOwner": {
+    "description": "The owner of the preparations, if special preparations are required.",
+    "enum": [
+      "AMAZON",
+      "NONE",
+      "SELLER"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PrepType": {
+    "description": "Preparation instructions for shipping an item to Amazon's fulfillment network.",
+    "enum": [
+      "ITEM_BLACK_SHRINKWRAP",
+      "ITEM_BLANKSTK",
+      "ITEM_BOXING",
+      "ITEM_BUBBLEWRAP",
+      "ITEM_CAP_SEALING",
+      "ITEM_DEBUNDLE",
+      "ITEM_HANG_GARMENT",
+      "ITEM_LABELING",
+      "ITEM_NO_PREP",
+      "ITEM_POLYBAGGING",
+      "ITEM_RMOVHANG",
+      "ITEM_SETCREAT",
+      "ITEM_SETSTK",
+      "ITEM_SIOC",
+      "ITEM_SUFFOSTK",
+      "ITEM_TAPING"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Quote": {
+    "description": "The estimated shipping cost associated with the transportation option.",
+    "properties": {
+      "cost": {
+        "ref": "Currency"
+      },
+      "expiration": {
+        "description": "The time at which this transportation option quote expires.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "voidableUntil": {
+        "description": "Voidable until timestamp.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "cost"
+    ],
+    "type": "object"
+  },
+  "ReasonComment": {
+    "description": "Reason for cancelling or rescheduling a self-ship appointment.",
+    "enum": [
+      "APPOINTMENT_REQUESTED_BY_MISTAKE",
+      "INCREASED_QUANTITY",
+      "OTHER",
+      "OUTSIDE_CARRIER_BUSINESS_HOURS",
+      "PROCUREMENT_DELAY",
+      "SHIPPING_PLAN_CHANGED",
+      "SLOT_NOT_SUITABLE",
+      "UNFAVOURABLE_EXTERNAL_CONDITIONS",
+      "VEHICLE_DELAY"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Region": {
+    "description": "Representation of a location used within the inbounding experience.",
+    "properties": {
+      "countryCode": {
+        "description": "ISO 3166 standard alpha-2 country code.",
+        "type": "string"
+      },
+      "state": {
+        "description": "State.",
+        "type": "string"
+      },
+      "warehouseId": {
+        "description": "An identifier for a warehouse, such as a FC, IXD, upstream storage.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RequestedUpdates": {
+    "description": "Objects that were included in the update request.",
+    "properties": {
+      "boxes": {
+        "description": "A list of boxes that will be present in the shipment after the update.",
+        "ref": "BoxUpdateInput",
+        "type": "array"
+      },
+      "items": {
+        "description": "A list of all items that will be present in the shipment after the update.",
+        "ref": "ItemInput",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ScheduleSelfShipAppointmentRequest": {
+    "description": "The `scheduleSelfShipAppointment` request.",
+    "properties": {
+      "reasonComment": {
+        "ref": "ReasonComment"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ScheduleSelfShipAppointmentResponse": {
+    "description": "The `scheduleSelfShipAppointment` response.",
+    "properties": {
+      "selfShipAppointmentDetails": {
+        "ref": "SelfShipAppointmentDetails"
+      }
+    },
+    "required": [
+      "selfShipAppointmentDetails"
+    ],
+    "type": "object"
+  },
+  "SelectedDeliveryWindow": {
+    "description": "Selected delivery window attributes.",
+    "properties": {
+      "availabilityType": {
+        "description": "The type of delivery window availability.",
+        "type": "string"
+      },
+      "deliveryWindowOptionId": {
+        "description": "Identifier of a delivery window option.",
+        "type": "string"
+      },
+      "editableUntil": {
+        "description": "The timestamp at which this Window can no longer be edited.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "endDate": {
+        "description": "The end timestamp of the window.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startDate": {
+        "description": "The start timestamp of the window.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "availabilityType",
+      "deliveryWindowOptionId",
+      "endDate",
+      "startDate"
+    ],
+    "type": "object"
+  },
+  "SelfShipAppointmentDetails": {
+    "description": "Appointment details for carrier pickup or fulfillment center appointments.",
+    "properties": {
+      "appointmentId": {
+        "description": "Identifier for appointment.",
+        "type": "number"
+      },
+      "appointmentSlotTime": {
+        "ref": "AppointmentSlotTime"
+      },
+      "appointmentStatus": {
+        "description": "Status of the appointment.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SelfShipAppointmentSlotsAvailability": {
+    "description": "The self ship appointment time slots availability and an expiration date for which the slots can be scheduled.",
+    "properties": {
+      "expiresAt": {
+        "description": "The time at which the self ship appointment slot expires.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "slots": {
+        "description": "A list of appointment slots.",
+        "ref": "AppointmentSlot",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SetPackingInformationRequest": {
+    "description": "The `setPackingInformation` request.",
+    "properties": {
+      "packageGroupings": {
+        "description": "List of packing information for the inbound plan.",
+        "ref": "PackageGroupingInput",
+        "type": "array"
+      }
+    },
+    "required": [
+      "packageGroupings"
+    ],
+    "type": "object"
+  },
+  "SetPackingInformationResponse": {
+    "description": "The `setPackingInformation` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "SetPrepDetailsRequest": {
+    "description": "The `setPrepDetails` request.",
+    "properties": {
+      "marketplaceId": {
+        "description": "The marketplace ID.",
+        "type": "string"
+      },
+      "mskuPrepDetails": {
+        "description": "A list of MSKUs and related prep details.",
+        "ref": "MskuPrepDetailInput",
+        "type": "array"
+      }
+    },
+    "required": [
+      "marketplaceId",
+      "mskuPrepDetails"
+    ],
+    "type": "object"
+  },
+  "SetPrepDetailsResponse": {
+    "description": "The `setPrepDetails` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "Shipment": {
+    "description": "Contains information pertaining to a shipment in an inbound plan.",
+    "properties": {
+      "amazonReferenceId": {
+        "description": "A unique identifier created by Amazon that identifies this Amazon-partnered, Less Than Truckload/Full Truckload (LTL/FTL) shipment.",
+        "type": "string"
+      },
+      "contactInformation": {
+        "ref": "ContactInformation"
+      },
+      "dates": {
+        "ref": "Dates"
+      },
+      "destination": {
+        "ref": "ShipmentDestination"
+      },
+      "freightInformation": {
+        "ref": "FreightInformation"
+      },
+      "name": {
+        "description": "The name of the shipment.",
+        "type": "string"
+      },
+      "placementOptionId": {
+        "description": "The identifier of a placement option.",
+        "type": "string"
+      },
+      "selectedDeliveryWindow": {
+        "ref": "SelectedDeliveryWindow"
+      },
+      "selectedTransportationOptionId": {
+        "description": "Identifier of a transportation option.",
+        "type": "string"
+      },
+      "selfShipAppointmentDetails": {
+        "description": "List of self ship appointment details.",
+        "ref": "SelfShipAppointmentDetails",
+        "type": "array"
+      },
+      "shipmentConfirmationId": {
+        "description": "The confirmed shipment ID which shows up on labels (for example, `FBA1234ABCD`).",
+        "type": "string"
+      },
+      "shipmentId": {
+        "description": "Identifier of a shipment.",
+        "type": "string"
+      },
+      "source": {
+        "ref": "ShipmentSource"
+      },
+      "status": {
+        "description": "The status of a shipment.",
+        "type": "string"
+      },
+      "trackingDetails": {
+        "ref": "TrackingDetails"
+      }
+    },
+    "required": [
+      "destination",
+      "placementOptionId",
+      "shipmentId",
+      "source"
+    ],
+    "type": "object"
+  },
+  "ShipmentDestination": {
+    "description": "The Amazon fulfillment center address and warehouse ID.",
+    "properties": {
+      "address": {
+        "description": "The address the shipment should be sent to.",
+        "ref": "Address"
+      },
+      "destinationType": {
+        "description": "The type of destination for this shipment.",
+        "type": "string"
+      },
+      "warehouseId": {
+        "description": "The warehouse that the shipment should be sent to.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "destinationType"
+    ],
+    "type": "object"
+  },
+  "ShipmentSource": {
+    "description": "Specifies the 'ship from' address for the shipment.",
+    "properties": {
+      "address": {
+        "ref": "Address"
+      },
+      "sourceType": {
+        "description": "The type of source for this shipment.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "sourceType"
+    ],
+    "type": "object"
+  },
+  "ShipmentSummary": {
+    "description": "Summary information about a shipment.",
+    "properties": {
+      "shipmentId": {
+        "description": "Identifier of a shipment.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The status of a shipment.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "shipmentId",
+      "status"
+    ],
+    "type": "object"
+  },
+  "ShipmentTransportationConfiguration": {
+    "description": "Details needed to generate the transportation options.",
+    "properties": {
+      "contactInformation": {
+        "ref": "ContactInformation"
+      },
+      "freightInformation": {
+        "ref": "FreightInformation"
+      },
+      "pallets": {
+        "description": "List of pallet configuration inputs.",
+        "ref": "PalletInput",
+        "type": "array"
+      },
+      "readyToShipWindow": {
+        "description": "The range of dates within which the seller intends to ship their items.",
+        "ref": "WindowInput"
+      },
+      "shipmentId": {
+        "description": "Identifier of a shipment.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "readyToShipWindow",
+      "shipmentId"
+    ],
+    "type": "object"
+  },
+  "ShippingConfiguration": {
+    "description": "The shipping configurations supported for the packing option.",
+    "properties": {
+      "shippingMode": {
+        "description": "Mode of shipment transportation that this option will provide.",
+        "type": "string"
+      },
+      "shippingSolution": {
+        "description": "Shipping program for the option.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ShippingRequirements": {
+    "description": "The possible shipping modes for the packing option for a given shipping solution or program.",
+    "properties": {
+      "modes": {
+        "description": "Available shipment modes for this shipping program.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "solution": {
+        "description": "Shipping program for the option.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "modes",
+      "solution"
+    ],
+    "type": "object"
+  },
+  "SpdTrackingDetail": {
+    "description": "Contains information related to Small Parcel Delivery (SPD) shipment tracking.",
+    "properties": {
+      "spdTrackingItems": {
+        "description": "List of Small Parcel Delivery (SPD) tracking items.",
+        "ref": "SpdTrackingItem",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SpdTrackingDetailInput": {
+    "description": "Contains input information to update Small Parcel Delivery (SPD) tracking information.",
+    "properties": {
+      "spdTrackingItems": {
+        "description": "List of Small Parcel Delivery (SPD) tracking items input.",
+        "ref": "SpdTrackingItemInput",
+        "type": "array"
+      }
+    },
+    "required": [
+      "spdTrackingItems"
+    ],
+    "type": "object"
+  },
+  "SpdTrackingItem": {
+    "description": "Contains information used to track and identify a Small Parcel Delivery (SPD) item.",
+    "properties": {
+      "boxId": {
+        "description": "The ID provided by Amazon that identifies a given box.",
+        "type": "string"
+      },
+      "trackingId": {
+        "description": "The tracking ID associated with each box in a non-Amazon partnered Small Parcel Delivery (SPD) shipment.",
+        "type": "string"
+      },
+      "trackingNumberValidationStatus": {
+        "description": "Indicates whether Amazon has validated the tracking number.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SpdTrackingItemInput": {
+    "description": "Small Parcel Delivery (SPD) tracking items input information.",
+    "properties": {
+      "boxId": {
+        "description": "The ID provided by Amazon that identifies a given box.",
+        "type": "string"
+      },
+      "trackingId": {
+        "description": "The tracking Id associated with each box in a non-Amazon partnered Small Parcel Delivery (SPD) shipment.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "boxId",
+      "trackingId"
+    ],
+    "type": "object"
+  },
+  "Stackability": {
+    "description": "Indicates whether pallets will be stacked when carrier arrives for pick-up.",
+    "enum": [
+      "NON_STACKABLE",
+      "STACKABLE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "TaxDetails": {
+    "description": "Information used to determine the tax compliance.",
+    "properties": {
+      "declaredValue": {
+        "ref": "Currency"
+      },
+      "hsnCode": {
+        "description": "Harmonized System of Nomenclature code.",
+        "type": "string"
+      },
+      "taxRates": {
+        "description": "List of tax rates.",
+        "ref": "TaxRate",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TaxRate": {
+    "description": "Contains the type and rate of tax.",
+    "properties": {
+      "cessRate": {
+        "description": "Rate of cess tax.",
+        "type": "number"
+      },
+      "gstRate": {
+        "description": "Rate of gst tax.",
+        "type": "number"
+      },
+      "taxType": {
+        "description": "Type of tax.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TrackingDetails": {
+    "description": "Tracking information for Less-Than-Truckload (LTL) and Small Parcel Delivery (SPD) shipments.",
+    "properties": {
+      "ltlTrackingDetail": {
+        "ref": "LtlTrackingDetail"
+      },
+      "spdTrackingDetail": {
+        "ref": "SpdTrackingDetail"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TrackingDetailsInput": {
+    "description": "Tracking information input for Less-Than-Truckload (LTL) and Small Parcel Delivery (SPD) shipments.",
+    "properties": {
+      "ltlTrackingDetail": {
+        "ref": "LtlTrackingDetailInput"
+      },
+      "spdTrackingDetail": {
+        "ref": "SpdTrackingDetailInput"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TransportationOption": {
+    "description": "Contains information pertaining to a transportation option and the related carrier.",
+    "properties": {
+      "carrier": {
+        "ref": "Carrier"
+      },
+      "carrierAppointment": {
+        "ref": "CarrierAppointment"
+      },
+      "preconditions": {
+        "description": "Identifies a list of preconditions for confirming the transportation option.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "quote": {
+        "ref": "Quote"
+      },
+      "shipmentId": {
+        "description": "Identifier of a shipment.",
+        "type": "string"
+      },
+      "shippingMode": {
+        "description": "Mode of shipment transportation that this option will provide.",
+        "type": "string"
+      },
+      "shippingSolution": {
+        "description": "Shipping program for the option.",
+        "type": "string"
+      },
+      "transportationOptionId": {
+        "description": "Identifier of a transportation option.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "carrier",
+      "preconditions",
+      "shipmentId",
+      "shippingMode",
+      "shippingSolution",
+      "transportationOptionId"
+    ],
+    "type": "object"
+  },
+  "TransportationSelection": {
+    "description": "The transportation option selected to confirm.",
+    "properties": {
+      "contactInformation": {
+        "ref": "ContactInformation"
+      },
+      "shipmentId": {
+        "description": "Shipment ID that the transportation Option is for.",
+        "type": "string"
+      },
+      "transportationOptionId": {
+        "description": "Transportation option being selected for the provided shipment.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "shipmentId",
+      "transportationOptionId"
+    ],
+    "type": "object"
+  },
+  "UnitOfMeasurement": {
+    "description": "Unit of linear measure.",
+    "enum": [
+      "CM",
+      "IN"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "UnitOfWeight": {
+    "description": "Unit of the weight being measured.",
+    "enum": [
+      "KG",
+      "LB"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "UpdateInboundPlanNameRequest": {
+    "description": "The `updateInboundPlanName` request.",
+    "properties": {
+      "name": {
+        "description": "A human-readable name to update the inbound plan name to.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "type": "object"
+  },
+  "UpdateItemComplianceDetailsRequest": {
+    "description": "The `updateItemComplianceDetails` request.",
+    "properties": {
+      "msku": {
+        "description": "The merchant SKU, a merchant-supplied identifier for a specific SKU.",
+        "type": "string"
+      },
+      "taxDetails": {
+        "ref": "TaxDetails"
+      }
+    },
+    "required": [
+      "msku",
+      "taxDetails"
+    ],
+    "type": "object"
+  },
+  "UpdateItemComplianceDetailsResponse": {
+    "description": "The `updateItemComplianceDetails` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "UpdateShipmentNameRequest": {
+    "description": "The `updateShipmentName` request.",
+    "properties": {
+      "name": {
+        "description": "A human-readable name to update the shipment name to.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "type": "object"
+  },
+  "UpdateShipmentSourceAddressRequest": {
+    "description": "The `UpdateShipmentSourceAddress` request.",
+    "properties": {
+      "address": {
+        "ref": "AddressInput"
+      }
+    },
+    "required": [
+      "address"
+    ],
+    "type": "object"
+  },
+  "UpdateShipmentSourceAddressResponse": {
+    "description": "The `UpdateShipmentSourceAddress` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "UpdateShipmentTrackingDetailsRequest": {
+    "description": "The `updateShipmentTrackingDetails` request.",
+    "properties": {
+      "trackingDetails": {
+        "ref": "TrackingDetailsInput"
+      }
+    },
+    "required": [
+      "trackingDetails"
+    ],
+    "type": "object"
+  },
+  "UpdateShipmentTrackingDetailsResponse": {
+    "description": "The `updateShipmentTrackingDetails` response.",
+    "properties": {
+      "operationId": {
+        "description": "UUID for the given operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operationId"
+    ],
+    "type": "object"
+  },
+  "Weight": {
+    "description": "The weight of a package.",
+    "properties": {
+      "unit": {
+        "ref": "UnitOfWeight"
+      },
+      "value": {
+        "description": "Value of a weight.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "unit",
+      "value"
+    ],
+    "type": "object"
+  },
+  "WeightRange": {
+    "description": "The range of weights that are allowed for a package.",
+    "properties": {
+      "maximum": {
+        "description": "Maximum allowed weight.",
+        "type": "number"
+      },
+      "minimum": {
+        "description": "Minimum allowed weight.",
+        "type": "number"
+      },
+      "unit": {
+        "ref": "UnitOfWeight"
+      }
+    },
+    "required": [
+      "maximum",
+      "minimum",
+      "unit"
+    ],
+    "type": "object"
+  },
+  "Window": {
+    "description": "Contains a start and end DateTime representing a time range.",
+    "properties": {
+      "editableUntil": {
+        "description": "The timestamp at which this Window can no longer be edited.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "end": {
+        "description": "The end timestamp of the window.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "start": {
+        "description": "The start timestamp of the window.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "end",
+      "start"
+    ],
+    "type": "object"
+  },
+  "WindowInput": {
+    "description": "Contains only a starting DateTime.",
+    "properties": {
+      "start": {
+        "description": "The start date of the window.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "start"
+    ],
+    "type": "object"
+  }
+}

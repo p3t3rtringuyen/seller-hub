@@ -1,0 +1,567 @@
+{
+  "AggregationFilter": {
+    "description": "A filter you can use to select the aggregation time period at which to send notifications (for example, limit to one notification every five minutes for high frequency notifications).",
+    "properties": {
+      "aggregationSettings": {
+        "ref": "AggregationSettings"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AggregationSettings": {
+    "description": "A container that holds all of the necessary properties to configure the aggregation of notifications.",
+    "properties": {
+      "aggregationTimePeriod": {
+        "description": "The supported time period to use to perform marketplace-ASIN level aggregation.",
+        "ref": "AggregationTimePeriod"
+      }
+    },
+    "required": [
+      "aggregationTimePeriod"
+    ],
+    "type": "object"
+  },
+  "AggregationTimePeriod": {
+    "description": "The supported aggregation time periods.",
+    "enum": [
+      "FiveMinutes",
+      "TenMinutes"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CreateDestinationRequest": {
+    "description": "The request schema for the `createDestination` operation.",
+    "properties": {
+      "name": {
+        "description": "A developer-defined name to help identify this destination.",
+        "type": "string"
+      },
+      "resourceSpecification": {
+        "description": "The information required to create a destination resource.",
+        "ref": "DestinationResourceSpecification"
+      }
+    },
+    "required": [
+      "name",
+      "resourceSpecification"
+    ],
+    "type": "object"
+  },
+  "CreateDestinationResponse": {
+    "description": "The response schema for the createDestination operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `createDestination` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `createDestination` operation.",
+        "ref": "Destination"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateSubscriptionRequest": {
+    "description": "The request schema for the `createSubscription` operation.",
+    "properties": {
+      "destinationId": {
+        "description": "The identifier for the destination where notifications will be delivered.",
+        "type": "string"
+      },
+      "payloadVersion": {
+        "description": "The version of the payload object to be used in the notification.",
+        "type": "string"
+      },
+      "processingDirective": {
+        "ref": "ProcessingDirective"
+      }
+    },
+    "required": [
+      "destinationId",
+      "payloadVersion"
+    ],
+    "type": "object"
+  },
+  "CreateSubscriptionResponse": {
+    "description": "The response schema for the `createSubscription` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `createSubscription` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `createSubscription` operation.",
+        "ref": "Subscription"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DeleteDestinationResponse": {
+    "description": "The response schema for the `deleteDestination` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `deleteDestination` operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DeleteSubscriptionByIdResponse": {
+    "description": "The response schema for the `deleteSubscriptionById` operation.",
+    "properties": {
+      "errors": {
+        "description": "An unexpected condition occurred during the `deleteSubscriptionById` operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Destination": {
+    "description": "Information about the destination you create when you call the `createDestination` operation.",
+    "properties": {
+      "destinationId": {
+        "description": "The destination identifier generated when you created the destination.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The developer-defined name for this destination.",
+        "type": "string"
+      },
+      "resource": {
+        "description": "The resource that will receive notifications associated with this destination.",
+        "ref": "DestinationResource"
+      }
+    },
+    "required": [
+      "destinationId",
+      "name",
+      "resource"
+    ],
+    "type": "object"
+  },
+  "DestinationList": {
+    "description": "A list of destinations.",
+    "properties": {},
+    "ref": "Destination",
+    "required": [],
+    "type": "array"
+  },
+  "DestinationResource": {
+    "description": "The destination resource types.",
+    "properties": {
+      "eventBridge": {
+        "description": "An Amazon EventBridge destination.",
+        "ref": "EventBridgeResource"
+      },
+      "sqs": {
+        "description": "An Amazon Simple Queue Service (SQS) queue destination.",
+        "ref": "SqsResource"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DestinationResourceSpecification": {
+    "description": "The information required to create a destination resource.",
+    "properties": {
+      "eventBridge": {
+        "description": "The information required to create an Amazon EventBridge destination.",
+        "ref": "EventBridgeResourceSpecification"
+      },
+      "sqs": {
+        "description": "The information required to create an Amazon Simple Queue Service (SQS) queue destination.",
+        "ref": "SqsResource"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "An error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "EventBridgeResource": {
+    "description": "The Amazon EventBridge destination.",
+    "properties": {
+      "accountId": {
+        "description": "The identifier for the AWS account that is responsible for charges related to receiving notifications.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the partner event source associated with the destination.",
+        "type": "string"
+      },
+      "region": {
+        "description": "The AWS region in which you receive the notifications.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "accountId",
+      "name",
+      "region"
+    ],
+    "type": "object"
+  },
+  "EventBridgeResourceSpecification": {
+    "description": "The information required to create an Amazon EventBridge destination.",
+    "properties": {
+      "accountId": {
+        "description": "The identifier for the AWS account that is responsible for charges related to receiving notifications.",
+        "type": "string"
+      },
+      "region": {
+        "description": "The AWS region in which you will be receiving the notifications.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "accountId",
+      "region"
+    ],
+    "type": "object"
+  },
+  "EventFilter": {
+    "allOf": [
+      "AggregationFilter",
+      "MarketplaceFilter",
+      "OrderChangeTypeFilter",
+      "TrackingFilter"
+    ],
+    "description": "A `notificationType` filter.",
+    "properties": {
+      "eventFilterType": {
+        "description": "An `eventFilterType` value that the `notificationType` supports.",
+        "enum": [
+          "ANY_OFFER_CHANGED",
+          "ORDER_CHANGE",
+          "SHIPMENT_TRACKING_MILESTONE_CHANGED"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "eventFilterType"
+    ],
+    "type": "object"
+  },
+  "GetDestinationResponse": {
+    "description": "The response schema for the `getDestination` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `getDestination` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getDestination` operation.",
+        "ref": "Destination"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetDestinationsResponse": {
+    "description": "The response schema for the `getDestinations` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `getDestinations` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getDestinations` operation.",
+        "ref": "DestinationList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetSubscriptionByIdResponse": {
+    "description": "The response schema for the `getSubscriptionById` operation.",
+    "properties": {
+      "errors": {
+        "description": "An unexpected condition occurred during the `getSubscriptionById` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getSubscriptionById` operation.",
+        "ref": "Subscription"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetSubscriptionResponse": {
+    "description": "The response schema for the `getSubscription` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `getSubscription` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getSubscription` operation.",
+        "ref": "Subscription"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetSubscriptionsPayload": {
+    "description": "The payload for the `getSubscriptions` operation.",
+    "properties": {
+      "nextToken": {
+        "description": "A token that you can use to retrieve the next page of results.",
+        "type": "string"
+      },
+      "subscriptions": {
+        "description": "A list of subscriptions.",
+        "ref": "Subscriptions"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetSubscriptionsResponse": {
+    "description": "The response schema for the `getSubscriptions` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `getSubscriptions` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getSubscriptions` operation.",
+        "ref": "GetSubscriptionsPayload"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "MarketplaceFilter": {
+    "description": "An event filter you can use to customize your subscription to send notifications for specific `marketplaceId`s.",
+    "properties": {
+      "marketplaceIds": {
+        "ref": "MarketplaceIds"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "MarketplaceIds": {
+    "description": "A list of marketplace identifiers you can subscribe to (for example, `ATVPDKIKX0DER`).",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "OrderChangeTypeEnum": {
+    "description": "The supported order change type of ORDER_CHANGE notification.",
+    "enum": [
+      "BuyerRequestedChange",
+      "DeliveryTipChange",
+      "OrderStatusChange",
+      "PreFulfillmentStatusChange"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "OrderChangeTypeFilter": {
+    "description": "An event filter you can use to customize your subscription to send notifications for a specific `orderChangeType`.",
+    "properties": {
+      "orderChangeTypes": {
+        "ref": "OrderChangeTypes"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderChangeTypes": {
+    "description": "A list of order change types you can subscribe to (for example, `BuyerRequestedChange`).",
+    "properties": {},
+    "ref": "OrderChangeTypeEnum",
+    "required": [],
+    "type": "array"
+  },
+  "ProcessingDirective": {
+    "description": "Additional information passed to the subscription to control the processing of notifications.",
+    "properties": {
+      "eventFilter": {
+        "description": "A `notificationType` filter.",
+        "ref": "EventFilter"
+      },
+      "filterExpression": {
+        "description": "An expression for filtering events before delivery to destination based on the notification payload (example: FulfillmentOrderStatusNotification.FulfillmentOrderStatus == `SHIPPED` ).",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SendTestNotificationRequest": {
+    "description": "The request schema for the `sendTestNotification` operation.",
+    "properties": {
+      "destinationId": {
+        "description": "The identifier for the destination where notifications will be delivered.",
+        "type": "string"
+      },
+      "testNotification": {
+        "ref": "TestNotification"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SendTestNotificationResponse": {
+    "description": "The response schema for the `sendTestNotification` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `sendTestNotification` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `sendTestNotification` operation."
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SqsResource": {
+    "description": "The information required to create an Amazon Simple Queue Service (Amazon SQS) queue destination.",
+    "properties": {
+      "arn": {
+        "description": "The Amazon Resource Name (ARN) associated with the SQS queue.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "arn"
+    ],
+    "type": "object"
+  },
+  "Subscription": {
+    "description": "Information about the subscription.",
+    "properties": {
+      "destinationId": {
+        "description": "The identifier for the destination where notifications will be delivered.",
+        "type": "string"
+      },
+      "payloadVersion": {
+        "description": "The version of the payload object to be used in the notification.",
+        "type": "string"
+      },
+      "processingDirective": {
+        "ref": "ProcessingDirective"
+      },
+      "subscriptionId": {
+        "description": "The subscription identifier generated when the subscription is created.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "destinationId",
+      "payloadVersion",
+      "subscriptionId"
+    ],
+    "type": "object"
+  },
+  "Subscriptions": {
+    "description": "A list of subscriptions.",
+    "properties": {},
+    "ref": "Subscription",
+    "required": [],
+    "type": "array"
+  },
+  "TestNotification": {
+    "description": "The describer for the test notification that will be delivered.",
+    "properties": {
+      "payloadVersion": {
+        "description": "The version of the payload object to be used in the notification.",
+        "type": "string"
+      },
+      "testScenario": {
+        "description": "The scenario of the specified notification to be used in the notification payload.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "payloadVersion"
+    ],
+    "type": "object"
+  },
+  "TrackingFilter": {
+    "description": "An event filter you can use to customize your subscription to receive shipment tracking milestone notifications for a specific tracking identifier.",
+    "properties": {
+      "trackingIdentifier": {
+        "ref": "TrackingIdentifier"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TrackingIdentifier": {
+    "description": "Specifies the tracking identifier used to filter your subscription notifications.",
+    "properties": {
+      "acsin": {
+        "description": "Air Cargo Shipment Identification Number.",
+        "type": "string"
+      },
+      "aftn": {
+        "description": "Amazon Fulfillment Tracking Number.",
+        "type": "string"
+      },
+      "carrierTracking": {
+        "description": "Carrier-provided tracking identifier.",
+        "type": "object"
+      },
+      "containerNumber": {
+        "description": "Container number provided by the Logistics Service Provider.",
+        "type": "string"
+      },
+      "houseBillOfLadingNumber": {
+        "description": "House Bill of Lading number.",
+        "type": "string"
+      },
+      "id": {
+        "description": "Amazon unique tracking identifier.",
+        "type": "string"
+      },
+      "proNumber": {
+        "description": "The PRO number assigned by the freight carrier",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

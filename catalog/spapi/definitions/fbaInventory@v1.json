@@ -1,0 +1,366 @@
+{
+  "AddInventoryRequest": {
+    "description": "The object with the list of Inventory to be added",
+    "properties": {
+      "inventoryItems": {
+        "ref": "InventoryItems"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AddInventoryResponse": {
+    "description": "The response schema for the AddInventory operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the AddInventory operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateInventoryItemRequest": {
+    "description": "An item to be created in the inventory.",
+    "properties": {
+      "marketplaceId": {
+        "description": "The marketplaceId.",
+        "type": "string"
+      },
+      "productName": {
+        "description": "The name of the item.",
+        "type": "string"
+      },
+      "sellerSku": {
+        "description": "The seller SKU of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "marketplaceId",
+      "productName",
+      "sellerSku"
+    ],
+    "type": "object"
+  },
+  "CreateInventoryItemResponse": {
+    "description": "The response schema for the CreateInventoryItem operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the CreateInventoryItem operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DeleteInventoryItemResponse": {
+    "description": "The response schema for the DeleteInventoryItem operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the DeleteInventoryItem operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "An error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional information that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition in a human-readable form.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "GetInventorySummariesResponse": {
+    "description": "The Response schema.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the getInventorySummaries operation.",
+        "ref": "ErrorList"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      },
+      "payload": {
+        "description": "The payload for the getInventorySummaries operation.",
+        "ref": "GetInventorySummariesResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetInventorySummariesResult": {
+    "description": "The payload schema for the getInventorySummaries operation.",
+    "properties": {
+      "granularity": {
+        "ref": "Granularity"
+      },
+      "inventorySummaries": {
+        "ref": "InventorySummaries"
+      }
+    },
+    "required": [
+      "granularity",
+      "inventorySummaries"
+    ],
+    "type": "object"
+  },
+  "Granularity": {
+    "description": "Describes a granularity at which inventory data can be aggregated.",
+    "properties": {
+      "granularityId": {
+        "description": "The granularity ID for the specified granularity type.",
+        "type": "string"
+      },
+      "granularityType": {
+        "description": "The granularity type for the inventory aggregation level.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InventoryDetails": {
+    "description": "Summarized inventory details.",
+    "properties": {
+      "fulfillableQuantity": {
+        "description": "The item quantity that can be picked, packed, and shipped.",
+        "type": "integer"
+      },
+      "inboundReceivingQuantity": {
+        "description": "The number of units that have not yet been received at an Amazon fulfillment center for processing, but are part of an inbound shipment with some units that have already been received and processed.",
+        "type": "integer"
+      },
+      "inboundShippedQuantity": {
+        "description": "The number of units in an inbound shipment that you have notified Amazon about and have provided a tracking number.",
+        "type": "integer"
+      },
+      "inboundWorkingQuantity": {
+        "description": "The number of units in an inbound shipment for which you have notified Amazon.",
+        "type": "integer"
+      },
+      "researchingQuantity": {
+        "ref": "ResearchingQuantity"
+      },
+      "reservedQuantity": {
+        "ref": "ReservedQuantity"
+      },
+      "unfulfillableQuantity": {
+        "ref": "UnfulfillableQuantity"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InventoryItem": {
+    "description": "An item in the list of inventory to be added.",
+    "properties": {
+      "marketplaceId": {
+        "description": "The marketplaceId.",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "The quantity of item to add.",
+        "type": "integer"
+      },
+      "sellerSku": {
+        "description": "The seller SKU of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "marketplaceId",
+      "quantity",
+      "sellerSku"
+    ],
+    "type": "object"
+  },
+  "InventoryItems": {
+    "description": "List of Inventory to be added",
+    "properties": {},
+    "ref": "InventoryItem",
+    "required": [],
+    "type": "array"
+  },
+  "InventorySummaries": {
+    "description": "A list of inventory summaries.",
+    "properties": {},
+    "ref": "InventorySummary",
+    "required": [],
+    "type": "array"
+  },
+  "InventorySummary": {
+    "description": "Inventory summary for a specific item.",
+    "properties": {
+      "asin": {
+        "description": "The Amazon Standard Identification Number (ASIN) of an item.",
+        "type": "string"
+      },
+      "condition": {
+        "description": "The condition of the item as described by the seller (for example, New Item).",
+        "type": "string"
+      },
+      "fnSku": {
+        "description": "Amazon's fulfillment network SKU identifier.",
+        "type": "string"
+      },
+      "inventoryDetails": {
+        "ref": "InventoryDetails"
+      },
+      "lastUpdatedTime": {
+        "description": "The date and time that any quantity was last updated.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "productName": {
+        "description": "The localized language product title of the item within the specific marketplace.",
+        "type": "string"
+      },
+      "sellerSku": {
+        "description": "The seller SKU of the item.",
+        "type": "string"
+      },
+      "stores": {
+        "description": "A list of seller-enrolled stores that apply to this seller SKU.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "totalQuantity": {
+        "description": "The total number of units in an inbound shipment or in Amazon fulfillment centers.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "The process of returning the results to a request in batches of a defined size called pages.",
+    "properties": {
+      "nextToken": {
+        "description": "A generated string used to retrieve the next page of the result.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ResearchingQuantity": {
+    "description": "The number of misplaced or warehouse damaged units that are actively being confirmed at our fulfillment centers.",
+    "properties": {
+      "researchingQuantityBreakdown": {
+        "description": "A list of quantity details for items currently being researched.",
+        "ref": "ResearchingQuantityEntry",
+        "type": "array"
+      },
+      "totalResearchingQuantity": {
+        "description": "The total number of units currently being researched in Amazon's fulfillment network.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ResearchingQuantityEntry": {
+    "description": "The misplaced or warehouse damaged inventory that is actively being confirmed at our fulfillment centers.",
+    "properties": {
+      "name": {
+        "description": "The duration of the research.",
+        "enum": [
+          "researchingQuantityInLongTerm",
+          "researchingQuantityInMidTerm",
+          "researchingQuantityInShortTerm"
+        ],
+        "type": "string"
+      },
+      "quantity": {
+        "description": "The number of units.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "name",
+      "quantity"
+    ],
+    "type": "object"
+  },
+  "ReservedQuantity": {
+    "description": "The quantity of reserved inventory.",
+    "properties": {
+      "fcProcessingQuantity": {
+        "description": "The number of units that have been sidelined at the fulfillment center for additional processing.",
+        "type": "integer"
+      },
+      "pendingCustomerOrderQuantity": {
+        "description": "The number of units reserved for customer orders.",
+        "type": "integer"
+      },
+      "pendingTransshipmentQuantity": {
+        "description": "The number of units being transferred from one fulfillment center to another.",
+        "type": "integer"
+      },
+      "totalReservedQuantity": {
+        "description": "The total number of units in Amazon's fulfillment network that are currently being picked, packed, and shipped; or are sidelined for measurement, sampling, or other internal processes.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UnfulfillableQuantity": {
+    "description": "The quantity of unfulfillable inventory.",
+    "properties": {
+      "carrierDamagedQuantity": {
+        "description": "The number of units in carrier damaged disposition.",
+        "type": "integer"
+      },
+      "customerDamagedQuantity": {
+        "description": "The number of units in customer damaged disposition.",
+        "type": "integer"
+      },
+      "defectiveQuantity": {
+        "description": "The number of units in defective disposition.",
+        "type": "integer"
+      },
+      "distributorDamagedQuantity": {
+        "description": "The number of units in distributor damaged disposition.",
+        "type": "integer"
+      },
+      "expiredQuantity": {
+        "description": "The number of units in expired disposition.",
+        "type": "integer"
+      },
+      "totalUnfulfillableQuantity": {
+        "description": "The total number of units in Amazon's fulfillment network in unsellable condition.",
+        "type": "integer"
+      },
+      "warehouseDamagedQuantity": {
+        "description": "The number of units in warehouse damaged disposition.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

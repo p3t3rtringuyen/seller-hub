@@ -1,0 +1,1573 @@
+{
+  "AdditionalServices": {
+    "description": "Request additional services",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "Address": {
+    "description": "A physical address.",
+    "properties": {
+      "addressLine1": {
+        "description": "The first line of the address.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "addressLine3": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city where the person, business, or institution is located.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two-digit country code (in ISO 3166-1 alpha-2 format) for the country where the person, business or institution is located.",
+        "ref": "CountryCode"
+      },
+      "districtOrCounty": {
+        "description": "The district or county where the person, business, or institution is located.",
+        "type": "string"
+      },
+      "email": {
+        "description": "The email of the person, business, or institution located at the address.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the person, business or institution at the address.",
+        "type": "string"
+      },
+      "phone": {
+        "description": "The phone number of the person, business, or institution located at the address.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "The postal code of the address.",
+        "type": "string"
+      },
+      "stateOrRegion": {
+        "description": "The state or region where the person, business, or institution is located.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "addressLine1",
+      "countryCode",
+      "name",
+      "postalCode"
+    ],
+    "type": "object"
+  },
+  "AmazonFacility": {
+    "description": "The Amazon facility from which the shipment is sent.",
+    "properties": {
+      "address": {
+        "description": "The facility address from which the shipment originated.",
+        "ref": "Address"
+      },
+      "facilityId": {
+        "description": "An identifier for the Amazon facility from which the shipment is sent.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "facilityId"
+    ],
+    "type": "object"
+  },
+  "AmazonTracking": {
+    "description": "Amazon tracking information for a package.",
+    "properties": {
+      "trackingNumber": {
+        "description": "The amazon tracking number that can be used to obtain tracking and delivery information.",
+        "type": "string"
+      },
+      "trackingUrl": {
+        "description": "Represents the tracking URL where amazon tracking information is shown.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Amount": {
+    "description": "A quantity based on the specified unit of measurement.",
+    "properties": {
+      "unit": {
+        "description": "The unit of measure for the amount.",
+        "type": "string"
+      },
+      "value": {
+        "description": "The amount of a product in the associated unit of measurement.",
+        "ref": "Decimal"
+      }
+    },
+    "required": [
+      "value"
+    ],
+    "type": "object"
+  },
+  "CancelOrderResponse": {
+    "description": "The response to the `cancelOrder` operation.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "CarrierTracking": {
+    "description": "Carrier tracking information for a package.",
+    "properties": {
+      "carrierCode": {
+        "description": "Identifies the carrier who delivers the shipment to the recipient.",
+        "type": "string"
+      },
+      "trackingNumber": {
+        "description": "The tracking number, if provided, can be used to obtain tracking and delivery information.",
+        "type": "string"
+      },
+      "trackingUrl": {
+        "description": "Represents the tracking URL where package tracking information is shown.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "carrierCode"
+    ],
+    "type": "object"
+  },
+  "Constraint": {
+    "description": "A constraint that may affect a fulfillment order.",
+    "properties": {
+      "code": {
+        "description": "The constraint code.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Array of constraint details",
+        "ref": "ConstraintDetail",
+        "type": "array"
+      },
+      "message": {
+        "description": "A human-readable description of the constraint.",
+        "type": "string"
+      },
+      "type": {
+        "description": "The type of constraint.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message",
+      "type"
+    ],
+    "type": "object"
+  },
+  "ConstraintDetail": {
+    "description": "Additional information about a constraint violation, providing the specific type of detail and its corresponding value that caused the violation.",
+    "properties": {
+      "type": {
+        "description": "The type of the constraint detail.",
+        "type": "string"
+      },
+      "value": {
+        "description": "The value of the constraint detail.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "type",
+      "value"
+    ],
+    "type": "object"
+  },
+  "CountryCode": {
+    "description": "The two digit country code.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CreateOrderAcceptedResponse": {
+    "description": "The response schema for the `createOrder` operation when the request is accepted for async processing.",
+    "properties": {
+      "orderId": {
+        "description": "The fulfillment order identifier.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The current status of the fulfillment order.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "orderId",
+      "status"
+    ],
+    "type": "object"
+  },
+  "CreateOrderLineItem": {
+    "description": "Line item information for a create order request.",
+    "properties": {
+      "amount": {
+        "ref": "Amount"
+      },
+      "fulfillmentConfiguration": {
+        "description": "Fulfillment configuration for the line item.",
+        "ref": "LineItemFulfillmentConfiguration"
+      },
+      "lineItemId": {
+        "description": "The line item identifier for the fulfillment order.",
+        "type": "string"
+      },
+      "product": {
+        "ref": "OrderProduct"
+      }
+    },
+    "required": [
+      "amount",
+      "lineItemId",
+      "product"
+    ],
+    "type": "object"
+  },
+  "CreateOrderRequest": {
+    "description": "The request body schema for `createOrder`.",
+    "properties": {
+      "channel": {
+        "description": "The sales channel of the fulfillment order.",
+        "type": "string"
+      },
+      "destination": {
+        "description": "The destination of the fulfillment order.",
+        "ref": "OrderDestination"
+      },
+      "fulfillmentConfiguration": {
+        "description": "The fulfillment configuration of the order.",
+        "ref": "OrderFulfillmentConfiguration"
+      },
+      "lineItems": {
+        "description": "A list of items to include in the fulfillment order, including quantity.",
+        "ref": "CreateOrderLineItem",
+        "type": "array"
+      },
+      "orderId": {
+        "description": "A fulfillment order identifier that the seller creates to track their fulfillment order.",
+        "type": "string"
+      },
+      "origin": {
+        "description": "The origin of the fulfillment order.",
+        "ref": "OrderOrigin"
+      },
+      "paymentInformation": {
+        "description": "Payment information for the order.",
+        "ref": "PaymentInformation"
+      }
+    },
+    "required": [
+      "destination",
+      "lineItems",
+      "orderId"
+    ],
+    "type": "object"
+  },
+  "CreateOrderResponse": {
+    "description": "The response schema for the `createOrder` operation.",
+    "properties": {
+      "order": {
+        "ref": "FulfillmentOrder"
+      }
+    },
+    "required": [
+      "order"
+    ],
+    "type": "object"
+  },
+  "Decimal": {
+    "description": "A decimal number with no loss of precision.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "DeliveryService": {
+    "description": "Specify delivery settings.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "array of errors",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "EstimatedPrice": {
+    "description": "The estimated price information for the fulfillment order.",
+    "properties": {
+      "rollupPrices": {
+        "description": "A breakdown of the price associated with the delivery preview.",
+        "ref": "RollupPrice",
+        "type": "array"
+      },
+      "totalPrice": {
+        "description": "The total price associated with the delivery preview.",
+        "ref": "Money"
+      }
+    },
+    "required": [
+      "rollupPrices",
+      "totalPrice"
+    ],
+    "type": "object"
+  },
+  "FulfillmentOrder": {
+    "description": "General information about a fulfillment order, including its status.",
+    "properties": {
+      "channel": {
+        "description": "The sales channel for the fulfillment order.",
+        "type": "string"
+      },
+      "destination": {
+        "description": "The destination for the fulfillment order.",
+        "ref": "OrderDestination"
+      },
+      "fulfillmentConfiguration": {
+        "description": "Fulfillment configuration for the order.",
+        "ref": "OrderResponseFulfillmentConfiguration"
+      },
+      "lineItems": {
+        "description": "A list of items in the fulfillment order.",
+        "ref": "OrderLineItem",
+        "type": "array"
+      },
+      "orderId": {
+        "description": "The fulfillment order identifier submitted with the `createOrder` operation.",
+        "type": "string"
+      },
+      "origin": {
+        "description": "The origin for the fulfillment order.",
+        "ref": "OrderOrigin"
+      },
+      "paymentInformation": {
+        "description": "Payment information for the order.",
+        "ref": "PaymentInformation"
+      },
+      "receiveTime": {
+        "description": "The date and time that the fulfillment order was received.",
+        "ref": "Timestamp"
+      },
+      "shipments": {
+        "description": "An array of fulfillment shipment information.",
+        "ref": "Shipment",
+        "type": "array"
+      },
+      "status": {
+        "description": "The current status of the fulfillment order.",
+        "ref": "OrderStatus"
+      },
+      "statusUpdateTime": {
+        "description": "The date and time that the status of the fulfillment order last changed.",
+        "ref": "Timestamp"
+      }
+    },
+    "required": [
+      "lineItems",
+      "orderId",
+      "receiveTime"
+    ],
+    "type": "object"
+  },
+  "GetOffersRequest": {
+    "description": "The request body schema for `getOffers`.",
+    "properties": {
+      "destination": {
+        "description": "The destination of the fulfillment.",
+        "ref": "OfferDestination"
+      },
+      "fulfillmentConfiguration": {
+        "description": "The fulfillment configuration of the offers request.",
+        "ref": "OfferFulfillmentConfiguration"
+      },
+      "items": {
+        "description": "A list of items for which to get offers.",
+        "ref": "OfferItem",
+        "type": "array"
+      },
+      "origin": {
+        "description": "The origin of the fulfillment order.",
+        "ref": "OrderOrigin"
+      }
+    },
+    "required": [
+      "items",
+      "origin"
+    ],
+    "type": "object"
+  },
+  "GetOffersResponse": {
+    "description": "The response schema for `getOffers`.",
+    "properties": {
+      "offerResults": {
+        "description": "Per-item offer results.",
+        "ref": "OfferResult",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetOrderPreviewRequest": {
+    "description": "The request body schema for `getOrderPreview`.",
+    "properties": {
+      "channel": {
+        "description": "The sales channel for the fulfillment request.",
+        "type": "string"
+      },
+      "destination": {
+        "description": "The destination of the fulfillment.",
+        "ref": "PreviewDestination"
+      },
+      "excludeEstimatedFees": {
+        "description": "When `true`, excludes estimated fees from the preview response for latency optimization.",
+        "type": "boolean"
+      },
+      "fulfillmentConfiguration": {
+        "description": "Fulfillment configuration for the preview.",
+        "ref": "PreviewFulfillmentConfiguration"
+      },
+      "includePaymentOnDelivery": {
+        "description": "When `true`, includes payment on delivery information in the preview response.",
+        "type": "boolean"
+      },
+      "lineItems": {
+        "description": "A list of items to include in the fulfillment preview, including quantity.",
+        "ref": "PreviewLineItem",
+        "type": "array"
+      },
+      "origin": {
+        "description": "The origin of the fulfillment order.",
+        "ref": "OrderOrigin"
+      }
+    },
+    "required": [
+      "destination",
+      "lineItems"
+    ],
+    "type": "object"
+  },
+  "GetOrderPreviewResponse": {
+    "description": "The response schema for `getOrderPreview`.",
+    "properties": {
+      "constraints": {
+        "description": "An array of constraints that may affect the fulfillment order.",
+        "ref": "Constraint",
+        "type": "array"
+      },
+      "plannedShipments": {
+        "description": "An array of planned shipment information.",
+        "ref": "PreviewPlannedShipment",
+        "type": "array"
+      }
+    },
+    "required": [
+      "plannedShipments"
+    ],
+    "type": "object"
+  },
+  "GetOrderResponse": {
+    "description": "The response schema for `getOrder`.",
+    "properties": {
+      "order": {
+        "ref": "FulfillmentOrder"
+      }
+    },
+    "required": [
+      "order"
+    ],
+    "type": "object"
+  },
+  "IpAddress": {
+    "description": "An IP address.",
+    "format": "ip",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "LineItemFulfillmentConfiguration": {
+    "description": "Fulfillment service configuration for a line item.",
+    "properties": {
+      "services": {
+        "description": "Services for the line item.",
+        "ref": "OrderLineItemServices"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListOrdersResponse": {
+    "description": "The response schema for the `listOrders` operation.",
+    "properties": {
+      "orders": {
+        "description": "A list of fulfillment orders.",
+        "ref": "FulfillmentOrder",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [
+      "orders"
+    ],
+    "type": "object"
+  },
+  "Money": {
+    "description": "An amount of money, including units in the form of currency.",
+    "properties": {
+      "amount": {
+        "ref": "Decimal"
+      },
+      "currencyCode": {
+        "description": "Three-digit currency code in ISO 4217 format.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "amount",
+      "currencyCode"
+    ],
+    "type": "object"
+  },
+  "OfferDestination": {
+    "description": "The destination of the fulfillment.",
+    "properties": {
+      "deliveryAddress": {
+        "ref": "VariablePrecisionAddress"
+      },
+      "ipAddress": {
+        "description": "The IP address of the customer.",
+        "ref": "IpAddress"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OfferFulfillmentConfiguration": {
+    "description": "Fulfillment configuration for offers request.",
+    "properties": {
+      "serviceLevel": {
+        "ref": "PreviewServiceLevel"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OfferItem": {
+    "description": "Item information for a getOffers request.",
+    "properties": {
+      "productIdentifier": {
+        "ref": "ProductIdentifier"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OfferOption": {
+    "description": "An available offer for delivery of a product.",
+    "properties": {
+      "expiryTime": {
+        "description": "The time at which this offer expires.",
+        "ref": "Timestamp"
+      },
+      "fulfillmentConfiguration": {
+        "description": "Fulfillment configuration for the offer.",
+        "ref": "OfferOptionFulfillmentConfiguration"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OfferOptionFulfillmentConfiguration": {
+    "description": "Fulfillment configuration for a `getOffers` response offer.",
+    "properties": {
+      "serviceLevel": {
+        "ref": "OfferServiceLevel"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OfferResult": {
+    "description": "Per-item offer results including available offers and any constraints.",
+    "properties": {
+      "constraints": {
+        "description": "Constraints that prevented offers for this item.",
+        "ref": "Constraint",
+        "type": "array"
+      },
+      "item": {
+        "description": "The item this result is for.",
+        "ref": "OfferItem"
+      },
+      "offers": {
+        "description": "Available delivery offers for this item.",
+        "ref": "OfferOption",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OfferServiceLevel": {
+    "description": "Service level configuration for a `getOffers` response offer.",
+    "properties": {
+      "deliveryInterval": {
+        "description": "The delivery interval for this offer.",
+        "ref": "TimeInterval"
+      },
+      "serviceTier": {
+        "description": "The service tier for this offer.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderDestination": {
+    "description": "The destination of the fulfillment order.",
+    "properties": {
+      "deliveryAddress": {
+        "ref": "Address"
+      },
+      "deliveryNotes": {
+        "description": "Delivery notes for the fulfillment order.",
+        "type": "string"
+      },
+      "dropOffLocation": {
+        "description": "Drop-off location for the fulfillment order.",
+        "ref": "OrderDropOffLocation"
+      }
+    },
+    "required": [
+      "deliveryAddress"
+    ],
+    "type": "object"
+  },
+  "OrderDropOffLocation": {
+    "description": "Drop-off location for the fulfillment order.",
+    "properties": {
+      "attributes": {
+        "description": "Drop-off location attributes.",
+        "ref": "OrderDropOffLocationAttributes"
+      },
+      "type": {
+        "description": "Specifies the preferred location to leave the package at the destination address.",
+        "ref": "OrderDropOffLocationType"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderDropOffLocationAttributes": {
+    "description": "Drop-off location attributes.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "OrderDropOffLocationType": {
+    "description": "Specifies the preferred location to leave the package at the destination address.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "OrderFulfillmentAction": {
+    "description": "Specifies whether the fulfillment order should ship now or have an order hold put on it.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "OrderFulfillmentConfiguration": {
+    "description": "Fulfillment configuration for an order request.",
+    "properties": {
+      "action": {
+        "description": "Specifies whether the fulfillment order should ship now or have an order hold put on it.",
+        "ref": "OrderFulfillmentAction"
+      },
+      "policy": {
+        "description": "The policy for the fulfillment order.",
+        "ref": "OrderFulfillmentPolicy"
+      },
+      "serviceLevel": {
+        "description": "Set of service settings that determine the service contract for an order or item.",
+        "ref": "ServiceLevel"
+      },
+      "services": {
+        "description": "Services for the order.",
+        "ref": "OrderServices"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderFulfillmentPolicy": {
+    "description": "The policy value specified when you submitted the `createOrder` request.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "OrderLineItem": {
+    "description": "Line Item information for a fulfillment order.",
+    "properties": {
+      "amount": {
+        "ref": "Amount"
+      },
+      "cancelledAmount": {
+        "ref": "Amount"
+      },
+      "fulfillmentConfiguration": {
+        "description": "The fulfillment configuration of the line item.",
+        "ref": "LineItemFulfillmentConfiguration"
+      },
+      "lineItemId": {
+        "description": "The line item identifier for the fulfillment order.",
+        "type": "string"
+      },
+      "product": {
+        "ref": "OrderProduct"
+      },
+      "unfulfillableAmount": {
+        "ref": "Amount"
+      }
+    },
+    "required": [
+      "amount",
+      "lineItemId",
+      "product"
+    ],
+    "type": "object"
+  },
+  "OrderLineItemDeliveryService": {
+    "description": "Delivery settings for the line item.",
+    "properties": {
+      "paymentOnDelivery": {
+        "description": "Payment On Delivery costs.",
+        "ref": "OrderLineItemPaymentOnDelivery"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderLineItemPackagingService": {
+    "description": "Packaging settings for the line item.",
+    "properties": {
+      "packingSlip": {
+        "description": "Line item packing slip settings.",
+        "ref": "OrderPackingSlip"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderLineItemPaymentOnDelivery": {
+    "description": "Payment on delivery settings.",
+    "properties": {
+      "perUnitServicePrice": {
+        "ref": "Money"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderLineItemServices": {
+    "description": "Services selected for a line item.",
+    "properties": {
+      "delivery": {
+        "ref": "OrderLineItemDeliveryService"
+      },
+      "packaging": {
+        "ref": "OrderLineItemPackagingService"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderOrigin": {
+    "description": "The origin of the fulfillment.",
+    "properties": {
+      "countryCode": {
+        "description": "The two-digit country code (in ISO 3166-1 alpha-2 format) for the country where the items ship from.",
+        "ref": "CountryCode"
+      }
+    },
+    "required": [
+      "countryCode"
+    ],
+    "type": "object"
+  },
+  "OrderPackingSlip": {
+    "description": "Packing slip settings.",
+    "properties": {
+      "templateAttributes": {
+        "ref": "OrderPackingSlipTemplateAttributes"
+      },
+      "templateName": {
+        "description": "The template name for the packing slip.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderPackingSlipTemplateAttributes": {
+    "description": "Packing slip template attributes.",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "OrderProduct": {
+    "description": "Product information for the line item.",
+    "properties": {
+      "perUnitDeclaredValue": {
+        "description": "The monetary value assigned by the seller to each unit.",
+        "ref": "Money"
+      },
+      "productIdentifier": {
+        "ref": "ProductIdentifier"
+      }
+    },
+    "required": [
+      "productIdentifier"
+    ],
+    "type": "object"
+  },
+  "OrderResponseFulfillmentConfiguration": {
+    "description": "Fulfillment configuration in order response.",
+    "properties": {
+      "action": {
+        "description": "Specifies whether the fulfillment order should ship now or have an order hold put on it.",
+        "ref": "OrderFulfillmentAction"
+      },
+      "policy": {
+        "description": "The policy for the fulfillment order.",
+        "ref": "OrderFulfillmentPolicy"
+      },
+      "serviceLevel": {
+        "description": "Set of service settings that indicate the service contract for an order or item.",
+        "ref": "ServiceLevel"
+      },
+      "services": {
+        "description": "Services for the order.",
+        "ref": "OrderServices"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderServices": {
+    "description": "Services selected for a fulfillment order.",
+    "properties": {
+      "additional": {
+        "description": "Additional services for the fulfillment order.",
+        "ref": "AdditionalServices"
+      },
+      "delivery": {
+        "description": "Delivery settings for the fulfillment order.",
+        "ref": "DeliveryService"
+      },
+      "packaging": {
+        "description": "The packaging settings for the fulfillment order.",
+        "ref": "PackagingService"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderStatus": {
+    "description": "The current status of the fulfillment order.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Package": {
+    "description": "Package information for a shipment in a fulfillment order.",
+    "properties": {
+      "deliveryTime": {
+        "description": "The estimated delivery date and time of the package, in ISO 8601 date time format.",
+        "ref": "Timestamp"
+      },
+      "packageId": {
+        "description": "Identifies a package in a shipment.",
+        "type": "string"
+      },
+      "shipmentItemIds": {
+        "description": "The shipment item identifiers contained in this package.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "status": {
+        "ref": "ShipmentPackageStatus"
+      },
+      "tracking": {
+        "description": "Tracking information for the package.",
+        "ref": "Tracking"
+      }
+    },
+    "required": [
+      "packageId"
+    ],
+    "type": "object"
+  },
+  "PackagingService": {
+    "description": "Specify packaging requirements.",
+    "properties": {
+      "overbox": {
+        "description": "Whether to require an overbox for the shipment.",
+        "type": "string"
+      },
+      "packagingOption": {
+        "description": "The packaging option to use for fulfillment.",
+        "type": "string"
+      },
+      "packingSlip": {
+        "description": "Packing slip settings.",
+        "ref": "OrderPackingSlip"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "A token that you use to retrieve the next page of results.",
+    "properties": {
+      "nextToken": {
+        "description": "A token that can be used to fetch the next page of results.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Payment": {
+    "description": "Payment details.",
+    "properties": {
+      "paymentId": {
+        "description": "The payment identifier.",
+        "type": "string"
+      },
+      "paymentMethod": {
+        "description": "The payment method.",
+        "type": "string"
+      },
+      "paymentTime": {
+        "description": "The time of the payment in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PaymentInformation": {
+    "description": "Payment information for the order.",
+    "properties": {
+      "payments": {
+        "description": "A list of payments associated with the order.",
+        "ref": "Payment",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PreviewDeliveryOffer": {
+    "description": "An available offer for delivery of a group of items.",
+    "properties": {
+      "estimatedPrice": {
+        "description": "The estimated fees for the offer.",
+        "ref": "EstimatedPrice"
+      },
+      "fulfillmentConfiguration": {
+        "description": "Fulfillment configuration for the offer.",
+        "ref": "PreviewOfferFulfillmentConfiguration"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PreviewDeliveryService": {
+    "description": "Delivery settings for a fulfillment preview.",
+    "properties": {
+      "paymentOnDelivery": {
+        "description": "Indicates whether to include payment on delivery pricing in the preview.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PreviewDestination": {
+    "description": "The destination of the fulfillment.",
+    "properties": {
+      "deliveryAddress": {
+        "ref": "Address"
+      }
+    },
+    "required": [
+      "deliveryAddress"
+    ],
+    "type": "object"
+  },
+  "PreviewFulfillmentConfiguration": {
+    "description": "Fulfillment configuration for preview request.",
+    "properties": {
+      "serviceLevel": {
+        "ref": "PreviewServiceLevel"
+      },
+      "services": {
+        "description": "Services for the preview.",
+        "ref": "PreviewServices"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PreviewLineItem": {
+    "description": "Item information for a fulfillment preview.",
+    "properties": {
+      "amount": {
+        "ref": "Amount"
+      },
+      "product": {
+        "ref": "PreviewProduct"
+      }
+    },
+    "required": [
+      "amount",
+      "product"
+    ],
+    "type": "object"
+  },
+  "PreviewOfferFulfillmentConfiguration": {
+    "description": "Fulfillment configuration for a preview offer.",
+    "properties": {
+      "serviceLevel": {
+        "ref": "PreviewOfferServiceLevel"
+      },
+      "services": {
+        "description": "Services for the offer.",
+        "ref": "PreviewOfferServices"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PreviewOfferServiceLevel": {
+    "description": "Service configuration for a preview offer.",
+    "properties": {
+      "deliveryInterval": {
+        "description": "The delivery interval for this offer.",
+        "ref": "TimeInterval"
+      },
+      "serviceTier": {
+        "description": "The service tier for this offer.",
+        "type": "string"
+      },
+      "shipInterval": {
+        "description": "The time range within which the shipment is expected to be sent from the fulfillment center.",
+        "ref": "TimeInterval"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PreviewOfferServices": {
+    "description": "Services for a preview offer response.",
+    "properties": {
+      "additional": {
+        "description": "Additional services for this offer.",
+        "ref": "AdditionalServices"
+      },
+      "delivery": {
+        "description": "Delivery service settings for this offer.",
+        "ref": "PreviewDeliveryService"
+      },
+      "packaging": {
+        "description": "The packaging settings for this offer.",
+        "ref": "PreviewPackagingService"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PreviewPackagingService": {
+    "description": "Packaging requirements for a fulfillment preview.",
+    "properties": {
+      "overbox": {
+        "description": "Whether to require an overbox for the shipment.",
+        "type": "string"
+      },
+      "packagingOption": {
+        "description": "The packaging option to use for fulfillment.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PreviewPlannedShipment": {
+    "description": "A group of items to be delivered together.",
+    "properties": {
+      "estimatedShippingWeight": {
+        "description": "The estimated shipping weight of the planned shipment.",
+        "ref": "Weight"
+      },
+      "items": {
+        "description": "The items in this planned shipment.",
+        "ref": "PreviewPlannedShipmentItem",
+        "type": "array"
+      },
+      "offers": {
+        "description": "An array of offers for this planned shipment.",
+        "ref": "PreviewDeliveryOffer",
+        "type": "array"
+      }
+    },
+    "required": [
+      "items"
+    ],
+    "type": "object"
+  },
+  "PreviewPlannedShipmentItem": {
+    "description": "Item information for a fulfillment preview.",
+    "properties": {
+      "amount": {
+        "ref": "Amount"
+      },
+      "productIdentifier": {
+        "ref": "ProductIdentifier"
+      }
+    },
+    "required": [
+      "amount",
+      "productIdentifier"
+    ],
+    "type": "object"
+  },
+  "PreviewProduct": {
+    "description": "Product information for the line item.",
+    "properties": {
+      "perUnitDeclaredValue": {
+        "description": "The monetary value assigned by the seller to each unit.",
+        "ref": "Money"
+      },
+      "productIdentifier": {
+        "ref": "ProductIdentifier"
+      }
+    },
+    "required": [
+      "productIdentifier"
+    ],
+    "type": "object"
+  },
+  "PreviewServiceLevel": {
+    "description": "Service level configuration for data-plane requests (`getOffers`, `getOrderPreview`).",
+    "properties": {
+      "serviceTiers": {
+        "description": "The service tiers to retrieve offers for.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PreviewServices": {
+    "description": "Services for a fulfillment preview request.",
+    "properties": {
+      "additional": {
+        "description": "Additional services for the fulfillment preview.",
+        "ref": "AdditionalServices"
+      },
+      "packaging": {
+        "description": "The packaging settings for the fulfillment preview.",
+        "ref": "PreviewPackagingService"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ProductIdentifier": {
+    "description": "The identifier of a product.",
+    "properties": {
+      "amazonSku": {
+        "description": "The Amazon SKU of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "amazonSku"
+    ],
+    "type": "object"
+  },
+  "ProofOfDelivery": {
+    "description": "Proof of delivery information for a package.",
+    "properties": {
+      "deliveryPhotoUrl": {
+        "description": "URL of the delivery photo.",
+        "type": "string"
+      },
+      "receivedBy": {
+        "description": "The name of the person who received the package.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RollupPrice": {
+    "description": "A component of the total price.",
+    "properties": {
+      "type": {
+        "description": "The type of price.",
+        "type": "string"
+      },
+      "value": {
+        "description": "The total value of a price type.",
+        "ref": "Money"
+      }
+    },
+    "required": [
+      "type",
+      "value"
+    ],
+    "type": "object"
+  },
+  "ServiceLevel": {
+    "description": "Service level configuration for fulfillment.",
+    "properties": {
+      "deliveryInterval": {
+        "description": "The time range within which delivery should occur.",
+        "ref": "TimeInterval"
+      },
+      "serviceTiers": {
+        "description": "The service tiers that are acceptable for this order, listed in order of preference.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Shipment": {
+    "description": "Delivery and item information for a shipment in a fulfillment order.",
+    "properties": {
+      "amazonFacility": {
+        "ref": "AmazonFacility"
+      },
+      "amazonShipmentId": {
+        "description": "A shipment identifier assigned by Amazon.",
+        "type": "string"
+      },
+      "deliveryTime": {
+        "description": "The estimated delivery date and time of the shipment, in ISO 8601 date time format.",
+        "ref": "Timestamp"
+      },
+      "items": {
+        "description": "An array of fulfillment shipment item information.",
+        "ref": "ShipmentItem",
+        "type": "array"
+      },
+      "packages": {
+        "description": "An array of fulfillment shipment package information.",
+        "ref": "Package",
+        "type": "array"
+      },
+      "serviceLevel": {
+        "description": "The actualized service level for this shipment.",
+        "ref": "ShipmentServiceLevel"
+      },
+      "shipTime": {
+        "description": "The meaning of `shipTime` depends on the current status of the shipment: * Processing - `shipTime` is the estimated time that the shipment will leave the Amazon fulfillment center.",
+        "ref": "Timestamp"
+      },
+      "shippingNotes": {
+        "description": "Provides additional insight into shipment timeline.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "status": {
+        "ref": "ShipmentStatus"
+      }
+    },
+    "required": [
+      "amazonFacility",
+      "amazonShipmentId",
+      "items",
+      "status"
+    ],
+    "type": "object"
+  },
+  "ShipmentItem": {
+    "description": "Item information for a shipment in a fulfillment order.",
+    "properties": {
+      "amount": {
+        "ref": "Amount"
+      },
+      "lineItemId": {
+        "description": "The fulfillment order item identifier that the seller created and submitted with a call to the `createOrder` operation.",
+        "type": "string"
+      },
+      "packageId": {
+        "description": "An identifier for the package that contains the item quantity.",
+        "type": "string"
+      },
+      "productIdentifier": {
+        "ref": "ProductIdentifier"
+      },
+      "shipmentItemId": {
+        "description": "A unique identifier for the shipment item.",
+        "type": "string"
+      },
+      "unitIdentifiers": {
+        "description": "The manufacturer lot codes of the shipped items.",
+        "ref": "UnitIdentifiers"
+      }
+    },
+    "required": [
+      "amount",
+      "lineItemId",
+      "productIdentifier"
+    ],
+    "type": "object"
+  },
+  "ShipmentPackageStatus": {
+    "description": "The current status of a package.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ShipmentServiceLevel": {
+    "description": "The service level for a shipment in a fulfillment order.",
+    "properties": {
+      "serviceTier": {
+        "description": "The service tier used for this shipment.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ShipmentStatus": {
+    "description": "The current status of the shipment.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "TimeInterval": {
+    "description": "The time range within which an event (for example, a delivery) will occur.",
+    "properties": {
+      "endTime": {
+        "description": "The latest point in a date range in ISO 8601 date-time format.",
+        "ref": "Timestamp"
+      },
+      "startTime": {
+        "description": "The earliest point in a date range in ISO 8601 date-time format.",
+        "ref": "Timestamp"
+      }
+    },
+    "required": [
+      "endTime",
+      "startTime"
+    ],
+    "type": "object"
+  },
+  "Timestamp": {
+    "description": "Date timestamp in [ISO 8601](https://developer-docs.amazon/sp-api/docs/iso-8601) date time format.",
+    "format": "date-time",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Tracking": {
+    "description": "Tracking information for a package.",
+    "properties": {
+      "amazon": {
+        "ref": "AmazonTracking"
+      },
+      "carrier": {
+        "ref": "CarrierTracking"
+      },
+      "dropOffLocation": {
+        "description": "The drop off location for a package.",
+        "ref": "OrderDropOffLocation"
+      },
+      "proofOfDelivery": {
+        "description": "Proof of delivery information for the package.",
+        "ref": "ProofOfDelivery"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UnitIdentifiers": {
+    "description": "A map of unit identifier types to lists of identifier values",
+    "itemType": "array",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "UpdateOrderFulfillmentConfiguration": {
+    "description": "Fulfillment configuration for update order request.",
+    "properties": {
+      "action": {
+        "description": "Specifies whether the fulfillment order should ship now or have an order hold put on it.",
+        "ref": "OrderFulfillmentAction"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UpdateOrderRequest": {
+    "description": "The request body schema for the `updateOrder` operation.",
+    "properties": {
+      "fulfillmentConfiguration": {
+        "description": "Fulfillment configuration to update.",
+        "ref": "UpdateOrderFulfillmentConfiguration"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UpdateOrderResponse": {
+    "description": "The response to the `updateOrder` operation.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "UpdateOrderStatusRequest": {
+    "description": "The request body schema for the `updateOrderStatus` operation.",
+    "properties": {
+      "status": {
+        "description": "The status of the fulfillment order to apply.",
+        "ref": "OrderStatus"
+      }
+    },
+    "required": [
+      "status"
+    ],
+    "type": "object"
+  },
+  "UpdatePackageRequest": {
+    "description": "Package information to update for a specific package in a fulfillment order.",
+    "properties": {
+      "deliveryTime": {
+        "description": "The estimated delivery date and time of the package, in ISO 8601 date time format.",
+        "ref": "Timestamp"
+      },
+      "status": {
+        "ref": "ShipmentPackageStatus"
+      },
+      "tracking": {
+        "description": "Tracking information for the package.",
+        "ref": "Tracking"
+      }
+    },
+    "required": [
+      "status"
+    ],
+    "type": "object"
+  },
+  "VariablePrecisionAddress": {
+    "description": "A physical address with varying degrees of precision.",
+    "properties": {
+      "addressLine1": {
+        "description": "The first line of the address.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "addressLine3": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city where the person, business, or institution is located.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two-digit country code (in ISO 3166-1 alpha-2 format) for the country where the person, business or institution is located.",
+        "ref": "CountryCode"
+      },
+      "districtOrCounty": {
+        "description": "The district or county where the person, business, or institution is located.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "The postal code of the address.",
+        "type": "string"
+      },
+      "stateOrRegion": {
+        "description": "The state or region where the person, business, or institution is located.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "countryCode",
+      "postalCode"
+    ],
+    "type": "object"
+  },
+  "Weight": {
+    "description": "The weight.",
+    "properties": {
+      "unit": {
+        "description": "The unit of weight.",
+        "type": "string"
+      },
+      "value": {
+        "description": "The weight value.",
+        "ref": "Decimal"
+      }
+    },
+    "required": [
+      "unit",
+      "value"
+    ],
+    "type": "object"
+  }
+}

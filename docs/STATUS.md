@@ -2,10 +2,10 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P0 done, G0 passed — P1 ready to start
+- **Phase:** P1 — 6 of 7 discovery tasks done and committed; P1-VENDOR, then P1-SCOPE
 - **Updated:** 2026-11-09
-- **Waiting on user:** go-ahead to start the P1 sessions; R5/R6 (own SP-API app, own Ads API
-  LWA client — not Yes4All's); R1 Docker Desktop engine returns 500 (needed from P3, not P1)
+- **Waiting on user:** `tiếp` to start P1-VENDOR (needs Chrome free: close the stuck Display-builder
+  tab, choose Leave); R5/R6 (own SP-API app, own Ads API LWA client); R1 Docker engine 500 (P3)
 
 ## Running
 
@@ -16,6 +16,12 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 
 | Task | Verified how | Merged / committed | Report |
 | --- | --- | --- | --- |
+| P1-SPAPI | builder re-run exit 0, catalog unchanged; 394 ops (352 seller, 42 vendor) | committed on main | docs/reports/P1-SPAPI.md |
+| P1-ADS | builder re-run exit 0, catalog unchanged; 1,090 ops, 110 MCP tools / 18 groups | committed on main | docs/reports/P1-ADS.md |
+| P1-CONSOLE | report read; entityId grep clean. Partial: account has SB only (SP/SD detail tabs, validation msgs, tooltips not covered) | committed on main | docs/reports/P1-CONSOLE.md |
+| P1-REF | report read; competitor evidence partly secondhand (some pages blocked) | committed on main | docs/reports/P1-REF.md |
+| P1-WEB | report read; 188/194 web calls match api-endpoints.json; JSON parses | committed on main | docs/reports/P1-WEB.md |
+| P1-API | report read; clean-room grep 0 (yes4all/y4a/codenames); SP-API names checked vs catalog/spapi | committed on main | docs/reports/P1-API.md |
 
 ## Blocked / waiting
 
@@ -24,7 +30,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 
 ## Next runnable
 
-- P1-SPAPI, P1-ADS, P1-WEB, P1-API, P1-REF, P1-CONSOLE in parallel; then P1-VENDOR; then P1-SCOPE.
+- P1-VENDOR (on user's `tiếp`, Chrome free), then P1-SCOPE after P1-WEB/P1-API follow-ups and P1-VENDOR.
 
 ## Log
 
@@ -52,3 +58,12 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   (`prompts/p1-vendor-console.md`) for D5; runs after P1-CONSOLE (one Chrome driver).
 - 2026-11-09 — User asked to reuse SP-API credentials from ads-api's env: refused (CLAUDE.md
   forbids opening legacy `.env*`; Yes4All credentials need written consent, D30).
+- 2026-11-09 — Started P1 group (6 sessions). User touched P1-CONSOLE's tab; session recovered,
+  nothing saved. User says that Ads profile is a test account where creating is allowed —
+  candidate for D30 write tests at G3 (to confirm then).
+- 2026-11-09 — All six P1 sessions reported DONE. Verification: both catalog builders re-run clean
+  with no diff. Clean-room grep found ~480 Yes4All-specific names (proxy headers, schema/table and
+  rule-engine codenames) in `catalog/legacy/**` → sent back to P1-API to neutralise; P1-WEB sent to
+  cross-check endpoints now that P1-API's catalog exists. Nothing committed yet (waits for those).
+- 2026-11-09 — P1-API neutralised internal names (grep 0); P1-WEB cross-check: 188/194 calls match,
+  5 go to other services, 95 backend routes unused by any screen. Committed all six P1 outputs.

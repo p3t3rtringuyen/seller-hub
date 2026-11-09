@@ -1,0 +1,442 @@
+{
+ "api": "AmazonAdsAPIALLCommunicationPreferencesContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLCommunicationPreferencesContract_prod_3p_BETA.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CommunicationCategoryPreference": {
+   "description": "An advertiser's subscription preference for a specific communication category.",
+   "properties": {
+    "categoryDescription": {
+     "description": "Description of the communications covered by this category.",
+     "type": "string"
+    },
+    "categoryId": {
+     "description": "The communication category this preference applies to. Values are static configuration keys defined outside the domain model.",
+     "type": "string"
+    },
+    "categoryTitle": {
+     "description": "Display name of the communication category.",
+     "type": "string"
+    },
+    "isCategorySubscribed": {
+     "description": "Whether the advertiser is subscribed to this communication category. Effective only when communicationsEnabled is true.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "categoryId",
+    "isCategorySubscribed"
+   ],
+   "type": "object"
+  },
+  "CommunicationChannel": {
+   "description": "Channels through which communications can be delivered. **CommunicationChannel Enum:** | CommunicationChannel | Description | |------|------| | `EMAIL` | Email communications. | | `UI` | In-app communications. |",
+   "enum": [
+    "EMAIL",
+    "UI"
+   ],
+   "type": "string"
+  },
+  "CommunicationPreference": {
+   "properties": {
+    "categoryPreferences": {
+     "description": "Subscription preferences for individual communication categories on this channel.",
+     "items": {
+      "$ref": "CommunicationCategoryPreference"
+     },
+     "maxItems": 25,
+     "minItems": 0,
+     "type": "array"
+    },
+    "channel": {
+     "$ref": "CommunicationChannel"
+    },
+    "communicationPreferenceId": {
+     "description": "Unique identifier for this communication preference.",
+     "type": "string"
+    },
+    "communicationsEnabled": {
+     "description": "Whether communications are enabled for this channel. When false, all communications on this channel are suppressed regardless of individual category subscriptions.",
+     "type": "boolean"
+    },
+    "lastUpdateSource": {
+     "$ref": "UpdateSource"
+    },
+    "lastUpdatedDateTime": {
+     "description": "UTC timestamp of the most recent preference change.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "channel",
+    "communicationPreferenceId",
+    "communicationsEnabled"
+   ],
+   "type": "object"
+  },
+  "CommunicationPreferenceCommunicationChannelFilter": {
+   "properties": {
+    "include": {
+     "description": "**Channel Enum:** | Channel | Description | | --- | --- | | `EMAIL` | Email communications. | | `UI` | In-app communications. |",
+     "items": {
+      "$ref": "CommunicationChannel"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "CommunicationPreferenceMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "CommunicationPreferenceMultiStatusSuccess"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CommunicationPreferenceMultiStatusSuccess": {
+   "properties": {
+    "communicationPreference": {
+     "$ref": "CommunicationPreference"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 0,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "communicationPreference",
+    "index"
+   ],
+   "type": "object"
+  },
+  "CommunicationPreferenceSuccessResponse": {
+   "properties": {
+    "communicationPreferences": {
+     "items": {
+      "$ref": "CommunicationPreference"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CommunicationPreferenceUpdate": {
+   "properties": {
+    "categoryPreferences": {
+     "description": "Subscription preferences for individual communication categories on this channel.",
+     "items": {
+      "$ref": "CreateCommunicationCategoryPreference"
+     },
+     "maxItems": 25,
+     "minItems": 0,
+     "type": "array"
+    },
+    "communicationPreferenceId": {
+     "description": "Unique identifier for this communication preference.",
+     "type": "string"
+    },
+    "communicationsEnabled": {
+     "description": "Whether communications are enabled for this channel. When false, all communications on this channel are suppressed regardless of individual category subscriptions.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "communicationPreferenceId"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateCommunicationCategoryPreference": {
+   "description": "An advertiser's subscription preference for a specific communication category.",
+   "properties": {
+    "categoryId": {
+     "description": "The communication category this preference applies to. Values are static configuration keys defined outside the domain model.",
+     "type": "string"
+    },
+    "isCategorySubscribed": {
+     "description": "Whether the advertiser is subscribed to this communication category. Effective only when communicationsEnabled is true.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "categoryId",
+    "isCategorySubscribed"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `CONTENT_TOO_LARGE` | The request is too large. Consider splitting it int…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryCommunicationPreferenceRequest": {
+   "properties": {
+    "channelFilter": {
+     "$ref": "CommunicationPreferenceCommunicationChannelFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "channelFilter"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateCommunicationPreferenceRequest": {
+   "properties": {
+    "communicationPreferences": {
+     "items": {
+      "$ref": "CommunicationPreferenceUpdate"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "communicationPreferences"
+   ],
+   "type": "object"
+  },
+  "UpdateSource": {
+   "description": "Origins from which preference changes can be made. **UpdateSource Enum:** | UpdateSource | Description | |------|------| | `ADS_CONSOLE` | Changed via the Ads Console. | | `EMAIL` | Changed via the email unsubscribe lin…",
+   "enum": [
+    "ADS_CONSOLE",
+    "EMAIL"
+   ],
+   "type": "string"
+  }
+ }
+}

@@ -1,0 +1,636 @@
+{
+ "api": "AmazonAdsAPIALLLinearTvIncrementalReachForecastsContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLLinearTvIncrementalReachForecastsContract_prod_3p_BETA.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Budget": {
+   "properties": {
+    "budgetType": {
+     "$ref": "BudgetType"
+    },
+    "budgetValue": {
+     "$ref": "BudgetValue"
+    },
+    "recurrenceTimePeriod": {
+     "$ref": "Recurrence"
+    }
+   },
+   "required": [
+    "budgetType",
+    "budgetValue",
+    "recurrenceTimePeriod"
+   ],
+   "type": "object"
+  },
+  "BudgetType": {
+   "enum": [
+    "IMPRESSION"
+   ],
+   "type": "string"
+  },
+  "BudgetValue": {
+   "oneOf": [
+    {
+     "properties": {
+      "impressionBudgetValue": {
+       "$ref": "ImpressionBudgetValue"
+      }
+     },
+     "required": [
+      "impressionBudgetValue"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateBudget": {
+   "properties": {
+    "budgetType": {
+     "$ref": "BudgetType"
+    },
+    "budgetValue": {
+     "$ref": "CreateBudgetValue"
+    },
+    "recurrenceTimePeriod": {
+     "$ref": "Recurrence"
+    }
+   },
+   "required": [
+    "budgetType",
+    "budgetValue",
+    "recurrenceTimePeriod"
+   ],
+   "type": "object"
+  },
+  "CreateBudgetValue": {
+   "oneOf": [
+    {
+     "properties": {
+      "impressionBudgetValue": {
+       "$ref": "CreateImpressionBudgetValue"
+      }
+     },
+     "required": [
+      "impressionBudgetValue"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateImpressionBudgetValue": {
+   "properties": {
+    "impression": {
+     "description": "The impression cap of the budget cap.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "impression"
+   ],
+   "type": "object"
+  },
+  "CreateLinearTvIncrementalReachForecastRequest": {
+   "properties": {
+    "linearTvIncrementalReachForecasts": {
+     "items": {
+      "$ref": "LinearTvIncrementalReachForecastCreate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "linearTvIncrementalReachForecasts"
+   ],
+   "type": "object"
+  },
+  "CreateLinearTvInventoryAllocation": {
+   "description": "Linear TV Inventory Allocation",
+   "properties": {
+    "grossRatingPoint": {
+     "description": "Gross Rating Point (GRP) for the Linear TV inventory.",
+     "format": "double",
+     "type": "number"
+    },
+    "inventoryType": {
+     "$ref": "LinearTvInventoryType"
+    },
+    "linearTvDaypartId": {
+     "description": "A unique identifier of the daypart associated with the Linear TV inventory.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "grossRatingPoint",
+    "inventoryType",
+    "linearTvDaypartId"
+   ],
+   "type": "object"
+  },
+  "CreateReachForecastBudgetAllocation": {
+   "properties": {
+    "budget": {
+     "$ref": "CreateBudget"
+    },
+    "reachForecastId": {
+     "description": "The identifier for the Reach Forecast.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "budget",
+    "reachForecastId"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ImpressionBudgetValue": {
+   "properties": {
+    "impression": {
+     "description": "The impression cap of the budget cap.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "impression"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "LinearTvIncrementalReachForecast": {
+   "properties": {
+    "creationDateTime": {
+     "description": "The date time that the reach forecast was created.",
+     "type": "string"
+    },
+    "deduplicatedReachPercent": {
+     "description": "Total combined reach percentage across both channels.",
+     "format": "double",
+     "type": "number"
+    },
+    "endDate": {
+     "description": "The end date of the Linear TV Incremental Reach Forecast.",
+     "format": "date",
+     "type": "string"
+    },
+    "linearTvIncrementalReachForecastId": {
+     "description": "A unique identifier for a Linear TV Incremental Reach Forecast.",
+     "type": "string"
+    },
+    "linearTvInventoryAllocation": {
+     "description": "Inventory allocation for the Linear TV Incremental Reach Forecast.",
+     "items": {
+      "$ref": "LinearTvInventoryAllocation"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "linearTvOnlyReachPercent": {
+     "description": "Linear TV Incremental (unique) reach percentage.",
+     "format": "double",
+     "type": "number"
+    },
+    "linearTvReachPercentOverride": {
+     "description": "Override of TV reach percentage. If not provided, the service will calculate TV reach based on internal estimation.",
+     "format": "double",
+     "type": "number"
+    },
+    "marketplace": {
+     "$ref": "Marketplace"
+    },
+    "overlapReachPercent": {
+     "description": "Overlapped reach percentage between Streaming TV and Linear TV.",
+     "format": "double",
+     "type": "number"
+    },
+    "reachUnit": {
+     "$ref": "ReachUnit"
+    },
+    "startDate": {
+     "description": "The start date of the Linear TV Incremental Reach Forecast.",
+     "format": "date",
+     "type": "string"
+    },
+    "streamingTvBudgetAllocation": {
+     "description": "Budget allocation for the list of Reach Forecast to be compared on top of Linear TV reach.",
+     "items": {
+      "$ref": "ReachForecastBudgetAllocation"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "streamingTvExclusiveReachRate": {
+     "description": "The percentage of streaming TV reach that wasn't exposed to a linear TV campaign. streamingTvOnlyReachPercent / (streamingTvOnlyReachPercent + overlapReachPercent) * 100%",
+     "format": "double",
+     "type": "number"
+    },
+    "streamingTvIncrementalReachRate": {
+     "description": "The percentage of unique households/individuals that were reached on streaming TV inventory compared to linear TV. Households/individuals that are included in linear TV reach aren't counted in Streaming TV reach. stream…",
+     "format": "double",
+     "type": "number"
+    },
+    "streamingTvOnlyReachPercent": {
+     "description": "Streaming TV Incremental (unique) reach percentage.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "creationDateTime",
+    "deduplicatedReachPercent",
+    "endDate",
+    "linearTvIncrementalReachForecastId",
+    "linearTvOnlyReachPercent",
+    "marketplace",
+    "overlapReachPercent",
+    "reachUnit",
+    "startDate",
+    "streamingTvBudgetAllocation",
+    "streamingTvExclusiveReachRate",
+    "streamingTvIncrementalReachRate",
+    "streamingTvOnlyReachPercent"
+   ],
+   "type": "object"
+  },
+  "LinearTvIncrementalReachForecastCreate": {
+   "properties": {
+    "endDate": {
+     "description": "The end date of the Linear TV Incremental Reach Forecast.",
+     "format": "date",
+     "type": "string"
+    },
+    "linearTvInventoryAllocation": {
+     "description": "Inventory allocation for the Linear TV Incremental Reach Forecast.",
+     "items": {
+      "$ref": "CreateLinearTvInventoryAllocation"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "linearTvReachPercentOverride": {
+     "description": "Override of TV reach percentage. If not provided, the service will calculate TV reach based on internal estimation.",
+     "format": "double",
+     "type": "number"
+    },
+    "marketplace": {
+     "$ref": "Marketplace"
+    },
+    "reachUnit": {
+     "$ref": "ReachUnit"
+    },
+    "startDate": {
+     "description": "The start date of the Linear TV Incremental Reach Forecast.",
+     "format": "date",
+     "type": "string"
+    },
+    "streamingTvBudgetAllocation": {
+     "description": "Budget allocation for the list of Reach Forecast to be compared on top of Linear TV reach.",
+     "items": {
+      "$ref": "CreateReachForecastBudgetAllocation"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "endDate",
+    "marketplace",
+    "reachUnit",
+    "startDate",
+    "streamingTvBudgetAllocation"
+   ],
+   "type": "object"
+  },
+  "LinearTvIncrementalReachForecastMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "LinearTvIncrementalReachForecastMultiStatusSuccess"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "LinearTvIncrementalReachForecastMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "linearTvIncrementalReachForecast": {
+     "$ref": "LinearTvIncrementalReachForecast"
+    }
+   },
+   "required": [
+    "index",
+    "linearTvIncrementalReachForecast"
+   ],
+   "type": "object"
+  },
+  "LinearTvInventoryAllocation": {
+   "description": "Linear TV Inventory Allocation",
+   "properties": {
+    "grossRatingPoint": {
+     "description": "Gross Rating Point (GRP) for the Linear TV inventory.",
+     "format": "double",
+     "type": "number"
+    },
+    "inventoryType": {
+     "$ref": "LinearTvInventoryType"
+    },
+    "linearTvDaypartId": {
+     "description": "A unique identifier of the daypart associated with the Linear TV inventory.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "grossRatingPoint",
+    "inventoryType",
+    "linearTvDaypartId"
+   ],
+   "type": "object"
+  },
+  "LinearTvInventoryType": {
+   "description": "**LinearTvInventoryType Enum:** | LinearTvInventoryType | Description | | --- | --- | | `BROADCAST` | Inventory on broadcast TV Network. | | `CABLE` | Inventory on cable TV Network. | | `SYNDICATION` | Inventory within …",
+   "enum": [
+    "BROADCAST",
+    "CABLE",
+    "SYNDICATION"
+   ],
+   "type": "string"
+  },
+  "Marketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "SA",
+    "SE",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ReachForecastBudgetAllocation": {
+   "properties": {
+    "budget": {
+     "$ref": "Budget"
+    },
+    "reachForecastId": {
+     "description": "The identifier for the Reach Forecast.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "budget",
+    "reachForecastId"
+   ],
+   "type": "object"
+  },
+  "ReachUnit": {
+   "description": "The unit of reach numbers. **ReachUnit Enum:** | ReachUnit | Description | | --- | --- | | `HOUSEHOLD` | Household which can be reached by ads. | | `INDIVIDUAL` | Individual people who can view ads. |",
+   "enum": [
+    "HOUSEHOLD",
+    "INDIVIDUAL"
+   ],
+   "type": "string"
+  },
+  "Recurrence": {
+   "enum": [
+    "LIFETIME"
+   ],
+   "type": "string"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

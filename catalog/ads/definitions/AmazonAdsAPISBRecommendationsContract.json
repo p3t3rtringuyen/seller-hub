@@ -1,0 +1,530 @@
+{
+ "api": "AmazonAdsAPISBRecommendationsContract",
+ "file": "specs/dest/AmazonAdsAPISBRecommendationsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "| ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `CONTENT_TOO_LARGE` | The request is too large. Consider splitting it into multiple requests.…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SBAlternateBrandIdType": {
+   "description": "The type of identifier for the alternate brand identifier. | AlternateBrandIdType | Description | |------|------| | `BRAND_REGISTRY` | Previous version of brand identifier retrieved from BrandRegistry. Identifiers of th…",
+   "enum": [
+    "BRAND_REGISTRY"
+   ],
+   "type": "string"
+  },
+  "SBBrandAlternateId": {
+   "description": "Other types of brand identifiers for a brand that are used with other operations.",
+   "properties": {
+    "alternateBrandId": {
+     "description": "The alternative brand identifier for the brandId.",
+     "type": "string"
+    },
+    "alternateBrandIdType": {
+     "$ref": "SBAlternateBrandIdType"
+    }
+   },
+   "required": [
+    "alternateBrandId",
+    "alternateBrandIdType"
+   ],
+   "type": "object"
+  },
+  "SBBrandedKeyword": {
+   "properties": {
+    "brandAlternateId": {
+     "$ref": "SBBrandAlternateId"
+    },
+    "keyword": {
+     "description": "Branded keyword",
+     "type": "string"
+    }
+   },
+   "required": [
+    "brandAlternateId",
+    "keyword"
+   ],
+   "type": "object"
+  },
+  "SBBrandedKeywordList": {
+   "properties": {
+    "associatedBrandIds": {
+     "description": "Brand IDs associated with the branded keyword list",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brandedKeyword": {
+     "description": "Branded keywords are specific words or phrases that include a company's brand name or a registered trademark of a brand",
+     "items": {
+      "$ref": "SBBrandedKeyword"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBBrandedKeywordRecommendationTypeDetails": {
+   "properties": {
+    "brandAlternateId": {
+     "items": {
+      "$ref": "SBBrandAlternateId"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "brandIds": {
+     "description": "The brand ID to scope branded keyword recommendations for",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brandAlternateId"
+   ],
+   "type": "object"
+  },
+  "SBCreateBrandAlternateId": {
+   "description": "Other types of brand identifiers for a brand that are used with other operations.",
+   "properties": {
+    "alternateBrandId": {
+     "description": "The alternative brand identifier for the brandId.",
+     "type": "string"
+    },
+    "alternateBrandIdType": {
+     "$ref": "SBAlternateBrandIdType"
+    }
+   },
+   "required": [
+    "alternateBrandId",
+    "alternateBrandIdType"
+   ],
+   "type": "object"
+  },
+  "SBCreateBrandedKeywordRecommendationTypeDetails": {
+   "properties": {
+    "brandAlternateId": {
+     "items": {
+      "$ref": "SBCreateBrandAlternateId"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "brandIds": {
+     "description": "The brand ID to scope branded keyword recommendations for",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brandAlternateId"
+   ],
+   "type": "object"
+  },
+  "SBCreateRecommendationRequest": {
+   "properties": {
+    "recommendations": {
+     "items": {
+      "$ref": "SBRecommendationCreate"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBCreateRecommendationTypeDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandedKeywordRecommendationTypeDetails": {
+       "$ref": "SBCreateBrandedKeywordRecommendationTypeDetails"
+      }
+     },
+     "required": [
+      "brandedKeywordRecommendationTypeDetails"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBObjectSettings": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandedKeywordList": {
+       "$ref": "SBBrandedKeywordList"
+      }
+     },
+     "required": [
+      "brandedKeywordList"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBRecommendation": {
+   "properties": {
+    "recommendationId": {
+     "description": "The identifier of the recommendation",
+     "type": "string"
+    },
+    "recommendationType": {
+     "description": "A unique value to indicate similar recommendations, used for internal purposes only",
+     "type": "string"
+    },
+    "recommendationTypeDetails": {
+     "$ref": "SBRecommendationTypeDetails"
+    },
+    "recommendedObjects": {
+     "description": "The target objects of the recommendation",
+     "items": {
+      "$ref": "SBRecommendedObject"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "recommendationId",
+    "recommendationType",
+    "recommendedObjects"
+   ],
+   "type": "object"
+  },
+  "SBRecommendationCreate": {
+   "properties": {
+    "recommendationType": {
+     "description": "A unique value to indicate similar recommendations, used for internal purposes only",
+     "type": "string"
+    },
+    "recommendationTypeDetails": {
+     "$ref": "SBCreateRecommendationTypeDetails"
+    }
+   },
+   "required": [
+    "recommendationType"
+   ],
+   "type": "object"
+  },
+  "SBRecommendationMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "SBRecommendationMultiStatusSuccess"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBRecommendationMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 0,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "recommendation": {
+     "$ref": "SBRecommendation"
+    }
+   },
+   "required": [
+    "index",
+    "recommendation"
+   ],
+   "type": "object"
+  },
+  "SBRecommendationTypeDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandedKeywordRecommendationTypeDetails": {
+       "$ref": "SBBrandedKeywordRecommendationTypeDetails"
+      }
+     },
+     "required": [
+      "brandedKeywordRecommendationTypeDetails"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBRecommendationTypeEnum": {
+   "description": "The unique identifier of the recommendation type. Used to classify and group similar recommendations (e.g. 'BRANDED_KEYWORD'). **RecommendationTypeEnum Enum:** | RecommendationTypeEnum | Description | | --- | --- | | `B…",
+   "enum": [
+    "BRANDED_KEYWORD"
+   ],
+   "type": "string"
+  },
+  "SBRecommendedObject": {
+   "description": "Details of the recommended object",
+   "properties": {
+    "recommendedObjectSettings": {
+     "$ref": "SBObjectSettings"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

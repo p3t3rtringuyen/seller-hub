@@ -1,0 +1,2203 @@
+{
+ "api": "Deals",
+ "file": "specs/dest/Deals_prod_3p.json",
+ "schemas": {
+  "ApiError": {
+   "description": "The error response object.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "FieldError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "A value created by Amazon API Gateway that uniquely identifies your request.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AvailsForDeviceType": {
+   "properties": {
+    "deviceType": {
+     "$ref": "DeviceType"
+    },
+    "impressionOpportunities": {
+     "description": "The number of impression opportunities per day per device.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "BroadcasterFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by broadcaster classification ID(s).",
+     "enum": [
+      "BROADCASTER"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "values": {
+     "description": "Broadcaster classification IDs to filter by.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "values"
+   ],
+   "type": "object"
+  },
+  "CMInventoryDiscoveryDeal": {
+   "properties": {
+    "broadcasters": {
+     "description": "Broadcasters associated with this deal. Each entry contains an id and display name. For publisher (SSP) reads, only declared values are returned.",
+     "items": {
+      "$ref": "ClassificationEntity"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "createdDateTime": {
+     "description": "The deal start date. Format is ISO-8601 and UTC timezone.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "creativeRequirements": {
+     "description": "Creative requirements associated with the deal.",
+     "properties": {
+      "creativeSource": {
+       "description": "Indicates who hosts and serves the creative for this deal. PUBLISHER means the creative is hosted by the publisher's ad server. ADVERTISER means the creative is provided by the demand side.",
+       "enum": [
+        "ADVERTISER",
+        "PUBLISHER"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "dealBudget": {
+     "allOf": [
+      {
+       "$ref": "DealBudget"
+      }
+     ],
+     "description": "The deal budget (PG or SOV deals only).",
+     "type": "object"
+    },
+    "dealPrice": {
+     "allOf": [
+      {
+       "$ref": "DealPrice"
+      }
+     ],
+     "description": "The deal price.",
+     "type": "object"
+    },
+    "dealStatus": {
+     "allOf": [
+      {
+       "$ref": "DealStatus"
+      }
+     ],
+     "description": "The deal status.",
+     "type": "string"
+    },
+    "dealType": {
+     "allOf": [
+      {
+       "$ref": "DealType"
+      }
+     ],
+     "description": "The deal type.",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The deal end date. Format is ISO-8601 and UTC timezone.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "exchangeId": {
+     "description": "The exchange id.",
+     "type": "string"
+    },
+    "externalDealId": {
+     "description": "The deal ID assigned by the associated exchange.",
+     "type": "string"
+    },
+    "id": {
+     "description": "The internal deal id.",
+     "type": "string"
+    },
+    "inventoryType": {
+     "allOf": [
+      {
+       "$ref": "InventoryType"
+      }
+     ],
+     "description": "The type of inventory.",
+     "type": "string"
+    },
+    "leagues": {
+     "description": "Leagues associated with this deal. Each entry contains an id and display name. For publisher (SSP) reads, only declared values are returned.",
+     "items": {
+      "$ref": "ClassificationEntity"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "liveEventDeal": {
+     "description": "Whether the deal is a live event deal.",
+     "type": "boolean"
+    },
+    "marketplaceDeal": {
+     "description": "Whether the deal is a marketplace deal.",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "The name of the deal.",
+     "type": "string"
+    },
+    "publisherName": {
+     "description": "The publisher name.",
+     "type": "string"
+    },
+    "recommendedDeal": {
+     "description": "Whether the deal is recommended or not.",
+     "type": "boolean"
+    },
+    "sports": {
+     "description": "Sports associated with this deal. Each entry contains an id and display name. For publisher (SSP) reads, only declared values are returned.",
+     "items": {
+      "$ref": "ClassificationEntity"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "startDateTime": {
+     "description": "The deal start date. Format is ISO-8601 and UTC timezone.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "targetedPgDeal": {
+     "description": "Indicates whether the deal is already targeted by another ad group of the same entity (PG or SOV deals only).",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "CMInventoryDiscoveryDealsSort": {
+   "properties": {
+    "sortField": {
+     "$ref": "CMListDealsSortField"
+    },
+    "sortOrder": {
+     "$ref": "SortOrder"
+    }
+   },
+   "required": [
+    "sortField",
+    "sortOrder"
+   ],
+   "type": "object"
+  },
+  "CMListDealsSortField": {
+   "description": "The field by which to sort deals in the result for ad group eligibility.",
+   "enum": [
+    "CREATED_DATE_TIME",
+    "DEAL_BUDGET",
+    "DEAL_ID",
+    "DEAL_NAME",
+    "DEAL_TYPE",
+    "END_DATE_TIME",
+    "EXCHANGE_ID",
+    "INVENTORY_TYPE",
+    "MARKETPLACE_DEAL",
+    "PRICE",
+    "PRICE_TYPE",
+    "RECOMMENDED_DEAL",
+    "START_DATE_TIME",
+    "STATUS"
+   ],
+   "type": "string"
+  },
+  "ClassificationEntity": {
+   "description": "A classification entity with an id and display name.",
+   "properties": {
+    "id": {
+     "description": "The unique identifier for the classification entity.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The display name of the classification entity.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "id",
+    "name"
+   ],
+   "type": "object"
+  },
+  "CountryIsoCode": {
+   "description": "2-digit country codes, used by AdX for DealDiscovery. Currently only used for IN.",
+   "enum": [
+    "IN"
+   ],
+   "type": "string"
+  },
+  "CountryIsoCodeFilter": {
+   "properties": {
+    "field": {
+     "description": "Used in AdX deals for \"IN\" to retrieve FE seatIds",
+     "enum": [
+      "COUNTRY_ISO_CODE"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "allOf": [
+      {
+       "$ref": "CountryIsoCode"
+      }
+     ],
+     "description": "The country ISO code associated with the adGroup.marketplaceId",
+     "type": "string"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "Currency": {
+   "description": "Supported Currency ISO-4217 codes.",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CHF",
+    "CNY",
+    "DKK",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "NOK",
+    "NZD",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "DateRangeFilter": {
+   "properties": {
+    "begins": {
+     "description": "Start date for filter. Can be null to be unbounded.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "ends": {
+     "description": "Ending date for filter. Can be null to be unbounded.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Deal": {
+   "properties": {
+    "budgetMillis": {
+     "description": "Indicates the agreed guaranteed budget for PROGRAMMATIC_GUARANTEED deal type.",
+     "nullable": true,
+     "type": "number"
+    },
+    "createdDateTime": {
+     "description": "Date the deal was created. Format is ISO-8601 and UTC timezone.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "currency": {
+     "$ref": "Currency"
+    },
+    "dealId": {
+     "description": "Amazon assigned ID unique to each Deal.",
+     "type": "string"
+    },
+    "dealName": {
+     "description": "The name of the deal.",
+     "type": "string"
+    },
+    "dealType": {
+     "$ref": "DealType"
+    },
+    "endDateTime": {
+     "description": "The deal end date. Format is ISO-8601 and UTC timezone.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "entityId": {
+     "description": "Owning entity. Null for marketplace deals.",
+     "type": "string"
+    },
+    "exchangeId": {
+     "description": "Amazon Publisher Service (3P only), SpotX, Amazon 1P. This should be consistent with consolidated supply sources shown on the line item. APS and Amazon 1P may need to be created as consolidated supply sources.",
+     "type": "string"
+    },
+    "externalDealId": {
+     "description": "The external 'Deal ID' provided by the SSP/publisher to the DSP, and advertisers will reference this ID in their correspondence with the SSP/publisher.",
+     "type": "string"
+    },
+    "liveEventDeal": {
+     "description": "Indicates whether the deal is a live event deal.",
+     "type": "boolean"
+    },
+    "marketplaceDeal": {
+     "description": "Indicates whether the deal is a Marketplace deal, available to all entities and buyers but non-editable by them.",
+     "type": "boolean"
+    },
+    "priceMillis": {
+     "description": "Numeric value for the price.",
+     "type": "number"
+    },
+    "priceType": {
+     "$ref": "PriceType"
+    },
+    "publisher": {
+     "description": "The name of the publisher providing the deal.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The deal start date. Format is ISO-8601 and UTC timezone.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "DealStatus"
+    }
+   },
+   "type": "object"
+  },
+  "DealBudget": {
+   "properties": {
+    "amount": {
+     "description": "The deal budget expressed in the currency of the deal.",
+     "type": "number"
+    },
+    "currency": {
+     "$ref": "Currency"
+    }
+   },
+   "type": "object"
+  },
+  "DealBudgetFilter": {
+   "properties": {
+    "field": {
+     "description": "The deal budget (PG or SOV deals only).",
+     "enum": [
+      "DEAL_BUDGET"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DealEndDateTimeFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the specified end time. Filter matches on everything at or before specified value. Unbounded if DealStartDateTimeFilter value is not specified.",
+     "enum": [
+      "END_DATE_TIME"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "description": "The end date filter value.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DealExchangeIdFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the specified exchange id.",
+     "enum": [
+      "EXCHANGE_ID"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "values": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "values"
+   ],
+   "type": "object"
+  },
+  "DealIdFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the specified internal deal id.",
+     "enum": [
+      "DEAL_ID"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "values": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "values"
+   ],
+   "type": "object"
+  },
+  "DealInferredAttributesResponse": {
+   "properties": {
+    "devices": {
+     "description": "Device type and names by bid request frequency for a deal.",
+     "items": {
+      "$ref": "InferredDevice"
+     },
+     "maxItems": 22,
+     "minItems": 0,
+     "type": "array"
+    },
+    "environments": {
+     "description": "Web environments by bid request frequency for a deal.",
+     "items": {
+      "$ref": "InferredEnvironment"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "locations": {
+     "description": "Locations by bid request frequency for a deal.",
+     "items": {
+      "$ref": "InferredLocation"
+     },
+     "maxItems": 34,
+     "minItems": 0,
+     "type": "array"
+    },
+    "mediaTypes": {
+     "description": "Media types by bid request frequency for a deal.",
+     "items": {
+      "$ref": "InferredMedia"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DealInferredFilter": {
+   "description": "A filter object that is applied to the response object.",
+   "properties": {
+    "field": {
+     "description": "Specifies the field of the response object that is being filtered.",
+     "enum": [
+      "COUNTRY_CODE",
+      "DEVICE_NAME",
+      "DEVICE_TYPE",
+      "ENVIRONMENT_TYPE",
+      "MEDIA_TYPE",
+      "SITE",
+      "SUPPLY_SELLER_NAME"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates if the field should be included in the response.",
+     "type": "boolean"
+    },
+    "values": {
+     "description": "Array of values for the specified field that will be used to filter.",
+     "items": {
+      "maxItems": 34,
+      "minItems": 0,
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "values"
+   ],
+   "type": "object"
+  },
+  "DealInferredRangeFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the bid request volume.",
+     "enum": [
+      "BID_REQUEST_RATE",
+      "BID_REQUEST_VOLUME"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates if the field should be included in the response.",
+     "type": "boolean"
+    },
+    "values": {
+     "description": "Filters to values within the specified range.",
+     "items": {
+      "$ref": "NumberFilter"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "values"
+   ],
+   "type": "object"
+  },
+  "DealLineItems": {
+   "properties": {
+    "lineItemIds": {
+     "description": "A list of line item IDs targeting the deal.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DealLineItemsResponse": {
+   "allOf": [
+    {
+     "$ref": "DealLineItems"
+    }
+   ],
+   "type": "object"
+  },
+  "DealListInferredSupplySellersFilterRequest": {
+   "description": "List of filters to be applied to the result set. Only one filter per field may be included in the request. Valid 'values' by selected 'field' are SUPPLY_SELLER_NAME ('string' which supports wildcards '*' and '?' and is …",
+   "properties": {
+    "filters": {
+     "allOf": [
+      {
+       "$ref": "DealListInferredSupplySellersFilters"
+      }
+     ]
+    }
+   },
+   "type": "object"
+  },
+  "DealListInferredSupplySellersFilters": {
+   "description": "List of filters to be applied to the result set.",
+   "items": {
+    "oneOf": [
+     {
+      "$ref": "DealInferredFilter"
+     },
+     {
+      "$ref": "DealInferredRangeFilter"
+     }
+    ]
+   },
+   "maxItems": 3,
+   "minItems": 0,
+   "type": "array"
+  },
+  "DealListInferredSupplySellersRequest": {
+   "allOf": [
+    {
+     "$ref": "DealListInferredSupplySellersSort"
+    },
+    {
+     "$ref": "PagingRequestV2"
+    },
+    {
+     "$ref": "DealListInferredSupplySellersFilterRequest"
+    }
+   ],
+   "type": "object"
+  },
+  "DealListInferredSupplySellersResponse": {
+   "allOf": [
+    {
+     "$ref": "PagingResponse"
+    }
+   ],
+   "properties": {
+    "supplySellers": {
+     "description": "Inferred supply sellers for a deal.",
+     "items": {
+      "$ref": "InferredSupplySeller"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DealListInferredSupplySellersSort": {
+   "description": "Field by which to sort the results.",
+   "properties": {
+    "sortField": {
+     "$ref": "DealListInferredSupplySellersSortField"
+    },
+    "sortOrder": {
+     "$ref": "SortOrder"
+    }
+   },
+   "type": "object"
+  },
+  "DealListInferredSupplySellersSortField": {
+   "description": "The field by which to sort the supply sellers in the result.",
+   "enum": [
+    "BID_REQUEST_VOLUME",
+    "BID_REQUEST_VOLUME_RATE",
+    "SUPPLY_SELLER_NAME"
+   ],
+   "type": "string"
+  },
+  "DealNameFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the specified deal name.",
+     "enum": [
+      "DEAL_NAME"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "description": "The deal name.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DealPrice": {
+   "properties": {
+    "amount": {
+     "description": "The deal price expressed in the currency of the deal.",
+     "type": "number"
+    },
+    "currency": {
+     "$ref": "Currency"
+    },
+    "priceType": {
+     "$ref": "PriceType"
+    }
+   },
+   "type": "object"
+  },
+  "DealPriceCurrencyFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the specified currency.",
+     "enum": [
+      "PRICE_CURRENCY"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "allOf": [
+      {
+       "$ref": "Currency"
+      }
+     ],
+     "description": "The currency ISO code.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DealPriceMaxFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the specified deal max price. If populated, DealPriceCurrencyFilter must also be populated.",
+     "enum": [
+      "PRICE_MAX"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "description": "The maximum price for filter in millicents.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DealPriceMinFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the specified deal min price. If populated, DealPriceCurrencyFilter must also be populated.",
+     "enum": [
+      "PRICE_MIN"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "description": "The minimum price for filter in millicents.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DealPriceTypeFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the specified price type.",
+     "enum": [
+      "PRICE_TYPE"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "values": {
+     "items": {
+      "$ref": "PriceType"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "values"
+   ],
+   "type": "object"
+  },
+  "DealSearchTerms": {
+   "description": "Deal search terms, combined into a single OR expression — a deal matches if any term matches. Applied on top of `filters`, which are ANDed and narrow results. For example: `(term OR term OR term) AND filter AND filter`.",
+   "properties": {
+    "leagueIds": {
+     "description": "League classification IDs whose names substring-matched the term.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "sportIds": {
+     "description": "Sport classification IDs whose names substring-matched the term.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "term": {
+     "description": "Raw search term. Matched (case-insensitive substring via WILDCARD) against deal name and external deal ID.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DealStartDateTimeFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the specified start time. Filter matches on everything at or after specified value. Unbounded if DealEndDateTimeFilter value is not specified.",
+     "enum": [
+      "START_DATE_TIME"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "description": "The start date filter value.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DealStatus": {
+   "description": "The status of each Deal, describing its ability to deliver supply to line items.",
+   "enum": [
+    "ACTIVE",
+    "EXPIRED",
+    "PAUSED",
+    "UPCOMING"
+   ],
+   "type": "string"
+  },
+  "DealStatusFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the specified deal status.",
+     "enum": [
+      "DEAL_STATUS"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "values": {
+     "items": {
+      "$ref": "DealStatus"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "values"
+   ],
+   "type": "object"
+  },
+  "DealType": {
+   "description": "The type of deal used defines the structure of the agreement between the seller and the buyer, and informs the buyer on subsequent actions and settings that may be allowed on the deal. Other settings, such as delivery g…",
+   "enum": [
+    "AMAZON_AUDIENCE_GUARANTEED",
+    "AMAZON_AUDIO_AUDIENCE_GUARANTEED",
+    "AMAZON_LOCAL_PREMIUM_REACH",
+    "AMAZON_LOCAL_VALUE_REACH",
+    "AMAZON_STV_AUDIENCE_GUARANTEED",
+    "AMAZON_STV_LOCAL_PREMIUM_REACH",
+    "AMAZON_STV_LOCAL_VALUE_REACH",
+    "AMAZON_TWITCH_GUARANTEED",
+    "AUDIO_INTERACTIVE_CREATIVE",
+    "AUDIO_LOCAL_VALUE_REACH",
+    "PREFERRED",
+    "PRIVATE_AUCTION",
+    "PROGRAMMATIC_GUARANTEED"
+   ],
+   "type": "string"
+  },
+  "DealTypeFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the specified deal type.",
+     "enum": [
+      "DEAL_TYPE"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "values": {
+     "items": {
+      "$ref": "DealType"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "values"
+   ],
+   "type": "object"
+  },
+  "DeviceType": {
+   "description": "The device type. Possible values are 'MOBILE', 'DESKTOP', 'CONNECTED_TV', 'SMART_SPEAKER', 'IPHONE', 'IPAD', 'ANDROID', 'KINDLE_FIRE', 'KINDLE_FIRE_HD', or 'UNKNOWN'.",
+   "enum": [
+    "ANDROID",
+    "CONNECTED_TV",
+    "DESKTOP",
+    "IPAD",
+    "IPHONE",
+    "KINDLE_FIRE",
+    "KINDLE_FIRE_HD",
+    "MOBILE",
+    "SMART_SPEAKER"
+   ],
+   "type": "string"
+  },
+  "Exchange": {
+   "properties": {
+    "exchangeId": {
+     "description": "Exchange Id.",
+     "type": "string"
+    },
+    "name": {
+     "description": "Exchange Name.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ExternalDealIdFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the specified external deal id.",
+     "enum": [
+      "EXTERNAL_DEAL_ID"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "values": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "values"
+   ],
+   "type": "object"
+  },
+  "FieldError": {
+   "description": "The sub error object.",
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InferredBidData": {
+   "properties": {
+    "bidRequestVolume": {
+     "description": "Sum of bid requests that contained the specified inferred attribute.",
+     "type": "number"
+    },
+    "bidRequestVolumeRate": {
+     "description": "Measure of frequency for specified inferred attribute being present in all bid requests that contained the deal",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "InferredCountryCode": {
+   "description": "ISO 3166-1 alpha-2 based country codes. OTHER is any country that is defined in the bid requests but not included in the below list of countries. OTHER_EEA represents european economic area countries not included in the…",
+   "enum": [
+    "AE",
+    "AT",
+    "AU",
+    "BE",
+    "BH",
+    "BR",
+    "CA",
+    "CH",
+    "CN",
+    "DE",
+    "DK",
+    "ES",
+    "FI",
+    "FR",
+    "GB",
+    "IE",
+    "IL",
+    "IN",
+    "IT",
+    "JP",
+    "KW",
+    "LU",
+    "MA",
+    "MX",
+    "NL",
+    "NO",
+    "NZ",
+    "OTHER",
+    "OTHER_EEA",
+    "SA",
+    "SE",
+    "TR",
+    "US",
+    "ZZ"
+   ],
+   "type": "string"
+  },
+  "InferredDevice": {
+   "allOf": [
+    {
+     "$ref": "InferredBidData"
+    }
+   ],
+   "properties": {
+    "deviceName": {
+     "$ref": "InferredDeviceName"
+    },
+    "deviceType": {
+     "$ref": "InferredDeviceType"
+    }
+   },
+   "type": "object"
+  },
+  "InferredDeviceName": {
+   "description": "Device name derived from data seen on bid requests.",
+   "enum": [
+    "ANDROID_PHONE",
+    "ANDROID_TABLET",
+    "ANDROID_TV",
+    "APPLE_TV",
+    "CHROME_DESKTOP",
+    "FIRE_PHONE",
+    "FIRE_TV",
+    "GOOGLE_TV",
+    "IPAD_TABLET",
+    "IPHONE_PHONE",
+    "IPOD_PHONE",
+    "KINDLE_FIRE_TABLET",
+    "LINUX_DESKTOP",
+    "MAC_DESKTOP",
+    "SMART_TV",
+    "UNKNOWN",
+    "UNKNOWN_DESKTOP",
+    "UNKNOWN_PHONE",
+    "UNKNOWN_TABLET",
+    "WINDOWS_DESKTOP",
+    "WINDOWS_PHONE",
+    "WINDOWS_TABLET"
+   ],
+   "type": "string"
+  },
+  "InferredDeviceType": {
+   "description": "Device type derived from data seen on bid requests.",
+   "enum": [
+    "CONNECTED_TV",
+    "DESKTOP",
+    "MOBILE",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "InferredEnvironment": {
+   "allOf": [
+    {
+     "$ref": "InferredBidData"
+    }
+   ],
+   "properties": {
+    "environmentType": {
+     "$ref": "InferredEnvironmentType"
+    }
+   },
+   "type": "object"
+  },
+  "InferredEnvironmentType": {
+   "description": "Environment derived from data seen on bid requests.",
+   "enum": [
+    "APP",
+    "WEB"
+   ],
+   "type": "string"
+  },
+  "InferredLocation": {
+   "allOf": [
+    {
+     "$ref": "InferredBidData"
+    }
+   ],
+   "properties": {
+    "countryCode": {
+     "$ref": "InferredCountryCode"
+    }
+   },
+   "type": "object"
+  },
+  "InferredMedia": {
+   "allOf": [
+    {
+     "$ref": "InferredBidData"
+    }
+   ],
+   "properties": {
+    "mediaType": {
+     "$ref": "InferredMediaType"
+    }
+   },
+   "type": "object"
+  },
+  "InferredMediaType": {
+   "enum": [
+    "AUDIO",
+    "DISPLAY",
+    "VIDEO_OLV",
+    "VIDEO_STV"
+   ],
+   "type": "string"
+  },
+  "InferredSupplySeller": {
+   "allOf": [
+    {
+     "$ref": "InferredBidData"
+    }
+   ],
+   "properties": {
+    "supplySellerName": {
+     "description": "The name of the supply seller.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "InventoryType": {
+   "description": "The type of inventory. Note - DISPLAY is a new consolidated type that includes all display line items (STANDARD_DISPLAY, AAP_MOBILE_APP, AMAZON_MOBILE_DISPLAY). Do not use this type until we announce the launch of conso…",
+   "enum": [
+    "AAP_MOBILE_APP",
+    "AUDIO",
+    "DISPLAY",
+    "STANDARD_DISPLAY",
+    "UNKNOWN",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "InventoryTypeFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the type of inventory.",
+     "enum": [
+      "INVENTORY_TYPE"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "values": {
+     "items": {
+      "$ref": "InventoryType"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "values"
+   ],
+   "type": "object"
+  },
+  "LeagueFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by league classification ID(s).",
+     "enum": [
+      "LEAGUE"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "values": {
+     "description": "League classification IDs to filter by.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "values"
+   ],
+   "type": "object"
+  },
+  "ListCMInventoryDiscoveryDealsFilters": {
+   "description": "Represents a list of filters that can be applied to the result set.",
+   "items": {
+    "oneOf": [
+     {
+      "$ref": "InventoryTypeFilter"
+     },
+     {
+      "$ref": "DealIdFilter"
+     },
+     {
+      "$ref": "ExternalDealIdFilter"
+     },
+     {
+      "$ref": "DealStatusFilter"
+     },
+     {
+      "$ref": "DealNameFilter"
+     },
+     {
+      "$ref": "DealPriceTypeFilter"
+     },
+     {
+      "$ref": "DealExchangeIdFilter"
+     },
+     {
+      "$ref": "DealStartDateTimeFilter"
+     },
+     {
+      "$ref": "DealEndDateTimeFilter"
+     },
+     {
+      "$ref": "DealTypeFilter"
+     },
+     {
+      "$ref": "DealPriceCurrencyFilter"
+     },
+     {
+      "$ref": "DealPriceMinFilter"
+     },
+     {
+      "$ref": "DealPriceMaxFilter"
+     },
+     {
+      "$ref": "MarketplaceDealFilter"
+     },
+     {
+      "$ref": "LiveEventDealFilter"
+     },
+     {
+      "$ref": "RecommendedDealFilter"
+     },
+     {
+      "$ref": "DealBudgetFilter"
+     },
+     {
+      "$ref": "CountryIsoCodeFilter"
+     },
+     {
+      "$ref": "PublisherFilter"
+     },
+     {
+      "$ref": "SportFilter"
+     },
+     {
+      "$ref": "LeagueFilter"
+     },
+     {
+      "$ref": "BroadcasterFilter"
+     },
+     {
+      "$ref": "MultiSportOnlyFilter"
+     },
+     {
+      "$ref": "MultiLeagueOnlyFilter"
+     }
+    ]
+   },
+   "maxItems": 1000,
+   "minItems": 0,
+   "type": "array"
+  },
+  "ListCMInventoryDiscoveryDealsRequest": {
+   "allOf": [
+    {
+     "$ref": "CMInventoryDiscoveryDealsSort"
+    },
+    {
+     "$ref": "PagingRequestV2"
+    }
+   ],
+   "properties": {
+    "filters": {
+     "allOf": [
+      {
+       "$ref": "ListCMInventoryDiscoveryDealsFilters"
+      }
+     ],
+     "maxItems": 25,
+     "minItems": 0
+    },
+    "searchTerms": {
+     "$ref": "DealSearchTerms"
+    }
+   },
+   "type": "object"
+  },
+  "ListCMInventoryDiscoveryDealsResponse": {
+   "allOf": [
+    {
+     "$ref": "PagingResponse"
+    },
+    {
+     "properties": {
+      "deals": {
+       "description": "The list of deals.",
+       "items": {
+        "$ref": "CMInventoryDiscoveryDeal"
+       },
+       "maxItems": 10000,
+       "minItems": 0,
+       "type": "array"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "ListDealExchangesRequest": {
+   "allOf": [
+    {
+     "$ref": "PagingRequest"
+    }
+   ],
+   "type": "object"
+  },
+  "ListDealExchangesResponse": {
+   "allOf": [
+    {
+     "$ref": "PagingResponse"
+    }
+   ],
+   "properties": {
+    "exchanges": {
+     "description": "The performance metrics by DealId.",
+     "items": {
+      "$ref": "Exchange"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListDealPerformance": {
+   "properties": {
+    "availsByDeviceType": {
+     "description": "A list of external IDs that are of filterIdType for deals to retrieve.",
+     "items": {
+      "$ref": "AvailsForDeviceType"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "availsTotal": {
+     "description": "The total number of impression opportunities.",
+     "type": "number"
+    },
+    "averageCpm": {
+     "description": "Historical cost per thousand impressions over the period of time specified.",
+     "type": "number"
+    },
+    "bidRequests": {
+     "description": "The volume of bids with this deal ID that are eligible for the Amazon DSP.",
+     "type": "number"
+    },
+    "bidResponses": {
+     "description": "The number of bid responses sent back to SSP or publisher for the applicable deal ID.",
+     "type": "number"
+    },
+    "clickthroughCount": {
+     "description": "The number of times an ad is clicked.",
+     "type": "number"
+    },
+    "completionCount": {
+     "description": "The number of times a video or audio ad is completed.",
+     "type": "number"
+    },
+    "conversionCount": {
+     "description": "The number of times an impression resulted in an action.",
+     "type": "number"
+    },
+    "dealId": {
+     "description": "The identifier for the deal.",
+     "type": "string"
+    },
+    "measurableImpressions": {
+     "description": "The number of impressions that were measurable.",
+     "type": "number"
+    },
+    "recognizedBids": {
+     "description": "The number of bid requests which include a recognized deal ID. This is divided by total bid requests for the deal to get recognition rate.",
+     "type": "number"
+    },
+    "totalImpressions": {
+     "description": "The number of times an advertisement was displayed.",
+     "type": "number"
+    },
+    "totalSpend": {
+     "description": "The total amount spent on the deal over the period of time specified.",
+     "type": "number"
+    },
+    "viewableImpressions": {
+     "description": "The number of impressions that were viewable.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "ListDealsInferred": {
+   "properties": {
+    "dealId": {
+     "description": "The identifier for the deal.",
+     "type": "string"
+    },
+    "devices": {
+     "description": "Top three device type and names by bid request frequency for a deal.",
+     "items": {
+      "$ref": "InferredDevice"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "environments": {
+     "description": "Top three web environments by bid request frequency for a deal.",
+     "items": {
+      "$ref": "InferredEnvironment"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "locations": {
+     "description": "Top three locations by bid request frequency for a deal.",
+     "items": {
+      "$ref": "InferredLocation"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "mediaTypes": {
+     "description": "Top three media types by bid request frequency for a deal.",
+     "items": {
+      "$ref": "InferredMedia"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "supplySellers": {
+     "description": "Top three supply sellers by bid request frequency for a deal.",
+     "items": {
+      "$ref": "InferredSupplySeller"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalAvails": {
+     "description": "Total available ad opportunities for the Deal based on bid requests data.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "ListDealsInferredFilterRequest": {
+   "description": "List of filters to be applied to the result set. Only one filter per field may be included in the request. Valid 'values' by selected 'field' are SITE ('string' which supports wildcards '*' and '?' and is case-insensiti…",
+   "properties": {
+    "filters": {
+     "$ref": "ListDealsInferredFilters"
+    }
+   },
+   "type": "object"
+  },
+  "ListDealsInferredFilters": {
+   "description": "List of filters to be applied to the result set.",
+   "items": {
+    "$ref": "DealInferredFilter"
+   },
+   "maxItems": 7,
+   "minItems": 0,
+   "type": "array"
+  },
+  "ListDealsInferredRequest": {
+   "allOf": [
+    {
+     "$ref": "PagingRequestV2"
+    },
+    {
+     "$ref": "ListDealsInferredFilterRequest"
+    }
+   ],
+   "properties": {
+    "dealIdFilter": {
+     "description": "List of Deal IDs that will be used to retrieve matching deals performance.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "dealIdFilter"
+   ],
+   "type": "object"
+  },
+  "ListDealsInferredResponse": {
+   "allOf": [
+    {
+     "$ref": "PagingResponse"
+    }
+   ],
+   "properties": {
+    "deals": {
+     "description": "Directional attributes by DealId.",
+     "items": {
+      "$ref": "ListDealsInferred"
+     },
+     "maxItems": 10000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListDealsPerformanceRequest": {
+   "allOf": [
+    {
+     "$ref": "PagingRequest"
+    }
+   ],
+   "properties": {
+    "dealIdFilter": {
+     "description": "List of Deal IDs that will be used to retrieve matching deals performance.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "performanceEndDate": {
+     "description": "End date for performance metrics.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "performanceStartDate": {
+     "description": "Start date for performance metrics.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListDealsPerformanceResponse": {
+   "allOf": [
+    {
+     "$ref": "PagingResponse"
+    }
+   ],
+   "properties": {
+    "deals": {
+     "description": "The performance metrics by DealId.",
+     "items": {
+      "$ref": "ListDealPerformance"
+     },
+     "maxItems": 100000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "metricsLastUpdated": {
+     "description": "Last time the metrics being viewed were updated.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListDealsRequest": {
+   "allOf": [
+    {
+     "$ref": "ListDealsSort"
+    },
+    {
+     "$ref": "PagingRequest"
+    }
+   ],
+   "properties": {
+    "countryIsoCodeFilter": {
+     "description": "The country ISO code associated with the adGroup.marketplaceId, used by AdX for India marketplace.",
+     "type": "string"
+    },
+    "createdDateRangeFilter": {
+     "allOf": [
+      {
+       "$ref": "DateRangeFilter"
+      }
+     ],
+     "description": "Date range used to retrieve deals whose created Date matches the range.",
+     "type": "object"
+    },
+    "dealIdFilter": {
+     "description": "List of Deal IDs that will be used to retrieve matching deals.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "dealNameFilter": {
+     "description": "Text string that will be used to exact match (case sensitive) against Deal Name to retrieve deals.",
+     "type": "string"
+    },
+    "dealTypeFilter": {
+     "description": "List of Deal Types that will be used to retrieve matching deals.",
+     "items": {
+      "$ref": "DealType"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "endDateRangeFilter": {
+     "allOf": [
+      {
+       "$ref": "DateRangeFilter"
+      }
+     ],
+     "description": "Date range used to retrieve deals whose End Date matches the range.",
+     "type": "object"
+    },
+    "exchangeIdFilter": {
+     "description": "Exchange ID that will be used to retrieve matching deals. Can be null.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "externalDealIdFilter": {
+     "description": "List of Deal IDs that will be used to retrieve matching deals.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "liveEventDealFilter": {
+     "description": "Live event Deal flag that will be used to retrieve matching deals. Can be null.",
+     "nullable": true,
+     "type": "boolean"
+    },
+    "marketplaceDealFilter": {
+     "description": "Marketplace Deal flag that will be used to retrieve matching deals. Can be null.",
+     "nullable": true,
+     "type": "boolean"
+    },
+    "priceRangeFilter": {
+     "allOf": [
+      {
+       "$ref": "PriceRangeFilter"
+      }
+     ],
+     "description": "Price range used to retrieve deals whose Price matches the range.",
+     "type": "object"
+    },
+    "priceTypeFilter": {
+     "description": "Price Type that will be used to retrieve matching deals. Can be null.",
+     "items": {
+      "$ref": "PriceType"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "startDateRangeFilter": {
+     "allOf": [
+      {
+       "$ref": "DateRangeFilter"
+      }
+     ],
+     "description": "Date range used to retrieve deals whose Start Date matches the range.",
+     "type": "object"
+    },
+    "statusFilter": {
+     "description": "List of deal &quot;Status&quot; that will be used to retrieve matching deals.",
+     "items": {
+      "$ref": "DealStatus"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListDealsResponse": {
+   "allOf": [
+    {
+     "$ref": "PagingResponse"
+    }
+   ],
+   "properties": {
+    "deals": {
+     "description": "The deals retrieved.",
+     "items": {
+      "$ref": "Deal"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListDealsSort": {
+   "description": "Field by which to sort the results.",
+   "properties": {
+    "sortField": {
+     "allOf": [
+      {
+       "$ref": "ListDealsSortField"
+      },
+      {
+       "$ref": "ListDealsSortByCreatedDateField"
+      }
+     ]
+    },
+    "sortOrder": {
+     "$ref": "SortOrder"
+    }
+   },
+   "type": "object"
+  },
+  "ListDealsSortByCreatedDateField": {
+   "description": "The field to sort deals based on the created date.",
+   "enum": [
+    "CREATED_DATE"
+   ],
+   "type": "string"
+  },
+  "ListDealsSortField": {
+   "description": "The field by which to sort the deals in the result.",
+   "enum": [
+    "DEAL_ID",
+    "DEAL_NAME",
+    "DEAL_TYPE",
+    "END_DATE",
+    "EXTERNAL_DEAL_ID",
+    "PRICE",
+    "START_DATE",
+    "STATUS"
+   ],
+   "type": "string"
+  },
+  "LiveEventDealFilter": {
+   "properties": {
+    "field": {
+     "description": "Indicates whether the deal is a live event deal.",
+     "enum": [
+      "LIVE_EVENT_DEAL"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "MarketplaceDealFilter": {
+   "properties": {
+    "field": {
+     "description": "Indicates whether the deal is a Marketplace deal.",
+     "enum": [
+      "MARKETPLACE_DEAL"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "MultiLeagueOnlyFilter": {
+   "properties": {
+    "field": {
+     "description": "Indicates whether the deal is tagged with multiple leagues.",
+     "enum": [
+      "MULTI_LEAGUE_ONLY"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "MultiSportOnlyFilter": {
+   "properties": {
+    "field": {
+     "description": "Indicates whether the deal is tagged with multiple sports.",
+     "enum": [
+      "MULTI_SPORT_ONLY"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "NumberFilter": {
+   "properties": {
+    "max": {
+     "description": "Maximum value for filter. Can be null to be unbounded.",
+     "format": "double",
+     "type": "number"
+    },
+    "min": {
+     "description": "Minimum value for filter. Can be null to be unbounded.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "PagingRequest": {
+   "properties": {
+    "nextToken": {
+     "description": "Used for pagination, a string that can be sent in the next request to get the next page of results.",
+     "type": "string"
+    },
+    "pageSize": {
+     "description": "Sets the maximum number of results in the returned collection. Used in conjunction with 'nextToken' to control pagination. Values less than 1 are considered invalid and will result in an error response.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "PagingRequestV2": {
+   "properties": {
+    "maxResults": {
+     "default": 1000,
+     "description": "Sets the maximum number of results in the response. Used in conjunction with `nextToken` to control pagination.",
+     "maximum": 3500,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Used in conjunction with the `pageSize` parameter to control pagination.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PagingResponse": {
+   "properties": {
+    "nextToken": {
+     "description": "Used for pagination, a string that can be sent in the next request to get the next page of results.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The number of results returned.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "PriceRangeFilter": {
+   "properties": {
+    "currency": {
+     "description": "Currency code for price.",
+     "type": "string"
+    },
+    "maxMillis": {
+     "description": "Maximum value for filter. Can be null to be unbounded.",
+     "type": "integer"
+    },
+    "minMillis": {
+     "description": "Minimum value for filter. Can be null to be unbounded.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "PriceType": {
+   "description": "The deal price type.",
+   "enum": [
+    "FIXED_CPM",
+    "FLAT_FEE",
+    "FLOOR_RATE"
+   ],
+   "type": "string"
+  },
+  "PublisherFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by the specified publisher name.",
+     "enum": [
+      "PUBLISHER"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "description": "The publisher name.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "RecommendedDealFilter": {
+   "properties": {
+    "field": {
+     "description": "Indicates whether a deal is recommended or not.",
+     "enum": [
+      "RECOMMENDED_DEAL"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "value": {
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SortOrder": {
+   "description": "The direction by which to sort the deals, either 'ASCENDING' or 'DESCENDING'.",
+   "enum": [
+    "ASCENDING",
+    "DESCENDING"
+   ],
+   "type": "string"
+  },
+  "SportFilter": {
+   "properties": {
+    "field": {
+     "description": "Filters by sport classification ID(s).",
+     "enum": [
+      "SPORT"
+     ],
+     "type": "string"
+    },
+    "include": {
+     "description": "Indicates whether results that match the filter value should be included or excluded from the response.",
+     "type": "boolean"
+    },
+    "values": {
+     "description": "Sport classification IDs to filter by.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "include",
+    "values"
+   ],
+   "type": "object"
+  }
+ }
+}

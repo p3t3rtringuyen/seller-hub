@@ -1,0 +1,106 @@
+{
+ "api": "HashedRecords",
+ "file": "specs/dest/HashedRecords_prod_3p.json",
+ "schemas": {
+  "HashedRecord": {
+   "properties": {
+    "address": {
+     "allOf": [
+      {
+       "$ref": "Sha256String"
+      }
+     ],
+     "description": "The street address normalized and hashed [according to the documentation](https://advertising.amazon.com/help/GCCXMZYCK4RXWS6C)."
+    },
+    "city": {
+     "allOf": [
+      {
+       "$ref": "Sha256String"
+      }
+     ],
+     "description": "The city normalized and hashed [according to the documentation](https://advertising.amazon.com/help/GCCXMZYCK4RXWS6C)."
+    },
+    "email": {
+     "allOf": [
+      {
+       "$ref": "Sha256String"
+      }
+     ],
+     "description": "The email address normalized and hashed [according to the documentation](https://advertising.amazon.com/help/GCCXMZYCK4RXWS6C)."
+    },
+    "firstName": {
+     "allOf": [
+      {
+       "$ref": "Sha256String"
+      }
+     ],
+     "description": "The first name normalized and hashed [according to the documentation](https://advertising.amazon.com/help/GCCXMZYCK4RXWS6C)."
+    },
+    "lastName": {
+     "allOf": [
+      {
+       "$ref": "Sha256String"
+      }
+     ],
+     "description": "The last name normalized and hashed [according to the documentation](https://advertising.amazon.com/help/GCCXMZYCK4RXWS6C)."
+    },
+    "phone": {
+     "allOf": [
+      {
+       "$ref": "Sha256String"
+      }
+     ],
+     "description": "The phone number normalized and hashed [according to the documentation](https://advertising.amazon.com/help/GCCXMZYCK4RXWS6C)."
+    },
+    "postalCode": {
+     "allOf": [
+      {
+       "$ref": "Sha256String"
+      }
+     ],
+     "description": "The postal code normalized and hashed [according to the documentation](https://advertising.amazon.com/help/GCCXMZYCK4RXWS6C)."
+    },
+    "state": {
+     "allOf": [
+      {
+       "$ref": "Sha256String"
+      }
+     ],
+     "description": "The state or province normalized and hashed [according to the documentation](https://advertising.amazon.com/help/GCCXMZYCK4RXWS6C)."
+    }
+   },
+   "type": "object"
+  },
+  "IngestionRecord": {
+   "properties": {
+    "externalId": {
+     "description": "The external identifier for this record. This can be any ID unique to the record in the caller's own identity space, and following regex pattern [0-9a-zA-Z\\-\\_]{1,128}",
+     "type": "string"
+    },
+    "hashedRecords": {
+     "description": "list of hashed records data",
+     "items": {
+      "$ref": "HashedRecord"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "externalId",
+    "hashedRecords"
+   ],
+   "type": "object"
+  },
+  "IngestionRecordsList": {
+   "description": "The list of hashed records.",
+   "items": {
+    "$ref": "IngestionRecord"
+   },
+   "type": "array"
+  },
+  "Sha256String": {
+   "maxLength": 64,
+   "type": "string"
+  }
+ }
+}

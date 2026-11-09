@@ -1,0 +1,631 @@
+{
+ "api": "AmazonAdsAPIALLStreamSubscriptionsContract",
+ "file": "specs/dest/AmazonAdsAPIALLStreamSubscriptionsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateS3Destination": {
+   "description": "A destination that delivers stream data to an Amazon S3 bucket, along with an SQS notification destination.",
+   "properties": {
+    "bucketArn": {
+     "description": "The ARN of the Amazon S3 bucket that stream data is delivered to.",
+     "type": "string"
+    },
+    "notification": {
+     "$ref": "CreateSqsDestination"
+    }
+   },
+   "required": [
+    "bucketArn",
+    "notification"
+   ],
+   "type": "object"
+  },
+  "CreateSqsDestination": {
+   "properties": {
+    "queueArn": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "queueArn"
+   ],
+   "type": "object"
+  },
+  "CreateStreamSubscriptionConfiguration": {
+   "oneOf": [
+    {
+     "properties": {
+      "dataset": {
+       "$ref": "CreateStreamSubscriptionDatasetConfiguration"
+      }
+     },
+     "required": [
+      "dataset"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateStreamSubscriptionDatasetConfiguration": {
+   "description": "A subscription configuration that specifies the versioned dataset to subscribe to.",
+   "properties": {
+    "datasetId": {
+     "description": "The stream dataset this subscription delivers data for.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "datasetId"
+   ],
+   "type": "object"
+  },
+  "CreateStreamSubscriptionDestination": {
+   "oneOf": [
+    {
+     "properties": {
+      "s3Destination": {
+       "$ref": "CreateS3Destination"
+      }
+     },
+     "required": [
+      "s3Destination"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateStreamSubscriptionRequest": {
+   "properties": {
+    "accessRequestedAccounts": {
+     "items": {
+      "$ref": "StreamSubscriptionCreateAccessRequestedAccountItem"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "streamSubscriptions": {
+     "items": {
+      "$ref": "StreamSubscriptionCreate"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "accessRequestedAccounts",
+    "streamSubscriptions"
+   ],
+   "type": "object"
+  },
+  "DeleteStreamSubscriptionRequest": {
+   "properties": {
+    "accessRequestedAccounts": {
+     "items": {
+      "$ref": "StreamSubscriptionDeleteAccessRequestedAccountItem"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "streamSubscriptionIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "accessRequestedAccounts",
+    "streamSubscriptionIds"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `CONFLICT` | Operation could not be completed due to a conflict. Please r…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONFLICT",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 0,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryStreamSubscriptionRequest": {
+   "properties": {
+    "accessRequestedAccounts": {
+     "items": {
+      "$ref": "QueryStreamSubscriptionRequestAccessRequestedAccountItem"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "maxResults": {
+     "default": 1000,
+     "format": "int32",
+     "maximum": 5000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "accessRequestedAccounts"
+   ],
+   "type": "object"
+  },
+  "QueryStreamSubscriptionRequestAccessRequestedAccountItem": {
+   "description": "| QueryStreamSubscriptionRequestAccessRequestedAccountItem | Description | | --- | --- | | `advertiserAccountId` | ADSP Regional Account or Global Account |",
+   "oneOf": [
+    {
+     "properties": {
+      "advertiserAccountId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "advertiserAccountId"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "RetrieveStreamSubscriptionRequest": {
+   "properties": {
+    "accessRequestedAccounts": {
+     "items": {
+      "$ref": "StreamSubscriptionRetrieveAccessRequestedAccountItem"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "streamSubscriptionIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "accessRequestedAccounts",
+    "streamSubscriptionIds"
+   ],
+   "type": "object"
+  },
+  "S3Destination": {
+   "description": "A destination that delivers stream data to an Amazon S3 bucket, along with an SQS notification destination.",
+   "properties": {
+    "bucketArn": {
+     "description": "The ARN of the Amazon S3 bucket that stream data is delivered to.",
+     "type": "string"
+    },
+    "notification": {
+     "$ref": "SqsDestination"
+    }
+   },
+   "required": [
+    "bucketArn",
+    "notification"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SqsDestination": {
+   "properties": {
+    "queueArn": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "queueArn"
+   ],
+   "type": "object"
+  },
+  "StreamSubscription": {
+   "properties": {
+    "configuration": {
+     "$ref": "StreamSubscriptionConfiguration"
+    },
+    "creationDateTime": {
+     "description": "ISO8601 Timestamp",
+     "format": "date-time",
+     "type": "string"
+    },
+    "destination": {
+     "$ref": "StreamSubscriptionDestination"
+    },
+    "lastUpdatedDateTime": {
+     "description": "ISO8601 Timestamp",
+     "format": "date-time",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "SubscriptionStatus"
+    },
+    "streamSubscriptionId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "configuration",
+    "creationDateTime",
+    "destination",
+    "lastUpdatedDateTime",
+    "status",
+    "streamSubscriptionId"
+   ],
+   "type": "object"
+  },
+  "StreamSubscriptionConfiguration": {
+   "oneOf": [
+    {
+     "properties": {
+      "dataset": {
+       "$ref": "StreamSubscriptionDatasetConfiguration"
+      }
+     },
+     "required": [
+      "dataset"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "StreamSubscriptionCreate": {
+   "properties": {
+    "configuration": {
+     "$ref": "CreateStreamSubscriptionConfiguration"
+    },
+    "destination": {
+     "$ref": "CreateStreamSubscriptionDestination"
+    }
+   },
+   "required": [
+    "configuration",
+    "destination"
+   ],
+   "type": "object"
+  },
+  "StreamSubscriptionCreateAccessRequestedAccountItem": {
+   "description": "| StreamSubscriptionCreateAccessRequestedAccountItem | Description | | --- | --- | | `advertiserAccountId` | ADSP Regional Account or Global Account |",
+   "oneOf": [
+    {
+     "properties": {
+      "advertiserAccountId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "advertiserAccountId"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "StreamSubscriptionDatasetConfiguration": {
+   "description": "A subscription configuration that specifies the versioned dataset to subscribe to.",
+   "properties": {
+    "datasetId": {
+     "description": "The stream dataset this subscription delivers data for.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "datasetId"
+   ],
+   "type": "object"
+  },
+  "StreamSubscriptionDeleteAccessRequestedAccountItem": {
+   "description": "| StreamSubscriptionDeleteAccessRequestedAccountItem | Description | | --- | --- | | `advertiserAccountId` | ADSP Regional Account or Global Account |",
+   "oneOf": [
+    {
+     "properties": {
+      "advertiserAccountId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "advertiserAccountId"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "StreamSubscriptionDestination": {
+   "oneOf": [
+    {
+     "properties": {
+      "s3Destination": {
+       "$ref": "S3Destination"
+      }
+     },
+     "required": [
+      "s3Destination"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "StreamSubscriptionMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "StreamSubscriptionMultiStatusSuccess"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "StreamSubscriptionMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 0,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "streamSubscription": {
+     "$ref": "StreamSubscription"
+    }
+   },
+   "required": [
+    "index",
+    "streamSubscription"
+   ],
+   "type": "object"
+  },
+  "StreamSubscriptionRetrieveAccessRequestedAccountItem": {
+   "description": "| StreamSubscriptionRetrieveAccessRequestedAccountItem | Description | | --- | --- | | `advertiserAccountId` | ADSP Regional Account or Global Account |",
+   "oneOf": [
+    {
+     "properties": {
+      "advertiserAccountId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "advertiserAccountId"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "StreamSubscriptionSuccessResponse": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "streamSubscriptions": {
+     "items": {
+      "$ref": "StreamSubscription"
+     },
+     "maxItems": 5000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SubscriptionStatus": {
+   "description": "The lifecycle status of a stream subscription. **SubscriptionStatus Enum:** | SubscriptionStatus | Description | |------|------| | `ACTIVE` | Subscription is delivering data. | | `ARCHIVED` | Subscription deleted by the…",
+   "enum": [
+    "ACTIVE",
+    "ARCHIVED",
+    "SUSPENDED"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

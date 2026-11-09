@@ -1,0 +1,416 @@
+{
+  "Appointment": {
+    "description": "An appointment for a contact at a future date.",
+    "properties": {
+      "answeringParty": {
+        "description": "The person who is expected to answer the call.",
+        "enum": [
+          "RECEPTIONIST"
+        ],
+        "type": "string"
+      },
+      "appointmentId": {
+        "description": "The unique identifier for the scheduled appointment.",
+        "type": "string"
+      },
+      "callbackTiming": {
+        "description": "The time window during which the appointment is scheduled.",
+        "ref": "CallbackTiming"
+      },
+      "phoneNumber": {
+        "description": "The selling partner's phone number.",
+        "ref": "PhoneNumber"
+      },
+      "status": {
+        "description": "The appointment status.",
+        "enum": [
+          "CANCELLED",
+          "COMPLETED",
+          "MISSED",
+          "SCHEDULED"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "appointmentId",
+      "callbackTiming",
+      "phoneNumber",
+      "status"
+    ],
+    "type": "object"
+  },
+  "Attachment": {
+    "description": "A file attachment.",
+    "properties": {
+      "downloadUrl": {
+        "description": "The download link to the attachment file.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the attachment.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "type": "object"
+  },
+  "CallbackTiming": {
+    "description": "The time window for an appointment callback",
+    "properties": {
+      "earliestCallbackTime": {
+        "description": "The earliest time at which to call the selling partner.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "latestCallbackTime": {
+        "description": "The latest time at which to call the selling partner.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "earliestCallbackTime",
+      "latestCallbackTime"
+    ],
+    "type": "object"
+  },
+  "Case": {
+    "description": "The support case.",
+    "properties": {
+      "appointments": {
+        "description": "All appointments for the case.",
+        "ref": "Appointment",
+        "type": "array"
+      },
+      "caseId": {
+        "description": "A globally unique identifier for the case",
+        "type": "string"
+      },
+      "ccEmails": {
+        "description": "Additional emails that are attached to the case.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "createdDate": {
+        "description": "The time when the case was created.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "lastUpdatedDate": {
+        "description": "The time when the case was last updated, which includes updates to the case details and new contacts added to the case.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "primaryEmail": {
+        "description": "The primary email associated with the case.",
+        "type": "string"
+      },
+      "resolvedDate": {
+        "description": "The time when the case was resolved.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "status": {
+        "description": "The current status of the case.",
+        "enum": [
+          "PENDING_AMAZON_ACTION",
+          "PENDING_MERCHANT_ACTION",
+          "RESOLVED",
+          "TRANSFERRED"
+        ],
+        "type": "string"
+      },
+      "subject": {
+        "description": "The subject of the case.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "caseId",
+      "ccEmails",
+      "createdDate",
+      "lastUpdatedDate",
+      "primaryEmail",
+      "status",
+      "subject"
+    ],
+    "type": "object"
+  },
+  "ChatContent": {
+    "description": "The content for a chat contact.",
+    "properties": {
+      "events": {
+        "description": "A list of events that make up the chat contact.",
+        "ref": "ChatEvent",
+        "type": "array"
+      },
+      "transcript": {
+        "description": "The human-readable transcript of the chat contact.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "events",
+      "transcript"
+    ],
+    "type": "object"
+  },
+  "ChatEvent": {
+    "description": "A single event from a chat contact.",
+    "properties": {
+      "attachments": {
+        "description": "All attachments included in the event.",
+        "ref": "Attachment",
+        "type": "array"
+      },
+      "message": {
+        "description": "The message from the chat event.",
+        "type": "string"
+      },
+      "participant": {
+        "description": "The entity that is associated with the event.",
+        "ref": "Participant"
+      },
+      "timestamp": {
+        "description": "The time at which the event occurred.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "type": {
+        "description": "The type of chat event.",
+        "enum": [
+          "ATTACHMENT",
+          "CHAT_ENDED",
+          "MESSAGE",
+          "PARTICIPANT_IDLE",
+          "PARTICIPANT_JOINED",
+          "PARTICIPANT_LEFT"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "timestamp",
+      "type"
+    ],
+    "type": "object"
+  },
+  "Contact": {
+    "description": "A contact.",
+    "properties": {
+      "channel": {
+        "description": "The contact channel for communication between the selling partner and Amazon.",
+        "enum": [
+          "CHAT",
+          "EMAIL",
+          "PHONE"
+        ],
+        "type": "string"
+      },
+      "chatContent": {
+        "description": "The content of the contact.",
+        "ref": "ChatContent"
+      },
+      "contactId": {
+        "description": "A unique identifier for the contact",
+        "type": "string"
+      },
+      "createdDate": {
+        "description": "The time at which the contact was created.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "emailContent": {
+        "description": "The content of the contact.",
+        "ref": "EmailContent"
+      },
+      "phoneContent": {
+        "description": "The content of the contact.",
+        "ref": "PhoneContent"
+      }
+    },
+    "required": [
+      "channel",
+      "contactId",
+      "createdDate"
+    ],
+    "type": "object"
+  },
+  "EmailContent": {
+    "description": "The content of an email contact.",
+    "properties": {
+      "attachments": {
+        "description": "All attachments included in the contact.",
+        "ref": "Attachment",
+        "type": "array"
+      },
+      "message": {
+        "description": "The email body of the contact.",
+        "type": "string"
+      },
+      "sender": {
+        "description": "The entity who sent the contact.",
+        "ref": "Participant"
+      }
+    },
+    "required": [
+      "message",
+      "sender"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "array of errors",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "ListCasesRequest": {
+    "description": "The request body for the listCases operation.",
+    "properties": {
+      "maxResults": {
+        "description": "Maximum number of results to return.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "nextToken": {
+        "description": "A token to retrieve the next page of results.",
+        "type": "string"
+      },
+      "sortOrder": {
+        "description": "The sort direction.",
+        "enum": [
+          "ASC",
+          "DESC"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListCasesResult": {
+    "description": "A list of support cases.",
+    "properties": {
+      "cases": {
+        "description": "A paginated list of support cases.",
+        "ref": "Case",
+        "type": "array"
+      },
+      "nextToken": {
+        "description": "A token to retrieve the next page of results.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "cases"
+    ],
+    "type": "object"
+  },
+  "ListContactsResult": {
+    "description": "A list of contacts.",
+    "properties": {
+      "contacts": {
+        "description": "A list of contacts.",
+        "ref": "Contact",
+        "type": "array"
+      },
+      "nextToken": {
+        "description": "A token to retrieve the next page of results.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "contacts"
+    ],
+    "type": "object"
+  },
+  "Participant": {
+    "description": "A participant for a single-directional communication between a selling partner and Amazon support.",
+    "properties": {
+      "displayName": {
+        "description": "The human-readable name of the participant.",
+        "type": "string"
+      },
+      "role": {
+        "description": "The role of the participant.",
+        "enum": [
+          "AMAZON",
+          "SELLING_PARTNER"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "displayName",
+      "role"
+    ],
+    "type": "object"
+  },
+  "PhoneContent": {
+    "description": "The content for a phone contact.",
+    "properties": {
+      "callNotes": {
+        "description": "Notes that summarize the phone call, provided by Amazon support",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PhoneNumber": {
+    "description": "The selling partner's phone number.",
+    "properties": {
+      "countryCode": {
+        "description": "The ISO 3166-1 two-digit country code for the calling country.",
+        "type": "string"
+      },
+      "extension": {
+        "description": "The extension to use for the call, if applicable.",
+        "type": "string"
+      },
+      "number": {
+        "description": "The phone number to call.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "countryCode",
+      "number"
+    ],
+    "type": "object"
+  }
+}

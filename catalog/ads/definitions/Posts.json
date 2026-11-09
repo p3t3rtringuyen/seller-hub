@@ -1,0 +1,975 @@
+{
+ "api": "Posts",
+ "file": "specs/dest/Posts_prod_3p.json",
+ "schemas": {
+  "AccessDeniedExceptionResponseContent": {
+   "description": "Access Denied Exception - Caller was not authorized to make this call.",
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AggregateProfileMetrics": {
+   "description": "Set of aggregated metric for a given date range.",
+   "properties": {
+    "clicksToDetailPage": {
+     "type": "number"
+    },
+    "engagements": {
+     "type": "number"
+    },
+    "impressions": {
+     "type": "number"
+    },
+    "reach": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "AggregateType": {
+   "description": "Period of aggregation for metrics at the profile level.",
+   "enum": [
+    "DAY",
+    "WEEK"
+   ],
+   "type": "string"
+  },
+  "ConflictExceptionResponseContent": {
+   "description": "Conflict Exception - Updating or deleting this resource can cause an inconsistent state.",
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CreatePostRequestContent": {
+   "description": "Contains the post fields to create the post with.",
+   "properties": {
+    "caption": {
+     "description": "Caption for a post.",
+     "type": "string"
+    },
+    "medias": {
+     "description": "A list of medias for a post.",
+     "items": {
+      "$ref": "Media"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "products": {
+     "description": "A list of product identifiers.",
+     "items": {
+      "description": "Identifier for a product on Amazon.",
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "profileId": {
+     "description": "Identifier for a profile.",
+     "type": "string"
+    },
+    "scheduledLiveDate": {
+     "description": "A date and time for when to publish a post. The value is in ISO8601 date-time format (UTC). For example, 2020-08-16T18:20:00.000Z.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "scheduledWithdrawalDate": {
+     "description": "A date and time for when to unpublish a post. The value is in ISO8601 date-time format (UTC). For example, 2020-08-16T18:20:00.000Z.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "medias",
+    "products",
+    "profileId"
+   ],
+   "type": "object"
+  },
+  "CreatePostResponseContent": {
+   "description": "Returns the post created.",
+   "properties": {
+    "post": {
+     "$ref": "Post"
+    }
+   },
+   "type": "object"
+  },
+  "GetPostProductsResponseContent": {
+   "properties": {
+    "eligibleProducts": {
+     "items": {
+      "$ref": "Product"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "ineligibleProducts": {
+     "description": "List of ineligible products that cannot be added to a post.",
+     "items": {
+      "$ref": "IneligibleProduct"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "GetPostResponseContent": {
+   "description": "Returns the post.",
+   "properties": {
+    "post": {
+     "$ref": "Post"
+    }
+   },
+   "type": "object"
+  },
+  "GetProfileMetricsRequestContent": {
+   "description": "Contains the profile identifier to get metrics for, the metric start and end dates, and the type of aggregation period for metrics. AggregateType can be either DAY or WEEK. For example, to get total metrics for a profil…",
+   "properties": {
+    "aggregateType": {
+     "$ref": "AggregateType"
+    },
+    "metricEndDate": {
+     "description": "The end date to get metrics for. The value is in ISO8601 full-date format (UTC). For example, 2020-08-16.",
+     "type": "string"
+    },
+    "metricStartDate": {
+     "description": "The start date to get metrics for. The value is in ISO8601 full-date format (UTC). For example, 2020-08-16.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetProfileMetricsResponseContent": {
+   "description": "Brand level performance metrics for posts.",
+   "properties": {
+    "aggregateMetrics": {
+     "$ref": "AggregateProfileMetrics"
+    },
+    "aggregateType": {
+     "$ref": "AggregateType"
+    },
+    "metrics": {
+     "items": {
+      "$ref": "ProfileMetric"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "GetProfileResponseContent": {
+   "description": "Returns the profile.",
+   "properties": {
+    "profile": {
+     "$ref": "Profile"
+    }
+   },
+   "type": "object"
+  },
+  "GetReportDownloadLinkResponseContent": {
+   "description": "Returns a URL that can be used to download the metrics report.",
+   "properties": {
+    "metricEndDate": {
+     "description": "The end date to get metrics for. The value is in ISO8601 full-date format (UTC). For example, 2020-08-16.",
+     "type": "string"
+    },
+    "metricStartDate": {
+     "description": "The start date to get metrics for. The value is in ISO8601 full-date format (UTC). For example, 2020-08-16.",
+     "type": "string"
+    },
+    "profileId": {
+     "description": "Identifier for a profile.",
+     "type": "string"
+    },
+    "reportDownloadUrl": {
+     "description": "Link to download a metrics report.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "IneligibleProduct": {
+   "description": "A product that is not eligible to be added to a post, along with the reason code.",
+   "properties": {
+    "asin": {
+     "description": "Identifier for a product on Amazon.",
+     "type": "string"
+    },
+    "ineligibilityCode": {
+     "$ref": "ProductIneligibilityCode"
+    }
+   },
+   "type": "object"
+  },
+  "InternalServerExceptionResponseContent": {
+   "description": "Internal Server Exception - Something went wrong with the server. Please try again later. If the issue persists, report an error.",
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListPostsRequestContent": {
+   "description": "Contains the profile identifier, optional metric date range, filters, sort criteria, and list of metrics to return. Request also contains pagination token and max results for paginated requests.",
+   "properties": {
+    "filters": {
+     "description": "A list of post filters.",
+     "items": {
+      "$ref": "PostListFilter"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "description": "Number of items to be returned on this call.",
+     "maximum": 500,
+     "minimum": 50,
+     "type": "number"
+    },
+    "metricEndDate": {
+     "description": "The end date to get metrics for. The value is in ISO8601 full-date format (UTC). For example, 2020-08-16.",
+     "type": "string"
+    },
+    "metricStartDate": {
+     "description": "The start date to get metrics for. The value is in ISO8601 full-date format (UTC). For example, 2020-08-16.",
+     "type": "string"
+    },
+    "nextToken": {
+     "description": "Pagination token to get next page of results from previous call.",
+     "type": "string"
+    },
+    "profileId": {
+     "description": "Identifier for a profile.",
+     "type": "string"
+    },
+    "selectedMetrics": {
+     "description": "A list of metrics to return for each post.",
+     "items": {
+      "$ref": "MetricName"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "sortCriterion": {
+     "$ref": "PostListSortCriterion"
+    }
+   },
+   "required": [
+    "profileId"
+   ],
+   "type": "object"
+  },
+  "ListPostsResponseContent": {
+   "description": "Returns list of posts with metrics. Also returns pagination token to get the next page of posts.",
+   "properties": {
+    "isNumPostsOverLimit": {
+     "description": "No more than 10,000 posts can be sorted by a field other than CREATED_DATE. This value represents if that limit has been reached. If this is the case, you should instruct your users to add more filters to the call.",
+     "type": "boolean"
+    },
+    "nextToken": {
+     "description": "Pagination token to get next page of results from previous call.",
+     "type": "string"
+    },
+    "posts": {
+     "description": "A list of posts.",
+     "items": {
+      "$ref": "Post"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalPosts": {
+     "description": "Total number of posts that exist within the conditions of the request.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "ListProfilesResponseContent": {
+   "description": "Returns a list of profiles that the user has access to.",
+   "properties": {
+    "nextToken": {
+     "description": "Pagination token to get next page of results from previous call.",
+     "type": "string"
+    },
+    "profiles": {
+     "items": {
+      "$ref": "Profile"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "Media": {
+   "description": "A media for a post.",
+   "properties": {
+    "mediaId": {
+     "type": "string"
+    },
+    "mediaMetadata": {
+     "$ref": "MediaMetadata"
+    },
+    "mediaType": {
+     "description": "One of the following: video, image",
+     "type": "string"
+    },
+    "mediaUrl": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "MediaMetadata": {
+   "additionalProperties": {
+    "type": "string"
+   },
+   "description": "When mediaType is image, keys: assetId. When mediaType is video, keys: assetId, thumbnailUrl, closedCaptionUrl",
+   "type": "object"
+  },
+  "MetricName": {
+   "description": "Available metrics to request for a post.",
+   "enum": [
+    "clickThroughRate",
+    "clicksToBrandStore",
+    "clicksToDetailPage",
+    "clicksToFollow",
+    "engagement",
+    "impressions",
+    "reach"
+   ],
+   "type": "string"
+  },
+  "MetricsForPost": {
+   "additionalProperties": {
+    "format": "double",
+    "type": "number"
+   },
+   "description": "A map of metrics for a post. Represents metric data. The detail on metric data is available in the link below: https://advertising.amazon.com/help#G8FRSCXFWNDW962E. **Note**: Metrics only available for list posts calls.",
+   "type": "object"
+  },
+  "Post": {
+   "description": "A post, along with metadata about the post. **Note: Metrics are not available for a single GetPost request.**",
+   "properties": {
+    "caption": {
+     "description": "Caption for a post.",
+     "type": "string"
+    },
+    "createdDate": {
+     "description": "Date and time for when the post was created. The value is in ISO8601 date-time format (UTC). For example, 2020-08-16T18:20:00.000Z.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "isFlaggedForQuality": {
+     "description": "Whether the post has quality defects or not.",
+     "type": "boolean"
+    },
+    "lastModified": {
+     "description": "Date and time for when the post was last modified. The value is in ISO8601 date-time format (UTC). For example, 2020-08-16T18:20:00.000Z.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "liveDate": {
+     "description": "Date and time for when the post was published. The value is in ISO8601 date-time format (UTC). For example, 2020-08-16T18:20:00.000Z.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "mediaUrl": {
+     "type": "string"
+    },
+    "medias": {
+     "description": "A list of medias for a post.",
+     "items": {
+      "$ref": "Media"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "metrics": {
+     "$ref": "MetricsForPost"
+    },
+    "products": {
+     "description": "A list of product identifiers.",
+     "items": {
+      "description": "Identifier for a product on Amazon.",
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "profileId": {
+     "description": "Identifier for a profile.",
+     "type": "string"
+    },
+    "promotionMetadata": {
+     "$ref": "PromotionMetadata"
+    },
+    "scheduledLiveDate": {
+     "description": "Date and time for when the post was unpublished. The value is in ISO8601 date-time format (UTC). For example, 2020-08-16T18:20:00.000Z.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "scheduledWithdrawalDate": {
+     "description": "A date and time for when to unpublish a post. The value is in ISO8601 date-time format (UTC). For example, 2020-08-16T18:20:00.000Z.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "PostStatus"
+    },
+    "statusMetadata": {
+     "$ref": "StatusMetadata"
+    },
+    "version": {
+     "description": "Version of a post. Used to ensure that post writes are consistent. Calls can only update the latest version of a post.",
+     "type": "number"
+    },
+    "withdrawnDate": {
+     "description": "Date and time for when the post was unpublished. The value is in ISO8601 date-time format (UTC). For example, 2020-08-16T18:20:00.000Z.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PostListFilter": {
+   "description": "A post filter.",
+   "properties": {
+    "endDate": {
+     "description": "End date for a date range filter.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fieldName": {
+     "$ref": "PostListFilterField"
+    },
+    "filterType": {
+     "$ref": "PostListFilterType"
+    },
+    "startDate": {
+     "description": "Start date for a date range filter.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "values": {
+     "description": "Specifies a list of values to filter by. Applies only for filters of type VALUES and TEXT.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PostListFilterField": {
+   "description": "Available post fields to filter a list of posts.",
+   "enum": [
+    "caption",
+    "createdDate",
+    "flaggedForQuality",
+    "state"
+   ],
+   "type": "string"
+  },
+  "PostListFilterType": {
+   "description": "Types of post filters.",
+   "enum": [
+    "RANGE",
+    "TEXT",
+    "VALUES"
+   ],
+   "type": "string"
+  },
+  "PostListSortCriterion": {
+   "description": "The criteria to determine how to sort a list of posts. Consists of the field to sort by, and the order.",
+   "properties": {
+    "sortField": {
+     "$ref": "PostListSortField"
+    },
+    "sortOrder": {
+     "$ref": "PostListSortOrder"
+    }
+   },
+   "type": "object"
+  },
+  "PostListSortField": {
+   "description": "Available post fields to sort by for a list of posts.",
+   "enum": [
+    "clickThroughRate",
+    "clicksToBrandStore",
+    "clicksToDetailPage",
+    "clicksToFollow",
+    "createdDate",
+    "engagement",
+    "impressions",
+    "liveDate",
+    "reach",
+    "state"
+   ],
+   "type": "string"
+  },
+  "PostListSortOrder": {
+   "description": "Sorting order (ASC = Ascending, DESC = Descending).",
+   "enum": [
+    "ASC",
+    "DESC"
+   ],
+   "type": "string"
+  },
+  "PostStatus": {
+   "description": "Status of Post: * DRAFT - Post is in DRAFT state. * REVIEW - Post is in Review. * LIVE - Post is live and available for Amazon Shoppers. * REJECTED - Post is Rejected. The detail of rejection is available in StatusMetad…",
+   "enum": [
+    "DRAFT",
+    "LIVE",
+    "REJECTED",
+    "REVIEW",
+    "SCHEDULED",
+    "WITHDRAWN"
+   ],
+   "type": "string"
+  },
+  "Product": {
+   "properties": {
+    "availability": {
+     "type": "string"
+    },
+    "customerReviewSummary": {
+     "$ref": "ProductReviewSummary"
+    },
+    "detailPageUrl": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "imageUrl": {
+     "type": "string"
+    },
+    "isPrime": {
+     "type": "boolean"
+    },
+    "name": {
+     "type": "string"
+    },
+    "priceSummary": {
+     "$ref": "ProductPriceSummary"
+    }
+   },
+   "type": "object"
+  },
+  "ProductIneligibilityCode": {
+   "enum": [
+    "INVALID",
+    "PROHIBITED",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ProductPriceSummary": {
+   "properties": {
+    "basisPrice": {
+     "type": "string"
+    },
+    "maxPrice": {
+     "type": "string"
+    },
+    "minPrice": {
+     "type": "string"
+    },
+    "winningPrice": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ProductReviewSummary": {
+   "properties": {
+    "displayString": {
+     "type": "string"
+    },
+    "halfStar": {
+     "type": "boolean"
+    },
+    "reviewFullStar": {
+     "type": "number"
+    },
+    "totalCustomerReviewCount": {
+     "type": "number"
+    },
+    "value": {
+     "format": "float",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "Profile": {
+   "description": "A Post Profile represents a brand that can create posts.",
+   "properties": {
+    "brandId": {
+     "description": "Identifier for a brand on Brand Registry.",
+     "type": "string"
+    },
+    "brandProfileId": {
+     "description": "Identifier for a Brand Profile.",
+     "type": "string"
+    },
+    "browseNodeId": {
+     "description": "Large Browse Refinement Brand identifier.",
+     "type": "string"
+    },
+    "feedUrl": {
+     "description": "URL for the profile's post feed on Amazon.com",
+     "type": "string"
+    },
+    "isAuthorized": {
+     "type": "boolean"
+    },
+    "lastApprovalDate": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "logoUrl": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "pendingChanges": {
+     "$ref": "ProfilePendingReviewChanges"
+    },
+    "postProfileId": {
+     "description": "Identifier for a profile.",
+     "type": "string"
+    },
+    "status": {
+     "type": "string"
+    },
+    "statusMetadata": {
+     "$ref": "StatusMetadata"
+    }
+   },
+   "type": "object"
+  },
+  "ProfileMetric": {
+   "description": "Set of metrics at a profile level for a particular date.",
+   "properties": {
+    "clicksToDetailPage": {
+     "type": "number"
+    },
+    "date": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "engagements": {
+     "type": "number"
+    },
+    "impressions": {
+     "type": "number"
+    },
+    "reach": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "ProfilePendingReviewChanges": {
+   "description": "Values for a profile that are pending review.",
+   "properties": {
+    "logoUrl": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PromotionMetadata": {
+   "description": "Metadata related to promoting a post to ad.",
+   "properties": {
+    "isEligibleForPromotion": {
+     "description": "Whether the post is eligible for promotion.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "RejectionEvidence": {
+   "description": "Additional information for a rejection of a post or profile.",
+   "properties": {
+    "componentId": {
+     "type": "string"
+    },
+    "type": {
+     "$ref": "RejectionEvidenceType"
+    }
+   },
+   "type": "object"
+  },
+  "RejectionEvidenceType": {
+   "description": "Types of rejection reason evidences.",
+   "enum": [
+    "ASIN",
+    "DUPLICATE_IMAGE"
+   ],
+   "type": "string"
+  },
+  "RejectionReason": {
+   "description": "Reason for rejecting a post or profile.",
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "detail": {
+     "type": "string"
+    },
+    "evidences": {
+     "items": {
+      "$ref": "RejectionEvidence"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ResourceNotFoundExceptionResponseContent": {
+   "description": "Resource Not Found Exception - The request references a resource that does not exist.",
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceLimitExceededExceptionResponseContent": {
+   "description": "Service Limit Exceeded Exception - A service limit has been exceeded in this request.",
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StatusMetadata": {
+   "description": "Additional data about the status of a post/profile.",
+   "properties": {
+    "mediaDefects": {
+     "description": "Quality defects that can affect the impressions/engagement of a post.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "rejectionReasons": {
+     "description": "A list of rejection reasons.",
+     "items": {
+      "$ref": "RejectionReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SubmitPostForReviewRequestContent": {
+   "description": "Contains post identifier and version of the post to submit for review.",
+   "properties": {
+    "version": {
+     "description": "Version of a post. Used to ensure that post writes are consistent. Calls can only update the latest version of a post.",
+     "type": "number"
+    }
+   },
+   "required": [
+    "version"
+   ],
+   "type": "object"
+  },
+  "SubmitPostForReviewResponseContent": {
+   "description": "Returns the post submitted for review.",
+   "properties": {
+    "post": {
+     "$ref": "Post"
+    }
+   },
+   "type": "object"
+  },
+  "ThrottlingExceptionResponseContent": {
+   "description": "Throttling Exception - Request was throttled.",
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdatePostRequestContent": {
+   "description": "Contains post identifier and post data for post to be saved. Also contains the version of the post that is intended to be saved.",
+   "properties": {
+    "caption": {
+     "description": "Caption for a post.",
+     "type": "string"
+    },
+    "medias": {
+     "description": "A list of medias for a post.",
+     "items": {
+      "$ref": "Media"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "products": {
+     "description": "A list of product identifiers.",
+     "items": {
+      "description": "Identifier for a product on Amazon.",
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "profileId": {
+     "description": "Identifier for a profile.",
+     "type": "string"
+    },
+    "scheduledLiveDate": {
+     "description": "A date and time for when to publish a post. The value is in ISO8601 date-time format (UTC). For example, 2020-08-16T18:20:00.000Z.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "scheduledWithdrawalDate": {
+     "description": "A date and time for when to unpublish a post. The value is in ISO8601 date-time format (UTC). For example, 2020-08-16T18:20:00.000Z.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "version": {
+     "description": "Version of a post. Used to ensure that post writes are consistent. Calls can only update the latest version of a post.",
+     "type": "number"
+    }
+   },
+   "required": [
+    "medias",
+    "products",
+    "profileId",
+    "version"
+   ],
+   "type": "object"
+  },
+  "UpdatePostResponseContent": {
+   "description": "Returns post that was saved.",
+   "properties": {
+    "post": {
+     "$ref": "Post"
+    }
+   },
+   "type": "object"
+  },
+  "ValidationExceptionResponseContent": {
+   "description": "Validation Exception - Request failed because invalid parameters were provided.",
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "WithdrawPostRequestContent": {
+   "description": "Contains post identifier and version of post to be unpublished.",
+   "properties": {
+    "version": {
+     "description": "Version of a post. Used to ensure that post writes are consistent. Calls can only update the latest version of a post.",
+     "type": "number"
+    }
+   },
+   "required": [
+    "version"
+   ],
+   "type": "object"
+  },
+  "WithdrawPostResponseContent": {
+   "description": "Returns post that was unpublished.",
+   "properties": {
+    "post": {
+     "$ref": "Post"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

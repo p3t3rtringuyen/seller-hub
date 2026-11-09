@@ -1,0 +1,463 @@
+{
+ "api": "AdvertisingAccounts",
+ "file": "specs/dest/AdvertisingAccounts_prod_3p.json",
+ "schemas": {
+  "AccessDeniedExceptionResponseContent": {
+   "description": "User does not have sufficient access to perform this action.",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdsAccount": {
+   "description": "Ads Account structure response consists of the GlobalAccountID (advertisingAccountId) and other account metadata.",
+   "properties": {
+    "accountName": {
+     "type": "string"
+    },
+    "adsAccountId": {
+     "description": "This is the global advertising account Id from the client.",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "Status"
+    }
+   },
+   "required": [
+    "adsAccountId"
+   ],
+   "type": "object"
+  },
+  "AdsAccountWithMetaData": {
+   "description": "Ads Account structure response consists of the GlobalAccountID (advertisingAccountId) and other account metadata.",
+   "properties": {
+    "accountName": {
+     "type": "string"
+    },
+    "adsAccountId": {
+     "description": "This is the global advertising account Id from the client.",
+     "type": "string"
+    },
+    "alternateIds": {
+     "items": {
+      "$ref": "AlternateId"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "countryCodes": {
+     "description": "Amazon Ads is available in many but not all countries where Amazon sells goods. For vendors, Global accounts come stock with all countries where Amazon Ads is available. For sellers, Global Accounts will contain only co…",
+     "items": {
+      "description": "A Country Code refers to 2-digit (UPPER CASE) country code",
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "errors": {
+     "$ref": "CountryCodeToErrorListMap"
+    },
+    "status": {
+     "$ref": "Status"
+    }
+   },
+   "required": [
+    "adsAccountId"
+   ],
+   "type": "object"
+  },
+  "AdvertisingAccountNotFoundExceptionResponseContent": {
+   "description": "Advertising Account not found.",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AlternateId": {
+   "description": "A construct that represents alternate Id an Ads Account could have, such profile Id",
+   "properties": {
+    "countryCode": {
+     "description": "The country code of the advertising account",
+     "type": "string"
+    },
+    "entityId": {
+     "description": "The entity id of the advertising account",
+     "type": "string"
+    },
+    "profileId": {
+     "description": "The Profile Id of the advertising account",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonAuthor": {
+   "description": "Represent an Amazon Author.",
+   "properties": {
+    "email": {
+     "description": "The email address of the KDP or Author Central account",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonSeller": {
+   "description": "Represent an Amazon Seller.",
+   "properties": {
+    "sellerCentralAccount": {
+     "description": "The merchant customer id of the seller central account",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonVendor": {
+   "description": "Represent an Amazon Vendor.",
+   "properties": {
+    "vendorGroup": {
+     "description": "The vendor group id of the vendor",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Association": {
+   "description": "Association can represent an Amazon Vendor, Seller or business who does not sell on Amazon",
+   "properties": {
+    "amazonAuthor": {
+     "$ref": "AmazonAuthor"
+    },
+    "amazonSeller": {
+     "$ref": "AmazonSeller"
+    },
+    "amazonVendor": {
+     "$ref": "AmazonVendor"
+    },
+    "business": {
+     "$ref": "Business"
+    }
+   },
+   "type": "object"
+  },
+  "Business": {
+   "description": "Represent a business who does not sell on Amazon. These fields are containing information about the client's business and will be used for business verification.",
+   "properties": {
+    "addressLine1": {
+     "description": "Address line 1 of the business",
+     "type": "string"
+    },
+    "addressLine2": {
+     "description": "Address line 2 of the business.",
+     "type": "string"
+    },
+    "city": {
+     "description": "The city of the business.",
+     "type": "string"
+    },
+    "countryCode": {
+     "description": "Country code of the business.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the business.",
+     "type": "string"
+    },
+    "phone": {
+     "description": "The phone number of the business.",
+     "type": "string"
+    },
+    "state": {
+     "description": "The state of the business.",
+     "type": "string"
+    },
+    "websiteUrl": {
+     "description": "The website url of the business.",
+     "type": "string"
+    },
+    "zipCode": {
+     "description": "Zip code of the business.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CountryCodeToErrorListMap": {
+   "additionalProperties": {
+    "items": {
+     "$ref": "Error"
+    },
+    "type": "array"
+   },
+   "type": "object"
+  },
+  "CreateTermsTokenRequestContent": {
+   "properties": {
+    "accountId": {
+     "description": "Optional account ID (Global Account or Manager Account) for accepting terms on existing accounts",
+     "type": "string"
+    },
+    "termsType": {
+     "$ref": "TermsType"
+    }
+   },
+   "type": "object"
+  },
+  "CreateTermsTokenResponseContent": {
+   "properties": {
+    "termsToken": {
+     "description": "A Terms Token refers to an UUID token used for terms and conditions acceptance",
+     "type": "string"
+    },
+    "termsUrl": {
+     "description": "The link to advertising terms page where the advertiser can view and accept.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "termsToken",
+    "termsUrl"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "description": "Error structure is to describe the various errors consist of error id, error code, and a readable error message",
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "number"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetAccountResponseContent": {
+   "properties": {
+    "adsAccount": {
+     "$ref": "AdsAccountWithMetaData"
+    }
+   },
+   "type": "object"
+  },
+  "GetTermsTokenResponseContent": {
+   "properties": {
+    "termsTokenStatus": {
+     "$ref": "TermsTokenStatus"
+    },
+    "termsType": {
+     "$ref": "TermsType"
+    }
+   },
+   "required": [
+    "termsTokenStatus"
+   ],
+   "type": "object"
+  },
+  "InternalServerExceptionResponseContent": {
+   "description": "Unexpected error during processing of request.",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "InvalidInputExceptionResponseContent": {
+   "description": "Request failed because invalid parameters were provided. Ensure that all required parameters are provided.",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListAdsAccountsRequestContent": {
+   "properties": {
+    "maxResults": {
+     "default": "100",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "The token is used to fetch the next page of results if they exist.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListAdsAccountsResponseContent": {
+   "properties": {
+    "adsAccounts": {
+     "items": {
+      "$ref": "AdsAccountWithMetaData"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RateExceededExceptionResponseContent": {
+   "description": "Maximum sending rate exceeded.",
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RegisterAdsAccountRequestContent": {
+   "properties": {
+    "accountName": {
+     "description": "Account names are typically the name of the company or brand being advertised. We recommend that you avoid using personal details such as first name, last name, phone number, social security number, credit card or other…",
+     "type": "string"
+    },
+    "associations": {
+     "description": "Associations you would like to link to this advertising account, could be Amazon Vendor, Seller, or just a regular business",
+     "items": {
+      "$ref": "Association"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "countryCodes": {
+     "description": "The countries that you want this account to operate in.",
+     "items": {
+      "description": "A Country Code refers to 2-digit (UPPER CASE) country code",
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "termsToken": {
+     "description": "We recommend you do not provide this field since we can determine if the customer has accepted the terms for you. An obfuscated identifier of the termsToken, which is activated when an advertisers accepts the Amazon Ads…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RegisterAdsAccountResponseContent": {
+   "properties": {
+    "adsAccount": {
+     "$ref": "AdsAccount"
+    }
+   },
+   "type": "object"
+  },
+  "Status": {
+   "description": "The current state of the account. Statuses include Pending, Partially Created, Created, and Disabled. If the account is in pending, it's registration is in progress and you'll need to call back again for an updated stat…",
+   "enum": [
+    "CREATED",
+    "DISABLED",
+    "PARTIALLY_CREATED",
+    "PENDING"
+   ],
+   "type": "string"
+  },
+  "TermsTokenStatus": {
+   "description": "The current state of the terms token. Created is the initial state, that's after the integrator requests a token. Accepted is set once the customer has viewed the terms page and accepted it. Redeemed means when the toke…",
+   "enum": [
+    "ACCEPTED",
+    "CREATED",
+    "REDEEMED"
+   ],
+   "type": "string"
+  },
+  "TermsType": {
+   "description": "There are different Terms and Conditions for different amazon advertising platforms. This enum will keep track of these different types of terms and is used in validating whether or not a given user in an advertising ac…",
+   "enum": [
+    "ADSP",
+    "ADVERTISING",
+    "MARKETING_CLOUD",
+    "PARTNER_NETWORK"
+   ],
+   "type": "string"
+  },
+  "V2AccessDeniedExceptionResponseContent": {
+   "description": "User does not have sufficient access to perform this action.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "V2InternalInvalidInputExceptionResponseContent": {
+   "description": "Request failed because invalid parameters were provided. Ensure that all required parameters are provided.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "V2InternalServerExceptionResponseContent": {
+   "description": "Unexpected error during processing of request.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "V2InvalidInputExceptionResponseContent": {
+   "description": "Request failed because invalid parameters were provided. Ensure that all required parameters are provided.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "V2RateExceededExceptionResponseContent": {
+   "description": "Maximum sending rate exceeded.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

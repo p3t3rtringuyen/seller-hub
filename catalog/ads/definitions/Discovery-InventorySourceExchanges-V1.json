@@ -1,0 +1,287 @@
+{
+ "api": "Discovery-InventorySourceExchanges-V1",
+ "file": "specs/dest/Discovery-InventorySourceExchanges-V1_prod_3p.json",
+ "schemas": {
+  "DeviceType": {
+   "description": "The device type supported by the exchange.",
+   "enum": [
+    "CONNECTED_DEVICE",
+    "CONNECTED_TV",
+    "DESKTOP",
+    "MOBILE"
+   ],
+   "type": "string"
+  },
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Exchange": {
+   "properties": {
+    "countries": {
+     "description": "The ISO Alpha-2 codes of countries where the inventory source is available.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "deviceType": {
+     "$ref": "DeviceType"
+    },
+    "id": {
+     "description": "The ID of the exchange.",
+     "type": "string"
+    },
+    "inventorySourceType": {
+     "$ref": "InventorySourceType"
+    },
+    "inventoryType": {
+     "$ref": "InventoryType"
+    },
+    "mobileEnvironment": {
+     "items": {
+      "$ref": "MobileEnvironmentType"
+     },
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the exchange.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Filter": {
+   "properties": {
+    "field": {
+     "$ref": "FilterField"
+    },
+    "value": {
+     "description": "The value by which the Exchanges in the responses will be filtered against. | Filter Field | Accepted Values | |-----|-----| | INVENTORY_TYPE | STANDARD_DISPLAY<br>AMAZON_MOBILE_DISPLAY<br>AAP_MOBILE_APP<br>DISPLAY<br>V…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "field",
+    "value"
+   ],
+   "type": "object"
+  },
+  "FilterField": {
+   "enum": [
+    "DEVICE_TYPE",
+    "INVENTORY_SOURCE_TYPE",
+    "INVENTORY_TYPE",
+    "MOBILE_ENVIRONMENT"
+   ],
+   "type": "string"
+  },
+  "InventorySourceType": {
+   "description": "The inventory source type of the exchange.",
+   "enum": [
+    "AMAZON",
+    "AMAZON_PUBLISHER_DIRECT",
+    "OTHER",
+    "THIRD_PARTY_EXCHANGE"
+   ],
+   "type": "string"
+  },
+  "InventoryType": {
+   "description": "The inventory type of the exchange.",
+   "enum": [
+    "AAP_MOBILE_APP",
+    "AMAZON_MOBILE_DISPLAY",
+    "AUDIO",
+    "DIGITAL_OUT_OF_HOME",
+    "DISPLAY",
+    "LIVE_EVENTS",
+    "ONLINE_VIDEO",
+    "PODCAST",
+    "STANDARD_DISPLAY",
+    "STREAMING_TV",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "ListCMInventoryDiscoveryExchangesRequest": {
+   "properties": {
+    "filters": {
+     "description": "List of filters to be applied to the result set of exchanges. At least two filters, one for InventoryType and one for InventorySourceType, are required for a successful request. <br><br> `DEVICE_TYPE` filter is optional…",
+     "items": {
+      "$ref": "Filter"
+     },
+     "maxItems": 10,
+     "minItems": 2,
+     "type": "array"
+    }
+   },
+   "required": [
+    "filters"
+   ],
+   "type": "object"
+  },
+  "ListCMInventoryDiscoveryExchangesResponse": {
+   "properties": {
+    "exchanges": {
+     "items": {
+      "$ref": "Exchange"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "MobileEnvironmentType": {
+   "description": "The environment type for mobile devices.",
+   "enum": [
+    "APP",
+    "WEB"
+   ],
+   "type": "string"
+  }
+ }
+}

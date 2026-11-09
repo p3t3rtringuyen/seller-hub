@@ -1,0 +1,6404 @@
+{
+ "api": "dsp-3-1",
+ "file": "specs/dsp/3-1/openapi.yaml",
+ "schemas": {
+  "AapMobileAppTargeting": {
+   "properties": {
+    "amazonViewabilityTargeting": {
+     "$ref": "AmazonViewabilityTargeting"
+    },
+    "dayPartTargeting": {
+     "$ref": "DayPartTargeting"
+    },
+    "deviceOrientationTargeting": {
+     "description": "The mobile device orientation targeting type.",
+     "enum": [
+      "ANY",
+      "PORTRAIT",
+      "LANDSCAPE"
+     ],
+     "type": "string"
+    },
+    "deviceTypeTargeting": {
+     "description": "The targeted mobile application device type. Note that this is applicable only for the `AAP_MOBILE APP` type of line item. It is required input for `AAP_MOBILE APP` line item type.",
+     "items": {
+      "enum": [
+       "IPHONE",
+       "IPAD",
+       "ANDROID",
+       "KINDLE_FIRE",
+       "KINDLE_FIRE_HD"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "geoLocationTargeting": {
+     "$ref": "GeoLocationTargeting"
+    },
+    "mobileAppTargeting": {
+     "$ref": "MobileAppTargeting"
+    },
+    "segmentTargeting": {
+     "$ref": "SegmentTargeting"
+    },
+    "supplyTargeting": {
+     "$ref": "SupplyTargeting"
+    },
+    "thirdPartyPreBidTargeting": {
+     "$ref": "ThirdPartyPreBidTargeting"
+    },
+    "userLocationTargeting": {
+     "$ref": "UserLocationTargeting"
+    }
+   },
+   "type": "object"
+  },
+  "AapMobileAppTargetingV3": {
+   "properties": {
+    "amazonViewabilityTargeting": {
+     "$ref": "AmazonViewabilityTargeting"
+    },
+    "dayPartTargeting": {
+     "$ref": "DayPartTargeting"
+    },
+    "deviceOrientationTargeting": {
+     "description": "The mobile device orientation targeting type.",
+     "enum": [
+      "ANY",
+      "PORTRAIT",
+      "LANDSCAPE"
+     ],
+     "type": "string"
+    },
+    "deviceTypeTargeting": {
+     "description": "The targeted mobile application device type. Note that this is applicable only for the `AAP_MOBILE APP` type of line item. It is required input for `AAP_MOBILE APP` line item type.",
+     "items": {
+      "enum": [
+       "IPHONE",
+       "IPAD",
+       "ANDROID",
+       "KINDLE_FIRE",
+       "KINDLE_FIRE_HD"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "geoLocationTargeting": {
+     "$ref": "GeoLocationTargeting"
+    },
+    "mobileAppTargeting": {
+     "$ref": "MobileAppTargeting"
+    },
+    "segmentTargeting": {
+     "$ref": "SegmentTargeting"
+    },
+    "supplyTargeting": {
+     "$ref": "SupplyTargeting"
+    },
+    "thirdPartyPreBidTargeting": {
+     "$ref": "MobileAppThirdPartyPreBidTargeting"
+    },
+    "userLocationTargeting": {
+     "$ref": "UserLocationTargetingV3"
+    }
+   },
+   "type": "object"
+  },
+  "AapMobileAppTargetingV3_1": {
+   "allOf": [
+    {
+     "$ref": "AapMobileAppTargetingV3"
+    }
+   ],
+   "properties": {
+    "thirdPartyPreBidTargeting": {
+     "$ref": "MobileAppThirdPartyPreBidTargetingV3_1"
+    }
+   }
+  },
+  "AapMobileAppTargetingV3_2": {
+   "allOf": [
+    {
+     "$ref": "AapMobileAppTargetingV3_1"
+    }
+   ],
+   "properties": {
+    "thirdPartyPreBidTargeting": {
+     "$ref": "MobileAppThirdPartyPreBidTargetingV3_2"
+    }
+   }
+  },
+  "AapMobileAppTargetingV3_3": {
+   "allOf": [
+    {
+     "$ref": "AapMobileAppTargetingV3_2"
+    }
+   ],
+   "properties": {
+    "thirdPartyPreBidTargeting": {
+     "$ref": "MobileAppThirdPartyPreBidTargetingV3_3"
+    }
+   }
+  },
+  "AgencyFee": {
+   "description": "The service fee associated with an agency.",
+   "properties": {
+    "feePercentage": {
+     "description": "Fee expressed as a percentage of the total budget.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonConsoleFee": {
+   "description": "A service fee for using the Amazon Ad Platform. Fees are applied as a percentage of supply costs.",
+   "properties": {
+    "feePercentage": {
+     "description": "The service fee expressed as a percentage.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "feePercentage"
+   ],
+   "type": "object"
+  },
+  "AmazonMobileDisplayTargeting": {
+   "properties": {
+    "amazonViewabilityTargeting": {
+     "$ref": "AmazonViewabilityTargeting"
+    },
+    "contextualTargeting": {
+     "description": "Set to `true` to enable contextual targeting. Contextual targeting targets the detail page of products that are frequently viewed or purchased with the products in your ad. Note that this feature applies to Dynamic eCom…",
+     "type": "boolean"
+    },
+    "dayPartTargeting": {
+     "$ref": "DayPartTargeting"
+    },
+    "geoLocationTargeting": {
+     "$ref": "GeoLocationTargeting"
+    },
+    "mobileOsTargeting": {
+     "$ref": "MobileOsTargeting"
+    },
+    "segmentTargeting": {
+     "$ref": "SegmentTargeting"
+    },
+    "supplyTargeting": {
+     "$ref": "SupplyTargeting"
+    },
+    "thirdPartyPreBidTargeting": {
+     "$ref": "ThirdPartyPreBidTargeting"
+    },
+    "userLocationTargeting": {
+     "$ref": "UserLocationTargeting"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMobileDisplayTargetingV3": {
+   "properties": {
+    "amazonViewabilityTargeting": {
+     "$ref": "AmazonViewabilityTargeting"
+    },
+    "contextualTargeting": {
+     "description": "Set to `true` to enable contextual targeting. Contextual targeting targets the detail page of products that are frequently viewed or purchased with the products in your ad. Note that this feature applies to Dynamic eCom…",
+     "type": "boolean"
+    },
+    "dayPartTargeting": {
+     "$ref": "DayPartTargeting"
+    },
+    "geoLocationTargeting": {
+     "$ref": "GeoLocationTargeting"
+    },
+    "mobileOsTargeting": {
+     "$ref": "MobileOsTargeting"
+    },
+    "segmentTargeting": {
+     "$ref": "SegmentTargeting"
+    },
+    "supplyTargeting": {
+     "$ref": "SupplyTargeting"
+    },
+    "thirdPartyPreBidTargeting": {
+     "$ref": "MobileDisplayThirdPartyPreBidTargeting"
+    },
+    "userLocationTargeting": {
+     "$ref": "UserLocationTargetingV3"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMobileDisplayTargetingV3_1": {
+   "allOf": [
+    {
+     "$ref": "AmazonMobileDisplayTargetingV3"
+    }
+   ],
+   "properties": {
+    "thirdPartyPreBidTargeting": {
+     "$ref": "MobileDisplayThirdPartyPreBidTargetingV3_1"
+    }
+   }
+  },
+  "AmazonViewabilityTargeting": {
+   "description": "Selects a viewability tier to target. The predicted view rate percentages are based on historical data and are not guaranteed. Actual view rates may vary by measurement provider and order.",
+   "properties": {
+    "includeUnmeasurableImpressions": {
+     "description": "Set to `true` to include impressions where impressions can't be measured.",
+     "type": "boolean"
+    },
+    "viewabilityTier": {
+     "$ref": "ViewabilityTier"
+    }
+   },
+   "required": [
+    "viewabilityTier",
+    "includeUnmeasurableImpressions"
+   ],
+   "type": "object"
+  },
+  "App": {
+   "properties": {
+    "id": {
+     "description": "The app identifier.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The app name.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AppliedFees": {
+   "properties": {
+    "amazonDspConsoleFee": {
+     "$ref": "AmazonConsoleFee"
+    },
+    "audienceFees": {
+     "description": "The list of audience fees associated with the line item.",
+     "items": {
+      "$ref": "AudienceFee"
+     },
+     "type": "array"
+    },
+    "thirdPartyFees": {
+     "description": "The list of third party fees associated with the line item.",
+     "items": {
+      "$ref": "ThirdPartyFee"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "Apps": {
+   "properties": {
+    "apps": {
+     "items": {
+      "$ref": "App"
+     },
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AudienceFee": {
+   "description": "The audience fee applied to Amazon (in-market and lifestyle) third-party (automotive).",
+   "properties": {
+    "amount": {
+     "description": "The amount of the audience fee.",
+     "format": "double",
+     "type": "number"
+    },
+    "feeName": {
+     "description": "The category of the audience fee.",
+     "enum": [
+      "IN_MARKET_LIFESTYLE",
+      "AUTOMOTIVE"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "feeName",
+    "amount"
+   ],
+   "type": "object"
+  },
+  "AutoOptimization": {
+   "enum": [
+    "BUDGET",
+    "BID"
+   ],
+   "type": "string"
+  },
+  "AutoOptimizations": {
+   "description": "The list of optimizations supported. When goal=`AWARENESS`, `CONVERSIONS`, or `CONSIDERATION`, `BID` auto optimization is not supported.",
+   "items": {
+    "enum": [
+     "BUDGET",
+     "BID"
+    ],
+    "type": "string"
+   },
+   "type": "array"
+  },
+  "Bidding": {
+   "description": "The bid values associated with a line item.",
+   "properties": {
+    "baseSupplyBid": {
+     "description": "The base bid per thousand impressions for ad inventory. Expressed in dollars.",
+     "format": "double",
+     "type": "number"
+    },
+    "maxSupplyBid": {
+     "description": "The maximum cost-per-thousand impressions bid for media supply. Expressed in dollars.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "baseSupplyBid"
+   ],
+   "type": "object"
+  },
+  "BiddingStrategy": {
+   "description": "It specifies how Amazon Advertising determines bids on your behalf for each opportunity to serve an impression. It is immutable once the order has started delivering.",
+   "enum": [
+    "SPEND_BUDGET_IN_FULL",
+    "MAXIMIZE_PERFORMANCE"
+   ],
+   "type": "string"
+  },
+  "BrandSuitabilityRiskLevel": {
+   "description": "The Double Verify brand suitability risk level.",
+   "enum": [
+    "ALLOW_ALL",
+    "HIGH",
+    "HIGH_MEDIUM",
+    "HIGH_MEDIUM_LOW"
+   ],
+   "type": "string"
+  },
+  "BudgetCap": {
+   "description": "Adding a budget cap can result in under-delivery.",
+   "properties": {
+    "amount": {
+     "description": "The spending limit amount.",
+     "format": "double",
+     "type": "number"
+    },
+    "recurrenceTimePeriod": {
+     "description": "The type of recurrence for the spending limit.",
+     "enum": [
+      "UNCAPPED",
+      "DAILY",
+      "MONTHLY"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "recurrenceTimePeriod",
+    "amount"
+   ],
+   "type": "object"
+  },
+  "ConversionTracking": {
+   "properties": {
+    "pixels": {
+     "$ref": "PixelTracking"
+    },
+    "products": {
+     "$ref": "ProductTracking"
+    }
+   },
+   "type": "object"
+  },
+  "ConversionTrackingV2_1": {
+   "properties": {
+    "pixels": {
+     "$ref": "PixelTracking"
+    },
+    "products": {
+     "$ref": "ProductTrackingV2_1"
+    }
+   },
+   "type": "object"
+  },
+  "Creative": {
+   "properties": {
+    "advertiserId": {
+     "description": "The identifier of the advertiser.",
+     "type": "string"
+    },
+    "creativeId": {
+     "description": "The identifier of the creative.",
+     "type": "string"
+    },
+    "externalId": {
+     "description": "The external identifier of the creative.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The creative name.",
+     "type": "string"
+    },
+    "size": {
+     "description": "The creative size.",
+     "type": "string"
+    },
+    "supportedLineItemTypes": {
+     "description": "Supported lineItemTypes where creatives can be associated. VIDEO line item type is supported since version `application/vnd.dspcreatives.v2.1+json`",
+     "items": {
+      "$ref": "SupportedLineItemTypes"
+     },
+     "type": "array"
+    },
+    "type": {
+     "description": "The creative type.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CreativeOptions": {
+   "properties": {
+    "creativeRotationType": {
+     "description": "The creative rotation type.",
+     "enum": [
+      "WEIGHTED",
+      "RANDOM"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Creatives": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "Creative"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "CurrencyCode": {
+   "description": "The currency code.",
+   "enum": [
+    "USD",
+    "CAD",
+    "MXN"
+   ],
+   "type": "string"
+  },
+  "CurrencyCodeV3": {
+   "allOf": [
+    {
+     "$ref": "CurrencyCode"
+    }
+   ],
+   "enum": [
+    "BRL"
+   ]
+  },
+  "DayPart": {
+   "description": "The parts of a day.",
+   "properties": {
+    "dayOfWeek": {
+     "description": "The day of the week.",
+     "enum": [
+      "SUNDAY",
+      "MONDAY",
+      "TUESDAY",
+      "WEDNESDAY",
+      "THURSDAY",
+      "FRIDAY",
+      "SATURDAY"
+     ],
+     "type": "string"
+    },
+    "hourSlots": {
+     "items": {
+      "description": "The hour slot.",
+      "format": "int64",
+      "maximum": 23,
+      "minimum": 0,
+      "type": "integer"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "hourSlots",
+    "dayOfWeek"
+   ],
+   "type": "object"
+  },
+  "DayPartTargeting": {
+   "description": "Specifies time zone and parts of the day to target delivery of the line item.",
+   "properties": {
+    "dayParts": {
+     "description": "The list of parts of the day.",
+     "items": {
+      "$ref": "DayPart"
+     },
+     "type": "array"
+    },
+    "timeZonePreference": {
+     "description": "The time zone associated with line item delivery.",
+     "enum": [
+      "USER_TIMEZONE",
+      "AD_SERVER_TIMEZONE"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "timeZonePreference",
+    "dayParts"
+   ],
+   "type": "object"
+  },
+  "DealFee": {
+   "description": "The fee associated with the deal. This will be the same value as deal price, but includes more information such as currency code.",
+   "properties": {
+    "amount": {
+     "description": "The price agreed upon with the publisher. Given in base currency units multiplied by scaling factor ('scale').",
+     "type": "integer"
+    },
+    "currency": {
+     "description": "Base currency, such as US Dollar, given in ISO 4217.",
+     "type": "string"
+    },
+    "feeCalculationType": {
+     "description": "How the fee is applied.",
+     "enum": [
+      "FIXED_CPM",
+      "FLOOR_RATE"
+     ],
+     "type": "string"
+    },
+    "scale": {
+     "description": "Scale of the amount relative to the base currency unit. For instance, if the scale is 100000, the currency is USD, and the amount is 50000, the human-readable fee is $0.50.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "DealInfo": {
+   "description": "Deal metadata present only for the DEAL type.",
+   "properties": {
+    "dealGroup": {
+     "type": "string"
+    },
+    "dealPrice": {
+     "description": "Price of the deal",
+     "format": "integer",
+     "type": "number"
+    },
+    "dealType": {
+     "enum": [
+      "PREFERRED_DEAL",
+      "PRIVATE_AUCTION"
+     ],
+     "type": "string"
+    },
+    "endDate": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "exchangeName": {
+     "description": "The name of the supply source item to which the deal belongs. If deal belongs to OPEN_EXCHANGE, it is the name of the consolidated supply source item.",
+     "type": "string"
+    },
+    "publisherName": {
+     "type": "string"
+    },
+    "startDate": {
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DealInfoV1_1": {
+   "allOf": [
+    {
+     "$ref": "DealInfo"
+    }
+   ],
+   "properties": {
+    "dealFee": {
+     "$ref": "DealFee"
+    }
+   }
+  },
+  "DealInfoV1_2": {
+   "allOf": [
+    {
+     "$ref": "DealInfoV1_1"
+    },
+    {
+     "properties": {
+      "dealId": {
+       "description": "ID provided by the user while creating the deal.",
+       "type": "string"
+      }
+     }
+    }
+   ]
+  },
+  "DeliveryActivationStatus": {
+   "description": "This will be used to control the delivery activation status of order and lineitem resource. Active - Activate order or lineitem. INACTIVE - Pause the order or lineitem.",
+   "enum": [
+    "ACTIVE",
+    "INACTIVE"
+   ],
+   "type": "string"
+  },
+  "DiscoveryLineItemTypes": {
+   "enum": [
+    "STANDARD_DISPLAY",
+    "AMAZON_MOBILE_DISPLAY",
+    "AAP_MOBILE_APP",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "DomainFileMetaData": {
+   "properties": {
+    "fileKey": {
+     "description": "The S3 key of domain list file.",
+     "type": "string"
+    },
+    "fileName": {
+     "description": "The domain list file name.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "fileKey",
+    "fileName"
+   ],
+   "type": "object"
+  },
+  "DomainFileValidationResponse": {
+   "properties": {
+    "addedDomainSize": {
+     "description": "Number of domains in the file that have been added to the line item.",
+     "type": "integer"
+    },
+    "duplicateDomainSize": {
+     "description": "Number of duplicate domains in the file. The unique ones of them are added to the line item.",
+     "type": "integer"
+    },
+    "duplicateDomainsFileUrl": {
+     "description": "The URL of duplicate domains file. It expires in 1 hour.",
+     "type": "string"
+    },
+    "fileName": {
+     "description": "The uploaded file name.",
+     "type": "string"
+    },
+    "invalidDomainSize": {
+     "description": "Number of invalid domains in the file. They are not added to the line item.",
+     "type": "integer"
+    },
+    "invalidDomainsFileUrl": {
+     "description": "The URL of invalid domains file. It expires in 1 hour.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DomainList": {
+   "properties": {
+    "inheritFromAdvertiser": {
+     "description": "Inherit domains from advertiser settings.",
+     "type": "boolean"
+    },
+    "mergedDomainList": {
+     "$ref": "MergedDomainList"
+    }
+   },
+   "type": "object"
+  },
+  "DomainListMetadata": {
+   "properties": {
+    "created": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "size": {
+     "description": "Number of URLs specified in this list",
+     "type": "integer"
+    },
+    "updated": {
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DoubleVerify": {
+   "description": "Double Verify (DV) is a third party provider for digital ad verification. Double Verify offers technologies that drive high-quality advertising media.",
+   "properties": {
+    "authenticBrandSafety": {
+     "$ref": "DoubleVerifyAuthenticBrandSafety"
+    },
+    "brandSafety": {
+     "$ref": "DoubleVerifyBrandSafety"
+    },
+    "customContextualSegmentId": {
+     "description": "The custom segment identifier.",
+     "type": "string"
+    },
+    "fraudInvalidTraffic": {
+     "$ref": "DoubleVerifyFraudInvalidTraffic"
+    },
+    "viewability": {
+     "$ref": "DoubleVerifyViewability"
+    }
+   },
+   "type": "object"
+  },
+  "DoubleVerifyAuthenticBrandSafety": {
+   "properties": {
+    "doubleVerifySegmentId": {
+     "description": "The segment identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DoubleVerifyBrandSafety": {
+   "description": "In an update from Double Verify (DV), support for `HATE_SPEECH_PROFANITY`, medium severity `ADULT_CONTENT`, and `SEX_EDUCATION` has been dropped. Additionally, DV has moved away from high severity content and medium sev…",
+   "properties": {
+    "appAgeRating": {
+     "description": "A list of app age rating to be used for excluding apps.",
+     "items": {
+      "enum": [
+       "EVERYONE",
+       "TWEENS",
+       "TEEN",
+       "MATURE",
+       "ADULTS_ONLY",
+       "UNKNOWN"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "appStarRating": {
+     "description": "Exclude by app star rating (app inventory only)",
+     "enum": [
+      "ALLOW_ALL",
+      "APP_STAR_RATING_LT_15",
+      "APP_STAR_RATING_LT_20",
+      "APP_STAR_RATING_LT_25",
+      "APP_STAR_RATING_LT_30",
+      "APP_STAR_RATING_LT_35",
+      "APP_STAR_RATING_LT_40",
+      "APP_STAR_RATING_LT_45"
+     ],
+     "type": "string"
+    },
+    "excludeAppsWithInsufficientRating": {
+     "description": "Set to `true` to exclude unofficial apps or apps with insufficient user ratings (<100 lifetime).",
+     "type": "boolean"
+    },
+    "highSeverityContent": {
+     "description": "A list of high severity content and corresponding status.",
+     "items": {
+      "enum": [
+       "ADULT_CONTENT",
+       "DRUGS_SUBSTANCES",
+       "EXTREME_GRAPHICS_VIOLENCE_WEAPONS",
+       "HATE_SPEECH_PROFANITY",
+       "ILLEGAL_ACTIVITIES",
+       "INCENTIVIZED_MALWARE_CLUTTER",
+       "PIRACY_COPYRIGHT_INFRINGEMENT"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "mediumSeverityContent": {
+     "description": "A list of medium severity content and corresponding status.",
+     "items": {
+      "enum": [
+       "AD_SERVER",
+       "ADULT_CONTENT",
+       "CULTS_SURVIVALISM",
+       "CELEBRITY_GOSSIP",
+       "GAMBLING",
+       "DISASTER_AVIATION",
+       "DISASTER_MAN_MADE",
+       "DISASTER_NATURAL",
+       "DISASTER_TERRORISTS_EVENTS",
+       "DISASTER_VEHICLE",
+       "DRUGS_ALCOHOL",
+       "DRUGS_SMOKING",
+       "INFLAMMATORY_POLITICS_NEWS",
+       "NEGATIVE_NEWS_FINANCIAL",
+       "NEGATIVE_NEWS_PHARMACEUTICAL",
+       "NON_STANDARD_CONTENT_NON_ENGLISH",
+       "NON_STANDARD_CONTENT_PARKING_PAGE",
+       "OCCULT",
+       "SEX_EDUCATION",
+       "UNMODERATED_UGC_FORUMS_IMAGES_VIDEO"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "unknownContent": {
+     "description": "Set to `true` to exclude unknown content.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DoubleVerifyFraudInvalidTraffic": {
+   "properties": {
+    "blockAppAndSites": {
+     "description": "Set to `true` to block applications and sites with insufficient historical fraud and invalid traffic statistics. This will not be applicable if ALLOW_ALL is chosen.",
+     "type": "boolean"
+    },
+    "excludeAppsAndSites": {
+     "enum": [
+      "ALLOW_ALL",
+      "FRAUD_TRAFFIC_LEVEL_GTE_100",
+      "FRAUD_TRAFFIC_LEVEL_GTE_50",
+      "FRAUD_TRAFFIC_LEVEL_GTE_25",
+      "FRAUD_TRAFFIC_LEVEL_GTE_10",
+      "FRAUD_TRAFFIC_LEVEL_GTE_08",
+      "FRAUD_TRAFFIC_LEVEL_GTE_06",
+      "FRAUD_TRAFFIC_LEVEL_GTE_04",
+      "FRAUD_TRAFFIC_LEVEL_GTE_02"
+     ],
+     "type": "string"
+    },
+    "excludeImpressions": {
+     "description": "Set to `true` to exclude impressions delivered to devices identified to be fraudulent or invalid.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DoubleVerifyV2_1": {
+   "allOf": [
+    {
+     "$ref": "DoubleVerify"
+    }
+   ],
+   "properties": {
+    "viewability": {
+     "$ref": "DoubleVerifyViewabilityV2_1"
+    }
+   }
+  },
+  "DoubleVerifyViewability": {
+   "properties": {
+    "brandExposureViewabilityTargeting": {
+     "description": "The type of brand exposure viewability targeting.",
+     "enum": [
+      "ALLOW_ALL",
+      "BRAND_EXPOSURE_VIEWABILITY_GTE_15_SEC_AVG_DURATION",
+      "BRAND_EXPOSURE_VIEWABILITY_GTE_10_SEC_AVG_DURATION",
+      "BRAND_EXPOSURE_VIEWABILITY_GTE_5_SEC_AVG_DURATION"
+     ],
+     "type": "string"
+    },
+    "includeUnmeasurableImpressions": {
+     "description": "Set to `true` to include impressions where impressions can't be measured.",
+     "type": "boolean"
+    },
+    "mrcViewabilityTargeting": {
+     "description": "The type of MRC viewability targeting.",
+     "enum": [
+      "ALLOW_ALL",
+      "MRC_VIEWABILITY_GTE_80",
+      "MRC_VIEWABILITY_GTE_75",
+      "MRC_VIEWABILITY_GTE_70",
+      "MRC_VIEWABILITY_GTE_65",
+      "MRC_VIEWABILITY_GTE_60",
+      "MRC_VIEWABILITY_GTE_55",
+      "MRC_VIEWABILITY_GTE_50",
+      "MRC_VIEWABILITY_GTE_40",
+      "MRC_VIEWABILITY_GTE_30"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DoubleVerifyViewabilityV2_1": {
+   "allOf": [
+    {
+     "$ref": "DoubleVerifyViewability"
+    }
+   ],
+   "properties": {
+    "averageCompletionAndFullyViewableRateTargeting": {
+     "description": "The type of average completion and fully viewable rate targeting.",
+     "enum": [
+      "ALLOW_ALL",
+      "AVG_COMPLETION_FULLY_VIEWABLE_GTE_10",
+      "AVG_COMPLETION_FULLY_VIEWABLE_GTE_20",
+      "AVG_COMPLETION_FULLY_VIEWABLE_GTE_25",
+      "AVG_COMPLETION_FULLY_VIEWABLE_GTE_30",
+      "AVG_COMPLETION_FULLY_VIEWABLE_GTE_35",
+      "AVG_COMPLETION_FULLY_VIEWABLE_GTE_40"
+     ],
+     "type": "string"
+    }
+   }
+  },
+  "DspAdChoicesPositionV1": {
+   "default": "TOP_RIGHT",
+   "description": "Default value is TOP_RIGHT.",
+   "enum": [
+    "TOP_RIGHT",
+    "TOP_LEFT",
+    "BOTTOM_RIGHT",
+    "BOTTOM_LEFT"
+   ],
+   "type": "string"
+  },
+  "DspAssetV1": {
+   "description": "Asset to be associated with creative.",
+   "properties": {
+    "assetId": {
+     "description": "The uploaded asset Id. This Id is provided by Creative Assets API when user registers an asset with assetType after upload.",
+     "type": "string"
+    },
+    "url": {
+     "description": "The asset's URL. This will be provided if asset linked with the creative being read is not registered in Creative Assets API.",
+     "type": "string"
+    },
+    "version": {
+     "description": "The uploaded asset version. This version is provided by Creative Assets API when user registers an asset with assetType after upload.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "version"
+   ],
+   "type": "object"
+  },
+  "DspBaseCreateCreativeRequestV1": {
+   "allOf": [
+    {
+     "$ref": "DspBaseWriteCreativeV1"
+    },
+    {
+     "description": "This holds common immutable properties of all creative types create request.",
+     "properties": {
+      "advertiserId": {
+       "description": "The advertiser Id. It's an immutable field.",
+       "type": "string"
+      },
+      "marketplace": {
+       "$ref": "DspCreativeMarketplaceV1"
+      }
+     },
+     "required": [
+      "advertiserId",
+      "marketplace"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DspBaseReadCreativeV1": {
+   "description": "This holds common read-only properties of all creative types.",
+   "properties": {
+    "approvalStatus": {
+     "$ref": "DspCreativeApprovalStatusV1"
+    },
+    "createdDate": {
+     "description": "The creative created date.",
+     "type": "string"
+    },
+    "lastUpdatedDate": {
+     "description": "The creative last updated date.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspBaseUpdateCreativeRequestV1": {
+   "allOf": [
+    {
+     "$ref": "DspBaseWriteCreativeV1"
+    },
+    {
+     "description": "This holds common server-assigned mutable properties of all creative types update request.",
+     "properties": {
+      "creativeId": {
+       "description": "The creative Id. It will be used to perform update operation. It's an immutable field.",
+       "type": "string"
+      }
+     },
+     "required": [
+      "creativeId"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DspBaseWriteCreativeV1": {
+   "description": "This holds common mutable properties of all creative types update request.",
+   "properties": {
+    "name": {
+     "description": "The creative name.",
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "required": [
+    "name"
+   ],
+   "type": "object"
+  },
+  "DspClickThroughAndroidAppDownloadActionV1": {
+   "description": "To target Android app download as click through action, at least `storeId`, `productAsin` or `downloadUrl` must be provided. If both `storeId` and `productAsin` is provided, `storePriority` must be provided as well. Thi…",
+   "properties": {
+    "downloadUrl": {
+     "description": "URL to direct users to download app. By default, This will be built automatically using `playStoreId` and `productAsin` information provided. It can be overriden.",
+     "type": "string"
+    },
+    "isRtb": {
+     "description": "Indicates whether it's for real time bidding or not. Default value is `false`. This is applicable only to `MOBILE_AAP` supply.",
+     "type": "boolean"
+    },
+    "productAsin": {
+     "description": "Amazon product Asin, used to build the download URL. This is applicable only to `MOBILE_AAP` supply.",
+     "type": "string"
+    },
+    "storeId": {
+     "description": "Android play store Id for app, used to build the download URL.",
+     "type": "string"
+    },
+    "storePriority": {
+     "description": "The higher priority store will be tried first, then if it does not exist on device the second store will be tried. Default value is `PLAY_STORE_THEN_AMAZON_APP_STORE`. This is applicable only to `MOBILE_AAP` supply.",
+     "enum": [
+      "PLAY_STORE_THEN_AMAZON_APP_STORE",
+      "AMAZON_APP_STORE_THEN_PLAY_STORE"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspClickThroughDestinationV1": {
+   "default": "OTHER",
+   "description": "Choose `AMAZON` if the `click through` links to an Amazon site like Amazon.com or IMDb. Otherwise choose `OTHER`.",
+   "enum": [
+    "AMAZON",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DspClickThroughDetailPageActionV1": {
+   "description": "Click through Action - Detail Page. This is applicable only to `MOBILE_OO` and `MOBILE_AAP` supply.",
+   "properties": {
+    "enableDeepLinking": {
+     "description": "Allow to open URL in Amazon App, if available on device. By default it is false. This will be considered only for `MOBILE_AAP` supply.",
+     "type": "boolean"
+    },
+    "productAsin": {
+     "description": "Define which product's detail page the customer should be taken to when tapping on the creative.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "productAsin"
+   ],
+   "type": "object"
+  },
+  "DspClickThroughIosAppDownloadActionV1": {
+   "description": "Click through action - IOS App Download. This is applicable only to `MOBILE_AAP` supply.",
+   "properties": {
+    "downloadUrl": {
+     "description": "URL to direct users to download app. By default, This will be built automatically using `storeLink` information provided. It can be overridden.",
+     "type": "string"
+    },
+    "storeLink": {
+     "description": "Apple app store link for app, used to build the download URL.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "storeLink"
+   ],
+   "type": "object"
+  },
+  "DspClickThroughKindleAppDownloadActionV1": {
+   "description": "Click through Action - Kindle App Download. This is applicable only to `MOBILE_AAP` supply.",
+   "properties": {
+    "downloadUrl": {
+     "description": "URL to direct users to download app. By default, this will be built automatically using `productAsin` information provided. It can be overridden.",
+     "type": "string"
+    },
+    "productAsin": {
+     "description": "Amazon product Asin, used to build the download URL.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "productAsin"
+   ],
+   "type": "object"
+  },
+  "DspClickThroughSearchAsinActionV1": {
+   "description": "Click through Action - Search Asins. This is applicable only to `MOBILE_AAP` and `MOBILE_OO` supply.",
+   "properties": {
+    "enableDeepLinking": {
+     "description": "Allow to open URL in Amazon App, if available on device. This will be considered only for `MOBILE_AAP` supply. Default value is `false`.",
+     "type": "boolean"
+    },
+    "productAsins": {
+     "description": "Define the Asins to query for in the search results that will be displayed on click-through.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 25,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "productAsins"
+   ],
+   "type": "object"
+  },
+  "DspClickThroughSearchKeywordActionV1": {
+   "description": "Click through action - Search Keywords. This is applicable only to `MOBILE_AAP` and `MOBILE_OO` supply.",
+   "properties": {
+    "enableDeepLinking": {
+     "description": "Allow to open URL in Amazon App, if available on device. This will be considered only for `MOBILE_AAP` supply. By default it is `false`.",
+     "type": "boolean"
+    },
+    "keywords": {
+     "description": "Define the keywords to query for in the search results that will be displayed on click-through.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "keywords"
+   ],
+   "type": "object"
+  },
+  "DspCreateImageCreativeRequestV1": {
+   "allOf": [
+    {
+     "$ref": "DspBaseCreateCreativeRequestV1"
+    },
+    {
+     "$ref": "DspReadWriteImageCreativeAttributesV1"
+    },
+    {
+     "description": "Create image creative request.",
+     "properties": {
+      "supply": {
+       "$ref": "DspImageCreativeSupplyV1"
+      }
+     },
+     "required": [
+      "supply"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DspCreateImageCreativesRequestV1": {
+   "description": "Create image creatives request.",
+   "items": {
+    "$ref": "DspCreateImageCreativeRequestV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "DspCreateRecCreativeRequestV1": {
+   "allOf": [
+    {
+     "$ref": "DspBaseCreateCreativeRequestV1"
+    },
+    {
+     "$ref": "DspReadWriteRecCreativeAttributesV1"
+    }
+   ],
+   "description": "Create Responsive eCommerce creative (REC) request."
+  },
+  "DspCreateRecCreativesRequestV1": {
+   "description": "Create Responsive eCommerce creatives (REC) request.",
+   "items": {
+    "$ref": "DspCreateRecCreativeRequestV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "DspCreateThirdPartyCreativeRequestV1": {
+   "allOf": [
+    {
+     "$ref": "DspBaseCreateCreativeRequestV1"
+    },
+    {
+     "$ref": "DspReadWriteThirdPartyCreativeAttributesV1"
+    },
+    {
+     "description": "Create Third Party creative request.",
+     "properties": {
+      "supply": {
+       "$ref": "DspCreativeSupplyV1"
+      }
+     },
+     "required": [
+      "supply"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DspCreateThirdPartyCreativesRequestV1": {
+   "description": "Create Third Party creatives request.",
+   "items": {
+    "$ref": "DspCreateThirdPartyCreativeRequestV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "DspCreateVideoCreativeRequestV1": {
+   "allOf": [
+    {
+     "$ref": "DspBaseCreateCreativeRequestV1"
+    },
+    {
+     "$ref": "DspReadWriteVideoCreativeAttributesV1"
+    }
+   ],
+   "description": "Create video creative request"
+  },
+  "DspCreateVideoCreativesRequestV1": {
+   "description": "Create video creatives request.",
+   "items": {
+    "$ref": "DspCreateVideoCreativeRequestV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "DspCreativeApprovalStatusV1": {
+   "description": "The creative approval status.",
+   "enum": [
+    "PENDING",
+    "APPROVED",
+    "NOT_APPROVED",
+    "WAITING_FOR_LINEITEM",
+    "APPROVED_WITH_EXCEPTIONS"
+   ],
+   "type": "string"
+  },
+  "DspCreativeMarketplaceV1": {
+   "description": "Marketplace where this creative is applicable.",
+   "enum": [
+    "US"
+   ],
+   "type": "string"
+  },
+  "DspCreativeModerationV1": {
+   "description": "The creative moderation summary.",
+   "properties": {
+    "additionalNotes": {
+     "description": "The additional notes.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "type": "array"
+    },
+    "creativeId": {
+     "type": "string"
+    },
+    "reasons": {
+     "description": "The reasons why creative is not approved.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "type": "array"
+    },
+    "status": {
+     "$ref": "DspCreativeApprovalStatusV1"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreativePreviewResponseV1": {
+   "description": "Creative preview response.",
+   "properties": {
+    "previewContent": {
+     "description": "The HTML content",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreativeResponseV1": {
+   "description": "Response for the creative create/update operations. If operation is successful, it contains only creativeId. If it is a failure, it contains only errorDetails.",
+   "properties": {
+    "creativeId": {
+     "description": "The creative Id.",
+     "type": "string"
+    },
+    "errorDetails": {
+     "$ref": "Error"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreativeSupplyV1": {
+   "description": "Different supported supply of creative.",
+   "enum": [
+    "DESKTOP",
+    "MOBILE_OO",
+    "MOBILE_AAP"
+   ],
+   "type": "string"
+  },
+  "DspCustomUrlActionV1": {
+   "description": "Click through Action - Custom Url.",
+   "properties": {
+    "url": {
+     "description": "Define where the creative links to on click.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "DspIasContextualControlAvoidanceV3_3": {
+   "properties": {
+    "avoidanceSegments": {
+     "items": {
+      "description": "The unique identifier of the IAS contextual avoidance segment",
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspIasContextualControlTargetingV3_3": {
+   "properties": {
+    "topicalSegments": {
+     "items": {
+      "description": "The unique identifier of the IAS contextual topical targeting segment",
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "verticalSegments": {
+     "items": {
+      "description": "The unique identifier of the IAS contextual vertical targeting segment",
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspImageClickThroughActionV1": {
+   "description": "Image's click through action which can have any one of the following properties. One action and one action alone must be provided.",
+   "properties": {
+    "androidAppDownload": {
+     "$ref": "DspClickThroughAndroidAppDownloadActionV1"
+    },
+    "customUrl": {
+     "$ref": "DspCustomUrlActionV1"
+    },
+    "detailPage": {
+     "$ref": "DspClickThroughDetailPageActionV1"
+    },
+    "iosAppDownload": {
+     "$ref": "DspClickThroughIosAppDownloadActionV1"
+    },
+    "kindleAppDownload": {
+     "$ref": "DspClickThroughKindleAppDownloadActionV1"
+    },
+    "searchAsin": {
+     "$ref": "DspClickThroughSearchAsinActionV1"
+    },
+    "searchKeyword": {
+     "$ref": "DspClickThroughSearchKeywordActionV1"
+    }
+   },
+   "type": "object"
+  },
+  "DspImageCreativePreviewModelV1": {
+   "description": "Image creative preview model. Populate this to preview a new creative.",
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "DspAdChoicesPositionV1"
+    },
+    "additionalHtml": {
+     "description": "Add HTML to the creative for surveys or other arbitrary HTML.",
+     "maxLength": 5000,
+     "type": "string"
+    },
+    "asset": {
+     "$ref": "DspAssetV1"
+    },
+    "clickThroughAction": {
+     "$ref": "DspImageClickThroughActionV1"
+    },
+    "marketplace": {
+     "$ref": "DspCreativeMarketplaceV1"
+    },
+    "size": {
+     "$ref": "DspSizeV1"
+    },
+    "supply": {
+     "$ref": "DspImageCreativeSupplyV1"
+    },
+    "thirdPartyClickTrackers": {
+     "description": "This URL is pinged when the creative is clicked. The URL can contain macros.",
+     "items": {
+      "maxLength": 2000,
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "thirdPartyTrackers": {
+     "items": {
+      "$ref": "DspThirdPartyTrackerV1"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "marketplace",
+    "supply",
+    "size",
+    "asset",
+    "adChoicesPosition"
+   ],
+   "type": "object"
+  },
+  "DspImageCreativePreviewRequestV1": {
+   "description": "Image creative preview request. Either `creativeId` or `creativeModel` must be provided, but not both.",
+   "properties": {
+    "creativeId": {
+     "description": "The creative Id.",
+     "type": "string"
+    },
+    "creativeModel": {
+     "$ref": "DspImageCreativePreviewModelV1"
+    },
+    "previewConfiguration": {
+     "$ref": "DspPreviewConfigurationV1"
+    }
+   },
+   "type": "object"
+  },
+  "DspImageCreativeSupplyV1": {
+   "allOf": [
+    {
+     "$ref": "DspCreativeSupplyV1"
+    }
+   ]
+  },
+  "DspImageCreativeV1": {
+   "allOf": [
+    {
+     "$ref": "DspCreateImageCreativeRequestV1"
+    },
+    {
+     "$ref": "DspUpdateImageCreativeRequestV1"
+    },
+    {
+     "$ref": "DspBaseReadCreativeV1"
+    }
+   ]
+  },
+  "DspImageCreativesResponseV1": {
+   "description": "Create/Update operation's image creatives response.",
+   "items": {
+    "$ref": "DspCreativeResponseV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "DspPreviewConfigurationV1": {
+   "description": "Configuration settings for preview",
+   "properties": {
+    "isOnAmazon": {
+     "default": true,
+     "description": "If it's true, shows preview in amazon websites, else shows in other websites",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DspReadImageCreativesResponseV1": {
+   "description": "Read image creatives response.",
+   "properties": {
+    "creatives": {
+     "items": {
+      "$ref": "DspImageCreativeV1"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspReadRecCreativesResponseV1": {
+   "description": "Read Responsive eCommerce creative (REC) creatives response.",
+   "properties": {
+    "creatives": {
+     "items": {
+      "$ref": "DspRecCreativeV1"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspReadThirdPartyCreativesResponseV1": {
+   "description": "Read Third Party creative creatives response.",
+   "properties": {
+    "creatives": {
+     "items": {
+      "$ref": "DspThirdPartyCreativeV1"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspReadVideoCreativesResponseV1": {
+   "description": "Read video creatives response.",
+   "properties": {
+    "creatives": {
+     "items": {
+      "$ref": "DspVideoCreativeV1"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspReadWriteImageCreativeAttributesV1": {
+   "description": "This holds common properties that can we written and updated for image creative.",
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "DspAdChoicesPositionV1"
+    },
+    "additionalHtml": {
+     "description": "Add HTML to the creative for surveys or other arbitrary HTML.",
+     "maxLength": 5000,
+     "type": "string"
+    },
+    "asset": {
+     "$ref": "DspAssetV1"
+    },
+    "clickThroughAction": {
+     "$ref": "DspImageClickThroughActionV1"
+    },
+    "externalId": {
+     "description": "The creative external Id.",
+     "type": "string"
+    },
+    "size": {
+     "$ref": "DspSizeV1"
+    },
+    "thirdPartyClickTrackers": {
+     "description": "This URL is pinged when the creative is clicked. The URL can contain macros.",
+     "items": {
+      "maxLength": 2000,
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "thirdPartyTrackers": {
+     "items": {
+      "$ref": "DspThirdPartyTrackerV1"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "size",
+    "asset",
+    "clickThroughAction"
+   ],
+   "type": "object"
+  },
+  "DspReadWriteRecCreativeAttributesV1": {
+   "description": "This holds common properties that can we written and updated for REC creative.",
+   "properties": {
+    "additionalHtml": {
+     "description": "Add HTML to the creative for surveys or other arbitrary HTML.",
+     "maxLength": 5000,
+     "type": "string"
+    },
+    "allowThirdPartySellers": {
+     "description": "If it's true, orders can be fulfilled by third party sellers.",
+     "type": "boolean"
+    },
+    "allowedFormats": {
+     "description": "A list of formats configured to display for the creative.",
+     "items": {
+      "$ref": "DspRecFormatV1"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "allowedSizes": {
+     "description": "A list of sizes configured to display for the creative. This overrides the default REC supported sizes.",
+     "items": {
+      "$ref": "DspSizeV1"
+     },
+     "maxItems": 11,
+     "minItems": 0,
+     "type": "array"
+    },
+    "associatedProducts": {
+     "description": "Product objects associated with the creative.",
+     "items": {
+      "$ref": "DspRecProductV1"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "content": {
+     "$ref": "DspRecContentV1"
+    },
+    "optimizationGoal": {
+     "$ref": "DspRecOptimizationGoalV1"
+    },
+    "thirdPartyClickTrackers": {
+     "description": "This URL is pinged when the creative is clicked. The URL can contain macros.",
+     "items": {
+      "maxLength": 2000,
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "thirdPartyTrackers": {
+     "description": "URL used for tracking interactions with third party",
+     "items": {
+      "$ref": "DspThirdPartyTrackerV1"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "associatedProducts"
+   ],
+   "type": "object"
+  },
+  "DspReadWriteThirdPartyCreativeAttributesV1": {
+   "description": "This holds common properties that can we written and updated for Third Party creative.",
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "DspAdChoicesPositionV1"
+    },
+    "additionalHtml": {
+     "description": "Add HTML to the creative for surveys or other arbitrary HTML.",
+     "maxLength": 5000,
+     "type": "string"
+    },
+    "destination": {
+     "allOf": [
+      {
+       "$ref": "DspClickThroughDestinationV1"
+      }
+     ],
+     "description": "Choose `AMAZON` if the `tag` links to an Amazon site like Amazon.com or IMDb. Otherwise choose `OTHER`."
+    },
+    "externalId": {
+     "description": "The creative external Id.",
+     "type": "string"
+    },
+    "size": {
+     "$ref": "DspSizeV1"
+    },
+    "tagSource": {
+     "description": "The third party tag associated with creative.",
+     "type": "string"
+    },
+    "thirdPartyTrackers": {
+     "items": {
+      "$ref": "DspThirdPartyTrackerV1"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "size",
+    "tagSource"
+   ],
+   "type": "object"
+  },
+  "DspReadWriteVideoCreativeAttributesV1": {
+   "description": "This holds common properties that can we written and updated for video creative",
+   "properties": {
+    "asset": {
+     "$ref": "DspAssetV1"
+    },
+    "clickThroughAction": {
+     "$ref": "DspVideoClickThroughActionV1"
+    },
+    "externalId": {
+     "description": "The creative external identifier.",
+     "type": "string"
+    },
+    "thirdPartyTrackers": {
+     "items": {
+      "$ref": "DspThirdPartyTrackerV1"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "asset",
+    "clickThroughAction"
+   ],
+   "type": "object"
+  },
+  "DspRecContentV1": {
+   "description": "Responsive eCommerce creative field for displaying customized content. Provide either Background or LogoHeadline but not both.",
+   "properties": {
+    "background": {
+     "description": "Creative customization field for displaying custom images.",
+     "items": {
+      "$ref": "DspAssetV1"
+     },
+     "type": "array"
+    },
+    "logoHeadline": {
+     "description": "Creative customization field for displaying brandlogo and headline.",
+     "properties": {
+      "brandLogo": {
+       "$ref": "DspAssetV1"
+      },
+      "headline": {
+       "description": "Creative customization field for displaying headline.",
+       "maxLength": 50,
+       "type": "string"
+      }
+     },
+     "required": [
+      "brandLogo"
+     ],
+     "type": "object"
+    }
+   },
+   "type": "object"
+  },
+  "DspRecCreativePreviewModelV1": {
+   "description": "Responsive eCommerce Creative preview model. Populate this to preview a new creative.",
+   "properties": {
+    "content": {
+     "$ref": "DspRecContentV1"
+    },
+    "marketplace": {
+     "$ref": "DspCreativeMarketplaceV1"
+    },
+    "thirdPartyClickTrackers": {
+     "description": "This URL is pinged when the creative is clicked. The URL can contain macros.",
+     "items": {
+      "maxLength": 2000,
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "thirdPartyTrackers": {
+     "items": {
+      "$ref": "DspThirdPartyTrackerV1"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "marketplace"
+   ],
+   "type": "object"
+  },
+  "DspRecCreativePreviewRequestV1": {
+   "description": "Responsive eCommerce creative preview request. Either `creativeId` or `creativeModel` must be provided, but not both.",
+   "properties": {
+    "creativeId": {
+     "description": "The identifier of the creative.",
+     "type": "string"
+    },
+    "creativeModel": {
+     "$ref": "DspRecCreativePreviewModelV1"
+    },
+    "previewConfiguration": {
+     "$ref": "DspRecPreviewConfigurationV1"
+    }
+   },
+   "required": [
+    "previewConfiguration"
+   ],
+   "type": "object"
+  },
+  "DspRecCreativeV1": {
+   "allOf": [
+    {
+     "$ref": "DspCreateRecCreativeRequestV1"
+    },
+    {
+     "$ref": "DspUpdateRecCreativeRequestV1"
+    },
+    {
+     "$ref": "DspBaseReadCreativeV1"
+    }
+   ]
+  },
+  "DspRecCreativesResponseV1": {
+   "description": "Create/Update operation's rec creatives response.",
+   "items": {
+    "$ref": "DspCreativeResponseV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "DspRecFormatV1": {
+   "description": "Formats configured to display for the creative. * `SHOP_NOW`: Clicking on the ad will take customer to the relevant product detail page. * `ADD_TO_CART`: Clicking on the ad will add the product to the customer’s Cart. *…",
+   "enum": [
+    "SHOP_NOW",
+    "ADD_TO_CART",
+    "COUPON"
+   ],
+   "type": "string"
+  },
+  "DspRecOptimizationGoalV1": {
+   "description": "Metric which creative optimization should attempt to improve.",
+   "enum": [
+    "PURCHASE_RATE",
+    "CLICK_THROUGH_RATE",
+    "DETAIL_PAGE_VIEW_RATE"
+   ],
+   "type": "string"
+  },
+  "DspRecPreviewConfigurationV1": {
+   "allOf": [
+    {
+     "$ref": "DspPreviewConfigurationV1"
+    },
+    {
+     "description": "REC Creative Preview Configuration",
+     "properties": {
+      "allowedFormat": {
+       "$ref": "DspRecFormatV1"
+      },
+      "allowedSize": {
+       "$ref": "DspSizeV1"
+      },
+      "associatedProduct": {
+       "$ref": "DspRecProductV1"
+      }
+     },
+     "required": [
+      "allowedSize",
+      "allowedFormat",
+      "associatedProduct"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DspRecProductV1": {
+   "description": "The object representation of a product.",
+   "properties": {
+    "asin": {
+     "description": "Amazon standard identification number.",
+     "type": "string"
+    },
+    "productTitle": {
+     "description": "Retail product title.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "asin"
+   ],
+   "type": "object"
+  },
+  "DspSizeV1": {
+   "description": "Size of the creative.",
+   "properties": {
+    "height": {
+     "description": "The creative height in pixels.",
+     "format": "integer",
+     "type": "number"
+    },
+    "width": {
+     "description": "The creative width in pixels.",
+     "format": "integer",
+     "type": "number"
+    }
+   },
+   "required": [
+    "width",
+    "height"
+   ],
+   "type": "object"
+  },
+  "DspThirdPartyCreativePreviewModelV1": {
+   "description": "Third Party Creative preview model. Populate this to preview a new creative.",
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "DspAdChoicesPositionV1"
+    },
+    "additionalHtml": {
+     "description": "Add HTML to the creative for surveys or other arbitrary HTML.",
+     "maxLength": 5000,
+     "type": "string"
+    },
+    "marketplace": {
+     "$ref": "DspCreativeMarketplaceV1"
+    },
+    "size": {
+     "$ref": "DspSizeV1"
+    },
+    "supply": {
+     "$ref": "DspCreativeSupplyV1"
+    },
+    "tagSource": {
+     "description": "The third party tag associated with creative.",
+     "type": "string"
+    },
+    "thirdPartyTrackers": {
+     "items": {
+      "$ref": "DspThirdPartyTrackerV1"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "marketplace",
+    "supply",
+    "size",
+    "tagSource",
+    "adChoicesPosition"
+   ],
+   "type": "object"
+  },
+  "DspThirdPartyCreativePreviewRequestV1": {
+   "description": "Third Party creative preview request. Either `creativeId` or `creativeModel` must be provided, but not both.",
+   "properties": {
+    "creativeId": {
+     "description": "The identifier of the creative.",
+     "type": "string"
+    },
+    "creativeModel": {
+     "$ref": "DspThirdPartyCreativePreviewModelV1"
+    },
+    "previewConfiguration": {
+     "$ref": "DspPreviewConfigurationV1"
+    }
+   },
+   "required": [
+    "previewConfiguration"
+   ],
+   "type": "object"
+  },
+  "DspThirdPartyCreativeV1": {
+   "allOf": [
+    {
+     "$ref": "DspCreateThirdPartyCreativeRequestV1"
+    },
+    {
+     "$ref": "DspUpdateThirdPartyCreativeRequestV1"
+    },
+    {
+     "$ref": "DspBaseReadCreativeV1"
+    }
+   ]
+  },
+  "DspThirdPartyCreativesResponseV1": {
+   "description": "Create/Update third party creatives response.",
+   "items": {
+    "$ref": "DspCreativeResponseV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "DspThirdPartyTrackerTypeV1": {
+   "description": "Third party creative tracker type.",
+   "enum": [
+    "IMPRESSION"
+   ],
+   "type": "string"
+  },
+  "DspThirdPartyTrackerV1": {
+   "description": "Trackers used for tracking interactions with third party",
+   "properties": {
+    "trackerUrl": {
+     "description": "URL used for tracking interactions with third party",
+     "maxLength": 2000,
+     "type": "string"
+    },
+    "type": {
+     "$ref": "DspThirdPartyTrackerTypeV1"
+    }
+   },
+   "required": [
+    "type",
+    "trackerUrl"
+   ],
+   "type": "object"
+  },
+  "DspUpdateImageCreativeRequestV1": {
+   "allOf": [
+    {
+     "$ref": "DspBaseUpdateCreativeRequestV1"
+    },
+    {
+     "$ref": "DspReadWriteImageCreativeAttributesV1"
+    }
+   ],
+   "description": "Update image creative request"
+  },
+  "DspUpdateImageCreativesRequestV1": {
+   "description": "Update image creatives request.",
+   "items": {
+    "$ref": "DspUpdateImageCreativeRequestV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "DspUpdateRecCreativeRequestV1": {
+   "allOf": [
+    {
+     "$ref": "DspBaseUpdateCreativeRequestV1"
+    },
+    {
+     "$ref": "DspReadWriteRecCreativeAttributesV1"
+    }
+   ],
+   "description": "Update Responsive eCommerce creative (REC) request."
+  },
+  "DspUpdateRecCreativesRequestV1": {
+   "description": "Update Responsive eCommerce creatives (REC) request.",
+   "items": {
+    "$ref": "DspUpdateRecCreativeRequestV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "DspUpdateThirdPartyCreativeRequestV1": {
+   "allOf": [
+    {
+     "$ref": "DspBaseUpdateCreativeRequestV1"
+    },
+    {
+     "$ref": "DspReadWriteThirdPartyCreativeAttributesV1"
+    }
+   ],
+   "description": "Update Third Party creative request."
+  },
+  "DspUpdateThirdPartyCreativesRequestV1": {
+   "description": "Update Third Party creatives request.",
+   "items": {
+    "$ref": "DspUpdateThirdPartyCreativeRequestV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "DspUpdateVideoCreativeRequestV1": {
+   "allOf": [
+    {
+     "$ref": "DspBaseUpdateCreativeRequestV1"
+    },
+    {
+     "$ref": "DspReadWriteVideoCreativeAttributesV1"
+    }
+   ],
+   "description": "Update video creative request"
+  },
+  "DspUpdateVideoCreativesRequestV1": {
+   "description": "Update video creatives request",
+   "items": {
+    "$ref": "DspUpdateVideoCreativeRequestV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "DspVideoClickThroughActionV1": {
+   "description": "Click through action for video creatives",
+   "properties": {
+    "customUrl": {
+     "$ref": "DspCustomUrlActionV1"
+    }
+   },
+   "type": "object"
+  },
+  "DspVideoCreativePreviewModelV1": {
+   "description": "Video creative preview model. Populate this to preview a new creative.",
+   "properties": {
+    "asset": {
+     "$ref": "DspAssetV1"
+    },
+    "clickThroughAction": {
+     "$ref": "DspVideoClickThroughActionV1"
+    },
+    "marketplace": {
+     "$ref": "DspCreativeMarketplaceV1"
+    },
+    "thirdPartyTrackers": {
+     "items": {
+      "$ref": "DspThirdPartyTrackerV1"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "marketplace",
+    "asset"
+   ],
+   "type": "object"
+  },
+  "DspVideoCreativePreviewRequestV1": {
+   "description": "Video creative preview request. Either `creativeId` or `creativeModel` must be provided, but not both.",
+   "properties": {
+    "creativeId": {
+     "description": "The creative Id.",
+     "type": "string"
+    },
+    "creativeModel": {
+     "$ref": "DspVideoCreativePreviewModelV1"
+    }
+   },
+   "type": "object"
+  },
+  "DspVideoCreativeV1": {
+   "allOf": [
+    {
+     "$ref": "DspCreateVideoCreativeRequestV1"
+    },
+    {
+     "$ref": "DspUpdateVideoCreativeRequestV1"
+    },
+    {
+     "$ref": "DspBaseReadCreativeV1"
+    }
+   ]
+  },
+  "DspVideoCreativesResponseV1": {
+   "description": "Create/Update operation's video creatives response.",
+   "items": {
+    "$ref": "DspCreativeResponseV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "DvBrandSafetyAppAgeRating": {
+   "description": "A list of app age ratings to be used for excluding apps. For example, `TEENS_12_PLUS` will only exclude apps with content rated for everyone ages 12 and over. `UNKNOWN` will exclude apps with content unrated or unknown …",
+   "items": {
+    "enum": [
+     "EVERYONE_4_PLUS",
+     "TWEENS_9_PLUS",
+     "TEENS_12_PLUS",
+     "MATURE_17_PLUS",
+     "ADULTS_ONLY_18_PLUS",
+     "UNKNOWN"
+    ],
+    "type": "string"
+   },
+   "type": "array"
+  },
+  "DvBrandSafetyAppStarRating": {
+   "description": "App star rating to be used for excluding apps.",
+   "enum": [
+    "ALLOW_ALL",
+    "APP_STAR_RATING_LT_1_POINT_5_STARS",
+    "APP_STAR_RATING_LT_2_STARS",
+    "APP_STAR_RATING_LT_2_POINT_5_STARS",
+    "APP_STAR_RATING_LT_3_STARS",
+    "APP_STAR_RATING_LT_3_POINT_5_STARS",
+    "APP_STAR_RATING_LT_4_STARS",
+    "APP_STAR_RATING_LT_4_POINT_5_STARS"
+   ],
+   "type": "string"
+  },
+  "DvBrandSafetyContentCategories": {
+   "description": "A list of content categories to exclude from targeting.",
+   "items": {
+    "enum": [
+     "AD_SERVER",
+     "CELEBRITY_GOSSIP",
+     "CULTS_SURVIVALISM",
+     "GAMBLING",
+     "INCENTIVIZED_MALWARE_CLUTTER",
+     "INFLAMMATORY_POLITICS_NEWS",
+     "NEGATIVE_NEWS_FINANCIAL",
+     "NEGATIVE_NEWS_PHARMACEUTICAL",
+     "NON_STANDARD_CONTENT_NON_ENGLISH",
+     "NON_STANDARD_CONTENT_PARKING_PAGE",
+     "OCCULT",
+     "PIRACY_COPYRIGHT_INFRINGEMENT",
+     "UNMODERATED_UGC_FORUMS_IMAGES_VIDEO"
+    ],
+    "type": "string"
+   },
+   "type": "array"
+  },
+  "DvBrandSafetyContentCategoriesV3_2": {
+   "description": "A list of content categories to exclude from targeting. EXTREME_GRAPHIC is available since version `application/vnd.dsplineitems.v3.2+json`.",
+   "items": {
+    "enum": [
+     "AD_SERVER",
+     "CELEBRITY_GOSSIP",
+     "CULTS_SURVIVALISM",
+     "GAMBLING",
+     "INCENTIVIZED_MALWARE_CLUTTER",
+     "INFLAMMATORY_POLITICS_NEWS",
+     "NEGATIVE_NEWS_FINANCIAL",
+     "NEGATIVE_NEWS_PHARMACEUTICAL",
+     "NON_STANDARD_CONTENT_NON_ENGLISH",
+     "NON_STANDARD_CONTENT_PARKING_PAGE",
+     "OCCULT",
+     "PIRACY_COPYRIGHT_INFRINGEMENT",
+     "UNMODERATED_UGC_FORUMS_IMAGES_VIDEO",
+     "EXTREME_GRAPHIC"
+    ],
+    "type": "string"
+   },
+   "type": "array"
+  },
+  "DvBrandSafetyContentCategoriesWithRisk": {
+   "additionalProperties": {
+    "$ref": "BrandSuitabilityRiskLevel"
+   },
+   "description": "A map from content categories to risk level to exclude from targeting. Available keys are: [`ADULT_CONTENT`, `ALCOHOL`, `CRIME`, `DISASTER_AVIATION`, `DISASTER_MAN_MADE`, `DISASTER_NATURAL`, `DISASTER_TERRORIST_EVENTS`,…",
+   "type": "object"
+  },
+  "DvBrandSafetyContentCategoriesWithRiskV3_2": {
+   "additionalProperties": {
+    "$ref": "BrandSuitabilityRiskLevel"
+   },
+   "description": "A map from content categories to risk level to exclude from targeting. Available keys are: [`ADULT_CONTENT`, `ALCOHOL`, `CRIME`, `DEATH_INJURIES`, `DISASTER_AVIATION`, `DISASTER_MAN_MADE`, `DISASTER_NATURAL`, `DISASTER_…",
+   "type": "object"
+  },
+  "DvBrandSafetyExcludeApps": {
+   "description": "Set to `true` to exclude unofficial apps or apps with insufficient user ratings (<100 lifetime).",
+   "type": "boolean"
+  },
+  "DvBrandSafetyUnknownContent": {
+   "description": "Set to `true` to exclude unknown content.",
+   "type": "boolean"
+  },
+  "DvCustomContextualSegment": {
+   "properties": {
+    "id": {
+     "description": "The segment identifier.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The segment name.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "id",
+    "name"
+   ],
+   "type": "object"
+  },
+  "DvCustomContextualSegmentId": {
+   "description": "The custom segment identifier.",
+   "type": "string"
+  },
+  "DvCustomContextualSegments": {
+   "properties": {
+    "customContextualSegments": {
+     "items": {
+      "$ref": "DvCustomContextualSegment"
+     },
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Error": {
+   "description": "The error response object.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "SubError"
+     },
+     "type": "array"
+    },
+    "message": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "Request Id that uniquely identifies your request.",
+     "type": "string"
+    }
+   }
+  },
+  "FileUploadPolicy": {
+   "properties": {
+    "fields": {
+     "additionalProperties": {
+      "type": "string"
+     },
+     "description": "Fields used in Post request. See more details at https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/modules/_aws_sdk_s3_presigned_post.html#post-file-using-formdata-in-nodejs",
+     "type": "object"
+    },
+    "url": {
+     "description": "The AWS S3 url for file upload. It will be used as POST request URL.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "FrequencyCap": {
+   "properties": {
+    "maxImpressions": {
+     "description": "The maximum number of times an ad is displayed.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "timeUnit": {
+     "description": "The time unit.",
+     "enum": [
+      "DAYS",
+      "HOURS"
+     ],
+     "type": "string"
+    },
+    "timeUnitCount": {
+     "description": "The count of time units.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "type": {
+     "description": "The type of advertising frequency cap. If `UNCAPPED`, no other fields are used.",
+     "enum": [
+      "UNCAPPED",
+      "CUSTOM"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "type"
+   ],
+   "type": "object"
+  },
+  "GeoLocation": {
+   "description": "Single geo location information.",
+   "properties": {
+    "category": {
+     "description": "Category of the geo location.",
+     "enum": [
+      "COUNTRY",
+      "STATE",
+      "CITY",
+      "POSTAL_CODE",
+      "DMA"
+     ],
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "name": {
+     "description": "Name of geo location.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GeoLocationTargeting": {
+   "description": "Targets based on city, state, country, DMA , or postal code.",
+   "properties": {
+    "exclusions": {
+     "items": {
+      "$ref": "Identifier"
+     },
+     "type": "array"
+    },
+    "inclusions": {
+     "items": {
+      "$ref": "Identifier"
+     },
+     "type": "array"
+    },
+    "locationTargetingBy": {
+     "description": "The geographic location targeting type. IPADDRESS: includes IP address only. IPADDRESS_POSTALCODE: includes both IP address and postal code.",
+     "enum": [
+      "IPADDRESS",
+      "IPADDRESS_POSTALCODE"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Goal": {
+   "description": "The primary goal that a campaign using this configuration is trying to achieve.",
+   "enum": [
+    "AWARENESS",
+    "ENGAGEMENT_WITH_MY_AD",
+    "CONSIDERATIONS_ON_AMAZON",
+    "CONVERSIONS_OFF_AMAZON",
+    "PURCHASES_ON_AMAZON",
+    "MOBILE_APP_INSTALLS"
+   ],
+   "type": "string"
+  },
+  "GoalConfiguration": {
+   "properties": {
+    "availableKpis": {
+     "items": {
+      "properties": {
+       "autoOptimizations": {
+        "description": "Which optimizations can be applied for this KPI",
+        "items": {
+         "$ref": "AutoOptimization"
+        },
+        "type": "array"
+       },
+       "kpiName": {
+        "$ref": "GoalKpi"
+       }
+      },
+      "type": "object"
+     },
+     "type": "array"
+    },
+    "goalName": {
+     "$ref": "Goal"
+    }
+   },
+   "type": "object"
+  },
+  "GoalConfigurationV1": {
+   "properties": {
+    "availableKpis": {
+     "items": {
+      "properties": {
+       "autoOptimizations": {
+        "description": "Which optimizations can be applied for this KPI",
+        "items": {
+         "$ref": "AutoOptimization"
+        },
+        "type": "array"
+       },
+       "kpiName": {
+        "$ref": "GoalKpiV1"
+       }
+      },
+      "type": "object"
+     },
+     "type": "array"
+    },
+    "goalName": {
+     "$ref": "GoalV1"
+    }
+   },
+   "type": "object"
+  },
+  "GoalConfigurationV1_1": {
+   "properties": {
+    "availableKpis": {
+     "items": {
+      "properties": {
+       "autoOptimizations": {
+        "description": "Which optimizations can be applied for this KPI",
+        "items": {
+         "$ref": "AutoOptimization"
+        },
+        "type": "array"
+       },
+       "kpiName": {
+        "$ref": "GoalKpiV1_1"
+       }
+      },
+      "type": "object"
+     },
+     "type": "array"
+    },
+    "goalName": {
+     "$ref": "GoalV1"
+    }
+   },
+   "type": "object"
+  },
+  "GoalKpi": {
+   "description": "Performance metrics that may be chosen to measure how effectively an order is achieving the desired goal. Although some goals may have multiple possible KPIs, exactly one KPI must be chosen during order creation.",
+   "enum": [
+    "CLICK_THROUGH_RATE",
+    "COST_PER_ACQUISITION",
+    "COST_PER_CLICK",
+    "COST_PER_DETAIL_PAGE_VIEW",
+    "COST_PER_VIDEO_COMPLETION",
+    "DETAIL_PAGE_VIEW_RATE",
+    "NONE",
+    "OTHER",
+    "REACH",
+    "RETURN_ON_AD_SPEND",
+    "TOTAL_RETURN_ON_AD_SPEND",
+    "VIDEO_COMPLETION_RATE"
+   ],
+   "type": "string"
+  },
+  "GoalKpiV1": {
+   "allOf": [
+    {
+     "$ref": "GoalKpi"
+    }
+   ],
+   "description": "Performance metrics that may be chosen to measure how effectively an order is achieving the desired goal. Although some goals may have multiple possible KPIs, exactly one KPI must be chosen during order creation. COMBIN…",
+   "enum": [
+    "COMBINED_RETURN_ON_AD_SPEND",
+    "COST_PER_FIRST_APP_OPEN",
+    "COST_PER_INSTALL",
+    "TOTAL_COST_PER_SUBSCRIPTION"
+   ],
+   "type": "string"
+  },
+  "GoalKpiV1_1": {
+   "description": "Performance metrics that may be chosen to measure how effectively an order is achieving the desired goal. Although some goals may have multiple possible KPIs, exactly one KPI must be chosen during order creation. COMBIN…",
+   "enum": [
+    "CLICK_THROUGH_RATE",
+    "COMBINED_RETURN_ON_AD_SPEND",
+    "COST_PER_ACTION",
+    "COST_PER_CLICK",
+    "COST_PER_DETAIL_PAGE_VIEW",
+    "COST_PER_FIRST_APP_OPEN",
+    "COST_PER_INSTALL",
+    "COST_PER_VIDEO_COMPLETION",
+    "DETAIL_PAGE_VIEW_RATE",
+    "NONE",
+    "OTHER",
+    "REACH",
+    "RETURN_ON_AD_SPEND",
+    "TOTAL_COST_PER_SUBSCRIPTION",
+    "TOTAL_RETURN_ON_AD_SPEND",
+    "VIDEO_COMPLETION_RATE"
+   ],
+   "type": "string"
+  },
+  "GoalV1": {
+   "allOf": [
+    {
+     "$ref": "Goal"
+    }
+   ],
+   "description": "The primary goal that a campaign using this configuration is trying to achieve. PURCHASES_ON_OFF_AMAZON is available since application/vnd.goalconfigurations.v1+json.",
+   "enum": [
+    "PURCHASES_ON_OFF_AMAZON"
+   ],
+   "type": "string"
+  },
+  "IABContentCategory": {
+   "properties": {
+    "id": {
+     "description": "The category identifier.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The category name.",
+     "type": "string"
+    },
+    "parentId": {
+     "description": "The identifier of the parent category. This is blank if the category is a parent category.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "id",
+    "name"
+   ],
+   "type": "object"
+  },
+  "IasBrandSafety": {
+   "properties": {
+    "excludeContent": {
+     "description": "Set to `true` to exclude content that Integral Ad Science is not able to rate.",
+     "type": "boolean"
+    },
+    "iasBrandSafetyAdult": {
+     "$ref": "IasBrandSafetyLevel"
+    },
+    "iasBrandSafetyAlcohol": {
+     "$ref": "IasBrandSafetyLevel"
+    },
+    "iasBrandSafetyGambling": {
+     "$ref": "IasBrandSafetyLevel"
+    },
+    "iasBrandSafetyHateSpeech": {
+     "$ref": "IasBrandSafetyLevel"
+    },
+    "iasBrandSafetyIllegalDownloads": {
+     "$ref": "IasBrandSafetyLevel"
+    },
+    "iasBrandSafetyIllegalDrugs": {
+     "$ref": "IasBrandSafetyLevel"
+    },
+    "iasBrandSafetyOffensiveLanguage": {
+     "$ref": "IasBrandSafetyLevel"
+    },
+    "iasBrandSafetyViolence": {
+     "$ref": "IasBrandSafetyLevel"
+    }
+   },
+   "required": [
+    "iasBrandSafetyAdult",
+    "iasBrandSafetyAlcohol",
+    "iasBrandSafetyGambling",
+    "iasBrandSafetyHateSpeech",
+    "iasBrandSafetyIllegalDownloads",
+    "iasBrandSafetyIllegalDrugs",
+    "iasBrandSafetyOffensiveLanguage",
+    "iasBrandSafetyViolence",
+    "excludeContent"
+   ],
+   "type": "object"
+  },
+  "IasBrandSafetyLevel": {
+   "description": "The IAS brand safety risk level.",
+   "enum": [
+    "ALLOW_ALL",
+    "BRAND_SAFETY_EXCLUE_HIGH_RISK",
+    "BRAND_SAFETY_EXCLUE_HIGH_AND_MODERATE_RISK"
+   ],
+   "type": "string"
+  },
+  "IasBrandSafetyLevelV3": {
+   "description": "The IAS brand safety risk level.",
+   "enum": [
+    "ALLOW_ALL",
+    "BRAND_SAFETY_EXCLUDE_HIGH_RISK",
+    "BRAND_SAFETY_EXCLUDE_HIGH_AND_MODERATE_RISK"
+   ],
+   "type": "string"
+  },
+  "IasBrandSafetyV3": {
+   "allOf": [
+    {
+     "$ref": "IasBrandSafety"
+    }
+   ],
+   "properties": {
+    "iasBrandSafetyAdult": {
+     "$ref": "IasBrandSafetyLevelV3"
+    },
+    "iasBrandSafetyAlcohol": {
+     "$ref": "IasBrandSafetyLevelV3"
+    },
+    "iasBrandSafetyGambling": {
+     "$ref": "IasBrandSafetyLevelV3"
+    },
+    "iasBrandSafetyHateSpeech": {
+     "$ref": "IasBrandSafetyLevelV3"
+    },
+    "iasBrandSafetyIllegalDownloads": {
+     "$ref": "IasBrandSafetyLevelV3"
+    },
+    "iasBrandSafetyIllegalDrugs": {
+     "$ref": "IasBrandSafetyLevelV3"
+    },
+    "iasBrandSafetyOffensiveLanguage": {
+     "$ref": "IasBrandSafetyLevelV3"
+    },
+    "iasBrandSafetyViolence": {
+     "$ref": "IasBrandSafetyLevelV3"
+    }
+   }
+  },
+  "IasFraudInvalidTraffic": {
+   "description": "The type of fraud invalid traffic.",
+   "enum": [
+    "ALLOW_ALL",
+    "FRAUD_INVALID_TRAFFIC_EXCLUDE_HIGH_RISK",
+    "FRAUD_INVALID_TRAFFIC_EXCLUDE_HIGH_MODERATE_RISK"
+   ],
+   "type": "string"
+  },
+  "IasViewability": {
+   "description": "The IAS viewability standard.",
+   "properties": {
+    "standard": {
+     "description": "The viewability standard",
+     "enum": [
+      "NONE",
+      "MRC",
+      "GROUPM",
+      "PUBLICIS"
+     ],
+     "type": "string"
+    },
+    "viewabilityTargeting": {
+     "$ref": "ViewabilityTier"
+    }
+   },
+   "required": [
+    "standard",
+    "viewabilityTargeting"
+   ],
+   "type": "object"
+  },
+  "Identifier": {
+   "description": "The unique identifier of the DSP resource/object.",
+   "type": "string"
+  },
+  "IntegralAdScience": {
+   "description": "Integral Ad Science (IAS) is a third party provider in digital ad verification. IAS offers technologies to drive high-quality advertising media.",
+   "properties": {
+    "brandSafety": {
+     "$ref": "IasBrandSafety"
+    },
+    "fraudInvalidTraffic": {
+     "description": "The type of fraud invalid traffic.",
+     "enum": [
+      "ALLOW_ALL",
+      "FRAUD_INVALID_TRAFFIC_EXCLUDE_HIGH_RISK",
+      "FRAUD_INVALID_TRAFFIC_EXCLUDE_HIGH_MODERATE_RISK"
+     ],
+     "type": "string"
+    },
+    "viewability": {
+     "$ref": "IasViewability"
+    }
+   },
+   "type": "object"
+  },
+  "LineItem": {
+   "properties": {
+    "appliedFees": {
+     "$ref": "AppliedFees"
+    },
+    "bidding": {
+     "$ref": "Bidding"
+    },
+    "budget": {
+     "$ref": "LineItemBudget"
+    },
+    "comments": {
+     "description": "The line item comments.",
+     "type": "string"
+    },
+    "creationDate": {
+     "description": "The line item creation date.",
+     "type": "string"
+    },
+    "creativeOptions": {
+     "$ref": "CreativeOptions"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "deliveryActivationStatus": {
+     "$ref": "DeliveryActivationStatus"
+    },
+    "deliveryStatus": {
+     "$ref": "LineItemDeliveryStatus"
+    },
+    "endDateTime": {
+     "description": "The line item end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-07-16T19:20:30+01:00",
+     "type": "string"
+    },
+    "externalId": {
+     "description": "The external identifier of the line item.",
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCap"
+    },
+    "lastUpdateDate": {
+     "description": "The line item last update date.",
+     "type": "string"
+    },
+    "lineItemClassification": {
+     "$ref": "LineItemClassification"
+    },
+    "lineItemId": {
+     "description": "The line item identifier. This is required when we perform update operations. Immutable field.",
+     "type": "string"
+    },
+    "lineItemType": {
+     "$ref": "LineItemType"
+    },
+    "name": {
+     "description": "The line item name.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "LineItemOptimization"
+    },
+    "orderId": {
+     "description": "The order to which the line item is associated. Immutable field.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The line item start date in ISO date format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-07-16T19:20:30+01:00.",
+     "type": "string"
+    },
+    "targeting": {
+     "$ref": "LineItemTargeting"
+    }
+   },
+   "required": [
+    "lineItemType",
+    "name",
+    "orderId",
+    "startDateTime",
+    "endDateTime",
+    "lineItemClassification",
+    "frequencyCap",
+    "bidding",
+    "optimization"
+   ],
+   "type": "object"
+  },
+  "LineItemBasic": {
+   "properties": {
+    "bidding": {
+     "$ref": "Bidding"
+    },
+    "budget": {
+     "$ref": "LineItemBudget"
+    },
+    "comments": {
+     "description": "The line item comments.",
+     "type": "string"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "deliveryActivationStatus": {
+     "$ref": "DeliveryActivationStatus"
+    },
+    "deliveryStatus": {
+     "$ref": "LineItemDeliveryStatus"
+    },
+    "endDateTime": {
+     "description": "The line item end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example,2020-07-16T19:20:30+01:00",
+     "type": "string"
+    },
+    "externalId": {
+     "description": "The line item external identifier.",
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCap"
+    },
+    "lineItemId": {
+     "description": "The line item identifier.",
+     "type": "string"
+    },
+    "lineItemType": {
+     "$ref": "LineItemType"
+    },
+    "name": {
+     "description": "The line item name.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "LineItemOptimization"
+    },
+    "orderId": {
+     "description": "The order to which the line item is associated.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The line item start date in ISO date format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-07-16T19:20:30+01:00",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemBasicV2_1": {
+   "allOf": [
+    {
+     "$ref": "LineItemBasic"
+    }
+   ],
+   "properties": {
+    "lineItemType": {
+     "$ref": "LineItemTypeBasicV2_1"
+    }
+   }
+  },
+  "LineItemBasicV2_2": {
+   "allOf": [
+    {
+     "$ref": "LineItemBasic"
+    }
+   ],
+   "properties": {
+    "creationDate": {
+     "description": "The line item creation date. This field is available since version `application/vnd.dsplineitems.v2.2+json`.",
+     "type": "string"
+    },
+    "lastUpdatedDate": {
+     "description": "The line item last updated date. This field is available since version `application/vnd.dsplineitems.v2.2+json`.",
+     "type": "string"
+    },
+    "lineItemType": {
+     "$ref": "LineItemTypeBasicV2_1"
+    }
+   }
+  },
+  "LineItemBudget": {
+   "properties": {
+    "budgetCaps": {
+     "items": {
+      "$ref": "BudgetCap"
+     },
+     "type": "array"
+    },
+    "pacing": {
+     "$ref": "Pacing"
+    },
+    "totalBudgetAmount": {
+     "description": "The total budget amount.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemClassification": {
+   "properties": {
+    "productCategories": {
+     "description": "The array of identifiers of product categories associated with the line item. For `VIDEO` line item type only one parent product category or multiple sub-categories from one parent product category are allowed.",
+     "items": {
+      "$ref": "Identifier"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "productCategories"
+   ],
+   "type": "object"
+  },
+  "LineItemCreativeAssociation": {
+   "properties": {
+    "creativeId": {
+     "description": "The creative to operate on.",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The creative end date in in ISO format (YYYY-MM-DD hh:mm:ss z). Timezone is UTC. For example, 2020-10-21 03:59:00 UTC.",
+     "type": "string"
+    },
+    "lineItemId": {
+     "description": "The lineitem to operate on.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The creative start date in ISO format (YYYY-MM-DD hh:mm:ss z). Timezone is UTC. For example, 2020-10-21 03:59:00 UTC.",
+     "type": "string"
+    },
+    "weight": {
+     "description": "The weight of the creative. This field will be available only if the creative rotation type is `WEIGHTED`.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "lineItemId",
+    "creativeId"
+   ],
+   "type": "object"
+  },
+  "LineItemCreativeAssociationOperation": {
+   "description": "A lineItemCreativeAssociation operation.",
+   "enum": [
+    "CREATE",
+    "DELETE"
+   ],
+   "type": "string"
+  },
+  "LineItemCreativeAssociationV2_2": {
+   "allOf": [
+    {
+     "$ref": "LineItemCreativeAssociation"
+    },
+    {
+     "properties": {
+      "associationModerationReasons": {
+       "description": "Human readable reasons why line item - creative association was not approved or selectively approved, if applicable. Read only field.",
+       "items": {
+        "type": "string"
+       },
+       "type": "array"
+      },
+      "associationModerationStatus": {
+       "description": "The line item - creative association approval status. Read only field.",
+       "enum": [
+        "PENDING",
+        "APPROVED",
+        "NOT_APPROVED",
+        "APPROVED_WITH_EXCEPTIONS"
+       ],
+       "type": "string"
+      },
+      "state": {
+       "description": "The line item - creative association is active or not. Read only field.",
+       "enum": [
+        "ACTIVE",
+        "INACTIVE"
+       ],
+       "type": "string"
+      }
+     }
+    }
+   ]
+  },
+  "LineItemCreativeAssociations": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "LineItemCreativeAssociation"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemCreativeAssociationsRequest": {
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser identifier.",
+     "type": "string"
+    },
+    "associations": {
+     "description": "A list of the associations to operate on. This object requires only lineItemId and creativeId and other fields are not required.",
+     "items": {
+      "$ref": "LineItemCreativeAssociation"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "operation": {
+     "$ref": "LineItemCreativeAssociationOperation"
+    }
+   },
+   "required": [
+    "advertiserId",
+    "operation",
+    "associations"
+   ],
+   "type": "object"
+  },
+  "LineItemCreativeAssociationsResponse": {
+   "description": "Response for the update operation. This object will have either success or failure property for the corresponding requests on the index.",
+   "properties": {
+    "errorDetails": {
+     "$ref": "Error"
+    },
+    "success": {
+     "$ref": "LineItemCreativeAssociation"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemCreativeAssociationsV2_2": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "LineItemCreativeAssociationV2_2"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemDeliveryStatus": {
+   "description": "The lineitem delivery status. DELIVERING: The line item is delivering. OUT_OF_BUDGET: The line item is out of budget. ENDED: The line item has ended. CREATIVES_NOT_RUNNING: The line item doesn't have any active creative…",
+   "enum": [
+    "DELIVERING",
+    "ENDED",
+    "OUT_OF_BUDGET",
+    "INACTIVE",
+    "READY_TO_DELIVER",
+    "CREATIVES_NOT_RUNNING"
+   ],
+   "type": "string"
+  },
+  "LineItemOptimization": {
+   "properties": {
+    "budgetOptimization": {
+     "description": "Set to `true` to enable budget optimization for the line item.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "budgetOptimization"
+   ],
+   "type": "object"
+  },
+  "LineItemResponse": {
+   "description": "Response for the line item create/update operations. Success contains only lineItemId and failure contains only errorDetails corresponding to that requested index in that batch (array of items).",
+   "properties": {
+    "errorDetails": {
+     "$ref": "Error"
+    },
+    "lineItemId": {
+     "description": "The Line item identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemTargeting": {
+   "properties": {
+    "aapMobileAppTargeting": {
+     "$ref": "AapMobileAppTargeting"
+    },
+    "amazonMobileDisplayTargeting": {
+     "$ref": "AmazonMobileDisplayTargeting"
+    },
+    "standardDisplayTargeting": {
+     "$ref": "StandardDisplayTargeting"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemTargetingV2_1": {
+   "allOf": [
+    {
+     "$ref": "LineItemTargeting"
+    }
+   ],
+   "properties": {
+    "videoTargeting": {
+     "$ref": "VideoTargeting"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemTargetingV3": {
+   "properties": {
+    "aapMobileAppTargeting": {
+     "$ref": "AapMobileAppTargetingV3"
+    },
+    "amazonMobileDisplayTargeting": {
+     "$ref": "AmazonMobileDisplayTargetingV3"
+    },
+    "standardDisplayTargeting": {
+     "$ref": "StandardDisplayTargetingV3"
+    },
+    "videoTargeting": {
+     "$ref": "VideoTargetingV3"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemTargetingV3_1": {
+   "properties": {
+    "aapMobileAppTargeting": {
+     "$ref": "AapMobileAppTargetingV3_1"
+    },
+    "amazonMobileDisplayTargeting": {
+     "$ref": "AmazonMobileDisplayTargetingV3_1"
+    },
+    "standardDisplayTargeting": {
+     "$ref": "StandardDisplayTargetingV3_1"
+    },
+    "videoTargeting": {
+     "$ref": "VideoTargetingV3_1"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemTargetingV3_2": {
+   "properties": {
+    "aapMobileAppTargeting": {
+     "$ref": "AapMobileAppTargetingV3_2"
+    },
+    "amazonMobileDisplayTargeting": {
+     "$ref": "AmazonMobileDisplayTargetingV3_1"
+    },
+    "standardDisplayTargeting": {
+     "$ref": "StandardDisplayTargetingV3_2"
+    },
+    "videoTargeting": {
+     "$ref": "VideoTargetingV3_2"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemTargetingV3_3": {
+   "properties": {
+    "aapMobileAppTargeting": {
+     "$ref": "AapMobileAppTargetingV3_3"
+    },
+    "amazonMobileDisplayTargeting": {
+     "$ref": "AmazonMobileDisplayTargetingV3_1"
+    },
+    "standardDisplayTargeting": {
+     "$ref": "StandardDisplayTargetingV3_3"
+    },
+    "videoTargeting": {
+     "$ref": "VideoTargetingV3_3"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemType": {
+   "description": "The line item type.",
+   "enum": [
+    "STANDARD_DISPLAY",
+    "AMAZON_MOBILE_DISPLAY",
+    "AAP_MOBILE_APP"
+   ],
+   "type": "string"
+  },
+  "LineItemTypeBasicV2_1": {
+   "allOf": [
+    {
+     "$ref": "LineItemType"
+    }
+   ],
+   "description": "The line item type. All operations are supported for VIDEO line item type since version `application/vnd.dsplineitems.v2.1+json`. OTT_GUARANTEED is supported only for batch read API since version `application/vnd.dsplin…",
+   "enum": [
+    "VIDEO",
+    "OTT_GUARANTEED"
+   ],
+   "type": "string"
+  },
+  "LineItemTypeV2_1": {
+   "allOf": [
+    {
+     "$ref": "LineItemType"
+    }
+   ],
+   "description": "The line item type. All operations are supported for VIDEO line item type since version `application/vnd.dsplineitems.v2.1+json`.",
+   "enum": [
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "LineItemV2_1": {
+   "allOf": [
+    {
+     "$ref": "LineItem"
+    }
+   ],
+   "properties": {
+    "lineItemType": {
+     "$ref": "LineItemTypeV2_1"
+    },
+    "targeting": {
+     "$ref": "LineItemTargetingV2_1"
+    }
+   }
+  },
+  "LineItemV3": {
+   "properties": {
+    "appliedFees": {
+     "$ref": "AppliedFees"
+    },
+    "bidding": {
+     "$ref": "Bidding"
+    },
+    "budget": {
+     "$ref": "LineItemBudget"
+    },
+    "comments": {
+     "description": "The line item comments.",
+     "type": "string"
+    },
+    "creationDate": {
+     "description": "The line item creation date.",
+     "type": "string"
+    },
+    "creativeOptions": {
+     "$ref": "CreativeOptions"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCodeV3"
+    },
+    "deliveryActivationStatus": {
+     "$ref": "DeliveryActivationStatus"
+    },
+    "deliveryStatus": {
+     "$ref": "LineItemDeliveryStatus"
+    },
+    "endDateTime": {
+     "description": "The line item end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-07-16T19:20:30+01:00",
+     "type": "string"
+    },
+    "externalId": {
+     "description": "The external identifier of the line item.",
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCap"
+    },
+    "lastUpdatedDate": {
+     "description": "The line item last updated date.",
+     "type": "string"
+    },
+    "lineItemClassification": {
+     "$ref": "LineItemClassification"
+    },
+    "lineItemId": {
+     "description": "The line item identifier. This is required when we perform update operations. Immutable field.",
+     "type": "string"
+    },
+    "lineItemType": {
+     "$ref": "LineItemTypeV2_1"
+    },
+    "name": {
+     "description": "The line item name.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "LineItemOptimization"
+    },
+    "orderId": {
+     "description": "The order to which the line item is associated. Immutable field.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The line item start date in ISO date format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-07-16T19:20:30+01:00.",
+     "type": "string"
+    },
+    "targeting": {
+     "$ref": "LineItemTargetingV3"
+    }
+   },
+   "required": [
+    "lineItemType",
+    "name",
+    "orderId",
+    "startDateTime",
+    "endDateTime",
+    "lineItemClassification",
+    "frequencyCap",
+    "bidding",
+    "optimization"
+   ],
+   "type": "object"
+  },
+  "LineItemV3_1": {
+   "allOf": [
+    {
+     "$ref": "LineItemV3"
+    }
+   ],
+   "properties": {
+    "targeting": {
+     "$ref": "LineItemTargetingV3_1"
+    }
+   }
+  },
+  "LineItemV3_2": {
+   "allOf": [
+    {
+     "$ref": "LineItemV3_1"
+    }
+   ],
+   "properties": {
+    "targeting": {
+     "$ref": "LineItemTargetingV3_2"
+    }
+   }
+  },
+  "LineItemV3_3": {
+   "allOf": [
+    {
+     "$ref": "LineItemV3_2"
+    }
+   ],
+   "properties": {
+    "targeting": {
+     "$ref": "LineItemTargetingV3_3"
+    }
+   }
+  },
+  "LineItems": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "LineItemBasic"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemsV2_1": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "LineItemBasicV2_1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "LineItemsV2_2": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "LineItemBasicV2_2"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "MergedDomainList": {
+   "properties": {
+    "domainListMergedFile": {
+     "description": "The URL address of the domain list file after merging all domains into single file\"",
+     "type": "string"
+    },
+    "domainListMergedTargetingType": {
+     "description": "The list type of the domain. Either include or exclude",
+     "enum": [
+      "EXCLUDE",
+      "INCLUDE"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "MobileAppDoubleVerify": {
+   "description": "Double Verify (DV) is a third party provider for digital ad verification. Double Verify offers technologies that drive high-quality advertising media.",
+   "properties": {
+    "authenticBrandSafety": {
+     "$ref": "DoubleVerifyAuthenticBrandSafety"
+    },
+    "brandSafety": {
+     "$ref": "MobileAppDoubleVerifyBrandSafety"
+    },
+    "customContextualSegmentId": {
+     "$ref": "DvCustomContextualSegmentId"
+    },
+    "fraudInvalidTraffic": {
+     "$ref": "DoubleVerifyFraudInvalidTraffic"
+    },
+    "viewability": {
+     "$ref": "DoubleVerifyViewabilityV2_1"
+    }
+   },
+   "type": "object"
+  },
+  "MobileAppDoubleVerifyBrandSafety": {
+   "properties": {
+    "appAgeRating": {
+     "$ref": "DvBrandSafetyAppAgeRating"
+    },
+    "appStarRating": {
+     "$ref": "DvBrandSafetyAppStarRating"
+    },
+    "contentCategories": {
+     "$ref": "DvBrandSafetyContentCategories"
+    },
+    "contentCategoriesWithRisk": {
+     "$ref": "DvBrandSafetyContentCategoriesWithRisk"
+    },
+    "excludeAppsWithInsufficientRating": {
+     "$ref": "DvBrandSafetyExcludeApps"
+    },
+    "unknownContent": {
+     "$ref": "DvBrandSafetyUnknownContent"
+    }
+   },
+   "type": "object"
+  },
+  "MobileAppDoubleVerifyBrandSafetyV3_2": {
+   "allOf": [
+    {
+     "$ref": "MobileAppDoubleVerifyBrandSafety"
+    }
+   ],
+   "properties": {
+    "contentCategories": {
+     "$ref": "DvBrandSafetyContentCategoriesV3_2"
+    },
+    "contentCategoriesWithRisk": {
+     "$ref": "DvBrandSafetyContentCategoriesWithRiskV3_2"
+    }
+   }
+  },
+  "MobileAppDoubleVerifyV3_2": {
+   "allOf": [
+    {
+     "$ref": "MobileAppDoubleVerify"
+    }
+   ],
+   "properties": {
+    "brandSafety": {
+     "$ref": "MobileAppDoubleVerifyBrandSafetyV3_2"
+    }
+   }
+  },
+  "MobileAppIntegralAdScience": {
+   "description": "Integral Ad Science (IAS) is a third party provider in digital ad verification. IAS offers technologies to drive high-quality advertising media.",
+   "properties": {
+    "brandSafety": {
+     "$ref": "IasBrandSafetyV3"
+    },
+    "fraudInvalidTraffic": {
+     "$ref": "IasFraudInvalidTraffic"
+    }
+   },
+   "type": "object"
+  },
+  "MobileAppIntegralAdScienceV3_3": {
+   "allOf": [
+    {
+     "$ref": "MobileAppIntegralAdScience"
+    }
+   ],
+   "properties": {
+    "contextualAvoidance": {
+     "$ref": "DspIasContextualControlTargetingV3_3"
+    },
+    "contextualTargeting": {
+     "$ref": "DspIasContextualControlAvoidanceV3_3"
+    }
+   }
+  },
+  "MobileAppTargeting": {
+   "properties": {
+    "appIds": {
+     "description": "The list of application identifiers.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "appTargetingOption": {
+     "description": "The mobile application targeting inclusion type.",
+     "enum": [
+      "INCLUDE_APPS",
+      "EXCLUDE_APPS"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "appTargetingOption",
+    "appIds"
+   ],
+   "type": "object"
+  },
+  "MobileAppThirdPartyPreBidTargeting": {
+   "description": "Amazon DSP automatically filters fraudulent and invalid traffic as well as unsafe content using a combination of proprietary technology and solutions from comScore and Sizmek. This service is available by default and at…",
+   "properties": {
+    "doubleVerify": {
+     "$ref": "MobileAppDoubleVerify"
+    },
+    "integralAdScience": {
+     "$ref": "MobileAppIntegralAdScience"
+    },
+    "oracleDataCloud": {
+     "$ref": "OracleDataCloudV3"
+    }
+   },
+   "type": "object"
+  },
+  "MobileAppThirdPartyPreBidTargetingV3_1": {
+   "allOf": [
+    {
+     "$ref": "MobileAppThirdPartyPreBidTargeting"
+    }
+   ],
+   "properties": {
+    "oracleDataCloud": {
+     "$ref": "OracleDataCloudV3_1"
+    },
+    "pixalate": {
+     "$ref": "Pixalate"
+    }
+   }
+  },
+  "MobileAppThirdPartyPreBidTargetingV3_2": {
+   "allOf": [
+    {
+     "$ref": "MobileAppThirdPartyPreBidTargetingV3_1"
+    }
+   ],
+   "properties": {
+    "doubleVerify": {
+     "$ref": "MobileAppDoubleVerifyV3_2"
+    }
+   }
+  },
+  "MobileAppThirdPartyPreBidTargetingV3_3": {
+   "allOf": [
+    {
+     "$ref": "MobileAppThirdPartyPreBidTargetingV3_2"
+    }
+   ],
+   "properties": {
+    "integralAdScience": {
+     "$ref": "MobileAppIntegralAdScienceV3_3"
+    }
+   }
+  },
+  "MobileDisplayDoubleVerify": {
+   "description": "Double Verify (DV) is a third party provider for digital ad verification. Double Verify offers technologies that drive high-quality advertising media.",
+   "properties": {
+    "fraudInvalidTraffic": {
+     "$ref": "DoubleVerifyFraudInvalidTraffic"
+    }
+   },
+   "type": "object"
+  },
+  "MobileDisplayIntegralAdScience": {
+   "description": "Integral Ad Science (IAS) is a third party provider in digital ad verification. IAS offers technologies to drive high-quality advertising media.",
+   "properties": {
+    "fraudInvalidTraffic": {
+     "$ref": "IasFraudInvalidTraffic"
+    }
+   },
+   "type": "object"
+  },
+  "MobileDisplayThirdPartyPreBidTargeting": {
+   "description": "Amazon DSP automatically filters fraudulent and invalid traffic as well as unsafe content using a combination of proprietary technology and solutions from comScore and Sizmek. This service is available by default and at…",
+   "properties": {
+    "doubleVerify": {
+     "$ref": "MobileDisplayDoubleVerify"
+    },
+    "integralAdScience": {
+     "$ref": "MobileDisplayIntegralAdScience"
+    }
+   },
+   "type": "object"
+  },
+  "MobileDisplayThirdPartyPreBidTargetingV3_1": {
+   "allOf": [
+    {
+     "$ref": "MobileDisplayThirdPartyPreBidTargeting"
+    }
+   ],
+   "properties": {
+    "pixalate": {
+     "$ref": "Pixalate"
+    }
+   }
+  },
+  "MobileOsTargeting": {
+   "description": "The mobile operating system targeting type.",
+   "enum": [
+    "ALL",
+    "IOS",
+    "ANDROID"
+   ],
+   "type": "string"
+  },
+  "ODCViewability": {
+   "description": "The ODC viewability standard.",
+   "properties": {
+    "standard": {
+     "description": "The viewability standard.",
+     "enum": [
+      "NONE",
+      "MRC"
+     ],
+     "type": "string"
+    },
+    "viewabilityTargeting": {
+     "description": "The type of ODC MRC viewability tier.",
+     "enum": [
+      "VIEWABILITY_TIER_GT_80",
+      "VIEWABILITY_TIER_GT_70",
+      "VIEWABILITY_TIER_GT_60",
+      "VIEWABILITY_TIER_GT_50",
+      "VIEWABILITY_TIER_GT_40",
+      "VIEWABILITY_TIER_GT_30",
+      "VIEWABILITY_TIER_GT_20"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "standard",
+    "viewabilityTargeting"
+   ],
+   "type": "object"
+  },
+  "OdcCustomPredicts": {
+   "properties": {
+    "customPredicts": {
+     "items": {
+      "$ref": "OdcPredict"
+     },
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "OdcPredict": {
+   "properties": {
+    "id": {
+     "description": "The segment identifier.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The segment name.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "id",
+    "name"
+   ],
+   "type": "object"
+  },
+  "OdcStandardPredicts": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "standardPredicts": {
+     "items": {
+      "$ref": "OdcPredict"
+     },
+     "maxItems": 320,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "OptimizationGoal": {
+   "description": "The budget optimization goal type.",
+   "enum": [
+    "AWARENESS",
+    "ENGAGEMENT_WITH_MY_AD",
+    "CONSIDERATIONS_ON_AMAZON",
+    "CONVERSIONS_OFF_AMAZON",
+    "PURCHASES_ON_AMAZON",
+    "MOBILE_APP_INSTALLS"
+   ],
+   "type": "string"
+  },
+  "OptimizationGoalKpi": {
+   "description": "KPI for the selected goal.",
+   "enum": [
+    "VIDEO_COMPLETION_RATE",
+    "CLICK_THROUGH_RATE",
+    "COST_PER_CLICK",
+    "COST_PER_ACQUISITION",
+    "COST_PER_DOWNLOAD",
+    "DETAIL_PAGE_VIEW_RATE",
+    "COST_PER_DETAIL_PAGE_VIEW",
+    "RETURN_ON_AD_SPEND",
+    "TOTAL_RETURN_ON_AD_SPEND",
+    "COST_PER_VIDEO_COMPLETION",
+    "NONE",
+    "OTHER",
+    "REACH"
+   ],
+   "type": "string"
+  },
+  "OptimizationGoalKpiV2_3": {
+   "allOf": [
+    {
+     "$ref": "OptimizationGoalKpi"
+    }
+   ],
+   "description": "KPI for the selected goal. COMBINED_RETURN_ON_AD_SPEND is available since application/vnd.dsporders.v2.3+json.",
+   "enum": [
+    "COMBINED_RETURN_ON_AD_SPEND"
+   ],
+   "type": "string"
+  },
+  "OptimizationGoalKpiV2_4": {
+   "description": "KPI for the selected goal. COMBINED_RETURN_ON_AD_SPEND is available since application/vnd.dsporders.v2.3+json. * CLICK_THROUGH_RATE: The number of click-throughs divided by the number of impressions. (CTR = Clicks / Imp…",
+   "enum": [
+    "CLICK_THROUGH_RATE",
+    "COMBINED_RETURN_ON_AD_SPEND",
+    "COST_PER_ACTION",
+    "COST_PER_CLICK",
+    "COST_PER_DETAIL_PAGE_VIEW",
+    "COST_PER_FIRST_APP_OPEN",
+    "COST_PER_INSTALL",
+    "COST_PER_VIDEO_COMPLETION",
+    "DETAIL_PAGE_VIEW_RATE",
+    "NONE",
+    "OTHER",
+    "REACH",
+    "RETURN_ON_AD_SPEND",
+    "TOTAL_COST_PER_SUBSCRIPTION",
+    "TOTAL_RETURN_ON_AD_SPEND",
+    "VIDEO_COMPLETION_RATE"
+   ],
+   "type": "string"
+  },
+  "OptimizationGoalKpiV2_6": {
+   "description": "KPI for the selected goal. COMBINED_RETURN_ON_AD_SPEND is available since application/vnd.dsporders.v2.3+json. FREQUENCY is available since application/vnd.dsporders.v2.6+json. * CLICK_THROUGH_RATE: The number of click-…",
+   "enum": [
+    "CLICK_THROUGH_RATE",
+    "COMBINED_RETURN_ON_AD_SPEND",
+    "COST_PER_ACTION",
+    "COST_PER_CLICK",
+    "COST_PER_DETAIL_PAGE_VIEW",
+    "COST_PER_FIRST_APP_OPEN",
+    "COST_PER_INSTALL",
+    "COST_PER_VIDEO_COMPLETION",
+    "DETAIL_PAGE_VIEW_RATE",
+    "NONE",
+    "OTHER",
+    "REACH",
+    "RETURN_ON_AD_SPEND",
+    "TOTAL_COST_PER_SUBSCRIPTION",
+    "TOTAL_RETURN_ON_AD_SPEND",
+    "VIDEO_COMPLETION_RATE",
+    "FREQUENCY"
+   ],
+   "type": "string"
+  },
+  "OptimizationGoalV2_3": {
+   "allOf": [
+    {
+     "$ref": "OptimizationGoal"
+    }
+   ],
+   "description": "The budget optimization goal type. PURCHASES_ON_OFF_AMAZON is available since application/vnd.dsporders.v2.3+json.",
+   "enum": [
+    "PURCHASES_ON_OFF_AMAZON"
+   ],
+   "type": "string"
+  },
+  "OptimizationGoalV2_5": {
+   "description": "The budget optimization goal type. * PURCHASES_ON_OFF_AMAZON is available since application/vnd.dsporders.v2.3+json. * CONSIDERATION & CONVERSIONS are available since application/vnd.dsporders.v2.5+json.",
+   "enum": [
+    "AWARENESS",
+    "ENGAGEMENT_WITH_MY_AD",
+    "CONSIDERATIONS_ON_AMAZON",
+    "CONVERSIONS_OFF_AMAZON",
+    "PURCHASES_ON_AMAZON",
+    "MOBILE_APP_INSTALLS",
+    "PURCHASES_ON_OFF_AMAZON",
+    "CONSIDERATION",
+    "CONVERSIONS"
+   ],
+   "type": "string"
+  },
+  "OracleDataCloud": {
+   "description": "Oracle Data Cloud is a third party provider in digital ad verification. Oracle Data Cloud offers technologies to drive high-quality advertising media.",
+   "properties": {
+    "brandSafety": {
+     "$ref": "OracleDataCloudBrandSafety"
+    },
+    "contextualPredictsSegmentId": {
+     "description": "The custom segment predict identifier.",
+     "type": "string"
+    },
+    "customSegmentId": {
+     "description": "The custom segment identifier.",
+     "type": "string"
+    },
+    "fraudInvalidTraffic": {
+     "description": "The fraud invalid traffic type.",
+     "enum": [
+      "ALLOW_ALL",
+      "FRAUD_INVALID_TRAFFIC_ESSENTIAL_PROTECTION",
+      "FRAUD_INVALID_TRAFFIC_MAXIMUM_PROTECTION"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "OracleDataCloudBrandSafety": {
+   "description": "The oracle data cloud brand safety.",
+   "properties": {
+    "essentialProtection": {
+     "enum": [
+      "ADULT",
+      "ARMS",
+      "CRIME",
+      "INJURY",
+      "PIRACY",
+      "DRUGS",
+      "HATE_SPEECH",
+      "MILITARY",
+      "OBSCENITY",
+      "TERRORISM",
+      "TOBACCO"
+     ],
+     "type": "string"
+    },
+    "targetingOption": {
+     "enum": [
+      "NO_BRAND_SAFETY",
+      "MAXIMUM_PROTECTION",
+      "ESSENTIAL_PROTECTION"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "OracleDataCloudV3": {
+   "allOf": [
+    {
+     "$ref": "OracleDataCloud"
+    }
+   ],
+   "properties": {
+    "viewability": {
+     "$ref": "ODCViewability"
+    }
+   }
+  },
+  "OracleDataCloudV3_1": {
+   "allOf": [
+    {
+     "$ref": "OracleDataCloudV3"
+    }
+   ],
+   "properties": {
+    "standardPredictsSegmentIds": {
+     "description": "The standard predict segment identifiers.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 320,
+     "minItems": 1,
+     "type": "array"
+    }
+   }
+  },
+  "Order": {
+   "description": "Complete order model which willl be used for create/update and get.",
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser identifier. Immutable field.",
+     "type": "string"
+    },
+    "agencyFee": {
+     "$ref": "AgencyFee"
+    },
+    "budget": {
+     "$ref": "OrderBudget"
+    },
+    "comments": {
+     "description": "The order comments.",
+     "type": "string"
+    },
+    "creationDate": {
+     "description": "The order creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00.",
+     "type": "string"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "deliveryActivationStatus": {
+     "$ref": "DeliveryActivationStatus"
+    },
+    "deliveryStatus": {
+     "$ref": "OrderDeliveryStatus"
+    },
+    "endDateTime": {
+     "description": "The order end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC. The end date has to be modeled as a part of flights object.",
+     "type": "string"
+    },
+    "externalId": {
+     "description": "The order external identifier, also known as purchase order number (PO number). This field is required if \"Mandatory PO numbers\" is set at the entity level. `N/A` (not applicable) is a valid value. This field will be de…",
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCap"
+    },
+    "lastUpdatedDate": {
+     "description": "The order last update date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The order name.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "OrderOptimization"
+    },
+    "orderId": {
+     "description": "The order identifier. It will be used to perform update operation. Immutable field.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The order start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC. The start date has to be modeled as a part of flights object.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertiserId",
+    "name",
+    "budget",
+    "frequencyCap",
+    "optimization"
+   ],
+   "type": "object"
+  },
+  "OrderBasic": {
+   "description": "This model is designed to support batch get operation for better performance.",
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser identifier.",
+     "type": "string"
+    },
+    "agencyFee": {
+     "$ref": "AgencyFee"
+    },
+    "budget": {
+     "$ref": "OrderBudgetBasic"
+    },
+    "comments": {
+     "description": "The order comments.",
+     "type": "string"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "deliveryActivationStatus": {
+     "$ref": "DeliveryActivationStatus"
+    },
+    "deliveryStatus": {
+     "$ref": "OrderDeliveryStatus"
+    },
+    "endDateTime": {
+     "description": "The order end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC",
+     "type": "string"
+    },
+    "externalId": {
+     "description": "The order external identifier, also known as purchase order number (PO number). This field is required if \"Mandatory PO numbers\" is set at the entity level. `N/A` (not applicable) is a valid value. This field will be de…",
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCap"
+    },
+    "name": {
+     "description": "The order name.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "OrderOptimization"
+    },
+    "orderId": {
+     "description": "The order identifier.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The order start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "OrderBasicV2_1": {
+   "allOf": [
+    {
+     "$ref": "OrderBasic"
+    }
+   ],
+   "properties": {
+    "creationDate": {
+     "description": "The order creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00. This field is available since version `application/vnd.dsporders.v2.1+json`.",
+     "type": "string"
+    },
+    "lastUpdatedDate": {
+     "description": "The order last update date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00. This field is available since version `application/vnd.dsporders.v2.1+json`.",
+     "type": "string"
+    }
+   }
+  },
+  "OrderBasicV2_2": {
+   "allOf": [
+    {
+     "$ref": "OrderBasicV2_1"
+    }
+   ],
+   "properties": {
+    "currencyCode": {
+     "$ref": "CurrencyCodeV3"
+    }
+   }
+  },
+  "OrderBasicV2_3": {
+   "description": "This model is designed to support batch get operation for better performance.",
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser identifier.",
+     "type": "string"
+    },
+    "agencyFee": {
+     "$ref": "AgencyFee"
+    },
+    "budget": {
+     "$ref": "OrderBudgetBasic"
+    },
+    "comments": {
+     "description": "The order comments.",
+     "type": "string"
+    },
+    "creationDate": {
+     "description": "The order creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00. This field is available since version `application/vnd.dsporders.v2.1+json`.",
+     "type": "string"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCodeV3"
+    },
+    "deliveryActivationStatus": {
+     "$ref": "DeliveryActivationStatus"
+    },
+    "deliveryStatus": {
+     "$ref": "OrderDeliveryStatus"
+    },
+    "endDateTime": {
+     "description": "The order end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC",
+     "type": "string"
+    },
+    "externalId": {
+     "description": "The order external identifier, also known as purchase order number (PO number). This field is required if \"Mandatory PO numbers\" is set at the entity level. \"N/A\" (not applicable) is a valid value. This field will be de…",
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCap"
+    },
+    "lastUpdatedDate": {
+     "description": "The order last update date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00. This field is available since version `application/vnd.dsporders.v2.1+json`.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The order name.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "OrderOptimizationV2_3"
+    },
+    "orderId": {
+     "description": "The order identifier.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The order start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "OrderBasicV2_4": {
+   "description": "This model is designed to support batch get operation for better performance.",
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser identifier.",
+     "type": "string"
+    },
+    "agencyFee": {
+     "$ref": "AgencyFee"
+    },
+    "budget": {
+     "$ref": "OrderBudgetBasic"
+    },
+    "comments": {
+     "description": "The order comments.",
+     "type": "string"
+    },
+    "creationDate": {
+     "description": "The order creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00. This field is available since version `application/vnd.dsporders.v2.1+json`.",
+     "type": "string"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCodeV3"
+    },
+    "deliveryActivationStatus": {
+     "$ref": "DeliveryActivationStatus"
+    },
+    "deliveryStatus": {
+     "$ref": "OrderDeliveryStatus"
+    },
+    "endDateTime": {
+     "description": "The order end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC",
+     "type": "string"
+    },
+    "externalId": {
+     "description": "The order external identifier, also known as purchase order number (PO number). This field is required if \"Mandatory PO numbers\" is set at the entity level. \"N/A\" (not applicable) is a valid value. This field will be de…",
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCap"
+    },
+    "lastUpdatedDate": {
+     "description": "The order last update date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00. This field is available since version `application/vnd.dsporders.v2.1+json`.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The order name.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "OrderOptimizationV2_4"
+    },
+    "orderId": {
+     "description": "The order identifier.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The order start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "OrderBasicV2_5": {
+   "allOf": [
+    {
+     "$ref": "OrderBasicV2_4"
+    }
+   ],
+   "properties": {
+    "optimization": {
+     "$ref": "OrderOptimizationV2_5"
+    }
+   }
+  },
+  "OrderBasicV2_6": {
+   "allOf": [
+    {
+     "$ref": "OrderBasicV2_5"
+    }
+   ],
+   "properties": {
+    "optimization": {
+     "$ref": "OrderOptimizationV2_6"
+    }
+   }
+  },
+  "OrderBudget": {
+   "allOf": [
+    {
+     "$ref": "OrderBudgetBasic"
+    },
+    {
+     "properties": {
+      "flights": {
+       "description": "The budget, start date and end date for an order have to be modeled as flight object. An order can have multiple flights.",
+       "items": {
+        "$ref": "OrderFlight"
+       },
+       "minItems": 1,
+       "type": "array"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "OrderBudgetBasic": {
+   "properties": {
+    "budgetCaps": {
+     "items": {
+      "$ref": "BudgetCap"
+     },
+     "type": "array"
+    },
+    "totalBudgetAmount": {
+     "description": "The total budget amount. For create/update operations, budget has to be modeled as part of flights object.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "OrderDeliveryStatus": {
+   "description": "The order delivery status. DELIVERING: The order is delivering. OUT_OF_BUDGET: The order is out of budget. ENDED: The order has ended. LINEITEMS_NOT_RUNNING: The order doesn’t have any active line items to deliver. INAC…",
+   "enum": [
+    "DELIVERING",
+    "ENDED",
+    "OUT_OF_BUDGET",
+    "LINEITEMS_NOT_RUNNING",
+    "INACTIVE",
+    "READY_TO_DELIVER"
+   ],
+   "type": "string"
+  },
+  "OrderFlight": {
+   "properties": {
+    "amount": {
+     "description": "The total flight budget amount.",
+     "format": "double",
+     "type": "number"
+    },
+    "endDateTime": {
+     "description": "The flight start date in ISO format (YYYY-MM-DD hh:mm:ss z). Timezone is UTC. For example, 2020-10-21 03:59:00 UTC.",
+     "type": "string"
+    },
+    "flightId": {
+     "description": "The flight identifier. Immutable field.",
+     "type": "string"
+    },
+    "remainingAmount": {
+     "description": "The remaining flight budget amount.",
+     "format": "double",
+     "type": "number"
+    },
+    "spentAmount": {
+     "description": "The spent flight budget amount.",
+     "format": "double",
+     "type": "number"
+    },
+    "startDateTime": {
+     "description": "The flight start date in ISO format (YYYY-MM-DD hh:mm:ss z). Timezone is UTC. For example, 2020-10-21 03:59:00 UTC.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "startDateTime",
+    "endDateTime",
+    "amount"
+   ],
+   "type": "object"
+  },
+  "OrderOptimization": {
+   "properties": {
+    "autoOptimizations": {
+     "$ref": "AutoOptimizations"
+    },
+    "biddingStrategy": {
+     "$ref": "BiddingStrategy"
+    },
+    "goal": {
+     "$ref": "OptimizationGoal"
+    },
+    "goalKpi": {
+     "$ref": "OptimizationGoalKpi"
+    },
+    "productLocation": {
+     "$ref": "ProductLocation"
+    }
+   },
+   "required": [
+    "productLocation",
+    "goal",
+    "goalKpi"
+   ],
+   "type": "object"
+  },
+  "OrderOptimizationV2_3": {
+   "properties": {
+    "autoOptimizations": {
+     "$ref": "AutoOptimizations"
+    },
+    "biddingStrategy": {
+     "$ref": "BiddingStrategy"
+    },
+    "goal": {
+     "$ref": "OptimizationGoalV2_3"
+    },
+    "goalKpi": {
+     "$ref": "OptimizationGoalKpiV2_3"
+    },
+    "productLocation": {
+     "$ref": "ProductLocation"
+    }
+   },
+   "required": [
+    "productLocation",
+    "goal",
+    "goalKpi"
+   ],
+   "type": "object"
+  },
+  "OrderOptimizationV2_4": {
+   "properties": {
+    "autoOptimizations": {
+     "$ref": "AutoOptimizations"
+    },
+    "biddingStrategy": {
+     "$ref": "BiddingStrategy"
+    },
+    "goal": {
+     "$ref": "OptimizationGoalV2_3"
+    },
+    "goalKpi": {
+     "$ref": "OptimizationGoalKpiV2_4"
+    },
+    "productLocation": {
+     "$ref": "ProductLocation"
+    }
+   },
+   "required": [
+    "productLocation",
+    "goal",
+    "goalKpi"
+   ],
+   "type": "object"
+  },
+  "OrderOptimizationV2_5": {
+   "allOf": [
+    {
+     "$ref": "OrderOptimizationV2_4"
+    }
+   ],
+   "properties": {
+    "goal": {
+     "$ref": "OptimizationGoalV2_5"
+    },
+    "targetKpi": {
+     "description": "The key performance metric that will be used to measure success of your order. Depending on the `goalKpi` selected, this will be either currency based, percentage based, or an integer.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "productLocation",
+    "goal",
+    "goalKpi"
+   ]
+  },
+  "OrderOptimizationV2_6": {
+   "allOf": [
+    {
+     "$ref": "OrderOptimizationV2_5"
+    }
+   ],
+   "properties": {
+    "goal": {
+     "$ref": "OptimizationGoalV2_5"
+    },
+    "goalKpi": {
+     "$ref": "OptimizationGoalKpiV2_6"
+    },
+    "targetKpi": {
+     "description": "The key performance metric that will be used to measure success of your order. Depending on the `goalKpi` selected, this will be either currency based, percentage based, or an integer.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "productLocation",
+    "goal",
+    "goalKpi"
+   ]
+  },
+  "OrderResponse": {
+   "description": "Response for the order create/update operations. If operation is successful, it contains only orderId. If it is a failure, it contains only errorDetails. success and failure will be corresponding to that requested index…",
+   "properties": {
+    "errorDetails": {
+     "$ref": "Error"
+    },
+    "orderId": {
+     "description": "The order Identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "OrderV2_2": {
+   "allOf": [
+    {
+     "$ref": "Order"
+    }
+   ],
+   "properties": {
+    "currencyCode": {
+     "$ref": "CurrencyCodeV3"
+    }
+   }
+  },
+  "OrderV2_3": {
+   "description": "Complete order model which willl be used for create/update and get.",
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser identifier. Immutable field.",
+     "type": "string"
+    },
+    "agencyFee": {
+     "$ref": "AgencyFee"
+    },
+    "budget": {
+     "$ref": "OrderBudget"
+    },
+    "comments": {
+     "description": "The order comments.",
+     "type": "string"
+    },
+    "creationDate": {
+     "description": "The order creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00.",
+     "type": "string"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCodeV3"
+    },
+    "deliveryActivationStatus": {
+     "$ref": "DeliveryActivationStatus"
+    },
+    "deliveryStatus": {
+     "$ref": "OrderDeliveryStatus"
+    },
+    "endDateTime": {
+     "description": "The order end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC. The end date has to be modeled as a part of flights object.",
+     "type": "string"
+    },
+    "externalId": {
+     "description": "The order external identifier, also known as purchase order number (PO number). This field is required if \"Mandatory PO numbers\" is set at the entity level. `N/A` (not applicable) is a valid value. This field will be de…",
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCap"
+    },
+    "lastUpdatedDate": {
+     "description": "The order last update date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The order name.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "OrderOptimizationV2_3"
+    },
+    "orderId": {
+     "description": "The order identifier. It will be used to perform update operation. Immutable field.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The order start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC. The start date has to be modeled as a part of flights object.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertiserId",
+    "name",
+    "budget",
+    "frequencyCap",
+    "optimization"
+   ],
+   "type": "object"
+  },
+  "OrderV2_4": {
+   "allOf": [
+    {
+     "$ref": "OrderV2_2"
+    }
+   ],
+   "properties": {
+    "optimization": {
+     "$ref": "OrderOptimizationV2_4"
+    }
+   }
+  },
+  "OrderV2_5": {
+   "allOf": [
+    {
+     "$ref": "OrderV2_4"
+    }
+   ],
+   "properties": {
+    "optimization": {
+     "$ref": "OrderOptimizationV2_5"
+    }
+   }
+  },
+  "OrderV2_6": {
+   "allOf": [
+    {
+     "$ref": "OrderV2_5"
+    }
+   ],
+   "properties": {
+    "optimization": {
+     "$ref": "OrderOptimizationV2_6"
+    }
+   }
+  },
+  "Orders": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "OrderBasic"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "OrdersV2_1": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "OrderBasicV2_1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "OrdersV2_2": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "OrderBasicV2_2"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "OrdersV2_3": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "OrderBasicV2_3"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "OrdersV2_4": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "OrderBasicV2_4"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "OrdersV2_5": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "OrderBasicV2_5"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "OrdersV2_6": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "OrderBasicV2_6"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "OttContentGenres": {
+   "enum": [
+    "ACTION",
+    "ADVENTURE",
+    "ANIMATION",
+    "BIOGRAPHY",
+    "COMEDY",
+    "CRIME",
+    "DOCUMENTARY",
+    "DRAMA",
+    "FAMILY",
+    "FANTASY",
+    "FILM_NOIR",
+    "GAME_SHOW",
+    "HISTORY",
+    "HORROR",
+    "MUSICAL",
+    "MYSTERY",
+    "NEWS",
+    "REALITY_TV",
+    "ROMANCE",
+    "SCIENCE_FICTION",
+    "SHORT",
+    "SPORT",
+    "SUPER_HERO",
+    "TALK_SHOW",
+    "THRILLER",
+    "WAR",
+    "WESTERN",
+    "GENRE_NOT_AVAILABLE"
+   ],
+   "type": "string"
+  },
+  "OttTargeting": {
+   "description": "This targeting only applies to Amazon O&O and Amazon Publisher Services (APS) inventory. It can only be provided when CONNECTED_TV is selected in deviceTypeTargeting. Currently API does not support excluding delivery to…",
+   "properties": {
+    "ottAppBlocking": {
+     "description": "Select the apps that should be excluded.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "ottContentGenres": {
+     "description": "Select genres to exclude delivery to that audience.",
+     "items": {
+      "$ref": "OttContentGenres"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "Pacing": {
+   "properties": {
+    "deliveryProfile": {
+     "description": "The type of line item delivery profile. FRONT_LOADED: Front loaded can deliver up to 25% more than the daily Even pace targets. EVENLY: Even pacing spends your budget consistently across the length of the campaign.",
+     "enum": [
+      "FRONT_LOADED",
+      "EVENLY"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "deliveryProfile"
+   ],
+   "type": "object"
+  },
+  "Pixalate": {
+   "description": "Pixalate is a third party provider for digital ad verification. Pixalate offers technologies that drive high-quality advertising media.",
+   "properties": {
+    "fraudInvalidTraffic": {
+     "$ref": "PixalateFraudInvalidTraffic"
+    }
+   },
+   "type": "object"
+  },
+  "PixalateFraudInvalidTraffic": {
+   "properties": {
+    "excludeAppsAndDomains": {
+     "description": "Set to `true` to exclude traffic from Apps and Domains identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeIpAddressAndUserAgents": {
+     "description": "Set to `true` to exclude traffic from IPV4 and IPV6 addresses and usger agents identified to to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeOttAndMobileDevices": {
+     "description": "Set to `true` to exclude traffic from OTT and Mobile devices identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeRemovedAppsFromAppStores": {
+     "description": "Set to `true` to exlude traffic from Apps that have been removed from the google play and apple app stores in the last 6 months.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "Pixel": {
+   "properties": {
+    "advertiserId": {
+     "type": "string"
+    },
+    "created": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "domain": {
+     "type": "string"
+    },
+    "event": {
+     "enum": [
+      "MARKETING_LANDING_PAGE"
+     ],
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "purpose": {
+     "items": {
+      "enum": [
+       "ENGAGEMENT",
+       "REMARKETING",
+       "CONVERSION"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PixelTracking": {
+   "description": "A list of pixels associated with the campaign.",
+   "items": {
+    "description": "The pixel identifier.",
+    "type": "string"
+   },
+   "type": "array"
+  },
+  "ProductCategory": {
+   "properties": {
+    "id": {
+     "description": "The category identifier.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The category name.",
+     "type": "string"
+    },
+    "parentId": {
+     "description": "The identifier of the parent category. This is blank if the category is a parent category.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "id",
+    "name"
+   ],
+   "type": "object"
+  },
+  "ProductLocation": {
+   "description": "The product location indicates whether the product is endemic or non-endemic. When goal=`AWARENESS`, `CONVERSIONS`, or `CONSIDERATION`, this field isn't used and the value will always be SOLD_ON_AMAZON.",
+   "enum": [
+    "SOLD_ON_AMAZON",
+    "NOT_SOLD_ON_AMAZON"
+   ],
+   "type": "string"
+  },
+  "ProductTracking": {
+   "properties": {
+    "productFile": {
+     "description": "The URL of the product tracking file.",
+     "type": "string"
+    },
+    "productList": {
+     "description": "The tracking product list.",
+     "items": {
+      "$ref": "ProductTrackingItem"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ProductTrackingDomain": {
+   "description": "The ASIN domain type. Applicable to ASIN line item type only.",
+   "enum": [
+    "AMAZON_US",
+    "AMAZON_CA",
+    "AMAZON_MX",
+    "PRIME_NOW_US",
+    "PRIME_NOW_CA",
+    "WHOLE_FOODS_MARKET_US"
+   ],
+   "type": "string"
+  },
+  "ProductTrackingDomainV2_1": {
+   "allOf": [
+    {
+     "$ref": "ProductTrackingDomain"
+    }
+   ],
+   "description": "The ASIN domain type. Applicable to ASIN line item type only. FRESH_STORES_US is available since application/vnd.dsporders.v2.1+json.",
+   "enum": [
+    "FRESH_STORES_US"
+   ],
+   "type": "string"
+  },
+  "ProductTrackingFile": {
+   "description": "The URL of the product tracking file.",
+   "type": "string"
+  },
+  "ProductTrackingItem": {
+   "properties": {
+    "domain": {
+     "$ref": "ProductTrackingDomain"
+    },
+    "productAssociation": {
+     "description": "The product feature type.",
+     "enum": [
+      "FEATURED",
+      "NOT_FEATURED"
+     ],
+     "type": "string"
+    },
+    "productId": {
+     "description": "The product identifier.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "productId",
+    "productAssociation",
+    "domain"
+   ],
+   "type": "object"
+  },
+  "ProductTrackingItemV1": {
+   "properties": {
+    "domain": {
+     "$ref": "SupportedProductTrackingDomainV1"
+    },
+    "productAssociation": {
+     "$ref": "SupportedProductAssociationV1"
+    },
+    "productId": {
+     "description": "The product identifier.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "productId",
+    "productAssociation",
+    "domain"
+   ],
+   "type": "object"
+  },
+  "ProductTrackingItemV2_1": {
+   "allOf": [
+    {
+     "$ref": "ProductTrackingItem"
+    }
+   ],
+   "properties": {
+    "domain": {
+     "$ref": "ProductTrackingDomainV2_1"
+    }
+   },
+   "required": [
+    "domain"
+   ],
+   "type": "object"
+  },
+  "ProductTrackingList": {
+   "description": "The tracking product list.",
+   "items": {
+    "$ref": "ProductTrackingItemV2_1"
+   },
+   "type": "array"
+  },
+  "ProductTrackingListV1": {
+   "description": "The tracking product list.",
+   "items": {
+    "$ref": "ProductTrackingItemV1"
+   },
+   "type": "array"
+  },
+  "ProductTrackingV1": {
+   "properties": {
+    "productFile": {
+     "description": "The URL of the product tracking file.",
+     "type": "string"
+    },
+    "productList": {
+     "$ref": "ProductTrackingListV1"
+    }
+   },
+   "type": "object"
+  },
+  "ProductTrackingV2_1": {
+   "allOf": [
+    {
+     "$ref": "ProductTracking"
+    }
+   ],
+   "properties": {
+    "productList": {
+     "items": {
+      "$ref": "ProductTrackingItemV2_1"
+     }
+    }
+   },
+   "type": "object"
+  },
+  "ReadDomainTargetingResponse": {
+   "description": "The read operation response.",
+   "properties": {
+    "domainListMergedFile": {
+     "description": "The URL address of the domain file after merging all domains into single file, including inheritance from advertiser, domain lists, domain files, domains entered, if any.",
+     "type": "string"
+    },
+    "inheritFromAdvertiser": {
+     "description": "Set to `true` to enable domain inheritance from advertiser.",
+     "type": "boolean"
+    },
+    "lineItemId": {
+     "description": "The line item identifier.",
+     "type": "string"
+    },
+    "targetingType": {
+     "$ref": "TargetingType"
+    }
+   },
+   "type": "object"
+  },
+  "ReadDomainTargetingResponses": {
+   "properties": {
+    "response": {
+     "items": {
+      "$ref": "ReadDomainTargetingResponse"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SegmentClause": {
+   "description": "The segment clause.",
+   "properties": {
+    "isNot": {
+     "description": "Set to `true` to set to negative targeting. Set to `false` to set to positive targeting. Default is false.",
+     "type": "boolean"
+    },
+    "segmentId": {
+     "$ref": "Identifier"
+    }
+   },
+   "required": [
+    "segmentId"
+   ],
+   "type": "object"
+  },
+  "SegmentGroup": {
+   "description": "This segment group.",
+   "properties": {
+    "interOperator": {
+     "description": "The inter operator used among segments within the same segment group.",
+     "enum": [
+      "ANY",
+      "ALL"
+     ]
+    },
+    "intraOperator": {
+     "description": "The intra operator used between two segment groups.",
+     "enum": [
+      "AND",
+      "OR"
+     ],
+     "type": "string"
+    },
+    "segments": {
+     "description": "The list of segment clauses.",
+     "items": {
+      "$ref": "SegmentClause"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "segments",
+    "intraOperator",
+    "interOperator"
+   ],
+   "type": "object"
+  },
+  "SegmentTargeting": {
+   "properties": {
+    "segmentGroups": {
+     "description": "The list of segment groups.",
+     "items": {
+      "$ref": "SegmentGroup"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SiteLanguageTargeting": {
+   "description": "The site language targeting type. For example, `EN`, `ES`.",
+   "enum": [
+    "EN",
+    "ES"
+   ],
+   "type": "string"
+  },
+  "SiteLanguageTargetingV3": {
+   "allOf": [
+    {
+     "$ref": "SiteLanguageTargeting"
+    }
+   ],
+   "description": "The site language targeting type. For example, US/Mexico advertisers can choose from `EN`, `ES`; Canada advertisers can choose from `EN`, `FR`; Brazil advertisers can choose from `EN`, `PT`.",
+   "enum": [
+    "FR",
+    "PT"
+   ]
+  },
+  "StandardDisplayDoubleVerify": {
+   "description": "Double Verify (DV) is a third party provider for digital ad verification. Double Verify offers technologies that drive high-quality advertising media.",
+   "properties": {
+    "authenticBrandSafety": {
+     "$ref": "DoubleVerifyAuthenticBrandSafety"
+    },
+    "brandSafety": {
+     "$ref": "StandardDisplayDoubleVerifyBrandSafety"
+    },
+    "customContextualSegmentId": {
+     "$ref": "DvCustomContextualSegmentId"
+    },
+    "fraudInvalidTraffic": {
+     "$ref": "DoubleVerifyFraudInvalidTraffic"
+    },
+    "viewability": {
+     "$ref": "DoubleVerifyViewabilityV2_1"
+    }
+   },
+   "type": "object"
+  },
+  "StandardDisplayDoubleVerifyBrandSafety": {
+   "properties": {
+    "contentCategories": {
+     "$ref": "DvBrandSafetyContentCategories"
+    },
+    "contentCategoriesWithRisk": {
+     "$ref": "DvBrandSafetyContentCategoriesWithRisk"
+    },
+    "unknownContent": {
+     "$ref": "DvBrandSafetyUnknownContent"
+    }
+   },
+   "type": "object"
+  },
+  "StandardDisplayDoubleVerifyBrandSafetyV3_2": {
+   "allOf": [
+    {
+     "$ref": "StandardDisplayDoubleVerifyBrandSafety"
+    }
+   ],
+   "properties": {
+    "contentCategories": {
+     "$ref": "DvBrandSafetyContentCategoriesV3_2"
+    },
+    "contentCategoriesWithRisk": {
+     "$ref": "DvBrandSafetyContentCategoriesWithRiskV3_2"
+    }
+   }
+  },
+  "StandardDisplayDoubleVerifyV3_2": {
+   "allOf": [
+    {
+     "$ref": "StandardDisplayDoubleVerify"
+    }
+   ],
+   "properties": {
+    "brandSafety": {
+     "$ref": "StandardDisplayDoubleVerifyBrandSafetyV3_2"
+    }
+   }
+  },
+  "StandardDisplayIntegralAdScience": {
+   "description": "Integral Ad Science (IAS) is a third party provider in digital ad verification. IAS offers technologies to drive high-quality advertising media.",
+   "properties": {
+    "brandSafety": {
+     "$ref": "IasBrandSafetyV3"
+    },
+    "fraudInvalidTraffic": {
+     "$ref": "IasFraudInvalidTraffic"
+    },
+    "viewability": {
+     "$ref": "IasViewability"
+    }
+   },
+   "type": "object"
+  },
+  "StandardDisplayIntegralAdScienceV3_3": {
+   "allOf": [
+    {
+     "$ref": "StandardDisplayIntegralAdScience"
+    }
+   ],
+   "properties": {
+    "contextualAvoidance": {
+     "$ref": "DspIasContextualControlTargetingV3_3"
+    },
+    "contextualTargeting": {
+     "$ref": "DspIasContextualControlAvoidanceV3_3"
+    }
+   }
+  },
+  "StandardDisplayTargeting": {
+   "properties": {
+    "amazonViewabilityTargeting": {
+     "$ref": "AmazonViewabilityTargeting"
+    },
+    "contentTargeting": {
+     "description": "The IAB content category type. IAB content categories enable advertisers to target websites according to their subject matter by scanning their content. This helps deliver ads to relevant sites while ensuring that the a…",
+     "items": {
+      "$ref": "Identifier"
+     },
+     "type": "array"
+    },
+    "contextualTargeting": {
+     "description": "Set to `true` to enable contextual targeting. Contextual targeting targets the detail page of products that are frequently viewed or purchased with the products in your ad. Note that this feature applies to Dynamic eCom…",
+     "type": "boolean"
+    },
+    "dayPartTargeting": {
+     "$ref": "DayPartTargeting"
+    },
+    "deviceTypeTargeting": {
+     "description": "The targeted device type for standard display line item type. It is required input for `STANDARD_DISPLAY` line item type.",
+     "enum": [
+      "DESKTOP_AND_MOBILE",
+      "MOBILE",
+      "DESKTOP"
+     ],
+     "type": "string"
+    },
+    "domainListTargeting": {
+     "$ref": "DomainList"
+    },
+    "geoLocationTargeting": {
+     "$ref": "GeoLocationTargeting"
+    },
+    "mobileOsTargeting": {
+     "$ref": "MobileOsTargeting"
+    },
+    "segmentTargeting": {
+     "$ref": "SegmentTargeting"
+    },
+    "siteLanguageTargeting": {
+     "$ref": "SiteLanguageTargeting"
+    },
+    "supplyTargeting": {
+     "$ref": "SupplyTargeting"
+    },
+    "thirdPartyPreBidTargeting": {
+     "$ref": "ThirdPartyPreBidTargeting"
+    },
+    "userLocationTargeting": {
+     "$ref": "UserLocationTargeting"
+    }
+   },
+   "type": "object"
+  },
+  "StandardDisplayTargetingV3": {
+   "properties": {
+    "amazonViewabilityTargeting": {
+     "$ref": "AmazonViewabilityTargeting"
+    },
+    "contentTargeting": {
+     "description": "The IAB content category type. IAB content categories enable advertisers to target websites according to their subject matter by scanning their content. This helps deliver ads to relevant sites while ensuring that the a…",
+     "items": {
+      "$ref": "Identifier"
+     },
+     "type": "array"
+    },
+    "contextualTargeting": {
+     "description": "Set to `true` to enable contextual targeting. Contextual targeting targets the detail page of products that are frequently viewed or purchased with the products in your ad. Note that this feature applies to Dynamic eCom…",
+     "type": "boolean"
+    },
+    "dayPartTargeting": {
+     "$ref": "DayPartTargeting"
+    },
+    "deviceTypeTargeting": {
+     "description": "The targeted device type for standard display line item type. It is required input for `STANDARD_DISPLAY` line item type.",
+     "enum": [
+      "DESKTOP_AND_MOBILE",
+      "MOBILE",
+      "DESKTOP"
+     ],
+     "type": "string"
+    },
+    "domainListTargeting": {
+     "$ref": "DomainList"
+    },
+    "geoLocationTargeting": {
+     "$ref": "GeoLocationTargeting"
+    },
+    "mobileOsTargeting": {
+     "$ref": "MobileOsTargeting"
+    },
+    "segmentTargeting": {
+     "$ref": "SegmentTargeting"
+    },
+    "siteLanguageTargeting": {
+     "$ref": "SiteLanguageTargetingV3"
+    },
+    "supplyTargeting": {
+     "$ref": "SupplyTargeting"
+    },
+    "thirdPartyPreBidTargeting": {
+     "$ref": "StandardDisplayThirdPartyPreBidTargeting"
+    },
+    "userLocationTargeting": {
+     "$ref": "UserLocationTargetingV3"
+    }
+   },
+   "type": "object"
+  },
+  "StandardDisplayTargetingV3_1": {
+   "allOf": [
+    {
+     "$ref": "StandardDisplayTargetingV3"
+    }
+   ],
+   "properties": {
+    "thirdPartyPreBidTargeting": {
+     "$ref": "StandardDisplayThirdPartyPreBidTargetingV3_1"
+    }
+   }
+  },
+  "StandardDisplayTargetingV3_2": {
+   "allOf": [
+    {
+     "$ref": "StandardDisplayTargetingV3_1"
+    }
+   ],
+   "properties": {
+    "thirdPartyPreBidTargeting": {
+     "$ref": "StandardDisplayThirdPartyPreBidTargetingV3_2"
+    }
+   }
+  },
+  "StandardDisplayTargetingV3_3": {
+   "allOf": [
+    {
+     "$ref": "StandardDisplayTargetingV3_2"
+    }
+   ],
+   "properties": {
+    "thirdPartyPreBidTargeting": {
+     "$ref": "StandardDisplayThirdPartyPreBidTargetingV3_3"
+    }
+   }
+  },
+  "StandardDisplayThirdPartyPreBidTargeting": {
+   "description": "Amazon DSP automatically filters fraudulent and invalid traffic as well as unsafe content using a combination of proprietary technology and solutions from comScore and Sizmek. This service is available by default and at…",
+   "properties": {
+    "doubleVerify": {
+     "$ref": "StandardDisplayDoubleVerify"
+    },
+    "integralAdScience": {
+     "$ref": "StandardDisplayIntegralAdScience"
+    },
+    "oracleDataCloud": {
+     "$ref": "OracleDataCloudV3"
+    }
+   },
+   "type": "object"
+  },
+  "StandardDisplayThirdPartyPreBidTargetingV3_1": {
+   "allOf": [
+    {
+     "$ref": "StandardDisplayThirdPartyPreBidTargeting"
+    }
+   ],
+   "properties": {
+    "oracleDataCloud": {
+     "$ref": "OracleDataCloudV3_1"
+    },
+    "pixalate": {
+     "$ref": "Pixalate"
+    }
+   }
+  },
+  "StandardDisplayThirdPartyPreBidTargetingV3_2": {
+   "allOf": [
+    {
+     "$ref": "StandardDisplayThirdPartyPreBidTargetingV3_1"
+    }
+   ],
+   "properties": {
+    "doubleVerify": {
+     "$ref": "StandardDisplayDoubleVerifyV3_2"
+    }
+   }
+  },
+  "StandardDisplayThirdPartyPreBidTargetingV3_3": {
+   "allOf": [
+    {
+     "$ref": "StandardDisplayThirdPartyPreBidTargetingV3_2"
+    }
+   ],
+   "properties": {
+    "integralAdScience": {
+     "$ref": "StandardDisplayIntegralAdScienceV3_3"
+    }
+   }
+  },
+  "SubError": {
+   "description": "The sub error object.",
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SupplyDealTargeting": {
+   "properties": {
+    "deals": {
+     "description": "The list of deal supply sources to target.",
+     "items": {
+      "$ref": "Identifier"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SupplySource": {
+   "properties": {
+    "dealInfo": {
+     "$ref": "DealInfo"
+    },
+    "id": {
+     "description": "ID of the supply source item. For OPEN_EXCHANGE type, it is ID of the consolidated supply source item.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the supply source item. For OPEN_EXCHANGE type, it is the name of the consolidated supply source item.",
+     "type": "string"
+    },
+    "supplySourceType": {
+     "description": "Type of this item",
+     "enum": [
+      "AMAZON_EXCLUSIVE",
+      "OPEN_EXCHANGE",
+      "DEAL"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SupplySourceResponse": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "supplySources": {
+     "description": "Array of supply source items sorted by deal start time (if available) then ID, ascending.",
+     "items": {
+      "allOf": [
+       {
+        "$ref": "SupplySource"
+       }
+      ],
+      "properties": {
+       "dealInfo": {
+        "$ref": "DealInfo"
+       }
+      }
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SupplySourceResponseV1_1": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "supplySources": {
+     "description": "Array of supply source items sorted by deal start time (if available) then ID, ascending.",
+     "items": {
+      "allOf": [
+       {
+        "$ref": "SupplySource"
+       }
+      ],
+      "properties": {
+       "dealInfo": {
+        "$ref": "DealInfoV1_1"
+       }
+      }
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SupplySourceResponseV1_2": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "supplySources": {
+     "description": "Array of supply source items sorted by deal start time (if available) then ID, ascending.",
+     "items": {
+      "allOf": [
+       {
+        "$ref": "SupplySource"
+       }
+      ],
+      "properties": {
+       "dealInfo": {
+        "$ref": "DealInfoV1_2"
+       }
+      }
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SupplySourceTargeting": {
+   "properties": {
+    "supplySources": {
+     "description": "The list of supply sources to target. In case of OPEN_EXCHANGE, the ID is of consolidated supply source.",
+     "items": {
+      "$ref": "Identifier"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SupplyTargeting": {
+   "properties": {
+    "supplyDealTargeting": {
+     "$ref": "SupplyDealTargeting"
+    },
+    "supplySourceTargeting": {
+     "$ref": "SupplySourceTargeting"
+    }
+   },
+   "type": "object"
+  },
+  "SupportedLineItemTypes": {
+   "enum": [
+    "STANDARD_DISPLAY",
+    "AMAZON_MOBILE_DISPLAY",
+    "AAP_MOBILE_APP",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "SupportedPolicyType": {
+   "enum": [
+    "PRODUCT",
+    "DOMAIN"
+   ],
+   "type": "string"
+  },
+  "SupportedProductAssociationV1": {
+   "description": "The product feature type.",
+   "enum": [
+    "FEATURED",
+    "NOT_FEATURED",
+    "FEATURED_WITH_VARIATION"
+   ],
+   "type": "string"
+  },
+  "SupportedProductTrackingDomainV1": {
+   "description": "The ASIN domain type.",
+   "enum": [
+    "AMAZON_US",
+    "AMAZON_CA",
+    "AMAZON_MX",
+    "PRIME_NOW_US",
+    "PRIME_NOW_CA",
+    "WHOLE_FOODS_MARKET_US",
+    "FRESH_STORES_US",
+    "PRIME_VIDEO_ROW_NA"
+   ],
+   "type": "string"
+  },
+  "TargetingType": {
+   "description": "The list type of the domain. Either INCLUDE (ALLOW_LIST) or EXCLUDE (BLOCK_LIST).",
+   "enum": [
+    "INCLUDE",
+    "EXCLUDE"
+   ],
+   "type": "string"
+  },
+  "ThirdPartyFee": {
+   "description": "Third-party fees enable the platform to apply an additional fee. For example, a third-party vendor fee for ad verification, an agency markup fee, and the like.",
+   "properties": {
+    "feeAllocation": {
+     "description": "The type of fee allocation.",
+     "enum": [
+      "ABSORB_WITH_AGENCY_FEE",
+      "PASS_TO_ADVERTISER"
+     ],
+     "type": "string"
+    },
+    "feeAmount": {
+     "description": "The fee amount associated a third-party provider.",
+     "format": "double",
+     "type": "number"
+    },
+    "providerName": {
+     "description": "The provider name.",
+     "enum": [
+      "INTEGRAL_AD_SCIENCE",
+      "DOUBLE_VERIFY",
+      "DOUBLE_CLICK_CAMPAIGN_MANAGER",
+      "COM_SCORE",
+      "CPM_1",
+      "CPM_2",
+      "CPM_3"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "providerName",
+    "feeAmount",
+    "feeAllocation"
+   ],
+   "type": "object"
+  },
+  "ThirdPartyPreBidTargeting": {
+   "description": "Amazon DSP automatically filters fraudulent and invalid traffic as well as unsafe content using a combination of proprietary technology and solutions from comScore and Sizmek. This service is available by default and at…",
+   "properties": {
+    "doubleVerify": {
+     "$ref": "DoubleVerify"
+    },
+    "integralAdScience": {
+     "$ref": "IntegralAdScience"
+    },
+    "oracleDataCloud": {
+     "$ref": "OracleDataCloud"
+    }
+   },
+   "type": "object"
+  },
+  "ThirdPartyPreBidTargetingV2_1": {
+   "allOf": [
+    {
+     "$ref": "ThirdPartyPreBidTargeting"
+    }
+   ],
+   "properties": {
+    "doubleVerify": {
+     "$ref": "DoubleVerifyV2_1"
+    }
+   }
+  },
+  "UpdateDomainTargetingRequest": {
+   "description": "The update operation request.",
+   "properties": {
+    "domainFiles": {
+     "description": "The list of URL addresses of the domain list files.",
+     "items": {
+      "$ref": "DomainFileMetaData"
+     },
+     "maxItems": 10,
+     "type": "array"
+    },
+    "domainLists": {
+     "description": "The list of domain lists Ids get from discovery API.",
+     "items": {
+      "description": "The list identifier.",
+      "maxLength": 36,
+      "type": "string"
+     },
+     "maxItems": 10,
+     "type": "array"
+    },
+    "domainNames": {
+     "description": "The list of raw domain names.",
+     "items": {
+      "description": "The domain name.",
+      "maxLength": 255,
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "type": "array"
+    },
+    "inheritFromAdvertiser": {
+     "description": "Set to `true` to enable domain inheritance from advertiser.",
+     "type": "boolean"
+    },
+    "lineItemId": {
+     "description": "The line item identifier.",
+     "type": "string"
+    },
+    "targetingType": {
+     "$ref": "TargetingType"
+    }
+   },
+   "required": [
+    "lineItemId",
+    "inheritFromAdvertiser",
+    "targetingType"
+   ],
+   "type": "object"
+  },
+  "UpdateDomainTargetingResponse": {
+   "description": "The update operation response. If operation is successful, it contains lineItemId (and domainFilesUploaded). If it is a failure, it contains only errorDetails. Success and failure will be corresponding to that requested…",
+   "properties": {
+    "domainFilesUploaded": {
+     "description": "The list of domain file validation results.",
+     "items": {
+      "$ref": "DomainFileValidationResponse"
+     },
+     "type": "array"
+    },
+    "errorDetails": {
+     "$ref": "Error"
+    },
+    "lineItemId": {
+     "description": "The line item identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UserLocationTargeting": {
+   "description": "The geographical location type of Amazon customers targeted. For example, `US`, `EVERYWHERE`, `NON-US`.",
+   "enum": [
+    "US",
+    "EVERYWHERE",
+    "NON_US"
+   ],
+   "type": "string"
+  },
+  "UserLocationTargetingV3": {
+   "allOf": [
+    {
+     "$ref": "UserLocationTargeting"
+    }
+   ],
+   "description": "The geographical location type of Amazon customers targeted. For example, US advertisers can choose from `US`, `EVERYWHERE`, `NON-US`; Canada advertisers can choose from `CA`, `EVERYWHERE`; Mexico advertisers can choose…",
+   "enum": [
+    "CA",
+    "MX",
+    "BR"
+   ]
+  },
+  "VideoDoubleVerify": {
+   "description": "Double Verify (DV) is a third party provider for digital ad verification. Double Verify offers technologies that drive high-quality advertising media.",
+   "properties": {
+    "authenticBrandSafety": {
+     "$ref": "DoubleVerifyAuthenticBrandSafety"
+    },
+    "brandSafety": {
+     "$ref": "VideoDoubleVerifyBrandSafety"
+    },
+    "customContextualSegmentId": {
+     "$ref": "DvCustomContextualSegmentId"
+    },
+    "fraudInvalidTraffic": {
+     "$ref": "DoubleVerifyFraudInvalidTraffic"
+    },
+    "viewability": {
+     "$ref": "DoubleVerifyViewabilityV2_1"
+    }
+   },
+   "type": "object"
+  },
+  "VideoDoubleVerifyBrandSafety": {
+   "properties": {
+    "appAgeRating": {
+     "$ref": "DvBrandSafetyAppAgeRating"
+    },
+    "appStarRating": {
+     "$ref": "DvBrandSafetyAppStarRating"
+    },
+    "contentCategories": {
+     "$ref": "DvBrandSafetyContentCategories"
+    },
+    "contentCategoriesWithRisk": {
+     "$ref": "DvBrandSafetyContentCategoriesWithRisk"
+    },
+    "excludeAppsWithInsufficientRating": {
+     "$ref": "DvBrandSafetyExcludeApps"
+    },
+    "unknownContent": {
+     "$ref": "DvBrandSafetyUnknownContent"
+    }
+   },
+   "type": "object"
+  },
+  "VideoDoubleVerifyBrandSafetyV3_2": {
+   "allOf": [
+    {
+     "$ref": "VideoDoubleVerifyBrandSafety"
+    }
+   ],
+   "properties": {
+    "contentCategories": {
+     "$ref": "DvBrandSafetyContentCategoriesV3_2"
+    },
+    "contentCategoriesWithRisk": {
+     "$ref": "DvBrandSafetyContentCategoriesWithRiskV3_2"
+    }
+   }
+  },
+  "VideoDoubleVerifyV3_2": {
+   "allOf": [
+    {
+     "$ref": "VideoDoubleVerify"
+    }
+   ],
+   "properties": {
+    "brandSafety": {
+     "$ref": "VideoDoubleVerifyBrandSafetyV3_2"
+    }
+   }
+  },
+  "VideoIntegralAdScience": {
+   "description": "Integral Ad Science (IAS) is a third party provider in digital ad verification. IAS offers technologies to drive high-quality advertising media.",
+   "properties": {
+    "brandSafety": {
+     "$ref": "IasBrandSafetyV3"
+    },
+    "fraudInvalidTraffic": {
+     "$ref": "IasFraudInvalidTraffic"
+    },
+    "viewability": {
+     "$ref": "IasViewability"
+    }
+   },
+   "type": "object"
+  },
+  "VideoIntegralAdScienceV3_3": {
+   "allOf": [
+    {
+     "$ref": "VideoIntegralAdScience"
+    }
+   ],
+   "properties": {
+    "contextualAvoidance": {
+     "$ref": "DspIasContextualControlTargetingV3_3"
+    },
+    "contextualTargeting": {
+     "$ref": "DspIasContextualControlAvoidanceV3_3"
+    }
+   }
+  },
+  "VideoTargeting": {
+   "description": "This field is available since version `application/vnd.dsplineitems.v2.1+json`.",
+   "properties": {
+    "amazonViewabilityTargeting": {
+     "$ref": "AmazonViewabilityTargeting"
+    },
+    "contentTargeting": {
+     "description": "The IAB content category type. IAB content categories enable advertisers to target websites according to their subject matter by scanning their content. This helps deliver ads to relevant sites while ensuring that the a…",
+     "items": {
+      "$ref": "Identifier"
+     },
+     "type": "array"
+    },
+    "dayPartTargeting": {
+     "$ref": "DayPartTargeting"
+    },
+    "deviceTypeTargeting": {
+     "description": "The targeted device type for video line item type. A list of device types can be provided.",
+     "items": {
+      "enum": [
+       "MOBILE",
+       "DESKTOP",
+       "CONNECTED_TV"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "domainListTargeting": {
+     "$ref": "DomainList"
+    },
+    "geoLocationTargeting": {
+     "$ref": "GeoLocationTargeting"
+    },
+    "limitToFepTargeting": {
+     "description": "Limit IN STREAM ad slot to full episode players (FEP).",
+     "type": "boolean"
+    },
+    "mobileEnvironmentTargeting": {
+     "description": "The targeted mobile environment for video line item type. It is required only when `MOBILE` device type is selected.",
+     "items": {
+      "enum": [
+       "WEB",
+       "APP"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "ottTargeting": {
+     "$ref": "OttTargeting"
+    },
+    "segmentTargeting": {
+     "$ref": "SegmentTargeting"
+    },
+    "siteLanguageTargeting": {
+     "$ref": "SiteLanguageTargeting"
+    },
+    "supplyTargeting": {
+     "$ref": "SupplyTargeting"
+    },
+    "thirdPartyPreBidTargeting": {
+     "$ref": "ThirdPartyPreBidTargetingV2_1"
+    },
+    "userLocationTargeting": {
+     "$ref": "UserLocationTargeting"
+    },
+    "videoAdFormatTargeting": {
+     "description": "Target a specific type of ad slot used to serve the video. A list can be provided.",
+     "items": {
+      "enum": [
+       "IN_STREAM",
+       "OUT_STREAM",
+       "IN_STREAM_AND_OUT_STREAM"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "videoCompletionTargeting": {
+     "description": "These are predictions based on machine learning and aren’t guaranteed. Selecting a higher percentage limits overall reach.",
+     "enum": [
+      "NO_TARGETING",
+      "VIDEO_COMPLETION_GTE_10",
+      "VIDEO_COMPLETION_GTE_20",
+      "VIDEO_COMPLETION_GTE_30",
+      "VIDEO_COMPLETION_GTE_40",
+      "VIDEO_COMPLETION_GTE_50",
+      "VIDEO_COMPLETION_GTE_60",
+      "VIDEO_COMPLETION_GTE_70",
+      "VIDEO_COMPLETION_GTE_80",
+      "VIDEO_COMPLETION_GTE_90"
+     ],
+     "type": "string"
+    },
+    "videoInitiationTypeTargeting": {
+     "description": "Target video inventory by how the video will be started. A list can be provided. If ANY is selected, no other type can be provided.",
+     "items": {
+      "enum": [
+       "ANY",
+       "USER_INITIATED_ONLY",
+       "AUTOPLAY_ONLY",
+       "UNKNOWN"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "videoPlayerSizeTargeting": {
+     "description": "Target video inventory by publisher’s player size. A list can be provided.",
+     "items": {
+      "enum": [
+       "ANY",
+       "SMALL",
+       "MEDIUM",
+       "LARGE",
+       "UNKNOWN"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "VideoTargetingV3": {
+   "description": "This field is available since version `application/vnd.dsplineitems.v2.1+json`.",
+   "properties": {
+    "amazonViewabilityTargeting": {
+     "$ref": "AmazonViewabilityTargeting"
+    },
+    "contentTargeting": {
+     "description": "The IAB content category type. IAB content categories enable advertisers to target websites according to their subject matter by scanning their content. This helps deliver ads to relevant sites while ensuring that the a…",
+     "items": {
+      "$ref": "Identifier"
+     },
+     "type": "array"
+    },
+    "dayPartTargeting": {
+     "$ref": "DayPartTargeting"
+    },
+    "deviceTypeTargeting": {
+     "description": "The targeted device type for video line item type. A list of device types can be provided.",
+     "items": {
+      "enum": [
+       "MOBILE",
+       "DESKTOP",
+       "CONNECTED_TV"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "domainListTargeting": {
+     "$ref": "DomainList"
+    },
+    "geoLocationTargeting": {
+     "$ref": "GeoLocationTargeting"
+    },
+    "limitToFepTargeting": {
+     "description": "Limit IN STREAM ad slot to full episode players (FEP).",
+     "type": "boolean"
+    },
+    "mobileEnvironmentTargeting": {
+     "description": "The targeted mobile environment for video line item type. It is required only when `MOBILE` device type is selected.",
+     "items": {
+      "enum": [
+       "WEB",
+       "APP"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "ottTargeting": {
+     "$ref": "OttTargeting"
+    },
+    "segmentTargeting": {
+     "$ref": "SegmentTargeting"
+    },
+    "siteLanguageTargeting": {
+     "$ref": "SiteLanguageTargetingV3"
+    },
+    "supplyTargeting": {
+     "$ref": "SupplyTargeting"
+    },
+    "thirdPartyPreBidTargeting": {
+     "$ref": "VideoThirdPartyPreBidTargeting"
+    },
+    "userLocationTargeting": {
+     "$ref": "UserLocationTargetingV3"
+    },
+    "videoAdFormatTargeting": {
+     "description": "Target a specific type of ad slot used to serve the video. A list can be provided.",
+     "items": {
+      "enum": [
+       "IN_STREAM",
+       "OUT_STREAM",
+       "IN_STREAM_AND_OUT_STREAM"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "videoCompletionTargeting": {
+     "description": "These are predictions based on machine learning and aren’t guaranteed. Selecting a higher percentage limits overall reach.",
+     "enum": [
+      "NO_TARGETING",
+      "VIDEO_COMPLETION_GTE_10",
+      "VIDEO_COMPLETION_GTE_20",
+      "VIDEO_COMPLETION_GTE_30",
+      "VIDEO_COMPLETION_GTE_40",
+      "VIDEO_COMPLETION_GTE_50",
+      "VIDEO_COMPLETION_GTE_60",
+      "VIDEO_COMPLETION_GTE_70",
+      "VIDEO_COMPLETION_GTE_80",
+      "VIDEO_COMPLETION_GTE_90"
+     ],
+     "type": "string"
+    },
+    "videoInitiationTypeTargeting": {
+     "description": "Target video inventory by how the video will be started. A list can be provided. If ANY is selected, no other type can be provided.",
+     "items": {
+      "enum": [
+       "ANY",
+       "USER_INITIATED_ONLY",
+       "AUTOPLAY_ONLY",
+       "UNKNOWN"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "videoPlayerSizeTargeting": {
+     "description": "Target video inventory by publisher’s player size. A list can be provided.",
+     "items": {
+      "enum": [
+       "ANY",
+       "SMALL",
+       "MEDIUM",
+       "LARGE",
+       "UNKNOWN"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "VideoTargetingV3_1": {
+   "allOf": [
+    {
+     "$ref": "VideoTargetingV3"
+    }
+   ],
+   "properties": {
+    "thirdPartyPreBidTargeting": {
+     "$ref": "VideoThirdPartyPreBidTargetingV3_1"
+    }
+   }
+  },
+  "VideoTargetingV3_2": {
+   "allOf": [
+    {
+     "$ref": "VideoTargetingV3_1"
+    }
+   ],
+   "properties": {
+    "thirdPartyPreBidTargeting": {
+     "$ref": "VideoThirdPartyPreBidTargetingV3_2"
+    }
+   }
+  },
+  "VideoTargetingV3_3": {
+   "allOf": [
+    {
+     "$ref": "VideoTargetingV3_2"
+    }
+   ],
+   "properties": {
+    "thirdPartyPreBidTargeting": {
+     "$ref": "VideoThirdPartyPreBidTargetingV3_3"
+    }
+   }
+  },
+  "VideoThirdPartyPreBidTargeting": {
+   "description": "Amazon DSP automatically filters fraudulent and invalid traffic as well as unsafe content using a combination of proprietary technology and solutions from comScore and Sizmek. This service is available by default and at…",
+   "properties": {
+    "doubleVerify": {
+     "$ref": "VideoDoubleVerify"
+    },
+    "integralAdScience": {
+     "$ref": "VideoIntegralAdScience"
+    },
+    "oracleDataCloud": {
+     "$ref": "OracleDataCloudV3"
+    }
+   },
+   "type": "object"
+  },
+  "VideoThirdPartyPreBidTargetingV3_1": {
+   "allOf": [
+    {
+     "$ref": "VideoThirdPartyPreBidTargeting"
+    }
+   ],
+   "properties": {
+    "oracleDataCloud": {
+     "$ref": "OracleDataCloudV3_1"
+    },
+    "pixalate": {
+     "$ref": "Pixalate"
+    }
+   }
+  },
+  "VideoThirdPartyPreBidTargetingV3_2": {
+   "allOf": [
+    {
+     "$ref": "VideoThirdPartyPreBidTargetingV3_1"
+    }
+   ],
+   "properties": {
+    "doubleVerify": {
+     "$ref": "VideoDoubleVerifyV3_2"
+    }
+   }
+  },
+  "VideoThirdPartyPreBidTargetingV3_3": {
+   "allOf": [
+    {
+     "$ref": "VideoThirdPartyPreBidTargetingV3_2"
+    }
+   ],
+   "properties": {
+    "integralAdScience": {
+     "$ref": "VideoIntegralAdScienceV3_3"
+    }
+   }
+  },
+  "ViewabilityTier": {
+   "description": "The type of viewability tier.",
+   "enum": [
+    "ALLOW_ALL",
+    "VIEWABILITY_TIER_GT_70",
+    "VIEWABILITY_TIER_GT_60",
+    "VIEWABILITY_TIER_GT_50",
+    "VIEWABILITY_TIER_GT_40",
+    "VIEWABILITY_TIER_LT_40"
+   ],
+   "type": "string"
+  }
+ }
+}

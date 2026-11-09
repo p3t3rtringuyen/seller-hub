@@ -1,0 +1,478 @@
+{
+  "AssignmentType": {
+    "description": "The default payment method type.",
+    "enum": [
+      "DEFAULT_DEPOSIT_METHOD"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "BigDecimal": {
+    "description": "A signed decimal number.",
+    "properties": {},
+    "required": [],
+    "type": "number"
+  },
+  "Currency": {
+    "description": "A currency type and amount.",
+    "properties": {
+      "currencyAmount": {
+        "description": "The monetary value.",
+        "ref": "BigDecimal"
+      },
+      "currencyCode": {
+        "description": "The three-digit currency code in ISO 4217 format.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Date": {
+    "description": "A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.",
+    "format": "date-time",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "array of errors",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "ExpectedPayout": {
+    "description": "All the information related to an expected payout.",
+    "properties": {
+      "accountTail": {
+        "description": "The last few digits of the payment instrument.",
+        "type": "string"
+      },
+      "amount": {
+        "description": "The total amount of money expected in the payout.",
+        "ref": "Currency"
+      },
+      "partnerMetadata": {
+        "description": "Metadata that describes the selling partner.",
+        "ref": "PartnerMetadata"
+      },
+      "paymentMethod": {
+        "description": "The type of payout instrument to which funds will be delivered.",
+        "ref": "PaymentMethodName"
+      },
+      "period": {
+        "description": "The interval considered for calculating the payout amount.",
+        "ref": "Period"
+      },
+      "relatedIdentifiers": {
+        "description": "Identifiers related to the payout, such as settlement IDs.",
+        "ref": "RelatedIdentifiers"
+      },
+      "scheduledDate": {
+        "description": "The expected date when the payout would be initiated in Amazon's system.",
+        "ref": "Date"
+      },
+      "status": {
+        "description": "The status of the expected payout.",
+        "ref": "ExpectedPayoutStatusName"
+      }
+    },
+    "required": [
+      "partnerMetadata",
+      "status"
+    ],
+    "type": "object"
+  },
+  "ExpectedPayoutStatusName": {
+    "description": "Enumerated set of expected payout status names.",
+    "enum": [
+      "AT_RISK",
+      "DISABLED",
+      "NO_PAYOUT_EXPECTED",
+      "SCHEDULED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ExpiryDate": {
+    "description": "The expiration date of the card used for payment.",
+    "properties": {
+      "month": {
+        "description": "The month the card expires expressed as a number from `1` to `12`.",
+        "type": "string"
+      },
+      "year": {
+        "description": "Year",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetPaymentMethodsResponse": {
+    "description": "The response schema for the `getPaymentMethods` operation.",
+    "properties": {
+      "paymentMethods": {
+        "ref": "PaymentMethodList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InitiatePayoutRequest": {
+    "description": "The request schema for the `initiatePayout` operation.",
+    "properties": {
+      "accountType": {
+        "description": "The account type in the selected marketplace for which a payout must be initiated.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The identifier of the Amazon store.",
+        "ref": "MarketplaceId"
+      }
+    },
+    "required": [
+      "accountType",
+      "marketplaceId"
+    ],
+    "type": "object"
+  },
+  "InitiatePayoutResponse": {
+    "description": "The response schema for the `initiatePayout` operation.",
+    "properties": {
+      "payoutReferenceId": {
+        "description": "The financial event group ID for a successfully initiated payout.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "payoutReferenceId"
+    ],
+    "type": "object"
+  },
+  "ListExpectedPayoutsResponse": {
+    "description": "The response schema for the `listExpectedPayouts` operation.",
+    "properties": {
+      "expectedPayouts": {
+        "description": "A list of expected payouts for all of the selling partner's accounts matching the filters.",
+        "ref": "ExpectedPayout",
+        "type": "array"
+      },
+      "nextToken": {
+        "description": "The response includes `nextToken` when the number of results exceeds the specified page size.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListPayoutsResponse": {
+    "description": "The response schema for the `listPayouts` operation.",
+    "properties": {
+      "nextToken": {
+        "description": "The response includes `nextToken` when the number of results exceeds the specified page size.",
+        "type": "string"
+      },
+      "payouts": {
+        "description": "A list of payouts matching the request criteria.",
+        "ref": "Payout",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "MarketplaceId": {
+    "description": "The identifier of the Amazon marketplace.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PartnerMetadata": {
+    "description": "Metadata that describes the selling partner.",
+    "properties": {
+      "accountType": {
+        "description": "The type of the selling partner's account in the payout.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The identifier of the store associated with the payout.",
+        "type": "string"
+      },
+      "partnerId": {
+        "description": "A unique selling partner identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "accountType",
+      "marketplaceId",
+      "partnerId"
+    ],
+    "type": "object"
+  },
+  "PaymentMethodDetails": {
+    "description": "The details of a payment method.",
+    "properties": {
+      "accountHolderName": {
+        "description": "The name of the account holder who is registered for the payment method.",
+        "type": "string"
+      },
+      "assignmentType": {
+        "description": "The payment method assignment type, whether it is assigned as default to the given marketplace or not.",
+        "ref": "AssignmentType"
+      },
+      "countryCode": {
+        "description": "The two-letter country code in ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "expiryDate": {
+        "description": "The expiration date of the card used for payment.",
+        "ref": "ExpiryDate"
+      },
+      "paymentMethodId": {
+        "description": "The payment method identifier.",
+        "type": "string"
+      },
+      "paymentMethodType": {
+        "description": "The payment method type.",
+        "ref": "PaymentMethodType"
+      },
+      "tail": {
+        "description": "The last three or four digits of the payment method.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PaymentMethodList": {
+    "description": "The list of payment methods with payment method details.",
+    "properties": {},
+    "ref": "PaymentMethodDetails",
+    "required": [],
+    "type": "array"
+  },
+  "PaymentMethodName": {
+    "description": "Enumerated set of payment methods for payout transfers.",
+    "enum": [
+      "BANK_ACCOUNT",
+      "DEBIT_CARD"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PaymentMethodType": {
+    "description": "The type of payment method.",
+    "enum": [
+      "BANK_ACCOUNT",
+      "CARD",
+      "SELLER_WALLET"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PaymentMethodTypeList": {
+    "description": "The list of payment method types that are present.",
+    "properties": {},
+    "ref": "PaymentMethodType",
+    "required": [],
+    "type": "array"
+  },
+  "Payout": {
+    "description": "All the information related to a payout.",
+    "properties": {
+      "accountTail": {
+        "description": "The last few digits of the payment instrument.",
+        "type": "string"
+      },
+      "amount": {
+        "description": "The total amount of the payout.",
+        "ref": "Currency"
+      },
+      "creationDate": {
+        "description": "The date when the payout was created.",
+        "ref": "Date"
+      },
+      "currentStatus": {
+        "description": "The current status of the payout.",
+        "ref": "PayoutStatusName"
+      },
+      "id": {
+        "description": "The unique identifier of the payout.",
+        "type": "string"
+      },
+      "partnerMetadata": {
+        "description": "Metadata that describes the selling partner.",
+        "ref": "PartnerMetadata"
+      },
+      "paymentMethod": {
+        "description": "The type of payout instrument to which funds are delivered.",
+        "ref": "PaymentMethodName"
+      },
+      "paymentRail": {
+        "description": "The underlying payment network or clearing system used to transmit the payout.",
+        "type": "string"
+      },
+      "period": {
+        "description": "The time interval for calculating the payout amount.",
+        "ref": "Period"
+      },
+      "relatedIdentifiers": {
+        "description": "Identifiers related to the payout, such as settlement IDs.",
+        "ref": "RelatedIdentifiers"
+      },
+      "statusHistory": {
+        "description": "A chronological list of payout status updates.",
+        "ref": "PayoutStatusEntry",
+        "type": "array"
+      },
+      "traceId": {
+        "description": "The banking network's unique identifier for a fund transfer request.",
+        "type": "string"
+      },
+      "type": {
+        "description": "The type of payout.",
+        "ref": "PayoutTypeName"
+      }
+    },
+    "required": [
+      "currentStatus",
+      "id",
+      "partnerMetadata",
+      "statusHistory"
+    ],
+    "type": "object"
+  },
+  "PayoutStatusEntry": {
+    "description": "A record of a payout's status at a specific point in time.",
+    "properties": {
+      "failureReason": {
+        "description": "The reason the payout failed.",
+        "type": "string"
+      },
+      "lastUpdatedDate": {
+        "description": "The date when this status was last updated.",
+        "ref": "Date"
+      },
+      "status": {
+        "description": "The payout status when this entry was recorded.",
+        "ref": "PayoutStatusName"
+      }
+    },
+    "required": [
+      "lastUpdatedDate",
+      "status"
+    ],
+    "type": "object"
+  },
+  "PayoutStatusName": {
+    "description": "Enumerated set of payout status names.",
+    "enum": [
+      "CANCELLED",
+      "FAILED",
+      "IN_TRANSIT",
+      "NO_PAYOUT",
+      "PAID",
+      "STARTED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PayoutTypeName": {
+    "description": "Enumerated set of payout type names.",
+    "enum": [
+      "ON_DEMAND",
+      "SCHEDULED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Period": {
+    "description": "The time interval for calculating the payout amount.",
+    "properties": {
+      "endDate": {
+        "description": "The ending date for a time interval.",
+        "ref": "Date"
+      },
+      "startDate": {
+        "description": "The starting date for a time interval.",
+        "ref": "Date"
+      }
+    },
+    "required": [
+      "startDate"
+    ],
+    "type": "object"
+  },
+  "RelatedIdentifier": {
+    "description": "Related business identifier of the payout.",
+    "properties": {
+      "relatedIdentifierName": {
+        "description": "An enumerated set of related business identifier names.",
+        "ref": "RelatedIdentifierName"
+      },
+      "relatedIdentifierValue": {
+        "description": "Corresponding value of `RelatedIdentifierName`.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "relatedIdentifierName",
+      "relatedIdentifierValue"
+    ],
+    "type": "object"
+  },
+  "RelatedIdentifierName": {
+    "description": "Enumerated set of related business identifier names.",
+    "enum": [
+      "SETTLEMENT_ID"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "RelatedIdentifiers": {
+    "description": "Related business identifiers of the payout.",
+    "properties": {},
+    "ref": "RelatedIdentifier",
+    "required": [],
+    "type": "array"
+  }
+}

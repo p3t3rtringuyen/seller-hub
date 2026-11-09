@@ -1,0 +1,475 @@
+{
+ "api": "AmazonAdsAPIALLPromotionRewardsContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLPromotionRewardsContract_prod_3p_BETA.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | | --- | --- | | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `CLP` | Chilean Peso | |…",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CLP",
+    "COP",
+    "EGP",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "NGN",
+    "PLN",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "ACCOUNT_NOT_ELIGIBLE",
+    "BAD_REQUEST",
+    "EXPIRED_PROMOTION_CODE",
+    "INTERNAL_ERROR",
+    "INVALID_PROMOTION_CODE",
+    "MAXIMUM_REDEMPTIONS_REACHED",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Marketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "CL",
+    "CO",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NG",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "PromotionReward": {
+   "properties": {
+    "advertiserAccountId": {
+     "description": "The advertiser account associated with the promotion reward.",
+     "type": "string"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "endDateTime": {
+     "description": "The date and time by which the promotion reward expires.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "includePromotionRewardConsumption": {
+     "description": "Whether per-invoice consumption details are included in the response.",
+     "type": "boolean"
+    },
+    "marketplace": {
+     "$ref": "Marketplace"
+    },
+    "name": {
+     "description": "The display name of the promotion reward.",
+     "type": "string"
+    },
+    "promotionRewardConsumptions": {
+     "description": "The per-invoice consumption details of the promotion reward.",
+     "items": {
+      "$ref": "PromotionRewardConsumption"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "promotionRewardId": {
+     "description": "A unique identifier for the promotion reward.",
+     "type": "string"
+    },
+    "promotionRewardType": {
+     "$ref": "PromotionRewardType"
+    },
+    "remainingReward": {
+     "description": "The click credits amount of the promotion reward not yet consumed.",
+     "format": "double",
+     "type": "number"
+    },
+    "reward": {
+     "description": "The total click credits amount of the promotion reward.",
+     "format": "double",
+     "type": "number"
+    },
+    "startDateTime": {
+     "description": "The date and time from which the promotion reward is active and eligible for consumption.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertiserAccountId",
+    "currencyCode",
+    "endDateTime",
+    "marketplace",
+    "name",
+    "promotionRewardId",
+    "promotionRewardType",
+    "remainingReward",
+    "reward",
+    "startDateTime"
+   ],
+   "type": "object"
+  },
+  "PromotionRewardConsumption": {
+   "description": "The consumption of a promotion reward against a specific invoice.",
+   "properties": {
+    "consumedReward": {
+     "description": "The click credits amount of the promotion reward applied to this invoice.",
+     "format": "double",
+     "type": "number"
+    },
+    "invoiceId": {
+     "description": "The invoice against which the promotion reward was applied. Null only for in-progress consumption that has not yet been settled to an invoice; once an invoice is issued, this is always populated. Consumers should treat …",
+     "type": "string"
+    }
+   },
+   "required": [
+    "consumedReward"
+   ],
+   "type": "object"
+  },
+  "PromotionRewardEndDateTimeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "format": "date-time",
+      "type": "string"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "PromotionRewardIncludePromotionRewardConsumptionFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "boolean"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "PromotionRewardMarketplaceFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "Marketplace"
+     },
+     "maxItems": 28,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "PromotionRewardPromotionRewardIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "PromotionRewardPromotionRewardTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**PromotionRewardType Enum:** | PromotionRewardType | Description | | --- | --- | | `ADHOC` | A direct promotion reward applied to an advertiser account. | | `SIGNUP` | A promotion reward awarded upon advertiser signup.…",
+     "items": {
+      "$ref": "PromotionRewardType"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "PromotionRewardStartDateTimeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "format": "date-time",
+      "type": "string"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "PromotionRewardSuccessResponse": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "promotionRewards": {
+     "items": {
+      "$ref": "PromotionReward"
+     },
+     "maxItems": 25,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PromotionRewardType": {
+   "description": "The type of a promotion reward. **PromotionRewardType Enum:** | PromotionRewardType | Description | | --- | --- | | `ADHOC` | A direct promotion reward applied to an advertiser account. | | `SIGNUP` | A promotion reward…",
+   "enum": [
+    "ADHOC",
+    "PROMO_CODE",
+    "SIGNUP"
+   ],
+   "type": "string"
+  },
+  "QueryPromotionRewardRequest": {
+   "properties": {
+    "endDateTimeFilter": {
+     "$ref": "PromotionRewardEndDateTimeFilter"
+    },
+    "includePromotionRewardConsumptionFilter": {
+     "$ref": "PromotionRewardIncludePromotionRewardConsumptionFilter"
+    },
+    "marketplaceFilter": {
+     "$ref": "PromotionRewardMarketplaceFilter"
+    },
+    "maxResults": {
+     "default": 25,
+     "format": "int32",
+     "maximum": 25,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "promotionRewardIdFilter": {
+     "$ref": "PromotionRewardPromotionRewardIdFilter"
+    },
+    "promotionRewardTypeFilter": {
+     "$ref": "PromotionRewardPromotionRewardTypeFilter"
+    },
+    "startDateTimeFilter": {
+     "$ref": "PromotionRewardStartDateTimeFilter"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

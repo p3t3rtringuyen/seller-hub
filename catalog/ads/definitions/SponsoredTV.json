@@ -1,0 +1,3569 @@
+{
+ "api": "SponsoredTV",
+ "file": "specs/dest/SponsoredTV_prod_3p.json",
+ "schemas": {
+  "AccessDeniedErrorCode": {
+   "enum": [
+    "ACCESS_DENIED"
+   ],
+   "type": "string"
+  },
+  "AccessDeniedExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "AccessDeniedErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Ad": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the Ad Group associated with the Ad.",
+     "type": "string"
+    },
+    "adId": {
+     "description": "The identifier of the Ad.",
+     "type": "string"
+    },
+    "adName": {
+     "description": "The name of the Ad.",
+     "type": "string"
+    },
+    "asin": {
+     "description": "The asin associated with this Ad.",
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "The identifier of the Campaign associated with the Ad.",
+     "type": "string"
+    },
+    "extendedData": {
+     "$ref": "AdExtendedData"
+    },
+    "landingPageType": {
+     "description": "The landing page type of the Ad. It can be one of ASIN_DP, SKU_DP, OFF_AMAZON_LINK, or STORE with ASIN, SKU, or an HTTPS URL value in the `landingPageValue` field.",
+     "type": "string"
+    },
+    "landingPageValue": {
+     "description": "The landing page for the Ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "EntityState"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "adId",
+    "campaignId",
+    "state"
+   ],
+   "type": "object"
+  },
+  "AdErrorType": {
+   "description": "Ad Error Type",
+   "enum": [
+    "OTHER_ERROR",
+    "RANGE_ERROR"
+   ],
+   "type": "string"
+  },
+  "AdExtendedData": {
+   "properties": {
+    "creationDate": {
+     "description": "The date in ISO 8601 format",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdateDate": {
+     "description": "The date in ISO 8601 format",
+     "format": "date-time",
+     "type": "string"
+    },
+    "servingStatus": {
+     "$ref": "AdServingStatus"
+    }
+   },
+   "type": "object"
+  },
+  "AdFailureResponseItem": {
+   "properties": {
+    "errors": {
+     "description": "A list of validation errors.",
+     "items": {
+      "$ref": "AdMutationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the ad in the array from the request body.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "AdGroup": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the Ad Group.",
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "The identifier of the Campaign associated with the Ad Group.",
+     "type": "string"
+    },
+    "defaultBid": {
+     "$ref": "DefaultBid"
+    },
+    "extendedData": {
+     "$ref": "AdGroupExtendedData"
+    },
+    "name": {
+     "description": "The name of the Ad Group.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "state": {
+     "$ref": "EntityState"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "campaignId",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "AdGroupErrorType": {
+   "description": "AdGroup Error Type",
+   "enum": [
+    "BIDDING_ERROR",
+    "DATE_ERROR",
+    "OTHER_ERROR",
+    "RANGE_ERROR"
+   ],
+   "type": "string"
+  },
+  "AdGroupExtendedData": {
+   "properties": {
+    "creationDate": {
+     "description": "The date in ISO 8601 format",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdateDate": {
+     "description": "The date in ISO 8601 format",
+     "format": "date-time",
+     "type": "string"
+    },
+    "servingStatus": {
+     "$ref": "AdGroupServingStatus"
+    }
+   },
+   "type": "object"
+  },
+  "AdGroupFailureResponseItem": {
+   "properties": {
+    "errors": {
+     "description": "A list of validation errors.",
+     "items": {
+      "$ref": "AdGroupMutationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the ad group in the array from the request body.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "AdGroupMutationError": {
+   "properties": {
+    "errorType": {
+     "$ref": "AdGroupErrorType"
+    },
+    "errorValue": {
+     "$ref": "AdGroupMutationErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "AdGroupMutationErrorSelector": {
+   "properties": {
+    "biddingError": {
+     "$ref": "BiddingError"
+    },
+    "dateError": {
+     "$ref": "DateError"
+    },
+    "otherError": {
+     "$ref": "OtherError"
+    },
+    "rangeError": {
+     "$ref": "RangeError"
+    }
+   },
+   "type": "object"
+  },
+  "AdGroupMutationExceptionResponseContent": {
+   "description": "Exception resulting in mutating campaign management entities",
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "AdGroupMutationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "AdGroupServingStatus": {
+   "enum": [
+    "ACCOUNT_OUT_OF_BUDGET",
+    "ADGROUP_POLICING_CREATIVE_REJECTED",
+    "ADGROUP_POLICING_PENDING_REVIEW",
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_EXCEED_SPENDS_LIMIT",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_STATUS_ENABLED",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_INCOMPLETE",
+    "AD_GROUP_LOW_BID",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_POLICING_CREATIVE_REJECTED",
+    "AD_GROUP_POLICING_PENDING_REVIEW",
+    "AD_GROUP_STATUS_ENABLED",
+    "AD_POLICING_PENDING_REVIEW",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "ENDED",
+    "INELIGIBLE",
+    "OTHER",
+    "PENDING_START_DATE",
+    "STATUS_UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "AdGroupSuccessResponseItem": {
+   "properties": {
+    "adGroup": {
+     "$ref": "AdGroup"
+    },
+    "adGroupId": {
+     "description": "The ad group ID.",
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the ad group in the array from the request body.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "AdMutationError": {
+   "properties": {
+    "errorType": {
+     "$ref": "AdErrorType"
+    },
+    "errorValue": {
+     "$ref": "AdMutationErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "AdMutationErrorSelector": {
+   "properties": {
+    "otherError": {
+     "$ref": "OtherError"
+    },
+    "rangeError": {
+     "$ref": "RangeError"
+    }
+   },
+   "type": "object"
+  },
+  "AdMutationExceptionResponseContent": {
+   "description": "Exception resulting in mutating campaign management entities",
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "AdMutationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "AdServingStatus": {
+   "enum": [
+    "ACCOUNT_OUT_OF_BUDGET",
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_EXCEED_SPENDS_LIMIT",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_STATUS_ENABLED",
+    "AD_ARCHIVED",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_INCOMPLETE",
+    "AD_GROUP_LOW_BID",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_POLICING_PENDING_REVIEW",
+    "AD_GROUP_STATUS_ENABLED",
+    "AD_PAUSED",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "AD_STATUS_ARCHIVED",
+    "AD_STATUS_LIVE",
+    "AD_STATUS_PAUSED",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "ENDED",
+    "INELIGIBLE",
+    "MISSING_DECORATION",
+    "NOT_BUYABLE",
+    "NOT_IN_BUYBOX",
+    "NOT_IN_POLICY",
+    "OTHER",
+    "OUT_OF_STOCK",
+    "PENDING_START_DATE",
+    "SECURITY_SCAN_PENDING_REVIEW",
+    "SECURITY_SCAN_REJECTED",
+    "STATUS_UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "AdSuccessResponseItem": {
+   "properties": {
+    "ad": {
+     "$ref": "Ad"
+    },
+    "adId": {
+     "description": "The ad ID.",
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the ad in the array from the request body.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "AssetProperties": {
+   "description": "The properties of the video asset to preview. You must provide either `creativeId` or `assetProperties`. `assetProperties` cannot be used in conjunction with `creativeId`.",
+   "properties": {
+    "assetId": {
+     "description": "The unique identifier of the video asset. This assetId comes from the Creative Asset Library.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The identifier of the particular video asset version.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "BiddingError": {
+   "description": "Errors related to bids.",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "lowerLimit": {
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "BiddingErrorReason"
+    },
+    "upperLimit": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "BiddingErrorReason": {
+   "description": "Error Reasons Bidding Error Reasons",
+   "enum": [
+    "BID_GT_BUDGET",
+    "BID_OUT_OF_MARKET_PLACE_RANGE",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "BillingError": {
+   "description": "Errors related to billing",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "BillingErrorReason"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "BillingErrorReason": {
+   "description": "Billing Error Reasons",
+   "enum": [
+    "ADVERTISER_BILLING_SETUP_INCOMPLETE",
+    "ADVERTISER_SUSPENDED",
+    "BILLING_ACCOUNT_NOT_FOUND",
+    "EXPIRED_PAYMENT_METHOD",
+    "OTHER",
+    "PAYMENT_PROFILE_NOT_FOUND",
+    "VETTING_FAILURE"
+   ],
+   "type": "string"
+  },
+  "Budget": {
+   "properties": {
+    "budgetValue": {
+     "$ref": "BudgetValue"
+    },
+    "recurrenceType": {
+     "$ref": "RecurrenceType"
+    }
+   },
+   "required": [
+    "budgetValue"
+   ],
+   "type": "object"
+  },
+  "BudgetCurrencyCode": {
+   "description": "The currency code of the campaign budget. Following table summarizes the list of available marketplaces, with their currency codes | Marketplace | CurrencyCode | Supported | | --- | --- | --- | | US | USD | Yes | | CA |…",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "EGP",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "MXP",
+    "PLN",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "BudgetError": {
+   "description": "Errors related to budgets",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "lowerLimit": {
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "BudgetErrorReason"
+    },
+    "upperLimit": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "BudgetErrorReason": {
+   "description": "Budget Error Reasons",
+   "enum": [
+    "BUDGETING_POLICY_INVALID",
+    "BUDGET_CURRENCY_DOES_NOT_MATCH_MARKETPLACE_SETTINGS",
+    "BUDGET_LT_DEFAULT_BIDS",
+    "BUDGET_LT_PREDEFINED_TARGET_BIDS",
+    "BUDGET_OUT_OF_MARKET_PLACE_RANGE",
+    "BUDGET_TOO_HIGH",
+    "BUDGET_TOO_LOW",
+    "MISSING_BUDGETING_POLICY",
+    "MISSING_IN_BUDGET_FLAG",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "BudgetSettings": {
+   "properties": {
+    "budget": {
+     "$ref": "Budget"
+    }
+   },
+   "required": [
+    "budget"
+   ],
+   "type": "object"
+  },
+  "BudgetValue": {
+   "properties": {
+    "amount": {
+     "description": "The budget amount of the campaign",
+     "format": "double",
+     "type": "number"
+    },
+    "budgetCurrencyCode": {
+     "$ref": "BudgetCurrencyCode"
+    }
+   },
+   "type": "object"
+  },
+  "BulkAdGroupsOperationResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "AdGroupFailureResponseItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "AdGroupSuccessResponseItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BulkAdsOperationResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "AdFailureResponseItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "AdSuccessResponseItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BulkCampaignOperationResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "CampaignFailureResponseItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "CampaignSuccessResponseItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BulkCreativeOperationResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "CreativeFailureResponseItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "CreativeSuccessResponseItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BulkLocationOperationResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "LocationFailureResponseItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "LocationSuccessResponseItem"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BulkTargetingClauseOperationResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "TargetingClauseFailureResponseItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "TargetingClauseSuccessResponseItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CallToAction": {
+   "description": "Prompt to encourage the customer to take a desired action. If no value is provided, the preview API will return previews for all supported CallToAction.",
+   "enum": [
+    "LEARN_MORE",
+    "SHOP_NOW"
+   ],
+   "type": "string"
+  },
+  "CallToActionPosition": {
+   "description": "The location of the CallToAction (default: LEFT).",
+   "enum": [
+    "LEFT",
+    "RIGHT"
+   ],
+   "type": "string"
+  },
+  "Campaign": {
+   "properties": {
+    "budgetSettings": {
+     "$ref": "BudgetSettings"
+    },
+    "campaignId": {
+     "description": "The identifier of the Campaign.",
+     "type": "string"
+    },
+    "costType": {
+     "description": "Cost type of the Campaign. Determines how the Campaign will bid and charge. Note that new values can be added to this list in the future. Support for the responses with newly addded values should be ensured for using th…",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The YYYYMMDD end date for the Campaign. Must be greater than the value for startDate. If not specified, the Campaign has no end date and runs continuously.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "extendedData": {
+     "$ref": "CampaignExtendedData"
+    },
+    "name": {
+     "description": "The name of the Campaign. Note: Names including single quotes must be escaped. For example, to create `Campaign 'A'`, the name field should be as follows: `\"name\": \"Campaign '\\''A'\\''\"`",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The YYYYMMDD start date for the Campaign. If this field is not set to a value, the current date is used.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "EntityState"
+    },
+    "tags": {
+     "$ref": "Tags"
+    },
+    "targetingType": {
+     "$ref": "TargetingType"
+    }
+   },
+   "required": [
+    "budgetSettings",
+    "campaignId",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "CampaignErrorType": {
+   "description": "Campaign Error Type",
+   "enum": [
+    "BIDDING_ERROR",
+    "BILLING_ERROR",
+    "BUDGET_ERROR",
+    "DATE_ERROR",
+    "OTHER_ERROR",
+    "RANGE_ERROR"
+   ],
+   "type": "string"
+  },
+  "CampaignExtendedData": {
+   "properties": {
+    "creationDate": {
+     "description": "The date in ISO 8601 format.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdateDate": {
+     "description": "The date in ISO 8601 format.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "servingStatus": {
+     "$ref": "CampaignServingStatus"
+    }
+   },
+   "type": "object"
+  },
+  "CampaignFailureResponseItem": {
+   "properties": {
+    "errors": {
+     "description": "A list of validation errors.",
+     "items": {
+      "$ref": "CampaignMutationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "the index of the campaign in the array from the request body.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "CampaignMutationError": {
+   "properties": {
+    "errorType": {
+     "$ref": "CampaignErrorType"
+    },
+    "errorValue": {
+     "$ref": "CampaignMutationErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "CampaignMutationErrorSelector": {
+   "properties": {
+    "biddingError": {
+     "$ref": "BiddingError"
+    },
+    "budgetError": {
+     "$ref": "BudgetError"
+    },
+    "dateError": {
+     "$ref": "DateError"
+    },
+    "otherError": {
+     "$ref": "OtherError"
+    },
+    "rangeError": {
+     "$ref": "RangeError"
+    }
+   },
+   "type": "object"
+  },
+  "CampaignMutationExceptionResponseContent": {
+   "description": "Exception resulting in mutating campaign management entities",
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "CampaignMutationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CampaignServingStatus": {
+   "description": "`Notice: the servingStatus enums have not been finalized yet.` The campaign serving status determined by system. - ADVERTISER_STATUS_ENABLED - Advertiser's status is enabled - ADVERTISER_POLICING_PENDING_REVIEW - Advert…",
+   "enum": [
+    "ADVERTISER_ACCOUNT_OUT_OF_BUDGET",
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_EXCEED_SPENDS_LIMIT",
+    "ADVERTISER_OUT_OF_PREPAY_BALANCE",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_POLICING_PENDING_REVIEW",
+    "ADVERTISER_POLICING_SUSPENDED",
+    "ADVERTISER_STATUS_ENABLED",
+    "AD_POLICING_PENDING_REVIEW",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_STATUS_ENABLED",
+    "ELIGIBLE",
+    "ENDED",
+    "INELIGIBLE",
+    "OTHER",
+    "PENDING_REVIEW",
+    "PENDING_START_DATE",
+    "PORTFOLIO_ARCHIVED",
+    "PORTFOLIO_ENDED",
+    "PORTFOLIO_OUT_OF_BUDGET",
+    "PORTFOLIO_PAUSED",
+    "PORTFOLIO_PENDING_START_DATE",
+    "PORTFOLIO_STATUS_ENABLED",
+    "REJECTED",
+    "STATUS_UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "CampaignSuccessResponseItem": {
+   "properties": {
+    "campaign": {
+     "$ref": "Campaign"
+    },
+    "campaignId": {
+     "description": "The campaign ID.",
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the campaign in the array from the request body.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "CreateAd": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the Ad Group associated with the Ad.",
+     "type": "string"
+    },
+    "adName": {
+     "description": "The name of the Ad.",
+     "type": "string"
+    },
+    "landingPageType": {
+     "description": "The type of landing page for the Ad. You can specify one of these values: | Type | Description | | --- | ------- | | ASIN_DP | The detail page of the asin. Please specify the ASIN in the `landingPageValue` field | | SKU…",
+     "type": "string"
+    },
+    "landingPageValue": {
+     "description": "The landing page for the Ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "CreateOrUpdateEntityState"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "state"
+   ],
+   "type": "object"
+  },
+  "CreateAdGroup": {
+   "properties": {
+    "campaignId": {
+     "description": "The identifier of the Campaign associated with the Ad Group.",
+     "type": "string"
+    },
+    "defaultBid": {
+     "$ref": "DefaultBid"
+    },
+    "name": {
+     "description": "The name of the Ad Group.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "state": {
+     "$ref": "CreateOrUpdateEntityState"
+    }
+   },
+   "required": [
+    "campaignId",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "CreateCampaign": {
+   "properties": {
+    "budgetSettings": {
+     "$ref": "BudgetSettings"
+    },
+    "costType": {
+     "description": "Cost type of the Campaign. Determines how the Campaign will bid and charge. Note that new values can be added to this list in the future. Support for the responses with newly addded values should be ensured for using th…",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "endDate is optional. If endDate is specified, startDate must be specified as well.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the Campaign. Note: Names including single quotes must be escaped. For example, to create `Campaign 'A'`, the name field should be as follows: `\"name\": \"Campaign '\\''A'\\''\"`",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "startDate": {
+     "description": "startDate is optional. If startDate is not specified, current date will be used.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "CreateOrUpdateEntityState"
+    },
+    "tags": {
+     "$ref": "Tags"
+    },
+    "targetingType": {
+     "$ref": "TargetingType"
+    }
+   },
+   "required": [
+    "budgetSettings",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "CreateCreative": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the Ad Group to which this Creative is associated.",
+     "type": "string"
+    },
+    "assetId": {
+     "description": "The unique identifier of the video asset. This assetId comes from the Creative Asset Library.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The identifier of the particular video asset version.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "CreateLocation": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the Ad Group to which this Location is associated.",
+     "type": "string"
+    },
+    "locationId": {
+     "description": "The Location Geo ACI (Amazon Common Identifier).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "locationId"
+   ],
+   "type": "object"
+  },
+  "CreateOrUpdateEntityState": {
+   "description": "State of the resource during creation or updates.",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "CreateSponsoredTvAdGroupsRequestContent": {
+   "properties": {
+    "adGroups": {
+     "description": "An array of Sponsored TV ad groups.",
+     "items": {
+      "$ref": "CreateAdGroup"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "CreateSponsoredTvAdGroupsResponseContent": {
+   "properties": {
+    "adGroups": {
+     "$ref": "BulkAdGroupsOperationResponse"
+    }
+   },
+   "type": "object"
+  },
+  "CreateSponsoredTvAdsRequestContent": {
+   "properties": {
+    "ads": {
+     "description": "An array of Sponsored TV ads.",
+     "items": {
+      "$ref": "CreateAd"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "ads"
+   ],
+   "type": "object"
+  },
+  "CreateSponsoredTvAdsResponseContent": {
+   "properties": {
+    "ads": {
+     "$ref": "BulkAdsOperationResponse"
+    }
+   },
+   "type": "object"
+  },
+  "CreateSponsoredTvCampaignsRequestContent": {
+   "properties": {
+    "campaigns": {
+     "items": {
+      "$ref": "CreateCampaign"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaigns"
+   ],
+   "type": "object"
+  },
+  "CreateSponsoredTvCampaignsResponseContent": {
+   "properties": {
+    "campaigns": {
+     "$ref": "BulkCampaignOperationResponse"
+    }
+   },
+   "type": "object"
+  },
+  "CreateSponsoredTvCreativesRequestContent": {
+   "properties": {
+    "creatives": {
+     "description": "An array of creatives.",
+     "items": {
+      "$ref": "CreateCreative"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "creatives"
+   ],
+   "type": "object"
+  },
+  "CreateSponsoredTvCreativesResponseContent": {
+   "properties": {
+    "creatives": {
+     "$ref": "BulkCreativeOperationResponse"
+    }
+   },
+   "required": [
+    "creatives"
+   ],
+   "type": "object"
+  },
+  "CreateSponsoredTvLocationsRequestContent": {
+   "properties": {
+    "locations": {
+     "description": "An array of locations.",
+     "items": {
+      "$ref": "CreateLocation"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "locations"
+   ],
+   "type": "object"
+  },
+  "CreateSponsoredTvLocationsResponseContent": {
+   "properties": {
+    "locations": {
+     "$ref": "BulkLocationOperationResponse"
+    }
+   },
+   "required": [
+    "locations"
+   ],
+   "type": "object"
+  },
+  "CreateSponsoredTvTargetingClausesRequestContent": {
+   "properties": {
+    "targetingClauses": {
+     "description": "An array of targetingClauses.",
+     "items": {
+      "$ref": "CreateTargetingClause"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targetingClauses"
+   ],
+   "type": "object"
+  },
+  "CreateSponsoredTvTargetingClausesResponseContent": {
+   "properties": {
+    "targetingClauses": {
+     "$ref": "BulkTargetingClauseOperationResponse"
+    }
+   },
+   "required": [
+    "targetingClauses"
+   ],
+   "type": "object"
+  },
+  "CreateTargetingClause": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the Ad Group to which this Targeting Clause is associated.",
+     "type": "string"
+    },
+    "bid": {
+     "deprecated": true,
+     "description": "This shape is deprecated: The bid for Ads sourced using the Targeting Clause. This field will no longer be supported as bids are now only supported at an adGroup level.",
+     "format": "double",
+     "type": "number"
+    },
+    "expression": {
+     "description": "The targeting expression.",
+     "items": {
+      "$ref": "CreateTargetingExpressionPredicate"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "state": {
+     "$ref": "CreateOrUpdateEntityState"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "expression",
+    "state"
+   ],
+   "type": "object"
+  },
+  "CreateTargetingExpressionPredicate": {
+   "properties": {
+    "type": {
+     "description": "Determines the type of targeting. Note that new values can be added to this list in the future. Support for the responses with newly addded values should be ensured for using them at the time of creation. | Predicate | …",
+     "type": "string"
+    },
+    "value": {
+     "description": "\"The value of the targeting predicate. Example for retail category `Arts, Crafts & Sewing`: \"2617941011\" Example for content categories \"amzn1.iab-content.483\" You can specify the following predicate values for CONTENT_…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "value"
+   ],
+   "type": "object"
+  },
+  "Creative": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the Ad Group to which this Creative is associated.",
+     "type": "string"
+    },
+    "assetId": {
+     "description": "The unique identifier of the video asset in use.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The identifier of the particular video asset version.",
+     "type": "string"
+    },
+    "creativeId": {
+     "description": "The Creative identifier.",
+     "type": "string"
+    },
+    "moderationStatus": {
+     "$ref": "SponsoredTvCreativesModerationsStatus"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "assetId",
+    "assetVersion",
+    "creativeId",
+    "moderationStatus"
+   ],
+   "type": "object"
+  },
+  "CreativeErrorType": {
+   "description": "Creative Error Type",
+   "enum": [
+    "OTHER_ERROR",
+    "RANGE_ERROR"
+   ],
+   "type": "string"
+  },
+  "CreativeFailureResponseItem": {
+   "properties": {
+    "errors": {
+     "description": "A list of validation errors.",
+     "items": {
+      "$ref": "CreativeMutationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the creative in the array from the request body.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "CreativeIdFilter": {
+   "description": "Filter entities by the list of creativeIds.",
+   "properties": {
+    "include": {
+     "items": {
+      "description": "Entity object identifier.",
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "CreativeMutationError": {
+   "properties": {
+    "errorType": {
+     "$ref": "CreativeErrorType"
+    },
+    "errorValue": {
+     "$ref": "CreativeMutationErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "CreativeMutationErrorSelector": {
+   "properties": {
+    "otherError": {
+     "$ref": "OtherError"
+    },
+    "rangeError": {
+     "$ref": "RangeError"
+    }
+   },
+   "type": "object"
+  },
+  "CreativeMutationExceptionResponseContent": {
+   "description": "Exception resulting in mutating creative management entities",
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "CreativeMutationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreativeSuccessResponseItem": {
+   "properties": {
+    "creative": {
+     "$ref": "Creative"
+    },
+    "creativeId": {
+     "description": "The creative ID.",
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the creative in the array from the request body.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "CreativesModerations": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the Ad Group to which this Creative is associated.",
+     "type": "string"
+    },
+    "creativeId": {
+     "description": "The Creative identifier.",
+     "type": "string"
+    },
+    "etaForModeration": {
+     "description": "Expected date and time by which moderation will be complete.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "moderationStatus": {
+     "$ref": "SponsoredTvCreativesModerationsStatus"
+    },
+    "reviewedVideoUrl": {
+     "description": "Address of the video reviewed during moderation.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "creativeId",
+    "moderationStatus"
+   ],
+   "type": "object"
+  },
+  "DateError": {
+   "description": "Errors related to dates.",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "DateErrorReason"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "DateErrorReason": {
+   "description": "Date Error Reasons",
+   "enum": [
+    "END_DATE_EARLIER_THAN_TODAY",
+    "END_DATE_LATER_THAN_MAXIMUM",
+    "INVALID_DATE",
+    "OTHER",
+    "START_DATE_AFTER_END_DATE",
+    "START_DATE_EARLIER_THAN_TODAY",
+    "START_DATE_LATER_THAN_MAXIMUM",
+    "UPDATING_READ_ONLY_END_DATE",
+    "UPDATING_READ_ONLY_START_DATE"
+   ],
+   "type": "string"
+  },
+  "DefaultBid": {
+   "properties": {
+    "bid": {
+     "description": "The amount of the default bid associated with the ad group. Used if no bid is specified.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteSponsoredTvAdGroupsRequestContent": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "ObjectIdFilter"
+    }
+   },
+   "required": [
+    "adGroupIdFilter"
+   ],
+   "type": "object"
+  },
+  "DeleteSponsoredTvAdGroupsResponseContent": {
+   "properties": {
+    "adGroups": {
+     "$ref": "BulkAdGroupsOperationResponse"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteSponsoredTvAdsRequestContent": {
+   "properties": {
+    "adIdFilter": {
+     "$ref": "ObjectIdFilter"
+    }
+   },
+   "required": [
+    "adIdFilter"
+   ],
+   "type": "object"
+  },
+  "DeleteSponsoredTvAdsResponseContent": {
+   "properties": {
+    "ads": {
+     "$ref": "BulkAdsOperationResponse"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteSponsoredTvCampaignsRequestContent": {
+   "properties": {
+    "campaignIdFilter": {
+     "$ref": "ObjectIdFilter"
+    }
+   },
+   "required": [
+    "campaignIdFilter"
+   ],
+   "type": "object"
+  },
+  "DeleteSponsoredTvCampaignsResponseContent": {
+   "properties": {
+    "campaigns": {
+     "$ref": "BulkCampaignOperationResponse"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteSponsoredTvLocationsRequestContent": {
+   "properties": {
+    "locationExpressionIdFilter": {
+     "$ref": "ObjectIdFilter"
+    }
+   },
+   "required": [
+    "locationExpressionIdFilter"
+   ],
+   "type": "object"
+  },
+  "DeleteSponsoredTvLocationsResponseContent": {
+   "properties": {
+    "locations": {
+     "$ref": "BulkLocationOperationResponse"
+    }
+   },
+   "required": [
+    "locations"
+   ],
+   "type": "object"
+  },
+  "DeleteSponsoredTvTargetingClausesRequestContent": {
+   "properties": {
+    "targetIdFilter": {
+     "$ref": "ObjectIdFilter"
+    }
+   },
+   "required": [
+    "targetIdFilter"
+   ],
+   "type": "object"
+  },
+  "DeleteSponsoredTvTargetingClausesResponseContent": {
+   "properties": {
+    "targetingClauses": {
+     "$ref": "BulkTargetingClauseOperationResponse"
+    }
+   },
+   "required": [
+    "targetingClauses"
+   ],
+   "type": "object"
+  },
+  "EntityState": {
+   "description": "The current resource state.",
+   "enum": [
+    "ARCHIVED",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "EntityStateFilter": {
+   "description": "Filter entities by state.",
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "EntityState"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "ErrorCause": {
+   "description": "Structure describing error cause - location in the payload and data causing error.",
+   "properties": {
+    "location": {
+     "description": "Error location, JSON Path expression specifying element of API payload causing error.",
+     "type": "string"
+    },
+    "trigger": {
+     "description": "Optional value causing error.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "location"
+   ],
+   "type": "object"
+  },
+  "Experience": {
+   "description": "The advertiser experience type for a given preview video.",
+   "properties": {
+    "callToAction": {
+     "$ref": "CallToAction"
+    },
+    "interactivity": {
+     "description": "The types of interactivity experiences Sponsored TV supports. Possible values: - BASE: viewers cannot have any interaction with the video - CLICKABLE: viewers can interact by directly clicking the button on the video - …",
+     "type": "string"
+    }
+   },
+   "required": [
+    "callToAction",
+    "interactivity"
+   ],
+   "type": "object"
+  },
+  "Forecast": {
+   "properties": {
+    "metric": {
+     "$ref": "ForecastMetricType"
+    },
+    "value": {
+     "$ref": "ForecastValue"
+    }
+   },
+   "type": "object"
+  },
+  "ForecastAd": {
+   "description": "Simplified Ad for Forecast. Asin and sku used for vendors and sellers",
+   "properties": {
+    "landingPageType": {
+     "description": "The landing page type of the Ad. Forecast only use ASIN_DP or SKU_DP with asin or sku value in the `landingPageValue` field",
+     "type": "string"
+    },
+    "landingPageValue": {
+     "description": "The landing page for the Ad",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType",
+    "landingPageValue"
+   ],
+   "type": "object"
+  },
+  "ForecastAdGroup": {
+   "description": "Simplified AdGroup needed for Forecast",
+   "properties": {
+    "defaultBid": {
+     "$ref": "DefaultBid"
+    }
+   },
+   "type": "object"
+  },
+  "ForecastCampaign": {
+   "description": "Simplified Campaign needed for Forecast",
+   "properties": {
+    "budgetSettings": {
+     "$ref": "BudgetSettings"
+    },
+    "campaignId": {
+     "description": "The identifier of the forecast campaign.",
+     "type": "string"
+    },
+    "costType": {
+     "description": "Support for the responses with newly added values should be ensured for using them at the time of creation or updates. | Type | Description | | --- | --- | | \"CPM\" | [Default] The performance of the campaign will be mea…",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The yyyy-MM-dd'T'hh:mm:ss'Z' end date for the campaign in forecast. Must be greater than the value for startDate. If not specified, the campaign has no end date and runs continuously.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The yyyy-MM-dd'T'hh:mm:ss'Z' start date for the campaign in forecast. If this field is not set to a value, the current date is used.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "targetingType": {
+     "$ref": "TargetingType"
+    }
+   },
+   "required": [
+    "budgetSettings",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "ForecastCreative": {
+   "description": "Simplified Creative needed for Forecast",
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the ad group to which this creative is associated.",
+     "type": "string"
+    },
+    "assetId": {
+     "description": "The unique identifier of the video asset in use.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The identifier of the particular video asset version.",
+     "type": "string"
+    },
+    "creativeId": {
+     "description": "The creative identifier.",
+     "type": "string"
+    },
+    "videoDuration": {
+     "description": "The duration time of the creative",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "videoDuration"
+   ],
+   "type": "object"
+  },
+  "ForecastErrorItem": {
+   "properties": {
+    "errorType": {
+     "$ref": "ForecastErrorType"
+    },
+    "errorValue": {
+     "$ref": "ForecastErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "ForecastErrorSelector": {
+   "properties": {
+    "forecastModelError": {
+     "$ref": "ForecastModelError"
+    },
+    "forecastOtherError": {
+     "$ref": "ForecastOtherError"
+    },
+    "forecastRulesError": {
+     "$ref": "ForecastRulesError"
+    },
+    "forecastValidationError": {
+     "$ref": "ForecastValidationError"
+    }
+   },
+   "type": "object"
+  },
+  "ForecastErrorType": {
+   "description": "Forecast Error Type",
+   "enum": [
+    "FORECAST_MODEL_ERROR",
+    "FORECAST_OTHER_ERROR",
+    "FORECAST_RULES_ERROR",
+    "FORECAST_VALIDATION_ERROR"
+   ],
+   "type": "string"
+  },
+  "ForecastExceptionResponseContent": {
+   "description": "Bad Request exception resulting in errors in ST forecast",
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "ForecastErrorItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ForecastLocationTargetingClause": {
+   "description": "Simplified Location Targeting Clause for Forecast",
+   "properties": {
+    "category": {
+     "description": "The category of the location, including DMA, CITY, POSTAL_CODE and so on.",
+     "type": "string"
+    },
+    "locationId": {
+     "description": "The Location Geo ACI (Amazon Common Identifier).",
+     "type": "string"
+    },
+    "locationIdResolved": {
+     "description": "The human readable location information.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "locationId"
+   ],
+   "type": "object"
+  },
+  "ForecastMetricType": {
+   "description": "Forecast Result Types",
+   "enum": [
+    "CLICKS",
+    "DETAIL_PAGE_VIEWS",
+    "IMPRESSIONS",
+    "REACH"
+   ],
+   "type": "string"
+  },
+  "ForecastModelError": {
+   "description": "Forecast Errors related to forecast model",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "reason": {
+     "description": "Reason for forecast model error",
+     "type": "string"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "ForecastOtherError": {
+   "description": "Forecast Errors just targeting on the general forecast error type",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "reason": {
+     "description": "Reason for forecast other error",
+     "type": "string"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "ForecastRulesError": {
+   "description": "Forecast Errors related to forecast rules as too broad or too narrow",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "reason": {
+     "description": "Reason for forecast rules error",
+     "type": "string"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "ForecastTargetingClause": {
+   "description": "Simplified Targeting Clause for Forecast, which only list of Targeting Expression and bid price",
+   "properties": {
+    "bid": {
+     "description": "The bid for ads sourced using the target. The US marketplace has a default bid of $15 CPM",
+     "format": "double",
+     "type": "number"
+    },
+    "expression": {
+     "description": "The targeting expression.",
+     "items": {
+      "$ref": "TargetingExpressionPredicate"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "expression"
+   ],
+   "type": "object"
+  },
+  "ForecastValidationError": {
+   "description": "Errors related to forecast input validation errors",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "reason": {
+     "description": "Reason for validation fields error in forecast",
+     "type": "string"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "ForecastValue": {
+   "properties": {
+    "max": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "min": {
+     "format": "int64",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "InternalErrorErrorCode": {
+   "enum": [
+    "INTERNAL_ERROR"
+   ],
+   "type": "string"
+  },
+  "InternalServerExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "InternalErrorErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InvalidArgumentError": {
+   "properties": {
+    "errorType": {
+     "description": "The type of the error",
+     "type": "string"
+    },
+    "errorValue": {
+     "$ref": "InvalidArgumentErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "InvalidArgumentErrorCode": {
+   "enum": [
+    "INVALID_ARGUMENT"
+   ],
+   "type": "string"
+  },
+  "InvalidArgumentErrorSelector": {
+   "properties": {
+    "otherError": {
+     "$ref": "OtherError"
+    },
+    "rangeError": {
+     "$ref": "RangeError"
+    }
+   },
+   "type": "object"
+  },
+  "InvalidArgumentExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "InvalidArgumentError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ListSponsoredTvAdGroupsRequestContent": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "fullFunnelCampaignIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API.",
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "NameFilter"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "EntityStateFilter"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvAdGroupsResponseContent": {
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "AdGroup"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "totalCount": {
+     "description": "The total number of entities.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvAdsRequestContent": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "adIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "fullFunnelCampaignIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API.",
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "EntityStateFilter"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvAdsResponseContent": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "Ad"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "totalCount": {
+     "description": "The total number of entities.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvCampaignsRequestContent": {
+   "properties": {
+    "campaignIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "fullFunnelCampaignIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API.",
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "NameFilter"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "EntityStateFilter"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvCampaignsResponseContent": {
+   "properties": {
+    "campaigns": {
+     "items": {
+      "$ref": "Campaign"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "totalCount": {
+     "description": "The total number of entities.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvCreativesModerationsPolicyViolationsRequestContent": {
+   "properties": {
+    "creativeIdFilter": {
+     "$ref": "CreativeIdFilter"
+    },
+    "locale": {
+     "$ref": "Locale"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API.",
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "creativeIdFilter"
+   ],
+   "type": "object"
+  },
+  "ListSponsoredTvCreativesModerationsPolicyViolationsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "policyViolations": {
+     "items": {
+      "$ref": "SponsoredTvPolicyViolation"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvCreativesModerationsRequestContent": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "creativeIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "locale": {
+     "$ref": "Locale"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API.",
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvCreativesModerationsResponseContent": {
+   "properties": {
+    "creativesModerations": {
+     "items": {
+      "$ref": "CreativesModerations"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvCreativesRequestContent": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "creativeIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "fullFunnelCampaignIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API.",
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvCreativesResponseContent": {
+   "properties": {
+    "creatives": {
+     "items": {
+      "$ref": "Creative"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of creative entities.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvLocationsRequestContent": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "locationExpressionIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the Locations paginated response. Defaults to max page size for given API.",
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvLocationsResponseContent": {
+   "properties": {
+    "locations": {
+     "items": {
+      "$ref": "Location"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of entities.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvTargetingClausesRequestContent": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "fullFunnelCampaignIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the paginated response. Defaults to max page size for given API.",
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "EntityStateFilter"
+    },
+    "targetIdFilter": {
+     "$ref": "ObjectIdFilter"
+    }
+   },
+   "type": "object"
+  },
+  "ListSponsoredTvTargetingClausesResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Token value allowing to navigate to the next response page.",
+     "type": "string"
+    },
+    "targetingClauses": {
+     "items": {
+      "$ref": "TargetingClause"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of entities.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "Locale": {
+   "description": "Locale Locale string as described in [BCP 47](https://tools.ietf.org/html/bcp47). For example, `en-US`",
+   "enum": [
+    "ar-AE",
+    "de-DE",
+    "en-AE",
+    "en-AU",
+    "en-BR",
+    "en-CA",
+    "en-DE",
+    "en-ES",
+    "en-FR",
+    "en-GB",
+    "en-IN",
+    "en-IT",
+    "en-JP",
+    "en-SG",
+    "en-US",
+    "es-ES",
+    "es-MX",
+    "fr-CA",
+    "fr-FR",
+    "hi-IN",
+    "it-IT",
+    "ja-JP",
+    "ko-KR",
+    "nl-NL",
+    "pt-BR",
+    "zh-CN"
+   ],
+   "type": "string"
+  },
+  "Location": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the Ad Group to which this Location is associated.",
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "The identifier of the Campaign associated with the Ad Group.",
+     "type": "string"
+    },
+    "locationExpressionId": {
+     "description": "The Location identifier.",
+     "type": "string"
+    },
+    "locationId": {
+     "description": "The Location Geo ACI (Amazon Common Identifier).",
+     "type": "string"
+    },
+    "locationIdResolved": {
+     "description": "A human-readable location text.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "campaignId",
+    "locationExpressionId",
+    "locationId"
+   ],
+   "type": "object"
+  },
+  "LocationError": {
+   "description": "Errors related to location validation",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "reason": {
+     "description": "Reason for validation fields error in location",
+     "type": "string"
+    }
+   },
+   "required": [
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "LocationErrorSelector": {
+   "properties": {
+    "locationError": {
+     "$ref": "LocationError"
+    },
+    "otherError": {
+     "$ref": "OtherError"
+    }
+   },
+   "type": "object"
+  },
+  "LocationErrorType": {
+   "description": "Location Error Type",
+   "enum": [
+    "LOCATION_ERROR",
+    "OTHER_ERROR"
+   ],
+   "type": "string"
+  },
+  "LocationFailureResponseItem": {
+   "properties": {
+    "errors": {
+     "description": "A list of validation errors.",
+     "items": {
+      "$ref": "LocationMutationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the location in the array from the request body.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "LocationMutationError": {
+   "properties": {
+    "errorType": {
+     "$ref": "LocationErrorType"
+    },
+    "errorValue": {
+     "$ref": "LocationErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "LocationMutationExceptionResponseContent": {
+   "description": "Exception resulting in mutating campaign management entities",
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "LocationMutationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "LocationSuccessResponseItem": {
+   "properties": {
+    "index": {
+     "description": "The index of the location in the array from the request body.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "location": {
+     "$ref": "Location"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "NameFilter": {
+   "description": "Filter entities by name Note: Names including single quotes must be escaped. For example, to filter for `Campaign 'A'`, provide the following filter array: `[\"Campaign '\\''A'\\''\"]`",
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "QueryTermMatchType"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "ObjectIdFilter": {
+   "description": "Filter entities by the list of objectIds.",
+   "properties": {
+    "include": {
+     "items": {
+      "description": "Entity object identifier.",
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "OtherError": {
+   "description": "Errors not related to any of the other error types",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "OtherErrorReason"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "OtherErrorReason": {
+   "description": "Other Error Reasons",
+   "enum": [
+    "OTHER_ERROR"
+   ],
+   "type": "string"
+  },
+  "PreviewConfiguration": {
+   "description": "Configuration settings for the preview.",
+   "properties": {
+    "asin": {
+     "description": "Amazon Standard Identification Number: The code that identifies the product being advertised. You must provide either `asin` or `sku`. `asin` cannot be used in conjunction with `sku`.",
+     "type": "string"
+    },
+    "callToAction": {
+     "$ref": "CallToAction"
+    },
+    "callToActionPosition": {
+     "$ref": "CallToActionPosition"
+    },
+    "safeZoneEnabled": {
+     "description": "Whether or not to see the safe zone as an overlay (true (default) | false).",
+     "type": "boolean"
+    },
+    "sku": {
+     "description": "Stock Keeping Unit: The unique identifier for the product being advertised. You must provide either `asin` or `sku`.`sku` cannot be used in conjunction with `asin`.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PreviewHtml": {
+   "description": "The experience type and HTML for a given preview video",
+   "properties": {
+    "experience": {
+     "$ref": "Experience"
+    },
+    "html": {
+     "description": "The HTML for one preview video.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "experience",
+    "html"
+   ],
+   "type": "object"
+  },
+  "PreviewSponsoredTvCreativeRequestContent": {
+   "properties": {
+    "assetProperties": {
+     "$ref": "AssetProperties"
+    },
+    "creativeId": {
+     "description": "The unique identifier of the creative to preview. You must provide either `creativeId` or `assetProperties`. `creativeId` cannot be used in conjunction with `assetProperties`.",
+     "type": "string"
+    },
+    "previewConfiguration": {
+     "$ref": "PreviewConfiguration"
+    }
+   },
+   "required": [
+    "previewConfiguration"
+   ],
+   "type": "object"
+  },
+  "PreviewSponsoredTvCreativeResponseContent": {
+   "properties": {
+    "previewHtmls": {
+     "description": "The list of HTMLs for all the requested preview videos.",
+     "items": {
+      "$ref": "PreviewHtml"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "previewHtmls"
+   ],
+   "type": "object"
+  },
+  "QueryTermMatchType": {
+   "description": "Match type for query filters. BROAD_MATCH: Match if the queried value contains the filter value. (substring matching) EXACT_MATCH: Match if the queried value is exactly equivalent to the filter value.",
+   "enum": [
+    "BROAD_MATCH",
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "RangeError": {
+   "description": "Errors related to range constraints and violations",
+   "properties": {
+    "allowed": {
+     "description": "Allowed values",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "lowerLimit": {
+     "description": "Optional lower limit.",
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "RangeErrorReason"
+    },
+    "upperLimit": {
+     "description": "Optional upper limit.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "RangeErrorReason": {
+   "description": "Range Error Reason",
+   "enum": [
+    "INVALID_ENUM_VALUE",
+    "NOT_IN_LIST",
+    "OTHER",
+    "TOO_HIGH",
+    "TOO_LOW"
+   ],
+   "type": "string"
+  },
+  "RecurrenceType": {
+   "description": "The time period over which the amount specified in the `budget` property is allocated. Set to `DAILY` by default, if empty value is provided",
+   "enum": [
+    "DAILY"
+   ],
+   "type": "string"
+  },
+  "SponsoredTvCreativesModerationsStatus": {
+   "description": "Moderation status of a creative. APPROVED: Moderation of the creative is complete PENDING_REVIEW: Moderation of the creative is in progress. The expected date and time for completion are specified in the `etaForModerati…",
+   "enum": [
+    "APPROVED",
+    "PENDING_REVIEW",
+    "REJECTED"
+   ],
+   "type": "string"
+  },
+  "SponsoredTvForecastsRequestContent": {
+   "properties": {
+    "adGroup": {
+     "$ref": "ForecastAdGroup"
+    },
+    "ads": {
+     "description": "list of product Ads specified in ST forecast.",
+     "items": {
+      "$ref": "ForecastAd"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "campaign": {
+     "$ref": "ForecastCampaign"
+    },
+    "creative": {
+     "$ref": "ForecastCreative"
+    },
+    "locationTargetingClauses": {
+     "description": "list of location targeting clauses specified in ST forecast",
+     "items": {
+      "$ref": "ForecastLocationTargetingClause"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingClauses": {
+     "description": "list of targeting clauses specified in ST forecast.",
+     "items": {
+      "$ref": "ForecastTargetingClause"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroup",
+    "ads",
+    "campaign",
+    "targetingClauses"
+   ],
+   "type": "object"
+  },
+  "SponsoredTvForecastsResponseContent": {
+   "properties": {
+    "weeklyForecasts": {
+     "description": "the weekly forecast response include in a list",
+     "items": {
+      "$ref": "Forecast"
+     },
+     "maxItems": 4,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SponsoredTvPolicyViolation": {
+   "properties": {
+    "policyDescription": {
+     "description": "A human-readable description of the policy.",
+     "type": "string"
+    },
+    "policyLinkUrl": {
+     "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+     "type": "string"
+    },
+    "videoEvidences": {
+     "description": "An array of start and end times in seconds for the given policy violation. While there may be more than 15 video evidences, this API will retrieve at most 15.",
+     "items": {
+      "$ref": "SponsoredTvViolatingVideoEvidence"
+     },
+     "maxItems": 15,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SponsoredTvViolatingVideoEvidence": {
+   "properties": {
+    "end": {
+     "description": "Time in seconds at which policy violation within the video asset ends.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "start": {
+     "description": "Time in seconds at which policy violation within the video asset starts.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "Tags": {
+   "additionalProperties": {
+    "type": "string"
+   },
+   "description": "A list of advertiser-specified custom identifiers for the Campaign. Each customer identifier is a key-value pair. Supports up to 50 custom identifiers. Functionality varies by date and advertiser type: After March 4th 2…",
+   "type": "object"
+  },
+  "TargetMutationError": {
+   "properties": {
+    "errorType": {
+     "$ref": "TargetingClauseErrorType"
+    },
+    "errorValue": {
+     "$ref": "TargetMutationErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "TargetMutationErrorSelector": {
+   "properties": {
+    "biddingError": {
+     "$ref": "BiddingError"
+    },
+    "billingError": {
+     "$ref": "BillingError"
+    },
+    "otherError": {
+     "$ref": "OtherError"
+    },
+    "rangeError": {
+     "$ref": "RangeError"
+    }
+   },
+   "type": "object"
+  },
+  "TargetMutationExceptionResponseContent": {
+   "description": "Exception resulting in mutating campaign management entities",
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "TargetMutationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TargetServingStatus": {
+   "enum": [
+    "ACCOUNT_OUT_OF_BUDGET",
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_EXCEED_SPENDS_LIMIT",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_STATUS_ENABLED",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_INCOMPLETE",
+    "AD_GROUP_LOW_BID",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_POLICING_CREATIVE_REJECTED",
+    "AD_GROUP_POLICING_PENDING_REVIEW",
+    "AD_GROUP_STATUS_ENABLED",
+    "AD_POLICING_PENDING_REVIEW",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "ENDED",
+    "INELIGIBLE",
+    "OTHER",
+    "PENDING_START_DATE",
+    "STATUS_UNAVAILABLE",
+    "TARGETING_CLAUSE_ARCHIVED",
+    "TARGETING_CLAUSE_BLOCKED",
+    "TARGETING_CLAUSE_PAUSED",
+    "TARGETING_CLAUSE_POLICING_SUSPENDED",
+    "TARGETING_CLAUSE_STATUS_LIVE"
+   ],
+   "type": "string"
+  },
+  "TargetingClause": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the Ad Group to which this Targeting Clause is associated.",
+     "type": "string"
+    },
+    "bid": {
+     "deprecated": true,
+     "description": "This shape is deprecated: The bid for Ads sourced using the Targeting Clause. This field will no longer be supported as bids are now only supported at an adGroup level",
+     "format": "double",
+     "type": "number"
+    },
+    "campaignId": {
+     "description": "The identifier of the Campaign associated with the Ad.",
+     "type": "string"
+    },
+    "expression": {
+     "description": "The targeting expression.",
+     "items": {
+      "$ref": "TargetingExpressionPredicate"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "extendedData": {
+     "$ref": "TargetingClauseExtendedData"
+    },
+    "resolvedExpression": {
+     "description": "A human-readable target text.",
+     "items": {
+      "$ref": "TargetingResolvedExpressionPredicate"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "state": {
+     "$ref": "EntityState"
+    },
+    "targetId": {
+     "description": "The Targeting Clause ID.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "campaignId",
+    "expression",
+    "state",
+    "targetId"
+   ],
+   "type": "object"
+  },
+  "TargetingClauseErrorType": {
+   "description": "TargetingClause Error Type",
+   "enum": [
+    "BIDDING_ERROR",
+    "BILLING_ERROR",
+    "OTHER_ERROR",
+    "RANGE_ERROR"
+   ],
+   "type": "string"
+  },
+  "TargetingClauseExtendedData": {
+   "properties": {
+    "creationDate": {
+     "description": "The date in ISO 8601 format.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdateDate": {
+     "description": "The date in ISO 8601 format.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "servingStatus": {
+     "$ref": "TargetServingStatus"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingClauseFailureResponseItem": {
+   "properties": {
+    "errors": {
+     "description": "A list of validation errors",
+     "items": {
+      "$ref": "TargetMutationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "the index of the targetingClause in the array from the request body",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "TargetingClauseSuccessResponseItem": {
+   "properties": {
+    "index": {
+     "description": "the index of the targetingClause in the array from the request body",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "targetId": {
+     "description": "the targetingClause ID",
+     "type": "string"
+    },
+    "targetingClause": {
+     "$ref": "TargetingClause"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "TargetingExpressionPredicate": {
+   "properties": {
+    "type": {
+     "type": "string"
+    },
+    "value": {
+     "description": "\"The value of the targeting predicate. Example for retail category `Arts, Crafts & Sewing`: \"2617941011\" Example for content categories \"amzn1.iab-content.483\" You can specify the following predicate values for CONTENT_…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingResolvedExpressionPredicate": {
+   "properties": {
+    "type": {
+     "type": "string"
+    },
+    "value": {
+     "description": "\"The human-readable value of the targeting predicate. Example for retail category \"2617941011\": `Arts, Crafts & Sewing` Example for content categories \"Sports\" You can specify the following predicate values for CONTENT_…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingType": {
+   "description": "The targeting strategy of the Campaign. If targetingType is not specified, MANUAL will be used.",
+   "enum": [
+    "AUTO_RELEVANT_TO_MY_BUSINESS",
+    "MANUAL"
+   ],
+   "type": "string"
+  },
+  "ThrottledErrorCode": {
+   "enum": [
+    "THROTTLED"
+   ],
+   "type": "string"
+  },
+  "ThrottlingExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ThrottledErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedErrorCode": {
+   "description": "Error codes reported on top level exceptions they correspond HTTP protocol level response codes",
+   "enum": [
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "UnauthorizedExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "UnauthorizedErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateAd": {
+   "properties": {
+    "adId": {
+     "description": "The Ad identifier.",
+     "type": "string"
+    },
+    "adName": {
+     "description": "The name of the Ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "CreateOrUpdateEntityState"
+    }
+   },
+   "required": [
+    "adId"
+   ],
+   "type": "object"
+  },
+  "UpdateAdGroup": {
+   "properties": {
+    "adGroupId": {
+     "description": "The Ad Group ID.",
+     "type": "string"
+    },
+    "defaultBid": {
+     "$ref": "DefaultBid"
+    },
+    "name": {
+     "description": "The name of the Ad Group.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "state": {
+     "$ref": "CreateOrUpdateEntityState"
+    }
+   },
+   "required": [
+    "adGroupId"
+   ],
+   "type": "object"
+  },
+  "UpdateCampaign": {
+   "properties": {
+    "budgetSettings": {
+     "$ref": "BudgetSettings"
+    },
+    "campaignId": {
+     "description": "The identifier of the Campaign.",
+     "type": "string"
+    },
+    "costType": {
+     "description": "Cost type of the Campaign. Determines how the campaign will bid and charge. Note that new values can be added to this list in the future. Support for the responses with newly addded values should be ensured for using th…",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "endDate is optional. If endDate is specified, startDate must be specified as well.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the Campaign. Note: Names including single quotes must be escaped. For example, to update the name to `Campaign 'A'`, the name field should be as follows: `\"name\": \"Campaign '\\''A'\\''\"`",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "startDate": {
+     "description": "startDate can only be changed if the current startDate is in the future.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "CreateOrUpdateEntityState"
+    },
+    "tags": {
+     "$ref": "Tags"
+    }
+   },
+   "required": [
+    "campaignId"
+   ],
+   "type": "object"
+  },
+  "UpdateCreative": {
+   "properties": {
+    "assetId": {
+     "description": "The unique identifier of the video asset. This assetId comes from the Creative Asset Library.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The identifier of the particular video asset version.",
+     "type": "string"
+    },
+    "creativeId": {
+     "description": "The Creative identifier.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion",
+    "creativeId"
+   ],
+   "type": "object"
+  },
+  "UpdateSponsoredTvAdGroupsRequestContent": {
+   "properties": {
+    "adGroups": {
+     "description": "An array of Sponsored TV ad groups.",
+     "items": {
+      "$ref": "UpdateAdGroup"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "UpdateSponsoredTvAdGroupsResponseContent": {
+   "properties": {
+    "adGroups": {
+     "$ref": "BulkAdGroupsOperationResponse"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateSponsoredTvAdsRequestContent": {
+   "properties": {
+    "ads": {
+     "description": "An array of Sponsored TV ads.",
+     "items": {
+      "$ref": "UpdateAd"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "ads"
+   ],
+   "type": "object"
+  },
+  "UpdateSponsoredTvAdsResponseContent": {
+   "properties": {
+    "ads": {
+     "$ref": "BulkAdsOperationResponse"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateSponsoredTvCampaignsRequestContent": {
+   "properties": {
+    "campaigns": {
+     "items": {
+      "$ref": "UpdateCampaign"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaigns"
+   ],
+   "type": "object"
+  },
+  "UpdateSponsoredTvCampaignsResponseContent": {
+   "properties": {
+    "campaigns": {
+     "$ref": "BulkCampaignOperationResponse"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateSponsoredTvCreativesRequestContent": {
+   "properties": {
+    "creatives": {
+     "description": "An array of creatives.",
+     "items": {
+      "$ref": "UpdateCreative"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "creatives"
+   ],
+   "type": "object"
+  },
+  "UpdateSponsoredTvCreativesResponseContent": {
+   "properties": {
+    "creatives": {
+     "$ref": "BulkCreativeOperationResponse"
+    }
+   },
+   "required": [
+    "creatives"
+   ],
+   "type": "object"
+  },
+  "UpdateSponsoredTvTargetingClausesRequestContent": {
+   "properties": {
+    "targetingClauses": {
+     "description": "An array of targetingClauses.",
+     "items": {
+      "$ref": "UpdateTargetingClause"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targetingClauses"
+   ],
+   "type": "object"
+  },
+  "UpdateSponsoredTvTargetingClausesResponseContent": {
+   "properties": {
+    "targetingClauses": {
+     "$ref": "BulkTargetingClauseOperationResponse"
+    }
+   },
+   "required": [
+    "targetingClauses"
+   ],
+   "type": "object"
+  },
+  "UpdateTargetingClause": {
+   "properties": {
+    "bid": {
+     "deprecated": true,
+     "description": "This shape is deprecated: The bid for Ads sourced using the Targeting Clause. This field will no longer be supported as bids are now only supported at an adGroup level.",
+     "format": "double",
+     "type": "number"
+    },
+    "state": {
+     "$ref": "CreateOrUpdateEntityState"
+    },
+    "targetId": {
+     "description": "The Targeting Clause ID.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "state",
+    "targetId"
+   ],
+   "type": "object"
+  }
+ }
+}

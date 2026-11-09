@@ -1,0 +1,6559 @@
+{
+ "meta": {
+  "task": "P1-API",
+  "counts": {
+   "external": 212,
+   "internal": 39,
+   "total": 251
+  },
+  "mounting": {
+   "/api/external": "Register + RegisterBudgetRouter + RegisterSDRouter + RegisterSBRouter behind VerifyAuth (bearer token + AProfileId header), then per-route ACL; RegisterNoMiddleware mounted before auth",
+   "/api/external/:typeApiParam": "Register + RegisterBudgetRouter mounted a second time with the product type (sp|sb|sd) as a path segment; budget handlers read it from the path; the other handlers ignore it. Rows carry mountedAlsoUnder.",
+   "/api/internal": "RegisterNoAuth (health, read-db, migrate, test, portfolio migrate-users, bidding cron) mounted BEFORE VerifyAuthInternal, so those routes are unauthenticated; Register (auto, clone, api-interface) is behind TOKEN_INTERNAL",
+   "/swagger": "Swagger UI (not inventoried as a business route)"
+  },
+  "amazonCalls": "ids refer to catalog/legacy/api-amazon-calls.json (calls[].id). Routes with an empty list read only the app DB, the reporting DB or other internal sources.",
+  "notesOnMethod": "Routes and auth were extracted mechanically from router/external.go (212 registrations) and router/internal.go (39); domain defaults (usecase, entities, dataSources) come from handler constructor dependencies and the SRS; per-handler Amazon calls were set from the usecase code of each domain and verified to exist as client functions. A few read paths were classified by name only and are marked in notes where doubtful.",
+  "unauthenticatedExternal": 4,
+  "aclMissing": 46
+ },
+ "endpoints": [
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/get-list",
+   "group": "external",
+   "handler": "campaignHandler.GetList",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": "Grid with metrics: app DB campaigns joined to reporting tables; the Amazon sync that fills the app DB is done by the migrate jobs, not by this call.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/campaigns/get-by-id/:campaignID",
+   "group": "external",
+   "handler": "campaignHandler.GetByID",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/get-by-id/:campaignID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns",
+   "group": "external",
+   "handler": "campaignHandler.Create",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignInsert",
+    "SBCampaignInsert",
+    "UpSertAdsGroup",
+    "SDAdGroupInsert",
+    "SBAdGroupInsert",
+    "UpSertProductAds",
+    "SDProductAdInsert",
+    "SBProductAdInsertVideo",
+    "CreateKeyword",
+    "CreateTarget",
+    "SBKeywordInsert",
+    "SBTargetInsert",
+    "SDTargetInsert"
+   ],
+   "notes": "Creates the campaign tree (campaign, ad groups, ads, keywords/targets) in one request; Redis lock (5 min) prevents duplicates; compensating archive on partial failure.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/campaigns/:campaignID",
+   "group": "external",
+   "handler": "campaignHandler.Update",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignUpdate",
+    "SBCampaignUpdate"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/:campaignID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "DELETE",
+   "path": "/api/external/campaigns/:campaignID",
+   "group": "external",
+   "handler": "campaignHandler.Delete",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "DeleteCampaign",
+    "SDCampaignDelete",
+    "SBCampaignDelete"
+   ],
+   "notes": "Amazon has no hard delete; delete = archive.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/:campaignID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/update-state",
+   "group": "external",
+   "handler": "campaignHandler.UpdateState",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignUpdate",
+    "SBCampaignUpdate"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/update-state",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/campaigns/stores",
+   "group": "external",
+   "handler": "campaignHandler.GetStores",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetStoreList",
+    "GetStorePages"
+   ],
+   "notes": "ACL missing on route: any authenticated user passes route-level checks.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/stores",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/campaigns/page-asins",
+   "group": "external",
+   "handler": "campaignHandler.GetPageAsins",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetAsinsPage"
+   ],
+   "notes": "ACL missing on route: any authenticated user passes route-level checks.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/page-asins",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/page-asins-store-spotlight",
+   "group": "external",
+   "handler": "campaignHandler.GetAsinsPagesStoreSpotlight",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetAsinsPage"
+   ],
+   "notes": "ACL missing on route: any authenticated user passes route-level checks.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/page-asins-store-spotlight",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/get-campaign-placement/:campaignID",
+   "group": "external",
+   "handler": "campaignHandler.GetCampaignPlacement",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/get-campaign-placement/:campaignID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/get-campaign-placement-amazon-business/:campaignID",
+   "group": "external",
+   "handler": "campaignHandler.GetCampaignPlacementAmazonBusiness",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/get-campaign-placement-amazon-business/:campaignID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/update-adjust-budget",
+   "group": "external",
+   "handler": "campaignHandler.UpdateAdjustBudget",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignUpdate",
+    "SBCampaignUpdate"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/update-adjust-budget",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/recommend",
+   "group": "external",
+   "handler": "campaignHandler.BudgetRecommend",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetCampaignBudgetRecommend"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/recommend",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/update-multiple",
+   "group": "external",
+   "handler": "campaignHandler.UpdateMultiple",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignUpdate",
+    "SBCampaignUpdate",
+    "UpdateOptimizationRule"
+   ],
+   "notes": "Bulk update with per-item result; also the path the bidding-rule scheduler uses to change placement bids.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/update-multiple",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/clone",
+   "group": "external",
+   "handler": "campaignHandler.Clone",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignInsert",
+    "SBCampaignInsert",
+    "UpSertAdsGroup",
+    "UpSertProductAds",
+    "CreateKeyword",
+    "CreateTarget"
+   ],
+   "notes": "Clone within the same profile.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/clone",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/get-log-campaigns-oob",
+   "group": "external",
+   "handler": "campaignHandler.GetCampaignsOOB",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": "Out-of-budget log: reporting DB rows derived from the Marketing Stream budget-usage dataset.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/get-log-campaigns-oob",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/clone-from-profile",
+   "group": "external",
+   "handler": "campaignHandler.CloneCampaignFromProfile",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignInsert",
+    "SBCampaignInsert",
+    "UpSertAdsGroup",
+    "UpSertProductAds",
+    "CreateKeyword",
+    "CreateTarget"
+   ],
+   "notes": "Clone across profiles (marketplaces); keyword translation helper used.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/clone-from-profile",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/amz-campaign-list",
+   "group": "external",
+   "handler": "campaignHandler.GetListAMZCampaign",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "Amazon Ads console private endpoints with a borrowed user cookie",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "processSingleCampaignBatch",
+    "GetHeaderAWS",
+    "GetCookieAWS",
+    "GetCookieSwitchAccount",
+    "GetCurrentEntity"
+   ],
+   "notes": "\"Prime mod\" / real-time mode: lists campaigns live from the console, bypassing the app DB. Not an Amazon Ads API call.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/amz-campaign-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/amz-campaign-placement",
+   "group": "external",
+   "handler": "campaignHandler.GetCampaignAWSPlacement",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "console private endpoints",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetAllPlacementCampaign",
+    "GetHeaderAWS",
+    "GetCookieAWS"
+   ],
+   "notes": "Prime mod placement report",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/amz-campaign-placement",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/amz-campaign-placement-amazon-business",
+   "group": "external",
+   "handler": "campaignHandler.GetCampaignAWSPlacementAmazonBusiness",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "console private endpoints",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetAmazonBusinessPlacementCampaign",
+    "GetHeaderAWS",
+    "GetCookieAWS"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/amz-campaign-placement-amazon-business",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/runtime",
+   "group": "external",
+   "handler": "campaignHandler.GetRuntime",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": "Hours the campaign was running/serving, from the reporting DB.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/runtime",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/product-ads/get-list",
+   "group": "external",
+   "handler": "producAdshandler.GetList",
+   "usecase": "ProductAdsUsecase, ProductAdAWSUsecase",
+   "entities": [
+    "product_ads",
+    "creatives",
+    "creative_histories",
+    "log_status_asin_product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/product-ads/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/product-ads",
+   "group": "external",
+   "handler": "producAdshandler.Create",
+   "usecase": "ProductAdsUsecase, ProductAdAWSUsecase",
+   "entities": [
+    "product_ads",
+    "creatives",
+    "creative_histories",
+    "log_status_asin_product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertProductAds",
+    "SDProductAdInsert",
+    "SBProductAdInsertVideo",
+    "SBProductAdInsertBrandVideo",
+    "SBProductAdInsertProductCollection",
+    "SBProductAdInsertStoreSpotlight"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/product-ads",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/product-ads/:adID",
+   "group": "external",
+   "handler": "producAdshandler.Update",
+   "usecase": "ProductAdsUsecase, ProductAdAWSUsecase",
+   "entities": [
+    "product_ads",
+    "creatives",
+    "creative_histories",
+    "log_status_asin_product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertProductAds",
+    "SDProductAdUpdate",
+    "SBProductAdUpdate"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/product-ads/:adID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/product-ads/update-state",
+   "group": "external",
+   "handler": "producAdshandler.UpdateState",
+   "usecase": "ProductAdsUsecase, ProductAdAWSUsecase",
+   "entities": [
+    "product_ads",
+    "creatives",
+    "creative_histories",
+    "log_status_asin_product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertProductAds",
+    "SDProductAdUpdate",
+    "SBProductAdUpdate",
+    "DeleteProductAds",
+    "SDProductAdDelete",
+    "SBProductAdDelete"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/product-ads/update-state",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/product-ads/:adID/update-creative",
+   "group": "external",
+   "handler": "producAdshandler.UpdateCreative",
+   "usecase": "ProductAdsUsecase, ProductAdAWSUsecase",
+   "entities": [
+    "product_ads",
+    "creatives",
+    "creative_histories",
+    "log_status_asin_product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBCreateCreativeVideo",
+    "SBCreateCreativeStoreSpotlight",
+    "SBCreateCreativeProductCollection",
+    "SBCreateCreativeBrandVideo",
+    "SBProductAdUpdate",
+    "SDUpdateCreatives"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/product-ads/:adID/update-creative",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/product-ads/create-multi",
+   "group": "external",
+   "handler": "producAdshandler.CreateMulti",
+   "usecase": "ProductAdsUsecase, ProductAdAWSUsecase",
+   "entities": [
+    "product_ads",
+    "creatives",
+    "creative_histories",
+    "log_status_asin_product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertProductAds",
+    "SDProductAdInsert"
+   ],
+   "notes": "Bulk create with per-item errors; ASINs ineligible are logged to status_asin_product_ads.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/product-ads/create-multi",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/product-ads/get-moderation-results",
+   "group": "external",
+   "handler": "producAdshandler.GetModerationResults",
+   "usecase": "ProductAdsUsecase, ProductAdAWSUsecase",
+   "entities": [
+    "product_ads",
+    "creatives",
+    "creative_histories",
+    "log_status_asin_product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "ModerationResult",
+    "SDModerationCreatives"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/product-ads/get-moderation-results",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/product-ads/amz-product-ad",
+   "group": "external",
+   "handler": "producAdshandler.GetListProductAdAWS",
+   "usecase": "ProductAdsUsecase, ProductAdAWSUsecase",
+   "entities": [
+    "product_ads",
+    "creatives",
+    "creative_histories",
+    "log_status_asin_product_ads"
+   ],
+   "dataSources": [
+    "console private endpoints",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetListAWSProductAd",
+    "GetListAWSProductAdSD",
+    "GetHeaderAWS",
+    "GetCookieAWS"
+   ],
+   "notes": "Prime mod listing.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/product-ads/amz-product-ad",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/product-ads/get-list-ads",
+   "group": "external",
+   "handler": "producAdshandler.GetListProductAds",
+   "usecase": "ProductAdsUsecase, ProductAdAWSUsecase",
+   "entities": [
+    "product_ads",
+    "creatives",
+    "creative_histories",
+    "log_status_asin_product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": "Alternative ad listing by ASIN/ad group; used by the inventory auto-stop flow too.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/product-ads/get-list-ads",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/product/metadata",
+   "group": "external",
+   "handler": "productHandler.GetProductsMetadata",
+   "usecase": "Product",
+   "entities": [
+    "product_ads"
+   ],
+   "dataSources": [
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetProductsMetadata"
+   ],
+   "notes": "Mentioned in SRS as reachable with a non-production bypass token.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/product/metadata",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/product/get-list",
+   "group": "external",
+   "handler": "productHandler.GetList",
+   "usecase": "Product",
+   "entities": [
+    "product_ads"
+   ],
+   "dataSources": [
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "product/inventory warehouse (read replica)",
+    "product catalog service (ASIN to SKU)",
+    "product lifecycle service (SKU status)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/product/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/product/get-list-sub",
+   "group": "external",
+   "handler": "productHandler.GetListSub",
+   "usecase": "Product",
+   "entities": [
+    "product_ads"
+   ],
+   "dataSources": [
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/product/get-list-sub",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/product/inventory",
+   "group": "external",
+   "handler": "productHandler.GetInventory",
+   "usecase": "Product",
+   "entities": [
+    "product_ads"
+   ],
+   "dataSources": [
+    "product/inventory warehouse (read replica)"
+   ],
+   "amazonCalls": [],
+   "notes": "Saleable inventory, days-of-cover, GMV/affiliate/promo metrics per ASIN from the internal warehouse.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/product/inventory",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/portfolio/list",
+   "group": "external",
+   "handler": "portfolioHandler.GetPortfolios",
+   "usecase": "Portfolio",
+   "entities": [
+    "portfolios",
+    "portfolio_users",
+    "portfolio_disables",
+    "roles_ads_management"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetPortfolios"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/portfolio/list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdmin",
+    "OrganizationAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/portfolio/list-for-filter",
+   "group": "external",
+   "handler": "portfolioHandler.ListPortfoliosForFilter",
+   "usecase": "Portfolio",
+   "entities": [
+    "portfolios",
+    "portfolio_users",
+    "portfolio_disables",
+    "roles_ads_management"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetPortfolios"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/portfolio/list-for-filter",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdmin",
+    "OrganizationAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/portfolio/create",
+   "group": "external",
+   "handler": "portfolioHandler.CreatePortfolios",
+   "usecase": "Portfolio",
+   "entities": [
+    "portfolios",
+    "portfolio_users",
+    "portfolio_disables",
+    "roles_ads_management"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "CreatePortfolios"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/portfolio/create",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/portfolio/update",
+   "group": "external",
+   "handler": "portfolioHandler.UpdatePortfolios",
+   "usecase": "Portfolio",
+   "entities": [
+    "portfolios",
+    "portfolio_users",
+    "portfolio_disables",
+    "roles_ads_management"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpdatePortfolios"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/portfolio/update",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/portfolio/:portfolioID",
+   "group": "external",
+   "handler": "portfolioHandler.GetDetailPortfolio",
+   "usecase": "Portfolio",
+   "entities": [
+    "portfolios",
+    "portfolio_users",
+    "portfolio_disables",
+    "roles_ads_management"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/portfolio/:portfolioID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin",
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit",
+    "OrganizationAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/portfolio/operations",
+   "group": "external",
+   "handler": "portfolioHandler.GetListPortfolios",
+   "usecase": "Portfolio",
+   "entities": [
+    "portfolios",
+    "portfolio_users",
+    "portfolio_disables",
+    "roles_ads_management"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/portfolio/operations",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin",
+    "OrganizationAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/portfolio/operations/users",
+   "group": "external",
+   "handler": "portfolioHandler.SavePortfolioUsers",
+   "usecase": "Portfolio",
+   "entities": [
+    "portfolios",
+    "portfolio_users",
+    "portfolio_disables",
+    "roles_ads_management"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": "Assigns app users to portfolios; permission data lives only in the app DB.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/portfolio/operations/users",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/portfolio/operations/:portfolioID/users",
+   "group": "external",
+   "handler": "portfolioHandler.ListPortfolioUsers",
+   "usecase": "Portfolio",
+   "entities": [
+    "portfolios",
+    "portfolio_users",
+    "portfolio_disables",
+    "roles_ads_management"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache",
+    "identity/portal service (user lookup)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/portfolio/operations/:portfolioID/users",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin",
+    "OrganizationAdmin"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/portfolio/operations/suffix-emails",
+   "group": "external",
+   "handler": "portfolioHandler.SuffixEmails",
+   "usecase": "Portfolio",
+   "entities": [
+    "portfolios",
+    "portfolio_users",
+    "portfolio_disables",
+    "roles_ads_management"
+   ],
+   "dataSources": [
+    "identity/portal service"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/portfolio/operations/suffix-emails",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin",
+    "OrganizationAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/notification/list",
+   "group": "external",
+   "handler": "notificationIncidentsHandler.ListNotificationIncident",
+   "usecase": "NotificationIncidents",
+   "entities": [
+    "notification_incidents"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/notification/list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "false",
+   "roles": [
+    "ModuleAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/notification/create",
+   "group": "external",
+   "handler": "notificationIncidentsHandler.CreateNotificationIncident",
+   "usecase": "NotificationIncidents",
+   "entities": [
+    "notification_incidents"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/notification/create",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "false",
+   "roles": [
+    "ModuleAdmin"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/notification/:notificationID",
+   "group": "external",
+   "handler": "notificationIncidentsHandler.UpdateNotificationIncident",
+   "usecase": "NotificationIncidents",
+   "entities": [
+    "notification_incidents"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/notification/:notificationID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "false",
+   "roles": [
+    "ModuleAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/breadscrumb/list",
+   "group": "external",
+   "handler": "breadscrumbHandler.GetBreadscrumb",
+   "usecase": "Breadscrumb",
+   "entities": [
+    "campaigns",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route: any authenticated user passes route-level checks.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/breadscrumb/list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/profile/list",
+   "group": "external",
+   "handler": "profileHandler.GetProfiles",
+   "usecase": "Profile",
+   "entities": [
+    "profiles"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetProfiles"
+   ],
+   "notes": "ACL missing on route: any authenticated user passes route-level checks.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/profile/list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/profile/get-profile-wrong",
+   "group": "external",
+   "handler": "profileHandler.GetProfileWrong",
+   "usecase": "Profile",
+   "entities": [
+    "profiles"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": "Debug endpoint left in the production router. ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/profile/get-profile-wrong",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/profile/test-profile",
+   "group": "external",
+   "handler": "profileHandler.TestProfile",
+   "usecase": "Profile",
+   "entities": [
+    "profiles"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": "Debug endpoint left in the production router. ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/profile/test-profile",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/profile/call-profile",
+   "group": "external",
+   "handler": "profileHandler.CallProfile",
+   "usecase": "Profile",
+   "entities": [
+    "profiles"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "CallProfile"
+   ],
+   "notes": "Debug endpoint left in the production router; CallProfile client function GETs this service on localhost with a hard-coded dummy bearer. ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/profile/call-profile",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/role/list",
+   "group": "external",
+   "handler": "roleHandler.GetRoles",
+   "usecase": "Role",
+   "entities": [
+    "roles_ads_management",
+    "users_simulator",
+    "department_simulator",
+    "portfolios"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache",
+    "identity/portal service"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route: any authenticated user passes route-level checks.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/role/list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/role/module-admin",
+   "group": "external",
+   "handler": "roleHandler.GetListUserPermissionForModuleAdmin",
+   "usecase": "Role",
+   "entities": [
+    "roles_ads_management",
+    "users_simulator",
+    "department_simulator",
+    "portfolios"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache",
+    "identity/portal service"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/role/module-admin",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "ModuleAdmin",
+    "OrganizationAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/role/profile-admin",
+   "group": "external",
+   "handler": "roleHandler.GetListUserPermissionForProfileAdmin",
+   "usecase": "Role",
+   "entities": [
+    "roles_ads_management",
+    "users_simulator",
+    "department_simulator",
+    "portfolios"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache",
+    "identity/portal service"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/role/profile-admin",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin",
+    "OrganizationAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/role/save",
+   "group": "external",
+   "handler": "roleHandler.SaveRoleUsers",
+   "usecase": "Role",
+   "entities": [
+    "roles_ads_management",
+    "users_simulator",
+    "department_simulator",
+    "portfolios"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache",
+    "identity/portal service"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/role/save",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "ModuleAdmin"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/role/list-role",
+   "group": "external",
+   "handler": "roleHandler.GetListRoleAssign",
+   "usecase": "Role",
+   "entities": [
+    "roles_ads_management",
+    "users_simulator",
+    "department_simulator",
+    "portfolios"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache",
+    "identity/portal service"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/role/list-role",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin",
+    "ModuleAdmin",
+    "OrganizationAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/role/assign-portfolios-role",
+   "group": "external",
+   "handler": "roleHandler.AssignPortfolioRole",
+   "usecase": "Role",
+   "entities": [
+    "roles_ads_management",
+    "users_simulator",
+    "department_simulator",
+    "portfolios"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache",
+    "identity/portal service"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/role/assign-portfolios-role",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/target/get-bid-recommend",
+   "group": "external",
+   "handler": "tartgetHandler.GetTargetBidRecommendations",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetTargetBidRecommendations",
+    "GetTargetBidRecommendationsV5"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/target/get-bid-recommend",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/target/get-list",
+   "group": "external",
+   "handler": "tartgetHandler.GetList",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/target/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/target",
+   "group": "external",
+   "handler": "tartgetHandler.Create",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "CreateTarget",
+    "SDTargetInsert",
+    "SBTargetInsert",
+    "SBKeywordInsert"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/target",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/target/:targetID",
+   "group": "external",
+   "handler": "tartgetHandler.Update",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpdateTarget",
+    "SDTargetUpdate",
+    "SBTargetUpdate"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/target/:targetID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/target/get-product-count",
+   "group": "external",
+   "handler": "tartgetHandler.GetProductCount",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetProductCount"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/target/get-product-count",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/target/get-product-recommend",
+   "group": "external",
+   "handler": "tartgetHandler.GetProductRecommend",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetProductRecommend"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/target/get-product-recommend",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/target/updates",
+   "group": "external",
+   "handler": "tartgetHandler.Updates",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpdateTarget",
+    "SDTargetUpdate",
+    "SBTargetUpdate",
+    "DeleteTarget",
+    "SDTargetDelete",
+    "SBTargetDelete"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/target/updates",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/target/get-all-targeting",
+   "group": "external",
+   "handler": "tartgetHandler.GetAllTargetingAWS",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "console private endpoints"
+   ],
+   "amazonCalls": [
+    "GetALLTargetAWS",
+    "GetHeaderAWS",
+    "GetCookieAWS"
+   ],
+   "notes": "Prime mod.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/target/get-all-targeting",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/target/get-campaign-and-adgroup",
+   "group": "external",
+   "handler": "tartgetHandler.GetCampaignAndAdGroup",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "console private endpoints"
+   ],
+   "amazonCalls": [
+    "GetTargetInfoAWS",
+    "GetHeaderAWS",
+    "GetCookieAWS"
+   ],
+   "notes": "Prime mod.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/target/get-campaign-and-adgroup",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/target/amz-target-in-campaign",
+   "group": "external",
+   "handler": "tartgetHandler.GetListTargetInCampaign",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "console private endpoints"
+   ],
+   "amazonCalls": [
+    "GetTargetInCampaignAWS",
+    "GetTargetSBInCampaignAWS",
+    "GetTargetSDInCampaignAWS",
+    "GetProductAdsSD",
+    "RecommendBigTargetSDInCampaignAWS",
+    "GetHeaderTargetSDAWS"
+   ],
+   "notes": "Prime mod.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/target/amz-target-in-campaign",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/negative-target/get-list",
+   "group": "external",
+   "handler": "negativeTargetHandler.GetList",
+   "usecase": "NegativeTarget",
+   "entities": [
+    "negative_targets",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/negative-target/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/negative-target",
+   "group": "external",
+   "handler": "negativeTargetHandler.Create",
+   "usecase": "NegativeTarget",
+   "entities": [
+    "negative_targets",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "NegativeTargetInsert",
+    "SBNegativeTargetInsert",
+    "SDNegativeTargetInsert"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/negative-target",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/negative-target/:targetID",
+   "group": "external",
+   "handler": "negativeTargetHandler.Update",
+   "usecase": "NegativeTarget",
+   "entities": [
+    "negative_targets",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "NegativeTargetUpdate",
+    "SBNegativeTargetUpdate",
+    "SDNegativeTargetUpdate"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/negative-target/:targetID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/negative-target/brand-search",
+   "group": "external",
+   "handler": "negativeTargetHandler.BrandSearch",
+   "usecase": "NegativeTarget",
+   "entities": [
+    "negative_targets",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "BrandSearch"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/negative-target/brand-search",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/negative-target/brand-recommend",
+   "group": "external",
+   "handler": "negativeTargetHandler.BrandRecommend",
+   "usecase": "NegativeTarget",
+   "entities": [
+    "negative_targets",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "BrandRecommend"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/negative-target/brand-recommend",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/negative-target/delete",
+   "group": "external",
+   "handler": "negativeTargetHandler.Delete",
+   "usecase": "NegativeTarget",
+   "entities": [
+    "negative_targets",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "NegativeTargetDelete",
+    "SBNegativeTargetDelete"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/negative-target/delete",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/negative-target/create-multi",
+   "group": "external",
+   "handler": "negativeTargetHandler.CreateMulti",
+   "usecase": "NegativeTarget",
+   "entities": [
+    "negative_targets",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "NegativeTargetInsert",
+    "SBNegativeTargetInsert",
+    "SDNegativeTargetInsert"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/negative-target/create-multi",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ad-group/get-list",
+   "group": "external",
+   "handler": "adGroupHandler.GetList",
+   "usecase": "AdGroup, AdgroupAWSUsecase",
+   "entities": [
+    "ad_groups",
+    "product_ads",
+    "targets",
+    "negative_targets",
+    "creatives"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ad-group/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/ad-group/get-by-id/:adGroupID",
+   "group": "external",
+   "handler": "adGroupHandler.GetByID",
+   "usecase": "AdGroup, AdgroupAWSUsecase",
+   "entities": [
+    "ad_groups",
+    "product_ads",
+    "targets",
+    "negative_targets",
+    "creatives"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ad-group/get-by-id/:adGroupID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/ad-group/:adGroupID",
+   "group": "external",
+   "handler": "adGroupHandler.Update",
+   "usecase": "AdGroup, AdgroupAWSUsecase",
+   "entities": [
+    "ad_groups",
+    "product_ads",
+    "targets",
+    "negative_targets",
+    "creatives"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertAdsGroup",
+    "SDAdGroupUpdate",
+    "SBAdGroupUpdate"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ad-group/:adGroupID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ad-group/get-list-target",
+   "group": "external",
+   "handler": "adGroupHandler.GetListTarget",
+   "usecase": "AdGroup, AdgroupAWSUsecase",
+   "entities": [
+    "ad_groups",
+    "product_ads",
+    "targets",
+    "negative_targets",
+    "creatives"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ad-group/get-list-target",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ad-group",
+   "group": "external",
+   "handler": "adGroupHandler.Create",
+   "usecase": "AdGroup, AdgroupAWSUsecase",
+   "entities": [
+    "ad_groups",
+    "product_ads",
+    "targets",
+    "negative_targets",
+    "creatives"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertAdsGroup",
+    "SDAdGroupInsert",
+    "SBAdGroupInsert"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ad-group",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "DELETE",
+   "path": "/api/external/ad-group/:adGroupID",
+   "group": "external",
+   "handler": "adGroupHandler.Delete",
+   "usecase": "AdGroup, AdgroupAWSUsecase",
+   "entities": [
+    "ad_groups",
+    "product_ads",
+    "targets",
+    "negative_targets",
+    "creatives"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "DeleteAdsGroup",
+    "SDAdGroupDelete",
+    "SBAdGroupDelete"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ad-group/:adGroupID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ad-group/update-state",
+   "group": "external",
+   "handler": "adGroupHandler.UpdateState",
+   "usecase": "AdGroup, AdgroupAWSUsecase",
+   "entities": [
+    "ad_groups",
+    "product_ads",
+    "targets",
+    "negative_targets",
+    "creatives"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertAdsGroup",
+    "SDAdGroupUpdate",
+    "SBAdGroupUpdate"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ad-group/update-state",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ad-group/get-list-negative-target",
+   "group": "external",
+   "handler": "adGroupHandler.GetListNegativeTarget",
+   "usecase": "AdGroup, AdgroupAWSUsecase",
+   "entities": [
+    "ad_groups",
+    "product_ads",
+    "targets",
+    "negative_targets",
+    "creatives"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ad-group/get-list-negative-target",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ad-group/verify-store-spotlight",
+   "group": "external",
+   "handler": "adGroupHandler.VerifyStoreSpotlight",
+   "usecase": "AdGroup, AdgroupAWSUsecase",
+   "entities": [
+    "ad_groups",
+    "product_ads",
+    "targets",
+    "negative_targets",
+    "creatives"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetStoreList",
+    "GetStorePages"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ad-group/verify-store-spotlight",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ad-group/list-all",
+   "group": "external",
+   "handler": "adGroupHandler.ListAll",
+   "usecase": "AdGroup, AdgroupAWSUsecase",
+   "entities": [
+    "ad_groups",
+    "product_ads",
+    "targets",
+    "negative_targets",
+    "creatives"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ad-group/list-all",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ad-group/clone",
+   "group": "external",
+   "handler": "adGroupHandler.Clone",
+   "usecase": "AdGroup, AdgroupAWSUsecase",
+   "entities": [
+    "ad_groups",
+    "product_ads",
+    "targets",
+    "negative_targets",
+    "creatives"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpSertAdsGroup",
+    "SDAdGroupInsert",
+    "SBAdGroupInsert",
+    "UpSertProductAds",
+    "CreateKeyword",
+    "CreateTarget"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ad-group/clone",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ad-group/amz-adgroup-list",
+   "group": "external",
+   "handler": "adGroupHandler.GetListAWSAdgroup",
+   "usecase": "AdGroup, AdgroupAWSUsecase",
+   "entities": [
+    "ad_groups",
+    "product_ads",
+    "targets",
+    "negative_targets",
+    "creatives"
+   ],
+   "dataSources": [
+    "console private endpoints"
+   ],
+   "amazonCalls": [
+    "GetAdgroupSPListAWS",
+    "GetAdgroupSBListAWS",
+    "GetAdgroupSDListAWS",
+    "GetHeaderAWS",
+    "GetCookieAWS"
+   ],
+   "notes": "Prime mod.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ad-group/amz-adgroup-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/keyword/get-recommend",
+   "group": "external",
+   "handler": "keywordHandler.GetKeywordRecommend",
+   "usecase": "Keyword",
+   "entities": [
+    "keywords",
+    "keyword_translates"
+   ],
+   "dataSources": [
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetKeywordRecommend",
+    "SBKeywordRecommendation"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/keyword/get-recommend",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/keyword/get-list",
+   "group": "external",
+   "handler": "keywordHandler.GetList",
+   "usecase": "Keyword",
+   "entities": [
+    "keywords",
+    "keyword_translates"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/keyword/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/keyword/:keywordID",
+   "group": "external",
+   "handler": "keywordHandler.Update",
+   "usecase": "Keyword",
+   "entities": [
+    "keywords",
+    "keyword_translates"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache",
+    "translation helper (keyword_translates table)"
+   ],
+   "amazonCalls": [
+    "UpdateKeyword",
+    "SBKeywordUpdate"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/keyword/:keywordID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/keyword",
+   "group": "external",
+   "handler": "keywordHandler.Create",
+   "usecase": "Keyword",
+   "entities": [
+    "keywords",
+    "keyword_translates"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache",
+    "translation helper (keyword_translates table)"
+   ],
+   "amazonCalls": [
+    "CreateKeyword",
+    "SBKeywordInsert"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/keyword",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/keyword/updates",
+   "group": "external",
+   "handler": "keywordHandler.Updates",
+   "usecase": "Keyword",
+   "entities": [
+    "keywords",
+    "keyword_translates"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache",
+    "translation helper (keyword_translates table)"
+   ],
+   "amazonCalls": [
+    "UpdateKeyword",
+    "SBKeywordUpdate",
+    "DeleteKeyword",
+    "SBKeywordDelete"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/keyword/updates",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/negative-keyword/get-list",
+   "group": "external",
+   "handler": "negativeKeywordHandler.GetList",
+   "usecase": "NegativeKeyword",
+   "entities": [
+    "negative_keywords"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/negative-keyword/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/negative-keyword/:keywordID",
+   "group": "external",
+   "handler": "negativeKeywordHandler.Update",
+   "usecase": "NegativeKeyword",
+   "entities": [
+    "negative_keywords"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SPNegativeKeywordUpdate",
+    "SBNegativeKeywordUpdate"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/negative-keyword/:keywordID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/negative-keyword",
+   "group": "external",
+   "handler": "negativeKeywordHandler.Create",
+   "usecase": "NegativeKeyword",
+   "entities": [
+    "negative_keywords"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SPNegativeKeywordInsert",
+    "SBNegativeKeywordInsert"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/negative-keyword",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/negative-keyword/delete",
+   "group": "external",
+   "handler": "negativeKeywordHandler.Delete",
+   "usecase": "NegativeKeyword",
+   "entities": [
+    "negative_keywords"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SPNegativeKeywordDelete",
+    "SBNegativeKeywordDelete"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/negative-keyword/delete",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/negative-keyword/create-multi",
+   "group": "external",
+   "handler": "negativeKeywordHandler.CreateMulti",
+   "usecase": "NegativeKeyword",
+   "entities": [
+    "negative_keywords"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SPNegativeKeywordInsert",
+    "SBNegativeKeywordInsert"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/negative-keyword/create-multi",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/category/get-recommend",
+   "group": "external",
+   "handler": "categoryHandler.GetCategoryRecommend",
+   "usecase": "Category",
+   "entities": [
+    "categories (reference table)"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "GetCategoryRecommend"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/category/get-recommend",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/category/get-refine/:categoryID",
+   "group": "external",
+   "handler": "categoryHandler.GetCategoryRefine",
+   "usecase": "Category",
+   "entities": [
+    "categories (reference table)"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "GetCategoryRefine"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/category/get-refine/:categoryID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/category/get-list",
+   "group": "external",
+   "handler": "categoryHandler.GetCategory",
+   "usecase": "Category",
+   "entities": [
+    "categories (reference table)"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": "Local category tree (reference table), not an Amazon call.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/category/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/report/get-spend",
+   "group": "external",
+   "handler": "reportHandler.GetSpend",
+   "usecase": "Report",
+   "entities": [
+    "legacy reporting table: ads daily spend",
+    "legacy reporting table: promotion spend per ASIN"
+   ],
+   "dataSources": [
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route (any authenticated user, any profile id in the body).",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/report/get-spend",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/report/get-spend-by-date",
+   "group": "external",
+   "handler": "reportHandler.GetSpendByDate",
+   "usecase": "Report",
+   "entities": [
+    "legacy reporting table: ads daily spend",
+    "legacy reporting table: promotion spend per ASIN"
+   ],
+   "dataSources": [
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/report/get-spend-by-date",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/report/get-performance-by-date",
+   "group": "external",
+   "handler": "reportHandler.GetPerformanceByDate",
+   "usecase": "Report",
+   "entities": [
+    "legacy reporting table: ads daily spend",
+    "legacy reporting table: promotion spend per ASIN"
+   ],
+   "dataSources": [
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/report/get-performance-by-date",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/report/get-last-date-ads",
+   "group": "external",
+   "handler": "reportHandler.GetLastDateAds",
+   "usecase": "Report",
+   "entities": [
+    "legacy reporting table: ads daily spend",
+    "legacy reporting table: promotion spend per ASIN"
+   ],
+   "dataSources": [
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": "Freshness marker of the reporting data. ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/report/get-last-date-ads",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/user-log/get-filter-config",
+   "group": "external",
+   "handler": "userLogHandler.GetFilterConfig",
+   "usecase": "UserLog",
+   "entities": [
+    "user_activity_logs",
+    "activities",
+    "entity_changes"
+   ],
+   "dataSources": [],
+   "amazonCalls": [],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/user-log/get-filter-config",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/user-log/get-list",
+   "group": "external",
+   "handler": "userLogHandler.GetList",
+   "usecase": "UserLog",
+   "entities": [
+    "user_activity_logs",
+    "activities",
+    "entity_changes"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "search index (activity-log index)",
+    "object storage wrapper (Excel export)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/user-log/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/user-log/export-excel",
+   "group": "external",
+   "handler": "userLogHandler.ExportExcel",
+   "usecase": "UserLog",
+   "entities": [
+    "user_activity_logs",
+    "activities",
+    "entity_changes"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "search index (activity-log index)",
+    "object storage wrapper (Excel export)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route; writes xlsx locally and uploads through the object-storage wrapper.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/user-log/export-excel",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/audience/get-list",
+   "group": "external",
+   "handler": "audienceHandler.GetAudienceList",
+   "usecase": "Audience",
+   "entities": [
+    "audiences"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetAudienceList"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/audience/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/audience/get-taxonomy-list",
+   "group": "external",
+   "handler": "audienceHandler.GetAudienceTaxonomyList",
+   "usecase": "Audience",
+   "entities": [
+    "audiences"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetAudienceTaxonomyList"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/audience/get-taxonomy-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/audience/get-data-audience",
+   "group": "external",
+   "handler": "audienceHandler.GetDataAudienceInCampaign",
+   "usecase": "Audience",
+   "entities": [
+    "audiences"
+   ],
+   "dataSources": [
+    "console private endpoints"
+   ],
+   "amazonCalls": [
+    "GetAudienceInfoAWS",
+    "GetHeaderAWS",
+    "GetCookieAWS"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/audience/get-data-audience",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/audience/get-list-audience/:campaignType",
+   "group": "external",
+   "handler": "audienceHandler.GetListAudience",
+   "usecase": "Audience",
+   "entities": [
+    "audiences"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/audience/get-list-audience/:campaignType",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/audience/download-log-audience",
+   "group": "external",
+   "handler": "audienceHandler.DownloadLogAudience",
+   "usecase": "Audience",
+   "entities": [
+    "audiences"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "object storage wrapper"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/audience/download-log-audience",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/filter/config",
+   "group": "external",
+   "handler": "configHandler.GetConfig",
+   "usecase": "Configs",
+   "entities": [],
+   "dataSources": [
+    "static config / enums in code"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/filter/config",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/:campaignID/optimization-rules",
+   "group": "external",
+   "handler": "optimizationRuleHandler.Create",
+   "usecase": "OptimizationRuleUsecase",
+   "entities": [
+    "optimization_rule_cpcs",
+    "campaigns"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "CreateOptimizationRule",
+    "PopulateCampaignToOptimizationRule"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/:campaignID/optimization-rules",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/campaigns/:campaignID/optimization-rules",
+   "group": "external",
+   "handler": "optimizationRuleHandler.Update",
+   "usecase": "OptimizationRuleUsecase",
+   "entities": [
+    "optimization_rule_cpcs",
+    "campaigns"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "UpdateOptimizationRule",
+    "UnAssignOptimizationRuleAWS",
+    "PopulateCampaignToOptimizationRule"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/:campaignID/optimization-rules",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/campaigns/:campaignID/optimization-rules",
+   "group": "external",
+   "handler": "optimizationRuleHandler.GetList",
+   "usecase": "OptimizationRuleUsecase",
+   "entities": [
+    "optimization_rule_cpcs",
+    "campaigns"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "FilterOptimizationRule",
+    "ListOptimizationRuleSB"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/:campaignID/optimization-rules",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaign-negative-keywords/get-list",
+   "group": "external",
+   "handler": "campaignNegativeKeyword.GetList",
+   "usecase": "CampaignNegativeKeywordUsecase",
+   "entities": [
+    "campaign_negative_keywords"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaign-negative-keywords/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaign-negative-keywords/create",
+   "group": "external",
+   "handler": "campaignNegativeKeyword.Create",
+   "usecase": "CampaignNegativeKeywordUsecase",
+   "entities": [
+    "campaign_negative_keywords"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "SPCampaignNegativeKeywordInsert"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaign-negative-keywords/create",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaign-negative-keywords/delete",
+   "group": "external",
+   "handler": "campaignNegativeKeyword.Delete",
+   "usecase": "CampaignNegativeKeywordUsecase",
+   "entities": [
+    "campaign_negative_keywords"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "SPCampaignNegativeKeywordDelete"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaign-negative-keywords/delete",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaign-negative-products/get-list",
+   "group": "external",
+   "handler": "campaignNegativeProduct.GetList",
+   "usecase": "CampaignNegativeProductUsecase",
+   "entities": [
+    "campaign_negative_products"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaign-negative-products/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaign-negative-products/create",
+   "group": "external",
+   "handler": "campaignNegativeProduct.Create",
+   "usecase": "CampaignNegativeProductUsecase",
+   "entities": [
+    "campaign_negative_products"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "SPCampaignNegativeProductInsert"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaign-negative-products/create",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaign-negative-products/delete",
+   "group": "external",
+   "handler": "campaignNegativeProduct.Delete",
+   "usecase": "CampaignNegativeProductUsecase",
+   "entities": [
+    "campaign_negative_products"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "SPCampaignNegativeProductDelete"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaign-negative-products/delete",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/configs/profile",
+   "group": "external",
+   "handler": "configHandler.GetProfileConfig",
+   "usecase": "Configs",
+   "entities": [],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/configs/profile",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/configs/aws-filter",
+   "group": "external",
+   "handler": "configHandler.AWSFilterConfig",
+   "usecase": "Configs",
+   "entities": [],
+   "dataSources": [
+    "static config / enums in code"
+   ],
+   "amazonCalls": [],
+   "notes": "Filter/sort definitions for the reporting grids.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/configs/aws-filter",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/search-terms/get-list",
+   "group": "external",
+   "handler": "searchTermsHandler.Get",
+   "usecase": "SearchTerms, SearchTermAWSUsecase, SearchTermImpressionShare",
+   "entities": [
+    "search_terms_report (reporting table)",
+    "keywords",
+    "targets",
+    "negative_keywords",
+    "negative_targets"
+   ],
+   "dataSources": [
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": "Search-term report rows from the reporting DB, enriched with \"already added as keyword/target/negative\" flags from the app DB.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/search-terms/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsNemoReportView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/search-terms/amz-search-term",
+   "group": "external",
+   "handler": "searchTermsHandler.GetSearchTermAWS",
+   "usecase": "SearchTerms, SearchTermAWSUsecase, SearchTermImpressionShare",
+   "entities": [
+    "search_terms_report (reporting table)",
+    "keywords",
+    "targets",
+    "negative_keywords",
+    "negative_targets"
+   ],
+   "dataSources": [
+    "console private endpoints"
+   ],
+   "amazonCalls": [
+    "GetSearchTermSPListAWS",
+    "GetSearchTermSBListAWS",
+    "GetHeaderAWS",
+    "GetCookieAWS"
+   ],
+   "notes": "Prime mod.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/search-terms/amz-search-term",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsNemoReportView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/search-terms/impression-share/detail",
+   "group": "external",
+   "handler": "searchTermsHandler.GetImpressionShareDetail",
+   "usecase": "SearchTerms, SearchTermAWSUsecase, SearchTermImpressionShare",
+   "entities": [
+    "search_terms_report (reporting table)",
+    "keywords",
+    "targets",
+    "negative_keywords",
+    "negative_targets"
+   ],
+   "dataSources": [
+    "product/inventory warehouse (read replica)"
+   ],
+   "amazonCalls": [],
+   "notes": "Impression share per search term from the warehouse (a Brand Analytics / Search Query style dataset); returns null when absent.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/search-terms/impression-share/detail",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsNemoReportView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/:campaignID/bidding-rules",
+   "group": "external",
+   "handler": "biddingRuleHandler.Create",
+   "usecase": "BiddingRuleUsecase",
+   "entities": [
+    "bidding_rules",
+    "campaigns"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/:campaignID/bidding-rules",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/campaigns/:campaignID/bidding-rules",
+   "group": "external",
+   "handler": "biddingRuleHandler.Update",
+   "usecase": "BiddingRuleUsecase",
+   "entities": [
+    "bidding_rules",
+    "campaigns"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/:campaignID/bidding-rules",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/campaigns/:campaignID/bidding-rules/action-type/:actionType",
+   "group": "external",
+   "handler": "biddingRuleHandler.GetListByAction",
+   "usecase": "BiddingRuleUsecase",
+   "entities": [
+    "bidding_rules",
+    "campaigns"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/:campaignID/bidding-rules/action-type/:actionType",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/:campaignID/bidding-rules/delete",
+   "group": "external",
+   "handler": "biddingRuleHandler.Delete",
+   "usecase": "BiddingRuleUsecase",
+   "entities": [
+    "bidding_rules",
+    "campaigns"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign"
+   ],
+   "notes": "Delete restores the saved placement percentages on the campaign.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/:campaignID/bidding-rules/delete",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/read-db/get-cache",
+   "group": "external",
+   "handler": "readDBHandler.GetCache",
+   "usecase": "ReadDB",
+   "entities": [],
+   "dataSources": [
+    "Redis cache",
+    "raw DB access"
+   ],
+   "amazonCalls": [],
+   "notes": "Operational: reads any Redis key.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/read-db/get-cache",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/read-db/del-cache",
+   "group": "external",
+   "handler": "readDBHandler.DelCache",
+   "usecase": "ReadDB",
+   "entities": [],
+   "dataSources": [
+    "Redis cache",
+    "raw DB access"
+   ],
+   "amazonCalls": [],
+   "notes": "Operational: deletes Redis keys.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/read-db/del-cache",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/read-db/keys-cache",
+   "group": "external",
+   "handler": "readDBHandler.KeysCache",
+   "usecase": "ReadDB",
+   "entities": [],
+   "dataSources": [
+    "Redis cache",
+    "raw DB access"
+   ],
+   "amazonCalls": [],
+   "notes": "Operational: lists Redis keys.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/read-db/keys-cache",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/read-db/set-cache",
+   "group": "external",
+   "handler": "readDBHandler.SetCache",
+   "usecase": "ReadDB",
+   "entities": [],
+   "dataSources": [
+    "Redis cache",
+    "raw DB access"
+   ],
+   "amazonCalls": [],
+   "notes": "Operational: writes any Redis key.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/read-db/set-cache",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdmin"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ticket-management/get-profiles",
+   "group": "external",
+   "handler": "ticketManagementHandler.GetProfilesByAsins",
+   "usecase": "TicketManagement",
+   "entities": [
+    "ticket_managements"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "ticketing service"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ticket-management/get-profiles",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ticket-management/get-list",
+   "group": "external",
+   "handler": "ticketManagementHandler.GetListTicketByUser",
+   "usecase": "TicketManagement",
+   "entities": [
+    "ticket_managements"
+   ],
+   "dataSources": [
+    "ticketing service",
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ticket-management/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/ticket-management/get-detail/:ticketID",
+   "group": "external",
+   "handler": "ticketManagementHandler.GetTicketDetail",
+   "usecase": "TicketManagement",
+   "entities": [
+    "ticket_managements"
+   ],
+   "dataSources": [
+    "ticketing service",
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ticket-management/get-detail/:ticketID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/ticket-management/update/:ticketID",
+   "group": "external",
+   "handler": "ticketManagementHandler.UpdateTicketInformation",
+   "usecase": "TicketManagement",
+   "entities": [
+    "ticket_managements"
+   ],
+   "dataSources": [
+    "ticketing service",
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ticket-management/update/:ticketID",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ticket-management/create/log",
+   "group": "external",
+   "handler": "ticketManagementHandler.CreateTicketLog",
+   "usecase": "TicketManagement",
+   "entities": [
+    "ticket_managements"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ticket-management/create/log",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ticket-management/mark-as-read",
+   "group": "external",
+   "handler": "ticketManagementHandler.MarkAsRead",
+   "usecase": "TicketManagement",
+   "entities": [
+    "ticket_managements"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ticket-management/mark-as-read",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/ticket-management/get-all-ticket",
+   "group": "external",
+   "handler": "ticketManagementHandler.GetAllTicket",
+   "usecase": "TicketManagement",
+   "entities": [
+    "ticket_managements"
+   ],
+   "dataSources": [
+    "ticketing service",
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/ticket-management/get-all-ticket",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/campaigns/bidding-rules/cron",
+   "group": "external",
+   "handler": "biddingRuleHandler.ScheduleCalculator",
+   "usecase": "BiddingRuleUsecase",
+   "entities": [
+    "bidding_rules",
+    "campaigns"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign"
+   ],
+   "notes": "Evaluates running rules; also exposed as the cron-bidding-rule command.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/campaigns/bidding-rules/cron",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/operation-log/get-filter-config",
+   "group": "external",
+   "handler": "operationLogHandler.GetFilterConfig",
+   "usecase": "OperationLog",
+   "entities": [
+    "operation_activity_logs",
+    "operation_logs"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "search index (operation-log index)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/operation-log/get-filter-config",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/operation-log/get-list",
+   "group": "external",
+   "handler": "operationLogHandler.GetList",
+   "usecase": "OperationLog",
+   "entities": [
+    "operation_activity_logs",
+    "operation_logs"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "search index (operation-log index)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/operation-log/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/log-request-action/get-list",
+   "group": "external",
+   "handler": "logRequestActionHandler.GetListRequest",
+   "usecase": "LogRequestActionUsecase",
+   "entities": [
+    "log_request_actions",
+    "log_request_activities"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/log-request-action/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/download-histories/get-list",
+   "group": "external",
+   "handler": "downloadHistoryHandler.GetList",
+   "usecase": "DownloadHistoryUsecase",
+   "entities": [
+    "download_histories",
+    "status_asin_product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "object storage wrapper"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/download-histories/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/download-histories/create",
+   "group": "external",
+   "handler": "downloadHistoryHandler.Create",
+   "usecase": "DownloadHistoryUsecase",
+   "entities": [
+    "download_histories",
+    "status_asin_product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "object storage wrapper"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/download-histories/create",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/download-histories/update",
+   "group": "external",
+   "handler": "downloadHistoryHandler.Update",
+   "usecase": "DownloadHistoryUsecase",
+   "entities": [
+    "download_histories",
+    "status_asin_product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "object storage wrapper"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/download-histories/update",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/download-histories/download-asins-status",
+   "group": "external",
+   "handler": "downloadHistoryHandler.DownloadAsinsStatus",
+   "usecase": "DownloadHistoryUsecase",
+   "entities": [
+    "download_histories",
+    "status_asin_product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "object storage wrapper"
+   ],
+   "amazonCalls": [],
+   "notes": "Exports the ineligible-ASIN status list.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/download-histories/download-asins-status",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/download-histories/get-status-asins-ineligible",
+   "group": "external",
+   "handler": "downloadHistoryHandler.GetStatusAsinsInEligible",
+   "usecase": "DownloadHistoryUsecase",
+   "entities": [
+    "download_histories",
+    "status_asin_product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/download-histories/get-status-asins-ineligible",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/budget-recommendations/campaign/get-list",
+   "group": "external",
+   "handler": "budgetRecommendHandler.GetListBudgetRecommendation",
+   "usecase": "BudgetRecommendUsecase",
+   "entities": [
+    "budget recommendation queue"
+   ],
+   "dataSources": [
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": "Recommendations come from an internal engine writing a warehouse table; ads-api only lists them.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budget-recommendations/campaign/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/budget-recommendations/campaign/approve",
+   "group": "external",
+   "handler": "budgetRecommendHandler.ApproveBudgetRecommendation",
+   "usecase": "BudgetRecommendUsecase",
+   "entities": [
+    "budget recommendation queue"
+   ],
+   "dataSources": [
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignUpdate",
+    "SBCampaignUpdate"
+   ],
+   "notes": "User confirms (or edits) a recommended budget; confirmation is written back to the warehouse row and applied to the campaign.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budget-recommendations/campaign/approve",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/budget-recommendations/campaign/reasons",
+   "group": "external",
+   "handler": "budgetRecommendHandler.GetListCampaignReason",
+   "usecase": "BudgetRecommendUsecase",
+   "entities": [
+    "budget recommendation queue"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budget-recommendations/campaign/reasons",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView",
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/competitor-target-products/get-list",
+   "group": "external",
+   "handler": "competitorTargetProductHandler.GetList",
+   "usecase": "CompetitorTargetProductUsecase",
+   "entities": [
+    "competitor_target_products"
+   ],
+   "dataSources": [
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/competitor-target-products/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/rules/get-list",
+   "group": "external",
+   "handler": "budgetHandler.GetList",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/rules/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/rules/budget-rule/create-multiple",
+   "group": "external",
+   "handler": "budgetHandler.CreateMultiple",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "CreateBudgetRule",
+    "AssignBudgetRuleMultiCampaign",
+    "AssignBudgetRuleForCampaign"
+   ],
+   "notes": "ACL missing on route (/rules/budget-rule/create-multiple and /budgets/create-multiple).",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/rules/budget-rule/create-multiple",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/rules/budget-rule/update-multiple",
+   "group": "external",
+   "handler": "budgetHandler.UpdateMultiple",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpdateBudgetRule"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/rules/budget-rule/update-multiple",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/rules/budget-rule/:id/detail",
+   "group": "external",
+   "handler": "budgetHandler.GetDetailRule",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetBudgetRuleByID"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/rules/budget-rule/:id/detail",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/rules/budget-rule/:id/update-status",
+   "group": "external",
+   "handler": "budgetHandler.UpdateRuleStatus",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpdateBudgetRule"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/rules/budget-rule/:id/update-status",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/rules/bidding-rule/create-multiple",
+   "group": "external",
+   "handler": "optimizationRuleHandler.CreateMultiple",
+   "usecase": "OptimizationRuleUsecase",
+   "entities": [
+    "optimization_rule_cpcs",
+    "campaigns"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "CreateOptimizationRule",
+    "PopulateCampaignToOptimizationRule",
+    "CreateOptimizationRuleSB",
+    "AssociateOptimizationRuleSB"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/rules/bidding-rule/create-multiple",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/rules/bidding-rule/update-multiple",
+   "group": "external",
+   "handler": "optimizationRuleHandler.UpdateMultiple",
+   "usecase": "OptimizationRuleUsecase",
+   "entities": [
+    "optimization_rule_cpcs",
+    "campaigns"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "UpdateOptimizationRule",
+    "UpdateOptimizationRuleSB",
+    "UnAssignOptimizationRuleAWS"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/rules/bidding-rule/update-multiple",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/inventory-alerts/get-list",
+   "group": "external",
+   "handler": "inventoryAlertHandler.GetList",
+   "usecase": "InventoryAlertUsecase",
+   "entities": [
+    "inventory_alerts"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "datamart (legacy datamart table: per-ASIN inventory level metrics)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/inventory-alerts/get-list",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/inventory-alert-feedback/create",
+   "group": "external",
+   "handler": "inventoryAlertFeedbackHandler.CreateFeedback",
+   "usecase": "InventoryAlertFeedbackUsecase",
+   "entities": [
+    "inventory_alert_feedback"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/inventory-alert-feedback/create",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/inventory-alert-feedback/:alertId",
+   "group": "external",
+   "handler": "inventoryAlertFeedbackHandler.GetFeedbackByAlertID",
+   "usecase": "InventoryAlertFeedbackUsecase",
+   "entities": [
+    "inventory_alert_feedback"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/inventory-alert-feedback/:alertId",
+   "routeFunction": "Register",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/budgets/campaign-get-rule",
+   "group": "external",
+   "handler": "budgetHandler.GetListRuleCampaign",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetBudgetRuleCampaign"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/campaign-get-rule",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/budgets/rules",
+   "group": "external",
+   "handler": "budgetHandler.GetBudgetRules",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetAllbudgetRule",
+    "GetCampaignByBudgetID"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/rules",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/budgets/assign",
+   "group": "external",
+   "handler": "budgetHandler.AssignBudgetToCampaign",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "AssignBudgetRuleForCampaign",
+    "AssignBudgetRuleMultiCampaign"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/assign",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/budgets/un-assign",
+   "group": "external",
+   "handler": "budgetHandler.UnAssignBudgetRuleForCampaign",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "RemoveBudgetRuleCampaign"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/un-assign",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/budgets",
+   "group": "external",
+   "handler": "budgetHandler.CreateRule",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "CreateBudgetRule"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/budgets/:id",
+   "group": "external",
+   "handler": "budgetHandler.UpdateRule",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpdateBudgetRule"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/:id",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/budgets/recomment",
+   "group": "external",
+   "handler": "budgetHandler.GetBudgetRecommendations",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetBudgetRecommendations"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/recomment",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/budgets/get-total-by-profile",
+   "group": "external",
+   "handler": "budgetHandler.GetTotalByProfile",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route; internal budget (ticket) totals per profile.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/get-total-by-profile",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/budgets/run-job",
+   "group": "external",
+   "handler": "budgetHandler.GetBudgetReportByTimes",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route; triggers the budget report computation synchronously (\"run-job\" on a GET).",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/run-job",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/budgets/create-multiple",
+   "group": "external",
+   "handler": "budgetHandler.CreateMultiple",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "CreateBudgetRule",
+    "AssignBudgetRuleMultiCampaign",
+    "AssignBudgetRuleForCampaign"
+   ],
+   "notes": "ACL missing on route (/rules/budget-rule/create-multiple and /budgets/create-multiple).",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/create-multiple",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/budgets/all-recommendation",
+   "group": "external",
+   "handler": "budgetHandler.GetBudgetAllRecommendations",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetBudgetAllRecommendations"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/all-recommendation",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/budgets/get-list",
+   "group": "external",
+   "handler": "budgetHandler.GetList",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/get-list",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/budgets/:id/update-status",
+   "group": "external",
+   "handler": "budgetHandler.UpdateRuleStatus",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpdateBudgetRule"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/:id/update-status",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/budgets/:id/detail",
+   "group": "external",
+   "handler": "budgetHandler.GetDetailRule",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetBudgetRuleByID"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/:id/detail",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/budgets/:id/update-multiple",
+   "group": "external",
+   "handler": "budgetHandler.UpdateMultiple",
+   "usecase": "IbudgetUsecase, IbudgetProfileUsercase",
+   "entities": [
+    "budget_rules",
+    "assigned_rules",
+    "budget_accounts",
+    "budget_histories_daily_reports"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "UpdateBudgetRule"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": "/api/external/:typeApiParam/budgets/:id/update-multiple",
+   "routeFunction": "RegisterBudgetRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/sd/assets",
+   "group": "external",
+   "handler": "assetsHandler.GetAssets",
+   "usecase": "AssetsUsecase",
+   "entities": [],
+   "dataSources": [
+    "Amazon asset library via proxy"
+   ],
+   "amazonCalls": [
+    "GetAssets"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sd/assets/search",
+   "group": "external",
+   "handler": "assetsHandler.SearchAssets",
+   "usecase": "AssetsUsecase",
+   "entities": [],
+   "dataSources": [
+    "Amazon asset library via proxy"
+   ],
+   "amazonCalls": [
+    "SearchAssets"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sd/assets/upload",
+   "group": "external",
+   "handler": "assetsHandler.UploadAssets",
+   "usecase": "AssetsUsecase",
+   "entities": [],
+   "dataSources": [
+    "Amazon asset library via proxy"
+   ],
+   "amazonCalls": [
+    "AssetsUpload"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sd/assets/register",
+   "group": "external",
+   "handler": "assetsHandler.RegisterAssets",
+   "usecase": "AssetsUsecase",
+   "entities": [],
+   "dataSources": [
+    "Amazon asset library via proxy"
+   ],
+   "amazonCalls": [
+    "AssetsRegister"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sd/creatives/preview",
+   "group": "external",
+   "handler": "creativesHandler.GetAdPreview",
+   "usecase": "CreativesUsecase",
+   "entities": [
+    "creatives",
+    "creative_histories",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SDGetAdPreview"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/sd/creatives/preview-template",
+   "group": "external",
+   "handler": "creativesHandler.ListAdPreviewTemplate",
+   "usecase": "CreativesUsecase",
+   "entities": [
+    "creatives",
+    "creative_histories",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SDGetAdPreview"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/sd/creatives",
+   "group": "external",
+   "handler": "creativesHandler.ListCreatives",
+   "usecase": "CreativesUsecase",
+   "entities": [
+    "creatives",
+    "creative_histories",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SDListCreatives"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "PUT",
+   "path": "/api/external/sd/creatives",
+   "group": "external",
+   "handler": "creativesHandler.UpdateCreatives",
+   "usecase": "CreativesUsecase",
+   "entities": [
+    "creatives",
+    "creative_histories",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SDUpdateCreatives"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sd/creatives",
+   "group": "external",
+   "handler": "creativesHandler.SDCreateCreatives",
+   "usecase": "CreativesUsecase",
+   "entities": [
+    "creatives",
+    "creative_histories",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SDCreateCreatives"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/sd/:adGroupId/creatives",
+   "group": "external",
+   "handler": "creativesHandler.GetDetailsByAdGroupID",
+   "usecase": "CreativesUsecase",
+   "entities": [
+    "creatives",
+    "creative_histories",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/sd/moderation/creatives",
+   "group": "external",
+   "handler": "creativesHandler.ModerationCreatives",
+   "usecase": "CreativesUsecase",
+   "entities": [
+    "creatives",
+    "creative_histories",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SDModerationCreatives"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sd/target/get-bid-recommend",
+   "group": "external",
+   "handler": "tartgetHandler.GetSDTargetBidRecommendations",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetSDTargetBidRecommendations"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sd/target/get-product-recommend",
+   "group": "external",
+   "handler": "tartgetHandler.GetSDProductRecommend",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetSDTargetRecommendations"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sd/target/get-category-recommend",
+   "group": "external",
+   "handler": "tartgetHandler.GetSDCategoryRecommend",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetSDTargetRecommendations"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sd/target/verify-target-audience",
+   "group": "external",
+   "handler": "tartgetHandler.VerifyTargetAudience",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "GetAudienceInfo",
+    "GetAudienceList"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSDRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sb/creatives/video",
+   "group": "external",
+   "handler": "creativesHandler.SBCreateCreativeVideo",
+   "usecase": "CreativesUsecase",
+   "entities": [
+    "creatives",
+    "creative_histories",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBCreateCreativeVideo"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sb/creatives/store-spotlight",
+   "group": "external",
+   "handler": "creativesHandler.SBCreateCreativeStoreSpotlight",
+   "usecase": "CreativesUsecase",
+   "entities": [
+    "creatives",
+    "creative_histories",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBCreateCreativeStoreSpotlight"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sb/creatives/product-collection",
+   "group": "external",
+   "handler": "creativesHandler.SBCreateCreativeProductCollection",
+   "usecase": "CreativesUsecase",
+   "entities": [
+    "creatives",
+    "creative_histories",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBCreateCreativeProductCollection",
+    "SBCreateCreativeProductCollectionV2"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sb/creatives/brand-video",
+   "group": "external",
+   "handler": "creativesHandler.SBCreateCreativeBrandVideo",
+   "usecase": "CreativesUsecase",
+   "entities": [
+    "creatives",
+    "creative_histories",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBCreateCreativeBrandVideo"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sb/creatives/list",
+   "group": "external",
+   "handler": "creativesHandler.SBCreativeList",
+   "usecase": "CreativesUsecase",
+   "entities": [
+    "creatives",
+    "creative_histories",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBListCreative"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sb/creatives/preview-template",
+   "group": "external",
+   "handler": "creativesHandler.ListSBAdPreviewTemplate",
+   "usecase": "CreativesUsecase",
+   "entities": [
+    "creatives",
+    "creative_histories",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBListCreative"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sb/recommendations/targets/products",
+   "group": "external",
+   "handler": "tartgetHandler.GetSBroductSRecommend",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBTargetingRecommendationProducts"
+   ],
+   "notes": "ACL missing on route; handler calls the Amazon client directly (layering leak).",
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sb/recommendations/targets/category",
+   "group": "external",
+   "handler": "tartgetHandler.GetSBCategoryRecommend",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBTargetingRecommendationCategories"
+   ],
+   "notes": "ACL missing on route.",
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sb/recommendations/targets/brand",
+   "group": "external",
+   "handler": "tartgetHandler.GetSBBrandRecommend",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBTargetingRecommendationBrands"
+   ],
+   "notes": "ACL missing on route; handler calls the Amazon client directly.",
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sb/recommendations/targets/bids",
+   "group": "external",
+   "handler": "tartgetHandler.GetSBBidRecommend",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBGetBidRecommendation"
+   ],
+   "notes": "ACL missing on route; handler calls the Amazon client directly (SplitSBGetBidRecommendation).",
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sb/recommendations/keyword",
+   "group": "external",
+   "handler": "tartgetHandler.GetSBKeywordRecommendation",
+   "usecase": "Target, SDTarget, IsbRecommend, TargetAWSUsecase (+ direct aws client)",
+   "entities": [
+    "targets",
+    "keywords",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBKeywordRecommendation",
+    "SBThemeKeywordList"
+   ],
+   "notes": "ACL missing on route; handler calls the Amazon client directly.",
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": null,
+   "roles": []
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/sb/negative-target/brand-recommend",
+   "group": "external",
+   "handler": "negativeTargetHandler.SBBrandRecommend",
+   "usecase": "NegativeTarget",
+   "entities": [
+    "negative_targets",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBBrandRecommend"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/sb/negative-target/brand-search",
+   "group": "external",
+   "handler": "negativeTargetHandler.SBBrandSearch",
+   "usecase": "NegativeTarget",
+   "entities": [
+    "negative_targets",
+    "ad_groups"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Redis cache"
+   ],
+   "amazonCalls": [
+    "SBBrandSearch"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/sb/campaigns/:campaignID/optimization-rules",
+   "group": "external",
+   "handler": "optimizationRuleHandler.GetListSB",
+   "usecase": "OptimizationRuleUsecase",
+   "entities": [
+    "optimization_rule_cpcs",
+    "campaigns"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "ListOptimizationRuleSB"
+   ],
+   "notes": null,
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterSBRouter",
+   "auth": "bearer token + profile header (VerifyAuth)",
+   "aclProfileRequired": "true",
+   "roles": [
+    "RoleAdsAdvertiserCamapaignEdit",
+    "RoleAdsAdvertiserCamapaignView"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/ad-group/get-by-aws-id",
+   "group": "external",
+   "handler": "adGroupHandler.GetByAwsID",
+   "usecase": "AdGroup, AdgroupAWSUsecase",
+   "entities": [
+    "ad_groups",
+    "product_ads",
+    "targets",
+    "negative_targets",
+    "creatives"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": "UNAUTHENTICATED: registered in RegisterNoMiddleware, before VerifyAuth. Returns an ad group by Amazon ad group id.",
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterNoMiddleware",
+   "auth": "none (mounted before VerifyAuth)",
+   "acl": null
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/campaigns/get-by-aws-id",
+   "group": "external",
+   "handler": "campaignHandler.GetByAwsID",
+   "usecase": "CampaignUsecase, CampaignAWSUsecase",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": "UNAUTHENTICATED: registered in RegisterNoMiddleware, before VerifyAuth. Returns a campaign by Amazon campaign id.",
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterNoMiddleware",
+   "auth": "none (mounted before VerifyAuth)",
+   "acl": null
+  },
+  {
+   "method": "GET",
+   "path": "/api/external/health-check/info",
+   "group": "external",
+   "handler": "healthCheckHandler.HealthCheckInfo",
+   "usecase": "CheckFileUsecase",
+   "entities": [],
+   "dataSources": [],
+   "amazonCalls": [],
+   "notes": "UNAUTHENTICATED (before VerifyAuth). Returns service info.",
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterNoMiddleware",
+   "auth": "none (mounted before VerifyAuth)",
+   "acl": null
+  },
+  {
+   "method": "POST",
+   "path": "/api/external/health-check/check-file",
+   "group": "external",
+   "handler": "healthCheckHandler.CheckFile",
+   "usecase": "CheckFileUsecase",
+   "entities": [],
+   "dataSources": [],
+   "amazonCalls": [],
+   "notes": "UNAUTHENTICATED (before VerifyAuth): file-check probe, purpose unclear (CheckFileUsecase).",
+   "mountedAlsoUnder": null,
+   "routeFunction": "RegisterNoMiddleware",
+   "auth": "none (mounted before VerifyAuth)",
+   "acl": null
+  },
+  {
+   "method": "GET",
+   "path": "/api/internal/health-check",
+   "group": "internal",
+   "handler": "health.GetHealth",
+   "usecase": "health",
+   "entities": [],
+   "dataSources": [],
+   "amazonCalls": [],
+   "notes": "liveness. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "GET",
+   "path": "/api/internal/health-check/get-key",
+   "group": "internal",
+   "handler": "health.GetKey",
+   "usecase": "health",
+   "entities": [],
+   "dataSources": [],
+   "amazonCalls": [],
+   "notes": "returns a key; purpose unclear. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "GET",
+   "path": "/api/internal/budget-profile/details",
+   "group": "internal",
+   "handler": "InternalHandler.GetDetails",
+   "usecase": null,
+   "entities": [],
+   "dataSources": [],
+   "amazonCalls": [],
+   "notes": null,
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/budget-profile",
+   "group": "internal",
+   "handler": "sender.BudgetRequestPublisher",
+   "usecase": "sender",
+   "entities": [],
+   "dataSources": [
+    "Kafka"
+   ],
+   "amazonCalls": [],
+   "notes": "publishes a budget-request message to Kafka (BudgetRequestPublisher). Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/read-db/get-cache",
+   "group": "internal",
+   "handler": "readDBHandler.GetCache",
+   "usecase": "readDB",
+   "entities": [],
+   "dataSources": [
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": "read any Redis key. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "GET",
+   "path": "/api/internal/read-db/migrate",
+   "group": "internal",
+   "handler": "sender.Migrate",
+   "usecase": "sender",
+   "entities": [],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": "runs a migration (Migrate) with no auth. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "GET",
+   "path": "/api/internal/read-db/rundb",
+   "group": "internal",
+   "handler": "readDBHandler.GetDBHandler",
+   "usecase": "readDB",
+   "entities": [],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": "executes raw DB handler (GetDBHandler) with no auth. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/read-db/del-cache",
+   "group": "internal",
+   "handler": "readDBHandler.DelCache",
+   "usecase": "readDB",
+   "entities": [],
+   "dataSources": [
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": "delete Redis keys. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/read-db/keys-cache",
+   "group": "internal",
+   "handler": "readDBHandler.KeysCache",
+   "usecase": "readDB",
+   "entities": [],
+   "dataSources": [
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": "list Redis keys. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/read-db/set-cache",
+   "group": "internal",
+   "handler": "readDBHandler.SetCache",
+   "usecase": "readDB",
+   "entities": [],
+   "dataSources": [
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": "write Redis keys. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/read-db/save-log-demo",
+   "group": "internal",
+   "handler": "readDBHandler.SaveLogDemo",
+   "usecase": "readDB",
+   "entities": [],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [],
+   "notes": "demo log write. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "GET",
+   "path": "/api/internal/profile/get-profile-cate-detail",
+   "group": "internal",
+   "handler": "profileHandler.GetProfileCateDetail",
+   "usecase": null,
+   "entities": [],
+   "dataSources": [],
+   "amazonCalls": [],
+   "notes": null,
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/campaign",
+   "group": "internal",
+   "handler": "migrateHandler.MigrateCampaign",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "GetListCampaign",
+    "GetListAdsGroup",
+    "GetKeywords",
+    "GetTargets",
+    "GetListProductAds",
+    "SDCampaignGetList",
+    "SDAdGroupGetList",
+    "SDTargetGetList",
+    "SDListCreatives",
+    "SDProductAdGetList",
+    "SBCampaignList",
+    "SBAdGroupList",
+    "SBKeywordList",
+    "SBNegativeKeywordList",
+    "SBNegativeTargetList",
+    "SBThemeKeywordList",
+    "SBTargetList",
+    "SBProductAdList"
+   ],
+   "notes": "Manual trigger of: copy campaigns of all profiles from Amazon into the app DB (SP, SD, SB). Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/sp-campaign",
+   "group": "internal",
+   "handler": "migrateHandler.MigrateSPCampaign",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "GetListCampaign",
+    "GetListAdsGroup",
+    "GetKeywords",
+    "GetTargets",
+    "GetListProductAds"
+   ],
+   "notes": "Manual trigger of: sync one SP campaign tree (campaign, ad groups, ads, keywords, targets) from Amazon. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/sp-profile",
+   "group": "internal",
+   "handler": "migrateHandler.MigrateSPProfile",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "GetListCampaign",
+    "GetListAdsGroup",
+    "GetKeywords",
+    "GetTargets",
+    "GetListProductAds"
+   ],
+   "notes": "Manual trigger of: SP sync for one profile. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/sd-profile",
+   "group": "internal",
+   "handler": "migrateHandler.MigrateSDProfile",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "SDCampaignGetList",
+    "SDAdGroupGetList",
+    "SDTargetGetList",
+    "SDListCreatives",
+    "SDProductAdGetList"
+   ],
+   "notes": "Manual trigger of: SD sync for one profile. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/sd-campaign",
+   "group": "internal",
+   "handler": "migrateHandler.MigrateSDCampaign",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "SDCampaignGetList",
+    "SDAdGroupGetList",
+    "SDTargetGetList",
+    "SDListCreatives",
+    "SDProductAdGetList"
+   ],
+   "notes": "Manual trigger of: SD sync for one campaign. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/sb-profile",
+   "group": "internal",
+   "handler": "migrateHandler.MigrateSBProfile",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "SBCampaignList",
+    "SBAdGroupList",
+    "SBKeywordList",
+    "SBNegativeKeywordList",
+    "SBNegativeTargetList",
+    "SBThemeKeywordList",
+    "SBTargetList",
+    "SBProductAdList"
+   ],
+   "notes": "Manual trigger of: SB sync for one profile. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/sb-campaign",
+   "group": "internal",
+   "handler": "migrateHandler.MigrateSBCampaign",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "SBCampaignList",
+    "SBAdGroupList",
+    "SBKeywordList",
+    "SBNegativeKeywordList",
+    "SBNegativeTargetList",
+    "SBThemeKeywordList",
+    "SBTargetList",
+    "SBProductAdList"
+   ],
+   "notes": "Manual trigger of: SB sync for one campaign. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/profile",
+   "group": "internal",
+   "handler": "migrateHandler.MigrateProfile",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "GetProfiles",
+    "GetListCampaign",
+    "GetListAdsGroup",
+    "GetKeywords",
+    "GetTargets",
+    "GetListProductAds",
+    "SDCampaignGetList",
+    "SDAdGroupGetList",
+    "SDTargetGetList",
+    "SDListCreatives",
+    "SDProductAdGetList",
+    "SBCampaignList",
+    "SBAdGroupList",
+    "SBKeywordList",
+    "SBNegativeKeywordList",
+    "SBNegativeTargetList",
+    "SBThemeKeywordList",
+    "SBTargetList",
+    "SBProductAdList"
+   ],
+   "notes": "Manual trigger of: profile list + per-profile sync of all products. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/budget",
+   "group": "internal",
+   "handler": "migrateHandler.MigrateBudget",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "GetAllbudgetRule"
+   ],
+   "notes": "Manual trigger of: budget rules sync from Amazon. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/sp-campaign-negative",
+   "group": "internal",
+   "handler": "migrateHandler.MigrateSPCampaignNegative",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "GetListCampaign",
+    "SPCampaignNegativeKeywordList",
+    "SPCampaignNegativeProductList"
+   ],
+   "notes": "Manual trigger of: campaign-level negative keywords/products sync (SP). Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/sp-profile-campaign-negative",
+   "group": "internal",
+   "handler": "migrateHandler.MigrateSPProfileCampaignNegative",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "GetListCampaign",
+    "SPCampaignNegativeKeywordList",
+    "SPCampaignNegativeProductList"
+   ],
+   "notes": "Manual trigger of: campaign-level negatives sync for a profile. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/alert-campaign",
+   "group": "internal",
+   "handler": "migrateHandler.AlertCampaign",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [],
+   "notes": "Manual trigger of: compare Amazon state with the app DB per campaign type and report drift (alert-campaign-job); parts of the body are commented out in the source. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/auto-searchterm",
+   "group": "internal",
+   "handler": "migrateHandler.AutoSearchTerm",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "SPNegativeKeywordInsert",
+    "NegativeTargetInsert",
+    "SBNegativeKeywordInsert",
+    "CreateKeyword",
+    "CreateTarget",
+    "SBKeywordInsert"
+   ],
+   "notes": "Manual trigger of: run auto negative + good search-term automation (auto-campaign-job). Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/auto-bidding",
+   "group": "internal",
+   "handler": "migrateHandler.AutoBidding",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignUpdate",
+    "SBCampaignUpdate",
+    "UpdateTarget",
+    "SDTargetUpdate",
+    "SBTargetUpdate",
+    "UpdateKeyword"
+   ],
+   "notes": "Manual trigger of: run auto budget + auto target-bid automation (auto-bidding-job). Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/sp-negative-target",
+   "group": "internal",
+   "handler": "migrateHandler.MigrateSPNegativeTarget",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "NegativeTargetList"
+   ],
+   "notes": "Manual trigger of: SP negative target sync. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/auto-archived-searchterm",
+   "group": "internal",
+   "handler": "migrateHandler.AutoArchivedSearchTerm",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "SPNegativeKeywordDelete",
+    "NegativeTargetDelete",
+    "SBNegativeKeywordDelete"
+   ],
+   "notes": "Manual trigger of: remove (archive) negative search terms. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/auto-create-campaign",
+   "group": "internal",
+   "handler": "migrateHandler.AutoCreateCampaign",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignInsert",
+    "SBCampaignInsert",
+    "UpSertAdsGroup",
+    "UpSertProductAds",
+    "CreateKeyword",
+    "CreateTarget"
+   ],
+   "notes": "Manual trigger of: create campaigns from the auto-campaign dimension tables (auto-create-campaign-job). Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/migrate/auto-log-change-status-asin",
+   "group": "internal",
+   "handler": "migrateHandler.MigrateLogChangeStatusAsin",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads",
+    "keywords",
+    "targets",
+    "negative_*"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "Amazon via proxy",
+    "Kafka"
+   ],
+   "amazonCalls": [
+    "GetListProductAds",
+    "SDProductAdGetList",
+    "SBProductAdList"
+   ],
+   "notes": "Manual trigger of: refresh the ineligible-ASIN status log for product ads. Mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "GET",
+   "path": "/api/internal/test/get-report-actual",
+   "group": "internal",
+   "handler": "budgetReportHandler.GetReport",
+   "usecase": "BudgetReport",
+   "entities": [],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": "Test/demo endpoint left in the router, mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "GET",
+   "path": "/api/internal/test/get-report-estimate",
+   "group": "internal",
+   "handler": "budgetReportHandler.GetDailyBudgetByTime",
+   "usecase": "BudgetReport",
+   "entities": [],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [],
+   "notes": "Test/demo endpoint left in the router, mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/portfolio/operations/migrate-users",
+   "group": "internal",
+   "handler": "portfolioHandler.MigrateUsers",
+   "usecase": "Portfolio",
+   "entities": [
+    "users_simulator",
+    "roles_ads_management",
+    "portfolio_users"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "identity/portal service"
+   ],
+   "amazonCalls": [],
+   "notes": "One-off user migration, mounted without auth.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/campaigns/bidding-rules/cron",
+   "group": "internal",
+   "handler": "biddingRuleHandler.ScheduleCalculator",
+   "usecase": "BiddingRuleUsecase",
+   "entities": [
+    "bidding_rules",
+    "campaigns"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign"
+   ],
+   "notes": "Scheduler trigger for bidding rules; also external duplicate under /api/external with campaign ACL. Mounted without auth here.",
+   "auth": "none (RegisterNoAuth: mounted before VerifyAuthInternal)",
+   "routeFunction": "RegisterNoAuth"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/auto/campaign-budgets",
+   "group": "internal",
+   "handler": "autoHandler.UpdateCampaignBudget",
+   "usecase": "Auto",
+   "entities": [
+    "campaigns"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)",
+    "reporting DB (warehouse replica: ads daily/hourly reports, stream tables)"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignUpdate",
+    "SBCampaignUpdate"
+   ],
+   "notes": "Runs UpdateCampaignBudget for one campaign (out-of-budget top-up).",
+   "auth": "TOKEN_INTERNAL header (VerifyAuthInternal)",
+   "routeFunction": "Register"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/campaigns/clone-by-asins-multiple",
+   "group": "internal",
+   "handler": "migrateHandler.CloneCampaignByAsinMultiple",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignInsert",
+    "SBCampaignInsert",
+    "UpSertAdsGroup",
+    "UpSertProductAds",
+    "CreateKeyword",
+    "CreateTarget"
+   ],
+   "notes": "Bulk clone by ASIN list.",
+   "auth": "TOKEN_INTERNAL header (VerifyAuthInternal)",
+   "routeFunction": "Register"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/campaigns/clone-multiple",
+   "group": "internal",
+   "handler": "migrateHandler.CloneCampaignMultiple",
+   "usecase": "Migrate",
+   "entities": [
+    "campaigns",
+    "ad_groups",
+    "product_ads"
+   ],
+   "dataSources": [
+    "app DB (Postgres, GORM)"
+   ],
+   "amazonCalls": [
+    "UpSertCampaign",
+    "SDCampaignInsert",
+    "SBCampaignInsert",
+    "UpSertAdsGroup",
+    "UpSertProductAds",
+    "CreateKeyword",
+    "CreateTarget"
+   ],
+   "notes": "Bulk clone by campaign list.",
+   "auth": "TOKEN_INTERNAL header (VerifyAuthInternal)",
+   "routeFunction": "Register"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/api-interface/call",
+   "group": "internal",
+   "handler": "apiInterface.CallExternalAPI",
+   "usecase": "CallAPIExternalUsecase",
+   "entities": [],
+   "dataSources": [
+    "arbitrary external HTTP target given by the caller"
+   ],
+   "amazonCalls": [],
+   "notes": "Generic HTTP forwarder: caller supplies URL, method, headers and body; the request incl. headers is logged. Open-proxy/SSRF risk.",
+   "auth": "TOKEN_INTERNAL header (VerifyAuthInternal)",
+   "routeFunction": "Register"
+  },
+  {
+   "method": "POST",
+   "path": "/api/internal/api-interface/backup-cookie",
+   "group": "internal",
+   "handler": "apiInterface.BackupCookie",
+   "usecase": "CookieCache",
+   "entities": [],
+   "dataSources": [
+    "Redis cache"
+   ],
+   "amazonCalls": [],
+   "notes": "Stores a console session cookie pushed by an external bot into Redis (feeds the console-private calls).",
+   "auth": "TOKEN_INTERNAL header (VerifyAuthInternal)",
+   "routeFunction": "Register"
+  }
+ ]
+}

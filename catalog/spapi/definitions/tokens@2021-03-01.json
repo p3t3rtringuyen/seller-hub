@@ -1,0 +1,97 @@
+{
+  "CreateRestrictedDataTokenRequest": {
+    "description": "The request schema for the createRestrictedDataToken operation.",
+    "properties": {
+      "restrictedResources": {
+        "description": "A list of restricted resources.",
+        "ref": "RestrictedResource",
+        "type": "array"
+      },
+      "targetApplication": {
+        "description": "The application ID for the target application to which access is being delegated.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "restrictedResources"
+    ],
+    "type": "object"
+  },
+  "CreateRestrictedDataTokenResponse": {
+    "description": "The response schema for the createRestrictedDataToken operation.",
+    "properties": {
+      "expiresIn": {
+        "description": "The lifetime of the Restricted Data Token, in seconds.",
+        "type": "integer"
+      },
+      "restrictedDataToken": {
+        "description": "A Restricted Data Token (RDT).",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "An error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RestrictedResource": {
+    "description": "Model of a restricted resource.",
+    "properties": {
+      "dataElements": {
+        "description": "Indicates the type of Personally Identifiable Information requested.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "method": {
+        "description": "The HTTP method in the restricted resource.",
+        "enum": [
+          "DELETE",
+          "GET",
+          "POST",
+          "PUT"
+        ],
+        "type": "string"
+      },
+      "path": {
+        "description": "The path in the restricted resource.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "method",
+      "path"
+    ],
+    "type": "object"
+  }
+}

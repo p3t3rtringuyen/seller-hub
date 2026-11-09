@@ -1,0 +1,154 @@
+{
+ "api": "profiles-3-0",
+ "file": "specs/profiles/3-0/openapi.yaml",
+ "schemas": {
+  "AccountInfo": {
+   "properties": {
+    "id": {
+     "description": "Identifier for sellers and vendors. Note that this value is not unique and may be the same across marketplace.",
+     "type": "string"
+    },
+    "marketplaceStringId": {
+     "description": "The identifier of the marketplace to which the account is associated.",
+     "type": "string"
+    },
+    "name": {
+     "description": "Account name.",
+     "type": "string"
+    },
+    "subType": {
+     "description": "The account subtype.",
+     "enum": [
+      "KDP_AUTHOR",
+      "AMAZON_ATTRIBUTION"
+     ],
+     "type": "string"
+    },
+    "type": {
+     "$ref": "AccountType"
+    },
+    "validPaymentMethod": {
+     "description": "Only present for Vendors, this returns whether the Advertiser has set up a valid payment method or not.",
+     "type": "boolean"
+    }
+   }
+  },
+  "AccountType": {
+   "description": "The `seller` and `vendor` account types are associated with Sponsored Ads APIs. The `agency` account type is associated with DSP and Data Provider APIs.",
+   "enum": [
+    "vendor",
+    "seller",
+    "agency"
+   ],
+   "type": "string"
+  },
+  "Profile": {
+   "properties": {
+    "accountInfo": {
+     "$ref": "AccountInfo"
+    },
+    "countryCode": {
+     "$ref": "countryCode"
+    },
+    "currencyCode": {
+     "description": "The currency used for all monetary values for entities under this profile. |Region|`countryCode`|Country Name|`currencyCode`| |-----|------|------|------| |NA|BR|Brazil|BRL| |NA|CA|Canada|CAD| |NA|MX|Mexico|MXN| |NA|US|…",
+     "enum": [
+      "BRL",
+      "CAD",
+      "MXN",
+      "USD",
+      "AED",
+      "EUR",
+      "EGP",
+      "INR",
+      "PLN",
+      "SAR",
+      "SEK",
+      "TRY",
+      "GBP",
+      "AUD",
+      "JPY",
+      "SGD",
+      "ZAR"
+     ],
+     "type": "string"
+    },
+    "dailyBudget": {
+     "description": "Note that this field applies to Sponsored Product campaigns for seller type accounts only. Not supported for vendor type accounts.",
+     "type": "number"
+    },
+    "profileId": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "timezone": {
+     "description": "The time zone used for all date-based campaign management and reporting. |Region|`countryCode`|Country Name|`timezone`| |------|-----|-----|------| |NA|BR|Brazil|America/Sao_Paulo| |NA|CA|Canada|America/Los_Angeles| |NA…",
+     "enum": [
+      "Africa/Cairo",
+      "America/Sao_Paulo",
+      "America/Los_Angeles",
+      "Asia/Dubai",
+      "Asia/Kolkata",
+      "Asia/Riyadh",
+      "Asia/Singapore",
+      "Asia/Tokyo",
+      "Australia/Sydney",
+      "Europe/Amsterdam",
+      "Europe/Dublin",
+      "Europe/Istanbul",
+      "Europe/London",
+      "Europe/Paris",
+      "Europe/Stockholm",
+      "Europe/Warsaw",
+      "Europe/Brussels",
+      "Africa/Johannesburg"
+     ],
+     "type": "string"
+    }
+   }
+  },
+  "ProfileResponse": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "details": {
+     "type": "string"
+    },
+    "profileId": {
+     "format": "int64",
+     "type": "integer"
+    }
+   }
+  },
+  "countryCode": {
+   "description": "The countryCode for a given country |Region|`countryCode`|Country Name| |------|-----|-------| |NA|BR|Brazil| |NA|CA|Canada| |NA|MX|Mexico| |NA|US|United States| |EU|AE|United Arab Emirates| |EU|BE|Belgium| |EU|DE|Germa…",
+   "enum": [
+    "BR",
+    "CA",
+    "MX",
+    "US",
+    "AE",
+    "BE",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "IE",
+    "IN",
+    "IT",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "TR",
+    "UK",
+    "AU",
+    "JP",
+    "SG",
+    "ZA"
+   ],
+   "type": "string"
+  }
+ }
+}

@@ -1,0 +1,353 @@
+{
+ "api": "dsp-2-2-reports_previous",
+ "file": "specs/dsp/2-2/reports_previous.yaml",
+ "schemas": {
+  "CreateReportRequestBodyV2": {
+   "properties": {
+    "advertiserIds": {
+     "description": "List of advertisers specified by identifier to include in the report. If this field is not specified, the report includes data for all advertisers included in the scope specified in the `Amazon-Advertising-API-Scope` he…",
+     "items": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "dimensions": {
+     "description": "List of dimensions to include in the report. Specify one or many comma-delimited strings of dimensions. For example: [\"ORDER\", \"LINE_ITEM\", \"CREATIVE\"]. Adding a dimension in this array determines the aggregation level …",
+     "items": {
+      "enum": [
+       "ORDER",
+       "LINE_ITEM",
+       "CREATIVE",
+       "SITE",
+       "SUPPLY",
+       "DEAL",
+       "COUNTRY",
+       "STATE_COUNTY_REGION",
+       "CITY",
+       "DMA",
+       "POSTAL_CODE",
+       "OPERATING_SYSTEM",
+       "BROWSER_TYPE",
+       "BROWSER_VERSION",
+       "DEVICE_TYPE",
+       "ENVIRONMENT_TYPE"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "endDate": {
+     "description": "Date in YYYYMMDD format. The report contains only metrics generated on the specified date range between startDate and endDate. The maximum date range between startDate and endDate is 31 days. The endDate can be up to 90…",
+     "type": "string"
+    },
+    "format": {
+     "default": "JSON",
+     "description": "The report file format.",
+     "enum": [
+      "JSON",
+      "CSV"
+     ],
+     "type": "string"
+    },
+    "metrics": {
+     "description": "Specify a comma-delimited string of metrics field names to include in the report. For example: \"impressions, clickThroughs, CTR, eCPC, totalCost, eCPM\". If no metric field names are specified, only the default fields an…",
+     "type": "string"
+    },
+    "orderIds": {
+     "description": "List of orders specified by identifier to include in the report. If this field is not specified, the report includes data for all orders included in the scope specified in the `Amazon-Advertising-API-Scope` header. Note…",
+     "items": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "startDate": {
+     "description": "Date in YYYYMMDD format. The report contains only metrics generated on the specified date range between startDate and endDate. The maximum date range between startDate and endDate is 31 days. The startDate can be up to …",
+     "type": "string"
+    },
+    "timeUnit": {
+     "default": "SUMMARY",
+     "description": "Adding timeUnit determines the aggregation level (`SUMMARY` or `DAILY`) of the report data. If the timeUnit is null or empty, the aggregation of the report data is at the `SUMMARY` level and aggregated at the time perio…",
+     "enum": [
+      "DAILY",
+      "SUMMARY"
+     ],
+     "type": "string"
+    },
+    "type": {
+     "default": "CAMPAIGN",
+     "description": "The report type.",
+     "enum": [
+      "CAMPAIGN",
+      "INVENTORY",
+      "AUDIENCE",
+      "PRODUCTS",
+      "TECHNOLOGY",
+      "GEOGRAPHY"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "startDate",
+    "endDate"
+   ],
+   "type": "object"
+  },
+  "CreateReportRequestBodyV3": {
+   "properties": {
+    "advertiserIds": {
+     "description": "List of advertisers specified by identifier to include in the report. This should not be present if accountId is advertiser",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "dimensions": {
+     "description": "List of dimensions to include in the report. Specify one or many comma-delimited strings of dimensions. For example: [\"ORDER\", \"LINE_ITEM\", \"CREATIVE\"]. Adding a dimension in this array determines the aggregation level …",
+     "items": {
+      "enum": [
+       "ORDER",
+       "LINE_ITEM",
+       "CREATIVE",
+       "SITE",
+       "SUPPLY",
+       "DEAL",
+       "COUNTRY",
+       "STATE_COUNTY_REGION",
+       "CITY",
+       "DMA",
+       "POSTAL_CODE",
+       "OPERATING_SYSTEM",
+       "BROWSER_TYPE",
+       "BROWSER_VERSION",
+       "DEVICE_TYPE",
+       "ENVIRONMENT_TYPE"
+      ],
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "endDate": {
+     "description": "Date in yyyy-MM-dd format. The report contains only metrics generated on the specified date range between startDate and endDate. The maximum date range between startDate and endDate is 31 days. The endDate can be up to …",
+     "type": "string"
+    },
+    "format": {
+     "default": "JSON",
+     "description": "The report file format.",
+     "enum": [
+      "JSON",
+      "CSV"
+     ],
+     "type": "string"
+    },
+    "metrics": {
+     "description": "Specify a list of metrics field names to include in the report. For example: [\"impressions\", \"clickThroughs\", \"CTR\", \"eCPC\", \"totalCost\", \"eCPM\"]. If no metric field names are specified, only the default fields and sele…",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "orderIds": {
+     "description": "List of orders specified by identifier to include in the report.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "startDate": {
+     "description": "Date in yyyy-MM-dd format. The report contains only metrics generated on the specified date range between startDate and endDate. The maximum date range between startDate and endDate is 31 days. The startDate can be up t…",
+     "type": "string"
+    },
+    "timeUnit": {
+     "default": "SUMMARY",
+     "description": "Adding timeUnit determines the aggregation level (`SUMMARY` or `DAILY`) of the report data. If the timeUnit is null or empty, the aggregation of the report data is at the `SUMMARY` level and aggregated at the time perio…",
+     "enum": [
+      "DAILY",
+      "SUMMARY"
+     ],
+     "type": "string"
+    },
+    "type": {
+     "default": "CAMPAIGN",
+     "description": "The report type.",
+     "enum": [
+      "CAMPAIGN",
+      "INVENTORY",
+      "AUDIENCE",
+      "PRODUCTS",
+      "TECHNOLOGY",
+      "GEOGRAPHY"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "startDate",
+    "endDate"
+   ],
+   "type": "object"
+  },
+  "DSPReportsError": {
+   "description": "The error response object.",
+   "properties": {
+    "errors": {
+     "description": "A list of errors. Please check the values in this field for report validation errors.",
+     "items": {
+      "$ref": "DSPReportsSubError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "A unique identifier of the request.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "message"
+   ],
+   "type": "object"
+  },
+  "DSPReportsSubError": {
+   "description": "The sub-error object.",
+   "properties": {
+    "errorType": {
+     "description": "Enumerated error type.",
+     "type": "string"
+    },
+    "field": {
+     "description": "Request body field which is cause of the error.",
+     "type": "string"
+    },
+    "message": {
+     "description": "Detailed error description",
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ReportMetadataV2": {
+   "properties": {
+    "expiration": {
+     "description": "The expiration time of the URI in the location property in milliseconds. The expiration time is the interval between the time the response was generated and the time the URI expires.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "format": {
+     "description": "The data format of the report.",
+     "enum": [
+      "JSON",
+      "CSV"
+     ],
+     "type": "string"
+    },
+    "location": {
+     "description": "The URI address of the report.",
+     "type": "string"
+    },
+    "reportId": {
+     "description": "The identifier of the report.",
+     "type": "string"
+    },
+    "status": {
+     "description": "The build status of the report.",
+     "enum": [
+      "IN_PROGRESS",
+      "SUCCESS",
+      "FAILURE"
+     ],
+     "type": "string"
+    },
+    "statusDetails": {
+     "description": "A human-readable description of the current status.",
+     "type": "string"
+    },
+    "type": {
+     "description": "The type of report.",
+     "enum": [
+      "CAMPAIGN",
+      "INVENTORY",
+      "AUDIENCE",
+      "PRODUCTS",
+      "TECHNOLOGY",
+      "GEOGRAPHY"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ReportMetadataV3": {
+   "properties": {
+    "expiration": {
+     "description": "The expiration time of the URI in the location property in date-time format(yyyy-MM-ddTHH:mm:ss). The expiration time is the time when the download link expires.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "format": {
+     "description": "The data format of the report.",
+     "enum": [
+      "JSON",
+      "CSV"
+     ],
+     "type": "string"
+    },
+    "location": {
+     "description": "The URI address of the report.",
+     "type": "string"
+    },
+    "reportId": {
+     "description": "The identifier of the report.",
+     "type": "string"
+    },
+    "status": {
+     "description": "The build status of the report.",
+     "enum": [
+      "IN_PROGRESS",
+      "SUCCESS",
+      "FAILURE"
+     ],
+     "type": "string"
+    },
+    "statusDetails": {
+     "description": "A human-readable description of the current status.",
+     "type": "string"
+    },
+    "type": {
+     "description": "The type of report.",
+     "enum": [
+      "CAMPAIGN",
+      "INVENTORY",
+      "AUDIENCE",
+      "PRODUCTS",
+      "TECHNOLOGY",
+      "GEOGRAPHY"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

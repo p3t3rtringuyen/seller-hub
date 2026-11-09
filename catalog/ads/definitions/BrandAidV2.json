@@ -1,0 +1,438 @@
+{
+ "api": "BrandAidV2",
+ "file": "specs/dest/BrandAidV2_prod_3p.json",
+ "schemas": {
+  "AlternateBrandIdType": {
+   "description": "<p>The type of identifier for the alternate brand identifier. <strong>AlternateBrandIdType Enum:</strong> | AlternateBrandIdType | Description | | --- | --- | | <code>LINEAR_TV_ID</code> | Linear TV measurement provider…",
+   "enum": [
+    "LINEAR_TV_ID"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Brand": {
+   "properties": {
+    "brandAlternateIds": {
+     "description": "<p>Other types of brand identifiers for the brand that are used with other operations.</p>",
+     "items": {
+      "$ref": "BrandAlternateId"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brandId": {
+     "description": "<p>The unique identifier for a brand.</p>",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "<p>Logos of the brand.</p>",
+     "items": {
+      "$ref": "BrandLogo"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brandName": {
+     "description": "<p>Display name of the brand.</p>",
+     "type": "string"
+    },
+    "brandStatus": {
+     "$ref": "BrandStatus"
+    },
+    "brandWebsites": {
+     "description": "<p>Websites of the brand.</p>",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brandId",
+    "brandName",
+    "brandStatus"
+   ],
+   "type": "object"
+  },
+  "BrandAdvertiserAssociation": {
+   "properties": {
+    "advertiserAccountId": {
+     "description": "<p>The identifier of the advertiser account in the relationship.</p>",
+     "type": "string"
+    },
+    "associationStatus": {
+     "$ref": "BrandAdvertiserAssociationStatus"
+    },
+    "brandAssociationId": {
+     "description": "<p>The unique identifier for a brand advertiser association.</p>",
+     "type": "string"
+    },
+    "brandId": {
+     "description": "<p>The identifier of the brand in the relationship.</p>",
+     "type": "string"
+    },
+    "relationship": {
+     "$ref": "BrandAdvertiserRelationshipType"
+    }
+   },
+   "required": [
+    "advertiserAccountId",
+    "associationStatus",
+    "brandAssociationId",
+    "brandId",
+    "relationship"
+   ],
+   "type": "object"
+  },
+  "BrandAdvertiserAssociationStatus": {
+   "description": "<p>The current status of the brand to advertiser relationship. <strong>BrandAdvertiserAssociationStatus Enum:</strong> | BrandAdvertiserAssociationStatus | Description | | --- | --- | | <code>PENDING_REVIEW</code> | The…",
+   "enum": [
+    "APPROVED",
+    "NOT_APPROVED",
+    "PENDING_REVIEW"
+   ],
+   "type": "string"
+  },
+  "BrandAdvertiserRelationshipType": {
+   "description": "<p>The relationship between the brand and the advertiser account. <strong>BrandAdvertiserRelationshipType Enum:</strong> | BrandAdvertiserRelationshipType | Description | | --- | --- | | <code>OWNER</code> | The adverti…",
+   "enum": [
+    "ADVERTISER",
+    "OWNER",
+    "RESELLER"
+   ],
+   "type": "string"
+  },
+  "BrandAlternateId": {
+   "description": "<p>Other types of brand identifiers for a brand that are used with other operations.</p>",
+   "properties": {
+    "alternateBrandId": {
+     "description": "<p>The alternative brand identifier for the brandId.</p>",
+     "type": "string"
+    },
+    "alternateBrandIdType": {
+     "$ref": "AlternateBrandIdType"
+    },
+    "countryCode": {
+     "description": "<p>The country where the alternate brand identifier is valid.</p>",
+     "type": "string"
+    }
+   },
+   "required": [
+    "alternateBrandId",
+    "alternateBrandIdType",
+    "countryCode"
+   ],
+   "type": "object"
+  },
+  "BrandLogo": {
+   "description": "<p>Metadata for a brand logo.</p>",
+   "properties": {
+    "brandLogoAssetId": {
+     "description": "<p>Advertising Asset Library Id for a brand logo.</p>",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BrandMultiStatusSuccess": {
+   "properties": {
+    "brand": {
+     "$ref": "Brand"
+    },
+    "index": {
+     "maximum": 99,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "brand",
+    "index"
+   ],
+   "type": "object"
+  },
+  "BrandStatus": {
+   "description": "<p>The current status of the brand. <strong>BrandStatus Enum:</strong> | BrandStatus | Description | | --- | --- | | <code>PENDING_REVIEW</code> | The brand creation request is under review by Amazon. | | <code>NOT_APPR…",
+   "enum": [
+    "MERGED",
+    "NOT_APPROVED",
+    "PENDING_REVIEW",
+    "REGISTERED",
+    "SUSPENDED"
+   ],
+   "type": "string"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "<p><strong>ErrorCode Enum:</strong> | ErrorCode | Description | | --- | --- | | <code>INTERNAL_ERROR</code> | The server encountered an unexpected condition that prevented it from fulfilling the request. | | <code>UNAUT…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "maximum": 99,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryBrandAdvertiserAssociationRequestContent": {
+   "properties": {
+    "maxResults": {
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "QueryBrandAdvertiserAssociationResponseContent": {
+   "properties": {
+    "brandAdvertiserAssociations": {
+     "items": {
+      "$ref": "BrandAdvertiserAssociation"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RetrieveBrandRequestContent": {
+   "properties": {
+    "brandIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brandIds"
+   ],
+   "type": "object"
+  },
+  "RetrieveBrandResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "BrandMultiStatusSuccess"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

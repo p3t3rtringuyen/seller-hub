@@ -1,0 +1,511 @@
+{
+ "api": "AmazonAdsAPIALLAccountCombinationInvitationsContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLAccountCombinationInvitationsContract_prod_3p_BETA.json",
+ "schemas": {
+  "AccountCombinationInvitation": {
+   "properties": {
+    "accountCombinationInvitationId": {
+     "description": "The unique identifier for the account combination invitation.",
+     "type": "string"
+    },
+    "accountsToCombine": {
+     "description": "The list of accounts to combine into one Advertiser Account.",
+     "items": {
+      "$ref": "AccountToCombine"
+     },
+     "maxItems": 17,
+     "minItems": 1,
+     "type": "array"
+    },
+    "advertiserAccountId": {
+     "description": "The identifier of the Advertiser Account in the account combination invitation, in ACI format. Example: amzn1.ads-account.g.a1bc2de3fg4hi5jk6lm7no8pq.",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "AccountCombinationInvitationStatus"
+    },
+    "statusMessage": {
+     "description": "Additional information about the current status, including error details, rejection info and recommended actions.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "accountCombinationInvitationId",
+    "accountsToCombine",
+    "statusMessage"
+   ],
+   "type": "object"
+  },
+  "AccountCombinationInvitationAccountCombinationInvitationIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AccountCombinationInvitationCreate": {
+   "properties": {
+    "accountsToCombine": {
+     "description": "The list of accounts to combine into one Advertiser Account.",
+     "items": {
+      "$ref": "CreateAccountToCombine"
+     },
+     "maxItems": 17,
+     "minItems": 1,
+     "type": "array"
+    },
+    "advertiserAccountId": {
+     "description": "The identifier of the Advertiser Account in the account combination invitation, in ACI format. Example: amzn1.ads-account.g.a1bc2de3fg4hi5jk6lm7no8pq.",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "AccountCombinationInvitationStatus"
+    }
+   },
+   "required": [
+    "accountsToCombine"
+   ],
+   "type": "object"
+  },
+  "AccountCombinationInvitationMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "AccountCombinationInvitationMultiStatusSuccess"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AccountCombinationInvitationMultiStatusSuccess": {
+   "properties": {
+    "accountCombinationInvitation": {
+     "$ref": "AccountCombinationInvitation"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 49,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "accountCombinationInvitation",
+    "index"
+   ],
+   "type": "object"
+  },
+  "AccountCombinationInvitationStatus": {
+   "description": "This represents the current state of an account combination invitation. **AccountCombinationInvitationStatus Enum:** | AccountCombinationInvitationStatus | Description | |------|------| | `APPROVED` | The combination in…",
+   "enum": [
+    "APPROVED",
+    "PENDING",
+    "REJECTED",
+    "RESENT"
+   ],
+   "type": "string"
+  },
+  "AccountCombinationInvitationSuccessResponse": {
+   "properties": {
+    "accountCombinationInvitations": {
+     "items": {
+      "$ref": "AccountCombinationInvitation"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AccountCombinationInvitationUpdate": {
+   "properties": {
+    "accountCombinationInvitationId": {
+     "description": "The unique identifier for the account combination invitation.",
+     "type": "string"
+    },
+    "accountsToCombine": {
+     "description": "The list of accounts to combine into one Advertiser Account.",
+     "items": {
+      "$ref": "CreateAccountToCombine"
+     },
+     "maxItems": 17,
+     "minItems": 1,
+     "type": "array"
+    },
+    "advertiserAccountId": {
+     "description": "The identifier of the Advertiser Account in the account combination invitation, in ACI format. Example: amzn1.ads-account.g.a1bc2de3fg4hi5jk6lm7no8pq.",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "AccountCombinationInvitationStatus"
+    }
+   },
+   "required": [
+    "accountCombinationInvitationId"
+   ],
+   "type": "object"
+  },
+  "AccountFunction": {
+   "description": "All available options on how to combine an account metadata with other accounts. **AccountFunction Enum:** | AccountFunction | Description | |------|------| | `BILLING_PREFERENCES_SOURCE` | Inherit billing preferences f…",
+   "enum": [
+    "BILLING_PREFERENCES_SOURCE",
+    "BUSINESS_DETAILS_SOURCE"
+   ],
+   "type": "string"
+  },
+  "AccountId": {
+   "description": "| AccountId | Description | |------|------| | `advertiserAccountId` | This represents an advertiser account. It can be a global advertiser account that works across countries (ex: amzn1.ads-account.g.a1bc2de3fg4hi5jk6lm…",
+   "oneOf": [
+    {
+     "properties": {
+      "advertiserAccountId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "advertiserAccountId"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "AccountToCombine": {
+   "description": "Represents the account-to-be-combined and its attributes.",
+   "properties": {
+    "accountFunctions": {
+     "description": "Defines the different ways this account will be used to combine metadata with other accounts.",
+     "items": {
+      "$ref": "AccountFunction"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "accountId": {
+     "$ref": "AccountId"
+    }
+   },
+   "required": [
+    "accountId"
+   ],
+   "type": "object"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateAccountCombinationInvitationRequest": {
+   "properties": {
+    "accountCombinationInvitations": {
+     "items": {
+      "$ref": "AccountCombinationInvitationCreate"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "accountCombinationInvitations"
+   ],
+   "type": "object"
+  },
+  "CreateAccountToCombine": {
+   "description": "Represents the account-to-be-combined and its attributes.",
+   "properties": {
+    "accountFunctions": {
+     "description": "Defines the different ways this account will be used to combine metadata with other accounts.",
+     "items": {
+      "$ref": "AccountFunction"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "accountId": {
+     "$ref": "AccountId"
+    }
+   },
+   "required": [
+    "accountId"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACCESS_DENIED_FOR_MANAGER_ACCOUNT` | The request does not have access to the manager account provided in the registration request. | | `ACCOUNT_ALREADY_…",
+   "enum": [
+    "ACCESS_DENIED_FOR_MANAGER_ACCOUNT",
+    "ACCOUNT_ALREADY_EXISTS_FOR_ACCOUNT_NAME",
+    "ACCOUNT_ALREADY_EXISTS_FOR_SELLING_ACCOUNT",
+    "ACCOUNT_ALREADY_EXISTS_FOR_VENDOR",
+    "ADDRESS_BUSINESS_NAME_TOO_LONG",
+    "ADDRESS_INVALID_STATE",
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "INVALID_INPUT",
+    "INVALID_STATE_OR_REGION",
+    "INVALID_WEBSITE_URL",
+    "INVALID_ZIP_CODE",
+    "MISSING_ADDRESS_LINE_ONE",
+    "MISSING_BUSINESS_NAME",
+    "MISSING_CITY",
+    "MISSING_COUNTRY_CODE",
+    "MISSING_PHONE_NUMBER",
+    "MISSING_STATE",
+    "MISSING_WEBSITE_URL",
+    "MISSING_ZIP_CODE",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryAccountCombinationInvitationRequest": {
+   "properties": {
+    "accountCombinationInvitationIdFilter": {
+     "$ref": "AccountCombinationInvitationAccountCombinationInvitationIdFilter"
+    },
+    "maxResults": {
+     "default": 10,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateAccountCombinationInvitationRequest": {
+   "properties": {
+    "accountCombinationInvitations": {
+     "items": {
+      "$ref": "AccountCombinationInvitationUpdate"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "accountCombinationInvitations"
+   ],
+   "type": "object"
+  }
+ }
+}

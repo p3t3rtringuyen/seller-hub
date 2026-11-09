@@ -1,0 +1,175 @@
+{
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "Issue": {
+    "description": "An issue with a listings item.",
+    "properties": {
+      "attributeName": {
+        "description": "Name of the attribute associated with the issue, if applicable.",
+        "type": "string"
+      },
+      "code": {
+        "description": "An issue code that identifies the type of issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the issue.",
+        "type": "string"
+      },
+      "severity": {
+        "description": "The severity of the issue.",
+        "enum": [
+          "ERROR",
+          "INFO",
+          "WARNING"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message",
+      "severity"
+    ],
+    "type": "object"
+  },
+  "ListingsItemPatchRequest": {
+    "description": "The request body schema for the patchListingsItem operation.",
+    "properties": {
+      "patches": {
+        "description": "One or more JSON Patch operations to perform on the listings item.",
+        "ref": "PatchOperation",
+        "type": "array"
+      },
+      "productType": {
+        "description": "The Amazon product type of the listings item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "patches",
+      "productType"
+    ],
+    "type": "object"
+  },
+  "ListingsItemPutRequest": {
+    "description": "The request body schema for the putListingsItem operation.",
+    "properties": {
+      "attributes": {
+        "description": "JSON object containing structured listings item attribute data keyed by attribute name.",
+        "type": "object"
+      },
+      "productType": {
+        "description": "The Amazon product type of the listings item.",
+        "type": "string"
+      },
+      "requirements": {
+        "description": "The name of the requirements set for the provided data.",
+        "enum": [
+          "LISTING",
+          "LISTING_OFFER_ONLY",
+          "LISTING_PRODUCT_ONLY"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "attributes",
+      "productType"
+    ],
+    "type": "object"
+  },
+  "ListingsItemSubmissionResponse": {
+    "description": "Response containing the results of a submission to the Selling Partner API for Listings Items.",
+    "properties": {
+      "issues": {
+        "description": "Listings item issues related to the listings item submission.",
+        "ref": "Issue",
+        "type": "array"
+      },
+      "sku": {
+        "description": "A selling partner provided identifier for an Amazon listing.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The status of the listings item submission.",
+        "enum": [
+          "ACCEPTED",
+          "INVALID"
+        ],
+        "type": "string"
+      },
+      "submissionId": {
+        "description": "The unique identifier of the listings item submission.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "sku",
+      "status",
+      "submissionId"
+    ],
+    "type": "object"
+  },
+  "PatchOperation": {
+    "description": "Individual JSON Patch operation for an HTTP PATCH request.",
+    "properties": {
+      "op": {
+        "description": "Type of JSON Patch operation.",
+        "enum": [
+          "add",
+          "delete",
+          "replace"
+        ],
+        "type": "string"
+      },
+      "path": {
+        "description": "JSON Pointer path of the element to patch.",
+        "type": "string"
+      },
+      "value": {
+        "description": "JSON value to add, replace, or delete.",
+        "itemType": "object",
+        "type": "array"
+      }
+    },
+    "required": [
+      "op",
+      "path"
+    ],
+    "type": "object"
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "Blob": {
+    "description": "Shipment invoice document content.",
+    "format": "byte",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Error": {
+    "description": "An error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "GetInvoiceStatusResponse": {
+    "description": "The response schema for the getInvoiceStatus operation.",
+    "properties": {
+      "amazonOrderId": {
+        "description": "The Amazon-defined order identifier.",
+        "type": "string"
+      },
+      "amazonShipmentId": {
+        "description": "The Amazon-defined shipment identifier.",
+        "type": "string"
+      },
+      "errors": {
+        "description": "A list of errors returned by this API.",
+        "ref": "ErrorList"
+      },
+      "invoiceStatus": {
+        "description": "The current processing status of a shipment invoice.",
+        "ref": "ShipmentInvoiceStatus"
+      },
+      "invoices": {
+        "description": "List of individual invoice statuses for the order.",
+        "ref": "InvoiceStatus",
+        "type": "array"
+      },
+      "orderInvoicingStatus": {
+        "description": "The invoicing status of the order, considering the aggregated results of all invoices sent.",
+        "enum": [
+          "Accepted",
+          "PartiallyAccepted",
+          "Processing",
+          "Rejected"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InvoiceStatus": {
+    "description": "Individual invoice status entry.",
+    "properties": {
+      "id": {
+        "description": "The unique invoice identifier (NF-e access key for Brazilian invoices).",
+        "type": "string"
+      },
+      "status": {
+        "description": "The current status of this invoice.",
+        "enum": [
+          "Accepted",
+          "NotFound",
+          "Processing",
+          "Rejected"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "status"
+    ],
+    "type": "object"
+  },
+  "InvoiceType": {
+    "description": "The invoice type.",
+    "enum": [
+      "Outbound"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ProgramType": {
+    "description": "The Amazon program type.",
+    "enum": [
+      "EasyShip",
+      "FbaOnSite",
+      "SelfShip"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ShipmentInvoiceStatus": {
+    "description": "The shipment invoice status.",
+    "enum": [
+      "Accepted",
+      "Errored",
+      "NotFound",
+      "Processing"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "SubmitInvoiceRequest": {
+    "description": "The request schema for the `submitInvoice` operation.",
+    "properties": {
+      "contentMD5Value": {
+        "description": "MD5 sum for validating the invoice data.",
+        "type": "string"
+      },
+      "invoiceContent": {
+        "description": "The binary object representing an invoice's content.",
+        "ref": "Blob"
+      },
+      "invoiceType": {
+        "description": "The type of an invoice.",
+        "ref": "InvoiceType"
+      },
+      "marketplaceId": {
+        "description": "An Amazon store identifier.",
+        "type": "string"
+      },
+      "programType": {
+        "description": "The Amazon program that the seller is currently enrolled.",
+        "ref": "ProgramType"
+      }
+    },
+    "required": [
+      "contentMD5Value",
+      "invoiceContent",
+      "invoiceType",
+      "marketplaceId",
+      "programType"
+    ],
+    "type": "object"
+  },
+  "SubmitInvoiceResponse": {
+    "description": "The response schema for the submitInvoice operation.",
+    "properties": {
+      "errors": {
+        "description": "A list of errors returned by this API.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

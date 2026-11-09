@@ -1,0 +1,407 @@
+{
+ "api": "CombinedAudienceAPI",
+ "file": "specs/dest/CombinedAudienceAPI_prod_3p.json",
+ "schemas": {
+  "AUDIENCESTATUS": {
+   "description": "Status of audiences.",
+   "enum": [
+    "Active",
+    "Deactivated",
+    "Deprecated",
+    "Failed",
+    "Processing"
+   ],
+   "type": "string"
+  },
+  "AudienceTargetingExpression": {
+   "properties": {
+    "audiences": {
+     "description": "Specify groups of audiences to include or exclude when targeting.<ul><li>Included groups are joined by an intersection. Users must be in all of the groups specified to be included.</li><li>Audiences within a group are j…",
+     "items": {
+      "$ref": "AudienceV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audiences"
+   ],
+   "type": "object"
+  },
+  "AudienceV1": {
+   "properties": {
+    "audienceId": {
+     "description": "An audience identifier retrieved from the audiences/list resource.",
+     "type": "string"
+    },
+    "groupId": {
+     "description": "A customer-provided string used to create a group of audiences. This string is only used for this single request. Amazon does not store it.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) audiences when targeting. Only one state may be used per groupId.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "audienceId",
+    "groupId",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "CURRENCY": {
+   "description": "The supported currencies.",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "SAR",
+    "SEK",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "CreateCombinedAudienceRequestBody": {
+   "properties": {
+    "description": {
+     "description": "The combined audience description.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "idempotencyKey": {
+     "description": "The unique UUID for this requested audience.",
+     "type": "string"
+    },
+    "inputExpression": {
+     "$ref": "Expression"
+    },
+    "name": {
+     "description": "The combined audience name.",
+     "maxLength": 128,
+     "type": "string"
+    }
+   },
+   "required": [
+    "description",
+    "idempotencyKey",
+    "inputExpression",
+    "name"
+   ],
+   "type": "object"
+  },
+  "CreateCombinedAudienceResponseContent": {
+   "properties": {
+    "audienceId": {
+     "description": "The audience identifier.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceId"
+   ],
+   "type": "object"
+  },
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Expression": {
+   "description": "The expression should consist of audience targeting expression.",
+   "properties": {
+    "audienceTargetingExpression": {
+     "$ref": "AudienceTargetingExpression"
+    }
+   },
+   "type": "object"
+  },
+  "ExternalAudienceForecast": {
+   "description": "Forecast for an audience.",
+   "properties": {
+    "dailyImpressions": {
+     "$ref": "ForecastBucket"
+    },
+    "dailyReach": {
+     "$ref": "ForecastBucket"
+    }
+   },
+   "type": "object"
+  },
+  "Fee": {
+   "description": "Fee applied to a segment.",
+   "properties": {
+    "amount": {
+     "description": "Fee amount in base currency units, multiplied by scaling factor ('scale').",
+     "type": "number"
+    },
+    "currency": {
+     "$ref": "CURRENCY"
+    },
+    "feeCalculationType": {
+     "description": "How the fee is applied.",
+     "type": "string"
+    },
+    "impressionSupplyType": {
+     "description": "To which supply types this fee applies to. The fee may be different for different supply types.",
+     "type": "string"
+    },
+    "scale": {
+     "description": "Scale of the amount relative to the base currency unit. For instance, if the scale is 1000, the currency is USD, and the amount is 500, the human-readable fee is $0.50.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "ForecastBucket": {
+   "description": "Bucket containing lower and upper bounds for forecast.",
+   "properties": {
+    "lowerBoundInclusive": {
+     "description": "minimum number of devices reached/ minimum number of available impressions.",
+     "type": "number"
+    },
+    "upperBoundExclusive": {
+     "description": "maximum number of devices reached/ maximum number of available impressions.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "GetCombinedAudienceDetailsResponseContent": {
+   "properties": {
+    "audienceId": {
+     "description": "Audience segment identifier.",
+     "type": "string"
+    },
+    "audienceName": {
+     "description": "Audience name.",
+     "type": "string"
+    },
+    "category": {
+     "description": "Audience segment category.",
+     "type": "string"
+    },
+    "createDate": {
+     "description": "Audience creation date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "description": {
+     "description": "Audience description.",
+     "type": "string"
+    },
+    "expression": {
+     "$ref": "Expression"
+    },
+    "fees": {
+     "description": "Fees that will apply to this segment. Not all segments have fees. Fees may differ depending on the supply type the segment is attached to. In this case, multiple fee objects will be present.",
+     "items": {
+      "$ref": "Fee"
+     },
+     "maxItems": 168,
+     "minItems": 0,
+     "type": "array"
+    },
+    "forecast": {
+     "$ref": "ExternalAudienceForecast"
+    },
+    "status": {
+     "$ref": "AUDIENCESTATUS"
+    },
+    "subCategory": {
+     "description": "Audience segment sub-category.",
+     "type": "string"
+    },
+    "updateDate": {
+     "description": "Audience update date.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceId",
+    "audienceName",
+    "category",
+    "createDate",
+    "description",
+    "expression",
+    "status"
+   ],
+   "type": "object"
+  }
+ }
+}

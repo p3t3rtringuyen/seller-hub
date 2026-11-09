@@ -1,0 +1,339 @@
+{
+ "api": "AdvertisingInvitations",
+ "file": "specs/dest/AdvertisingInvitations_prod_3p.json",
+ "schemas": {
+  "BadRequestExceptionResponseContent": {
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Country": {
+   "properties": {
+    "countryCode": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CreateUserInvitationsRequestContent": {
+   "properties": {
+    "notifyInvitedUsers": {
+     "description": "Indicates if an invitation email will be sent to the invited user. This email will direct users to the Amazon Ads Console to redeem their invitation. Default value: false",
+     "type": "boolean"
+    },
+    "userInvitationRequests": {
+     "description": "List of invitations to be sent to users.",
+     "items": {
+      "$ref": "UserInvitationRequest"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "userInvitationRequests"
+   ],
+   "type": "object"
+  },
+  "CreateUserInvitationsResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "InvitationError"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "successes": {
+     "items": {
+      "$ref": "UserInvitation"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ForbiddenExceptionResponseContent": {
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetUserInvitationResponseContent": {
+   "properties": {
+    "invitation": {
+     "$ref": "UserInvitation"
+    },
+    "termsTypes": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "InternalServerExceptionResponseContent": {
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "InvitationError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorDetail": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    },
+    "identifier": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListUserInvitationsRequestContent": {
+   "properties": {
+    "maxResults": {
+     "description": "Max results to fetch per page.",
+     "maximum": 50,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Identifier of the next pagination token.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListUserInvitationsResponseContent": {
+   "properties": {
+    "invitations": {
+     "items": {
+      "$ref": "UserInvitation"
+     },
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Permission": {
+   "properties": {
+    "name": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PermissionSet": {
+   "properties": {
+    "customPermissionSet": {
+     "description": "If type = CUSTOM_PERMISSION_SET, indicates the permissions of the invitation. Different permissions are supported for different account types. - Amazon DSP Advertising Accounts: campaign_edit, creatives_edit, reports_ed…",
+     "items": {
+      "$ref": "Permission"
+     },
+     "maxItems": 200,
+     "minItems": 1,
+     "type": "array"
+    },
+    "role": {
+     "$ref": "Role"
+    },
+    "type": {
+     "description": "Type of permission set. Supported values: ROLE, CUSTOM_PERMISSION_SET",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RedeemUserInvitationRequestContent": {
+   "properties": {
+    "invitationId": {
+     "description": "Identifier of the invitation to be redeemed.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "invitationId"
+   ],
+   "type": "object"
+  },
+  "ResourceNotFoundExceptionResponseContent": {
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RetryableServiceExceptionResponseContent": {
+   "properties": {
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Role": {
+   "properties": {
+    "name": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Update": {
+   "properties": {
+    "invitationId": {
+     "description": "Identifier of the invitation you want to update.",
+     "type": "string"
+    },
+    "state": {
+     "description": "State to change your invitation to. Support states: REVOKED, RESENT.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "invitationId",
+    "state"
+   ],
+   "type": "object"
+  },
+  "UpdateUserInvitationsRequestContent": {
+   "properties": {
+    "notifyInvitedUsers": {
+     "description": "Indicates if an invitation email will be sent to the invited user. This email will direct users to the Amazon Ads Console to redeem their invitation. Default value: false",
+     "type": "boolean"
+    },
+    "updates": {
+     "description": "List of updates to perform for a set of invitations.",
+     "items": {
+      "$ref": "Update"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "updates"
+   ],
+   "type": "object"
+  },
+  "UpdateUserInvitationsResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "InvitationError"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "successes": {
+     "items": {
+      "$ref": "Update"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "User": {
+   "format": "password",
+   "properties": {
+    "emailAddress": {
+     "description": "Email address of the user to be invited",
+     "type": "string"
+    },
+    "userName": {
+     "description": "Name of the user to be invited",
+     "type": "string"
+    }
+   },
+   "required": [
+    "emailAddress",
+    "userName"
+   ],
+   "type": "object"
+  },
+  "UserInvitation": {
+   "properties": {
+    "countries": {
+     "items": {
+      "$ref": "Country"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "createdAt": {
+     "format": "double",
+     "type": "number"
+    },
+    "createdBy": {
+     "type": "string"
+    },
+    "expiration": {
+     "format": "double",
+     "type": "number"
+    },
+    "invitationId": {
+     "type": "string"
+    },
+    "permissionSet": {
+     "$ref": "PermissionSet"
+    },
+    "state": {
+     "type": "string"
+    },
+    "targetId": {
+     "type": "string"
+    },
+    "user": {
+     "$ref": "User"
+    }
+   },
+   "type": "object"
+  },
+  "UserInvitationRequest": {
+   "properties": {
+    "countries": {
+     "description": "List of two-letter ISO 3166 country codes that the user is invited to. Only valid for invitations to global accounts.",
+     "items": {
+      "$ref": "Country"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "permissionSet": {
+     "$ref": "PermissionSet"
+    },
+    "user": {
+     "$ref": "User"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

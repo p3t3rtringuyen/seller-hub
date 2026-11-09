@@ -1,0 +1,1551 @@
+{
+ "api": "ConversionsAPI",
+ "file": "specs/dest/ConversionsAPI_prod_3p.json",
+ "schemas": {
+  "AmazonAdTagEventAssociationStatusV1": {
+   "description": "The conversion definition association status of the event. If the event is associated to an existing conversion definition, it will be marked as IN_USE. If the event has no existing association, it will be marked as AVA…",
+   "enum": [
+    "AVAILABLE",
+    "IN_USE"
+   ],
+   "type": "string"
+  },
+  "AmazonAdTagEventV1": {
+   "properties": {
+    "eventName": {
+     "description": "The name of the event.",
+     "type": "string"
+    },
+    "lastActivityDateTime": {
+     "description": "The last time this event was triggered within the dates supplied by the startDateTime and endDateTime fields.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "AmazonAdTagEventAssociationStatusV1"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonAdTagV1": {
+   "description": "An Amazon ad tag for a given advertiser.",
+   "properties": {
+    "createDateTime": {
+     "description": "The reported timestamp of when the ad tag was created in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "tagId": {
+     "description": "A string depicting the ID of the ad tag.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AssociatedMobileMeasurementPartnerAppRegistrationV1": {
+   "properties": {
+    "associatedMobileApp": {
+     "$ref": "MobileMeasurementPartnerAppRegistrationV1"
+    },
+    "eventName": {
+     "description": "Mobile measurement partner event associated with this conversion definition",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BatchAssociateConversionDefinitionsRequestV1": {
+   "items": {
+    "properties": {
+     "conversionDefinitionId": {
+      "type": "string"
+     },
+     "operation": {
+      "enum": [
+       "ADD",
+       "REMOVE"
+      ],
+      "type": "string"
+     }
+    },
+    "required": [
+     "conversionDefinitionId",
+     "operation"
+    ]
+   },
+   "maxItems": 100,
+   "minItems": 1,
+   "type": "array"
+  },
+  "BatchAssociateConversionDefinitionsRequestV2": {
+   "items": {
+    "properties": {
+     "conversionDefinitionId": {
+      "type": "string"
+     },
+     "isOptimized": {
+      "description": "Denotes the association should be considered as optimized.",
+      "type": "boolean"
+     },
+     "operation": {
+      "enum": [
+       "ADD",
+       "REMOVE"
+      ],
+      "type": "string"
+     }
+    },
+    "required": [
+     "conversionDefinitionId",
+     "isOptimized",
+     "operation"
+    ]
+   },
+   "maxItems": 100,
+   "minItems": 1,
+   "type": "array"
+  },
+  "BatchAssociateConversionDefinitionsRequestV3": {
+   "items": {
+    "properties": {
+     "conversionDefinitionId": {
+      "type": "string"
+     },
+     "conversionWeight": {
+      "description": "The weight assigned to this conversion definition for optimization purposes. Supports weights ranging from 0-10 with up to 2 decimal places.",
+      "format": "double",
+      "maximum": 10,
+      "minimum": 0,
+      "type": "number"
+     },
+     "operation": {
+      "enum": [
+       "ADD",
+       "REMOVE"
+      ],
+      "type": "string"
+     }
+    },
+    "required": [
+     "conversionDefinitionId",
+     "operation"
+    ]
+   },
+   "maxItems": 100,
+   "minItems": 1,
+   "type": "array"
+  },
+  "BatchAssociateConversionDefinitionsResponseV1": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ConversionDefinitionErrorResponseV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "ConversionDefinitionSuccessResponseV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BatchCreateConversionDefinitionsRequestV1": {
+   "items": {
+    "$ref": "ConversionDefinitionInputV1"
+   },
+   "maxItems": 10,
+   "minItems": 1,
+   "type": "array"
+  },
+  "BatchCreateConversionDefinitionsRequestV2": {
+   "items": {
+    "$ref": "ConversionDefinitionInputV2"
+   },
+   "maxItems": 10,
+   "minItems": 1,
+   "type": "array"
+  },
+  "BatchCreateMobileMeasurementPartnerAppRegistrationRequestV1": {
+   "items": {
+    "$ref": "MobileMeasurementPartnerAppRegistrationV1"
+   },
+   "maxItems": 10,
+   "minItems": 1,
+   "type": "array"
+  },
+  "BatchDeleteMobileMeasurementPartnerAppRegistrationRequestV1": {
+   "items": {
+    "$ref": "DeleteMobileMeasurementPartnerAppRegistrationV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "BatchDeleteUserEventsRequestV1": {
+   "properties": {
+    "deletionRequests": {
+     "items": {
+      "$ref": "EventDeletionRequestV1"
+     },
+     "maxItems": 500,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "deletionRequests"
+   ],
+   "type": "object"
+  },
+  "BatchDeleteUserEventsResponseV1": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ConversionDeletionRequestErrorResponseV1"
+     },
+     "maxItems": 500,
+     "minItems": 1,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "ConversionDeletionRequestSuccessResponseV1"
+     },
+     "maxItems": 500,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BatchGetConversionDefinitionsAssociatedForOrdersRequestV1": {
+   "properties": {
+    "maxResults": {
+     "default": "10",
+     "description": "Sets the maximum number of conversions in the returned array. Use in conjunction with the `nextToken` parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxRe…",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    },
+    "orderIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BatchGetConversionDefinitionsForOrdersResponseV1": {
+   "properties": {
+    "conversionDefinitions": {
+     "description": "List of associated ConversionDefinitions.",
+     "items": {
+      "$ref": "BatchOrdersAssociatedConversionDefinitionsV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "type": "string"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BatchImportConversionEventDataRequestV1": {
+   "properties": {
+    "eventData": {
+     "items": {
+      "$ref": "ConversionEventDataV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "source": {
+     "$ref": "ConversionDefinitionSourceV1"
+    }
+   },
+   "required": [
+    "eventData",
+    "source"
+   ],
+   "type": "object"
+  },
+  "BatchImportConversionEventDataResponseV1": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ConversionEventDataErrorResponseV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "ConversionEventDataSuccessResponseV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BatchOrdersAssociatedConversionDefinitionsV1": {
+   "properties": {
+    "campaignId": {
+     "description": "Order identifier for this conversion definition.",
+     "type": "string"
+    },
+    "conversionDefinitionId": {
+     "description": "Associated conversion definition identifier for the order.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BatchUpdateConversionDefinitionsRequestV1": {
+   "items": {
+    "$ref": "UpdateConversionDefinitionV1"
+   },
+   "maxItems": 10,
+   "minItems": 1,
+   "type": "array"
+  },
+  "BatchUpdateConversionDefinitionsRequestV2": {
+   "items": {
+    "$ref": "UpdateConversionDefinitionV2"
+   },
+   "maxItems": 10,
+   "minItems": 1,
+   "type": "array"
+  },
+  "BatchUpdateMobileMeasurementPartnerAppRegistrationRequestV1": {
+   "items": {
+    "$ref": "UpdateMobileMeasurementPartnerAppRegistrationV1"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "CampaignAssociatedConversionDefinitionV2": {
+   "properties": {
+    "conversionWeight": {
+     "description": "The weight assigned to this conversion definition for optimization purposes. Supports weights ranging from 0-10 with up to 2 decimal places.",
+     "format": "double",
+     "maximum": 10,
+     "minimum": 0,
+     "type": "number"
+    },
+    "id": {
+     "description": "Associated conversion definition identifier for the campaign.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CampaignAssociatedConversionDefinitionsResponseV3": {
+   "properties": {
+    "conversionDefinitions": {
+     "description": "List of associated ConversionDefinitions for the campaign.",
+     "items": {
+      "$ref": "CampaignAssociatedConversionDefinitionV2"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "type": "string"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ConversionDefinitionAdTagEventAssociationRequestV1": {
+   "description": "The combination of adTagId and adTagEventName identifies an unique adTag event.",
+   "properties": {
+    "adTagEventName": {
+     "type": "string"
+    },
+    "adTagId": {
+     "type": "string"
+    },
+    "operation": {
+     "enum": [
+      "ADD",
+      "REMOVE"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "adTagEventName",
+    "adTagId",
+    "operation"
+   ],
+   "type": "object"
+  },
+  "ConversionDefinitionAssociatedAdTagEventV1": {
+   "properties": {
+    "adTagEventName": {
+     "type": "string"
+    },
+    "adTagId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ConversionDefinitionCountingMethodV1": {
+   "description": "Method used to determine whether all or only the first conversion event per user, per conversion definition are ingested within a 24 hour window.",
+   "enum": [
+    "EVERY",
+    "FIRST"
+   ],
+   "type": "string"
+  },
+  "ConversionDefinitionCreatedByV1": {
+   "properties": {
+    "accountId": {
+     "description": "ID of the account which created the conversion definition. The value could be either DSP Advertiser ID or manager Account ID.",
+     "type": "string"
+    },
+    "name": {
+     "description": "Name of the account which created the conversion definition.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ConversionDefinitionCreatedSourceV1": {
+   "enum": [
+    "AMAZON_AD_TAG",
+    "MMP",
+    "SERVER_TO_SERVER"
+   ],
+   "type": "string"
+  },
+  "ConversionDefinitionCurrencyCodeV1": {
+   "description": "The currencyCode associated with the 'value' of the event in ISO-4217 format. Only applicable for OFF_AMAZON_PURCHASES conversion type. If not provided, the currencyCode setting on the conversion definition will be used.",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CNY",
+    "DKK",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "NOK",
+    "NZD",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "ConversionDefinitionErrorResponseV1": {
+   "properties": {
+    "code": {
+     "description": "An enumerated success or error code for machine use.",
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the object in the request, starting from 1.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "message": {
+     "description": "A human-readable message of the code.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ConversionDefinitionFilterV1": {
+   "properties": {
+    "field": {
+     "enum": [
+      "CONVERSION_DEFINITION_ID"
+     ],
+     "type": "string"
+    },
+    "values": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "values"
+   ],
+   "type": "object"
+  },
+  "ConversionDefinitionInputV1": {
+   "description": "The conversion definition object.",
+   "properties": {
+    "conversionDefinitionId": {
+     "description": "The id of the ConversionDefinition.",
+     "type": "string"
+    },
+    "conversionType": {
+     "$ref": "ConversionDefinitionTypeV1"
+    },
+    "countingMethod": {
+     "$ref": "ConversionDefinitionCountingMethodV1"
+    },
+    "createTime": {
+     "description": "The timestamp of when the ConversionDefinition was created in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastActivityTime": {
+     "description": "The latest timestamp of when a conversion event for the ConversionDefinition was imported in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdatedTime": {
+     "description": "Date and time last edit was made to conversion settings in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the ConversionDefinition.",
+     "maxLength": 256,
+     "type": "string"
+    },
+    "source": {
+     "$ref": "ConversionDefinitionSourceV1"
+    },
+    "sourceType": {
+     "$ref": "ConversionDefinitionSourceTypeV1"
+    },
+    "value": {
+     "description": "The value of the event.<br> When the conversionType of the associated Conversion Definition is OFF_AMAZON_PURCHASES, this represents a monetary value. Must be a minimum of 0 and must not exceed 2 decimal points. If not …",
+     "format": "double",
+     "maximum": 9999999999999,
+     "type": "number"
+    }
+   },
+   "required": [
+    "conversionType",
+    "countingMethod",
+    "name",
+    "source",
+    "sourceType",
+    "value"
+   ],
+   "type": "object"
+  },
+  "ConversionDefinitionInputV2": {
+   "description": "The conversion definition object.",
+   "properties": {
+    "conversionDefinitionId": {
+     "description": "The id of the ConversionDefinition.",
+     "type": "string"
+    },
+    "conversionType": {
+     "$ref": "ConversionDefinitionTypeV2"
+    },
+    "countingMethod": {
+     "$ref": "ConversionDefinitionCountingMethodV1"
+    },
+    "createTime": {
+     "description": "The timestamp of when the ConversionDefinition was created in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastActivityTime": {
+     "description": "The latest timestamp of when a conversion event for the ConversionDefinition was imported in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdatedTime": {
+     "description": "Date and time last edit was made to conversion settings in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the ConversionDefinition.",
+     "maxLength": 256,
+     "type": "string"
+    },
+    "partner": {
+     "description": "The name of the third-party service used to deliver the conversions (if applicable).",
+     "maxLength": 256,
+     "type": "string"
+    },
+    "source": {
+     "$ref": "ConversionDefinitionSourceV1"
+    },
+    "sourceType": {
+     "$ref": "ConversionDefinitionSourceTypeV1"
+    },
+    "value": {
+     "description": "The value of the event.<br> When the conversionType of the associated Conversion Definition is OFF_AMAZON_PURCHASES, this represents a monetary value. Must be a minimum of 0 and must not exceed 2 decimal points. If not …",
+     "format": "double",
+     "maximum": 9999999999999,
+     "type": "number"
+    }
+   },
+   "required": [
+    "conversionType",
+    "countingMethod",
+    "name",
+    "source",
+    "sourceType",
+    "value"
+   ],
+   "type": "object"
+  },
+  "ConversionDefinitionMeasurementTypeV1": {
+   "description": "The measurement type of the conversion definition",
+   "enum": [
+    "SKAN"
+   ],
+   "type": "string"
+  },
+  "ConversionDefinitionSourceTypeV1": {
+   "description": "The type of source for the conversion definition. The sourceType must be compatible with the specified source value according to the following mapping: * `ANDROID`: Compatible with `SERVER_TO_SERVER` * `FIRE_TV`: Compat…",
+   "enum": [
+    "ANDROID",
+    "FIRE_TABLET",
+    "FIRE_TV",
+    "IOS",
+    "OFFLINE",
+    "WEBSITE"
+   ],
+   "type": "string"
+  },
+  "ConversionDefinitionSourceV1": {
+   "description": "The source of the conversion definition. The source must be compatible with the specified sourceType value according to the following mapping: * `SERVER_TO_SERVER`: Compatible with `ANDROID`, `FIRE_TV`, `FIRE_TABLET`, `…",
+   "enum": [
+    "AMAZON_AD_TAG",
+    "SERVER_TO_SERVER"
+   ],
+   "type": "string"
+  },
+  "ConversionDefinitionSuccessResponseV1": {
+   "properties": {
+    "conversionDefinitionId": {
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the object in the request, starting from 1.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ConversionDefinitionTypeV1": {
+   "description": "Conversion Types: * `ADD_TO_SHOPPING_CART` - When customers add a product to their shopping cart * `APPLICATION` - When customers submit an application * `CHECKOUT` - When customers submit an application * `CONTACT` - W…",
+   "enum": [
+    "ADD_TO_SHOPPING_CART",
+    "APPLICATION",
+    "CHECKOUT",
+    "CONTACT",
+    "LEAD",
+    "OFF_AMAZON_PURCHASES",
+    "OTHER",
+    "PAGE_VIEW",
+    "SEARCH",
+    "SIGN_UP",
+    "SUBSCRIBE"
+   ],
+   "type": "string"
+  },
+  "ConversionDefinitionTypeV2": {
+   "description": "Conversion Types: * `ADD_TO_SHOPPING_CART` - When customers add a product to their shopping cart * `APPLICATION` - When customers submit an application * `CHECKOUT` - When customers submit an application * `CONTACT` - W…",
+   "enum": [
+    "ADD_TO_SHOPPING_CART",
+    "APPLICATION",
+    "CHECKOUT",
+    "CONTACT",
+    "LEAD",
+    "MOBILE_APP_FIRST_START",
+    "OFF_AMAZON_PURCHASES",
+    "OTHER",
+    "PAGE_VIEW",
+    "SEARCH",
+    "SIGN_UP",
+    "SUBSCRIBE"
+   ],
+   "type": "string"
+  },
+  "ConversionDefinitionV1": {
+   "description": "The conversion definition object.",
+   "properties": {
+    "conversionDefinitionId": {
+     "description": "The id of the ConversionDefinition.",
+     "type": "string"
+    },
+    "conversionType": {
+     "$ref": "ConversionDefinitionTypeV1"
+    },
+    "countingMethod": {
+     "$ref": "ConversionDefinitionCountingMethodV1"
+    },
+    "createTime": {
+     "description": "The timestamp of when the ConversionDefinition was created in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "createdBy": {
+     "$ref": "ConversionDefinitionCreatedByV1"
+    },
+    "lastActivityTime": {
+     "description": "The latest timestamp of when a conversion event for the ConversionDefinition was imported in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdatedTime": {
+     "description": "Date and time last edit was made to conversion settings in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "measurementType": {
+     "$ref": "ConversionDefinitionMeasurementTypeV1"
+    },
+    "name": {
+     "description": "The name of the ConversionDefinition.",
+     "maxLength": 256,
+     "type": "string"
+    },
+    "source": {
+     "$ref": "ConversionDefinitionSourceV1"
+    },
+    "sourceType": {
+     "$ref": "ConversionDefinitionSourceTypeV1"
+    },
+    "value": {
+     "description": "The value of the event.<br> When the conversionType of the associated Conversion Definition is OFF_AMAZON_PURCHASES, this represents a monetary value. Must be a minimum of 0 and must not exceed 2 decimal points. If not …",
+     "format": "double",
+     "maximum": 9999999999999,
+     "type": "number"
+    }
+   },
+   "required": [
+    "conversionType",
+    "countingMethod",
+    "name",
+    "source",
+    "sourceType",
+    "value"
+   ],
+   "type": "object"
+  },
+  "ConversionDefinitionV2": {
+   "description": "The conversion definition object.",
+   "properties": {
+    "conversionDefinitionId": {
+     "description": "The id of the ConversionDefinition.",
+     "type": "string"
+    },
+    "conversionType": {
+     "$ref": "ConversionDefinitionTypeV2"
+    },
+    "countingMethod": {
+     "$ref": "ConversionDefinitionCountingMethodV1"
+    },
+    "createTime": {
+     "description": "The timestamp of when the ConversionDefinition was created in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "createdBy": {
+     "$ref": "ConversionDefinitionCreatedByV1"
+    },
+    "dataSetName": {
+     "description": "The dataset name linked to this conversion definition.",
+     "maxLength": 100,
+     "type": "string"
+    },
+    "lastActivityTime": {
+     "description": "The latest timestamp of when a conversion event for the ConversionDefinition was imported in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdatedTime": {
+     "description": "Date and time last edit was made to conversion settings in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "measurementType": {
+     "$ref": "ConversionDefinitionMeasurementTypeV1"
+    },
+    "name": {
+     "description": "The name of the ConversionDefinition.",
+     "maxLength": 256,
+     "type": "string"
+    },
+    "partner": {
+     "description": "The name of the third-party service used to deliver the conversions (if applicable).",
+     "maxLength": 256,
+     "type": "string"
+    },
+    "source": {
+     "$ref": "ConversionDefinitionCreatedSourceV1"
+    },
+    "sourceType": {
+     "$ref": "ConversionDefinitionSourceTypeV1"
+    },
+    "value": {
+     "description": "The value of the event.<br> When the conversionType of the associated Conversion Definition is OFF_AMAZON_PURCHASES, this represents a monetary value. Must be a minimum of 0 and must not exceed 2 decimal points. If not …",
+     "format": "double",
+     "maximum": 9999999999999,
+     "type": "number"
+    }
+   },
+   "required": [
+    "conversionType",
+    "countingMethod",
+    "name",
+    "source",
+    "sourceType",
+    "value"
+   ],
+   "type": "object"
+  },
+  "ConversionDefinitionsBatchResponseV1": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ConversionDefinitionErrorResponseV1"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "ConversionDefinitionSuccessResponseV1"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ConversionDeletionRequestErrorResponseV1": {
+   "properties": {
+    "code": {
+     "description": "An enumerated success or error code for machine use.",
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the object in the request, starting from 1.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "message": {
+     "description": "A human-readable message of the code.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ConversionDeletionRequestSuccessResponseV1": {
+   "properties": {
+    "index": {
+     "description": "The index of the object in the request, starting from 1.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ConversionEventDataErrorResponseV1": {
+   "properties": {
+    "code": {
+     "description": "An enumerated success or error code for machine use.",
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the object in the request, starting from 1.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "message": {
+     "description": "A human-readable message of the code.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ConversionEventDataSuccessResponseV1": {
+   "properties": {
+    "index": {
+     "description": "The index of the object in the request, starting from 1.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "message": {
+     "description": "A human-readable message containing further details.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ConversionEventDataV1": {
+   "properties": {
+    "clientDedupeId": {
+     "description": "An identifier chosen by the advertiser to represent a user event. This parameter is used for deduplication across all conversion definitions (events) and all sources (Amazon Ad tag, Conversions API, Mobile Measurement P…",
+     "type": "string"
+    },
+    "conversionDefinitionId": {
+     "description": "The id of the associated ConversionDefinition.",
+     "type": "string"
+    },
+    "countryCode": {
+     "description": "The country where the event originates from. e.g. US<br> This value is based on [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes), two-letter country codes defined in ISO 3166-1, part of…",
+     "maxLength": 2,
+     "type": "string"
+    },
+    "currencyCode": {
+     "$ref": "ConversionDefinitionCurrencyCodeV1"
+    },
+    "dataProcessingOptions": {
+     "description": "A flag for signaling how an event shall be processed. Events marked for limited data use will not be processed.",
+     "enum": [
+      "LIMITED_DATA_USE"
+     ],
+     "type": "string"
+    },
+    "matchKeys": {
+     "description": "Array representing the user and device identifier types/values to be used for attribution to traffic events. Match key value must be normalized and hashed, except for MAID which should not be hashed. ADID, IDFA, or FIRE…",
+     "items": {
+      "$ref": "ConversionMatchKeyV1"
+     },
+     "maxItems": 9,
+     "minItems": 1,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the imported event.",
+     "type": "string"
+    },
+    "timestamp": {
+     "description": "The timestamp when the event occurred in ISO format (YYYY-MM-DDThh:mm:ssTZD). The event's timestamp must be no more than 7 days old at the time of import.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "unitsSold": {
+     "description": "The number of items purchased. Only applicable for OFF_AMAZON_PURCHASES conversion type. If not provided on the conversion event, a default of 1 will be applied.",
+     "format": "int64",
+     "maximum": 9999999999999,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "value": {
+     "description": "The value of the event.<br> When the conversionType of the associated Conversion Definition is OFF_AMAZON_PURCHASES, this represents a monetary value. Must be a minimum of 0 and must not exceed 2 decimal points. If not …",
+     "format": "double",
+     "maximum": 9999999999999.99,
+     "minimum": -9999999999999.99,
+     "type": "number"
+    }
+   },
+   "required": [
+    "conversionDefinitionId",
+    "countryCode",
+    "matchKeys",
+    "name",
+    "timestamp"
+   ],
+   "type": "object"
+  },
+  "ConversionMatchKeyTypeV1": {
+   "enum": [
+    "ADDRESS",
+    "CITY",
+    "EMAIL",
+    "FIRST_NAME",
+    "LAST_NAME",
+    "MAID",
+    "PHONE",
+    "POSTAL",
+    "RAMP_ID",
+    "STATE"
+   ],
+   "type": "string"
+  },
+  "ConversionMatchKeyV1": {
+   "description": "The identifier used to match people for attribution. Match key value must be normalized and hashed, except for MAID which should not be hashed. ADID, IDFA, or FIREADID can be passed into the MAID field for mobile identi…",
+   "properties": {
+    "type": {
+     "$ref": "ConversionMatchKeyTypeV1"
+    },
+    "values": {
+     "description": "List of SHA-256 hashed identifier values of the customer who performed the event.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "type",
+    "values"
+   ],
+   "type": "object"
+  },
+  "DeleteMobileMeasurementPartnerAppRegistrationV1": {
+   "properties": {
+    "mmpAppId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "mmpAppId"
+   ],
+   "type": "object"
+  },
+  "DspErrorV1": {
+   "description": "The error response object.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "A value created by Amazon API Gateway that uniquely identifies your request.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "description": "The sub error object.",
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "EventDeletionRequestV1": {
+   "description": "All ConversionMatchKey objects for a single user should be grouped into a single EventDeletionRequest list.",
+   "properties": {
+    "matchKeys": {
+     "items": {
+      "$ref": "ConversionMatchKeyV1"
+     },
+     "maxItems": 9,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "GetAdTagResponseV1": {
+   "properties": {
+    "adTag": {
+     "$ref": "AmazonAdTagV1"
+    }
+   },
+   "type": "object"
+  },
+  "ListAdTagEventsResponseV1": {
+   "properties": {
+    "amazonAdTagEvents": {
+     "description": "Array of Amazon ad tag events given filters.",
+     "items": {
+      "$ref": "AmazonAdTagEventV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListConversionDefinitionsRequestV1": {
+   "properties": {
+    "filters": {
+     "items": {
+      "$ref": "ConversionDefinitionFilterV1"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "default": "10",
+     "description": "Sets the maximum number of conversions in the returned array. Use in conjunction with the `nextToken` parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxRe…",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListConversionDefinitionsResponseV1": {
+   "properties": {
+    "conversionDefinitions": {
+     "description": "Array of conversion definitions given filters.",
+     "items": {
+      "$ref": "ConversionDefinitionV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListConversionDefinitionsResponseV2": {
+   "properties": {
+    "conversionDefinitions": {
+     "description": "Array of conversion definitions given filters.",
+     "items": {
+      "$ref": "ConversionDefinitionV2"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListMobileMeasurementPartnerAppRegistrationsRequestV1": {
+   "properties": {
+    "filters": {
+     "items": {
+      "$ref": "MobileMeasurementPartnerAppRegistrationFilterV1"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "default": "10",
+     "description": "Sets the maximum number of conversions in the returned array. Use in conjunction with the `nextToken` parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxRe…",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListMobileMeasurementPartnerAppRegistrationsResponseV1": {
+   "properties": {
+    "appRegistrations": {
+     "description": "Array of Mobile Measurement Partner app registrations given filters.",
+     "items": {
+      "$ref": "MobileMeasurementPartnerAppRegistrationV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "MobileMeasurementPartnerAppBatchResponseV1": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "MobileMeasurementPartnerErrorResponseV1"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "MobileMeasurementPartnerSuccessResponseV1"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "MobileMeasurementPartnerAppRegistrationFilterV1": {
+   "properties": {
+    "field": {
+     "enum": [
+      "APP_NAME",
+      "APP_STORE_ID",
+      "MMP_NAME",
+      "PLATFORM"
+     ],
+     "type": "string"
+    },
+    "values": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "values"
+   ],
+   "type": "object"
+  },
+  "MobileMeasurementPartnerAppRegistrationV1": {
+   "properties": {
+    "appName": {
+     "description": "The name of the application.",
+     "type": "string"
+    },
+    "bundleId": {
+     "description": "The ID of the application with the app store it is registered with. The bundleId + platform + mmpName must be unique within your advertiser account.",
+     "type": "string"
+    },
+    "conversionsCreated": {
+     "description": "The number of conversions associated with this mobile application.",
+     "type": "number"
+    },
+    "lastEventReceived": {
+     "description": "The latest timestamp of when a conversion event for the mobile application was imported in ISO format (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "mmpAppId": {
+     "description": "The id of the mobile measurement partner app registration.",
+     "type": "string"
+    },
+    "mmpName": {
+     "$ref": "MobileMeasurementPartnerNameV1"
+    },
+    "platform": {
+     "$ref": "MobileMeasurementPartnerPlatformV1"
+    },
+    "skanConversionsCreated": {
+     "description": "Number of SKAN conversions created for this mobile measurement partner app registration.",
+     "type": "integer"
+    },
+    "uniqueAdvertiserId": {
+     "description": "The unique advertiser identifier associated with the mobile measurement partner app registration.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "appName",
+    "bundleId",
+    "mmpName",
+    "platform"
+   ],
+   "type": "object"
+  },
+  "MobileMeasurementPartnerErrorResponseV1": {
+   "properties": {
+    "code": {
+     "description": "An enumerated success or error code for machine use.",
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the object in the request, starting from 1.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "message": {
+     "description": "A human-readable message of the code.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "MobileMeasurementPartnerNameV1": {
+   "enum": [
+    "ADJUST",
+    "AIRBRIDGE",
+    "APPSFLYER",
+    "BRANCH",
+    "KOCHAVA",
+    "SINGULAR",
+    "TENJIN"
+   ],
+   "type": "string"
+  },
+  "MobileMeasurementPartnerPlatformV1": {
+   "enum": [
+    "ANDROID",
+    "FIRE_TABLET",
+    "FIRE_TV",
+    "IOS"
+   ],
+   "type": "string"
+  },
+  "MobileMeasurementPartnerSuccessResponseV1": {
+   "properties": {
+    "index": {
+     "description": "The index of the object in the request, starting from 1.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "mmpAppId": {
+     "description": "ID of the create mobile measurement partner application registration.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "OrderAssociatedConversionDefinitionV1": {
+   "properties": {
+    "id": {
+     "description": "Associated conversion definition identifier for the order.",
+     "type": "string"
+    },
+    "isOptimized": {
+     "description": "Denotes whether this conversion definition is optimized for this order.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "OrderAssociatedConversionDefinitionsResponseV1": {
+   "properties": {
+    "conversionDefinitionIds": {
+     "description": "List of associated ConversionDefinition identifiers for the order.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "type": "string"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "OrderAssociatedConversionDefinitionsResponseV2": {
+   "properties": {
+    "conversionDefinitions": {
+     "description": "List of associated ConversionDefinitions for the order.",
+     "items": {
+      "$ref": "OrderAssociatedConversionDefinitionV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "type": "string"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateConversionDefinitionV1": {
+   "properties": {
+    "conversionDefinitionId": {
+     "description": "The identifier of the ConversionDefinition.",
+     "type": "string"
+    },
+    "conversionType": {
+     "$ref": "ConversionDefinitionTypeV1"
+    },
+    "countingMethod": {
+     "$ref": "ConversionDefinitionCountingMethodV1"
+    },
+    "name": {
+     "description": "The name of the ConversionDefinition.",
+     "type": "string"
+    },
+    "source": {
+     "$ref": "ConversionDefinitionSourceV1"
+    },
+    "sourceType": {
+     "$ref": "ConversionDefinitionSourceTypeV1"
+    },
+    "value": {
+     "description": "The default value of each conversion event. Monetary value for OFF_AMAZON_PURCHASES ConversionDefinition type and non-monetary value for all other ConversionDefinition types.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "conversionDefinitionId"
+   ],
+   "type": "object"
+  },
+  "UpdateConversionDefinitionV2": {
+   "properties": {
+    "conversionDefinitionId": {
+     "description": "The identifier of the ConversionDefinition.",
+     "type": "string"
+    },
+    "conversionType": {
+     "$ref": "ConversionDefinitionTypeV2"
+    },
+    "countingMethod": {
+     "$ref": "ConversionDefinitionCountingMethodV1"
+    },
+    "name": {
+     "description": "The name of the ConversionDefinition.",
+     "type": "string"
+    },
+    "partner": {
+     "description": "The name of the third-party service used to deliver the conversions (if applicable).",
+     "type": "string"
+    },
+    "source": {
+     "$ref": "ConversionDefinitionSourceV1"
+    },
+    "sourceType": {
+     "$ref": "ConversionDefinitionSourceTypeV1"
+    },
+    "value": {
+     "description": "The default value of each conversion event. Monetary value for OFF_AMAZON_PURCHASES ConversionDefinition type and non-monetary value for all other ConversionDefinition types.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "conversionDefinitionId"
+   ],
+   "type": "object"
+  },
+  "UpdateMobileMeasurementPartnerAppRegistrationV1": {
+   "properties": {
+    "appName": {
+     "description": "The name of the application.",
+     "type": "string"
+    },
+    "bundleId": {
+     "description": "The ID of the application with the app store it is registered with.",
+     "type": "string"
+    },
+    "mmpAppId": {
+     "description": "The identifier of the app registration.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "mmpAppId"
+   ],
+   "type": "object"
+  }
+ }
+}

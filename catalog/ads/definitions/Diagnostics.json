@@ -1,0 +1,276 @@
+{
+ "api": "Diagnostics",
+ "file": "specs/dest/Diagnostics_prod_3p.json",
+ "schemas": {
+  "CampaignDiagnosticsAuthorizationException": {
+   "description": "401 Unauthorized Exception.",
+   "properties": {
+    "errorMessage": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorMessage",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "CampaignDiagnosticsInternalException": {
+   "description": "500 Internal Exception.",
+   "properties": {
+    "errorMessage": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorMessage",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "CampaignDiagnosticsRequest": {
+   "description": "A request to run diagnostics to retrieve issues impacting campaigns.",
+   "properties": {
+    "campaignIdsList": {
+     "description": "A list of campaign identifiers to be diagnosed.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    },
+    "includeOnlyActive": {
+     "default": "false",
+     "description": "Includes diagnostics information for only enabled entities. By default the response includes diagnostics information for both 'Enabled' and 'Paused' entities.",
+     "type": "boolean"
+    },
+    "issueTypeFilter": {
+     "description": "Specifies the issue types to be included. By default the response will include all issue types.",
+     "items": {
+      "$ref": "IssueType"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    },
+    "locale": {
+     "default": "en_US",
+     "description": "Specifies the language in which diagnostics information is returned. By default value is set to en_US. Value must be one of the following en_US, zh_CN, es_MX, es_ES, de_DE, fr_FR, it_IT, ja_JP, ko_KR, pt_BR, nl_NL, en_C…",
+     "type": "string"
+    },
+    "maxIssuesPerCampaign": {
+     "default": "100",
+     "description": "Sets a limit on the number of issues returned for a campaign. Default value is set to 100 and maximum value supported is 1000.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    },
+    "severityFilter": {
+     "description": "Specifies the issue severities to be included. By default the response will include all issue severities.",
+     "items": {
+      "$ref": "Severity"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaignIdsList"
+   ],
+   "type": "object"
+  },
+  "CampaignDiagnosticsResponse": {
+   "description": "A list of issues diagnosed for the campaigns specified by the requester.",
+   "properties": {
+    "campaignDiagnosticsList": {
+     "description": "A list of diagnosed campaigns with information on identified issues.",
+     "items": {
+      "$ref": "campaignDiagnosticsList"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "errorsList": {
+     "description": "Errors from api request.",
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "campaignDiagnosticsList",
+    "errorsList",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "CampaignDiagnosticsThrottlingException": {
+   "description": "429 Throttling Exception.",
+   "properties": {
+    "errorMessage": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorMessage",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "CampaignDiagnosticsValidationException": {
+   "description": "400 Validation Exception.",
+   "properties": {
+    "errorMessage": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorMessage",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "errorCode": {
+     "description": "Enum indicating the category of error. Example `NOT_FOUND`.",
+     "type": "string"
+    },
+    "errorMessage": {
+     "description": "Error message provided.",
+     "type": "string"
+    },
+    "itemRequestId": {
+     "description": "Campaign identifier.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage",
+    "itemRequestId"
+   ],
+   "type": "object"
+  },
+  "Issue": {
+   "description": "Captures issue details.",
+   "properties": {
+    "impact": {
+     "description": "Captures the impact of the issue across the campaign.",
+     "properties": {
+      "entityIdentifier": {
+       "description": "An Amazon product identifier or seller product identifier.",
+       "type": "string"
+      },
+      "entityType": {
+       "description": "Field to mention the impacted entityType for the issue. Possible entityType values are 'ASIN' or 'SKU' and the value is based off the issueType value.",
+       "type": "string"
+      },
+      "numAdsImpacted": {
+       "description": "A count of ads impacted by the entity.",
+       "type": "integer"
+      },
+      "supplementalInfo": {
+       "description": "Provides the corresponding ASIN information in case of seller product issue, reflected as 'SKU' in entityType.",
+       "properties": {
+        "asin": {
+         "description": "Amazon product identifier.",
+         "type": "string"
+        }
+       },
+       "type": "object"
+      }
+     },
+     "required": [
+      "entityIdentifier",
+      "entityType",
+      "numAdsImpacted"
+     ],
+     "type": "object"
+    },
+    "information": {
+     "description": "A human readable description of the issue including possible remediations, wherever applicable.",
+     "type": "string"
+    },
+    "issueCode": {
+     "description": "Describes the specific issue code under the broader issueType, for example MISSING_IMAGE.",
+     "type": "string"
+    },
+    "issueType": {
+     "$ref": "IssueType"
+    },
+    "severity": {
+     "$ref": "Severity"
+    }
+   },
+   "required": [
+    "impact",
+    "information",
+    "issueCode",
+    "issueType",
+    "severity"
+   ],
+   "type": "object"
+  },
+  "IssueType": {
+   "description": "Describes the type of the issue, for example FEATURED OFFER, PRODUCT_ELIGIBILITY, MODERATION.",
+   "type": "string"
+  },
+  "Severity": {
+   "description": "Describes the severity of the issue whether it is CRITICAL or WARNING.",
+   "type": "string"
+  },
+  "campaignDiagnosticsList": {
+   "description": "A list of diagnosed campaigns with information on identified issues.",
+   "properties": {
+    "campaignId": {
+     "description": "Campaign identifier.",
+     "type": "string"
+    },
+    "issuesList": {
+     "description": "A list of issues impacting the campaign.",
+     "items": {
+      "$ref": "Issue"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaignId",
+    "issuesList"
+   ],
+   "type": "object"
+  }
+ }
+}

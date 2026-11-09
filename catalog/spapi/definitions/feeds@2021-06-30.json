@@ -1,0 +1,220 @@
+{
+  "CreateFeedDocumentResponse": {
+    "description": "Information required to upload a feed document's contents.",
+    "properties": {
+      "feedDocumentId": {
+        "description": "The identifier of the feed document.",
+        "type": "string"
+      },
+      "url": {
+        "description": "The presigned URL for uploading the feed contents.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "feedDocumentId",
+      "url"
+    ],
+    "type": "object"
+  },
+  "CreateFeedDocumentSpecification": {
+    "description": "Specifies the content type for the createFeedDocument operation.",
+    "properties": {
+      "contentType": {
+        "description": "The content type of the feed.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "contentType"
+    ],
+    "type": "object"
+  },
+  "CreateFeedResponse": {
+    "description": "Response schema.",
+    "properties": {
+      "feedId": {
+        "description": "The identifier for the feed.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "feedId"
+    ],
+    "type": "object"
+  },
+  "CreateFeedSpecification": {
+    "description": "Information required to create the feed.",
+    "properties": {
+      "feedOptions": {
+        "ref": "FeedOptions"
+      },
+      "feedType": {
+        "description": "The feed type.",
+        "type": "string"
+      },
+      "inputFeedDocumentId": {
+        "description": "The document identifier returned by the createFeedDocument operation.",
+        "type": "string"
+      },
+      "marketplaceIds": {
+        "description": "A list of identifiers for marketplaces that you want the feed to be applied to.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "feedType",
+      "inputFeedDocumentId",
+      "marketplaceIds"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "An error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "An error response returned when the request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "Feed": {
+    "description": "Detailed information about the feed.",
+    "properties": {
+      "createdTime": {
+        "description": "The date and time when the feed was created, in ISO 8601 date time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "feedId": {
+        "description": "The identifier for the feed.",
+        "type": "string"
+      },
+      "feedType": {
+        "description": "The feed type.",
+        "type": "string"
+      },
+      "marketplaceIds": {
+        "description": "A list of identifiers for the marketplaces that the feed is applied to.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "processingEndTime": {
+        "description": "The date and time when feed processing completed, in ISO 8601 date time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "processingStartTime": {
+        "description": "The date and time when feed processing started, in ISO 8601 date time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "processingStatus": {
+        "description": "The processing status of the feed.",
+        "enum": [
+          "CANCELLED",
+          "DONE",
+          "FATAL",
+          "IN_PROGRESS",
+          "IN_QUEUE"
+        ],
+        "type": "string"
+      },
+      "resultFeedDocumentId": {
+        "description": "The identifier for the feed document.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "createdTime",
+      "feedId",
+      "feedType",
+      "processingStatus"
+    ],
+    "type": "object"
+  },
+  "FeedDocument": {
+    "description": "Information required for the feed document.",
+    "properties": {
+      "compressionAlgorithm": {
+        "description": "If the feed document contents have been compressed, the compression algorithm used is returned in this property and you must decompress the feed when you download.",
+        "enum": [
+          "GZIP"
+        ],
+        "type": "string"
+      },
+      "feedDocumentId": {
+        "description": "The identifier for the feed document.",
+        "type": "string"
+      },
+      "url": {
+        "description": "A presigned URL for the feed document.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "feedDocumentId",
+      "url"
+    ],
+    "type": "object"
+  },
+  "FeedList": {
+    "description": "A list of feeds.",
+    "properties": {},
+    "ref": "Feed",
+    "required": [],
+    "type": "array"
+  },
+  "FeedOptions": {
+    "description": "Additional options to control the feed.",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "GetFeedsResponse": {
+    "description": "Response schema.",
+    "properties": {
+      "feeds": {
+        "description": "The feeds.",
+        "ref": "FeedList"
+      },
+      "nextToken": {
+        "description": "Returned when the number of results exceeds pageSize.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "feeds"
+    ],
+    "type": "object"
+  }
+}

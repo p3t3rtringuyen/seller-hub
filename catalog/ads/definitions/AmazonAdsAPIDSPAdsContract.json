@@ -1,0 +1,4205 @@
+{
+ "api": "AmazonAdsAPIDSPAdsContract",
+ "file": "specs/dest/AmazonAdsAPIDSPAdsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DSPAd": {
+   "properties": {
+    "adId": {
+     "description": "The identifier of the ad.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "DSPAdProduct"
+    },
+    "adType": {
+     "$ref": "DSPAdType"
+    },
+    "creationDateTime": {
+     "description": "The date time that the ad was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "creative": {
+     "$ref": "DSPCreative"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time that the ad was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceScope": {
+     "$ref": "DSPMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad is applicable. For Sponsored Ads, the marketplaces included should either be same as or subset of parent ad group. For ADSP, this represe…",
+     "items": {
+      "$ref": "DSPMarketplace"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DSPState"
+    },
+    "status": {
+     "$ref": "DSPStatus"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad",
+     "items": {
+      "$ref": "DSPTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adId",
+    "adProduct",
+    "adType",
+    "creationDateTime",
+    "creative",
+    "lastUpdatedDateTime",
+    "marketplaceScope",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "DSPAdAdIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DSPAdAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+     "items": {
+      "$ref": "DSPAdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DSPAdChoicesPosition": {
+   "enum": [
+    "BOTTOM_LEFT",
+    "BOTTOM_RIGHT",
+    "TOP_LEFT",
+    "TOP_RIGHT"
+   ],
+   "type": "string"
+  },
+  "DSPAdCreate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "DSPAdProduct"
+    },
+    "adType": {
+     "$ref": "DSPAdType"
+    },
+    "creative": {
+     "$ref": "DSPCreateCreative"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad is applicable. For Sponsored Ads, the marketplaces included should either be same as or subset of parent ad group. For ADSP, this represe…",
+     "items": {
+      "$ref": "DSPMarketplace"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DSPCreateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad",
+     "items": {
+      "$ref": "DSPCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adProduct",
+    "adType",
+    "creative",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "DSPAdMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "DSPAdMultiStatusSuccess"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPAdMultiStatusSuccess": {
+   "properties": {
+    "ad": {
+     "$ref": "DSPAd"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "ad",
+    "index"
+   ],
+   "type": "object"
+  },
+  "DSPAdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "DSPAdSuccessResponse": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "DSPAd"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPAdType": {
+   "description": "**AdType Enum:** | AdType | Description | |------|------| | `AUDIO` | A creative that features one or more audio assets. | | `COMPONENT` | A creative that can features a collection of videos, images, and products. | | `…",
+   "enum": [
+    "AUDIO",
+    "COMPONENT",
+    "DISPLAY",
+    "THIRD_PARTY",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "DSPAdUpdate": {
+   "properties": {
+    "adId": {
+     "description": "The identifier of the ad.",
+     "type": "string"
+    },
+    "creative": {
+     "$ref": "DSPUpdateCreative"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad is applicable. For Sponsored Ads, the marketplaces included should either be same as or subset of parent ad group. For ADSP, this represe…",
+     "items": {
+      "$ref": "DSPMarketplace"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DSPUpdateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad",
+     "items": {
+      "$ref": "DSPCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adId"
+   ],
+   "type": "object"
+  },
+  "DSPAddToCartVideoCallToActionSettings": {
+   "properties": {
+    "position": {
+     "$ref": "DSPVideoCallToActionPosition"
+    }
+   },
+   "required": [
+    "position"
+   ],
+   "type": "object"
+  },
+  "DSPAdvertisedProducts": {
+   "properties": {
+    "productId": {
+     "description": "The identifier of the advertised product.",
+     "type": "string"
+    },
+    "productIdType": {
+     "$ref": "DSPProductIdType"
+    }
+   },
+   "required": [
+    "productId",
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "DSPAssetBasedCreativeCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "assetBasedCreativeCallToActionSettings": {
+       "$ref": "DSPAssetBasedCreativeCallToActionSettings"
+      }
+     },
+     "required": [
+      "assetBasedCreativeCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPAssetBasedCreativeCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "callToActionType": {
+     "description": "Type of CallToAction for AssetBasedCreative.",
+     "items": {
+      "$ref": "DSPAssetBasedCreativeCallToActionType"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPAssetBasedCreativeCallToActionType": {
+   "enum": [
+    "BOOK_NOW",
+    "BUY_NOW",
+    "DISCOVER_MORE",
+    "DOWNLOAD_NOW",
+    "EXPLORE_NOW",
+    "GET_APP",
+    "GET_QUOTE",
+    "LEARN_MORE",
+    "PRE_ORDER_NOW",
+    "SEE_DETAILS",
+    "SHOP_NOW",
+    "SIGN_UP_NOW",
+    "SUBSCRIBE_NOW"
+   ],
+   "type": "string"
+  },
+  "DSPAssetBasedCreativeSettings": {
+   "properties": {
+    "additionalHtml": {
+     "description": "Additional HTML to include with the render response for display inventory targets.",
+     "type": "string"
+    },
+    "bodyText": {
+     "description": "The body text to use for the Asset Based Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brand": {
+     "description": "The brand of the product(s) being advertised.",
+     "type": "string"
+    },
+    "callToActions": {
+     "$ref": "DSPAssetBasedCreativeCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "DSPSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customVideos": {
+     "$ref": "DSPVideo"
+    },
+    "disclaimers": {
+     "description": "The disclaimers to use for the Asset Based Creative experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the Asset Based Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "DSPComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "logos": {
+     "description": "The logos to use for the Asset Based Creative experience.",
+     "items": {
+      "$ref": "DSPImage"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "DSPCreativeOptimizationGoalKpi"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "DSPResponsiveSizingBehavior"
+    },
+    "squareImages": {
+     "description": "The square image(s) to use.",
+     "items": {
+      "$ref": "DSPImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "tallImages": {
+     "description": "The tall image(s) to use.",
+     "items": {
+      "$ref": "DSPImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "wideImages": {
+     "description": "The wide image(s) to use.",
+     "items": {
+      "$ref": "DSPImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "callToActions",
+    "headlines",
+    "inventoryTypes",
+    "language",
+    "optimizationGoalKpi",
+    "responsiveSizingBehavior",
+    "squareImages",
+    "tallImages",
+    "wideImages"
+   ],
+   "type": "object"
+  },
+  "DSPAudio": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the audio asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the audio asset.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "DSPAudioCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "clickToUrlAudioCallToActionSettings": {
+       "$ref": "DSPClickToUrlAudioCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlAudioCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPAudioCreative": {
+   "description": "| AudioCreative | Description | |------|------| | `standardAudioSettings` | The standard audio experience settings. See the Audio Spec for more info: https://advertising.amazon.com/en-us/resources/ad-specs/audio-ads?ref…",
+   "oneOf": [
+    {
+     "properties": {
+      "standardAudioSettings": {
+       "$ref": "DSPStandardAudioExperienceSettings"
+      }
+     },
+     "required": [
+      "standardAudioSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPBrandStoreCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandStoreCallToActionSettings": {
+       "$ref": "DSPBrandStoreCallToActionSettings"
+      }
+     },
+     "required": [
+      "brandStoreCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPBrandStoreCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "callToActionType": {
+     "description": "Type of CallToAction for BrandStore.",
+     "items": {
+      "$ref": "DSPBrandStoreCallToActionType"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPBrandStoreCallToActionType": {
+   "enum": [
+    "BUY_NOW",
+    "DISCOVER_MORE",
+    "LEARN_MORE",
+    "SEE_DETAILS",
+    "SHOP_NOW"
+   ],
+   "type": "string"
+  },
+  "DSPBrandStoreSettings": {
+   "properties": {
+    "additionalHtml": {
+     "description": "Additional HTML to include with the render response for display inventory targets.",
+     "type": "string"
+    },
+    "bodyText": {
+     "description": "The body text to use for the Brand Store Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brand": {
+     "description": "The brand of the product(s) being advertised.",
+     "type": "string"
+    },
+    "callToActions": {
+     "$ref": "DSPBrandStoreCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "DSPSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "disclaimers": {
+     "description": "The disclaimers to use for the Brand Store Creative experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the Brand Store Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "DSPComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "logos": {
+     "$ref": "DSPImage"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "DSPCreativeOptimizationGoalKpi"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "DSPResponsiveSizingBehavior"
+    },
+    "squareImages": {
+     "description": "The square image(s) to use.",
+     "items": {
+      "$ref": "DSPImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "tallImages": {
+     "description": "The tall image(s) to use.",
+     "items": {
+      "$ref": "DSPImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "wideImages": {
+     "description": "The wide image(s) to use.",
+     "items": {
+      "$ref": "DSPImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "callToActions",
+    "headlines",
+    "inventoryTypes",
+    "language",
+    "optimizationGoalKpi",
+    "responsiveSizingBehavior",
+    "squareImages",
+    "tallImages",
+    "wideImages"
+   ],
+   "type": "object"
+  },
+  "DSPClickToAppDisplayCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The app that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deepLinkingBehavior",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPClickToUrlAudioCallToActionSettings": {
+   "properties": {
+    "url": {
+     "description": "The url to redirect the user via the audio CallToAction.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPClickToUrlDisplayCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deepLinkingBehavior",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPClickToUrlVideoCallToActionSettings": {
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The url to redirect the user via the video CallToAction.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deepLinkingBehavior",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPComponentCreative": {
+   "properties": {
+    "assetBasedCreativeSettings": {
+     "$ref": "DSPAssetBasedCreativeSettings"
+    },
+    "brandStoreSettings": {
+     "$ref": "DSPBrandStoreSettings"
+    },
+    "responsiveEcommerceSettings": {
+     "$ref": "DSPResponsiveEcommerceSettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPComponentInventoryType": {
+   "enum": [
+    "DISPLAY",
+    "NATIVE"
+   ],
+   "type": "string"
+  },
+  "DSPCreateAdRequest": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "DSPAdCreate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "ads"
+   ],
+   "type": "object"
+  },
+  "DSPCreateAddToCartVideoCallToActionSettings": {
+   "properties": {
+    "position": {
+     "$ref": "DSPVideoCallToActionPosition"
+    }
+   },
+   "required": [
+    "position"
+   ],
+   "type": "object"
+  },
+  "DSPCreateAdvertisedProducts": {
+   "properties": {
+    "productId": {
+     "description": "The identifier of the advertised product.",
+     "type": "string"
+    },
+    "productIdType": {
+     "$ref": "DSPProductIdType"
+    }
+   },
+   "required": [
+    "productId",
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "DSPCreateAssetBasedCreativeCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "assetBasedCreativeCallToActionSettings": {
+       "$ref": "DSPCreateAssetBasedCreativeCallToActionSettings"
+      }
+     },
+     "required": [
+      "assetBasedCreativeCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreateAssetBasedCreativeCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "callToActionType": {
+     "description": "Type of CallToAction for AssetBasedCreative.",
+     "items": {
+      "$ref": "DSPAssetBasedCreativeCallToActionType"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPCreateAssetBasedCreativeSettings": {
+   "properties": {
+    "additionalHtml": {
+     "description": "Additional HTML to include with the render response for display inventory targets.",
+     "type": "string"
+    },
+    "bodyText": {
+     "description": "The body text to use for the Asset Based Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brand": {
+     "description": "The brand of the product(s) being advertised.",
+     "type": "string"
+    },
+    "callToActions": {
+     "$ref": "DSPCreateAssetBasedCreativeCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "DSPCreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customVideos": {
+     "$ref": "DSPCreateVideo"
+    },
+    "disclaimers": {
+     "description": "The disclaimers to use for the Asset Based Creative experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the Asset Based Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "DSPComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "logos": {
+     "description": "The logos to use for the Asset Based Creative experience.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "DSPCreativeOptimizationGoalKpi"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "DSPResponsiveSizingBehavior"
+    },
+    "squareImages": {
+     "description": "The square image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "tallImages": {
+     "description": "The tall image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "wideImages": {
+     "description": "The wide image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "callToActions",
+    "headlines",
+    "inventoryTypes",
+    "language",
+    "optimizationGoalKpi",
+    "responsiveSizingBehavior",
+    "squareImages",
+    "tallImages",
+    "wideImages"
+   ],
+   "type": "object"
+  },
+  "DSPCreateAudio": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the audio asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the audio asset.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "DSPCreateAudioCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "clickToUrlAudioCallToActionSettings": {
+       "$ref": "DSPCreateClickToUrlAudioCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlAudioCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreateAudioCreative": {
+   "description": "| CreateAudioCreative | Description | | --- | --- | | `standardAudioSettings` | The standard audio experience settings. See the Audio Spec for more info: https://advertising.amazon.com/en-us/resources/ad-specs/audio-ads…",
+   "oneOf": [
+    {
+     "properties": {
+      "standardAudioSettings": {
+       "$ref": "DSPCreateStandardAudioExperienceSettings"
+      }
+     },
+     "required": [
+      "standardAudioSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreateBrandStoreCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandStoreCallToActionSettings": {
+       "$ref": "DSPCreateBrandStoreCallToActionSettings"
+      }
+     },
+     "required": [
+      "brandStoreCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreateBrandStoreCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "callToActionType": {
+     "description": "Type of CallToAction for BrandStore.",
+     "items": {
+      "$ref": "DSPBrandStoreCallToActionType"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPCreateBrandStoreSettings": {
+   "properties": {
+    "additionalHtml": {
+     "description": "Additional HTML to include with the render response for display inventory targets.",
+     "type": "string"
+    },
+    "bodyText": {
+     "description": "The body text to use for the Brand Store Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brand": {
+     "description": "The brand of the product(s) being advertised.",
+     "type": "string"
+    },
+    "callToActions": {
+     "$ref": "DSPCreateBrandStoreCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "DSPCreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "disclaimers": {
+     "description": "The disclaimers to use for the Brand Store Creative experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the Brand Store Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "DSPComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "logos": {
+     "$ref": "DSPCreateImage"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "DSPCreativeOptimizationGoalKpi"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "DSPResponsiveSizingBehavior"
+    },
+    "squareImages": {
+     "description": "The square image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "tallImages": {
+     "description": "The tall image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "wideImages": {
+     "description": "The wide image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "callToActions",
+    "headlines",
+    "inventoryTypes",
+    "language",
+    "optimizationGoalKpi",
+    "responsiveSizingBehavior",
+    "squareImages",
+    "tallImages",
+    "wideImages"
+   ],
+   "type": "object"
+  },
+  "DSPCreateClickToAppDisplayCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The app that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deepLinkingBehavior",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPCreateClickToUrlAudioCallToActionSettings": {
+   "properties": {
+    "url": {
+     "description": "The url to redirect the user via the audio CallToAction.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPCreateClickToUrlDisplayCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deepLinkingBehavior",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPCreateClickToUrlVideoCallToActionSettings": {
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The url to redirect the user via the video CallToAction.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deepLinkingBehavior",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPCreateComponentCreative": {
+   "properties": {
+    "assetBasedCreativeSettings": {
+     "$ref": "DSPCreateAssetBasedCreativeSettings"
+    },
+    "brandStoreSettings": {
+     "$ref": "DSPCreateBrandStoreSettings"
+    },
+    "responsiveEcommerceSettings": {
+     "$ref": "DSPCreateResponsiveEcommerceSettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateCreative": {
+   "oneOf": [
+    {
+     "properties": {
+      "audioCreative": {
+       "$ref": "DSPCreateAudioCreative"
+      }
+     },
+     "required": [
+      "audioCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "displayCreative": {
+       "$ref": "DSPCreateDisplayCreative"
+      }
+     },
+     "required": [
+      "displayCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "thirdPartyCreative": {
+       "$ref": "DSPCreateThirdPartyCreative"
+      }
+     },
+     "required": [
+      "thirdPartyCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoCreative": {
+       "$ref": "DSPCreateVideoCreative"
+      }
+     },
+     "required": [
+      "videoCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "componentCreative": {
+       "$ref": "DSPCreateComponentCreative"
+      }
+     },
+     "required": [
+      "componentCreative"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreateCreativeTrackingUrl": {
+   "properties": {
+    "url": {
+     "description": "A url to be triggered for tracking events.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPCreateDisplayCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "clickToUrlDisplayCallToActionSettings": {
+       "$ref": "DSPCreateClickToUrlDisplayCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlDisplayCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "clickToAppDisplayCallToActionSettings": {
+       "$ref": "DSPCreateClickToAppDisplayCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToAppDisplayCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreateDisplayCreative": {
+   "properties": {
+    "standardDisplaySettings": {
+     "$ref": "DSPCreateStandardDisplaySettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateFormatProperties": {
+   "properties": {
+    "applyBorder": {
+     "description": "Apply a boarder to the image to fit rules for some supplies.",
+     "type": "boolean"
+    },
+    "height": {
+     "description": "The height (in pixels) of the cropped image.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "left": {
+     "description": "The number of pixels from the left of the image where the crop should begin.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "top": {
+     "description": "The number of pixels from the top of the image where the crop should begin.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width (in pixels) of the cropped image.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateImage": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the image asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the image asset.",
+     "type": "string"
+    },
+    "formatProperties": {
+     "description": "The cropping and positioning properties associated with the asset.",
+     "items": {
+      "$ref": "DSPCreateFormatProperties"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "DSPCreateLearnMoreVideoCallToActionSettings": {
+   "properties": {
+    "position": {
+     "$ref": "DSPVideoCallToActionPosition"
+    },
+    "url": {
+     "description": "The url to drive users to learn more via the video CallToAction.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "position",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPCreateOnlineVideoSettings": {
+   "properties": {
+    "callToActions": {
+     "description": "The call to actions for this video.",
+     "items": {
+      "$ref": "DSPCreateVideoCallToAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "products": {
+     "$ref": "DSPCreateAdvertisedProducts"
+    },
+    "videos": {
+     "$ref": "DSPCreateVideo"
+    }
+   },
+   "required": [
+    "language",
+    "videos"
+   ],
+   "type": "object"
+  },
+  "DSPCreateResponsiveEcommerceSettings": {
+   "properties": {
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "DSPResponsiveEcommerceCreativePropertiesToOptimize"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "DSPCreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "disclaimers": {
+     "description": "The disclaimer to use for the Responsive eCommerce experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline to use for the Responsive eCommerce experience.",
+     "type": "string"
+    },
+    "images": {
+     "description": "The image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "DSPComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "logos": {
+     "$ref": "DSPCreateImage"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "DSPCreativeOptimizationGoalKpi"
+    },
+    "products": {
+     "description": "The products advertised for the Responsive eCommerce experience.",
+     "items": {
+      "$ref": "DSPCreateAdvertisedProducts"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "recAdVariations": {
+     "description": "The rendering variations selected for the Responsive eCommerce experience.",
+     "items": {
+      "$ref": "DSPResponsiveEcommerceAdVariations"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "DSPResponsiveSizingBehavior"
+    },
+    "supportedThirdPartySellers": {
+     "$ref": "DSPSupportedThirdPartySellers"
+    }
+   },
+   "required": [
+    "inventoryTypes",
+    "language",
+    "optimizationGoalKpi",
+    "products",
+    "responsiveSizingBehavior",
+    "supportedThirdPartySellers"
+   ],
+   "type": "object"
+  },
+  "DSPCreateSize": {
+   "properties": {
+    "height": {
+     "description": "The height of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "height",
+    "width"
+   ],
+   "type": "object"
+  },
+  "DSPCreateStandardAudioExperienceSettings": {
+   "properties": {
+    "audio": {
+     "$ref": "DSPCreateAudio"
+    },
+    "callToActions": {
+     "$ref": "DSPCreateAudioCallToAction"
+    },
+    "companionImages": {
+     "$ref": "DSPCreateImage"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the standard audio experience. Headlines must be a maximum of 20 characters.",
+     "type": "string"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded. Urls cannot exceed 2048 characters.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "products": {
+     "description": "The product(s) being advertised.",
+     "items": {
+      "$ref": "DSPCreateAdvertisedProducts"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audio",
+    "companionImages",
+    "headlines",
+    "language"
+   ],
+   "type": "object"
+  },
+  "DSPCreateStandardDisplaySettings": {
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "DSPAdChoicesPosition"
+    },
+    "callToAction": {
+     "$ref": "DSPCreateDisplayCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The list of placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "DSPCreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The custom images to use for the standard display experience.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    }
+   },
+   "required": [
+    "adChoicesPosition",
+    "creativeSizes",
+    "customImages",
+    "language"
+   ],
+   "type": "object"
+  },
+  "DSPCreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "DSPCreateStreamingTvSettings": {
+   "properties": {
+    "callToActions": {
+     "description": "The call to actions for this video.",
+     "items": {
+      "$ref": "DSPCreateVideoCallToAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "products": {
+     "description": "The product advertised on this video creative.",
+     "items": {
+      "$ref": "DSPCreateAdvertisedProducts"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videos": {
+     "$ref": "DSPCreateVideo"
+    }
+   },
+   "required": [
+    "language",
+    "videos"
+   ],
+   "type": "object"
+  },
+  "DSPCreateTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPCreateThirdPartyCreative": {
+   "properties": {
+    "thirdPartyDisplaySettings": {
+     "$ref": "DSPCreateThirdPartyDisplaySettings"
+    },
+    "thirdPartyVideoSettings": {
+     "$ref": "DSPCreateThirdPartyVideoSettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateThirdPartyDisplaySettings": {
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "DSPAdChoicesPosition"
+    },
+    "additionalHtml": {
+     "description": "Additional html to be included along with the creative when rendered.",
+     "type": "string"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The list of placement sizes this creative should serve on. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "items": {
+      "$ref": "DSPCreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "publisherHostedCreativeSource": {
+     "$ref": "DSPPublisherHostedCreativeSource"
+    },
+    "thirdPartyTagHostingSource": {
+     "description": "The html tag to use to fetch this creative from the 3p ad server. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adChoicesPosition",
+    "language"
+   ],
+   "type": "object"
+  },
+  "DSPCreateThirdPartyVideoSettings": {
+   "properties": {
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "publisherHostedCreativeSource": {
+     "$ref": "DSPPublisherHostedCreativeSource"
+    },
+    "vastUrl": {
+     "description": "The url to use to fetch the VAST XML for this video creative. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "language"
+   ],
+   "type": "object"
+  },
+  "DSPCreateVideo": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the video asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the video asset.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "DSPCreateVideoCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "addToCartVideoCallToActionSettings": {
+       "$ref": "DSPCreateAddToCartVideoCallToActionSettings"
+      }
+     },
+     "required": [
+      "addToCartVideoCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "clickToUrlVideoCallToActionSettings": {
+       "$ref": "DSPCreateClickToUrlVideoCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlVideoCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "learnMoreVideoCallToActionSettings": {
+       "$ref": "DSPCreateLearnMoreVideoCallToActionSettings"
+      }
+     },
+     "required": [
+      "learnMoreVideoCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreateVideoCreative": {
+   "properties": {
+    "onlineVideoSettings": {
+     "$ref": "DSPCreateOnlineVideoSettings"
+    },
+    "streamingTvSettings": {
+     "$ref": "DSPCreateStreamingTvSettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreative": {
+   "oneOf": [
+    {
+     "properties": {
+      "audioCreative": {
+       "$ref": "DSPAudioCreative"
+      }
+     },
+     "required": [
+      "audioCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "componentCreative": {
+       "$ref": "DSPComponentCreative"
+      }
+     },
+     "required": [
+      "componentCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "displayCreative": {
+       "$ref": "DSPDisplayCreative"
+      }
+     },
+     "required": [
+      "displayCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "thirdPartyCreative": {
+       "$ref": "DSPThirdPartyCreative"
+      }
+     },
+     "required": [
+      "thirdPartyCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoCreative": {
+       "$ref": "DSPVideoCreative"
+      }
+     },
+     "required": [
+      "videoCreative"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreativeOptimizationGoalKpi": {
+   "enum": [
+    "CLICK_THROUGH_RATE",
+    "DETAIL_PAGE_VIEW_RATE",
+    "PURCHASE_RATE"
+   ],
+   "type": "string"
+  },
+  "DSPCreativeTrackingUrl": {
+   "properties": {
+    "url": {
+     "description": "A url to be triggered for tracking events.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPDeepLinkingBehavior": {
+   "enum": [
+    "DISABLED",
+    "ENABLED"
+   ],
+   "type": "string"
+  },
+  "DSPDeliveryReason": {
+   "description": "**DeliveryReason Enum:** | DeliveryReason | Description | |------|------| | `AD_CREATIVES_NOT_RUNNING` | | | `AD_GROUPS_NOT_RUNNING` | | | `AD_GROUP_ARCHIVED` | | | `AD_GROUP_ENDED` | | | `AD_GROUP_INELIGIBLE_GOAL_KPI` …",
+   "enum": [
+    "AD_CREATIVES_NOT_RUNNING",
+    "AD_GROUPS_NOT_RUNNING",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_ENDED",
+    "AD_GROUP_INELIGIBLE_GOAL_KPI",
+    "AD_GROUP_MISSING_CONVERSION_TRACKING_SELECTIONS",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_START_DATE",
+    "AD_GROUP_POLICING_SUSPENDED",
+    "AD_GROUP_TOO_FEW_CONVERSION_TRACKING_SELECTIONS",
+    "AD_GROUP_TOO_MANY_CONVERSION_TRACKING_SELECTIONS",
+    "AD_NOT_APPROVED_FOR_ALL_AD_GROUPS",
+    "AD_NOT_ASSOCIATED_WITH_AD_GROUP",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_POLICING_SUSPENDED",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DSPDeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | |------|------| | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplac…",
+   "enum": [
+    "DELIVERING",
+    "LIMITED",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "DSPDisplayCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "clickToAppDisplayCallToActionSettings": {
+       "$ref": "DSPClickToAppDisplayCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToAppDisplayCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "clickToUrlDisplayCallToActionSettings": {
+       "$ref": "DSPClickToUrlDisplayCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlDisplayCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPDisplayCreative": {
+   "properties": {
+    "standardDisplaySettings": {
+     "$ref": "DSPStandardDisplaySettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPFormatProperties": {
+   "properties": {
+    "applyBorder": {
+     "description": "Apply a boarder to the image to fit rules for some supplies.",
+     "type": "boolean"
+    },
+    "height": {
+     "description": "The height (in pixels) of the cropped image.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "left": {
+     "description": "The number of pixels from the left of the image where the crop should begin.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "top": {
+     "description": "The number of pixels from the top of the image where the crop should begin.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width (in pixels) of the cropped image.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "DSPImage": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the image asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the image asset.",
+     "type": "string"
+    },
+    "formatProperties": {
+     "description": "The cropping and positioning properties associated with the asset.",
+     "items": {
+      "$ref": "DSPFormatProperties"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "DSPLanguageLocale": {
+   "description": "A combination of ISO-639 standard for language code and ISO-3166 for country code. **LanguageLocale Enum:** | LanguageLocale | Description | |------|------| | `aa_ET` | Afar (Ethiopia). | | `ab_GE` | Abkhazian (Georgia)…",
+   "enum": [
+    "aa_ET",
+    "ab_GE",
+    "ae_INT",
+    "af_ZA",
+    "ak_GH",
+    "am_ET",
+    "an_ES",
+    "ar_AE",
+    "as_IN",
+    "av_RU",
+    "ay_BO",
+    "az_AZ",
+    "ba_RU",
+    "be_BY",
+    "bg_BG",
+    "bh_IN",
+    "bi_VU",
+    "bm_ML",
+    "bn_BD",
+    "bo_CN",
+    "br_FR",
+    "bs_BA",
+    "ca_ES",
+    "ce_RU",
+    "ch_GU",
+    "co_FR",
+    "cr_CA",
+    "cs_CZ",
+    "cu_INT",
+    "cv_RU",
+    "cy_GB",
+    "da_DK",
+    "de_DE",
+    "dv_MV",
+    "dz_BT",
+    "ee_GH",
+    "el_GR",
+    "en_US",
+    "eo_INT",
+    "es_ES",
+    "et_EE",
+    "eu_ES",
+    "fa_IR",
+    "ff_SN",
+    "fi_FI",
+    "fj_FJ",
+    "fo_FO",
+    "fr_FR",
+    "fy_NL",
+    "ga_IE",
+    "gd_GB",
+    "gl_ES",
+    "gn_PY",
+    "gu_IN",
+    "gv_IM",
+    "ha_NG",
+    "he_IL",
+    "hi_IN",
+    "ho_PG",
+    "hr_HR",
+    "ht_HT",
+    "hu_HU",
+    "hy_AM",
+    "hz_NA",
+    "ia_INT",
+    "id_ID",
+    "ie_INT",
+    "ig_NG",
+    "ii_CN",
+    "ik_US",
+    "io_INT",
+    "is_IS",
+    "it_IT",
+    "iu_CA",
+    "iw_IL",
+    "ja_JP",
+    "ji_IL",
+    "jv_ID",
+    "ka_GE",
+    "kg_CD",
+    "ki_KE",
+    "kj_NA",
+    "kk_KZ",
+    "kl_GL",
+    "km_KH",
+    "kn_IN",
+    "ko_KR",
+    "kr_NG",
+    "ks_IN",
+    "ku_TR",
+    "kv_RU",
+    "kw_GB",
+    "ky_KG",
+    "la_VA",
+    "lb_LU",
+    "lg_UG",
+    "li_NL",
+    "ln_CD",
+    "lo_LA",
+    "lt_LT",
+    "lu_CD",
+    "lv_LV",
+    "mg_MG",
+    "mh_MH",
+    "mi_NZ",
+    "mk_MK",
+    "ml_IN",
+    "mn_MN",
+    "mo_MD",
+    "mr_IN",
+    "ms_MY",
+    "mt_MT",
+    "my_MM",
+    "na_NR",
+    "nb_NO",
+    "nd_ZW",
+    "ne_NP",
+    "ng_NA",
+    "nl_NL",
+    "nn_NO",
+    "no_NO",
+    "nr_ZA",
+    "nv_US",
+    "ny_MW",
+    "oc_FR",
+    "oj_CA",
+    "om_ET",
+    "or_IN",
+    "os_RU",
+    "pa_IN",
+    "pi_IN",
+    "pl_PL",
+    "ps_AF",
+    "pt_PT",
+    "qu_PE",
+    "rm_CH",
+    "rn_BI",
+    "ro_RO",
+    "ru_RU",
+    "rw_RW",
+    "sa_IN",
+    "sc_IT",
+    "sd_PK",
+    "se_NO",
+    "sg_CF",
+    "si_LK",
+    "sk_SK",
+    "sl_SI",
+    "sm_WS",
+    "sn_ZW",
+    "so_SO",
+    "sq_AL",
+    "sr_RS",
+    "ss_SZ",
+    "st_LS",
+    "su_ID",
+    "sv_SE",
+    "sw_TZ",
+    "ta_IN",
+    "te_IN",
+    "tg_TJ",
+    "th_TH",
+    "ti_ET",
+    "tk_TM",
+    "tl_PH",
+    "tn_BW",
+    "to_TO",
+    "tr_TR",
+    "ts_ZA",
+    "tt_RU",
+    "tw_GH",
+    "ty_PF",
+    "ug_CN",
+    "uk_UA",
+    "ur_PK",
+    "uz_UZ",
+    "ve_ZA",
+    "vi_VN",
+    "vo_INT",
+    "wa_BE",
+    "wo_SN",
+    "xh_ZA",
+    "yi_IL",
+    "yo_NG",
+    "za_CN",
+    "zh_CN",
+    "zu_ZA"
+   ],
+   "type": "string"
+  },
+  "DSPLearnMoreVideoCallToActionSettings": {
+   "properties": {
+    "position": {
+     "$ref": "DSPVideoCallToActionPosition"
+    },
+    "url": {
+     "description": "The url to drive users to learn more via the video CallToAction.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "position",
+    "url"
+   ],
+   "type": "object"
+  },
+  "DSPMarketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "DSPMarketplaceScope": {
+   "enum": [
+    "SINGLE_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "DSPOnlineVideoSettings": {
+   "properties": {
+    "callToActions": {
+     "description": "The call to actions for this video.",
+     "items": {
+      "$ref": "DSPVideoCallToAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "products": {
+     "$ref": "DSPAdvertisedProducts"
+    },
+    "videos": {
+     "$ref": "DSPVideo"
+    }
+   },
+   "required": [
+    "language",
+    "videos"
+   ],
+   "type": "object"
+  },
+  "DSPProductIdType": {
+   "description": "**ProductIdType Enum:** | ProductIdType | Description | |------|------| | `ASIN` | ASIN identifier type. |",
+   "enum": [
+    "ASIN"
+   ],
+   "type": "string"
+  },
+  "DSPPublisherHostedCreativeSource": {
+   "description": "The publisher ad server source for publisher hosted creative placeholder creatives. **PublisherHostedCreativeSource Enum:** | PublisherHostedCreativeSource | Description | |------|------| | `GOOGLE_AD_MANAGER` | Google …",
+   "enum": [
+    "GOOGLE_AD_MANAGER"
+   ],
+   "type": "string"
+  },
+  "DSPQueryAdRequest": {
+   "properties": {
+    "adIdFilter": {
+     "$ref": "DSPAdAdIdFilter"
+    },
+    "adProductFilter": {
+     "$ref": "DSPAdAdProductFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "DSPResponsiveEcommerceAdVariations": {
+   "enum": [
+    "ADD_TO_CART",
+    "COUPON",
+    "CUSTOMER_REVIEWS",
+    "SHOP_NOW"
+   ],
+   "type": "string"
+  },
+  "DSPResponsiveEcommerceCreativePropertiesToOptimize": {
+   "description": "**ResponsiveEcommerceCreativePropertiesToOptimize Enum:** | ResponsiveEcommerceCreativePropertiesToOptimize | Description | |------|------| | `HEADLINE` | The headline in the creative. |",
+   "enum": [
+    "HEADLINE"
+   ],
+   "type": "string"
+  },
+  "DSPResponsiveEcommerceSettings": {
+   "properties": {
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "DSPResponsiveEcommerceCreativePropertiesToOptimize"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "DSPSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "disclaimers": {
+     "description": "The disclaimer to use for the Responsive eCommerce experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline to use for the Responsive eCommerce experience.",
+     "type": "string"
+    },
+    "images": {
+     "description": "The image(s) to use.",
+     "items": {
+      "$ref": "DSPImage"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "DSPComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "logos": {
+     "$ref": "DSPImage"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "DSPCreativeOptimizationGoalKpi"
+    },
+    "products": {
+     "description": "The products advertised for the Responsive eCommerce experience.",
+     "items": {
+      "$ref": "DSPAdvertisedProducts"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "recAdVariations": {
+     "description": "The rendering variations selected for the Responsive eCommerce experience.",
+     "items": {
+      "$ref": "DSPResponsiveEcommerceAdVariations"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "DSPResponsiveSizingBehavior"
+    },
+    "supportedThirdPartySellers": {
+     "$ref": "DSPSupportedThirdPartySellers"
+    }
+   },
+   "required": [
+    "inventoryTypes",
+    "language",
+    "optimizationGoalKpi",
+    "products",
+    "responsiveSizingBehavior",
+    "supportedThirdPartySellers"
+   ],
+   "type": "object"
+  },
+  "DSPResponsiveSizingBehavior": {
+   "enum": [
+    "DISABLED",
+    "ENABLED"
+   ],
+   "type": "string"
+  },
+  "DSPSize": {
+   "properties": {
+    "height": {
+     "description": "The height of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "height",
+    "width"
+   ],
+   "type": "object"
+  },
+  "DSPStandardAudioExperienceSettings": {
+   "properties": {
+    "audio": {
+     "$ref": "DSPAudio"
+    },
+    "callToActions": {
+     "$ref": "DSPAudioCallToAction"
+    },
+    "companionImages": {
+     "$ref": "DSPImage"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the standard audio experience. Headlines must be a maximum of 20 characters.",
+     "type": "string"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded. Urls cannot exceed 2048 characters.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "products": {
+     "description": "The product(s) being advertised.",
+     "items": {
+      "$ref": "DSPAdvertisedProducts"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audio",
+    "companionImages",
+    "headlines",
+    "language"
+   ],
+   "type": "object"
+  },
+  "DSPStandardDisplaySettings": {
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "DSPAdChoicesPosition"
+    },
+    "callToAction": {
+     "$ref": "DSPDisplayCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The list of placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "DSPSize"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The custom images to use for the standard display experience.",
+     "items": {
+      "$ref": "DSPImage"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    }
+   },
+   "required": [
+    "adChoicesPosition",
+    "creativeSizes",
+    "customImages",
+    "language"
+   ],
+   "type": "object"
+  },
+  "DSPState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "DSPStatus": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "DSPDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "DSPDeliveryStatus"
+    }
+   },
+   "required": [
+    "deliveryStatus"
+   ],
+   "type": "object"
+  },
+  "DSPStreamingTvSettings": {
+   "properties": {
+    "callToActions": {
+     "description": "The call to actions for this video.",
+     "items": {
+      "$ref": "DSPVideoCallToAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "products": {
+     "description": "The product advertised on this video creative.",
+     "items": {
+      "$ref": "DSPAdvertisedProducts"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videos": {
+     "$ref": "DSPVideo"
+    }
+   },
+   "required": [
+    "language",
+    "videos"
+   ],
+   "type": "object"
+  },
+  "DSPSupportedThirdPartySellers": {
+   "enum": [
+    "ALL",
+    "NONE"
+   ],
+   "type": "string"
+  },
+  "DSPTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPThirdPartyCreative": {
+   "properties": {
+    "thirdPartyDisplaySettings": {
+     "$ref": "DSPThirdPartyDisplaySettings"
+    },
+    "thirdPartyVideoSettings": {
+     "$ref": "DSPThirdPartyVideoSettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPThirdPartyDisplaySettings": {
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "DSPAdChoicesPosition"
+    },
+    "additionalHtml": {
+     "description": "Additional html to be included along with the creative when rendered.",
+     "type": "string"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The list of placement sizes this creative should serve on. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "items": {
+      "$ref": "DSPSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "publisherHostedCreativeSource": {
+     "$ref": "DSPPublisherHostedCreativeSource"
+    },
+    "thirdPartyTagHostingSource": {
+     "description": "The html tag to use to fetch this creative from the 3p ad server. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adChoicesPosition",
+    "language"
+   ],
+   "type": "object"
+  },
+  "DSPThirdPartyVideoSettings": {
+   "properties": {
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "publisherHostedCreativeSource": {
+     "$ref": "DSPPublisherHostedCreativeSource"
+    },
+    "vastUrl": {
+     "description": "The url to use to fetch the VAST XML for this video creative. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "language"
+   ],
+   "type": "object"
+  },
+  "DSPUpdateAdRequest": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "DSPAdUpdate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "ads"
+   ],
+   "type": "object"
+  },
+  "DSPUpdateAdvertisedProducts": {
+   "properties": {
+    "productId": {
+     "description": "The identifier of the advertised product.",
+     "type": "string"
+    },
+    "productIdType": {
+     "$ref": "DSPProductIdType"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateAssetBasedCreativeCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "assetBasedCreativeCallToActionSettings": {
+       "$ref": "DSPUpdateAssetBasedCreativeCallToActionSettings"
+      }
+     },
+     "required": [
+      "assetBasedCreativeCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPUpdateAssetBasedCreativeCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "callToActionType": {
+     "description": "Type of CallToAction for AssetBasedCreative.",
+     "items": {
+      "$ref": "DSPAssetBasedCreativeCallToActionType"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateAssetBasedCreativeSettings": {
+   "properties": {
+    "additionalHtml": {
+     "description": "Additional HTML to include with the render response for display inventory targets.",
+     "type": "string"
+    },
+    "bodyText": {
+     "description": "The body text to use for the Asset Based Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brand": {
+     "description": "The brand of the product(s) being advertised.",
+     "type": "string"
+    },
+    "callToActions": {
+     "$ref": "DSPUpdateAssetBasedCreativeCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "DSPCreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customVideos": {
+     "$ref": "DSPUpdateVideo"
+    },
+    "disclaimers": {
+     "description": "The disclaimers to use for the Asset Based Creative experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the Asset Based Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "DSPComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "logos": {
+     "description": "The logos to use for the Asset Based Creative experience.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "DSPCreativeOptimizationGoalKpi"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "DSPResponsiveSizingBehavior"
+    },
+    "squareImages": {
+     "description": "The square image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "tallImages": {
+     "description": "The tall image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "wideImages": {
+     "description": "The wide image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateAudio": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the audio asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the audio asset.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateAudioCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "clickToUrlAudioCallToActionSettings": {
+       "$ref": "DSPUpdateClickToUrlAudioCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlAudioCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPUpdateAudioCreative": {
+   "description": "| UpdateAudioCreative | Description | | --- | --- | | `standardAudioSettings` | The standard audio experience settings. See the Audio Spec for more info: https://advertising.amazon.com/en-us/resources/ad-specs/audio-ads…",
+   "oneOf": [
+    {
+     "properties": {
+      "standardAudioSettings": {
+       "$ref": "DSPUpdateStandardAudioExperienceSettings"
+      }
+     },
+     "required": [
+      "standardAudioSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPUpdateBrandStoreCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandStoreCallToActionSettings": {
+       "$ref": "DSPUpdateBrandStoreCallToActionSettings"
+      }
+     },
+     "required": [
+      "brandStoreCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPUpdateBrandStoreCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "callToActionType": {
+     "description": "Type of CallToAction for BrandStore.",
+     "items": {
+      "$ref": "DSPBrandStoreCallToActionType"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateBrandStoreSettings": {
+   "properties": {
+    "additionalHtml": {
+     "description": "Additional HTML to include with the render response for display inventory targets.",
+     "type": "string"
+    },
+    "bodyText": {
+     "description": "The body text to use for the Brand Store Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brand": {
+     "description": "The brand of the product(s) being advertised.",
+     "type": "string"
+    },
+    "callToActions": {
+     "$ref": "DSPUpdateBrandStoreCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "DSPCreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "disclaimers": {
+     "description": "The disclaimers to use for the Brand Store Creative experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the Brand Store Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "DSPComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "logos": {
+     "$ref": "DSPUpdateImage"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "DSPCreativeOptimizationGoalKpi"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "DSPResponsiveSizingBehavior"
+    },
+    "squareImages": {
+     "description": "The square image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "tallImages": {
+     "description": "The tall image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "wideImages": {
+     "description": "The wide image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateClickToAppDisplayCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The app that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateClickToUrlAudioCallToActionSettings": {
+   "properties": {
+    "url": {
+     "description": "The url to redirect the user via the audio CallToAction.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateClickToUrlDisplayCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DSPDeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateComponentCreative": {
+   "properties": {
+    "assetBasedCreativeSettings": {
+     "$ref": "DSPUpdateAssetBasedCreativeSettings"
+    },
+    "brandStoreSettings": {
+     "$ref": "DSPUpdateBrandStoreSettings"
+    },
+    "responsiveEcommerceSettings": {
+     "$ref": "DSPUpdateResponsiveEcommerceSettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateCreative": {
+   "oneOf": [
+    {
+     "properties": {
+      "audioCreative": {
+       "$ref": "DSPUpdateAudioCreative"
+      }
+     },
+     "required": [
+      "audioCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "displayCreative": {
+       "$ref": "DSPUpdateDisplayCreative"
+      }
+     },
+     "required": [
+      "displayCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "thirdPartyCreative": {
+       "$ref": "DSPUpdateThirdPartyCreative"
+      }
+     },
+     "required": [
+      "thirdPartyCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoCreative": {
+       "$ref": "DSPUpdateVideoCreative"
+      }
+     },
+     "required": [
+      "videoCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "componentCreative": {
+       "$ref": "DSPUpdateComponentCreative"
+      }
+     },
+     "required": [
+      "componentCreative"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPUpdateDisplayCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "clickToUrlDisplayCallToActionSettings": {
+       "$ref": "DSPUpdateClickToUrlDisplayCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlDisplayCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "clickToAppDisplayCallToActionSettings": {
+       "$ref": "DSPUpdateClickToAppDisplayCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToAppDisplayCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPUpdateDisplayCreative": {
+   "properties": {
+    "standardDisplaySettings": {
+     "$ref": "DSPUpdateStandardDisplaySettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateImage": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the image asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the image asset.",
+     "type": "string"
+    },
+    "formatProperties": {
+     "description": "The cropping and positioning properties associated with the asset.",
+     "items": {
+      "$ref": "DSPCreateFormatProperties"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateOnlineVideoSettings": {
+   "properties": {
+    "callToActions": {
+     "description": "The call to actions for this video.",
+     "items": {
+      "$ref": "DSPCreateVideoCallToAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "products": {
+     "$ref": "DSPUpdateAdvertisedProducts"
+    },
+    "videos": {
+     "$ref": "DSPUpdateVideo"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateResponsiveEcommerceSettings": {
+   "properties": {
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "DSPResponsiveEcommerceCreativePropertiesToOptimize"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "DSPCreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "disclaimers": {
+     "description": "The disclaimer to use for the Responsive eCommerce experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline to use for the Responsive eCommerce experience.",
+     "type": "string"
+    },
+    "images": {
+     "description": "The image(s) to use.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "DSPComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "logos": {
+     "$ref": "DSPUpdateImage"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "DSPCreativeOptimizationGoalKpi"
+    },
+    "products": {
+     "description": "The products advertised for the Responsive eCommerce experience.",
+     "items": {
+      "$ref": "DSPCreateAdvertisedProducts"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "recAdVariations": {
+     "description": "The rendering variations selected for the Responsive eCommerce experience.",
+     "items": {
+      "$ref": "DSPResponsiveEcommerceAdVariations"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "DSPResponsiveSizingBehavior"
+    },
+    "supportedThirdPartySellers": {
+     "$ref": "DSPSupportedThirdPartySellers"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateStandardAudioExperienceSettings": {
+   "properties": {
+    "audio": {
+     "$ref": "DSPUpdateAudio"
+    },
+    "callToActions": {
+     "$ref": "DSPUpdateAudioCallToAction"
+    },
+    "companionImages": {
+     "$ref": "DSPUpdateImage"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the standard audio experience. Headlines must be a maximum of 20 characters.",
+     "type": "string"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded. Urls cannot exceed 2048 characters.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "products": {
+     "description": "The product(s) being advertised.",
+     "items": {
+      "$ref": "DSPCreateAdvertisedProducts"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateStandardDisplaySettings": {
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "DSPAdChoicesPosition"
+    },
+    "callToAction": {
+     "$ref": "DSPUpdateDisplayCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The list of placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "DSPCreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The custom images to use for the standard display experience.",
+     "items": {
+      "$ref": "DSPCreateImage"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "DSPUpdateStreamingTvSettings": {
+   "properties": {
+    "callToActions": {
+     "description": "The call to actions for this video.",
+     "items": {
+      "$ref": "DSPCreateVideoCallToAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "products": {
+     "description": "The product advertised on this video creative.",
+     "items": {
+      "$ref": "DSPCreateAdvertisedProducts"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videos": {
+     "$ref": "DSPUpdateVideo"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateThirdPartyCreative": {
+   "properties": {
+    "thirdPartyDisplaySettings": {
+     "$ref": "DSPUpdateThirdPartyDisplaySettings"
+    },
+    "thirdPartyVideoSettings": {
+     "$ref": "DSPUpdateThirdPartyVideoSettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateThirdPartyDisplaySettings": {
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "DSPAdChoicesPosition"
+    },
+    "additionalHtml": {
+     "description": "Additional html to be included along with the creative when rendered.",
+     "type": "string"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The list of placement sizes this creative should serve on. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "items": {
+      "$ref": "DSPCreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "publisherHostedCreativeSource": {
+     "$ref": "DSPPublisherHostedCreativeSource"
+    },
+    "thirdPartyTagHostingSource": {
+     "description": "The html tag to use to fetch this creative from the 3p ad server. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateThirdPartyVideoSettings": {
+   "properties": {
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "DSPCreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "DSPLanguageLocale"
+    },
+    "publisherHostedCreativeSource": {
+     "$ref": "DSPPublisherHostedCreativeSource"
+    },
+    "vastUrl": {
+     "description": "The url to use to fetch the VAST XML for this video creative. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateVideo": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the video asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the video asset.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateVideoCreative": {
+   "properties": {
+    "onlineVideoSettings": {
+     "$ref": "DSPUpdateOnlineVideoSettings"
+    },
+    "streamingTvSettings": {
+     "$ref": "DSPUpdateStreamingTvSettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPVideo": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the video asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the video asset.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "DSPVideoCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "addToCartVideoCallToActionSettings": {
+       "$ref": "DSPAddToCartVideoCallToActionSettings"
+      }
+     },
+     "required": [
+      "addToCartVideoCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "clickToUrlVideoCallToActionSettings": {
+       "$ref": "DSPClickToUrlVideoCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlVideoCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "learnMoreVideoCallToActionSettings": {
+       "$ref": "DSPLearnMoreVideoCallToActionSettings"
+      }
+     },
+     "required": [
+      "learnMoreVideoCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPVideoCallToActionPosition": {
+   "enum": [
+    "LEFT",
+    "MINIMAL",
+    "RIGHT"
+   ],
+   "type": "string"
+  },
+  "DSPVideoCreative": {
+   "properties": {
+    "onlineVideoSettings": {
+     "$ref": "DSPOnlineVideoSettings"
+    },
+    "streamingTvSettings": {
+     "$ref": "DSPStreamingTvSettings"
+    }
+   },
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "ASSET_NOT_READY",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

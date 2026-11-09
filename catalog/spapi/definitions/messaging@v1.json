@@ -1,0 +1,367 @@
+{
+  "Attachment": {
+    "description": "Represents a file that was uploaded to a destination that was created by the Uploads API [`createUploadDestinationForResource`](https://developer-docs.amazon.com/sp-api/reference/createuploaddestinationforresource) operation.",
+    "properties": {
+      "fileName": {
+        "description": "The name of the file, including the extension.",
+        "type": "string"
+      },
+      "uploadDestinationId": {
+        "description": "The identifier for the upload destination.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "fileName",
+      "uploadDestinationId"
+    ],
+    "type": "object"
+  },
+  "CreateConfirmCustomizationDetailsRequest": {
+    "description": "The request schema for the confirmCustomizationDetails operation.",
+    "properties": {
+      "attachments": {
+        "description": "Attachments to include in the message to the buyer.",
+        "ref": "Attachment",
+        "type": "array"
+      },
+      "text": {
+        "description": "The text to be sent to the buyer.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateConfirmCustomizationDetailsResponse": {
+    "description": "The response schema for the confirmCustomizationDetails operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateConfirmDeliveryDetailsRequest": {
+    "description": "The request schema for the createConfirmDeliveryDetails operation.",
+    "properties": {
+      "text": {
+        "description": "The text to be sent to the buyer.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateConfirmDeliveryDetailsResponse": {
+    "description": "The response schema for the createConfirmDeliveryDetails operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateConfirmOrderDetailsRequest": {
+    "description": "The request schema for the createConfirmOrderDetails operation.",
+    "properties": {
+      "text": {
+        "description": "The text to be sent to the buyer.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateConfirmOrderDetailsResponse": {
+    "description": "The response schema for the createConfirmOrderDetails operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateConfirmServiceDetailsRequest": {
+    "description": "The request schema for the createConfirmServiceDetails operation.",
+    "properties": {
+      "text": {
+        "description": "The text to be sent to the buyer.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateConfirmServiceDetailsResponse": {
+    "description": "The response schema for the createConfirmServiceDetails operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateDigitalAccessKeyRequest": {
+    "description": "The request schema for the `createDigitalAccessKey` operation.",
+    "properties": {
+      "attachments": {
+        "description": "Attachments that you want to include in the message to the buyer.",
+        "ref": "Attachment",
+        "type": "array"
+      },
+      "text": {
+        "description": "The text that is sent to the buyer.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateDigitalAccessKeyResponse": {
+    "description": "The response schema for the `createDigitalAccessKey` operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateLegalDisclosureRequest": {
+    "description": "The request schema for the createLegalDisclosure operation.",
+    "properties": {
+      "attachments": {
+        "description": "Attachments to include in the message to the buyer.",
+        "ref": "Attachment",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateLegalDisclosureResponse": {
+    "description": "The response schema for the createLegalDisclosure operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateUnexpectedProblemRequest": {
+    "description": "The request schema for the createUnexpectedProblem operation.",
+    "properties": {
+      "text": {
+        "description": "The text to be sent to the buyer.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateUnexpectedProblemResponse": {
+    "description": "The response schema for the createUnexpectedProblem operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateWarrantyRequest": {
+    "description": "The request schema for the createWarranty operation.",
+    "properties": {
+      "attachments": {
+        "description": "Attachments to include in the message to the buyer.",
+        "ref": "Attachment",
+        "type": "array"
+      },
+      "coverageEndDate": {
+        "description": "The end date of the warranty coverage to include in the message to the buyer.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "coverageStartDate": {
+        "description": "The start date of the warranty coverage to include in the message to the buyer.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateWarrantyResponse": {
+    "description": "The response schema for the createWarranty operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "GetAttributesResponse": {
+    "description": "The response schema for the GetAttributes operation.",
+    "properties": {
+      "buyer": {
+        "description": "The list of attributes related to the buyer.",
+        "type": "object"
+      },
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetMessagingActionResponse": {
+    "description": "Describes a messaging action that can be taken for an order.",
+    "properties": {
+      "_embedded": {
+        "description": "The embedded response associated with the messaging action.",
+        "type": "object"
+      },
+      "_links": {
+        "description": "The links response that is associated with the messaging action.",
+        "type": "object"
+      },
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "ref": "MessagingAction"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetMessagingActionsForOrderResponse": {
+    "description": "The response schema for the `getMessagingActionsForOrder` operation.",
+    "properties": {
+      "_embedded": {
+        "description": "The messaging actions response that is associated with the specified `amazonOrderId`.",
+        "type": "object"
+      },
+      "_links": {
+        "description": "The links response that is associated with the specified `amazonOrderId`.",
+        "type": "object"
+      },
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetSchemaResponse": {
+    "description": "The `GET` request schema response.",
+    "properties": {
+      "_links": {
+        "description": "The links response that is associated with the object.",
+        "type": "object"
+      },
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "ref": "Schema"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InvoiceRequest": {
+    "description": "The request schema for the `sendInvoice` operation.",
+    "properties": {
+      "attachments": {
+        "description": "Attachments to include in the message to the buyer.",
+        "ref": "Attachment",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InvoiceResponse": {
+    "description": "The response schema for the sendInvoice operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "LinkObject": {
+    "description": "A Link object.",
+    "properties": {
+      "href": {
+        "description": "A URI for this object.",
+        "type": "string"
+      },
+      "name": {
+        "description": "An identifier for this object.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "href"
+    ],
+    "type": "object"
+  },
+  "MessagingAction": {
+    "description": "A simple object containing the name of the template.",
+    "properties": {
+      "name": {
+        "description": "The name of the template.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "type": "object"
+  },
+  "Schema": {
+    "description": "A JSON schema document describing the expected payload of the action.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  }
+}

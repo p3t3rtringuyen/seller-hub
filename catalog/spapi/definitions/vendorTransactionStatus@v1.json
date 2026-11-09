@@ -1,0 +1,81 @@
+{
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "GetTransactionResponse": {
+    "description": "The response schema for the getTransaction operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The response payload for the getTransaction operation.",
+        "ref": "TransactionStatus"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Transaction": {
+    "description": "The transaction status.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "status": {
+        "description": "Current processing status of the transaction.",
+        "enum": [
+          "Failure",
+          "Processing",
+          "Success"
+        ],
+        "type": "string"
+      },
+      "transactionId": {
+        "description": "The unique identifier returned in the 'transactionId' field in response to the post request of a specific transaction.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "status",
+      "transactionId"
+    ],
+    "type": "object"
+  },
+  "TransactionStatus": {
+    "description": "Represents the status of a transaction.",
+    "properties": {
+      "transactionStatus": {
+        "ref": "Transaction"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

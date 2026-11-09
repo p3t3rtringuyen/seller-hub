@@ -1,0 +1,1029 @@
+{
+ "api": "AmazonAdsAPIALLAdExtensionsContract",
+ "file": "specs/dest/AmazonAdsAPIALLAdExtensionsContract_prod_3p.json",
+ "schemas": {
+  "AdExtension": {
+   "properties": {
+    "adExtensionId": {
+     "description": "A unique identifier for the ad_extension.",
+     "type": "string"
+    },
+    "adExtensionSettings": {
+     "$ref": "AdExtensionSettings"
+    },
+    "adExtensionStatus": {
+     "$ref": "AdExtensionStatus"
+    },
+    "adExtensionType": {
+     "$ref": "AdExtensionType"
+    },
+    "adGroupId": {
+     "description": "A unique identifier for the ad group associated with the ad_extension.",
+     "type": "string"
+    },
+    "adId": {
+     "description": "A unique identifier for the ad associated with the ad_extension.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "creationDateTime": {
+     "description": "The date time the ad_extension was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time the ad_extension was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceScope": {
+     "$ref": "MarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of marketplace in which the global ad_extension is applicable. The marketplaces included should either be same as or subset of parent campaign/adGroup/ad",
+     "items": {
+      "$ref": "Marketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "state": {
+     "$ref": "State"
+    },
+    "status": {
+     "$ref": "Status"
+    }
+   },
+   "required": [
+    "adExtensionId",
+    "adExtensionSettings",
+    "adExtensionType",
+    "adProduct",
+    "creationDateTime",
+    "lastUpdatedDateTime",
+    "marketplaceScope",
+    "marketplaces",
+    "state"
+   ],
+   "type": "object"
+  },
+  "AdExtensionAdExtensionIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdExtensionAdExtensionStatusFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdExtensionStatus Enum:** | AdExtensionStatus | Description | | --- | --- | | `OPTED_OUT` | If the advertiser has opted out of this Ad Extension. |",
+     "items": {
+      "$ref": "AdExtensionStatus"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdExtensionAdExtensionTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdExtensionType Enum:** | AdExtensionType | Description | | --- | --- | | `PROMPTS` | Enables Prompt based Ad Extension. | | `VIDEO` | Enables Video based Ad Extension. |",
+     "items": {
+      "$ref": "AdExtensionType"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdExtensionAdGroupIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdExtensionAdIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 300,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdExtensionAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `SPONSORED_PRODUCTS` | Sponsored Products ad product. | | `SPONSORED_BRANDS` | Sponsored Brands ad product. | | `SPONSORED_DISPLAY` | Sponsored Display ad …",
+     "items": {
+      "$ref": "AdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdExtensionCreate": {
+   "properties": {
+    "adExtensionSettings": {
+     "$ref": "CreateAdExtensionSettings"
+    },
+    "adExtensionStatus": {
+     "$ref": "AdExtensionStatus"
+    },
+    "adExtensionType": {
+     "$ref": "AdExtensionType"
+    },
+    "adGroupId": {
+     "description": "A unique identifier for the ad group associated with the ad_extension.",
+     "type": "string"
+    },
+    "adId": {
+     "description": "A unique identifier for the ad associated with the ad_extension.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "marketplaceScope": {
+     "$ref": "MarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of marketplace in which the global ad_extension is applicable. The marketplaces included should either be same as or subset of parent campaign/adGroup/ad",
+     "items": {
+      "$ref": "Marketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "state": {
+     "$ref": "CreateState"
+    }
+   },
+   "required": [
+    "adExtensionSettings",
+    "adExtensionType",
+    "adProduct",
+    "marketplaceScope",
+    "marketplaces",
+    "state"
+   ],
+   "type": "object"
+  },
+  "AdExtensionMultiStatusResponseWithPartialErrors": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "partialSuccess": {
+     "items": {
+      "$ref": "AdExtensionPartialIndex"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "AdExtensionMultiStatusSuccess"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AdExtensionMultiStatusSuccess": {
+   "properties": {
+    "adExtension": {
+     "$ref": "AdExtension"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 49,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "adExtension",
+    "index"
+   ],
+   "type": "object"
+  },
+  "AdExtensionPartialIndex": {
+   "properties": {
+    "adExtension": {
+     "$ref": "AdExtension"
+    },
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 49,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "adExtension",
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "AdExtensionSettings": {
+   "oneOf": [
+    {
+     "properties": {
+      "promptExtension": {
+       "$ref": "PromptExtension"
+      }
+     },
+     "required": [
+      "promptExtension"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoExtension": {
+       "$ref": "VideoExtension"
+      }
+     },
+     "required": [
+      "videoExtension"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "AdExtensionStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `DRAFT` | The resource is in draft status and has not yet been proposed or enabled. | | `ENABLED` | The object is set active by user and eligible for delivery. | |…",
+     "items": {
+      "$ref": "State"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdExtensionStatus": {
+   "description": "Ad Extension Status. **AdExtensionStatus Enum:** | AdExtensionStatus | Description | |------|------| | `OPTED_OUT` | If the advertiser has opted out of this Ad Extension. |",
+   "enum": [
+    "OPTED_OUT"
+   ],
+   "type": "string"
+  },
+  "AdExtensionSuccessResponse": {
+   "properties": {
+    "adExtensions": {
+     "items": {
+      "$ref": "AdExtension"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdExtensionType": {
+   "description": "Ad Extension Type. **AdExtensionType Enum:** | AdExtensionType | Description | |------|------| | `PROMPTS` | Enables Prompt based Ad Extension. | | `VIDEO` | Enables Video based Ad Extension. |",
+   "enum": [
+    "PROMPTS",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "AdExtensionUpdate": {
+   "properties": {
+    "adExtensionId": {
+     "description": "A unique identifier for the ad_extension.",
+     "type": "string"
+    },
+    "marketplaces": {
+     "description": "The list of marketplace in which the global ad_extension is applicable. The marketplaces included should either be same as or subset of parent campaign/adGroup/ad",
+     "items": {
+      "$ref": "Marketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "state": {
+     "$ref": "UpdateState"
+    }
+   },
+   "required": [
+    "adExtensionId"
+   ],
+   "type": "object"
+  },
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. | | `SPONSORED_BRANDS` | Sponsored Brands ad product. | | `SPONSORED_DISPLAY` | Sponsored Display …",
+   "enum": [
+    "AMAZON_DSP",
+    "SPONSORED_BRANDS",
+    "SPONSORED_DISPLAY",
+    "SPONSORED_PRODUCTS",
+    "SPONSORED_TELEVISION"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateAdExtensionRequest": {
+   "properties": {
+    "adExtensions": {
+     "items": {
+      "$ref": "AdExtensionCreate"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adExtensions"
+   ],
+   "type": "object"
+  },
+  "CreateAdExtensionSettings": {
+   "oneOf": [
+    {
+     "properties": {
+      "promptExtension": {
+       "$ref": "CreatePromptExtension"
+      }
+     },
+     "required": [
+      "promptExtension"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoExtension": {
+       "$ref": "CreateVideoExtension"
+      }
+     },
+     "required": [
+      "videoExtension"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreatePromptExtension": {
+   "description": "Prompts Ad Extension",
+   "properties": {
+    "promptText": {
+     "description": "The prompt text rendered in the ads",
+     "type": "string"
+    }
+   },
+   "required": [
+    "promptText"
+   ],
+   "type": "object"
+  },
+  "CreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "CreateVideoExtension": {
+   "description": "Video Ad Extension",
+   "type": "object"
+  },
+  "DeliveryReason": {
+   "description": "**DeliveryReason Enum:** | DeliveryReason | Description | |------|------| | `ADVERTISER_ARCHIVED` | | | `ADVERTISER_INELIGIBLE` | | | `ADVERTISER_OUT_OF_BUDGET` | Indicates that an advertiser is out of budget for Sponso…",
+   "enum": [
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_INELIGIBLE",
+    "ADVERTISER_OUT_OF_BUDGET",
+    "ADVERTISER_OUT_OF_POSTPAY_CREDIT_LIMIT",
+    "ADVERTISER_OUT_OF_POSTPAY_MONTHLY_BUDGET",
+    "ADVERTISER_OUT_OF_PREPAY_BALANCE",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_POLICING_PENDING_REVIEW",
+    "ADVERTISER_POLICING_SUSPENDED",
+    "AD_ARCHIVED",
+    "AD_CREATION_FAILED",
+    "AD_CREATION_IN_PROGRESS",
+    "AD_CREATIVES_NOT_RUNNING",
+    "AD_EXTENSION_ARCHIVED",
+    "AD_EXTENSION_PAUSED",
+    "AD_EXTENSION_POLICING_PENDING_REVIEW",
+    "AD_EXTENSION_POLICING_SUSPENDED",
+    "AD_GROUPS_NOT_RUNNING",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_ENDED",
+    "AD_GROUP_INCOMPLETE",
+    "AD_GROUP_INELIGIBLE_GOAL_KPI",
+    "AD_GROUP_LOW_BID",
+    "AD_GROUP_MISSING_CONVERSION_TRACKING_SELECTIONS",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_REVIEW",
+    "AD_GROUP_PENDING_START_DATE",
+    "AD_GROUP_POLICING_PENDING_REVIEW",
+    "AD_GROUP_POLICING_SUSPENDED",
+    "AD_GROUP_REJECTED",
+    "AD_GROUP_TOO_FEW_CONVERSION_TRACKING_SELECTIONS",
+    "AD_GROUP_TOO_MANY_CONVERSION_TRACKING_SELECTIONS",
+    "AD_INELIGIBLE",
+    "AD_MISSING_DECORATION",
+    "AD_MISSING_IMAGE",
+    "AD_NOT_APPROVED_FOR_ALL_AD_GROUPS",
+    "AD_NOT_ASSOCIATED_WITH_AD_GROUP",
+    "AD_NOT_DELIVERING",
+    "AD_PAUSED",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "BRAND_INELIGIBLE",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_REVIEW",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_POLICING_SUSPENDED",
+    "CAMPAIGN_REJECTED",
+    "CREATIVE_MISSING_ASSET",
+    "CREATIVE_PENDING_REVIEW",
+    "CREATIVE_REJECTED",
+    "LANDING_PAGE_INELIGIBLE",
+    "LANDING_PAGE_NOT_AVAILABLE",
+    "MODERATION_ADULT_NOVELTY_POLICY_VIOLATION",
+    "MODERATION_ADULT_PRODUCT_POLICY_VIOLATION",
+    "MODERATION_ADULT_SOFTLINES_POLICY_VIOLATION",
+    "MODERATION_CLAIM_WEIGHTLOSS_POLICY_VIOLATION",
+    "MODERATION_CONTENT_NUDITY_POLICY_VIOLATION",
+    "MODERATION_CONTENT_PROVOCATIVE_POLICY_VIOLATION",
+    "MODERATION_CONTENT_SMOKING_POLICY_VIOLATION",
+    "MODERATION_CRITICAL_EVENTS_POLICY_VIOLATION",
+    "MODERATION_ERROR_404",
+    "MODERATION_GRAPHICAL_SEXUAL_IMAGES_POLICY_VIOLATION",
+    "MODERATION_HFSS_PRODUCT_POLICY_VIOLATION",
+    "MODERATION_LANGUAGE_OFFENSIVE_POLICY_VIOLATION",
+    "MODERATION_NOT_COMPLIANT_TO_AD_POLICY",
+    "MODERATION_SMOKING_RELATED_POLICY_VIOLATION",
+    "NOT_BUYABLE",
+    "NOT_IN_BUYBOX",
+    "NOT_IN_POLICY",
+    "NO_INVENTORY",
+    "NO_PURCHASABLE_OFFER",
+    "OTHER",
+    "OUT_OF_REWARD_BUDGET",
+    "OUT_OF_STOCK",
+    "PIR_RULE_EXCLUDED",
+    "PORTFOLIO_ARCHIVED",
+    "PORTFOLIO_END_DATE_REACHED",
+    "PORTFOLIO_OUT_OF_BUDGET",
+    "PORTFOLIO_PAUSED",
+    "PORTFOLIO_PENDING_START_DATE",
+    "SECURITY_SCAN_PENDING_REVIEW",
+    "SECURITY_SCAN_REJECTED",
+    "SPEND_LIMIT_EXCEEDED",
+    "STATUS_UNAVAILABLE",
+    "TARGET_ARCHIVED",
+    "TARGET_BLOCKED",
+    "TARGET_PAUSED",
+    "TARGET_POLICING_SUSPENDED"
+   ],
+   "type": "string"
+  },
+  "DeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | |------|------| | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplac…",
+   "enum": [
+    "DELIVERING",
+    "LIMITED",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "ASSET_NOT_READY",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FEATURE_NOT_AVAILABLE",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "GLOBAL_ATTRIBUTE_UPDATE_RESTRICTED_PORTFOLIO",
+    "GLOBAL_ATTRIBUTE_UPDATE_RESTRICTED_STATE",
+    "GLOBAL_CAMPAIGN_SINGLE_ADGROUP_LIMIT",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Marketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "MarketplaceScope": {
+   "enum": [
+    "GLOBAL",
+    "SINGLE_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "PromptExtension": {
+   "description": "Prompts Ad Extension",
+   "properties": {
+    "promptText": {
+     "description": "The prompt text rendered in the ads",
+     "type": "string"
+    }
+   },
+   "required": [
+    "promptText"
+   ],
+   "type": "object"
+  },
+  "QueryAdExtensionRequest": {
+   "properties": {
+    "adExtensionIdFilter": {
+     "$ref": "AdExtensionAdExtensionIdFilter"
+    },
+    "adExtensionStatusFilter": {
+     "$ref": "AdExtensionAdExtensionStatusFilter"
+    },
+    "adExtensionTypeFilter": {
+     "$ref": "AdExtensionAdExtensionTypeFilter"
+    },
+    "adGroupIdFilter": {
+     "$ref": "AdExtensionAdGroupIdFilter"
+    },
+    "adIdFilter": {
+     "$ref": "AdExtensionAdIdFilter"
+    },
+    "adProductFilter": {
+     "$ref": "AdExtensionAdProductFilter"
+    },
+    "maxResults": {
+     "default": 1000,
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "AdExtensionStateFilter"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "State": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "Status": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "DeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "DeliveryStatus"
+    },
+    "marketplaceSettings": {
+     "description": "The list of marketplace level delivery status and reasons of global resources, for all the marketplaces the global resource is applicable in.",
+     "items": {
+      "$ref": "StatusMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "deliveryStatus"
+   ],
+   "type": "object"
+  },
+  "StatusMarketplaceSetting": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "DeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "DeliveryStatus"
+    },
+    "marketplace": {
+     "$ref": "Marketplace"
+    }
+   },
+   "required": [
+    "deliveryStatus",
+    "marketplace"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateAdExtensionRequest": {
+   "properties": {
+    "adExtensions": {
+     "items": {
+      "$ref": "AdExtensionUpdate"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adExtensions"
+   ],
+   "type": "object"
+  },
+  "UpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "VideoExtension": {
+   "description": "Video Ad Extension",
+   "properties": {
+    "renderedAssetId": {
+     "description": "The video asset ID rendered in the ad.",
+     "type": "string"
+    },
+    "renderedCoverImageUrl": {
+     "description": "The image displayed over the video player before the video is played.",
+     "type": "string"
+    },
+    "videoType": {
+     "$ref": "VideoType"
+    }
+   },
+   "required": [
+    "videoType"
+   ],
+   "type": "object"
+  },
+  "VideoType": {
+   "description": "Video Type: Video type of the asset added in the ad extension and its rendering form. **VideoType Enum:** | VideoType | Description | |------|------| | `SPOTLIGHT` | SPOTLIGHT Video Asset. |",
+   "enum": [
+    "SPOTLIGHT"
+   ],
+   "type": "string"
+  }
+ }
+}

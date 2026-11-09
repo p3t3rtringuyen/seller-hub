@@ -1,0 +1,726 @@
+{
+ "api": "AmazonAdsAPIALLManagerAccountsContract",
+ "file": "specs/dest/AmazonAdsAPIALLManagerAccountsContract_prod_3p.json",
+ "schemas": {
+  "AccountUsageType": {
+   "enum": [
+    "PRODUCTION",
+    "TEST"
+   ],
+   "type": "string"
+  },
+  "Address": {
+   "description": "The business address of advertising account.",
+   "format": "password",
+   "properties": {
+    "addressLine1": {
+     "description": "The address details - 1 of business.",
+     "type": "string"
+    },
+    "addressLine2": {
+     "description": "The address details - 2 of business.",
+     "type": "string"
+    },
+    "businessName": {
+     "description": "The name of business.",
+     "type": "string"
+    },
+    "city": {
+     "description": "The city where business is located.",
+     "type": "string"
+    },
+    "countryCode": {
+     "description": "The country where business is located.",
+     "type": "string"
+    },
+    "phoneNumber": {
+     "description": "The phone number of business.",
+     "type": "string"
+    },
+    "state": {
+     "description": "The city where business is located.",
+     "type": "string"
+    },
+    "zipCode": {
+     "description": "The zipCode where business is located.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "addressLine1",
+    "businessName",
+    "city",
+    "countryCode"
+   ],
+   "type": "object"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BusinessDetail": {
+   "description": "The business details of advertising account.",
+   "format": "password",
+   "properties": {
+    "address": {
+     "$ref": "Address"
+    },
+    "addressToken": {
+     "description": "The token of the business address being linked.",
+     "type": "string"
+    },
+    "businessRegistrationNumber": {
+     "description": "The business registration number of the business.",
+     "type": "string"
+    },
+    "website": {
+     "description": "The website of the business.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateAddress": {
+   "description": "The business address of advertising account.",
+   "format": "password",
+   "properties": {
+    "addressLine1": {
+     "description": "The address details - 1 of business.",
+     "type": "string"
+    },
+    "addressLine2": {
+     "description": "The address details - 2 of business.",
+     "type": "string"
+    },
+    "businessName": {
+     "description": "The name of business.",
+     "type": "string"
+    },
+    "city": {
+     "description": "The city where business is located.",
+     "type": "string"
+    },
+    "countryCode": {
+     "description": "The country where business is located.",
+     "type": "string"
+    },
+    "phoneNumber": {
+     "description": "The phone number of business.",
+     "type": "string"
+    },
+    "state": {
+     "description": "The city where business is located.",
+     "type": "string"
+    },
+    "zipCode": {
+     "description": "The zipCode where business is located.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "addressLine1",
+    "businessName",
+    "city",
+    "countryCode"
+   ],
+   "type": "object"
+  },
+  "CreateBusinessDetail": {
+   "description": "The business details of advertising account.",
+   "format": "password",
+   "properties": {
+    "address": {
+     "$ref": "CreateAddress"
+    },
+    "addressToken": {
+     "description": "The token of the business address being linked.",
+     "type": "string"
+    },
+    "businessRegistrationNumber": {
+     "description": "The business registration number of the business.",
+     "type": "string"
+    },
+    "website": {
+     "description": "The website of the business.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CreateManagerAccountRequest": {
+   "properties": {
+    "managerAccounts": {
+     "items": {
+      "$ref": "ManagerAccountCreate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "managerAccounts"
+   ],
+   "type": "object"
+  },
+  "CurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | |------|------| | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BHD` | Bahraini Dinar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar…",
+   "enum": [
+    "AED",
+    "AUD",
+    "BHD",
+    "BRL",
+    "CAD",
+    "CHF",
+    "CNY",
+    "CZK",
+    "DKK",
+    "EGP",
+    "EUR",
+    "GBP",
+    "HKD",
+    "HUF",
+    "ILS",
+    "INR",
+    "JOD",
+    "JPY",
+    "KWD",
+    "MXN",
+    "MXP",
+    "NGN",
+    "NOK",
+    "NZD",
+    "PLN",
+    "QAR",
+    "RON",
+    "SAR",
+    "SEK",
+    "SGD",
+    "THB",
+    "TRY",
+    "USD",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACCESS_DENIED_FOR_MANAGER_ACCOUNT` | The request does not have access to the manager account provided in the registration request. | | `ACCOUNT_ALREADY_…",
+   "enum": [
+    "ACCESS_DENIED_FOR_MANAGER_ACCOUNT",
+    "ACCOUNT_ALREADY_EXISTS_FOR_ACCOUNT_NAME",
+    "ACCOUNT_ALREADY_EXISTS_FOR_SELLING_ACCOUNT",
+    "ACCOUNT_ALREADY_EXISTS_FOR_VENDOR",
+    "ADDRESS_BUSINESS_NAME_TOO_LONG",
+    "ADDRESS_INVALID_STATE",
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "INVALID_INPUT",
+    "INVALID_STATE_OR_REGION",
+    "INVALID_WEBSITE_URL",
+    "INVALID_ZIP_CODE",
+    "MISSING_ADDRESS_LINE_ONE",
+    "MISSING_BUSINESS_NAME",
+    "MISSING_CITY",
+    "MISSING_COUNTRY_CODE",
+    "MISSING_PHONE_NUMBER",
+    "MISSING_STATE",
+    "MISSING_WEBSITE_URL",
+    "MISSING_ZIP_CODE",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "IndustryVertical": {
+   "description": "**IndustryVertical Enum:** | IndustryVertical | Description | |------|------| | `AMS Keyword` | AMS Keyword | | `AMS Self Service` | AMS Self Service | | `Automotive` | Automotive | | `Consumer Goods` | Consumer Goods |…",
+   "enum": [
+    "AMS Keyword",
+    "AMS Self Service",
+    "Automotive",
+    "Consumer Goods",
+    "Entertainment",
+    "Financial Services",
+    "Hardware & Electronics",
+    "Health",
+    "House Ads",
+    "Public Services",
+    "Remnant Networks",
+    "Retail Goods & Services",
+    "Software",
+    "Telecommunications",
+    "Travel",
+    "Twitch",
+    "Twitch TV",
+    "Web Media",
+    "eCommerce"
+   ],
+   "type": "string"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ManagerAccount": {
+   "properties": {
+    "accountUsageType": {
+     "$ref": "AccountUsageType"
+    },
+    "businessDetails": {
+     "$ref": "BusinessDetail"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "industryVertical": {
+     "$ref": "IndustryVertical"
+    },
+    "timeZoneIana": {
+     "$ref": "TimeZoneIana"
+    }
+   },
+   "type": "object"
+  },
+  "ManagerAccountCreate": {
+   "properties": {
+    "accountUsageType": {
+     "$ref": "AccountUsageType"
+    },
+    "businessDetails": {
+     "$ref": "CreateBusinessDetail"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "industryVertical": {
+     "$ref": "IndustryVertical"
+    },
+    "timeZoneIana": {
+     "$ref": "TimeZoneIana"
+    }
+   },
+   "type": "object"
+  },
+  "ManagerAccountManagerAccountIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "ManagerAccountMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "ManagerAccountMultiStatusSuccess"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ManagerAccountMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "managerAccount": {
+     "$ref": "ManagerAccount"
+    }
+   },
+   "required": [
+    "index",
+    "managerAccount"
+   ],
+   "type": "object"
+  },
+  "ManagerAccountSuccessResponse": {
+   "properties": {
+    "managerAccounts": {
+     "items": {
+      "$ref": "ManagerAccount"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ManagerAccountUpdate": {
+   "properties": {
+    "businessDetails": {
+     "$ref": "UpdateBusinessDetail"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "industryVertical": {
+     "$ref": "IndustryVertical"
+    },
+    "managerAccountId": {
+     "description": "The identifier of the manager account.",
+     "type": "string"
+    },
+    "timeZoneIana": {
+     "$ref": "TimeZoneIana"
+    }
+   },
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryManagerAccountRequest": {
+   "properties": {
+    "managerAccountIdFilter": {
+     "$ref": "ManagerAccountManagerAccountIdFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 10,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TimeZoneIana": {
+   "description": "Each enum member is in the IANA Time Zone Database **TimeZoneIana Enum:** | TimeZoneIana | Description | |------|------| | `America/Anchorage` | Alaska Time Zone (UTC-09:00) | | `America/Caracas` | Venezuela Time Zone (…",
+   "enum": [
+    "America/Anchorage",
+    "America/Caracas",
+    "America/Chicago",
+    "America/Denver",
+    "America/Halifax",
+    "America/Los_Angeles",
+    "America/Mexico_City",
+    "America/New_York",
+    "America/Sao_Paulo",
+    "America/St_Johns",
+    "Asia/Almaty",
+    "Asia/Baghdad",
+    "Asia/Bangkok",
+    "Asia/Dubai",
+    "Asia/Hong_Kong",
+    "Asia/Kabul",
+    "Asia/Kathmandu",
+    "Asia/Kolkata",
+    "Asia/Magadan",
+    "Asia/Riyadh",
+    "Asia/Shanghai",
+    "Asia/Singapore",
+    "Asia/Tehran",
+    "Asia/Tokyo",
+    "Asia/Yekaterinburg",
+    "Asia/Yerevan",
+    "Atlantic/Azores",
+    "Atlantic/South_Georgia",
+    "Australia/Brisbane",
+    "Australia/Darwin",
+    "Australia/Sydney",
+    "EET",
+    "Europe/Amsterdam",
+    "Europe/Istanbul",
+    "Europe/London",
+    "Europe/Paris",
+    "Europe/Stockholm",
+    "Indian/Cocos",
+    "Pacific/Auckland",
+    "Pacific/Fiji",
+    "Pacific/Honolulu",
+    "Pacific/Kwajalein",
+    "Pacific/Midway"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateAddress": {
+   "description": "The business address of advertising account.",
+   "format": "password",
+   "properties": {
+    "addressLine1": {
+     "description": "The address details - 1 of business.",
+     "type": "string"
+    },
+    "addressLine2": {
+     "description": "The address details - 2 of business.",
+     "type": "string"
+    },
+    "businessName": {
+     "description": "The name of business.",
+     "type": "string"
+    },
+    "city": {
+     "description": "The city where business is located.",
+     "type": "string"
+    },
+    "countryCode": {
+     "description": "The country where business is located.",
+     "type": "string"
+    },
+    "phoneNumber": {
+     "description": "The phone number of business.",
+     "type": "string"
+    },
+    "state": {
+     "description": "The city where business is located.",
+     "type": "string"
+    },
+    "zipCode": {
+     "description": "The zipCode where business is located.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateBusinessDetail": {
+   "description": "The business details of advertising account.",
+   "format": "password",
+   "properties": {
+    "address": {
+     "$ref": "UpdateAddress"
+    },
+    "addressToken": {
+     "description": "The token of the business address being linked.",
+     "type": "string"
+    },
+    "businessRegistrationNumber": {
+     "description": "The business registration number of the business.",
+     "type": "string"
+    },
+    "website": {
+     "description": "The website of the business.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateManagerAccountRequest": {
+   "properties": {
+    "managerAccounts": {
+     "items": {
+      "$ref": "ManagerAccountUpdate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "managerAccounts"
+   ],
+   "type": "object"
+  }
+ }
+}

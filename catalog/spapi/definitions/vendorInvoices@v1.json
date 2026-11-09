@@ -1,0 +1,676 @@
+{
+  "AdditionalDetails": {
+    "description": "Additional information provided by the selling party for tax-related or any other purpose.",
+    "properties": {
+      "detail": {
+        "description": "The detail of the additional information provided by the selling party.",
+        "type": "string"
+      },
+      "languageCode": {
+        "description": "The language code of the additional information detail.",
+        "type": "string"
+      },
+      "type": {
+        "description": "The type of the additional information provided by the selling party.",
+        "enum": [
+          "CartonCount",
+          "LegalTerms",
+          "OCR",
+          "RegulatoryNote",
+          "SUR",
+          "TaxExemptReason"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "detail",
+      "type"
+    ],
+    "type": "object"
+  },
+  "AdditionalPartyIdentification": {
+    "description": "An additional corporate or fiscal registration identifier for a party.",
+    "properties": {
+      "identificationNumber": {
+        "description": "The value of the additional party identifier.",
+        "type": "string"
+      },
+      "identificationType": {
+        "description": "The type of the additional party identifier.",
+        "enum": [
+          "DE_WIDNR",
+          "FR_SIREN"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "identificationNumber",
+      "identificationType"
+    ],
+    "type": "object"
+  },
+  "Address": {
+    "description": "A physical address.",
+    "properties": {
+      "addressLine1": {
+        "description": "First line of street address.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "addressLine3": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city where the person, business or institution is located.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two digit country code.",
+        "type": "string"
+      },
+      "county": {
+        "description": "The county where person, business or institution is located.",
+        "type": "string"
+      },
+      "district": {
+        "description": "The district where person, business or institution is located.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the person, business or institution at that address.",
+        "type": "string"
+      },
+      "phone": {
+        "description": "The phone number of the person, business or institution located at that address.",
+        "type": "string"
+      },
+      "postalOrZipCode": {
+        "description": "The postal or zip code of that address.",
+        "type": "string"
+      },
+      "stateOrRegion": {
+        "description": "The state or region where person, business or institution is located.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "addressLine1",
+      "countryCode",
+      "name"
+    ],
+    "type": "object"
+  },
+  "AllowanceDetails": {
+    "description": "Monetary and tax details of the allowance.",
+    "properties": {
+      "allowanceAmount": {
+        "description": "Total monetary amount related to this allowance.",
+        "ref": "Money"
+      },
+      "description": {
+        "description": "Description of the allowance.",
+        "type": "string"
+      },
+      "taxDetails": {
+        "description": "Tax amount details applied on this allowance.",
+        "ref": "TaxDetails",
+        "type": "array"
+      },
+      "type": {
+        "description": "Type of the allowance applied.",
+        "enum": [
+          "Defective",
+          "Discount",
+          "DiscountIncentive",
+          "Promotional",
+          "Special",
+          "UnsaleableMerchandise"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "allowanceAmount",
+      "type"
+    ],
+    "type": "object"
+  },
+  "ChargeDetails": {
+    "description": "Monetary and tax details of the charge.",
+    "properties": {
+      "chargeAmount": {
+        "description": "Total monetary amount related to this charge.",
+        "ref": "Money"
+      },
+      "description": {
+        "description": "Description of the charge.",
+        "type": "string"
+      },
+      "taxDetails": {
+        "description": "Tax amount details applied on this charge.",
+        "ref": "TaxDetails",
+        "type": "array"
+      },
+      "type": {
+        "description": "Type of the charge applied.",
+        "enum": [
+          "CollectionAndRecyclingService",
+          "Duty",
+          "EnvironmentalProtectionService",
+          "Freight",
+          "InsuranceFee",
+          "InsurancePlacementCost",
+          "Packing",
+          "Service",
+          "SmallOrder",
+          "SpecialHandlingService",
+          "TaxCollectedAtSource"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "chargeAmount",
+      "type"
+    ],
+    "type": "object"
+  },
+  "CreditNoteDetails": {
+    "description": "References required in order to process a credit note.",
+    "properties": {
+      "consignorsReferenceNumber": {
+        "description": "Identifies the consignor reference number (VRET number), if generated by Amazon.",
+        "type": "string"
+      },
+      "coopReferenceNumber": {
+        "description": "Identifies the COOP reference used for COOP agreement.",
+        "type": "string"
+      },
+      "debitNoteNumber": {
+        "description": "Debit Note Number as generated by Amazon.",
+        "type": "string"
+      },
+      "goodsReturnDate": {
+        "description": "Date that a return is received by the vendor.",
+        "ref": "DateTime"
+      },
+      "originalInvoiceDate": {
+        "description": "Date of the original invoice that this credit note references.",
+        "ref": "DateTime"
+      },
+      "referenceInvoiceNumber": {
+        "description": "Original Invoice Number when sending a credit note relating to an existing invoice.",
+        "type": "string"
+      },
+      "returnsReferenceNumber": {
+        "description": "Identifies the Returns Notice Number.",
+        "type": "string"
+      },
+      "rmaId": {
+        "description": "Identifies the Returned Merchandise Authorization ID, if generated.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DateTime": {
+    "description": "Defines a date and time according to ISO8601.",
+    "format": "date-time",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Decimal": {
+    "description": "A decimal number with no loss of precision.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "Invoice": {
+    "description": "Represents an invoice or credit note document with details about the transaction, parties involved, and line items.",
+    "properties": {
+      "additionalDetails": {
+        "description": "Additional details provided by the selling party, for tax related or other purposes.",
+        "ref": "AdditionalDetails",
+        "type": "array"
+      },
+      "allowanceDetails": {
+        "description": "Total allowance amount details for all line items.",
+        "ref": "AllowanceDetails",
+        "type": "array"
+      },
+      "billFromParty": {
+        "description": "Name, address and tax details of the party that issues this invoice.",
+        "ref": "PartyIdentification"
+      },
+      "billToParty": {
+        "description": "Name, address and tax details of the party to whom this invoice is issued.",
+        "ref": "PartyIdentification"
+      },
+      "chargeDetails": {
+        "description": "Total charge amount details for all line items.",
+        "ref": "ChargeDetails",
+        "type": "array"
+      },
+      "date": {
+        "description": "Date when the invoice/credit note information was generated in the origin's accounting system.",
+        "ref": "DateTime"
+      },
+      "id": {
+        "description": "Unique number relating to the charges defined in this document.",
+        "type": "string"
+      },
+      "invoiceBaseAmount": {
+        "description": "Sum of all invoice line net amounts, excluding tax, charges and allowances.",
+        "ref": "Money"
+      },
+      "invoiceTotal": {
+        "description": "Total monetary amount charged in the invoice or full value of credit note to be paid including all relevant taxes.",
+        "ref": "Money"
+      },
+      "invoiceType": {
+        "description": "Identifies the type of invoice.",
+        "enum": [
+          "CreditNote",
+          "Invoice"
+        ],
+        "type": "string"
+      },
+      "items": {
+        "description": "The list of invoice items.",
+        "ref": "InvoiceItem",
+        "type": "array"
+      },
+      "paymentTerms": {
+        "description": "The payment terms for the invoice.",
+        "ref": "PaymentTerms"
+      },
+      "referenceNumber": {
+        "description": "An additional unique reference number used for regulatory or other purposes.",
+        "type": "string"
+      },
+      "remitToParty": {
+        "description": "Name, address and tax details of the party receiving the payment of this invoice.",
+        "ref": "PartyIdentification"
+      },
+      "shipFromParty": {
+        "description": "Name, address and tax details of the party sending a shipment of products.",
+        "ref": "PartyIdentification"
+      },
+      "shipToParty": {
+        "description": "Name, address and tax details of the party receiving a shipment of products.",
+        "ref": "PartyIdentification"
+      },
+      "taxDetails": {
+        "description": "Total tax amount details for all line items.",
+        "ref": "TaxDetails",
+        "type": "array"
+      },
+      "taxPointDate": {
+        "description": "The date on which the tax becomes chargeable, if different from the invoice date.",
+        "ref": "DateTime"
+      },
+      "taxRepresentativeParty": {
+        "description": "Name, address and tax registration details of the supplier's fiscal or tax representative, where one is required.",
+        "ref": "PartyIdentification"
+      },
+      "vatGroupParty": {
+        "description": "Name, address and tax registration details of the VAT group representative member, when the supplier reports VAT as part of a VAT group.",
+        "ref": "PartyIdentification"
+      }
+    },
+    "required": [
+      "date",
+      "id",
+      "invoiceTotal",
+      "invoiceType",
+      "remitToParty"
+    ],
+    "type": "object"
+  },
+  "InvoiceItem": {
+    "description": "Details of the item being invoiced.",
+    "properties": {
+      "additionalDetails": {
+        "description": "Line-level additional details provided by the selling party, e.g.",
+        "ref": "AdditionalDetails",
+        "type": "array"
+      },
+      "allowanceDetails": {
+        "description": "Individual allowance details per line item.",
+        "ref": "AllowanceDetails",
+        "type": "array"
+      },
+      "amazonProductIdentifier": {
+        "description": "Amazon Standard Identification Number (ASIN) of an item.",
+        "type": "string"
+      },
+      "chargeDetails": {
+        "description": "Individual charge details per line item.",
+        "ref": "ChargeDetails",
+        "type": "array"
+      },
+      "creditNoteDetails": {
+        "description": "Details required in order to process a credit note.",
+        "ref": "CreditNoteDetails"
+      },
+      "hsnCode": {
+        "description": "HSN Tax code.",
+        "type": "string"
+      },
+      "invoicedQuantity": {
+        "description": "Invoiced quantity of this item.",
+        "ref": "ItemQuantity"
+      },
+      "itemDescription": {
+        "description": "Product or service description for the invoiced line item.",
+        "type": "string"
+      },
+      "itemSequenceNumber": {
+        "description": "Unique number related to this line item.",
+        "type": "integer"
+      },
+      "netCost": {
+        "description": "The item cost to Amazon, which should match the cost on the order.",
+        "ref": "Money"
+      },
+      "netCostUnitOfMeasure": {
+        "description": "This field represents weight unit of measure of items that are ordered by cases and supporting priced by weight.",
+        "ref": "NetCostUnitOfMeasure"
+      },
+      "purchaseOrderNumber": {
+        "description": "The Amazon purchase order number for this invoiced line item.",
+        "type": "string"
+      },
+      "taxDetails": {
+        "description": "Individual tax details per line item.",
+        "ref": "TaxDetails",
+        "type": "array"
+      },
+      "vendorProductIdentifier": {
+        "description": "The vendor selected product identifier of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "invoicedQuantity",
+      "itemSequenceNumber",
+      "netCost"
+    ],
+    "type": "object"
+  },
+  "ItemQuantity": {
+    "description": "Details of quantity.",
+    "properties": {
+      "amount": {
+        "description": "Quantity of an item.",
+        "type": "integer"
+      },
+      "totalWeight": {
+        "ref": "TotalWeight"
+      },
+      "unitOfMeasure": {
+        "description": "Unit of measure for the quantity.",
+        "enum": [
+          "Cases",
+          "Eaches"
+        ],
+        "type": "string"
+      },
+      "unitSize": {
+        "description": "The case size, if the unit of measure value is Cases.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "amount",
+      "unitOfMeasure"
+    ],
+    "type": "object"
+  },
+  "Money": {
+    "description": "An amount of money, including units in the form of currency.",
+    "properties": {
+      "amount": {
+        "ref": "Decimal"
+      },
+      "currencyCode": {
+        "description": "Three-digit currency code in ISO 4217 format.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "NetCostUnitOfMeasure": {
+    "description": "This field represents weight unit of measure of items that are ordered by cases and supporting priced by weight.",
+    "enum": [
+      "GRAMS",
+      "KILOGRAMS",
+      "OUNCES",
+      "POUNDS"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PartyIdentification": {
+    "description": "Name, address and tax details of a party.",
+    "properties": {
+      "additionalPartyIdentifications": {
+        "description": "Additional corporate or fiscal registration identifiers for the party that are not VAT/GST registrations (e.g.",
+        "ref": "AdditionalPartyIdentification",
+        "type": "array"
+      },
+      "address": {
+        "description": "Identification of the party by address.",
+        "ref": "Address"
+      },
+      "partyId": {
+        "description": "Assigned identification for the party.",
+        "type": "string"
+      },
+      "taxRegistrationDetails": {
+        "description": "Tax registration details of the party.",
+        "ref": "TaxRegistrationDetails",
+        "type": "array"
+      }
+    },
+    "required": [
+      "partyId"
+    ],
+    "type": "object"
+  },
+  "PaymentTerms": {
+    "description": "Terms of the payment for the invoice.",
+    "properties": {
+      "discountDueDays": {
+        "description": "The number of calendar days from the Base date (Invoice date) until the discount is no longer valid.",
+        "type": "number"
+      },
+      "discountPercent": {
+        "description": "The discount percent value, which is good until the discount due date.",
+        "ref": "Decimal"
+      },
+      "netDueDays": {
+        "description": "The number of calendar days from the base date (invoice date) until the total amount on the invoice is due.",
+        "type": "number"
+      },
+      "type": {
+        "description": "The payment term type for the invoice.",
+        "enum": [
+          "Basic",
+          "EndOfMonth",
+          "FixedDate",
+          "LetterofCredit",
+          "PaymentDueUponReceiptOfInvoice",
+          "Proximo"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SubmitInvoicesRequest": {
+    "description": "The request schema for the submitInvoices operation.",
+    "properties": {
+      "invoices": {
+        "description": "An array of Invoice objects representing the invoices or credit notes to be submitted.",
+        "ref": "Invoice",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SubmitInvoicesResponse": {
+    "description": "The response schema for the submitInvoices operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The response payload for the submitInvoices operation.",
+        "ref": "TransactionId"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TaxDetails": {
+    "description": "Details of tax amount applied.",
+    "properties": {
+      "taxAmount": {
+        "description": "Total tax amount applied on invoice total or an item total.",
+        "ref": "Money"
+      },
+      "taxRate": {
+        "description": "Tax percentage applied.",
+        "ref": "Decimal"
+      },
+      "taxType": {
+        "description": "Type of the tax applied.",
+        "enum": [
+          "CESS",
+          "CGST",
+          "Consumption",
+          "DomesticVAT",
+          "GST",
+          "IGST",
+          "MutuallyDefined",
+          "MwSt.",
+          "PST",
+          "SGST",
+          "ST",
+          "TVA",
+          "UTGST",
+          "VAT"
+        ],
+        "type": "string"
+      },
+      "taxableAmount": {
+        "description": "The invoice amount that is taxable at the rate specified in the tax rate field.",
+        "ref": "Money"
+      }
+    },
+    "required": [
+      "taxAmount",
+      "taxType"
+    ],
+    "type": "object"
+  },
+  "TaxRegistrationDetails": {
+    "description": "Tax registration details of the entity.",
+    "properties": {
+      "taxRegistrationNumber": {
+        "description": "The tax registration number for the entity.",
+        "type": "string"
+      },
+      "taxRegistrationType": {
+        "description": "The tax registration type for the entity.",
+        "enum": [
+          "GST",
+          "LocalTaxNumber",
+          "VAT"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "taxRegistrationNumber",
+      "taxRegistrationType"
+    ],
+    "type": "object"
+  },
+  "TotalWeight": {
+    "description": "The aggregate weight of this item being invoiced.",
+    "properties": {
+      "amount": {
+        "ref": "Decimal"
+      },
+      "unitOfMeasure": {
+        "description": "The unit of measure for items sold by weight.",
+        "enum": [
+          "GRAMS",
+          "KILOGRAMS",
+          "OUNCES",
+          "POUNDS"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "amount",
+      "unitOfMeasure"
+    ],
+    "type": "object"
+  },
+  "TransactionId": {
+    "description": "Response containing the transaction ID.",
+    "properties": {
+      "transactionId": {
+        "description": "GUID to identify this transaction.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

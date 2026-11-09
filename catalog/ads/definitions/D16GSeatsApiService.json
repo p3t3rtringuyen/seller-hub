@@ -1,0 +1,331 @@
+{
+ "api": "D16GSeatsApiService",
+ "file": "specs/dest/D16GSeatsApiService_prod_3p.json",
+ "schemas": {
+  "CreateAdvertiserSeatsFailureResponseItem": {
+   "properties": {
+    "advertiserId": {
+     "description": "The ADSP advertiserId.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "DspDealException"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "advertiserId",
+    "errors"
+   ],
+   "type": "object"
+  },
+  "CreateAdvertiserSeatsRequestContent": {
+   "properties": {
+    "advertiserIds": {
+     "items": {
+      "description": "The ADSP advertiserId.",
+      "maxLength": 255,
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "advertiserIds"
+   ],
+   "type": "object"
+  },
+  "CreateAdvertiserSeatsResponseContent": {
+   "properties": {
+    "error": {
+     "description": "Advertisers for which seat creation failed.",
+     "items": {
+      "$ref": "CreateAdvertiserSeatsFailureResponseItem"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "description": "Advertisers for which seat creation succeeded.",
+     "items": {
+      "$ref": "CurrentAdvertiserSeats"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CurrentAdvertiserSeats": {
+   "description": "Advertiser seatIds for all available exchanges.",
+   "properties": {
+    "advertiserId": {
+     "description": "The ADSP advertiserId.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "currentSeats": {
+     "description": "SeatIds for all available exchanges.",
+     "items": {
+      "$ref": "CurrentSeat"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "advertiserId",
+    "currentSeats"
+   ],
+   "type": "object"
+  },
+  "CurrentSeat": {
+   "description": "SeatIds for an exchange.",
+   "properties": {
+    "dealCreationId": {
+     "description": "The seatId used to identify a buyer.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "exchangeId": {
+     "description": "The unique identifier of the exchange.",
+     "type": "number"
+    },
+    "exchangeName": {
+     "description": "The name of the exchange.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "spendTrackingId": {
+     "description": "The seatId used to identify a buyer.",
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "required": [
+    "exchangeId",
+    "exchangeName"
+   ],
+   "type": "object"
+  },
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspDealException": {
+   "properties": {
+    "errorKey": {
+     "$ref": "ErrorKey"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorKey",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ErrorKey": {
+   "enum": [
+    "UNKNOWN_ERROR"
+   ],
+   "type": "string"
+  },
+  "ListAdvertiserSeatsRequestContent": {
+   "properties": {
+    "exchangeIdFilter": {
+     "items": {
+      "description": "The unique identifier of the exchange.",
+      "type": "number"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "maximum": 200,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListAdvertiserSeatsResponseContent": {
+   "properties": {
+    "advertiserSeats": {
+     "items": {
+      "$ref": "CurrentAdvertiserSeats"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertiserSeats"
+   ],
+   "type": "object"
+  },
+  "ReconcileAdvertiserSeatRequestContent": {
+   "properties": {
+    "cfid": {
+     "type": "string"
+    },
+    "globalAccountId": {
+     "type": "string"
+    },
+    "isMainRegion": {
+     "type": "boolean"
+    },
+    "managerAccountId": {
+     "type": "string"
+    },
+    "region": {
+     "type": "string"
+    },
+    "seatId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "cfid",
+    "globalAccountId",
+    "isMainRegion",
+    "managerAccountId",
+    "region",
+    "seatId"
+   ],
+   "type": "object"
+  },
+  "ReconcileAdvertiserSeatResponseContent": {
+   "properties": {
+    "cfid": {
+     "type": "string"
+    },
+    "error": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "cfid",
+    "status"
+   ],
+   "type": "object"
+  }
+ }
+}

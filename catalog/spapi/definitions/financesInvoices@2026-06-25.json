@@ -1,0 +1,520 @@
+{
+  "BigDecimal": {
+    "description": "A signed decimal number.",
+    "properties": {},
+    "required": [],
+    "type": "number"
+  },
+  "BillingPeriod": {
+    "description": "The billing period for an invoice.",
+    "properties": {
+      "endDate": {
+        "description": "The end of the billing period of an invoice.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startDate": {
+        "description": "The start of the billing period of an invoice.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "endDate",
+      "startDate"
+    ],
+    "type": "object"
+  },
+  "Breakdown": {
+    "description": "Details about the movement of money.",
+    "properties": {
+      "breakdownAmount": {
+        "description": "The monetary amount of the charge.",
+        "ref": "Currency"
+      },
+      "breakdownType": {
+        "description": "The type of charge.",
+        "type": "string"
+      },
+      "breakdowns": {
+        "description": "A list of breakdowns that detail how the total amount is calculated.",
+        "ref": "Breakdown",
+        "type": "array"
+      }
+    },
+    "required": [
+      "breakdownAmount",
+      "breakdownType"
+    ],
+    "type": "object"
+  },
+  "Currency": {
+    "description": "A monetary amount with a currency code.",
+    "properties": {
+      "currencyAmount": {
+        "description": "The monetary value.",
+        "ref": "BigDecimal"
+      },
+      "currencyCode": {
+        "description": "The three-digit currency code in ISO 4217 format.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "currencyAmount",
+      "currencyCode"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "Error response returned when the request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "GetInvoiceResponse": {
+    "description": "The response to the `getInvoice` operation.",
+    "properties": {
+      "invoiceHeader": {
+        "ref": "InvoiceHeader"
+      },
+      "invoiceItems": {
+        "description": "A list of invoice line items.",
+        "ref": "InvoiceItem",
+        "type": "array"
+      },
+      "nextTokenForLineItems": {
+        "description": "A token you can use to retrieve the next page of line items.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetInvoicesResponse": {
+    "description": "The response to the `getInvoiceHeaders` operation.",
+    "properties": {
+      "invoices": {
+        "description": "A list of invoices with header-level details.",
+        "ref": "InvoiceHeader",
+        "type": "array"
+      },
+      "nextToken": {
+        "description": "The response includes `nextToken` when the number of invoices exceeds the default page size value.",
+        "type": "string"
+      },
+      "numOfRecords": {
+        "description": "The number of records returned.",
+        "format": "int32",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InvoiceHeader": {
+    "description": "Represents the header-level information for an invoice, including parties involved (payer/payee), financial amounts, status, dates, and related business identifiers.",
+    "properties": {
+      "billingPeriod": {
+        "description": "The billing period for an invoice.",
+        "ref": "BillingPeriod"
+      },
+      "creationDate": {
+        "description": "When the invoice was created.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "dueDate": {
+        "description": "The due date of the invoice.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "invoiceAmount": {
+        "description": "The total monetary amount of the invoice.",
+        "ref": "Currency"
+      },
+      "invoiceAmountBreakdowns": {
+        "description": "The breakdown of the invoice amount into sub-components.",
+        "ref": "Breakdown",
+        "type": "array"
+      },
+      "invoiceIdentifier": {
+        "description": "The unique identifier for an invoice.",
+        "type": "string"
+      },
+      "invoiceNumber": {
+        "description": "The invoice number provided when the invoice was created.",
+        "type": "string"
+      },
+      "invoiceSettlementBreakdowns": {
+        "description": "The breakdown of the invoice settlement amount into sub-components.",
+        "ref": "Breakdown",
+        "type": "array"
+      },
+      "invoiceStatus": {
+        "description": "The current state of the invoice.",
+        "enum": [
+          "DEDUCTED",
+          "IN_PROGRESS",
+          "PAID",
+          "PARTIALLY_DEDUCTED",
+          "PARTIALLY_PAID",
+          "REJECTED"
+        ],
+        "type": "string"
+      },
+      "invoiceType": {
+        "description": "The type of invoice.",
+        "enum": [
+          "AP_INVENTORY",
+          "OTHER"
+        ],
+        "type": "string"
+      },
+      "issueDate": {
+        "description": "When the invoice was issued.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "lastUpdatedDate": {
+        "description": "When the invoice was last updated.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "payee": {
+        "description": "The payee-related information.",
+        "ref": "PartnerMetadata"
+      },
+      "payer": {
+        "description": "The payer-related information.",
+        "ref": "PartnerMetadata"
+      },
+      "paymentTerms": {
+        "description": "Payment terms associated with the invoice.",
+        "type": "string"
+      },
+      "relatedIdentifiers": {
+        "description": "A list of related business identifiers associated with the invoice.",
+        "ref": "RelatedIdentifier",
+        "type": "array"
+      }
+    },
+    "required": [
+      "creationDate",
+      "invoiceAmount",
+      "invoiceIdentifier",
+      "invoiceNumber",
+      "invoiceStatus",
+      "invoiceType",
+      "issueDate",
+      "lastUpdatedDate",
+      "payee",
+      "payer"
+    ],
+    "type": "object"
+  },
+  "InvoiceItem": {
+    "description": "A line item within an invoice, including unit costs, quantities, tax information, and contextual details about the goods or services being invoiced.",
+    "properties": {
+      "lineItemContext": {
+        "description": "Contextual information about the line item.",
+        "ref": "LineItemContext"
+      },
+      "lineItemId": {
+        "description": "The unique identifier for the line item.",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "The number of units for the line item.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "relatedItemIdentifiers": {
+        "description": "List of related item identifiers for the line item.",
+        "ref": "RelatedIdentifier",
+        "type": "array"
+      },
+      "taxRateCodes": {
+        "description": "A list of country code and tax rate combinations applied to the line item.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "totalAmount": {
+        "description": "The total monetary amount for the line item, including tax.",
+        "ref": "Currency"
+      },
+      "totalAmountBreakdown": {
+        "description": "The breakdown of the total amount into sub-components.",
+        "ref": "Breakdown",
+        "type": "array"
+      },
+      "unitCost": {
+        "description": "The cost per unit of the line item.",
+        "ref": "Currency"
+      }
+    },
+    "required": [
+      "lineItemContext",
+      "lineItemId",
+      "totalAmount"
+    ],
+    "type": "object"
+  },
+  "ItemIdentifier": {
+    "description": "Identifier for an item in the invoice line item.",
+    "properties": {
+      "itemIdentifierName": {
+        "description": "The type of item identifier.",
+        "enum": [
+          "ASIN",
+          "EAN",
+          "EXTERNAL_ID",
+          "ISBN",
+          "SKU",
+          "UPC"
+        ],
+        "type": "string"
+      },
+      "itemIdentifierValue": {
+        "description": "The value of the item identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "itemIdentifierName",
+      "itemIdentifierValue"
+    ],
+    "type": "object"
+  },
+  "LineItemContext": {
+    "description": "Contextual information about an invoice line item.",
+    "properties": {
+      "itemDescription": {
+        "description": "A description of the item.",
+        "type": "string"
+      },
+      "itemIdentifiers": {
+        "description": "A list of identifiers for the item.",
+        "ref": "ItemIdentifier",
+        "type": "array"
+      },
+      "lineItemType": {
+        "description": "The type of line item.",
+        "enum": [
+          "GOODS",
+          "OTHERS",
+          "SERVICES"
+        ],
+        "type": "string"
+      },
+      "matchingContext": {
+        "description": "Information related to matching of invoiced quantity with Amazon systems.",
+        "ref": "MatchingContext"
+      },
+      "serviceChargePeriod": {
+        "description": "The service charge period.",
+        "ref": "ServiceChargePeriod"
+      },
+      "serviceChargeType": {
+        "description": "The type of service charge.",
+        "enum": [
+          "DAMAGE_ALLOWANCE",
+          "FBA_INVENTORY_STORAGE_FEE",
+          "OTHER",
+          "PRICE_PROTECTION"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "lineItemType"
+    ],
+    "type": "object"
+  },
+  "MatchingContext": {
+    "description": "How an invoice line item's quantity and price were matched against expected values, including any variances and their underlying reasons.",
+    "properties": {
+      "matchedAmount": {
+        "description": "The monetary amount that was matched.",
+        "ref": "Currency"
+      },
+      "matchedQuantity": {
+        "description": "The quantity that was matched.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "paidAmount": {
+        "description": "The monetary amount that has been paid.",
+        "ref": "Currency"
+      },
+      "paidQuantity": {
+        "description": "The quantity that has been paid for.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "priceVariance": {
+        "description": "The difference between expected and actual price.",
+        "ref": "Currency"
+      },
+      "quantityVariance": {
+        "description": "The difference between expected and actual quantity.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "varianceReasons": {
+        "description": "Reasons for the variance.",
+        "ref": "VarianceReason",
+        "type": "array"
+      }
+    },
+    "required": [
+      "matchedAmount",
+      "matchedQuantity"
+    ],
+    "type": "object"
+  },
+  "PartnerMetadata": {
+    "description": "Metadata about a partner (payer or payee) associated with the invoice.",
+    "properties": {
+      "partnerAddress": {
+        "description": "The address of the partner.",
+        "type": "string"
+      },
+      "partnerEntities": {
+        "description": "The list of entities associated with a partner.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "partnerId": {
+        "description": "The unique identifier for the partner.",
+        "type": "string"
+      },
+      "partnerName": {
+        "description": "The name of the partner.",
+        "type": "string"
+      },
+      "partnerType": {
+        "description": "The type of partner.",
+        "enum": [
+          "AMAZON",
+          "SELLER",
+          "VENDOR"
+        ],
+        "type": "string"
+      },
+      "taxRegistrationNumber": {
+        "description": "The tax registration number of the partner.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "partnerId",
+      "partnerType"
+    ],
+    "type": "object"
+  },
+  "RelatedIdentifier": {
+    "description": "Related business identifier of the transaction.",
+    "properties": {
+      "relatedIdentifierName": {
+        "description": "The name of the related identifier.",
+        "enum": [
+          "AGREEMENT_IDS",
+          "ASN_IDS",
+          "PAYEE_CODE",
+          "PRODUCT_LINE",
+          "PURCHASE_ORDER_IDS",
+          "RETURN_IDS",
+          "SHORTAGE_INVOICE_IDS",
+          "UNIQUE_PAYMENT_IDS",
+          "VENDOR_CODE",
+          "WAREHOUSE_ID"
+        ],
+        "type": "string"
+      },
+      "relatedIdentifierValue": {
+        "description": "The corresponding related identifier values.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "relatedIdentifierName",
+      "relatedIdentifierValue"
+    ],
+    "type": "object"
+  },
+  "ServiceChargePeriod": {
+    "description": "The time period for a service charge.",
+    "properties": {
+      "endDate": {
+        "description": "When the service charge period ends.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startDate": {
+        "description": "When the service charge period starts.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "endDate",
+      "startDate"
+    ],
+    "type": "object"
+  },
+  "VarianceReason": {
+    "description": "The type and underlying defect classifications explaining discrepancies between expected and actual invoice values.",
+    "properties": {
+      "defectTypes": {
+        "description": "List of defect types associated with the variance.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "varianceType": {
+        "description": "The type of variance.",
+        "enum": [
+          "OTHER",
+          "PPV",
+          "PQV"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "varianceType"
+    ],
+    "type": "object"
+  }
+}

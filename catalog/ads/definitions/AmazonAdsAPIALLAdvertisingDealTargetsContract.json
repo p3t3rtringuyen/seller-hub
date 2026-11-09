@@ -1,0 +1,468 @@
+{
+ "api": "AmazonAdsAPIALLAdvertisingDealTargetsContract",
+ "file": "specs/dest/AmazonAdsAPIALLAdvertisingDealTargetsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "| ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `CONTENT_TOO_LARGE` | The request is too large. Consider splitting it into multiple requests.…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDealBrandedKeywordTargetDetails": {
+   "description": "The detail of a BRANDED_KEYWORD target.",
+   "properties": {
+    "brandedKeyword": {
+     "description": "The branded keyword that is an exact match to the shoppers' search term.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "brandedKeyword"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDealTarget": {
+   "properties": {
+    "advertisingDealId": {
+     "description": "A unique identifier for the deal associated with the target.",
+     "type": "string"
+    },
+    "advertisingDealTargetId": {
+     "description": "A unique identifier for a deal target.",
+     "type": "string"
+    },
+    "targetDetails": {
+     "$ref": "SBAdvertisingDealTargetDetails"
+    },
+    "targetType": {
+     "$ref": "SBAdvertisingDealTargetType"
+    }
+   },
+   "required": [
+    "advertisingDealId",
+    "advertisingDealTargetId",
+    "targetDetails",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDealTargetAdvertisingDealIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDealTargetCreate": {
+   "properties": {
+    "advertisingDealId": {
+     "description": "A unique identifier for the deal associated with the target.",
+     "type": "string"
+    },
+    "targetDetails": {
+     "$ref": "SBCreateAdvertisingDealTargetDetails"
+    },
+    "targetType": {
+     "$ref": "SBAdvertisingDealTargetType"
+    }
+   },
+   "required": [
+    "advertisingDealId",
+    "targetDetails",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDealTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "advertisingDealBrandedKeywordTargetDetails": {
+       "$ref": "SBAdvertisingDealBrandedKeywordTargetDetails"
+      }
+     },
+     "required": [
+      "advertisingDealBrandedKeywordTargetDetails"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBAdvertisingDealTargetMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "SBAdvertisingDealTargetMultiStatusSuccess"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBAdvertisingDealTargetMultiStatusSuccess": {
+   "properties": {
+    "advertisingDealTarget": {
+     "$ref": "SBAdvertisingDealTarget"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "advertisingDealTarget",
+    "index"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDealTargetSuccessResponse": {
+   "properties": {
+    "advertisingDealTargets": {
+     "items": {
+      "$ref": "SBAdvertisingDealTarget"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SBAdvertisingDealTargetType": {
+   "description": "| AdvertisingDealTargetType | Description | |------|------| | `BRANDED_KEYWORD` | |",
+   "enum": [
+    "BRANDED_KEYWORD"
+   ],
+   "type": "string"
+  },
+  "SBCreateAdvertisingDealBrandedKeywordTargetDetails": {
+   "description": "The detail of a BRANDED_KEYWORD target.",
+   "properties": {
+    "brandedKeyword": {
+     "description": "The branded keyword that is an exact match to the shoppers' search term.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "brandedKeyword"
+   ],
+   "type": "object"
+  },
+  "SBCreateAdvertisingDealTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "advertisingDealBrandedKeywordTargetDetails": {
+       "$ref": "SBCreateAdvertisingDealBrandedKeywordTargetDetails"
+      }
+     },
+     "required": [
+      "advertisingDealBrandedKeywordTargetDetails"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBCreateAdvertisingDealTargetRequest": {
+   "properties": {
+    "advertisingDealTargets": {
+     "items": {
+      "$ref": "SBAdvertisingDealTargetCreate"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBDeleteAdvertisingDealTargetRequest": {
+   "properties": {
+    "advertisingDealTargetIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBQueryAdvertisingDealTargetRequest": {
+   "properties": {
+    "advertisingDealIdFilter": {
+     "$ref": "SBAdvertisingDealTargetAdvertisingDealIdFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 100,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertisingDealIdFilter"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

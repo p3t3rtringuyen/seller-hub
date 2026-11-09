@@ -1,0 +1,63 @@
+{
+  "CreateUploadDestinationResponse": {
+    "description": "The response schema for the createUploadDestination operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "ref": "UploadDestination"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition in a human-readable form.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "UploadDestination": {
+    "description": "Information about an upload destination.",
+    "properties": {
+      "headers": {
+        "description": "The headers to include in the upload request.",
+        "type": "object"
+      },
+      "uploadDestinationId": {
+        "description": "The unique identifier for the upload destination.",
+        "type": "string"
+      },
+      "url": {
+        "description": "The URL for the upload destination.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

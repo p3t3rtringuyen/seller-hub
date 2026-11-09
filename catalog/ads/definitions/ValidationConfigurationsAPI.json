@@ -1,0 +1,403 @@
+{
+ "api": "ValidationConfigurationsAPI",
+ "file": "specs/dest/ValidationConfigurationsAPI_prod_3p.json",
+ "schemas": {
+  "AccessDeniedErrorCode": {
+   "enum": [
+    "ACCESS_DENIED"
+   ],
+   "type": "string"
+  },
+  "AccessDeniedExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "AccessDeniedErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CampaignsConfigurations": {
+   "description": "The campaign validation configuration values for a specific advertiser context. This includes budget and inputted name field configuration values.",
+   "properties": {
+    "maxAdGroupNameLength": {
+     "description": "The maximum allowed length of an ad group name.",
+     "type": "number"
+    },
+    "maxCampaignNameLength": {
+     "description": "The maximum allowed length of a campaign name.",
+     "type": "number"
+    },
+    "maxDailyBudget": {
+     "description": "The maximum daily budget allowed for campaigns.",
+     "format": "double",
+     "type": "number"
+    },
+    "maxLifetimeBudget": {
+     "description": "The maximum lifetime budget allowed for campaigns.",
+     "format": "double",
+     "type": "number"
+    },
+    "maxPortfolioNameLength": {
+     "description": "The maximum allowed length of a portfolio name.",
+     "type": "number"
+    },
+    "minDailyBudget": {
+     "description": "The minimum daily budget allowed for campaigns.",
+     "format": "double",
+     "type": "number"
+    },
+    "minLifetimeBudget": {
+     "description": "The minimum lifetime budget allowed for campaigns.",
+     "format": "double",
+     "type": "number"
+    },
+    "textFieldValidationRegex": {
+     "description": "The regex string used to validate the characters and order of characters for campaign names, ad group names, and portfolio names.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "maxAdGroupNameLength",
+    "maxCampaignNameLength",
+    "maxDailyBudget",
+    "maxPortfolioNameLength",
+    "minDailyBudget",
+    "textFieldValidationRegex"
+   ],
+   "type": "object"
+  },
+  "CountryCode": {
+   "description": "The countryCode for a given country.",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "CN",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "UK",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "CountryToProgramToEntityToCampaignsConfigurations": {
+   "additionalProperties": {
+    "$ref": "ProgramToEntityToCampaignsConfigurations"
+   },
+   "description": "A nested structure mapping advertiser contexts to campaign configuration values. The keys at this level are country codes, two capitalized characters mapping to a marketplace. The valid country codes are: - US: United S…",
+   "type": "object"
+  },
+  "CountryToProgramToEntityToTargetingConfigurations": {
+   "additionalProperties": {
+    "$ref": "ProgramToEntityToTargetingConfigurations"
+   },
+   "description": "A nested structure mapping advertiser contexts to targeting clause configuration values. The keys at this level are country codes, two capitalized characters mapping to a marketplace. The valid country codes are: - US: …",
+   "type": "object"
+  },
+  "EntityToCampaignsConfigurations": {
+   "additionalProperties": {
+    "$ref": "CampaignsConfigurations"
+   },
+   "description": "A nested structure mapping advertiser contexts to campaign configuration values. The keys at this level are entity types, capitalized strings mapping to the advertiser's account profile. The valid entity types are: - SE…",
+   "type": "object"
+  },
+  "EntityToTargetingConfigurations": {
+   "additionalProperties": {
+    "$ref": "TargetingClausesConfiguration"
+   },
+   "description": "A nested structure mapping advertiser contexts to targeting clause configuration values. The keys at this level are entity types, capitalized strings mapping to the advertiser's account profile. The valid entity types a…",
+   "type": "object"
+  },
+  "EntityType": {
+   "description": "Identifier of supported entity types.",
+   "enum": [
+    "SELLER",
+    "VENDOR"
+   ],
+   "type": "string"
+  },
+  "InternalErrorErrorCode": {
+   "enum": [
+    "INTERNAL_ERROR"
+   ],
+   "type": "string"
+  },
+  "InternalServerExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "InternalErrorErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InvalidArgumentErrorCode": {
+   "enum": [
+    "INVALID_ARGUMENT"
+   ],
+   "type": "string"
+  },
+  "NotFoundErrorCode": {
+   "enum": [
+    "NOT_FOUND"
+   ],
+   "type": "string"
+  },
+  "ProgramToEntityToCampaignsConfigurations": {
+   "additionalProperties": {
+    "$ref": "EntityToCampaignsConfigurations"
+   },
+   "description": "A nested structure mapping advertiser contexts to campaign configuration values. The keys at this level are program types, two capitalized characters mapping to a specific builder. The valid program types are: - SB: Spo…",
+   "type": "object"
+  },
+  "ProgramToEntityToTargetingConfigurations": {
+   "additionalProperties": {
+    "$ref": "EntityToTargetingConfigurations"
+   },
+   "description": "A nested structure mapping advertiser contexts to targeting clause configuration values. The keys at this level are program types, two capitalized characters mapping to a specific builder. The valid program types are: -…",
+   "type": "object"
+  },
+  "ProgramType": {
+   "description": "Identifier of supported program types.",
+   "enum": [
+    "SB",
+    "SD",
+    "SP"
+   ],
+   "type": "string"
+  },
+  "ResourceNotFoundExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "NotFoundErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TargetingClausesConfiguration": {
+   "description": "The targeting group configuration values for a specific advertiser context. This includes bid and keyword validation values.",
+   "properties": {
+    "keywordValidationRegex": {
+     "description": "Regex string used to validate keywords.",
+     "type": "string"
+    },
+    "maxBid": {
+     "description": "The default maximum CPC bid value for campaigns.",
+     "format": "double",
+     "type": "number"
+    },
+    "maxBidVCpm": {
+     "description": "The default maximum vCPM bid value for campaigns.",
+     "format": "double",
+     "type": "number"
+    },
+    "maxBidVideoAdvertisement": {
+     "description": "The maximum CPC bid value for a Sponsored Brands video campaign.",
+     "format": "double",
+     "type": "number"
+    },
+    "maxBidVideoAdvertisementVCpm": {
+     "description": "The maximum vCPM bid value for a Sponsored Brands video campaign.",
+     "format": "double",
+     "type": "number"
+    },
+    "maxKeywordLength": {
+     "description": "The maximum allowed length of a keyword.",
+     "type": "number"
+    },
+    "minBid": {
+     "description": "The default minimum CPC bid value for campaigns.",
+     "format": "double",
+     "type": "number"
+    },
+    "minBidVCpm": {
+     "description": "The default minimum vCPM bid value for campaigns.",
+     "format": "double",
+     "type": "number"
+    },
+    "minBidVideoAdvertisement": {
+     "description": "The minimum CPC bid value for a Sponsored Brands video campaign.",
+     "format": "double",
+     "type": "number"
+    },
+    "minBidVideoAdvertisementVCpm": {
+     "description": "The minimum vCPM bid value for a Sponsored Brands video campaign.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "maxBid",
+    "minBid"
+   ],
+   "type": "object"
+  },
+  "ThrottledErrorCode": {
+   "enum": [
+    "THROTTLED"
+   ],
+   "type": "string"
+  },
+  "ThrottlingExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ThrottledErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ValidationExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "getCampaignsValidationConfigsRequestContent": {
+   "description": "An advertiser context is a combination of specific marketplace, entity, and program type that an advertiser belongs to. This context defines the specific configuration values the API is requesting. From this input, the …",
+   "properties": {
+    "countryCodesList": {
+     "description": "The list of countryCode enums defining the marketplaces whose configuration values are requested. When `null` is selected and no value is attributed to this key, all countryCode options are selected.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "entityTypesList": {
+     "description": "The list of entityType enums defining the marketplaces whose configuration values are requested. When `null` is selected and no value is attributed to this key, all countryCode options are selected.",
+     "items": {
+      "$ref": "EntityType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "programTypesList": {
+     "description": "The list of programType enums defining the marketplaces whose configuration values are requested. When `null` is selected and no value is attributed to this key, all countryCode options are selected.",
+     "items": {
+      "$ref": "ProgramType"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "getCampaignsValidationConfigsResponseContent": {
+   "description": "The key `campaignsValidationConfigs` is mapped to this API's returned object: a nested structure mapping country code to program type to entity type to campaign configuration values. The campaign configuration values co…",
+   "properties": {
+    "campaignValidationConfigs": {
+     "$ref": "CountryToProgramToEntityToCampaignsConfigurations"
+    }
+   },
+   "required": [
+    "campaignValidationConfigs"
+   ],
+   "type": "object"
+  },
+  "getTargetingClausesValidationConfigsRequestContent": {
+   "description": "An advertiser context is a combination of specific marketplace, entity, and program type that an advertiser belongs to. This context defines the specific configuration values the API is requesting. From this input, the …",
+   "properties": {
+    "countryCodesList": {
+     "description": "The list of countryCode enums defining the marketplaces whose configuration values are requested. When `null` is selected and no value is attributed to this key, all countryCode options are selected.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "entityTypesList": {
+     "description": "The list of entityType enums defining the marketplaces whose configuration values are requested. When `null` is selected and no value is attributed to this key, all countryCode options are selected.",
+     "items": {
+      "$ref": "EntityType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "programTypesList": {
+     "description": "The list of programType enums defining the marketplaces whose configuration values are requested. When `null` is selected and no value is attributed to this key, all countryCode options are selected.",
+     "items": {
+      "$ref": "ProgramType"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "getTargetingClausesValidationConfigsResponseContent": {
+   "description": "The key `targetingClausesValidationConfigs` is mapped to this API's returned object: a nested structure mapping country code to program type to entity type to targeting clause configuration values. The targeting clause …",
+   "properties": {
+    "targetingClausesValidationConfigs": {
+     "$ref": "CountryToProgramToEntityToTargetingConfigurations"
+    }
+   },
+   "required": [
+    "targetingClausesValidationConfigs"
+   ],
+   "type": "object"
+  }
+ }
+}

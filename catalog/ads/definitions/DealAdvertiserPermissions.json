@@ -1,0 +1,368 @@
+{
+ "api": "DealAdvertiserPermissions",
+ "file": "specs/dest/DealAdvertiserPermissions_prod_3p.json",
+ "schemas": {
+  "AdvertiserListOperationType": {
+   "enum": [
+    "ADD",
+    "REMOVE"
+   ],
+   "type": "string"
+  },
+  "AdvertiserPermissionRequestStrategy": {
+   "enum": [
+    "ALLOW",
+    "BLOCK"
+   ],
+   "type": "string"
+  },
+  "AdvertiserPermissionResponseStrategy": {
+   "enum": [
+    "ALLOW",
+    "BLOCK"
+   ],
+   "type": "string"
+  },
+  "CreateDealAdvertiserPermissionsRequestBody": {
+   "properties": {
+    "strategy": {
+     "$ref": "AdvertiserPermissionRequestStrategy"
+    }
+   },
+   "required": [
+    "strategy"
+   ],
+   "type": "object"
+  },
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "FailedAdvertiser": {
+   "properties": {
+    "advertiserId": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "index": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "FailedRecommendedAdvertiser": {
+   "properties": {
+    "advertiserId": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "index": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "GetAdvertiserListDspDealsResponseContent": {
+   "description": "Successful operation.",
+   "properties": {
+    "advertiserIds": {
+     "description": "List of Advertiser Ids currently used as advertiser permissions.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Used for pagination, a string that can be sent in the next request to get the next page of results.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The number of results returned.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "GetDealAdvertiserPermissionsDspDealsResponseContent": {
+   "description": "Successful operation.",
+   "properties": {
+    "strategy": {
+     "$ref": "AdvertiserPermissionResponseStrategy"
+    }
+   },
+   "type": "object"
+  },
+  "ListRecommendedAdvertiserDspDealsRequestContent": {
+   "properties": {
+    "maxResults": {
+     "description": "Sets the maximum number of results in the returned collection. Used in conjunction with 'nextToken' to control pagination. Values less than 1 are considered invalid and will result in an error response.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Used for pagination, a string that can be sent in the next request to get the next page of results.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListRecommendedAdvertiserDspDealsResponseContent": {
+   "description": "Successful operation.",
+   "properties": {
+    "advertiserIds": {
+     "description": "List of Recommended Advertiser Ids.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Used for pagination, a string that can be sent in the next request to get the next page of results.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The number of results returned.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "RecommendedAdvertiserListOperationType": {
+   "enum": [
+    "ADD",
+    "REMOVE"
+   ],
+   "type": "string"
+  },
+  "SuccessfulAdvertiser": {
+   "properties": {
+    "advertiserId": {
+     "type": "string"
+    },
+    "index": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "SuccessfulRecommendedAdvertiser": {
+   "properties": {
+    "advertiserId": {
+     "type": "string"
+    },
+    "index": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateAdvertiserListDspDealsResponseContent": {
+   "description": "Successful operation.",
+   "properties": {
+    "errors": {
+     "description": "List of Advertiser Ids that failed to be added or removed from the advertiser permissions list.",
+     "items": {
+      "$ref": "FailedAdvertiser"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "description": "List of Advertiser Ids that were successfully added or removed from the advertiser permissions list.",
+     "items": {
+      "$ref": "SuccessfulAdvertiser"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateAdvertiserListRequestBody": {
+   "properties": {
+    "advertiserIds": {
+     "description": "A list of Advertiser Ids to be added or removed from the advertiser permissions list.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "operationType": {
+     "$ref": "AdvertiserListOperationType"
+    }
+   },
+   "required": [
+    "advertiserIds",
+    "operationType"
+   ],
+   "type": "object"
+  },
+  "UpdateRecommendedAdvertiserListDspDealsResponseContent": {
+   "description": "Successful operation.",
+   "properties": {
+    "errors": {
+     "description": "List of Advertiser Ids that failed to be added or removed from the recommended advertiser list.",
+     "items": {
+      "$ref": "FailedRecommendedAdvertiser"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "description": "List of Advertiser Ids that were successfully added or removed from recommended advertiser list.",
+     "items": {
+      "$ref": "SuccessfulRecommendedAdvertiser"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateRecommendedAdvertiserListRequestBody": {
+   "properties": {
+    "advertiserIds": {
+     "description": "A list of Advertiser Ids to be added or removed from the recommended advertiser list.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "operationType": {
+     "$ref": "RecommendedAdvertiserListOperationType"
+    }
+   },
+   "required": [
+    "advertiserIds",
+    "operationType"
+   ],
+   "type": "object"
+  }
+ }
+}

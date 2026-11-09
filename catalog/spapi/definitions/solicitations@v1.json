@@ -1,0 +1,126 @@
+{
+  "CreateProductReviewAndSellerFeedbackSolicitationResponse": {
+    "description": "The response schema for the createProductReviewAndSellerFeedbackSolicitation operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "GetSchemaResponse": {
+    "properties": {
+      "_links": {
+        "type": "object"
+      },
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "ref": "Schema"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetSolicitationActionResponse": {
+    "description": "Describes a solicitation action that can be taken for an order.",
+    "properties": {
+      "_embedded": {
+        "type": "object"
+      },
+      "_links": {
+        "type": "object"
+      },
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "ref": "SolicitationsAction"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetSolicitationActionsForOrderResponse": {
+    "description": "The response schema for the getSolicitationActionsForOrder operation.",
+    "properties": {
+      "_embedded": {
+        "type": "object"
+      },
+      "_links": {
+        "type": "object"
+      },
+      "errors": {
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "LinkObject": {
+    "description": "A Link object.",
+    "properties": {
+      "href": {
+        "description": "A URI for this object.",
+        "type": "string"
+      },
+      "name": {
+        "description": "An identifier for this object.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "href"
+    ],
+    "type": "object"
+  },
+  "Schema": {
+    "description": "A JSON schema document describing the expected payload of the action.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "SolicitationsAction": {
+    "description": "A simple object containing the name of the template.",
+    "properties": {
+      "name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "type": "object"
+  }
+}

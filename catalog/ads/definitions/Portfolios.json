@@ -1,0 +1,1197 @@
+{
+ "api": "Portfolios",
+ "file": "specs/dest/Portfolios_prod_3p.json",
+ "schemas": {
+  "AccessDeniedErrorCode": {
+   "enum": [
+    "ACCESS_DENIED"
+   ],
+   "type": "string"
+  },
+  "AccessDeniedExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "AccessDeniedErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BudgetControls": {
+   "properties": {
+    "campaignUnspentBudgetSharing": {
+     "$ref": "CampaignUnspentBudgetSharing"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetUsageError": {
+   "description": "The Error Response Object.",
+   "properties": {
+    "code": {
+     "description": "An enumerated error code for machine use.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetUsagePortfolio": {
+   "properties": {
+    "budget": {
+     "description": "Budget amount of resource requested",
+     "type": "number"
+    },
+    "budgetUsagePercent": {
+     "description": "Budget usage percentage (spend / available budget) for the given budget policy.",
+     "type": "number"
+    },
+    "index": {
+     "description": "An index to maintain order of the portfolioIds",
+     "type": "number"
+    },
+    "portfolioId": {
+     "description": "ID of requested resource",
+     "type": "string"
+    },
+    "usageUpdatedTimestamp": {
+     "description": "Last evaluation time for budget usage",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetUsagePortfolioBatchError": {
+   "properties": {
+    "code": {
+     "description": "An enumerated error code for machine use.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "index": {
+     "description": "An index to maintain order of the portfolioIds",
+     "type": "number"
+    },
+    "portfolioId": {
+     "description": "ID of requested resource",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetUsagePortfolioRequest": {
+   "properties": {
+    "portfolioIds": {
+     "description": "A list of portfolio IDs.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetUsagePortfolioResponse": {
+   "properties": {
+    "error": {
+     "description": "List of budget usage percentages that failed to pull",
+     "items": {
+      "$ref": "BudgetUsagePortfolioBatchError"
+     },
+     "type": "array"
+    },
+    "success": {
+     "description": "List of budget usage percentages that were successfully pulled",
+     "items": {
+      "$ref": "BudgetUsagePortfolio"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BulkPortfolioOperationResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "PortfolioFailureResponseItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "PortfolioSuccessResponseItem"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CampaignUnspentBudgetSharing": {
+   "properties": {
+    "featureState": {
+     "$ref": "FeatureState"
+    }
+   },
+   "required": [
+    "featureState"
+   ],
+   "type": "object"
+  },
+  "CreatePortfolio": {
+   "properties": {
+    "budget": {
+     "$ref": "PortfolioBudget"
+    },
+    "budgetControls": {
+     "$ref": "BudgetControls"
+    },
+    "name": {
+     "description": "The name of the portfolio.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "EntityState"
+    }
+   },
+   "required": [
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "CreatePortfoliosRequestContent": {
+   "properties": {
+    "portfolios": {
+     "description": "An array of portfolio to create.",
+     "items": {
+      "$ref": "CreatePortfolio"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "portfolios"
+   ],
+   "type": "object"
+  },
+  "CreatePortfoliosResponseContent": {
+   "properties": {
+    "portfolios": {
+     "$ref": "BulkPortfolioOperationResponse"
+    }
+   },
+   "required": [
+    "portfolios"
+   ],
+   "type": "object"
+  },
+  "CurrencyCode": {
+   "description": "The currency used for all monetary values for entities under this profile. Cannot be `null`. |Region|`countryCode`|Country Name|`currencyCode`| |-----|------|------|------| |NA|US|United States|USD| |NA|CA|Canada|CAD| |…",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CLP",
+    "CNY",
+    "COP",
+    "EGP",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "NGN",
+    "PLN",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "EntityState": {
+   "description": "The current resource state.",
+   "enum": [
+    "ENABLED"
+   ],
+   "type": "string"
+  },
+  "EntityStateFilter": {
+   "description": "Filter entities by state",
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "EntityState"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ErrorCause": {
+   "description": "Structure describing error cause - location in the payload and data causing error",
+   "properties": {
+    "location": {
+     "description": "Error location, JSON Path expression specifying element of API payload causing error",
+     "type": "string"
+    },
+    "trigger": {
+     "description": "optional value causing error",
+     "type": "string"
+    }
+   },
+   "required": [
+    "location"
+   ],
+   "type": "object"
+  },
+  "FeatureState": {
+   "description": "The state for sharing unspent campaign budget.",
+   "enum": [
+    "DISABLED",
+    "ENABLED"
+   ],
+   "type": "string"
+  },
+  "InternalErrorErrorCode": {
+   "enum": [
+    "INTERNAL_ERROR"
+   ],
+   "type": "string"
+  },
+  "InternalServerExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "InternalErrorErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InvalidArgumentErrorCode": {
+   "enum": [
+    "INVALID_ARGUMENT"
+   ],
+   "type": "string"
+  },
+  "ListPortfoliosRequestContent": {
+   "properties": {
+    "includeExtendedDataFields": {
+     "description": "whether to get a list of targetingClauses with extended data fields (creationDate, lastUpdateDate, servingStatus).",
+     "type": "boolean"
+    },
+    "nameFilter": {
+     "$ref": "NameFilter"
+    },
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "portfolioIdFilter": {
+     "$ref": "ObjectIdFilter"
+    },
+    "stateFilter": {
+     "$ref": "EntityStateFilter"
+    }
+   },
+   "type": "object"
+  },
+  "ListPortfoliosResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "token value allowing to navigate to the next response page",
+     "type": "string"
+    },
+    "portfolios": {
+     "items": {
+      "$ref": "Portfolio"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of entities",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "NameFilter": {
+   "description": "Filter entities by name",
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "QueryTermMatchType"
+    }
+   },
+   "type": "object"
+  },
+  "ObjectIdFilter": {
+   "description": "Filter entities by the list of objectIds",
+   "properties": {
+    "include": {
+     "items": {
+      "description": "entity object identifier",
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PolicyType": {
+   "description": "The budget policy. Set to `DATE_RANGE` to specify a budget for a specific period of time. Set to `MONTHLY_RECURRING` to specify a budget that is automatically renewed at the beginning of each month. To remove budget, se…",
+   "enum": [
+    "DATE_RANGE",
+    "MONTHLY_RECURRING",
+    "NO_CAP",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "Portfolio": {
+   "properties": {
+    "budget": {
+     "$ref": "PortfolioBudget"
+    },
+    "budgetControls": {
+     "$ref": "BudgetControls"
+    },
+    "extendedData": {
+     "$ref": "PortfolioExtendedData"
+    },
+    "inBudget": {
+     "description": "States if the portfolio is still within budget.",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "The name of the portfolio.",
+     "type": "string"
+    },
+    "portfolioId": {
+     "description": "The ID of the portfolio.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "EntityState"
+    }
+   },
+   "required": [
+    "name",
+    "portfolioId",
+    "state"
+   ],
+   "type": "object"
+  },
+  "PortfolioAccessError": {
+   "properties": {
+    "errorType": {
+     "description": "The type of the error",
+     "type": "string"
+    },
+    "errorValue": {
+     "$ref": "PortfolioAccessErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "PortfolioAccessErrorSelector": {
+   "properties": {
+    "dateError": {
+     "$ref": "PortfolioDateError"
+    },
+    "entityNotFoundError": {
+     "$ref": "PortfolioEntityNotFoundError"
+    },
+    "malformedValueError": {
+     "$ref": "PortfolioMalformedValueError"
+    },
+    "missingValueError": {
+     "$ref": "PortfolioMissingValueError"
+    },
+    "otherError": {
+     "$ref": "PortfolioOtherError"
+    },
+    "rangeError": {
+     "$ref": "PortfolioRangeError"
+    }
+   },
+   "type": "object"
+  },
+  "PortfolioAccessExceptionResponseContent": {
+   "description": "Exception resulting in accessing portfolio entity",
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "errors": {
+     "items": {
+      "$ref": "PortfolioAccessError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "PortfolioBillingError": {
+   "description": "Errors related to bids",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "marketplace": {
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "PortfolioBillingErrorReason"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "PortfolioBillingErrorReason": {
+   "enum": [
+    "ADVERTISER_SUSPENDED",
+    "BILLING_ACCOUNT_NOT_FOUND",
+    "EXPIRED_PAYMENT_METHOD",
+    "PAYMENT_PROFILE_NOT_FOUND",
+    "VETTING_FAILURE"
+   ],
+   "type": "string"
+  },
+  "PortfolioBudget": {
+   "properties": {
+    "amount": {
+     "description": "The amount of the budget.",
+     "format": "double",
+     "nullable": true,
+     "type": "number"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "endDate": {
+     "description": "The end date after which the budget is no longer applied in ISO 8601.",
+     "format": "date",
+     "nullable": true,
+     "type": "string"
+    },
+    "policy": {
+     "$ref": "PolicyType"
+    },
+    "startDate": {
+     "description": "The starting date to which the budget is applied in ISO 8601.",
+     "format": "date",
+     "nullable": true,
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PortfolioBudgetError": {
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "lowerLimit": {
+     "type": "string"
+    },
+    "marketplace": {
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "PortfolioBudgetErrorReason"
+    },
+    "upperLimit": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "PortfolioBudgetErrorReason": {
+   "enum": [
+    "BUDGETING_POLICY_INVALID",
+    "BUDGET_AMOUNT_INVALID",
+    "BUDGET_CURRENCY_DOES_NOT_MATCH_MARKETPLACE_SETTINGS",
+    "BUDGET_LT_DEFAULT_BIDS",
+    "BUDGET_LT_KEYWORD_BIDS",
+    "BUDGET_LT_PREDEFINED_TARGET_BIDS",
+    "BUDGET_OUT_OF_MARKET_PLACE_RANGE",
+    "BUDGET_TOO_HIGH",
+    "BUDGET_TOO_LOW",
+    "MISSING_BUDGETING_POLICY",
+    "MISSING_IN_BUDGET_FLAG"
+   ],
+   "type": "string"
+  },
+  "PortfolioDateError": {
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "marketplace": {
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "PortfolioDateErrorReason"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "PortfolioDateErrorReason": {
+   "enum": [
+    "END_DATE_EARLIER_THAN_TODAY",
+    "INVALID_DATE",
+    "START_DATE_AFTER_END_DATE",
+    "START_DATE_EARLIER_THAN_TODAY",
+    "START_DATE_EQUAL_END_DATE",
+    "START_DATE_NOT_NULL"
+   ],
+   "type": "string"
+  },
+  "PortfolioDuplicateValueError": {
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "marketplace": {
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "PortfolioDuplicateValueErrorReason"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "PortfolioDuplicateValueErrorReason": {
+   "enum": [
+    "DUPLICATE_VALUE"
+   ],
+   "type": "string"
+  },
+  "PortfolioEntityNotFoundError": {
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "entityId": {
+     "description": "The entity id in the request",
+     "type": "string"
+    },
+    "entityType": {
+     "$ref": "PortfolioEntityType"
+    },
+    "marketplace": {
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "PortfolioEntityNotFoundErrorReason"
+    }
+   },
+   "required": [
+    "cause",
+    "entityId",
+    "entityType",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "PortfolioEntityNotFoundErrorReason": {
+   "enum": [
+    "ENTITY_NOT_FOUND"
+   ],
+   "type": "string"
+  },
+  "PortfolioEntityQuotaError": {
+   "description": "Errors related to exceeding quota in portfolios service",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "entityType": {
+     "$ref": "PortfolioEntityType"
+    },
+    "marketplace": {
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "quota": {
+     "description": "optional current quota",
+     "type": "string"
+    },
+    "quotaScope": {
+     "$ref": "PortfolioQuotaScope"
+    },
+    "reason": {
+     "$ref": "PortfolioEntityQuotaErrorReason"
+    }
+   },
+   "required": [
+    "cause",
+    "entityType",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "PortfolioEntityQuotaErrorReason": {
+   "enum": [
+    "QUOTA_EXCEEDED"
+   ],
+   "type": "string"
+  },
+  "PortfolioEntityType": {
+   "enum": [
+    "PORTFOLIO"
+   ],
+   "type": "string"
+  },
+  "PortfolioExtendedData": {
+   "properties": {
+    "creationDateTime": {
+     "description": "Creation date in ISO 8601.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdateDateTime": {
+     "description": "Date of last update in ISO 8601.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "servingStatus": {
+     "$ref": "PortfolioServingStatus"
+    },
+    "statusReasons": {
+     "items": {
+      "$ref": "PortfolioServingStatusReason"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PortfolioFailureResponseItem": {
+   "properties": {
+    "errors": {
+     "description": "a list of validation errors",
+     "items": {
+      "$ref": "PortfolioMutationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "the index of the portfolio in the array from the request body",
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "PortfolioMalformedValueError": {
+   "description": "Errors being used to represent malformed values e.g. containing not allowed characters, not following patterns etc",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "fragment": {
+     "description": "fragment of the value which is wrong",
+     "type": "string"
+    },
+    "marketplace": {
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "PortfolioMalformedValueErrorReason"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "PortfolioMalformedValueErrorReason": {
+   "enum": [
+    "FORBIDDEN_CHARS",
+    "PATTERN_NOT_MATCHED",
+    "TOO_LONG",
+    "TOO_SHORT"
+   ],
+   "type": "string"
+  },
+  "PortfolioMissingValueError": {
+   "description": "Error describing missing values in API payloads",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "marketplace": {
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "PortfolioMissingValueErrorReason"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "PortfolioMissingValueErrorReason": {
+   "enum": [
+    "MISSING_VALUE"
+   ],
+   "type": "string"
+  },
+  "PortfolioMutationError": {
+   "properties": {
+    "errorType": {
+     "description": "The type of the error",
+     "type": "string"
+    },
+    "errorValue": {
+     "$ref": "PortfolioMutationErrorSelector"
+    }
+   },
+   "required": [
+    "errorType",
+    "errorValue"
+   ],
+   "type": "object"
+  },
+  "PortfolioMutationErrorSelector": {
+   "properties": {
+    "billingError": {
+     "$ref": "PortfolioBillingError"
+    },
+    "budgetError": {
+     "$ref": "PortfolioBudgetError"
+    },
+    "dateError": {
+     "$ref": "PortfolioDateError"
+    },
+    "duplicateValueError": {
+     "$ref": "PortfolioDuplicateValueError"
+    },
+    "entityNotFoundError": {
+     "$ref": "PortfolioEntityNotFoundError"
+    },
+    "entityQuotaError": {
+     "$ref": "PortfolioEntityQuotaError"
+    },
+    "malformedValueError": {
+     "$ref": "PortfolioMalformedValueError"
+    },
+    "missingValueError": {
+     "$ref": "PortfolioMissingValueError"
+    },
+    "otherError": {
+     "$ref": "PortfolioOtherError"
+    },
+    "rangeError": {
+     "$ref": "PortfolioRangeError"
+    }
+   },
+   "type": "object"
+  },
+  "PortfolioOtherError": {
+   "description": "Errors not related to any of the other error types",
+   "properties": {
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "marketplace": {
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "PortfolioOtherErrorReason"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "PortfolioOtherErrorReason": {
+   "enum": [
+    "OTHER_ERROR"
+   ],
+   "type": "string"
+  },
+  "PortfolioQuotaScope": {
+   "enum": [
+    "ACCOUNT"
+   ],
+   "type": "string"
+  },
+  "PortfolioRangeError": {
+   "description": "Errors related to range constraints violations",
+   "properties": {
+    "allowed": {
+     "description": "allowed values",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "cause": {
+     "$ref": "ErrorCause"
+    },
+    "lowerLimit": {
+     "description": "optional lower limit",
+     "type": "string"
+    },
+    "marketplace": {
+     "type": "string"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    },
+    "reason": {
+     "$ref": "PortfolioValueLimitErrorReason"
+    },
+    "upperLimit": {
+     "description": "optional upper limit",
+     "type": "string"
+    }
+   },
+   "required": [
+    "cause",
+    "message",
+    "reason"
+   ],
+   "type": "object"
+  },
+  "PortfolioServingStatus": {
+   "enum": [
+    "ADVERTISER_ACCOUNT_OUT_OF_BUDGET",
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_EXCEED_SPENDS_LIMIT",
+    "ADVERTISER_OUT_OF_BUDGET",
+    "ADVERTISER_OUT_OF_PREPAY_BALANCE",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "PORTFOLIO_ENDED",
+    "PORTFOLIO_OUT_OF_BUDGET",
+    "PORTFOLIO_PENDING_START_DATE",
+    "PORTFOLIO_STATUS_ENABLED"
+   ],
+   "type": "string"
+  },
+  "PortfolioServingStatusReason": {
+   "enum": [
+    "ADVERTISER_ACCOUNT_OUT_OF_BUDGET_DETAIL",
+    "ADVERTISER_ARCHIVED_DETAIL",
+    "ADVERTISER_EXCEED_SPENDS_LIMIT_DETAIL",
+    "ADVERTISER_OUT_OF_BUDGET_DETAIL",
+    "ADVERTISER_OUT_OF_PREPAY_BALANCE_DETAIL",
+    "ADVERTISER_PAUSED_DETAIL",
+    "ADVERTISER_PAYMENT_FAILURE_DETAIL",
+    "PORTFOLIO_ENDED_DETAIL",
+    "PORTFOLIO_OUT_OF_BUDGET_DETAIL",
+    "PORTFOLIO_PENDING_START_DATE_DETAIL",
+    "PORTFOLIO_STATUS_ENABLED_DETAIL"
+   ],
+   "type": "string"
+  },
+  "PortfolioSuccessResponseItem": {
+   "properties": {
+    "index": {
+     "description": "the index of the portfolio in the array from the request body",
+     "minimum": 0,
+     "type": "number"
+    },
+    "portfolio": {
+     "$ref": "Portfolio"
+    },
+    "portfolioId": {
+     "description": "the Portfolio ID",
+     "type": "string"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "PortfolioValueLimitErrorReason": {
+   "enum": [
+    "INVALID_ENUM_VALUE",
+    "TOO_HIGH",
+    "TOO_LOW"
+   ],
+   "type": "string"
+  },
+  "QueryTermMatchType": {
+   "enum": [
+    "BROAD_MATCH",
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "SchemaValidationExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ThrottledErrorCode": {
+   "enum": [
+    "THROTTLED"
+   ],
+   "type": "string"
+  },
+  "ThrottlingExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ThrottledErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedErrorCode": {
+   "enum": [
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "UnauthorizedExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "UnauthorizedErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnsupportedMediaTypeErrorCode": {
+   "enum": [
+    "UNSUPPORTED_MEDIA_TYPE"
+   ],
+   "type": "string"
+  },
+  "UnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "UnsupportedMediaTypeErrorCode"
+    },
+    "message": {
+     "description": "Human readable error message",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdatePortfolio": {
+   "properties": {
+    "budget": {
+     "$ref": "PortfolioBudget"
+    },
+    "budgetControls": {
+     "$ref": "BudgetControls"
+    },
+    "name": {
+     "description": "The name of the portfolio.",
+     "type": "string"
+    },
+    "portfolioId": {
+     "description": "The ID of the portfolio.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "EntityState"
+    }
+   },
+   "required": [
+    "portfolioId"
+   ],
+   "type": "object"
+  },
+  "UpdatePortfoliosRequestContent": {
+   "properties": {
+    "portfolios": {
+     "description": "An array of portfolio with updated values.",
+     "items": {
+      "$ref": "UpdatePortfolio"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "portfolios"
+   ],
+   "type": "object"
+  },
+  "UpdatePortfoliosResponseContent": {
+   "properties": {
+    "portfolios": {
+     "$ref": "BulkPortfolioOperationResponse"
+    }
+   },
+   "required": [
+    "portfolios"
+   ],
+   "type": "object"
+  }
+ }
+}

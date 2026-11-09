@@ -1,0 +1,836 @@
+{
+  "Address": {
+    "description": "Address of the party.",
+    "properties": {
+      "addressLine1": {
+        "description": "First line of the address.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional street address information, if required.",
+        "type": "string"
+      },
+      "addressLine3": {
+        "description": "Additional street address information, if required.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city where the person, business or institution is located.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two digit country code in ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "county": {
+        "description": "The county where person, business or institution is located.",
+        "type": "string"
+      },
+      "district": {
+        "description": "The district where person, business or institution is located.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the person, business or institution at that address.",
+        "type": "string"
+      },
+      "phone": {
+        "description": "The phone number of the person, business or institution located at that address.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "The postal code of that address.",
+        "type": "string"
+      },
+      "stateOrRegion": {
+        "description": "The state or region where person, business or institution is located.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "addressLine1",
+      "countryCode",
+      "name"
+    ],
+    "type": "object"
+  },
+  "Container": {
+    "description": "A container used for shipping and packing items.",
+    "properties": {
+      "carrier": {
+        "description": "Carrier required for EU VOC vendors only.",
+        "type": "string"
+      },
+      "containerIdentifier": {
+        "description": "The container identifier.",
+        "type": "string"
+      },
+      "containerSequenceNumber": {
+        "description": "An integer that must be submitted for multi-box shipments only, where one item may come in separate packages.",
+        "type": "integer"
+      },
+      "containerType": {
+        "description": "The type of container.",
+        "enum": [
+          "carton",
+          "pallet"
+        ],
+        "type": "string"
+      },
+      "dimensions": {
+        "ref": "Dimensions"
+      },
+      "manifestDate": {
+        "description": "The date of the manifest.",
+        "type": "string"
+      },
+      "manifestId": {
+        "description": "The manifest identifier.",
+        "type": "string"
+      },
+      "packedItems": {
+        "description": "A list of packed items.",
+        "ref": "PackedItem",
+        "type": "array"
+      },
+      "scacCode": {
+        "description": "SCAC code required for NA VOC vendors only.",
+        "type": "string"
+      },
+      "shipMethod": {
+        "description": "The shipment method.",
+        "type": "string"
+      },
+      "trackingNumber": {
+        "description": "The tracking number.",
+        "type": "string"
+      },
+      "weight": {
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "containerIdentifier",
+      "containerType",
+      "packedItems",
+      "weight"
+    ],
+    "type": "object"
+  },
+  "CustomerInvoice": {
+    "description": "Represents a customer invoice associated with a purchase order.",
+    "properties": {
+      "content": {
+        "description": "The Base64encoded customer invoice.",
+        "type": "string"
+      },
+      "purchaseOrderNumber": {
+        "description": "The purchase order number for this order.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "content",
+      "purchaseOrderNumber"
+    ],
+    "type": "object"
+  },
+  "CustomerInvoiceList": {
+    "description": "Represents a list of customer invoices, potentially paginated.",
+    "properties": {
+      "customerInvoices": {
+        "description": "Represents a customer invoice within the CustomerInvoiceList.",
+        "ref": "CustomerInvoice",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Decimal": {
+    "description": "A decimal number with no loss of precision.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Dimensions": {
+    "description": "Physical dimensional measurements of a container.",
+    "properties": {
+      "height": {
+        "description": "The height of the container.",
+        "ref": "Decimal"
+      },
+      "length": {
+        "description": "The length of the container.",
+        "ref": "Decimal"
+      },
+      "unitOfMeasure": {
+        "description": "The unit of measure for dimensions.",
+        "enum": [
+          "CM",
+          "IN"
+        ],
+        "type": "string"
+      },
+      "width": {
+        "description": "The width of the container.",
+        "ref": "Decimal"
+      }
+    },
+    "required": [
+      "height",
+      "length",
+      "unitOfMeasure",
+      "width"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "GetCustomerInvoiceResponse": {
+    "description": "The response schema for the getCustomerInvoice operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the getCustomerInvoice operation.",
+        "ref": "CustomerInvoice"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetCustomerInvoicesResponse": {
+    "description": "The response schema for the getCustomerInvoices operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "List of customer invoices.",
+        "ref": "CustomerInvoiceList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetPackingSlipListResponse": {
+    "description": "Response payload with the list of Packing Slips.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "ref": "PackingSlipList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetPackingSlipResponse": {
+    "description": "Response payload with packing slip.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "ref": "PackingSlip"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetShippingLabelListResponse": {
+    "description": "The response schema for the getShippingLabels operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "List of ship labels.",
+        "ref": "ShippingLabelList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetShippingLabelResponse": {
+    "description": "The response schema for the getShippingLabel operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the getShippingLabel operation.",
+        "ref": "ShippingLabel"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Item": {
+    "description": "Details of the item being shipped.",
+    "properties": {
+      "buyerProductIdentifier": {
+        "description": "Buyer's Standard Identification Number (ASIN) of an item.",
+        "type": "string"
+      },
+      "itemSequenceNumber": {
+        "description": "Item Sequence Number for the item.",
+        "type": "integer"
+      },
+      "shippedQuantity": {
+        "description": "Total item quantity shipped in this shipment.",
+        "ref": "ItemQuantity"
+      },
+      "vendorProductIdentifier": {
+        "description": "The vendor selected product identification of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "itemSequenceNumber",
+      "shippedQuantity"
+    ],
+    "type": "object"
+  },
+  "ItemQuantity": {
+    "description": "Details of item quantity.",
+    "properties": {
+      "amount": {
+        "description": "Quantity of units shipped for a specific item at a shipment level.",
+        "type": "integer"
+      },
+      "unitOfMeasure": {
+        "description": "Unit of measure for the shipped quantity.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "amount",
+      "unitOfMeasure"
+    ],
+    "type": "object"
+  },
+  "LabelData": {
+    "description": "Details of the shipment label.",
+    "properties": {
+      "content": {
+        "description": "This field will contain the Base64encoded string of the shipment label content.",
+        "type": "string"
+      },
+      "packageIdentifier": {
+        "description": "Identifier for the package.",
+        "type": "string"
+      },
+      "shipMethod": {
+        "description": "Ship method to be used for shipping the order.",
+        "type": "string"
+      },
+      "shipMethodName": {
+        "description": "Shipping method name for internal reference.",
+        "type": "string"
+      },
+      "trackingNumber": {
+        "description": "Package tracking identifier from the shipping carrier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "content"
+    ],
+    "type": "object"
+  },
+  "PackedItem": {
+    "description": "Represents an item that has been packed into a container for shipping.",
+    "properties": {
+      "buyerProductIdentifier": {
+        "description": "Buyer's Standard Identification Number (ASIN) of an item.",
+        "type": "string"
+      },
+      "itemSequenceNumber": {
+        "description": "Item Sequence Number for the item.",
+        "type": "integer"
+      },
+      "packedQuantity": {
+        "description": "Total item quantity packed in the container.",
+        "ref": "ItemQuantity"
+      },
+      "vendorProductIdentifier": {
+        "description": "The vendor selected product identification of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "itemSequenceNumber",
+      "packedQuantity"
+    ],
+    "type": "object"
+  },
+  "PackingSlip": {
+    "description": "Packing slip information.",
+    "properties": {
+      "content": {
+        "description": "A Base64encoded string of the packing slip PDF.",
+        "type": "string"
+      },
+      "contentType": {
+        "description": "The format of the file such as PDF, JPEG etc.",
+        "enum": [
+          "application/pdf"
+        ],
+        "type": "string"
+      },
+      "purchaseOrderNumber": {
+        "description": "Purchase order number of the shipment that corresponds to the packing slip.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "content",
+      "purchaseOrderNumber"
+    ],
+    "type": "object"
+  },
+  "PackingSlipList": {
+    "description": "A list of packing slips.",
+    "properties": {
+      "packingSlips": {
+        "description": "An array of packing slip objects.",
+        "ref": "PackingSlip",
+        "type": "array"
+      },
+      "pagination": {
+        "description": "The pagination elements required to retrieve the remaining data.",
+        "ref": "Pagination"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "The pagination elements required to retrieve the remaining data.",
+    "properties": {
+      "nextToken": {
+        "description": "A generated string used to pass information to your next request.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PartyIdentification": {
+    "description": "Name, address and tax details of a party.",
+    "properties": {
+      "address": {
+        "description": "Identification of the party by address.",
+        "ref": "Address"
+      },
+      "partyId": {
+        "description": "Assigned Identification for the party.",
+        "type": "string"
+      },
+      "taxRegistrationDetails": {
+        "description": "Tax registration details of the entity.",
+        "ref": "TaxRegistrationDetails",
+        "type": "array"
+      }
+    },
+    "required": [
+      "partyId"
+    ],
+    "type": "object"
+  },
+  "ShipmentConfirmation": {
+    "description": "Represents the confirmation details of a shipment, including the purchase order number and other shipment details.",
+    "properties": {
+      "containers": {
+        "description": "Provide the details of the items in this shipment.",
+        "ref": "Container",
+        "type": "array"
+      },
+      "items": {
+        "description": "Provide the details of the items in this shipment.",
+        "ref": "Item",
+        "type": "array"
+      },
+      "purchaseOrderNumber": {
+        "description": "Purchase order number corresponding to the shipment.",
+        "type": "string"
+      },
+      "sellingParty": {
+        "description": "ID of the selling party or vendor.",
+        "ref": "PartyIdentification"
+      },
+      "shipFromParty": {
+        "description": "Warehouse code of vendor.",
+        "ref": "PartyIdentification"
+      },
+      "shipmentDetails": {
+        "description": "Shipment information.",
+        "ref": "ShipmentDetails"
+      }
+    },
+    "required": [
+      "items",
+      "purchaseOrderNumber",
+      "sellingParty",
+      "shipFromParty",
+      "shipmentDetails"
+    ],
+    "type": "object"
+  },
+  "ShipmentDetails": {
+    "description": "Details about a shipment.",
+    "properties": {
+      "estimatedDeliveryDate": {
+        "description": "Date on which the shipment is expected to reach the buyer's warehouse.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "isPriorityShipment": {
+        "description": "Provide the priority of the shipment.",
+        "type": "boolean"
+      },
+      "shipmentStatus": {
+        "description": "Indicate the shipment status.",
+        "enum": [
+          "FLOOR_DENIAL",
+          "SHIPPED"
+        ],
+        "type": "string"
+      },
+      "shippedDate": {
+        "description": "This field indicates the date of the departure of the shipment from vendor's location.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "vendorOrderNumber": {
+        "description": "The vendor order number is a unique identifier generated by a vendor for their reference.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "shipmentStatus",
+      "shippedDate"
+    ],
+    "type": "object"
+  },
+  "ShipmentStatusUpdate": {
+    "description": "Represents an update to the status of a shipment.",
+    "properties": {
+      "purchaseOrderNumber": {
+        "description": "Purchase order number of the shipment for which to update the shipment status.",
+        "type": "string"
+      },
+      "sellingParty": {
+        "description": "ID of the selling party or vendor.",
+        "ref": "PartyIdentification"
+      },
+      "shipFromParty": {
+        "description": "Warehouse code of vendor.",
+        "ref": "PartyIdentification"
+      },
+      "statusUpdateDetails": {
+        "description": "Provide the details about the status of the shipment at that particular point of time.",
+        "ref": "StatusUpdateDetails"
+      }
+    },
+    "required": [
+      "purchaseOrderNumber",
+      "sellingParty",
+      "shipFromParty",
+      "statusUpdateDetails"
+    ],
+    "type": "object"
+  },
+  "ShippingLabel": {
+    "description": "Shipping label information for an order, including the purchase order number, selling party, ship from party, label format, and package details.",
+    "properties": {
+      "labelData": {
+        "description": "Provides the details of the packages in this shipment.",
+        "ref": "LabelData",
+        "type": "array"
+      },
+      "labelFormat": {
+        "description": "Format of the label.",
+        "enum": [
+          "PNG",
+          "ZPL"
+        ],
+        "type": "string"
+      },
+      "purchaseOrderNumber": {
+        "description": "This field will contain the Purchase Order Number for this order.",
+        "type": "string"
+      },
+      "sellingParty": {
+        "description": "ID of the selling party or vendor.",
+        "ref": "PartyIdentification"
+      },
+      "shipFromParty": {
+        "description": "Warehouse code of vendor.",
+        "ref": "PartyIdentification"
+      }
+    },
+    "required": [
+      "labelData",
+      "labelFormat",
+      "purchaseOrderNumber",
+      "sellingParty",
+      "shipFromParty"
+    ],
+    "type": "object"
+  },
+  "ShippingLabelList": {
+    "description": "Response payload with the list of shipping labels",
+    "properties": {
+      "pagination": {
+        "ref": "Pagination"
+      },
+      "shippingLabels": {
+        "description": "An array containing the details of the generated shipping labels.",
+        "ref": "ShippingLabel",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ShippingLabelRequest": {
+    "description": "Represents the request payload for creating a shipping label, containing the purchase order number, selling party, ship from party, and a list of containers or packages in the shipment.",
+    "properties": {
+      "containers": {
+        "description": "A list of the packages in this shipment.",
+        "ref": "Container",
+        "type": "array"
+      },
+      "purchaseOrderNumber": {
+        "description": "Purchase order number of the order for which to create a shipping label.",
+        "type": "string"
+      },
+      "sellingParty": {
+        "description": "ID of the selling party or vendor.",
+        "ref": "PartyIdentification"
+      },
+      "shipFromParty": {
+        "description": "Warehouse code of vendor.",
+        "ref": "PartyIdentification"
+      }
+    },
+    "required": [
+      "purchaseOrderNumber",
+      "sellingParty",
+      "shipFromParty"
+    ],
+    "type": "object"
+  },
+  "StatusUpdateDetails": {
+    "description": "Details for the shipment status update given by the vendor for the specific package.",
+    "properties": {
+      "reasonCode": {
+        "description": "Provides a reason code for the status of the package that will provide additional information about the transportation status.",
+        "type": "string"
+      },
+      "shipmentSchedule": {
+        "description": "Details for the scheduled delivery timeline for a shipment, including the estimated delivery date and time, as well as the start and end times of the appointment window for delivery.",
+        "type": "object"
+      },
+      "statusCode": {
+        "description": "Indicates the shipment status code of the package that provides transportation information for Amazon tracking systems and ultimately for the final customer.",
+        "type": "string"
+      },
+      "statusDateTime": {
+        "description": "The date and time when the shipment status was updated.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "statusLocationAddress": {
+        "ref": "Address"
+      },
+      "trackingNumber": {
+        "description": "This is required to be provided for every package and should match with the trackingNumber sent for the shipment confirmation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "reasonCode",
+      "statusCode",
+      "statusDateTime",
+      "statusLocationAddress",
+      "trackingNumber"
+    ],
+    "type": "object"
+  },
+  "SubmitShipmentConfirmationsRequest": {
+    "description": "The request schema for the submitShipmentConfirmations operation.",
+    "properties": {
+      "shipmentConfirmations": {
+        "description": "Array of ShipmentConfirmation objects, each representing confirmation details for a specific shipment.",
+        "ref": "ShipmentConfirmation",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SubmitShipmentConfirmationsResponse": {
+    "description": "The response schema for the submitShipmentConfirmations operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The response payload for the submitShipmentConfirmations operation.",
+        "ref": "TransactionReference"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SubmitShipmentStatusUpdatesRequest": {
+    "description": "Represents the request payload for submitting updates to the status of shipments, containing an array of one or more ShipmentStatusUpdate objects.",
+    "properties": {
+      "shipmentStatusUpdates": {
+        "description": "Contains a list of one or more ShipmentStatusUpdate objects, each representing an update to the status of a specific shipment.",
+        "ref": "ShipmentStatusUpdate",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SubmitShipmentStatusUpdatesResponse": {
+    "description": "The response schema for the submitShipmentStatusUpdates operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The response payload for the submitShipmentStatusUpdates operation.",
+        "ref": "TransactionReference"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SubmitShippingLabelsRequest": {
+    "description": "The request schema for the submitShippingLabelRequest operation.",
+    "properties": {
+      "shippingLabelRequests": {
+        "description": "An array of shipping label requests to be processed.",
+        "ref": "ShippingLabelRequest",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SubmitShippingLabelsResponse": {
+    "description": "The response schema for the submitShippingLabelRequest operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The response payload for the submitShippingLabelRequest operation.",
+        "ref": "TransactionReference"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TaxRegistrationDetails": {
+    "description": "Tax registration details of the entity.",
+    "properties": {
+      "taxRegistrationAddress": {
+        "description": "Address associated with the tax registration number.",
+        "ref": "Address"
+      },
+      "taxRegistrationMessages": {
+        "description": "Tax registration message that can be used for additional tax related details.",
+        "type": "string"
+      },
+      "taxRegistrationNumber": {
+        "description": "Tax registration number for the party.",
+        "type": "string"
+      },
+      "taxRegistrationType": {
+        "description": "Tax registration type for the entity.",
+        "enum": [
+          "GST",
+          "VAT"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "taxRegistrationNumber"
+    ],
+    "type": "object"
+  },
+  "TransactionReference": {
+    "description": "Response containing the transaction ID.",
+    "properties": {
+      "transactionId": {
+        "description": "GUID to identify this transaction.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Weight": {
+    "description": "The weight.",
+    "properties": {
+      "unitOfMeasure": {
+        "description": "The unit of measurement.",
+        "enum": [
+          "KG",
+          "LB"
+        ],
+        "type": "string"
+      },
+      "value": {
+        "description": "The measurement value.",
+        "ref": "Decimal"
+      }
+    },
+    "required": [
+      "unitOfMeasure",
+      "value"
+    ],
+    "type": "object"
+  }
+}

@@ -1,0 +1,2782 @@
+{
+ "api": "AdGroupandCampaign-V1",
+ "file": "specs/dest/AdGroupandCampaign-V1_prod_3p.json",
+ "schemas": {
+  "AdGroupFrequencyGetV1": {
+   "properties": {
+    "frequencyType": {
+     "$ref": "AdGroupFrequencyTypeV1"
+    },
+    "levelType": {
+     "$ref": "AdGroupFrequencyLevelTypeGetV1"
+    },
+    "maxImpressions": {
+     "description": "The maximum number of times an impression is served per user.",
+     "maximum": 500,
+     "minimum": 1,
+     "type": "number"
+    },
+    "timeUnit": {
+     "$ref": "AdGroupFrequencyTimeUnitGetV1"
+    },
+    "timeUnitCount": {
+     "description": "The count of time units.",
+     "maximum": 60,
+     "minimum": 1,
+     "type": "number"
+    }
+   },
+   "required": [
+    "frequencyType"
+   ],
+   "type": "object"
+  },
+  "AdGroupFrequencyLevelTypeGetV1": {
+   "description": "The level unit.",
+   "enum": [
+    "HOUSEHOLD",
+    "USER"
+   ],
+   "type": "string"
+  },
+  "AdGroupFrequencyLevelTypePutV1": {
+   "description": "The level unit.",
+   "enum": [
+    "HOUSEHOLD",
+    "USER"
+   ],
+   "type": "string"
+  },
+  "AdGroupFrequencyPutV1": {
+   "properties": {
+    "frequencyType": {
+     "$ref": "AdGroupFrequencyTypeV1"
+    },
+    "levelType": {
+     "$ref": "AdGroupFrequencyLevelTypePutV1"
+    },
+    "maxImpressions": {
+     "description": "The maximum number of times an impression is served per user. Required when `frequencyType`=`CUSTOM`.",
+     "maximum": 500,
+     "minimum": 1,
+     "type": "number"
+    },
+    "timeUnit": {
+     "$ref": "AdGroupFrequencyTimeUnitPutV1"
+    },
+    "timeUnitCount": {
+     "description": "The count of time units. Required when `frequencyType`=`CUSTOM`.",
+     "maximum": 60,
+     "minimum": 1,
+     "type": "number"
+    }
+   },
+   "required": [
+    "frequencyType"
+   ],
+   "type": "object"
+  },
+  "AdGroupFrequencyTimeUnitGetV1": {
+   "description": "The time unit.",
+   "enum": [
+    "DAYS",
+    "HOURS",
+    "MINUTES",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "AdGroupFrequencyTimeUnitPutV1": {
+   "description": "The time unit.",
+   "enum": [
+    "DAYS",
+    "HOURS",
+    "MINUTES"
+   ],
+   "type": "string"
+  },
+  "AdGroupFrequencyTypeV1": {
+   "description": "The type of advertising frequency cap. If UNCAPPED, no other fields are used.",
+   "enum": [
+    "CUSTOM",
+    "UNCAPPED"
+   ],
+   "type": "string"
+  },
+  "AmazonViewabilityGetV1": {
+   "properties": {
+    "includeUnmeasurableImpressions": {
+     "description": "Must be false if `viewabilityTier` is set to ALL_TIERS. You can set to true to include impressions that can not be measured when a viewabilityTier other than ALL_TIERS is selected. We recommend setting to false if high …",
+     "type": "boolean"
+    },
+    "viewabilityTier": {
+     "$ref": "ViewabilityTierGetV1"
+    }
+   },
+   "required": [
+    "includeUnmeasurableImpressions",
+    "viewabilityTier"
+   ],
+   "type": "object"
+  },
+  "AmazonViewabilityPatchV1": {
+   "properties": {
+    "includeUnmeasurableImpressions": {
+     "description": "Must be false if `viewabilityTier` is set to ALL_TIERS. You can set to true to include impressions that can not be measured when a viewabilityTier other than ALL_TIERS is selected. We recommend setting to false if high …",
+     "type": "boolean"
+    },
+    "viewabilityTier": {
+     "$ref": "ViewabilityTierPatchV1"
+    }
+   },
+   "required": [
+    "includeUnmeasurableImpressions",
+    "viewabilityTier"
+   ],
+   "type": "object"
+  },
+  "AmazonViewabilityPostV1": {
+   "properties": {
+    "includeUnmeasurableImpressions": {
+     "description": "Must be false if `viewabilityTier` is set to ALL_TIERS. You can set to true to include impressions that can not be measured when a viewabilityTier other than ALL_TIERS is selected. We recommend setting to false if high …",
+     "type": "boolean"
+    },
+    "viewabilityTier": {
+     "$ref": "ViewabilityTierPostV1"
+    }
+   },
+   "required": [
+    "includeUnmeasurableImpressions",
+    "viewabilityTier"
+   ],
+   "type": "object"
+  },
+  "AutomatedAdGroupCreationSettingsV1": {
+   "description": "[UNSUPPORTED] This field is no longer supported as Legacy Performance Plus has been deprecated, and all values will be ignored.",
+   "properties": {
+    "performancePlus": {
+     "$ref": "PerformancePlusV1"
+    }
+   },
+   "type": "object"
+  },
+  "AutomatedTargetingTacticGetV1": {
+   "description": "Represents a targeting strategy for adGroup which can be employed to drive better outcomes.",
+   "enum": [
+    "AWARENESS",
+    "MAXIMIZE_PERFORMANCE",
+    "OTHER",
+    "PROSPECTING",
+    "REMARKETING",
+    "RETENTION",
+    "SEARCH",
+    "UPPER_FUNNEL_PROSPECTING",
+    "WIN_BACK"
+   ],
+   "type": "string"
+  },
+  "BidStrategyGetV1": {
+   "description": "Specifies how we determine bids and budget on your behalf. It cannot be changed after the campaign starts.<br><br>* SPEND_BUDGET_IN_FULL: Optimizes bidding to deliver budget in full over achieving the KPI target.<br>* P…",
+   "enum": [
+    "OTHER",
+    "PRIORITIZE_KPI_TARGET",
+    "SPEND_BUDGET_IN_FULL"
+   ],
+   "type": "string"
+  },
+  "BidStrategyPatchV1": {
+   "description": "A bid strategy specifies how we determine bids on your behalf. It cannot be changed after the campaign starts. Required on creation of the campaign.<br><br>SPEND_BUDGET_IN_FULL: Optimizes bidding to deliver budget in fu…",
+   "enum": [
+    "PRIORITIZE_KPI_TARGET",
+    "SPEND_BUDGET_IN_FULL"
+   ],
+   "type": "string"
+  },
+  "BudgetCapsGetV1": {
+   "properties": {
+    "amount": {
+     "description": "The spending limit amount.",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "description": "ISO 4217 standard currency code for all currency-related attributes.",
+     "type": "string"
+    },
+    "recurrenceTimePeriod": {
+     "$ref": "RecurrenceTimePeriodGetV1"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetCapsPutV1": {
+   "properties": {
+    "amount": {
+     "description": "The spending limit expressed in the currency of the ad group.",
+     "format": "double",
+     "minimum": 1,
+     "type": "number"
+    },
+    "recurrenceTimePeriod": {
+     "$ref": "RecurrenceTimePeriodPutV1"
+    }
+   },
+   "required": [
+    "amount",
+    "recurrenceTimePeriod"
+   ],
+   "type": "object"
+  },
+  "CampaignBudgetCapGetV1": {
+   "properties": {
+    "amount": {
+     "description": "The spending limit amount.",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "description": "ISO 4217 standard currency code for all currency-related attributes.",
+     "type": "string"
+    },
+    "recurrenceTimePeriod": {
+     "$ref": "CampaignRecurrenceTimePeriodGetV1"
+    }
+   },
+   "type": "object"
+  },
+  "CampaignBudgetCapPutV1": {
+   "properties": {
+    "amount": {
+     "description": "The spending limit amount.",
+     "format": "double",
+     "minimum": 1,
+     "type": "number"
+    },
+    "recurrenceTimePeriod": {
+     "$ref": "CampaignRecurrenceTimePeriodPutV1"
+    }
+   },
+   "required": [
+    "amount",
+    "recurrenceTimePeriod"
+   ],
+   "type": "object"
+  },
+  "CampaignFrequencyGetV1": {
+   "properties": {
+    "frequencyType": {
+     "$ref": "CampaignFrequencyTypeV1"
+    },
+    "levelType": {
+     "$ref": "CampaignFrequencyLevelTypeGetV1"
+    },
+    "maxImpressions": {
+     "description": "The maximum number of times this campaign serves an impression to a user.",
+     "maximum": 99000,
+     "minimum": 1,
+     "type": "number"
+    },
+    "timeUnit": {
+     "$ref": "CampaignFrequencyTimeUnitGetV1"
+    },
+    "timeUnitCount": {
+     "description": "The count of time units.",
+     "maximum": 60,
+     "minimum": 1,
+     "type": "number"
+    }
+   },
+   "required": [
+    "frequencyType"
+   ],
+   "type": "object"
+  },
+  "CampaignFrequencyLevelTypeGetV1": {
+   "description": "The level unit.",
+   "enum": [
+    "HOUSEHOLD",
+    "USER"
+   ],
+   "type": "string"
+  },
+  "CampaignFrequencyLevelTypePutV1": {
+   "description": "The level unit.",
+   "enum": [
+    "HOUSEHOLD",
+    "USER"
+   ],
+   "type": "string"
+  },
+  "CampaignFrequencyPutV1": {
+   "properties": {
+    "frequencyType": {
+     "$ref": "CampaignFrequencyTypeV1"
+    },
+    "levelType": {
+     "$ref": "CampaignFrequencyLevelTypePutV1"
+    },
+    "maxImpressions": {
+     "description": "The maximum number of times an impression is served per user.",
+     "maximum": 99000,
+     "minimum": 1,
+     "type": "number"
+    },
+    "timeUnit": {
+     "$ref": "CampaignFrequencyTimeUnitPutV1"
+    },
+    "timeUnitCount": {
+     "description": "The count of time units.",
+     "maximum": 60,
+     "minimum": 1,
+     "type": "number"
+    }
+   },
+   "required": [
+    "frequencyType"
+   ],
+   "type": "object"
+  },
+  "CampaignFrequencyTimeUnitGetV1": {
+   "description": "The time unit.",
+   "enum": [
+    "DAYS",
+    "HOURS",
+    "MINUTES",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "CampaignFrequencyTimeUnitPutV1": {
+   "description": "The time unit.",
+   "enum": [
+    "DAYS",
+    "HOURS",
+    "MINUTES"
+   ],
+   "type": "string"
+  },
+  "CampaignFrequencyTypeV1": {
+   "description": "The type of advertising frequency. If UNCAPPED, no other fields are used.",
+   "enum": [
+    "CUSTOM",
+    "UNCAPPED"
+   ],
+   "type": "string"
+  },
+  "CampaignRecurrenceTimePeriodGetV1": {
+   "enum": [
+    "DAILY",
+    "MONTHLY",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "CampaignRecurrenceTimePeriodPutV1": {
+   "enum": [
+    "DAILY",
+    "MONTHLY"
+   ],
+   "type": "string"
+  },
+  "ConversionSettings": {
+   "description": "Structure defining weights for different conversion types in campaign optimization. Controls the weight attached to conversions in CPA calculations. For the initial launch, only binary weights (0.0 or 1.0) are allowed. …",
+   "properties": {
+    "viewWeight": {
+     "description": "Weight applied to view conversions. For initial launch: 0.0 = clicks only, 1.0 = clicks and views. In the future, we will support all values between 0.0 and 1.0.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "CreativeRotationTypeGetV1": {
+   "description": "The creative rotation type. Applies to all creatives associated to the ad group.",
+   "enum": [
+    "OTHER",
+    "RANDOM",
+    "WEIGHTED"
+   ],
+   "type": "string"
+  },
+  "CreativeRotationTypePatchV1": {
+   "description": "The creative rotation type. Applies to all creatives associated to the ad group.",
+   "enum": [
+    "RANDOM",
+    "WEIGHTED"
+   ],
+   "type": "string"
+  },
+  "CreativeRotationTypePostV1": {
+   "description": "The creative rotation type. Applies to all creatives associated to the ad group.",
+   "enum": [
+    "RANDOM",
+    "WEIGHTED"
+   ],
+   "type": "string"
+  },
+  "DefaultAudienceTargetingMatchTypeGetV1": {
+   "description": "Match type for audience targeting inclusion groups, if any. You can enhance your ad group’s reach to consumers with similar shopping, streaming, and browsing behaviors or interests as your selected audiences across all …",
+   "enum": [
+    "EXACT",
+    "SIMILAR"
+   ],
+   "type": "string"
+  },
+  "DefaultAudienceTargetingMatchTypePatchV1": {
+   "description": "Match type for audience targeting inclusion groups, if any. You can enhance your ad group’s reach to consumers with similar shopping, streaming, and browsing behaviors or interests as your selected audiences across all …",
+   "enum": [
+    "EXACT",
+    "SIMILAR"
+   ],
+   "type": "string"
+  },
+  "DefaultAudienceTargetingMatchTypePostV1": {
+   "description": "Match type for audience targeting inclusion groups, if any. You can enhance your ad group’s reach to consumers with similar shopping, streaming, and browsing behaviors or interests as your selected audiences across all …",
+   "enum": [
+    "EXACT",
+    "SIMILAR"
+   ],
+   "type": "string"
+  },
+  "DspAdGroupDeliveryStatusV1": {
+   "description": "The system-derived delivery status.",
+   "enum": [
+    "CREATIVES_NOT_RUNNING",
+    "DELIVERING",
+    "ENDED",
+    "INACTIVE",
+    "OTHER",
+    "READY_TO_DELIVER"
+   ],
+   "type": "string"
+  },
+  "DspAdGroupError": {
+   "properties": {
+    "index": {
+     "type": "number"
+    },
+    "statusCode": {
+     "type": "number"
+    },
+    "subErrors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "index",
+    "subErrors"
+   ],
+   "type": "object"
+  },
+  "DspAdGroupStateV1": {
+   "description": "The user-defined activation status.",
+   "enum": [
+    "ACTIVE",
+    "INACTIVE"
+   ],
+   "type": "string"
+  },
+  "DspAdGroupSuccess": {
+   "description": "Success response",
+   "properties": {
+    "adGroupId": {
+     "type": "string"
+    },
+    "index": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspBatchPatchAdGroupV1RequestContent": {
+   "description": "Updates one or more ad groups synchronously.\\ <b>Find more details</b>\\ See the Amazon DSP Support Center for more details. If you need access, please contact your Account Manager.\\ <a target=\"_blank\" class=\"opblock-ext…",
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "DspPatchAdGroup"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "DspBatchPatchAdGroupV1ResponseContent": {
+   "description": "Multi-status. This holds arrays of items which represent success or failure corresponding to the index in the request body",
+   "properties": {
+    "error": {
+     "description": "List of error operations",
+     "items": {
+      "$ref": "DspAdGroupError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    },
+    "success": {
+     "description": "List of successful operations",
+     "items": {
+      "$ref": "DspAdGroupSuccess"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "DspBatchPatchCampaignV1RequestContent": {
+   "description": "Updates one or more campaigns.\\ <b>Find more details</b>\\ See the Amazon DSP Support Center for more details. If you need access, please contact your Account Manager.\\ <a target=\"_blank\" class=\"opblock-external-docs__li…",
+   "properties": {
+    "campaigns": {
+     "items": {
+      "$ref": "DspPatchCampaign"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaigns"
+   ],
+   "type": "object"
+  },
+  "DspBatchPatchCampaignV1ResponseContent": {
+   "description": "Multi-status. This holds arrays of items which represent success or failure corresponding to the index in the request body",
+   "properties": {
+    "error": {
+     "description": "List of error operations",
+     "items": {
+      "$ref": "DspCampaignError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    },
+    "success": {
+     "description": "List of successful operations",
+     "items": {
+      "$ref": "DspCampaignSuccess"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "DspBatchPostAdGroupV1RequestContent": {
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "DspPostAdGroup"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "DspBatchPostAdGroupV1ResponseContent": {
+   "description": "Multi-status. This holds arrays of items which represent success or failure corresponding to the index in the request body",
+   "properties": {
+    "error": {
+     "description": "List of error operations",
+     "items": {
+      "$ref": "DspAdGroupError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    },
+    "success": {
+     "description": "List of successful operations",
+     "items": {
+      "$ref": "DspAdGroupSuccess"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "DspBatchPostCampaignV1RequestContent": {
+   "properties": {
+    "campaigns": {
+     "items": {
+      "$ref": "DspPostCampaign"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaigns"
+   ],
+   "type": "object"
+  },
+  "DspBatchPostCampaignV1ResponseContent": {
+   "description": "Multi-status. This holds arrays of items which represent success or failure corresponding to the index in the request body",
+   "properties": {
+    "error": {
+     "description": "List of error operations",
+     "items": {
+      "$ref": "DspCampaignError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    },
+    "success": {
+     "description": "List of successful operations",
+     "items": {
+      "$ref": "DspCampaignSuccess"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "DspBidStrategyV1": {
+   "description": "A bid strategy specifies how we determine bids on your behalf for each opportunity to serve an impression. We recommend using the campaign bid strategy. If the strategies differ, the campaign may under perform or it won…",
+   "enum": [
+    "PRIORITIZE_KPI_TARGET",
+    "SPEND_BUDGET_IN_FULL",
+    "USE_CAMPAIGN_STRATEGY"
+   ],
+   "type": "string"
+  },
+  "DspCampaignDeliveryStatusV1": {
+   "description": "The system-derived delivery status.",
+   "enum": [
+    "ADGROUPS_NOT_RUNNING",
+    "DELIVERING",
+    "ENDED",
+    "INACTIVE",
+    "OTHER",
+    "READY_TO_DELIVER",
+    "SUSPENDED"
+   ],
+   "type": "string"
+  },
+  "DspCampaignError": {
+   "properties": {
+    "index": {
+     "type": "number"
+    },
+    "statusCode": {
+     "type": "number"
+    },
+    "subErrors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "index",
+    "subErrors"
+   ],
+   "type": "object"
+  },
+  "DspCampaignFlight": {
+   "properties": {
+    "flightId": {
+     "type": "string"
+    },
+    "index": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "DspCampaignStateV1": {
+   "description": "The user-defined activation status.",
+   "enum": [
+    "ACTIVE",
+    "INACTIVE"
+   ],
+   "type": "string"
+  },
+  "DspCampaignSuccess": {
+   "description": "Success response",
+   "properties": {
+    "campaignId": {
+     "type": "string"
+    },
+    "flights": {
+     "items": {
+      "$ref": "DspCampaignFlight"
+     },
+     "type": "array"
+    },
+    "index": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "DspConflictExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateAdGroupBidRequestContentV1": {
+   "properties": {
+    "baseBid": {
+     "description": "This is the ideal amount you'd like to pay (per thousand impressions) for your ad inventory expressed in the currency of the campaign. This price isn't guaranteed, but we optimize the bidding strategy to try to meet thi…",
+     "format": "double",
+     "type": "number"
+    },
+    "maxAverageCPM": {
+     "description": "The maximum average cost per thousand impressions expressed in the currency of the campaign. If this field is left blank, we automatically optimize the CPM based on your budget and goals. This field is not required befo…",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateAdGroupOptimizationRequestContentV1": {
+   "properties": {
+    "automateBudgetAllocation": {
+     "description": "Set to true to automatically allocate budgets to better performing ad groups based on your selected goal KPI. To opt into automatic budget optimization, this setting must be set to true at both the campaign and ad group…",
+     "type": "boolean"
+    },
+    "bidStrategy": {
+     "$ref": "DspBidStrategyV1"
+    },
+    "dailyMinSpendAmount": {
+     "description": "Denotes the daily minimum spend on the line item in local currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "bidStrategy"
+   ],
+   "type": "object"
+  },
+  "DspCreateAdGroupPacingV1": {
+   "properties": {
+    "catchUpBoostPercentage": {
+     "description": "Available when deliveryProfile is 'EVEN'. A catch up boost offsets any drops that may occur while ad groups are delivering during weekends, holidays, or other busy time periods. A 300 boost means ad groups can deliver u…",
+     "type": "number"
+    },
+    "deliveryProfile": {
+     "$ref": "DspPatchAdGroupDeliveryProfileV1"
+    }
+   },
+   "required": [
+    "catchUpBoostPercentage",
+    "deliveryProfile"
+   ],
+   "type": "object"
+  },
+  "DspCreateCampaignFlight": {
+   "properties": {
+    "budgetAmount": {
+     "description": "The total flight budget amount. Currency is derived from the advertiser level.",
+     "format": "double",
+     "minimum": 1,
+     "type": "number"
+    },
+    "endDateTime": {
+     "description": "The flight end timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The flight name.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The flight start timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "budgetAmount",
+    "endDateTime",
+    "startDateTime"
+   ],
+   "type": "object"
+  },
+  "DspCreateCampaignFlightsContent": {
+   "properties": {
+    "flights": {
+     "items": {
+      "$ref": "DspCreateCampaignFlight"
+     },
+     "maxItems": 150,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "flights"
+   ],
+   "type": "object"
+  },
+  "DspCreateCampaignOptimizationRequestContentV1": {
+   "properties": {
+    "automateBudgetAllocation": {
+     "description": "Set to `true` to automatically adjust budgets towards better performing ad groups based on your selected goal KPI. Set to `false` to manually allocate budget for ad groups in this campaign.",
+     "type": "boolean"
+    },
+    "automatedAdGroupCreationSettings": {
+     "$ref": "AutomatedAdGroupCreationSettingsV1"
+    },
+    "bidStrategy": {
+     "$ref": "BidStrategyPatchV1"
+    },
+    "conversionSettings": {
+     "$ref": "ConversionSettings"
+    },
+    "flightBudgetRolloverSetting": {
+     "$ref": "FlightBudgetRolloverSettingV1"
+    },
+    "goalSetting": {
+     "$ref": "GoalSettingCreateV1"
+    },
+    "primaryInventoryTypes": {
+     "description": "Primary inventory type of the campaign for filtering KPIs and recommending tactics.",
+     "items": {
+      "$ref": "PrimaryInventoryTypePatchV1"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "bidStrategy",
+    "goalSetting"
+   ],
+   "type": "object"
+  },
+  "DspFeesV1": {
+   "properties": {
+    "agencyFeePercentage": {
+     "description": "A service fee that is subtracted from the campaign budget as a percent of budget. This setting can't be changed after an ad group has been added to a campaign. To nullify, send a value of 0.",
+     "format": "double",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetAdGroup": {
+   "properties": {
+    "adGroupId": {
+     "type": "string"
+    },
+    "advertisedProductCategoryIds": {
+     "description": "We use categories to determine whether a campaign is eligible to run on a given set of inventory. These categories are used as metadata passed to ad exchanges. We recommend choosing a subcategory that best aligns with t…",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "bid": {
+     "$ref": "DspGetAdGroupBidRequestContentV1"
+    },
+    "budgetAmount": {
+     "description": "The maximum budget allowed for the ad group expressed in the currency of the campaign. Total ad group spend will never exceed this amount.<p>Required on initial creation if the campaign and ad group do not use automated…",
+     "format": "double",
+     "type": "number"
+    },
+    "budgetCaps": {
+     "description": "The per day or per month spending limit. An empty array indicates that no budget caps are applied.",
+     "items": {
+      "$ref": "BudgetCapsGetV1"
+     },
+     "type": "array"
+    },
+    "campaignId": {
+     "description": "The campaign to which the ad group is associated.",
+     "type": "string"
+    },
+    "comments": {
+     "description": "The ad group comments.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date the campaign was created. Time zone is always UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "creativeRotationType": {
+     "$ref": "CreativeRotationTypeGetV1"
+    },
+    "deliveryStatus": {
+     "$ref": "DspAdGroupDeliveryStatusV1"
+    },
+    "endDateTime": {
+     "description": "The ad group end timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fees": {
+     "description": "The list of fees associated with the ad group.",
+     "items": {
+      "$ref": "FeeGetV1"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "frequencies": {
+     "description": "The maximum number of times an impression is served per user.",
+     "items": {
+      "$ref": "AdGroupFrequencyGetV1"
+     },
+     "type": "array"
+    },
+    "inventoryType": {
+     "$ref": "InventoryTypeGetV1"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date the campaign was last updated. Time zone is always UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "A name for the ad group.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "DspGetAdGroupOptimizationResponseContentV1"
+    },
+    "pacing": {
+     "$ref": "DspGetAdGroupPacingV1"
+    },
+    "purchaseOrderNumber": {
+     "description": "The purchase order number.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The ad group start timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DspAdGroupStateV1"
+    },
+    "targetingSettings": {
+     "$ref": "TargetingSettingsGetV1"
+    }
+   },
+   "required": [
+    "adGroupId"
+   ],
+   "type": "object"
+  },
+  "DspGetAdGroupBidRequestContentV1": {
+   "properties": {
+    "baseBid": {
+     "description": "This is the ideal amount you'd like to pay (per thousand impressions) for your ad inventory. This price isn't guaranteed, but we optimize the bidding strategy to try to meet this goal.",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "description": "ISO 4217 standard currency code for all currency-related attributes.",
+     "type": "string"
+    },
+    "maxAverageCPM": {
+     "description": "The maximum average cost per thousand impressions. If this field is left blank, we automatically optimize the CPM based on your budget and goals.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetAdGroupDeliveryProfileV1": {
+   "description": "Determines how the system will spend budget and deliver impressions over the ad group’s flight. The following options are available: EVEN: Even pacing spends your budget consistently across the length of the campaign. W…",
+   "enum": [
+    "ASAP",
+    "EVEN",
+    "OTHER",
+    "PACE_AHEAD",
+    "STRICT_EVEN"
+   ],
+   "type": "string"
+  },
+  "DspGetAdGroupOptimizationResponseContentV1": {
+   "properties": {
+    "automateBudgetAllocation": {
+     "description": "Set to true to automatically allocate budgets to better performing ad groups based on your selected goal KPI. To opt into automatic budget optimization, this setting must be set to true at both the campaign and ad group…",
+     "type": "boolean"
+    },
+    "bidStrategy": {
+     "$ref": "DspBidStrategyV1"
+    },
+    "dailyMinSpendAmount": {
+     "description": "Denotes the daily minimum spend on the line item in local currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetAdGroupPacingV1": {
+   "properties": {
+    "catchUpBoostPercentage": {
+     "description": "Available when deliveryProfile is 'EVEN'. A catch up boost offsets any drops that may occur while ad groups are delivering during weekends, holidays, or other busy time periods. A 300 boost means ad groups can deliver u…",
+     "type": "number"
+    },
+    "deliveryProfile": {
+     "$ref": "DspGetAdGroupDeliveryProfileV1"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetCampaign": {
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser to which the campaign is associated.",
+     "type": "string"
+    },
+    "budgetCaps": {
+     "description": "The per day or per month spending limit. An empty array indicates that no budget caps are applied.",
+     "items": {
+      "$ref": "CampaignBudgetCapGetV1"
+     },
+     "type": "array"
+    },
+    "campaignId": {
+     "type": "string"
+    },
+    "comments": {
+     "description": "The campaign comments.",
+     "type": "string"
+    },
+    "country": {
+     "description": "The ISO Alpha-2 country code to which the campaign is associated.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date the campaign was created. Time zone is always UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "deliveryStatus": {
+     "$ref": "DspCampaignDeliveryStatusV1"
+    },
+    "endDateTime": {
+     "description": "The campaign end timestamp.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fees": {
+     "$ref": "DspFeesV1"
+    },
+    "flights": {
+     "items": {
+      "$ref": "DspListCampaignFlight"
+     },
+     "type": "array"
+    },
+    "frequencies": {
+     "description": "The maximum number of times this campaign serves an impression to a user.",
+     "items": {
+      "$ref": "CampaignFrequencyGetV1"
+     },
+     "type": "array"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date the campaign was last updated. Time zone is always UTC.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "A name for the campaign.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "DspGetCampaignOptimizationOutputV1"
+    },
+    "purchaseOrderNumber": {
+     "description": "The PO number associated to the campaign.",
+     "type": "string"
+    },
+    "skanAppId": {
+     "description": "StoreKit AdNetwork application ID. Represents iTunes application ID with which SKAN-enabled campaigns are associated.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The campaign start timestamp.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DspCampaignStateV1"
+    },
+    "targetsAmazonDeal": {
+     "description": "If the campaign is targeting an Amazon deal, the value will be true, and the campaign and ad group(s) will be read-only.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "campaignId"
+   ],
+   "type": "object"
+  },
+  "DspGetCampaignOptimizationOutputV1": {
+   "properties": {
+    "automateBidAllocation": {
+     "description": "Automatically adjust bids for impressions that are more likely to improve your selected goal KPI. This setting is on a path to deprecation. The value will be null for new campaigns.",
+     "type": "boolean"
+    },
+    "automateBudgetAllocation": {
+     "description": "Set to true to automatically allocate budgets to better performing ad groups based on your selected goal KPI. To opt into automatic budget optimization, this setting must also be set to true at the ad group level. Set t…",
+     "type": "boolean"
+    },
+    "automatedAdGroupCreationSettings": {
+     "$ref": "AutomatedAdGroupCreationSettingsV1"
+    },
+    "bidStrategy": {
+     "$ref": "BidStrategyGetV1"
+    },
+    "conversionSettings": {
+     "$ref": "ConversionSettings"
+    },
+    "flightBudgetRolloverSetting": {
+     "$ref": "FlightBudgetRolloverSettingV1"
+    },
+    "goalSetting": {
+     "$ref": "GoalSettingGetV1"
+    },
+    "primaryInventoryTypes": {
+     "description": "Primary inventory type of the campaign for filtering KPIs and recommending tactics.",
+     "items": {
+      "$ref": "PrimaryInventoryTypeGetV1"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListAdGroupV1RequestContent": {
+   "properties": {
+    "adGroupIdFilter": {
+     "description": "A comma-delimited list of ad group identifiers. Cannot be used with campaignIdFilter.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "campaignIdFilter": {
+     "description": "A comma-delimited list of campaign identifiers. Cannot be used with adGroupIdFilter.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "includeRegional": {
+     "description": "Flag to enable returning of adGroups related to cross region campaigns. Default false.",
+     "type": "boolean"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the paginated response.",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "To retrieve the next page of paginated results, specify this token in the request.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListAdGroupV1ResponseContent": {
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "DspGetAdGroup"
+     },
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListCampaignFlight": {
+   "properties": {
+    "budgetAmount": {
+     "description": "The total flight budget amount.",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "description": "ISO 4217 standard currency code for all currency-related campaign attributes.",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The flight end date. When listing flights UTC time zone will be used.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "flightId": {
+     "description": "The flight identifier.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The flight name.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The flight start date. When listing flights UTC time zone will be used.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListCampaignV1RequestContent": {
+   "properties": {
+    "campaignIdFilter": {
+     "description": "A comma-delimited list of campaign identifiers.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "includeRegional": {
+     "description": "Flag to enable returning of cross region campaigns. Default false.",
+     "type": "boolean"
+    },
+    "maxResults": {
+     "description": "Number of records to include in the paginated response.",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "To retrieve the next page of paginated results, specify this token in the request.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListCampaignV1ResponseContent": {
+   "properties": {
+    "campaigns": {
+     "items": {
+      "$ref": "DspGetCampaign"
+     },
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspPatchAdGroup": {
+   "properties": {
+    "adGroupId": {
+     "type": "string"
+    },
+    "advertisedProductCategoryIds": {
+     "description": "We use categories to determine whether a campaign is eligible to run on a given set of inventory. These categories are used as metadata passed to ad exchanges. We recommend choosing a subcategory that best aligns with t…",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 1,
+     "type": "array"
+    },
+    "bid": {
+     "$ref": "DspPatchAdGroupBidRequestContentV1"
+    },
+    "budgetAmount": {
+     "description": "The maximum budget allowed for the ad group expressed in the currency of the campaign. Total ad group spend will never exceed this amount.<p>Required on initial creation if the campaign and ad group do not use automated…",
+     "format": "double",
+     "type": "number"
+    },
+    "budgetCaps": {
+     "description": "The per day or per month spending limit. You may have up to 1 DAILY and/or 1 MONTHLY cap. An empty array indicates that no budget caps are applied.",
+     "items": {
+      "$ref": "BudgetCapsPutV1"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "comments": {
+     "description": "The ad group comments. To nullify, set the value to an empty string.",
+     "type": "string"
+    },
+    "creativeRotationType": {
+     "$ref": "CreativeRotationTypePatchV1"
+    },
+    "endDateTime": {
+     "description": "The ad group end timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fees": {
+     "description": "Apply third-party data fees to the ad group to have fees displayed in reports.",
+     "items": {
+      "$ref": "FeePatchV1"
+     },
+     "maxItems": 7,
+     "minItems": 0,
+     "type": "array"
+    },
+    "frequencies": {
+     "description": "The maximum number of times an impression is served per user.",
+     "items": {
+      "$ref": "AdGroupFrequencyPutV1"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    },
+    "inventoryType": {
+     "$ref": "InventoryTypePatchV1"
+    },
+    "name": {
+     "description": "A name for the ad group.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "DspUpdateAdGroupOptimizationRequestContentV1"
+    },
+    "pacing": {
+     "$ref": "DspPatchAdGroupPacingV1"
+    },
+    "purchaseOrderNumber": {
+     "description": "The purchase order number. If you’re using an ID to track this order elsewhere, you can enter it here. It is commonly referred to as externalId. To nullify, set the value to an empty string.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The ad group start timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DspAdGroupStateV1"
+    },
+    "targetingSettings": {
+     "$ref": "TargetingSettingsPatchV1"
+    }
+   },
+   "required": [
+    "adGroupId"
+   ],
+   "type": "object"
+  },
+  "DspPatchAdGroupBidRequestContentV1": {
+   "properties": {
+    "baseBid": {
+     "description": "This is the ideal amount you'd like to pay (per thousand impressions) for your ad inventory expressed in the currency of the campaign. This price isn't guaranteed, but we optimize the bidding strategy to try to meet thi…",
+     "format": "double",
+     "type": "number"
+    },
+    "maxAverageCPM": {
+     "description": "The maximum average cost per thousand impressions expressed in the currency of the campaign. If this field is left blank, we automatically optimize the CPM based on your budget and goals. To remove a value for this fiel…",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspPatchAdGroupDeliveryProfileV1": {
+   "description": "Determines how the system will spend budget and deliver impressions over the ad group’s flight. The following options are available: EVEN: Even pacing spends your budget consistently across the length of the campaign. W…",
+   "enum": [
+    "ASAP",
+    "EVEN",
+    "PACE_AHEAD",
+    "STRICT_EVEN"
+   ],
+   "type": "string"
+  },
+  "DspPatchAdGroupPacingV1": {
+   "properties": {
+    "catchUpBoostPercentage": {
+     "description": "Available when deliveryProfile is 'EVEN'. A catch up boost offsets any drops that may occur while ad groups are delivering during weekends, holidays, or other busy time periods. A 300 boost means ad groups can deliver u…",
+     "type": "number"
+    },
+    "deliveryProfile": {
+     "$ref": "DspPatchAdGroupDeliveryProfileV1"
+    }
+   },
+   "type": "object"
+  },
+  "DspPatchCampaign": {
+   "properties": {
+    "budgetCaps": {
+     "description": "The per day or per month spending limit. You may have up to 1 DAILY and/or 1 MONTHLY cap. An empty array indicates that no budget caps are applied.",
+     "items": {
+      "$ref": "CampaignBudgetCapPutV1"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "campaignId": {
+     "type": "string"
+    },
+    "comments": {
+     "description": "The campaign comments. To nullify, set the value to an empty string.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "fees": {
+     "$ref": "DspFeesV1"
+    },
+    "flights": {
+     "$ref": "DspPutCampaignFlightsContent"
+    },
+    "frequencies": {
+     "description": "The maximum number of times this campaign serves an impression to a user.",
+     "items": {
+      "$ref": "CampaignFrequencyPutV1"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    },
+    "name": {
+     "description": "A name for the campaign. This can’t be changed after the campaign ends.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "DspPatchCampaignOptimizationRequestContentV1"
+    },
+    "purchaseOrderNumber": {
+     "description": "If you’re using an ID to track this order elsewhere, you can enter it here. It will be available in all dashboards and downloadable reports. This field is required if \"Mandatory PO numbers\" is set at the entity level. T…",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "skanAppId": {
+     "description": "StoreKit AdNetwork application ID. Represents iTunes application ID with which SKAN-enabled campaigns are associated. To nullify, set the value to an empty string.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DspCampaignStateV1"
+    }
+   },
+   "required": [
+    "campaignId"
+   ],
+   "type": "object"
+  },
+  "DspPatchCampaignOptimizationRequestContentV1": {
+   "properties": {
+    "automateBudgetAllocation": {
+     "description": "Set to true to automatically allocate budgets to better performing ad groups based on your selected goal KPI. To opt into automatic budget optimization, this setting must also be set to true at the ad group level. Set t…",
+     "type": "boolean"
+    },
+    "automatedAdGroupCreationSettings": {
+     "$ref": "AutomatedAdGroupCreationSettingsV1"
+    },
+    "bidStrategy": {
+     "$ref": "BidStrategyPatchV1"
+    },
+    "conversionSettings": {
+     "$ref": "ConversionSettings"
+    },
+    "flightBudgetRolloverSetting": {
+     "$ref": "FlightBudgetRolloverSettingV1"
+    },
+    "goalSetting": {
+     "$ref": "GoalSettingPatchV1"
+    },
+    "primaryInventoryTypes": {
+     "description": "Primary inventory type of the campaign for filtering KPIs and recommending tactics.",
+     "items": {
+      "$ref": "PrimaryInventoryTypePatchV1"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspPostAdGroup": {
+   "properties": {
+    "advertisedProductCategoryIds": {
+     "description": "We use categories to determine whether a campaign is eligible to run on a given set of inventory. These categories are used as metadata passed to ad exchanges. We recommend choosing a subcategory that best aligns with t…",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 1,
+     "type": "array"
+    },
+    "bid": {
+     "$ref": "DspCreateAdGroupBidRequestContentV1"
+    },
+    "budgetAmount": {
+     "description": "The maximum budget allowed for the ad group expressed in the currency of the campaign. Total ad group spend will never exceed this amount.<p>Required on initial creation if the campaign and ad group do not use automated…",
+     "format": "double",
+     "type": "number"
+    },
+    "budgetCaps": {
+     "description": "The per day or per month spending limit. You may have up to 1 DAILY and/or 1 MONTHLY cap. An empty array indicates that no budget caps are applied.",
+     "items": {
+      "$ref": "BudgetCapsPutV1"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "campaignId": {
+     "description": "The campaign to which the ad group is associated.",
+     "type": "string"
+    },
+    "comments": {
+     "description": "The ad group comments.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "creativeRotationType": {
+     "$ref": "CreativeRotationTypePostV1"
+    },
+    "endDateTime": {
+     "description": "The ad group end timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fees": {
+     "description": "Apply third-party data fees to the ad group to have fees displayed in reports.",
+     "items": {
+      "$ref": "FeePostV1"
+     },
+     "maxItems": 7,
+     "minItems": 0,
+     "type": "array"
+    },
+    "frequencies": {
+     "description": "The maximum number of times an impression is served per user.",
+     "items": {
+      "$ref": "AdGroupFrequencyPutV1"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    },
+    "inventoryType": {
+     "$ref": "InventoryTypePostV1"
+    },
+    "name": {
+     "description": "A name for the ad group.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "DspCreateAdGroupOptimizationRequestContentV1"
+    },
+    "pacing": {
+     "$ref": "DspCreateAdGroupPacingV1"
+    },
+    "purchaseOrderNumber": {
+     "description": "The purchase order number. If you’re using an ID to track this order elsewhere, you can enter it here. It will be available in all dashboards and downloadable reports. For advertisers in Europe, this ID will be used as …",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The ad group start timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "targetingSettings": {
+     "$ref": "TargetingSettingsPostV1"
+    }
+   },
+   "required": [
+    "advertisedProductCategoryIds",
+    "bid",
+    "campaignId",
+    "creativeRotationType",
+    "endDateTime",
+    "frequencies",
+    "inventoryType",
+    "name",
+    "optimization",
+    "pacing",
+    "startDateTime",
+    "targetingSettings"
+   ],
+   "type": "object"
+  },
+  "DspPostCampaign": {
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser to which the campaign is associated.",
+     "type": "string"
+    },
+    "budgetCaps": {
+     "description": "The per day or per month spending limit. You may have up to 1 DAILY and/or 1 MONTHLY cap. An empty array indicates that no budget caps are applied.",
+     "items": {
+      "$ref": "CampaignBudgetCapPutV1"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "comments": {
+     "description": "The campaign comments.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "country": {
+     "description": "The ISO Alpha-2 country code to which the campaign is associated. If empty, advertiser must have a default country set.",
+     "type": "string"
+    },
+    "fees": {
+     "$ref": "DspFeesV1"
+    },
+    "flights": {
+     "$ref": "DspCreateCampaignFlightsContent"
+    },
+    "frequencies": {
+     "description": "The maximum number of times this campaign serves an impression to a user.",
+     "items": {
+      "$ref": "CampaignFrequencyPutV1"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    },
+    "name": {
+     "description": "A name for the campaign. This can’t be changed after the campaign ends.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "DspCreateCampaignOptimizationRequestContentV1"
+    },
+    "purchaseOrderNumber": {
+     "description": "If you’re using an ID to track this order elsewhere, you can enter it here. It will be available in all dashboards and downloadable reports. This field is required if \"Mandatory PO numbers\" is set at the entity level.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "skanAppId": {
+     "description": "StoreKit AdNetwork application ID. Represents iTunes application ID with which SKAN-enabled campaigns are associated. To nullify, set the value to an empty string.",
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertiserId",
+    "flights",
+    "frequencies",
+    "name",
+    "optimization"
+   ],
+   "type": "object"
+  },
+  "DspPutCampaignFlight": {
+   "properties": {
+    "budgetAmount": {
+     "description": "The total flight budget amount. Currency is derived from the advertiser level.",
+     "format": "double",
+     "minimum": 1,
+     "type": "number"
+    },
+    "endDateTime": {
+     "description": "The flight end timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    },
+    "flightId": {
+     "description": "The flight identifier. Only required when changing an existing flight.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The flight name.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The flight start timestamp. The format must be the RFC3339 profile of ISO-8601 (YYYY-MM-DDThh:mm:ssTZD).",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "budgetAmount",
+    "endDateTime",
+    "startDateTime"
+   ],
+   "type": "object"
+  },
+  "DspPutCampaignFlightsContent": {
+   "description": "The flights array acts as a full replacement of all flights on a campaign. To add, delete, and/or update flights, include the full list of existing flights and only update those you wish to change. To update existing fl…",
+   "properties": {
+    "flights": {
+     "items": {
+      "$ref": "DspPutCampaignFlight"
+     },
+     "maxItems": 150,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUpdateAdGroupOptimizationRequestContentV1": {
+   "properties": {
+    "automateBudgetAllocation": {
+     "description": "Set to true to automatically allocate budgets to better performing ad groups based on your selected goal KPI. To opt into automatic budget optimization, this setting must be set to true at both the campaign and ad group…",
+     "type": "boolean"
+    },
+    "bidStrategy": {
+     "$ref": "DspBidStrategyV1"
+    },
+    "dailyMinSpendAmount": {
+     "description": "Denotes the daily minimum spend on the line item in local currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "FeeCurrencyCodeV1": {
+   "description": "ISO 4217 standard currency code for all currency-related attributes. Applicable when feeValueType is `FIXED_CPM`. Note that the currencyCode represents the currency that the fee was originally set in. This may or may no…",
+   "enum": [
+    "AED",
+    "ARS",
+    "AUD",
+    "BGN",
+    "BHD",
+    "BOB",
+    "BRL",
+    "CAD",
+    "CHF",
+    "CLP",
+    "CNY",
+    "COP",
+    "CRC",
+    "CZK",
+    "DKK",
+    "DOP",
+    "DZD",
+    "EGP",
+    "EUR",
+    "GBP",
+    "GTQ",
+    "HKD",
+    "HNL",
+    "HRK",
+    "HUF",
+    "IDR",
+    "ILS",
+    "INR",
+    "JMD",
+    "JOD",
+    "JPY",
+    "KRW",
+    "KWD",
+    "MAD",
+    "MXN",
+    "MYR",
+    "NGN",
+    "NOK",
+    "NZD",
+    "PAB",
+    "PEN",
+    "PHP",
+    "PKR",
+    "PLN",
+    "PYG",
+    "QAR",
+    "RON",
+    "RSD",
+    "RUB",
+    "SAR",
+    "SEK",
+    "SGD",
+    "THB",
+    "TND",
+    "TRY",
+    "TWD",
+    "UAH",
+    "USD",
+    "UYU",
+    "VND",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "FeeGetV1": {
+   "properties": {
+    "addToBudgetSpentAmount": {
+     "description": "Applies only to THIRD_PARTY_APPLIED_FEE. When set to true, third-party applied fees are added on top of the total ad group budget spent amount in reports.",
+     "type": "boolean"
+    },
+    "currencyCode": {
+     "$ref": "FeeCurrencyCodeV1"
+    },
+    "feeType": {
+     "$ref": "FeeTypeGetV1"
+    },
+    "feeValue": {
+     "description": "The fee amount expressed as the `feeValueType`. `AMAZON_AUDIENCE_FEE` AND `THIRD_PARTY_AUDIENCE_FEE` is in the currency of the marketplace. All other CPM based fees are in the currency of the advertiser. For percentages…",
+     "type": "string"
+    },
+    "feeValueType": {
+     "$ref": "FeeValueTypeGetV1"
+    },
+    "thirdPartyProvider": {
+     "$ref": "ThirdPartyProviderGetV1"
+    }
+   },
+   "required": [
+    "feeType",
+    "feeValue",
+    "feeValueType"
+   ],
+   "type": "object"
+  },
+  "FeePatchV1": {
+   "properties": {
+    "addToBudgetSpentAmount": {
+     "description": "Applies only to THIRD_PARTY_APPLIED_FEE. When set to true, third-party applied fees are added on top of the total ad group budget spent amount in reports.",
+     "type": "boolean"
+    },
+    "feeType": {
+     "$ref": "FeeTypePatchV1"
+    },
+    "feeValue": {
+     "description": "The fee amount expressed as a CPM. AMAZON_AUDIENCE_FEE AND THIRD_PARTY_AUDIENCE_FEE is in the currency of the marketplace. All other third-party fees are in the currency of the advertiser.",
+     "type": "string"
+    },
+    "thirdPartyProvider": {
+     "$ref": "ThirdPartyProviderPatchV1"
+    }
+   },
+   "required": [
+    "addToBudgetSpentAmount",
+    "feeType",
+    "feeValue",
+    "thirdPartyProvider"
+   ],
+   "type": "object"
+  },
+  "FeePostV1": {
+   "properties": {
+    "addToBudgetSpentAmount": {
+     "description": "Applies only to THIRD_PARTY_APPLIED_FEE. When set to true, third-party applied fees are added on top of the total ad group budget spent amount in reports.",
+     "type": "boolean"
+    },
+    "feeType": {
+     "$ref": "FeeTypePostV1"
+    },
+    "feeValue": {
+     "description": "The fee amount expressed as a CPM. AMAZON_AUDIENCE_FEE AND THIRD_PARTY_AUDIENCE_FEE is in the currency of the marketplace. All other third-party fees are in the currency of the advertiser.",
+     "type": "string"
+    },
+    "thirdPartyProvider": {
+     "$ref": "ThirdPartyProviderPostV1"
+    }
+   },
+   "required": [
+    "addToBudgetSpentAmount",
+    "feeType",
+    "feeValue",
+    "thirdPartyProvider"
+   ],
+   "type": "object"
+  },
+  "FeeTypeGetV1": {
+   "description": "The type of the fee. * AMAZON_DSP_FEE: A service fee for using Amazon DSP and subtracted from the budget. This fee is applied as a percent of supply cost. * AMAZON_AUDIENCE_FEE: CPM fee for using Amazon audiences. * THI…",
+   "enum": [
+    "AMAZON_AUDIENCE_FEE",
+    "AMAZON_DSP_FEE",
+    "MANAGED_SERVICE_FEE",
+    "OMNICHANNEL_METRICS_FEE",
+    "THIRD_PARTY_APPLIED_FEE",
+    "THIRD_PARTY_AUDIENCE_FEE",
+    "THIRD_PARTY_TARGETING_FEE"
+   ],
+   "type": "string"
+  },
+  "FeeTypePatchV1": {
+   "description": "The type of the fee. * THIRD_PARTY_APPLIED_FEE: If this ad group uses third-party data and needs to track CPM costs, then apply any applicable data fee CPMs here. Amazon will automatically calculate your third-party fee…",
+   "enum": [
+    "THIRD_PARTY_APPLIED_FEE"
+   ],
+   "type": "string"
+  },
+  "FeeTypePostV1": {
+   "description": "The type of the fee. * THIRD_PARTY_APPLIED_FEE: If this ad group uses third-party data and needs to track CPM costs, then apply any applicable data fee CPMs here. Amazon will automatically calculate your third-party fee…",
+   "enum": [
+    "THIRD_PARTY_APPLIED_FEE"
+   ],
+   "type": "string"
+  },
+  "FeeValueTypeGetV1": {
+   "description": "* FIXED_CPM: Charged based on a fixed CPM. The currency depends on the feeType. * PERCENT_OF_SUPPLY_COST: Charged as a percent of supply (media) cost. Ranges from 0 to 1 where 0.15 represents 15%.",
+   "enum": [
+    "FIXED_CPM",
+    "PERCENT_OF_SUPPLY_COST"
+   ],
+   "type": "string"
+  },
+  "FlightBudgetRolloverSettingV1": {
+   "description": "Flight budget rollover settings for un-used budget of ended flights.",
+   "properties": {
+    "rolloverStrategy": {
+     "$ref": "RolloverStrategyV1"
+    }
+   },
+   "type": "object"
+  },
+  "GoalGetV1": {
+   "description": "The primary goal you are trying to achieve with this campaign. Only `AWARENESS`, `CONSIDERATION` and `CONVERSION` are supported on new campaigns. This field is read-only and is derived from the selected \"kpi\".",
+   "enum": [
+    "AWARENESS",
+    "CONSIDERATION",
+    "CONSIDERATIONS_ON_AMAZON",
+    "CONVERSION",
+    "CONVERSIONS_OFF_AMAZON",
+    "ENGAGEMENT_WITH_MY_AD",
+    "MOBILE_APP_INSTALLS",
+    "OTHER",
+    "PURCHASES_ON_AMAZON",
+    "PURCHASES_ON_OFF_AMAZON"
+   ],
+   "type": "string"
+  },
+  "GoalSettingCreateV1": {
+   "properties": {
+    "kpi": {
+     "$ref": "KpiPatchV1"
+    },
+    "targetKpi": {
+     "description": "The key performance metric that will be used to measure success of your campaign. Depending on the `kpi` selected, this will be either currency based, percentage based, or an integer. To nullify, send a value of -1. If …",
+     "format": "float",
+     "type": "number"
+    }
+   },
+   "required": [
+    "kpi"
+   ],
+   "type": "object"
+  },
+  "GoalSettingGetV1": {
+   "properties": {
+    "currencyCode": {
+     "description": "ISO 4217 standard currency code for all currency-related attributes.",
+     "type": "string"
+    },
+    "goal": {
+     "$ref": "GoalGetV1"
+    },
+    "kpi": {
+     "$ref": "KpiGetV1"
+    },
+    "targetKpi": {
+     "description": "The key performance metric that will be used to measure success of your campaign. Depending on the `kpi` selected, this will be either currency based, percentage based, or an integer. To nullify, send a value of -1. If …",
+     "format": "float",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "GoalSettingPatchV1": {
+   "properties": {
+    "kpi": {
+     "$ref": "KpiPatchV1"
+    },
+    "targetKpi": {
+     "description": "The key performance metric that will be used to measure success of your campaign. Depending on the `kpi` selected, this will be either currency based, percentage based, or an integer. To nullify, send a value of -1. If …",
+     "format": "float",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "InventoryTypeGetV1": {
+   "description": "Determines what inventory to display creatives on. Inventory refers to the channel (desktop sites, mobile sites, and apps) and specific sites and apps within those channels where ads can run. Once the ad group is create…",
+   "enum": [
+    "AAP_MOBILE_APP",
+    "AMAZON_MOBILE_DISPLAY",
+    "AUDIO",
+    "AUDIO_AMAZON_DEAL",
+    "DIGITAL_OUT_OF_HOME",
+    "DISPLAY",
+    "LIVE_EVENTS",
+    "ONLINE_VIDEO",
+    "OTHER",
+    "PODCAST",
+    "STANDARD_DISPLAY",
+    "STREAMING_TV",
+    "STREAMING_TV_AMAZON_DEAL",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "InventoryTypePatchV1": {
+   "description": "Determines what inventory to display creatives on. Inventory refers to the channel (desktop sites, mobile sites, and apps) and specific sites and apps within those channels where ads can run. Once the ad group is create…",
+   "enum": [
+    "AAP_MOBILE_APP",
+    "AMAZON_MOBILE_DISPLAY",
+    "AUDIO",
+    "DISPLAY",
+    "LIVE_EVENTS",
+    "ONLINE_VIDEO",
+    "PODCAST",
+    "STANDARD_DISPLAY",
+    "STREAMING_TV",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "InventoryTypePostV1": {
+   "description": "Determines what inventory to display creatives on. Inventory refers to the channel (desktop sites, mobile sites, and apps) and specific sites and apps within those channels where ads can run. Once the ad group is create…",
+   "enum": [
+    "AAP_MOBILE_APP",
+    "AMAZON_MOBILE_DISPLAY",
+    "AUDIO",
+    "DISPLAY",
+    "LIVE_EVENTS",
+    "ONLINE_VIDEO",
+    "PODCAST",
+    "STANDARD_DISPLAY",
+    "STREAMING_TV",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "InventoryTypesV1": {
+   "description": "Specifies the inventory type of the ad groups that are auto-created upon Performance+ campaign creation. This field cannot be edited after campaign creation.",
+   "enum": [
+    "DISPLAY",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "KpiGetV1": {
+   "description": "The KPI the campaign will optimize toward.",
+   "enum": [
+    "CLICK_THROUGH_RATE",
+    "COMBINED_RETURN_ON_AD_SPEND",
+    "COST_PER_ACTION",
+    "COST_PER_CLICK",
+    "COST_PER_DETAIL_PAGE_VIEW",
+    "COST_PER_FIRST_APP_OPEN",
+    "COST_PER_INSTALL",
+    "COST_PER_SIGN_UP",
+    "COST_PER_VIDEO_COMPLETION",
+    "DETAIL_PAGE_VIEW_RATE",
+    "FREQUENCY",
+    "OTHER",
+    "REACH",
+    "RETURN_ON_AD_SPEND",
+    "ROAS_OFF_AMAZON",
+    "TOTAL_RETURN_ON_AD_SPEND",
+    "VIDEO_COMPLETION_RATE"
+   ],
+   "type": "string"
+  },
+  "KpiPatchV1": {
+   "description": "The KPI the campaign will optimize toward. The KPI can be changed mid-flight but will reset any learnings built up by the campaign. Required on creation of the campaign. The \"goal\" displayed in the UI and campaign list …",
+   "enum": [
+    "CLICK_THROUGH_RATE",
+    "COMBINED_RETURN_ON_AD_SPEND",
+    "COST_PER_ACTION",
+    "COST_PER_CLICK",
+    "COST_PER_DETAIL_PAGE_VIEW",
+    "COST_PER_FIRST_APP_OPEN",
+    "COST_PER_INSTALL",
+    "COST_PER_SIGN_UP",
+    "COST_PER_VIDEO_COMPLETION",
+    "DETAIL_PAGE_VIEW_RATE",
+    "FREQUENCY",
+    "REACH",
+    "RETURN_ON_AD_SPEND",
+    "ROAS_OFF_AMAZON",
+    "TOTAL_RETURN_ON_AD_SPEND",
+    "VIDEO_COMPLETION_RATE"
+   ],
+   "type": "string"
+  },
+  "PerformancePlusV1": {
+   "description": "Set the required fields to generate a Performance+ campaign and ad groups with custom predictive audiences.",
+   "properties": {
+    "inventoryTypes": {
+     "items": {
+      "$ref": "InventoryTypesV1"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PrimaryInventoryTypeGetV1": {
+   "description": "Primary inventory types for filtering Goal KPIs and automated tactics recommendations.",
+   "enum": [
+    "AUDIO",
+    "DISPLAY",
+    "OTHER",
+    "VIDEO_OLV",
+    "VIDEO_STV"
+   ],
+   "type": "string"
+  },
+  "PrimaryInventoryTypePatchV1": {
+   "description": "Primary inventory types for filtering Goal KPIs and automated tactics recommendations.",
+   "enum": [
+    "AUDIO",
+    "DISPLAY",
+    "VIDEO_OLV",
+    "VIDEO_STV"
+   ],
+   "type": "string"
+  },
+  "RecurrenceTimePeriodGetV1": {
+   "description": "The type of recurrence for the spending limit.",
+   "enum": [
+    "DAILY",
+    "MONTHLY",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "RecurrenceTimePeriodPutV1": {
+   "description": "The type of recurrence for the spending limit.",
+   "enum": [
+    "DAILY",
+    "MONTHLY"
+   ],
+   "type": "string"
+  },
+  "RolloverStrategyV1": {
+   "description": "Strategy to apply for rolling over un-used flight budget. There are 3 options: Do not change flight budgets, Roll prior flight unused budget, Roll cumulative unused budget. If no value is set then default of NO_ROLLOVER…",
+   "enum": [
+    "CUMULATIVE_BUDGET_ROLLOVER",
+    "NO_ROLLOVER",
+    "PRIOR_BUDGET_ROLLOVER"
+   ],
+   "type": "string"
+  },
+  "SiteLanguageGetV1": {
+   "description": "The ISO 639-1 language code. Only applicable and required when `inventoryType` is STANDARD_DISPLAY or VIDEO. One language may be chosen from the list below depending on the advertiser's country. * US: EN, ES * CA: EN, F…",
+   "enum": [
+    "AR",
+    "BN",
+    "CS",
+    "DA",
+    "DE",
+    "EN",
+    "ES",
+    "FI",
+    "FR",
+    "GU",
+    "HI",
+    "IT",
+    "JA",
+    "KN",
+    "ML",
+    "MR",
+    "NL",
+    "NO",
+    "OTHER",
+    "PA",
+    "PL",
+    "PT",
+    "SV",
+    "TA",
+    "TE",
+    "TR",
+    "ZH"
+   ],
+   "type": "string"
+  },
+  "TacticsConvertersExclusionTypeGetV1": {
+   "description": "Represents the exclusion criteria applied to purchasers of your tactics ad groups. * NO_EXCLUSION Do not exclude anyone from your targeting. * RECENT_PURCHASERS Exclude recent shoppers who bought your product recently. …",
+   "enum": [
+    "NO_EXCLUSION",
+    "RECENT_PURCHASERS"
+   ],
+   "type": "string"
+  },
+  "TacticsConvertersExclusionTypePatchV1": {
+   "description": "Represents the exclusion criteria applied to purchasers of your tactics ad groups. * NO_EXCLUSION Do not exclude anyone from your targeting. * RECENT_PURCHASERS Exclude recent shoppers who bought your product recently. …",
+   "enum": [
+    "NO_EXCLUSION",
+    "RECENT_PURCHASERS"
+   ],
+   "type": "string"
+  },
+  "TacticsConvertersExclusionTypePostV1": {
+   "description": "Represents the exclusion criteria applied to purchasers of your tactics ad groups. * NO_EXCLUSION Do not exclude anyone from your targeting. * RECENT_PURCHASERS Exclude recent shoppers who bought your product recently. …",
+   "enum": [
+    "NO_EXCLUSION",
+    "RECENT_PURCHASERS"
+   ],
+   "type": "string"
+  },
+  "TargetingSettingsGetV1": {
+   "properties": {
+    "amazonViewability": {
+     "$ref": "AmazonViewabilityGetV1"
+    },
+    "automatedTargetingTactic": {
+     "$ref": "AutomatedTargetingTacticGetV1"
+    },
+    "defaultAudienceTargetingMatchType": {
+     "$ref": "DefaultAudienceTargetingMatchTypeGetV1"
+    },
+    "enableLanguageTargeting": {
+     "description": "If enabled, creatives will only target supply where the content language matches the creative language.",
+     "type": "boolean"
+    },
+    "siteLanguage": {
+     "$ref": "SiteLanguageGetV1"
+    },
+    "tacticsConvertersExclusionType": {
+     "$ref": "TacticsConvertersExclusionTypeGetV1"
+    },
+    "targetedPGDealId": {
+     "description": "Programmatic Guaranteed DealId targeted by the Ad Group.",
+     "type": "string"
+    },
+    "timeZoneType": {
+     "$ref": "TimeZoneTypeGetV1"
+    },
+    "userLocation": {
+     "$ref": "UserLocationGetV1"
+    },
+    "userLocationSignal": {
+     "$ref": "UserLocationSignalGetV1"
+    },
+    "videoCompletionTier": {
+     "$ref": "VideoCompletionTierGetV1"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingSettingsPatchV1": {
+   "properties": {
+    "amazonViewability": {
+     "$ref": "AmazonViewabilityPatchV1"
+    },
+    "defaultAudienceTargetingMatchType": {
+     "$ref": "DefaultAudienceTargetingMatchTypePatchV1"
+    },
+    "enableLanguageTargeting": {
+     "description": "If enabled, creatives will only target supply where the content language matches the creative language.",
+     "type": "boolean"
+    },
+    "tacticsConvertersExclusionType": {
+     "$ref": "TacticsConvertersExclusionTypePatchV1"
+    },
+    "targetedPGDealId": {
+     "description": "DealId to be targeted by the Ad Group being created. If you are creating an ad group targeting a programmatic guaranteed deal, the deal can be provided here.",
+     "type": "string"
+    },
+    "timeZoneType": {
+     "$ref": "TimeZoneTypePatchV1"
+    },
+    "userLocation": {
+     "$ref": "UserLocationPatchV1"
+    },
+    "userLocationSignal": {
+     "$ref": "UserLocationSignalPatchV1"
+    },
+    "videoCompletionTier": {
+     "$ref": "VideoCompletionTierPatchV1"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingSettingsPostV1": {
+   "properties": {
+    "amazonViewability": {
+     "$ref": "AmazonViewabilityPostV1"
+    },
+    "defaultAudienceTargetingMatchType": {
+     "$ref": "DefaultAudienceTargetingMatchTypePostV1"
+    },
+    "enableLanguageTargeting": {
+     "description": "If enabled, creatives will only target supply where the content language matches the creative language.",
+     "type": "boolean"
+    },
+    "tacticsConvertersExclusionType": {
+     "$ref": "TacticsConvertersExclusionTypePostV1"
+    },
+    "targetedPGDealId": {
+     "description": "DealId to be targeted by the Ad Group being created. If you are creating an ad group targeting a programmatic guaranteed deal, the deal can be provided here.",
+     "type": "string"
+    },
+    "timeZoneType": {
+     "$ref": "TimeZoneTypePostV1"
+    },
+    "userLocation": {
+     "$ref": "UserLocationPostV1"
+    },
+    "userLocationSignal": {
+     "$ref": "UserLocationSignalPostV1"
+    },
+    "videoCompletionTier": {
+     "$ref": "VideoCompletionTierPostV1"
+    }
+   },
+   "required": [
+    "amazonViewability",
+    "timeZoneType",
+    "userLocationSignal"
+   ],
+   "type": "object"
+  },
+  "ThirdPartyProviderGetV1": {
+   "description": "Applies only to THIRD_PARTY_APPLIED_FEE. Represents the data provider for the applied fee in reporting.",
+   "enum": [
+    "COM_SCORE",
+    "CPM_1",
+    "CPM_2",
+    "CPM_3",
+    "DOUBLE_CLICK_CAMPAIGN_MANAGER",
+    "DOUBLE_VERIFY",
+    "INTEGRAL_AD_SCIENCE"
+   ],
+   "type": "string"
+  },
+  "ThirdPartyProviderPatchV1": {
+   "description": "Applies only to THIRD_PARTY_APPLIED_FEE. Represents the data provider for the applied fee in reporting. Each provider is allowed one entry in the fees list.",
+   "enum": [
+    "COM_SCORE",
+    "CPM_1",
+    "CPM_2",
+    "CPM_3",
+    "DOUBLE_CLICK_CAMPAIGN_MANAGER",
+    "DOUBLE_VERIFY",
+    "INTEGRAL_AD_SCIENCE"
+   ],
+   "type": "string"
+  },
+  "ThirdPartyProviderPostV1": {
+   "description": "Applies only to THIRD_PARTY_APPLIED_FEE. Represents the data provider for the applied fee in reporting. Each provider is allowed one entry in the fees list.",
+   "enum": [
+    "COM_SCORE",
+    "CPM_1",
+    "CPM_2",
+    "CPM_3",
+    "DOUBLE_CLICK_CAMPAIGN_MANAGER",
+    "DOUBLE_VERIFY",
+    "INTEGRAL_AD_SCIENCE"
+   ],
+   "type": "string"
+  },
+  "TimeZoneTypeGetV1": {
+   "description": "The time zone associated with ad group delivery when daypart targeting is applied. * VIEWER is the time zone of the person viewing the ad. * ADVERTISER_REGION refers to one of these three options based on the region of …",
+   "enum": [
+    "ADVERTISER_REGION",
+    "OTHER",
+    "VIEWER"
+   ],
+   "type": "string"
+  },
+  "TimeZoneTypePatchV1": {
+   "description": "The time zone associated with ad group delivery when daypart targeting is applied. * VIEWER is the time zone of the person viewing the ad. * ADVERTISER_REGION refers to one of these three options based on the region of …",
+   "enum": [
+    "ADVERTISER_REGION",
+    "VIEWER"
+   ],
+   "type": "string"
+  },
+  "TimeZoneTypePostV1": {
+   "description": "The time zone associated with ad group delivery when daypart targeting is applied. * VIEWER is the time zone of the person viewing the ad. * ADVERTISER_REGION refers to one of these three options based on the region of …",
+   "enum": [
+    "ADVERTISER_REGION",
+    "VIEWER"
+   ],
+   "type": "string"
+  },
+  "UserLocationGetV1": {
+   "description": "[UNSUPPORTED] This field is no longer supported, and all values will be ignored. To target a user based on their location, create a geo location target using /dsp/v1/targets.",
+   "enum": [
+    "AE",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "EVERYWHERE",
+    "FR",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "NON_US",
+    "OTHER",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "UK",
+    "US"
+   ],
+   "type": "string"
+  },
+  "UserLocationPatchV1": {
+   "description": "[UNSUPPORTED] This field is no longer supported, and all values will be ignored. To target a user based on their location, create a geo location target using /dsp/v1/targets.",
+   "enum": [
+    "AE",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "EVERYWHERE",
+    "FR",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "NON_US",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "UK",
+    "US"
+   ],
+   "type": "string"
+  },
+  "UserLocationPostV1": {
+   "description": "[UNSUPPORTED] This field is no longer supported, and all values will be ignored. To target a user based on their location, create a geo location target using /dsp/v1/targets.",
+   "enum": [
+    "AE",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "EVERYWHERE",
+    "FR",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "NON_US",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "UK",
+    "US"
+   ],
+   "type": "string"
+  },
+  "UserLocationSignalGetV1": {
+   "description": "The type of signal used to determine a users location when geo location targeting is applied. * CURRENT: Includes people who are currently in this location. * MULTIPLE_SIGNALS: Multiple location signals are used, includ…",
+   "enum": [
+    "CURRENT",
+    "MULTIPLE_SIGNALS",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "UserLocationSignalPatchV1": {
+   "description": "The type of signal used to determine a users location when geo location targeting is applied. * CURRENT: Includes people who are currently in this location. * MULTIPLE_SIGNALS: Multiple location signals are used, includ…",
+   "enum": [
+    "CURRENT",
+    "MULTIPLE_SIGNALS"
+   ],
+   "type": "string"
+  },
+  "UserLocationSignalPostV1": {
+   "description": "The type of signal used to determine a users location when geo location targeting is applied. * CURRENT: Includes people who are currently in this location. * MULTIPLE_SIGNALS: Multiple location signals are used, includ…",
+   "enum": [
+    "CURRENT",
+    "MULTIPLE_SIGNALS"
+   ],
+   "type": "string"
+  },
+  "VideoCompletionTierGetV1": {
+   "description": "Only applicable when inventoryType is `VIDEO`, `STREAMING_TV`, or `ONLINE_VIDEO`. To increase video completion rate, select a video completion targeting tier. * These aren't guaranteed and actual video completion achiev…",
+   "enum": [
+    "ALL_TIERS",
+    "GREATER_THAN_10_PERCENT",
+    "GREATER_THAN_20_PERCENT",
+    "GREATER_THAN_30_PERCENT",
+    "GREATER_THAN_40_PERCENT",
+    "GREATER_THAN_50_PERCENT",
+    "GREATER_THAN_60_PERCENT",
+    "GREATER_THAN_70_PERCENT",
+    "GREATER_THAN_80_PERCENT",
+    "GREATER_THAN_90_PERCENT"
+   ],
+   "type": "string"
+  },
+  "VideoCompletionTierPatchV1": {
+   "description": "Only applicable when inventoryType is `VIDEO`, `STREAMING_TV`, or `ONLINE_VIDEO`. To increase video completion rate, select a video completion targeting tier. * These aren't guaranteed and actual video completion achiev…",
+   "enum": [
+    "ALL_TIERS",
+    "GREATER_THAN_10_PERCENT",
+    "GREATER_THAN_20_PERCENT",
+    "GREATER_THAN_30_PERCENT",
+    "GREATER_THAN_40_PERCENT",
+    "GREATER_THAN_50_PERCENT",
+    "GREATER_THAN_60_PERCENT",
+    "GREATER_THAN_70_PERCENT",
+    "GREATER_THAN_80_PERCENT",
+    "GREATER_THAN_90_PERCENT"
+   ],
+   "type": "string"
+  },
+  "VideoCompletionTierPostV1": {
+   "description": "Only applicable when inventoryType is `VIDEO`, `STREAMING_TV`, or `ONLINE_VIDEO`. To increase video completion rate, select a video completion targeting tier. * These aren't guaranteed and actual video completion achiev…",
+   "enum": [
+    "ALL_TIERS",
+    "GREATER_THAN_10_PERCENT",
+    "GREATER_THAN_20_PERCENT",
+    "GREATER_THAN_30_PERCENT",
+    "GREATER_THAN_40_PERCENT",
+    "GREATER_THAN_50_PERCENT",
+    "GREATER_THAN_60_PERCENT",
+    "GREATER_THAN_70_PERCENT",
+    "GREATER_THAN_80_PERCENT",
+    "GREATER_THAN_90_PERCENT"
+   ],
+   "type": "string"
+  },
+  "ViewabilityTierGetV1": {
+   "description": "The targeted viewability tier. These are predictions based on machine learning and aren’t guaranteed. Selecting a higher percentage limits overall reach.",
+   "enum": [
+    "ALL_TIERS",
+    "GREATER_THAN_40_PERCENT",
+    "GREATER_THAN_50_PERCENT",
+    "GREATER_THAN_60_PERCENT",
+    "GREATER_THAN_70_PERCENT",
+    "LESS_THAN_40_PERCENT",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "ViewabilityTierPatchV1": {
+   "description": "The targeted viewability tier. These are predictions based on machine learning and aren’t guaranteed. Selecting a higher percentage limits overall reach.",
+   "enum": [
+    "ALL_TIERS",
+    "GREATER_THAN_40_PERCENT",
+    "GREATER_THAN_50_PERCENT",
+    "GREATER_THAN_60_PERCENT",
+    "GREATER_THAN_70_PERCENT",
+    "LESS_THAN_40_PERCENT"
+   ],
+   "type": "string"
+  },
+  "ViewabilityTierPostV1": {
+   "description": "The targeted viewability tier. These are predictions based on machine learning and aren’t guaranteed. Selecting a higher percentage limits overall reach.",
+   "enum": [
+    "ALL_TIERS",
+    "GREATER_THAN_40_PERCENT",
+    "GREATER_THAN_50_PERCENT",
+    "GREATER_THAN_60_PERCENT",
+    "GREATER_THAN_70_PERCENT",
+    "LESS_THAN_40_PERCENT"
+   ],
+   "type": "string"
+  }
+ }
+}

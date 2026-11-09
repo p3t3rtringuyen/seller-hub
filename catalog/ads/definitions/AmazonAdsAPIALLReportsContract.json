@@ -1,0 +1,848 @@
+{
+ "api": "AmazonAdsAPIALLReportsContract",
+ "file": "specs/dest/AmazonAdsAPIALLReportsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ComparisonOperator": {
+   "description": "**ComparisonOperator Enum:** | ComparisonOperator | Description | |------|------| | `EQUALS` | Exact equality match, where exactly a single value has to be provided | | `IN` | Exact equality match, where at least one va…",
+   "enum": [
+    "EQUALS",
+    "IN"
+   ],
+   "type": "string"
+  },
+  "ComparisonPredicate": {
+   "properties": {
+    "comparisonOperator": {
+     "$ref": "ComparisonOperator"
+    },
+    "field": {
+     "type": "string"
+    },
+    "not": {
+     "type": "boolean"
+    },
+    "values": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "comparisonOperator",
+    "field",
+    "not",
+    "values"
+   ],
+   "type": "object"
+  },
+  "CompositePredicate": {
+   "properties": {
+    "filters": {
+     "items": {
+      "$ref": "Filter"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "filters"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateComparisonPredicate": {
+   "properties": {
+    "comparisonOperator": {
+     "$ref": "ComparisonOperator"
+    },
+    "field": {
+     "type": "string"
+    },
+    "not": {
+     "type": "boolean"
+    },
+    "values": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "comparisonOperator",
+    "field",
+    "not",
+    "values"
+   ],
+   "type": "object"
+  },
+  "CreateCompositePredicate": {
+   "properties": {
+    "filters": {
+     "items": {
+      "$ref": "CreateFilter"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "filters"
+   ],
+   "type": "object"
+  },
+  "CreateDatePeriod": {
+   "properties": {
+    "endDate": {
+     "format": "date",
+     "type": "string"
+    },
+    "startDate": {
+     "format": "date",
+     "type": "string"
+    }
+   },
+   "required": [
+    "endDate",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "CreateFilter": {
+   "oneOf": [
+    {
+     "properties": {
+      "and": {
+       "$ref": "CreateCompositePredicate"
+      }
+     },
+     "required": [
+      "and"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "on": {
+       "$ref": "CreateComparisonPredicate"
+      }
+     },
+     "required": [
+      "on"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateReportPeriod": {
+   "oneOf": [
+    {
+     "properties": {
+      "datePeriod": {
+       "$ref": "CreateDatePeriod"
+      }
+     },
+     "required": [
+      "datePeriod"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateReportRequest": {
+   "properties": {
+    "accessRequestedAccounts": {
+     "items": {
+      "$ref": "ReportCreateAccessRequestedAccountItem"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "reports": {
+     "items": {
+      "$ref": "ReportCreate"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "accessRequestedAccounts",
+    "reports"
+   ],
+   "type": "object"
+  },
+  "CreateReportingQuery": {
+   "properties": {
+    "fields": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "filter": {
+     "$ref": "CreateFilter"
+    }
+   },
+   "required": [
+    "fields"
+   ],
+   "type": "object"
+  },
+  "CurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | |------|------| | `AED` | United Arab Emirates Dirham | | `ARS` | Argentine Peso | | `AUD` | Australian Dollar | | `AZN` | Azerbaijani Manat | | `BBD` | Barbadian Do…",
+   "enum": [
+    "AED",
+    "ARS",
+    "AUD",
+    "AZN",
+    "BBD",
+    "BGN",
+    "BMD",
+    "BND",
+    "BRL",
+    "BSD",
+    "CAD",
+    "CHF",
+    "CLP",
+    "CNY",
+    "COP",
+    "CRC",
+    "CZK",
+    "DKK",
+    "DOP",
+    "EGP",
+    "EUR",
+    "GBP",
+    "GHS",
+    "GTQ",
+    "HKD",
+    "HUF",
+    "IDR",
+    "ILS",
+    "INR",
+    "JMD",
+    "JPY",
+    "KES",
+    "KRW",
+    "KYD",
+    "KZT",
+    "LBP",
+    "LKR",
+    "MAD",
+    "MUR",
+    "MXN",
+    "MYR",
+    "NAD",
+    "NGN",
+    "NOK",
+    "NZD",
+    "PAB",
+    "PEN",
+    "PHP",
+    "PKR",
+    "PLN",
+    "QAR",
+    "RON",
+    "RUB",
+    "SAR",
+    "SEK",
+    "SGD",
+    "THB",
+    "TRY",
+    "TTD",
+    "TWD",
+    "TZS",
+    "USD",
+    "UYU",
+    "VND",
+    "XAF",
+    "XCD",
+    "XOF",
+    "XPF",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "DatePeriod": {
+   "properties": {
+    "endDate": {
+     "format": "date",
+     "type": "string"
+    },
+    "startDate": {
+     "format": "date",
+     "type": "string"
+    }
+   },
+   "required": [
+    "endDate",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "DeleteReportRequest": {
+   "properties": {
+    "reportIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "reportIds"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `CONTENT_TOO_LARGE` | The request is too large. Consider splitting it int…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 0,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "Filter": {
+   "oneOf": [
+    {
+     "properties": {
+      "and": {
+       "$ref": "CompositePredicate"
+      }
+     },
+     "required": [
+      "and"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "on": {
+       "$ref": "ComparisonPredicate"
+      }
+     },
+     "required": [
+      "on"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ManagerAccountDspGrouping": {
+   "description": "**ManagerAccountDspGrouping Enum:** | ManagerAccountDspGrouping | Description | |------|------| | `DSP_ADVERTISER_ACCOUNT` | Prefer one row per DSP advertiser account. DSP advertiser accounts upgraded to a global advert…",
+   "enum": [
+    "DSP_ADVERTISER_ACCOUNT",
+    "GLOBAL_ADVERTISER_ACCOUNT"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Report": {
+   "properties": {
+    "completedDateTime": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "completedReportParts": {
+     "items": {
+      "$ref": "ReportPart"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creationDateTime": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "currencyOfView": {
+     "$ref": "CurrencyCode"
+    },
+    "failureCode": {
+     "type": "string"
+    },
+    "failureReason": {
+     "type": "string"
+    },
+    "format": {
+     "$ref": "ReportFormat"
+    },
+    "lastUpdatedDateTime": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "managerAccountDspGrouping": {
+     "$ref": "ManagerAccountDspGrouping"
+    },
+    "periods": {
+     "items": {
+      "$ref": "ReportPeriod"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "query": {
+     "$ref": "ReportingQuery"
+    },
+    "reportId": {
+     "type": "string"
+    },
+    "status": {
+     "$ref": "ReportStatus"
+    },
+    "warnings": {
+     "description": "Warnings explaining missing or redacted values in the report. Absent when there are none.",
+     "items": {
+      "$ref": "ReportWarning"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "creationDateTime",
+    "format",
+    "lastUpdatedDateTime",
+    "periods",
+    "query",
+    "reportId",
+    "status"
+   ],
+   "type": "object"
+  },
+  "ReportCreate": {
+   "properties": {
+    "currencyOfView": {
+     "$ref": "CurrencyCode"
+    },
+    "format": {
+     "$ref": "ReportFormat"
+    },
+    "managerAccountDspGrouping": {
+     "$ref": "ManagerAccountDspGrouping"
+    },
+    "periods": {
+     "items": {
+      "$ref": "CreateReportPeriod"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "query": {
+     "$ref": "CreateReportingQuery"
+    }
+   },
+   "required": [
+    "format",
+    "periods",
+    "query"
+   ],
+   "type": "object"
+  },
+  "ReportCreateAccessRequestedAccountItem": {
+   "description": "| ReportCreateAccessRequestedAccountItem | Description | | --- | --- | | `advertiserAccountId` | ADSP Regional Account or Global Account | | `managerAccountId` | Manager Account |",
+   "oneOf": [
+    {
+     "properties": {
+      "advertiserAccountId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "advertiserAccountId"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "managerAccountId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "managerAccountId"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ReportFormat": {
+   "description": "**ReportFormat Enum:** | ReportFormat | Description | |------|------| | `CSV` | Comma-separated values file containing plain text tabular data | | `GZIP_JSON` | JSON file compressed using GZIP format | | `PARTITIONED_CS…",
+   "enum": [
+    "CSV",
+    "GZIP_JSON",
+    "PARTITIONED_CSV",
+    "PARTITIONED_GZIP_JSON"
+   ],
+   "type": "string"
+  },
+  "ReportMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "ReportMultiStatusSuccess"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ReportMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 0,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "report": {
+     "$ref": "Report"
+    }
+   },
+   "required": [
+    "index",
+    "report"
+   ],
+   "type": "object"
+  },
+  "ReportPart": {
+   "description": "A downloadable part of the generated report",
+   "properties": {
+    "sizeInBytes": {
+     "description": "Size of the part file in bytes, could reach up to 100GB",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "url": {
+     "description": "URL of the report part",
+     "type": "string"
+    },
+    "urlExpirationDateTime": {
+     "description": "Expiration date and time when the above URL expires",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "sizeInBytes",
+    "url",
+    "urlExpirationDateTime"
+   ],
+   "type": "object"
+  },
+  "ReportPeriod": {
+   "oneOf": [
+    {
+     "properties": {
+      "datePeriod": {
+       "$ref": "DatePeriod"
+      }
+     },
+     "required": [
+      "datePeriod"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ReportStatus": {
+   "enum": [
+    "COMPLETED",
+    "FAILED",
+    "PENDING",
+    "PROCESSING"
+   ],
+   "type": "string"
+  },
+  "ReportWarning": {
+   "description": "Explains a limitation affecting a field's values in the report, such as redacted values or reduced coverage. A field may carry more than one reason.",
+   "properties": {
+    "field": {
+     "description": "The field this warning applies to. E.g. metric.userReach",
+     "type": "string"
+    },
+    "warningCodes": {
+     "description": "Reasons a limitation applies to the field's values",
+     "items": {
+      "$ref": "ReportWarningCode"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "field",
+    "warningCodes"
+   ],
+   "type": "object"
+  },
+  "ReportWarningCode": {
+   "description": "**ReportWarningCode Enum:** | ReportWarningCode | Description | |------|------| | `NO_PERMISSION` | One or more accounts in the report's scope do not have access to the field | | `PENDING_DEPRECATION` | The field is pen…",
+   "enum": [
+    "NO_PERMISSION",
+    "PENDING_DEPRECATION"
+   ],
+   "type": "string"
+  },
+  "ReportingQuery": {
+   "properties": {
+    "fields": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "filter": {
+     "$ref": "Filter"
+    }
+   },
+   "required": [
+    "fields"
+   ],
+   "type": "object"
+  },
+  "RetrieveReportRequest": {
+   "properties": {
+    "reportIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "reportIds"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

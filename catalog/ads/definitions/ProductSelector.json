@@ -1,0 +1,249 @@
+{
+ "api": "ProductSelector",
+ "file": "specs/dest/ProductSelector_prod_3p.json",
+ "schemas": {
+  "ProductMetadataModel": {
+   "properties": {
+    "asin": {
+     "description": "ASIN of the item",
+     "type": "string"
+    },
+    "availability": {
+     "description": "Stock availability: * IN_STOCK - The item is in stock. * IN_STOCK_SCARCE - The item is in stock, but stock levels are limited. * OUT_OF_STOCK - The item is currently out of stock. * PREORDER - The item is not yet availa…",
+     "type": "string"
+    },
+    "basisPrice": {
+     "$ref": "basisPrice"
+    },
+    "bestSellerRank": {
+     "description": "Best seller rank position in the category",
+     "type": "string"
+    },
+    "brand": {
+     "description": "Brand name of the item",
+     "type": "string"
+    },
+    "category": {
+     "description": "Category (browse node) name of the ASIN",
+     "type": "string"
+    },
+    "createdDate": {
+     "description": "Date the item was first available on Amazon",
+     "type": "string"
+    },
+    "eligibilityStatus": {
+     "description": "Eligibility status for advertising: * ELIGIBLE - Eligible for advertising * INELIGIBLE - Ineligible for advertising",
+     "type": "string"
+    },
+    "globalStoreSetting": {
+     "description": "This denotes the fields related to [GlobalStore Program](https://sellercentral.amazon.com/help/hub/reference/external/202139180).",
+     "properties": {
+      "catalogSourceCountryCode": {
+       "description": "Country code of source marketplace where seller has listed the product. Possible source country codes include US, UK, DE, JP, AE, and TR.",
+       "maxLength": 2,
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "imageUrl": {
+     "description": "Url to the product image",
+     "type": "string"
+    },
+    "ineligibilityCodes": {
+     "description": "List of ineligible status identifier",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 12,
+     "minItems": 0,
+     "type": "array"
+    },
+    "ineligibilityReasons": {
+     "description": "List of reasons that made this item ineligible to be advertised",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 12,
+     "minItems": 0,
+     "type": "array"
+    },
+    "priceToPay": {
+     "$ref": "priceToPay"
+    },
+    "sku": {
+     "description": "sku of the item",
+     "type": "string"
+    },
+    "title": {
+     "description": "Product title of the item",
+     "type": "string"
+    },
+    "variationList": {
+     "description": "List of ASIN variations of the current item",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1500,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ProductMetadataRequest": {
+   "properties": {
+    "adType": {
+     "description": "Program type. Required if checks advertising eligibility: * SP - Sponsored Product * SB - Sponsored Brand * SD - Sponsored Display",
+     "enum": [
+      "SB",
+      "SD",
+      "SP"
+     ],
+     "type": "string"
+    },
+    "asins": {
+     "description": "Specific asins to search for in the advertiser's inventory. Cannot use together with skus or searchStr input types.",
+     "items": {
+      "maxLength": 10,
+      "type": "string"
+     },
+     "maxItems": 300,
+     "minItems": 0,
+     "type": "array"
+    },
+    "checkEligibility": {
+     "default": "false",
+     "description": "Whether advertising eligibility info is required",
+     "type": "boolean"
+    },
+    "checkItemDetails": {
+     "default": "false",
+     "description": "Whether item details such as name, image, and price is required.",
+     "type": "boolean"
+    },
+    "cursorToken": {
+     "description": "Pagination token used for the suggested sort type or for author merchant",
+     "type": "string"
+    },
+    "isGlobalStoreSelection": {
+     "default": "false",
+     "description": "This will return only GlobalStore listings related to [GlobalStore Program](https://sellercentral.amazon.com/help/hub/reference/external/202139180) and not local listings",
+     "type": "boolean"
+    },
+    "locale": {
+     "description": "Optional locale for detail and eligibility response strings. Default to the marketplace locale.",
+     "type": "string"
+    },
+    "pageIndex": {
+     "description": "Index of the page to be returned; For author, this value will be ignored, should use cursorToken instead. For seller and vendor, results are capped at 10k ((pageIndex + 1) * pageSize).",
+     "format": "int32",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "pageSize": {
+     "description": "Number of items to be returned on this page index.",
+     "format": "int32",
+     "maximum": 300,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "searchStr": {
+     "description": "Specific string in the item title to search for in the advertiser's inventory. Case insensitive. Cannot use together with asins or skus input types.",
+     "maxLength": 200,
+     "type": "string"
+    },
+    "skus": {
+     "description": "Specific SKUs to search for in the advertiser's inventory. Currently only support SP program type for sellers. Cannot use together with asins or searchStr input types.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 300,
+     "minItems": 0,
+     "type": "array"
+    },
+    "sortBy": {
+     "description": "Sort option for the result. Currently only support SP program type for sellers: * SUGGESTED - Suggested products are those most likely to engage customers, and have a higher chance of generating clicks if advertised. * …",
+     "enum": [
+      "CREATED_DATE",
+      "SUGGESTED"
+     ],
+     "type": "string"
+    },
+    "sortOrder": {
+     "default": "DESC",
+     "description": "Sort order (has to be DESC for the suggested sort type): * ASC - Ascending, from A to Z * DESC - Descending, from Z to A",
+     "enum": [
+      "ASC",
+      "DESC"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "pageIndex",
+    "pageSize"
+   ],
+   "type": "object"
+  },
+  "ProductMetadataResponse": {
+   "properties": {
+    "ProductMetadataList": {
+     "items": {
+      "$ref": "ProductMetadataModel"
+     },
+     "maxItems": 300,
+     "minItems": 0,
+     "type": "array"
+    },
+    "cursorToken": {
+     "description": "Pagination token for later requests with specific sort type to use as the page index instead. Empty cursorToken means no further data is present at Server side.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "basisPrice": {
+   "description": "The basis price before the savings are calculated",
+   "properties": {
+    "amount": {
+     "description": "Price amount",
+     "type": "number"
+    },
+    "currency": {
+     "description": "Currency of the price",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "error": {
+   "description": "Error response object.",
+   "properties": {
+    "code": {
+     "description": "Enumerated error type.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "priceToPay": {
+   "description": "The price customer would pay for the buying option",
+   "properties": {
+    "amount": {
+     "description": "Price amount",
+     "type": "number"
+    },
+    "currency": {
+     "description": "Currency of the price",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

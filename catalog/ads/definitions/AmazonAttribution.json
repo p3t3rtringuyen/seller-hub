@@ -1,0 +1,226 @@
+{
+ "api": "AmazonAttribution",
+ "file": "specs/dest/AmazonAttribution_prod_3p.json",
+ "schemas": {
+  "AdvertiserResponse": {
+   "properties": {
+    "advertisers": {
+     "items": {
+      "$ref": "advertiser"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AttributionTagResponse": {
+   "properties": {
+    "advertiserAttributionTagMap": {
+     "additionalProperties": {
+      "$ref": "attributionTagMap"
+     },
+     "description": "A list of advertisers and associated attribution tags.",
+     "type": "object"
+    }
+   },
+   "type": "object"
+  },
+  "MaaSError": {
+   "description": "The error response object.",
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response. Possible value of code is \"200\", \"207\", \"400\", \"401\", \"429\", \"403\", or \"500\".",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Publisher": {
+   "properties": {
+    "id": {
+     "allOf": [
+      {
+       "description": "The identifier of a macro publisher.",
+       "type": "string"
+      },
+      {
+       "description": "The identifier of a publisher that does not support macros.",
+       "type": "string"
+      }
+     ],
+     "description": "The identifier of a publisher.",
+     "type": "object"
+    },
+    "macroEnabled": {
+     "description": "Set to 'true' if Amazon Attribution provides macro tags for the given publisher.",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "The name of the publisher.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PublishersResponse": {
+   "properties": {
+    "publisher": {
+     "description": "A list of publishers.",
+     "items": {
+      "$ref": "Publisher"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ReportEntry": {
+   "description": "Report entry object in GetReport reports list.",
+   "properties": {
+    "adGroupId": {
+     "description": "An ad group external identifier. Applies to `PERFORMANCE` and `PRODUCTS` reportType.",
+     "type": "string"
+    },
+    "advertiserName": {
+     "description": "Name of advertiser. Applies to `PERFORMANCE` and `PRODUCTS` reportType.",
+     "type": "string"
+    },
+    "brandName": {
+     "description": "Name of the advertiser's brand. Applies only to `PRODUCTS` reportType.",
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "A campaign external identifier. Applies to `PERFORMANCE` and `PRODUCTS` reportType.",
+     "type": "string"
+    },
+    "creativeId": {
+     "description": "A creative external identifier. Applies only to `PERFORMANCE` reportType",
+     "type": "string"
+    },
+    "date": {
+     "description": "Date on which the events took place. Applies to `PERFORMANCE` and `PRODUCTS` reportType.",
+     "type": "string"
+    },
+    "marketplace": {
+     "description": "The Amazon-owned site the product is sold on. Applies only to `PRODUCTS` reportType.",
+     "type": "string"
+    },
+    "productAsin": {
+     "description": "A unique block of letters and/or numbers that identify all products sold on Amazon. Applies only to `PRODUCTS` reportType.",
+     "type": "string"
+    },
+    "productCategory": {
+     "description": "A classification for the type of product being sold which determines its place in the Amazon retail catalog. Contains categories of products. Applies only to `PRODUCTS` reportType.",
+     "type": "string"
+    },
+    "productConversionType": {
+     "description": "The conversion type describes whether the conversion happened on a promoted or a brand halo ASIN. Applies only to `PRODUCTS` reportType.",
+     "type": "string"
+    },
+    "productGroup": {
+     "description": "A distinct product grouping distinguishing products like watches from video games from toys. Contains groups of products. Applies only to `PRODUCTS` reportType.",
+     "type": "string"
+    },
+    "productName": {
+     "description": "The name of the product. Applies only to `PRODUCTS` reportType.",
+     "type": "string"
+    },
+    "productSubcategory": {
+     "description": "A classification for the type of product being sold which determines its place in the Amazon retail catalog. Contains subcategories of products. Applies only to `PRODUCTS` reportType",
+     "type": "string"
+    },
+    "publisher": {
+     "description": "The publisher name. Applies to `PERFORMANCE` and `PRODUCTS` reportType",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ReportRequestBody": {
+   "description": "Report request body. Two types of reports are available: Performance or Products - choose by including the `reportType` property. Performance report may be aggregated at any of three levels: campaign, ad group, or creat…",
+   "properties": {
+    "advertiserIds": {
+     "description": "One or more advertiser Ids to filter reporting by. If requesting reporting for multiple advertiser Ids, input via a comma-delimited list.",
+     "type": "string"
+    },
+    "count": {
+     "description": "The number of entries to include in the report.",
+     "maximum": 5000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "cursorId": {
+     "description": "The value of `cursorId` must be set to `null` without `\"\"`, or set to `\"\"` for the first request. For each following request, the value of `cursorId` from the previous response must be included in the current request. N…",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The end date for the report, form as \"YYYYMMDD\"",
+     "type": "string"
+    },
+    "groupBy": {
+     "description": "For Performance report only - controls level of aggregation. Value can be `CAMPAIGN`, `ADGROUP`, or `CREATIVE`. Default is `CREATIVE`.",
+     "enum": [
+      "ADGROUP",
+      "CAMPAIGN",
+      "CREATIVE"
+     ],
+     "type": "string"
+    },
+    "metrics": {
+     "description": "A comma-delimited list of metrics to include in the report. In the report, each metric’s value reflects the events which took place on the row’s date; in other words, events are reported on the date they occurred, not o…",
+     "type": "string"
+    },
+    "reportType": {
+     "description": "The type of report. Either `PERFORMANCE` or `PRODUCTS`. It is an optional parameter. If not used in request body, default reportType is `PERFORMANCE`.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The start date for the report, in \"YYYYMMDD\" format. For reportType `PRODUCTS`, startDate can only be within last 90 days from current date.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ReportResponse": {
+   "properties": {
+    "cursorId": {
+     "description": "The identifier of the pagination cursor.",
+     "type": "string"
+    },
+    "reports": {
+     "items": {
+      "$ref": "ReportEntry"
+     },
+     "type": "array"
+    },
+    "size": {
+     "description": "The size of the report.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "advertiser": {
+   "properties": {
+    "advertiserId": {
+     "type": "string"
+    },
+    "advertiserName": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "attributionTagMap": {
+   "additionalProperties": {
+    "type": "string"
+   },
+   "description": "An object representing the association between a publisher identifier and an attribution tag.",
+   "type": "object"
+  }
+ }
+}

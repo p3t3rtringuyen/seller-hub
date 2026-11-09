@@ -1,0 +1,410 @@
+{
+ "api": "AmazonAdsAPIALLDealAdvertiserAccessEntriesContract",
+ "file": "specs/dest/AmazonAdsAPIALLDealAdvertiserAccessEntriesContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateDealAdvertiserAccessEntryRequest": {
+   "properties": {
+    "dealAdvertiserAccessEntries": {
+     "items": {
+      "$ref": "DealAdvertiserAccessEntryCreate"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "dealAdvertiserAccessEntries"
+   ],
+   "type": "object"
+  },
+  "DealAdvertiserAccessEntry": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertiserId": {
+     "description": "Reference to the advertiser granted or denied access.",
+     "type": "string"
+    },
+    "dealAdvertiserAccessEntryId": {
+     "description": "A unique identifier for this access entry.",
+     "type": "string"
+    },
+    "dealAdvertiserAccessId": {
+     "description": "Reference to the associated deal advertiser access record.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertiserId",
+    "dealAdvertiserAccessEntryId",
+    "dealAdvertiserAccessId"
+   ],
+   "type": "object"
+  },
+  "DealAdvertiserAccessEntryAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+     "items": {
+      "$ref": "AdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DealAdvertiserAccessEntryCreate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertiserId": {
+     "description": "Reference to the advertiser granted or denied access.",
+     "type": "string"
+    },
+    "dealAdvertiserAccessId": {
+     "description": "Reference to the associated deal advertiser access record.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertiserId",
+    "dealAdvertiserAccessId"
+   ],
+   "type": "object"
+  },
+  "DealAdvertiserAccessEntryDealAdvertiserAccessIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DealAdvertiserAccessEntryMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "DealAdvertiserAccessEntryMultiStatusSuccess"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DealAdvertiserAccessEntryMultiStatusSuccess": {
+   "properties": {
+    "dealAdvertiserAccessEntry": {
+     "$ref": "DealAdvertiserAccessEntry"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 19,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "dealAdvertiserAccessEntry",
+    "index"
+   ],
+   "type": "object"
+  },
+  "DealAdvertiserAccessEntrySuccessResponse": {
+   "properties": {
+    "dealAdvertiserAccessEntries": {
+     "items": {
+      "$ref": "DealAdvertiserAccessEntry"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "totalResults": {
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteDealAdvertiserAccessEntryRequest": {
+   "properties": {
+    "dealAdvertiserAccessEntryIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "dealAdvertiserAccessEntryIds"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `FORBIDDEN` | The caller is not authorized to make the given request. | |…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "RESOURCE_ID_NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 19,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryDealAdvertiserAccessEntryRequest": {
+   "properties": {
+    "adProductFilter": {
+     "$ref": "DealAdvertiserAccessEntryAdProductFilter"
+    },
+    "dealAdvertiserAccessIdFilter": {
+     "$ref": "DealAdvertiserAccessEntryDealAdvertiserAccessIdFilter"
+    },
+    "maxResults": {
+     "default": 50,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "dealAdvertiserAccessIdFilter"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

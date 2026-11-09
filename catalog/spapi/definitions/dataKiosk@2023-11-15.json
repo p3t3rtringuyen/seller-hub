@@ -1,0 +1,168 @@
+{
+  "CreateQueryResponse": {
+    "description": "The response for the `createQuery` operation.",
+    "properties": {
+      "queryId": {
+        "description": "The identifier for the query.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "queryId"
+    ],
+    "type": "object"
+  },
+  "CreateQuerySpecification": {
+    "description": "Information required to create the query.",
+    "properties": {
+      "paginationToken": {
+        "description": "A token to fetch a certain page of query results when there are multiple pages of query results available.",
+        "type": "string"
+      },
+      "query": {
+        "description": "The GraphQL query to submit.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "query"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "Error response returned when the request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "GetDocumentResponse": {
+    "description": "The response for the `getDocument` operation.",
+    "properties": {
+      "documentId": {
+        "description": "The identifier for the Data Kiosk document.",
+        "type": "string"
+      },
+      "documentUrl": {
+        "description": "A presigned URL that can be used to retrieve the Data Kiosk document.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "documentId",
+      "documentUrl"
+    ],
+    "type": "object"
+  },
+  "GetQueriesResponse": {
+    "description": "The response for the `getQueries` operation.",
+    "properties": {
+      "pagination": {
+        "description": "When a request has results that are not included in this response, pagination occurs.",
+        "type": "object"
+      },
+      "queries": {
+        "description": "The Data Kiosk queries.",
+        "ref": "QueryList"
+      }
+    },
+    "required": [
+      "queries"
+    ],
+    "type": "object"
+  },
+  "Query": {
+    "description": "Detailed information about the query.",
+    "properties": {
+      "createdTime": {
+        "description": "The date and time when the query was created, in ISO 8601 date time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "dataDocumentId": {
+        "description": "The data document identifier.",
+        "type": "string"
+      },
+      "errorDocumentId": {
+        "description": "The error document identifier.",
+        "type": "string"
+      },
+      "pagination": {
+        "description": "When a query produces results that are not included in the data document, pagination occurs.",
+        "type": "object"
+      },
+      "processingEndTime": {
+        "description": "The date and time when the query processing completed, in ISO 8601 date time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "processingStartTime": {
+        "description": "The date and time when the query processing started, in ISO 8601 date time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "processingStatus": {
+        "description": "The processing status of the query.",
+        "enum": [
+          "CANCELLED",
+          "DONE",
+          "FATAL",
+          "IN_PROGRESS",
+          "IN_QUEUE"
+        ],
+        "type": "string"
+      },
+      "query": {
+        "description": "The submitted query.",
+        "type": "string"
+      },
+      "queryId": {
+        "description": "The query identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "createdTime",
+      "processingStatus",
+      "query",
+      "queryId"
+    ],
+    "type": "object"
+  },
+  "QueryList": {
+    "description": "A list of queries.",
+    "properties": {},
+    "ref": "Query",
+    "required": [],
+    "type": "array"
+  }
+}

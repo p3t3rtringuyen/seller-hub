@@ -1,0 +1,347 @@
+{
+ "api": "AmazonAdsAPIALLDealPerformancesContract",
+ "file": "specs/dest/AmazonAdsAPIALLDealPerformancesContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "AvailsForDeviceType": {
+   "description": "Avails breakdown for a specific device type.",
+   "properties": {
+    "deviceType": {
+     "$ref": "DeviceType"
+    },
+    "impressionOpportunities": {
+     "description": "The number of impression opportunities per day per device.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "deviceType",
+    "impressionOpportunities"
+   ],
+   "type": "object"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DealPerformance": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertisingDealId": {
+     "description": "Reference to the associated advertising deal.",
+     "type": "string"
+    },
+    "availsByDeviceType": {
+     "description": "A list of avails broken down by device type.",
+     "items": {
+      "$ref": "AvailsForDeviceType"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "availsTotal": {
+     "description": "The total number of impression opportunities.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "averageCpm": {
+     "description": "Historical cost per thousand impressions over the period of time specified.",
+     "format": "double",
+     "type": "number"
+    },
+    "bidRequests": {
+     "description": "The volume of bids with this deal ID that are eligible for the Amazon DSP.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "bidResponses": {
+     "description": "The number of bid responses sent back to SSP or publisher for the applicable deal ID.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "clickthroughCount": {
+     "description": "The number of times an ad is clicked.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "completionCount": {
+     "description": "The number of times a video or audio ad is completed.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "conversionCount": {
+     "description": "The number of times an impression resulted in an action.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "dealPerformanceId": {
+     "description": "A unique identifier for the performance record.",
+     "type": "string"
+    },
+    "measurableImpressions": {
+     "description": "The number of impressions that were measurable.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "metricsLastUpdated": {
+     "description": "Last time the metrics were updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "performanceEndDate": {
+     "description": "End date for performance metrics period.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "performanceStartDate": {
+     "description": "Start date for performance metrics period.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "recognizedBids": {
+     "description": "The number of bid requests which include a recognized deal ID. This is divided by total bid requests for the deal to get recognition rate.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "totalImpressions": {
+     "description": "The number of times an advertisement was displayed.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "totalSpend": {
+     "description": "The total amount spent on the deal over the period of time specified.",
+     "format": "double",
+     "type": "number"
+    },
+    "viewableImpressions": {
+     "description": "The number of impressions that were viewable.",
+     "format": "int64",
+     "maximum": 9223372036854776000,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "adProduct",
+    "advertisingDealId",
+    "dealPerformanceId"
+   ],
+   "type": "object"
+  },
+  "DealPerformanceSuccessResponse": {
+   "properties": {
+    "dealPerformances": {
+     "items": {
+      "$ref": "DealPerformance"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DeviceType": {
+   "description": "**DeviceType Enum:** | DeviceType | Description | | --- | --- | | `DESKTOP` | Desktop computers and laptops. | | `MOBILE` | Mobile phones and tablets. | | `CONNECTED_TV` | Connected TV devices. | | `CONNECTED_DEVICE` | …",
+   "enum": [
+    "CONNECTED_DEVICE",
+    "CONNECTED_TV",
+    "DESKTOP",
+    "MOBILE",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

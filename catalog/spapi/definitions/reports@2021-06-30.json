@@ -1,0 +1,323 @@
+{
+  "CreateReportResponse": {
+    "description": "The response schema.",
+    "properties": {
+      "reportId": {
+        "description": "The identifier for the report.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "reportId"
+    ],
+    "type": "object"
+  },
+  "CreateReportScheduleResponse": {
+    "description": "Response schema.",
+    "properties": {
+      "reportScheduleId": {
+        "description": "The identifier for the report schedule.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "reportScheduleId"
+    ],
+    "type": "object"
+  },
+  "CreateReportScheduleSpecification": {
+    "description": "Information required to create the report schedule.",
+    "properties": {
+      "marketplaceIds": {
+        "description": "A list of marketplace identifiers for the report schedule.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "nextReportCreationTime": {
+        "description": "The date and time when the schedule will create its next report, in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "period": {
+        "description": "One of a set of predefined <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> periods that specifies how often a report should be created.",
+        "enum": [
+          "P14D",
+          "P15D",
+          "P18D",
+          "P1D",
+          "P1M",
+          "P2D",
+          "P30D",
+          "P3D",
+          "P7D",
+          "PT12H",
+          "PT15M",
+          "PT1H",
+          "PT2H",
+          "PT30M",
+          "PT4H",
+          "PT5M",
+          "PT84H",
+          "PT8H"
+        ],
+        "type": "string"
+      },
+      "reportOptions": {
+        "ref": "ReportOptions"
+      },
+      "reportType": {
+        "description": "The report type.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "marketplaceIds",
+      "period",
+      "reportType"
+    ],
+    "type": "object"
+  },
+  "CreateReportSpecification": {
+    "description": "Information required to create the report.",
+    "properties": {
+      "dataEndTime": {
+        "description": "The end of a date and time range, in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date time format, used for selecting the data to report.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "dataStartTime": {
+        "description": "The start of a date and time range, in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date time format, used for selecting the data to report.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "marketplaceIds": {
+        "description": "A list of marketplace identifiers.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "reportOptions": {
+        "ref": "ReportOptions"
+      },
+      "reportType": {
+        "description": "The report type.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "marketplaceIds",
+      "reportType"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "Error response returned when the request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "GetReportsResponse": {
+    "description": "The response for the `getReports` operation.",
+    "properties": {
+      "nextToken": {
+        "description": "Returned when the number of results exceeds `pageSize`.",
+        "type": "string"
+      },
+      "reports": {
+        "description": "The reports.",
+        "ref": "ReportList"
+      }
+    },
+    "required": [
+      "reports"
+    ],
+    "type": "object"
+  },
+  "Report": {
+    "description": "Detailed information about the report.",
+    "properties": {
+      "createdTime": {
+        "description": "The date and time when the report was created.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "dataEndTime": {
+        "description": "The end of a date and time range used for selecting the data to report.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "dataStartTime": {
+        "description": "The start of a date and time range used for selecting the data to report.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "marketplaceIds": {
+        "description": "A list of marketplace identifiers for the report.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "processingEndTime": {
+        "description": "The date and time when the report processing completed, in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "processingStartTime": {
+        "description": "The date and time when the report processing started, in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "processingStatus": {
+        "description": "The processing status of the report.",
+        "enum": [
+          "CANCELLED",
+          "DONE",
+          "FATAL",
+          "IN_PROGRESS",
+          "IN_QUEUE"
+        ],
+        "type": "string"
+      },
+      "reportDocumentId": {
+        "description": "The identifier for the report document.",
+        "type": "string"
+      },
+      "reportId": {
+        "description": "The identifier for the report.",
+        "type": "string"
+      },
+      "reportScheduleId": {
+        "description": "The identifier of the report schedule that created this report (if any).",
+        "type": "string"
+      },
+      "reportType": {
+        "description": "The report type.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "createdTime",
+      "processingStatus",
+      "reportId",
+      "reportType"
+    ],
+    "type": "object"
+  },
+  "ReportDocument": {
+    "description": "Information required for the report document.",
+    "properties": {
+      "compressionAlgorithm": {
+        "description": "If the report document contents have been compressed, the compression algorithm used is returned in this property and you must decompress the report when you download.",
+        "enum": [
+          "GZIP"
+        ],
+        "type": "string"
+      },
+      "reportDocumentId": {
+        "description": "The identifier for the report document.",
+        "type": "string"
+      },
+      "url": {
+        "description": "A presigned URL for the report document.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "reportDocumentId",
+      "url"
+    ],
+    "type": "object"
+  },
+  "ReportList": {
+    "description": "A list of reports.",
+    "properties": {},
+    "ref": "Report",
+    "required": [],
+    "type": "array"
+  },
+  "ReportOptions": {
+    "description": "Additional information passed to reports.",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "ReportSchedule": {
+    "description": "Detailed information about a report schedule.",
+    "properties": {
+      "marketplaceIds": {
+        "description": "A list of marketplace identifiers.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "nextReportCreationTime": {
+        "description": "The date and time when the schedule will create its next report, in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> date time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "period": {
+        "description": "An <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> period value that indicates how often a report should be created.",
+        "type": "string"
+      },
+      "reportOptions": {
+        "ref": "ReportOptions"
+      },
+      "reportScheduleId": {
+        "description": "The identifier for the report schedule.",
+        "type": "string"
+      },
+      "reportType": {
+        "description": "The report type.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "period",
+      "reportScheduleId",
+      "reportType"
+    ],
+    "type": "object"
+  },
+  "ReportScheduleList": {
+    "description": "A list of report schedules.",
+    "properties": {
+      "reportSchedules": {
+        "description": "Detailed information about a report schedule.",
+        "ref": "ReportSchedule",
+        "type": "array"
+      }
+    },
+    "required": [
+      "reportSchedules"
+    ],
+    "type": "object"
+  }
+}

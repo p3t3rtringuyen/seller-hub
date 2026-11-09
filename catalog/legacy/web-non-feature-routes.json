@@ -1,0 +1,50 @@
+[
+  {
+    "route": "/403",
+    "reason": "Access denied page (also target of failed login callback)"
+  },
+  {
+    "route": "/404",
+    "reason": "Not found page"
+  },
+  {
+    "route": "ErrorBoundary",
+    "reason": "Render-error boundary; also shows global 401/404 API errors"
+  },
+  {
+    "route": "_app",
+    "reason": "Providers: auth, profile gate, query client, layouts"
+  },
+  {
+    "route": "_document",
+    "reason": "HTML document shell"
+  },
+  {
+    "route": "/api/auth/login|callback|logout|renew",
+    "reason": "BFF OAuth flow with PKCE, httpOnly session cookie, refresh when <=60 s left, renew when <=120 s; state mismatch -> /403. Pattern worth keeping (D-BFF)."
+  },
+  {
+    "route": "/api/backend/[...path], /api/portal/[...path]",
+    "reason": "Server proxy attaching the session token; rejects path segments containing . .. / \\ : or control chars"
+  },
+  {
+    "route": "/api/export/[...path]",
+    "reason": "Proxy to the background export service (only exports/* allowed)"
+  },
+  {
+    "route": "/api/me/bootstrap, /api/me/portal-config",
+    "reason": "User + portal config fetched server-side"
+  },
+  {
+    "route": "/api/notifications/ws-url",
+    "reason": "Returns the WebSocket URL with token for the bell"
+  },
+  {
+    "route": "/api/internal/healthcheck",
+    "reason": "Returns status ok, no session"
+  },
+  {
+    "route": "/api/dev/curl-context",
+    "reason": "Developer helper"
+  }
+]

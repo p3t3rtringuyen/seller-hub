@@ -1,0 +1,1242 @@
+{
+  "ASINIdentifier": {
+    "description": "Schema to identify an item by MarketPlaceId and ASIN.",
+    "properties": {
+      "ASIN": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      },
+      "MarketplaceId": {
+        "description": "A marketplace identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "ASIN",
+      "MarketplaceId"
+    ],
+    "type": "object"
+  },
+  "Asin": {
+    "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AttributeSetList": {
+    "description": "A list of product attributes if they are applicable to the product that is returned.",
+    "itemType": "object",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "BatchOffersRequestParams": {
+    "description": "Common request parameters that can be accepted by `ItemOffersRequest` and `ListingOffersRequest`",
+    "properties": {
+      "CustomerType": {
+        "description": "Indicates whether to request Consumer or Business offers.",
+        "ref": "CustomerType"
+      },
+      "ItemCondition": {
+        "description": "Filters the offer listings to be considered based on item condition.",
+        "ref": "ItemCondition"
+      },
+      "MarketplaceId": {
+        "ref": "MarketplaceId"
+      }
+    },
+    "required": [
+      "ItemCondition",
+      "MarketplaceId"
+    ],
+    "type": "object"
+  },
+  "BatchOffersResponse": {
+    "description": "Common schema that present in `ItemOffersResponse` and `ListingOffersResponse`",
+    "properties": {
+      "body": {
+        "ref": "GetOffersResponse"
+      },
+      "headers": {
+        "ref": "HttpResponseHeaders"
+      },
+      "status": {
+        "ref": "GetOffersHttpStatusLine"
+      }
+    },
+    "required": [
+      "body"
+    ],
+    "type": "object"
+  },
+  "BatchRequest": {
+    "description": "Common properties of batch requests against individual APIs.",
+    "properties": {
+      "headers": {
+        "ref": "HttpRequestHeaders"
+      },
+      "method": {
+        "ref": "HttpMethod"
+      },
+      "uri": {
+        "description": "The resource path of the operation you are calling in batch without any query parameters.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "method",
+      "uri"
+    ],
+    "type": "object"
+  },
+  "BuyBoxEligibleOffers": {
+    "description": "A list that contains the total number of offers that are eligible for the Buy Box for the given conditions and fulfillment channels.",
+    "properties": {},
+    "ref": "OfferCountType",
+    "required": [],
+    "type": "array"
+  },
+  "BuyBoxPriceType": {
+    "description": "Schema for an individual buybox price.",
+    "properties": {
+      "LandedPrice": {
+        "description": "The value calculated by adding ListingPrice + Shipping - Points.",
+        "ref": "MoneyType"
+      },
+      "ListingPrice": {
+        "description": "The price of the item.",
+        "ref": "MoneyType"
+      },
+      "Points": {
+        "description": "The number of Amazon Points offered with the purchase of an item.",
+        "ref": "Points"
+      },
+      "Shipping": {
+        "description": "The shipping cost.",
+        "ref": "MoneyType"
+      },
+      "condition": {
+        "description": "Indicates the condition of the item.",
+        "type": "string"
+      },
+      "offerType": {
+        "description": "Indicates the type of customer that the offer is valid for.<br><br>When the offer type is B2C in a quantity discount, the seller is winning the Buy Box because others do not have inventory at that quantity, not because they have a quantity discount on the ASIN.",
+        "ref": "OfferCustomerType"
+      },
+      "quantityDiscountType": {
+        "description": "Indicates the type of quantity discount this price applies to.",
+        "ref": "QuantityDiscountType"
+      },
+      "quantityTier": {
+        "description": "Indicates at what quantity this price becomes active.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "sellerId": {
+        "description": "The seller identifier for the offer.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "LandedPrice",
+      "ListingPrice",
+      "Shipping",
+      "condition"
+    ],
+    "type": "object"
+  },
+  "BuyBoxPrices": {
+    "description": "A list of the Buy Box prices.",
+    "properties": {},
+    "ref": "BuyBoxPriceType",
+    "required": [],
+    "type": "array"
+  },
+  "CompetitivePriceList": {
+    "description": "A list of competitive pricing information.",
+    "properties": {},
+    "ref": "CompetitivePriceType",
+    "required": [],
+    "type": "array"
+  },
+  "CompetitivePriceType": {
+    "description": "Schema for competitive pricing information",
+    "properties": {
+      "CompetitivePriceId": {
+        "description": "The pricing model for each price that is returned.",
+        "type": "string"
+      },
+      "Price": {
+        "description": "Pricing information for a given CompetitivePriceId value.",
+        "ref": "PriceType"
+      },
+      "belongsToRequester": {
+        "description": "Indicates whether or not the pricing information is for an offer listing that belongs to the requester.",
+        "type": "boolean"
+      },
+      "condition": {
+        "description": "Indicates the condition of the item whose pricing information is returned.",
+        "type": "string"
+      },
+      "offerType": {
+        "description": "Indicates the type of customer that the offer is valid for.<br><br>When the offer type is B2C in a quantity discount, the seller is winning the Buy Box because others do not have inventory at that quantity, not because they have a quantity discount on the ASIN.",
+        "ref": "OfferCustomerType"
+      },
+      "quantityDiscountType": {
+        "description": "Indicates the type of quantity discount this price applies to.",
+        "ref": "QuantityDiscountType"
+      },
+      "quantityTier": {
+        "description": "Indicates at what quantity this price becomes active.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "sellerId": {
+        "description": "The seller identifier for the offer.",
+        "type": "string"
+      },
+      "subcondition": {
+        "description": "Indicates the subcondition of the item whose pricing information is returned.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "CompetitivePriceId",
+      "Price"
+    ],
+    "type": "object"
+  },
+  "CompetitivePricingType": {
+    "description": "Competitive pricing information for the item.",
+    "properties": {
+      "CompetitivePrices": {
+        "ref": "CompetitivePriceList"
+      },
+      "NumberOfOfferListings": {
+        "ref": "NumberOfOfferListingsList"
+      },
+      "TradeInValue": {
+        "description": "The trade-in value of the item in the trade-in program.",
+        "ref": "MoneyType"
+      }
+    },
+    "required": [
+      "CompetitivePrices",
+      "NumberOfOfferListings"
+    ],
+    "type": "object"
+  },
+  "ConditionType": {
+    "description": "Indicates the condition of the item.",
+    "enum": [
+      "Club",
+      "Collectible",
+      "New",
+      "Refurbished",
+      "Used"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CustomerType": {
+    "description": "Indicates whether to request Consumer or Business offers.",
+    "enum": [
+      "Business",
+      "Consumer"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "DetailedShippingTimeType": {
+    "description": "The time range in which an item will likely be shipped once an order has been placed.",
+    "properties": {
+      "availabilityType": {
+        "description": "Indicates whether the item is available for shipping now, or on a known or an unknown date in the future.",
+        "enum": [
+          "FUTURE_WITHOUT_DATE",
+          "FUTURE_WITH_DATE",
+          "NOW"
+        ],
+        "type": "string"
+      },
+      "availableDate": {
+        "description": "The date when the item will be available for shipping.",
+        "type": "string"
+      },
+      "maximumHours": {
+        "description": "The maximum time, in hours, that the item will likely be shipped after the order has been placed.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "minimumHours": {
+        "description": "The minimum time, in hours, that the item will likely be shipped after the order has been placed.",
+        "format": "int64",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "Errors": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "FulfillmentChannelType": {
+    "description": "Indicates whether the item is fulfilled by Amazon or by the seller (merchant).",
+    "enum": [
+      "Amazon",
+      "Merchant"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "GetItemOffersBatchRequest": {
+    "description": "The request associated with the `getItemOffersBatch` API call.",
+    "properties": {
+      "requests": {
+        "ref": "ItemOffersRequestList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetItemOffersBatchResponse": {
+    "description": "The response associated with the `getItemOffersBatch` API call.",
+    "properties": {
+      "responses": {
+        "ref": "ItemOffersResponseList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetListingOffersBatchRequest": {
+    "description": "The request associated with the `getListingOffersBatch` API call.",
+    "properties": {
+      "requests": {
+        "ref": "ListingOffersRequestList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetListingOffersBatchResponse": {
+    "description": "The response associated with the `getListingOffersBatch` API call.",
+    "properties": {
+      "responses": {
+        "ref": "ListingOffersResponseList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetOffersHttpStatusLine": {
+    "description": "The HTTP status line associated with the response.",
+    "properties": {
+      "reasonPhrase": {
+        "description": "The HTTP response Reason-Phase.",
+        "type": "string"
+      },
+      "statusCode": {
+        "description": "The HTTP response Status Code.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetOffersResponse": {
+    "description": "The response schema for the `getListingOffers` and `getItemOffers` operations.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getListingOffers` and `getItemOffers` operations.",
+        "ref": "GetOffersResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetOffersResult": {
+    "description": "The payload for the getListingOffers and getItemOffers operations.",
+    "properties": {
+      "ASIN": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      },
+      "Identifier": {
+        "description": "Metadata that identifies the item.",
+        "ref": "ItemIdentifier"
+      },
+      "ItemCondition": {
+        "description": "The condition of the item.",
+        "ref": "ConditionType"
+      },
+      "Offers": {
+        "description": "A list of offer details.",
+        "ref": "OfferDetailList"
+      },
+      "SKU": {
+        "description": "The stock keeping unit (SKU) of the item.",
+        "type": "string"
+      },
+      "Summary": {
+        "description": "Pricing information about the item.",
+        "ref": "Summary"
+      },
+      "marketplaceId": {
+        "description": "A marketplace identifier.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The status of the operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "Identifier",
+      "ItemCondition",
+      "Offers",
+      "Summary",
+      "marketplaceId",
+      "status"
+    ],
+    "type": "object"
+  },
+  "GetPricingResponse": {
+    "description": "The response schema for the `getPricing` and `getCompetitivePricing` operations.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the getPricing and getCompetitivePricing operations.",
+        "ref": "PriceList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "HttpMethod": {
+    "description": "The HTTP method associated with the individual APIs being called as part of the batch request.",
+    "enum": [
+      "DELETE",
+      "GET",
+      "PATCH",
+      "POST",
+      "PUT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "HttpRequestHeaders": {
+    "description": "A mapping of additional HTTP headers to send/receive for the individual batch request.",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "HttpResponseHeaders": {
+    "description": "A mapping of additional HTTP headers to send/receive for the individual batch request.",
+    "itemType": "string",
+    "properties": {
+      "Date": {
+        "description": "The timestamp that the API request was received.",
+        "type": "string"
+      },
+      "x-amzn-RequestId": {
+        "description": "Unique request reference identifier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "HttpUri": {
+    "description": "The URI associated with the individual APIs being called as part of the batch request.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "IdentifierType": {
+    "description": "Specifies the identifiers used to uniquely identify an item.",
+    "properties": {
+      "MarketplaceASIN": {
+        "description": "Indicates the item is identified by MarketPlaceId and ASIN.",
+        "ref": "ASINIdentifier"
+      },
+      "SKUIdentifier": {
+        "description": "Indicates the item is identified by MarketPlaceId, SellerId, and SellerSKU.",
+        "ref": "SellerSKUIdentifier"
+      }
+    },
+    "required": [
+      "MarketplaceASIN"
+    ],
+    "type": "object"
+  },
+  "ItemCondition": {
+    "description": "Filters the offer listings to be considered based on item condition.",
+    "enum": [
+      "Club",
+      "Collectible",
+      "New",
+      "Refurbished",
+      "Used"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ItemIdentifier": {
+    "description": "Information that identifies an item.",
+    "properties": {
+      "ASIN": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      },
+      "ItemCondition": {
+        "description": "The condition of the item.",
+        "ref": "ConditionType"
+      },
+      "MarketplaceId": {
+        "description": "A marketplace identifier.",
+        "type": "string"
+      },
+      "SellerSKU": {
+        "description": "The seller stock keeping unit (SKU) of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "ItemCondition",
+      "MarketplaceId"
+    ],
+    "type": "object"
+  },
+  "ItemOffersRequest": {
+    "allOf": [
+      "BatchOffersRequestParams",
+      "BatchRequest"
+    ],
+    "description": "List of request parameters can be accepted by `ItemOffersRequests` operation",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "ItemOffersRequestList": {
+    "description": "A list of `getListingOffers` batched requests to run.",
+    "properties": {},
+    "ref": "ItemOffersRequest",
+    "required": [],
+    "type": "array"
+  },
+  "ItemOffersRequestParams": {
+    "allOf": [
+      "BatchOffersRequestParams"
+    ],
+    "description": "List of request parameters that can be accepted by `ItemOffersRequest`",
+    "properties": {
+      "Asin": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemOffersResponse": {
+    "allOf": [
+      "BatchOffersResponse"
+    ],
+    "description": "Schema for an individual `ItemOffersResponse`",
+    "properties": {
+      "request": {
+        "ref": "ItemOffersRequestParams"
+      }
+    },
+    "required": [
+      "request"
+    ],
+    "type": "object"
+  },
+  "ItemOffersResponseList": {
+    "description": "A list of `getItemOffers` batched responses.",
+    "properties": {},
+    "ref": "ItemOffersResponse",
+    "required": [],
+    "type": "array"
+  },
+  "ListingOffersRequest": {
+    "allOf": [
+      "BatchOffersRequestParams",
+      "BatchRequest"
+    ],
+    "description": "List of request parameters that can be accepted by `ListingOffersRequest` operation",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "ListingOffersRequestList": {
+    "description": "A list of `getListingOffers` batched requests to run.",
+    "properties": {},
+    "ref": "ListingOffersRequest",
+    "required": [],
+    "type": "array"
+  },
+  "ListingOffersRequestParams": {
+    "allOf": [
+      "BatchOffersRequestParams"
+    ],
+    "description": "List of request parameters that can be accepted by `ListingOffersRequest`",
+    "properties": {
+      "SellerSKU": {
+        "description": "The seller stock keeping unit (SKU) of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "SellerSKU"
+    ],
+    "type": "object"
+  },
+  "ListingOffersResponse": {
+    "allOf": [
+      "BatchOffersResponse"
+    ],
+    "description": "Schema for an individual `ListingOffersResponse`",
+    "properties": {
+      "request": {
+        "ref": "ListingOffersRequestParams"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListingOffersResponseList": {
+    "description": "A list of `getListingOffers` batched responses.",
+    "properties": {},
+    "ref": "ListingOffersResponse",
+    "required": [],
+    "type": "array"
+  },
+  "LowestPriceType": {
+    "description": "Schema for an individual lowest price.",
+    "properties": {
+      "LandedPrice": {
+        "description": "The value calculated by adding ListingPrice + Shipping - Points.",
+        "ref": "MoneyType"
+      },
+      "ListingPrice": {
+        "description": "The price of the item.",
+        "ref": "MoneyType"
+      },
+      "Points": {
+        "description": "The number of Amazon Points offered with the purchase of an item.",
+        "ref": "Points"
+      },
+      "Shipping": {
+        "description": "The shipping cost.",
+        "ref": "MoneyType"
+      },
+      "condition": {
+        "description": "Indicates the condition of the item.",
+        "type": "string"
+      },
+      "fulfillmentChannel": {
+        "description": "Indicates whether the item is fulfilled by Amazon or by the seller.",
+        "type": "string"
+      },
+      "offerType": {
+        "description": "Indicates the type of customer that the offer is valid for.",
+        "ref": "OfferCustomerType"
+      },
+      "quantityDiscountType": {
+        "description": "Indicates the type of quantity discount this price applies to.",
+        "ref": "QuantityDiscountType"
+      },
+      "quantityTier": {
+        "description": "Indicates at what quantity this price becomes active.",
+        "format": "int32",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "ListingPrice",
+      "condition",
+      "fulfillmentChannel"
+    ],
+    "type": "object"
+  },
+  "LowestPrices": {
+    "description": "A list of the lowest prices.",
+    "properties": {},
+    "ref": "LowestPriceType",
+    "required": [],
+    "type": "array"
+  },
+  "MarketplaceId": {
+    "description": "A marketplace identifier.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "MoneyType": {
+    "description": "Currency type and monetary value.",
+    "properties": {
+      "Amount": {
+        "description": "The monetary value.",
+        "type": "number"
+      },
+      "CurrencyCode": {
+        "description": "The currency code in ISO 4217 format.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "NumberOfOfferListingsList": {
+    "description": "The number of active offer listings for the item that was submitted.",
+    "properties": {},
+    "ref": "OfferListingCountType",
+    "required": [],
+    "type": "array"
+  },
+  "NumberOfOffers": {
+    "description": "A list that contains the total number of offers information for given conditions and fulfillment channels.",
+    "properties": {},
+    "ref": "OfferCountType",
+    "required": [],
+    "type": "array"
+  },
+  "OfferCountType": {
+    "description": "The total number of offers for the specified condition and fulfillment channel.",
+    "properties": {
+      "OfferCount": {
+        "description": "The number of offers in a fulfillment channel that meet a specific condition.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "condition": {
+        "description": "Indicates the condition of the item.",
+        "type": "string"
+      },
+      "fulfillmentChannel": {
+        "description": "Indicates whether the item is fulfilled by Amazon or by the seller.",
+        "ref": "FulfillmentChannelType"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OfferCustomerType": {
+    "description": "Indicates whether the offer is a B2B or B2C offer",
+    "enum": [
+      "B2B",
+      "B2C"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "OfferDetail": {
+    "description": "Schema for an individual offer.",
+    "properties": {
+      "ConditionNotes": {
+        "description": "Information about the condition of the item.",
+        "type": "string"
+      },
+      "IsBuyBoxWinner": {
+        "description": "When true, the offer is currently in the Buy Box.",
+        "type": "boolean"
+      },
+      "IsFeaturedMerchant": {
+        "description": "When true, the seller of the item is eligible to win the Buy Box.",
+        "type": "boolean"
+      },
+      "IsFulfilledByAmazon": {
+        "description": "When true, the offer is fulfilled by Amazon.",
+        "type": "boolean"
+      },
+      "ListingPrice": {
+        "description": "The price of the item.",
+        "ref": "MoneyType"
+      },
+      "MyOffer": {
+        "description": "When true, this is the seller's offer.",
+        "type": "boolean"
+      },
+      "Points": {
+        "description": "The number of Amazon Points offered with the purchase of an item.",
+        "ref": "Points"
+      },
+      "PrimeInformation": {
+        "description": "Amazon Prime information.",
+        "ref": "PrimeInformationType"
+      },
+      "SellerFeedbackRating": {
+        "description": "Information about the seller's feedback, including the percentage of positive feedback, and the total number of ratings received.",
+        "ref": "SellerFeedbackType"
+      },
+      "SellerId": {
+        "description": "The seller identifier for the offer.",
+        "type": "string"
+      },
+      "Shipping": {
+        "description": "The shipping cost.",
+        "ref": "MoneyType"
+      },
+      "ShippingTime": {
+        "description": "The maximum time within which the item will likely be shipped once an order has been placed.",
+        "ref": "DetailedShippingTimeType"
+      },
+      "ShipsFrom": {
+        "description": "The state and country from where the item is shipped.",
+        "ref": "ShipsFromType"
+      },
+      "SubCondition": {
+        "description": "The subcondition of the item.",
+        "type": "string"
+      },
+      "offerType": {
+        "description": "Indicates the type of customer that the offer is valid for.",
+        "ref": "OfferCustomerType"
+      },
+      "quantityDiscountPrices": {
+        "description": "List of `QuantityDiscountPrice` that contains item's pricing information when buy in bulk.",
+        "ref": "QuantityDiscountPriceType",
+        "type": "array"
+      }
+    },
+    "required": [
+      "IsFulfilledByAmazon",
+      "ListingPrice",
+      "Shipping",
+      "ShippingTime",
+      "SubCondition"
+    ],
+    "type": "object"
+  },
+  "OfferDetailList": {
+    "description": "A list of offer details.",
+    "properties": {},
+    "ref": "OfferDetail",
+    "required": [],
+    "type": "array"
+  },
+  "OfferListingCountType": {
+    "description": "The number of offer listings with the specified condition.",
+    "properties": {
+      "Count": {
+        "description": "The number of offer listings.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "condition": {
+        "description": "The condition of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "Count",
+      "condition"
+    ],
+    "type": "object"
+  },
+  "OfferType": {
+    "description": "Schema for an individual offer.",
+    "properties": {
+      "BuyingPrice": {
+        "description": "Contains pricing information that includes promotions and contains the shipping cost.",
+        "ref": "PriceType"
+      },
+      "FulfillmentChannel": {
+        "description": "The fulfillment channel for the offer listing.",
+        "type": "string"
+      },
+      "ItemCondition": {
+        "description": "The item condition for the offer listing.",
+        "type": "string"
+      },
+      "ItemSubCondition": {
+        "description": "The item subcondition for the offer listing.",
+        "type": "string"
+      },
+      "RegularPrice": {
+        "description": "The current price excluding any promotions that apply to the product.",
+        "ref": "MoneyType"
+      },
+      "SellerSKU": {
+        "description": "The seller stock keeping unit (SKU) of the item.",
+        "type": "string"
+      },
+      "businessPrice": {
+        "description": "The current listing price for Business buyers.",
+        "ref": "MoneyType"
+      },
+      "offerType": {
+        "description": "Indicates the type of customer that the offer is valid for.",
+        "ref": "OfferCustomerType"
+      },
+      "quantityDiscountPrices": {
+        "description": "List of `QuantityDiscountPrice` that contains item's pricing information when buy in bulk.",
+        "ref": "QuantityDiscountPriceType",
+        "type": "array"
+      }
+    },
+    "required": [
+      "BuyingPrice",
+      "FulfillmentChannel",
+      "ItemCondition",
+      "ItemSubCondition",
+      "RegularPrice",
+      "SellerSKU"
+    ],
+    "type": "object"
+  },
+  "OffersList": {
+    "description": "A list of offers.",
+    "properties": {},
+    "ref": "OfferType",
+    "required": [],
+    "type": "array"
+  },
+  "Points": {
+    "description": "The number of Amazon Points offered with the purchase of an item, and their monetary value.",
+    "properties": {
+      "PointsMonetaryValue": {
+        "description": "The monetary value of the points.",
+        "ref": "MoneyType"
+      },
+      "PointsNumber": {
+        "description": "The number of points.",
+        "format": "int32",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Price": {
+    "description": "Schema for price info in `getPricing` response",
+    "properties": {
+      "ASIN": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      },
+      "Product": {
+        "ref": "Product"
+      },
+      "SellerSKU": {
+        "description": "The seller stock keeping unit (SKU) of the item.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The status of the operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "status"
+    ],
+    "type": "object"
+  },
+  "PriceList": {
+    "description": "The payload for the `getPricing` and `getCompetitivePricing` operations.",
+    "properties": {},
+    "ref": "Price",
+    "required": [],
+    "type": "array"
+  },
+  "PriceType": {
+    "description": "Schema for item's price information, including listing price, shipping price, and Amazon points.",
+    "properties": {
+      "LandedPrice": {
+        "description": "The value calculated by adding ListingPrice + Shipping - Points.",
+        "ref": "MoneyType"
+      },
+      "ListingPrice": {
+        "description": "The listing price of the item including any promotions that apply.",
+        "ref": "MoneyType"
+      },
+      "Points": {
+        "description": "The number of Amazon Points offered with the purchase of an item, and their monetary value.",
+        "ref": "Points"
+      },
+      "Shipping": {
+        "description": "The shipping cost of the product.",
+        "ref": "MoneyType"
+      }
+    },
+    "required": [
+      "ListingPrice"
+    ],
+    "type": "object"
+  },
+  "PrimeInformationType": {
+    "description": "Amazon Prime information.",
+    "properties": {
+      "IsNationalPrime": {
+        "description": "Indicates whether the offer is an Amazon Prime offer throughout the entire marketplace where it is listed.",
+        "type": "boolean"
+      },
+      "IsPrime": {
+        "description": "Indicates whether the offer is an Amazon Prime offer.",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "IsNationalPrime",
+      "IsPrime"
+    ],
+    "type": "object"
+  },
+  "Product": {
+    "description": "An item.",
+    "properties": {
+      "AttributeSets": {
+        "ref": "AttributeSetList"
+      },
+      "CompetitivePricing": {
+        "ref": "CompetitivePricingType"
+      },
+      "Identifiers": {
+        "ref": "IdentifierType"
+      },
+      "Offers": {
+        "ref": "OffersList"
+      },
+      "Relationships": {
+        "ref": "RelationshipList"
+      },
+      "SalesRankings": {
+        "ref": "SalesRankList"
+      }
+    },
+    "required": [
+      "Identifiers"
+    ],
+    "type": "object"
+  },
+  "QuantityDiscountPriceType": {
+    "description": "Contains pricing information that includes special pricing when buying in bulk.",
+    "properties": {
+      "listingPrice": {
+        "description": "The price at this quantity tier.",
+        "ref": "MoneyType"
+      },
+      "quantityDiscountType": {
+        "description": "Indicates the type of quantity discount this price applies to.",
+        "ref": "QuantityDiscountType"
+      },
+      "quantityTier": {
+        "description": "Indicates at what quantity this price becomes active.",
+        "format": "int32",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "listingPrice",
+      "quantityDiscountType",
+      "quantityTier"
+    ],
+    "type": "object"
+  },
+  "QuantityDiscountType": {
+    "description": "Indicates the type of quantity discount this price applies to.",
+    "enum": [
+      "QUANTITY_DISCOUNT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "RelationshipList": {
+    "description": "A list that contains product variation information, if applicable.",
+    "itemType": "object",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "SalesRankList": {
+    "description": "A list of sales rank information for the item, by category.",
+    "properties": {},
+    "ref": "SalesRankType",
+    "required": [],
+    "type": "array"
+  },
+  "SalesRankType": {
+    "description": "Sales rank information for the item, by category",
+    "properties": {
+      "ProductCategoryId": {
+        "description": "Identifies the item category from which the sales rank is taken.",
+        "type": "string"
+      },
+      "Rank": {
+        "description": "The sales rank of the item within the item category.",
+        "format": "int32",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "ProductCategoryId",
+      "Rank"
+    ],
+    "type": "object"
+  },
+  "SellerFeedbackType": {
+    "description": "Information about the seller's feedback, including the percentage of positive feedback, and the total number of ratings received.",
+    "properties": {
+      "FeedbackCount": {
+        "description": "The number of ratings received about the seller.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "SellerPositiveFeedbackRating": {
+        "description": "The percentage of positive feedback for the seller in the past 365 days.",
+        "format": "double",
+        "type": "number"
+      }
+    },
+    "required": [
+      "FeedbackCount"
+    ],
+    "type": "object"
+  },
+  "SellerSKUIdentifier": {
+    "description": "Schema to identify an item by MarketPlaceId, SellerId, and SellerSKU.",
+    "properties": {
+      "MarketplaceId": {
+        "description": "A marketplace identifier.",
+        "type": "string"
+      },
+      "SellerId": {
+        "description": "The seller identifier submitted for the operation.",
+        "type": "string"
+      },
+      "SellerSKU": {
+        "description": "The seller stock keeping unit (SKU) of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "MarketplaceId",
+      "SellerId",
+      "SellerSKU"
+    ],
+    "type": "object"
+  },
+  "ShipsFromType": {
+    "description": "The state and country from where the item is shipped.",
+    "properties": {
+      "Country": {
+        "description": "The country from where the item is shipped.",
+        "type": "string"
+      },
+      "State": {
+        "description": "The state from where the item is shipped.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Summary": {
+    "description": "Contains price information about the product, including the LowestPrices and BuyBoxPrices, the ListPrice, the SuggestedLowerPricePlusShipping, and NumberOfOffers and NumberOfBuyBoxEligibleOffers.",
+    "properties": {
+      "BuyBoxEligibleOffers": {
+        "description": "A list that contains the total number of offers that are eligible for the Buy Box for the given conditions and fulfillment channels.",
+        "ref": "BuyBoxEligibleOffers"
+      },
+      "BuyBoxPrices": {
+        "description": "A list of item prices.",
+        "ref": "BuyBoxPrices"
+      },
+      "CompetitivePriceThreshold": {
+        "description": "This price is based on competitive prices from other retailers (excluding other Amazon sellers).",
+        "ref": "MoneyType"
+      },
+      "ListPrice": {
+        "description": "The list price of the item as suggested by the manufacturer.",
+        "ref": "MoneyType"
+      },
+      "LowestPrices": {
+        "description": "A list of the lowest prices for the item.",
+        "ref": "LowestPrices"
+      },
+      "NumberOfOffers": {
+        "description": "A list that contains the total number of offers for the item for the given conditions and fulfillment channels.",
+        "ref": "NumberOfOffers"
+      },
+      "OffersAvailableTime": {
+        "description": "When the status is ActiveButTooSoonForProcessing, this is the time when the offers will be available for processing.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "SalesRankings": {
+        "description": "A list that contains the sales rank of the item in the given product categories.",
+        "ref": "SalesRankList"
+      },
+      "SuggestedLowerPricePlusShipping": {
+        "description": "The suggested lower price of the item, including shipping and Amazon Points.",
+        "ref": "MoneyType"
+      },
+      "TotalOfferCount": {
+        "description": "The number of unique offers contained in NumberOfOffers.",
+        "format": "int32",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "TotalOfferCount"
+    ],
+    "type": "object"
+  }
+}

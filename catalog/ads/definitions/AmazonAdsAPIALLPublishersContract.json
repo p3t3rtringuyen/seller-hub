@@ -1,0 +1,403 @@
+{
+ "api": "AmazonAdsAPIALLPublishersContract",
+ "file": "specs/dest/AmazonAdsAPIALLPublishersContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_NOT_FOUND",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "RESOURCE_ID_NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Publisher": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "isActive": {
+     "description": "Whether this publisher is active.",
+     "type": "boolean"
+    },
+    "isConfidential": {
+     "description": "Whether identity is confidential.",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "Normalized publisher name. NULL when isConfidential is true.",
+     "type": "string"
+    },
+    "publisherId": {
+     "description": "The unique identifier of the publisher (Long serialized as String).",
+     "type": "string"
+    },
+    "publisherOwnerId": {
+     "description": "The identifier of the company that owns this publisher's content rights.",
+     "type": "string"
+    },
+    "rootDomain": {
+     "description": "Root domain from ads.txt. PSL+1 root. NULL for app-only publishers.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adProduct",
+    "publisherId"
+   ],
+   "type": "object"
+  },
+  "PublisherAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+     "items": {
+      "$ref": "AdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "PublisherNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "PublisherNameFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "PublisherNameFilterType": {
+   "description": "**PublisherNameFilterType Enum:** | PublisherNameFilterType | Description | | --- | --- | | `BROAD_MATCH` | Filter by broad match. |",
+   "enum": [
+    "BROAD_MATCH"
+   ],
+   "type": "string"
+  },
+  "PublisherPublisherIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "PublisherPublisherOwnerIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "PublisherRootDomainFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "PublisherRootDomainFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "PublisherRootDomainFilterType": {
+   "description": "**PublisherRootDomainFilterType Enum:** | PublisherRootDomainFilterType | Description | | --- | --- | | `BROAD_MATCH` | Filter by broad match. |",
+   "enum": [
+    "BROAD_MATCH"
+   ],
+   "type": "string"
+  },
+  "PublisherSortOption": {
+   "properties": {
+    "by": {
+     "$ref": "PublisherSortOptionsFields"
+    },
+    "direction": {
+     "$ref": "SortDirection"
+    }
+   },
+   "required": [
+    "by"
+   ],
+   "type": "object"
+  },
+  "PublisherSortOptionsFields": {
+   "description": "Specify which field to order by. | Field Name | Supported Ordering | | --- | --- | | name | ASCENDING,DESCENDING |",
+   "enum": [
+    "name"
+   ],
+   "type": "string"
+  },
+  "PublisherSuccessResponse": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "publishers": {
+     "items": {
+      "$ref": "Publisher"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "QueryPublisherRequest": {
+   "properties": {
+    "adProductFilter": {
+     "$ref": "PublisherAdProductFilter"
+    },
+    "maxResults": {
+     "default": 10,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "PublisherNameFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "publisherIdFilter": {
+     "$ref": "PublisherPublisherIdFilter"
+    },
+    "publisherOwnerIdFilter": {
+     "$ref": "PublisherPublisherOwnerIdFilter"
+    },
+    "rootDomainFilter": {
+     "$ref": "PublisherRootDomainFilter"
+    },
+    "sort": {
+     "items": {
+      "$ref": "PublisherSortOption"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SortDirection": {
+   "description": "**SortDirection Enum:** | SortDirection | Description | | --- | --- | | `ASCENDING` | Sort in ascending order | | `DESCENDING` | Sort in descending order |",
+   "enum": [
+    "ASCENDING",
+    "DESCENDING"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

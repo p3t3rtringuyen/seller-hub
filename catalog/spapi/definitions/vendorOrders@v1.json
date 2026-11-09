@@ -1,0 +1,756 @@
+{
+  "AcknowledgementStatusDetails": {
+    "description": "Details of item quantity ordered",
+    "properties": {
+      "acceptedQuantity": {
+        "description": "Item quantity accepted by vendor to be shipped.",
+        "ref": "ItemQuantity"
+      },
+      "acknowledgementDate": {
+        "description": "The date when the line item was confirmed by vendor.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "rejectedQuantity": {
+        "description": "Item quantity rejected by vendor.",
+        "ref": "ItemQuantity"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Address": {
+    "description": "Address of the party.",
+    "properties": {
+      "addressLine1": {
+        "description": "First line of the address.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "addressLine3": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city where the person, business or institution is located.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two digit country code.",
+        "type": "string"
+      },
+      "county": {
+        "description": "The county where person, business or institution is located.",
+        "type": "string"
+      },
+      "district": {
+        "description": "The district where person, business or institution is located.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the person, business or institution at that address.",
+        "type": "string"
+      },
+      "phone": {
+        "description": "The phone number of the person, business or institution located at that address.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "The postal code of that address.",
+        "type": "string"
+      },
+      "stateOrRegion": {
+        "description": "The state or region where person, business or institution is located.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "addressLine1",
+      "countryCode",
+      "name"
+    ],
+    "type": "object"
+  },
+  "DateTimeInterval": {
+    "description": "Defines a date time interval according to ISO8601.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Decimal": {
+    "description": "A decimal number with no loss of precision.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "GetPurchaseOrderResponse": {
+    "description": "The response schema for the getPurchaseOrder operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The details of the requested order",
+        "ref": "Order"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetPurchaseOrdersResponse": {
+    "description": "The response schema for the getPurchaseOrders operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "A list of orders.",
+        "ref": "OrderList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetPurchaseOrdersStatusResponse": {
+    "description": "The response schema for the getPurchaseOrdersStatus operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "Current status of list of purchase orders.",
+        "ref": "OrderListStatus"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ImportDetails": {
+    "description": "Import details for an import order.",
+    "properties": {
+      "importContainers": {
+        "description": "Types and numbers of container(s) for import purchase orders.",
+        "type": "string"
+      },
+      "internationalCommercialTerms": {
+        "description": "Incoterms (International Commercial Terms) are used to divide transaction costs and responsibilities between buyer and seller and reflect state-of-the-art transportation practices.",
+        "enum": [
+          "CarriageAndInsurancePaidTo",
+          "CarriagePaidTo",
+          "CostAndFreight",
+          "CostInsuranceAndFreight",
+          "DeliverDutyPaid",
+          "DeliveredAtPlace",
+          "DeliveredAtTerminal",
+          "ExWorks",
+          "FreeAlongSideShip",
+          "FreeCarrier",
+          "FreeOnBoard"
+        ],
+        "type": "string"
+      },
+      "methodOfPayment": {
+        "description": "If the recipient requests, contains the shipment method of payment.",
+        "enum": [
+          "CollectOnDelivery",
+          "DefinedByBuyerAndSeller",
+          "FOBPortOfCall",
+          "PaidByBuyer",
+          "PaidBySeller",
+          "PrepaidBySeller"
+        ],
+        "type": "string"
+      },
+      "portOfDelivery": {
+        "description": "The port where goods on an import purchase order must be delivered by the vendor.",
+        "type": "string"
+      },
+      "shippingInstructions": {
+        "description": "Special instructions regarding the shipment.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemQuantity": {
+    "description": "Details of quantity ordered.",
+    "properties": {
+      "amount": {
+        "description": "Acknowledged quantity.",
+        "type": "integer"
+      },
+      "unitOfMeasure": {
+        "description": "Unit of measure for the acknowledged quantity.",
+        "enum": [
+          "Cases",
+          "Eaches"
+        ],
+        "type": "string"
+      },
+      "unitSize": {
+        "description": "The case size, in the event that we ordered using cases.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemStatus": {
+    "description": "Detailed description of items order status.",
+    "properties": {},
+    "ref": "OrderItemStatus",
+    "required": [],
+    "type": "array"
+  },
+  "Money": {
+    "description": "An amount of money.",
+    "properties": {
+      "amount": {
+        "ref": "Decimal"
+      },
+      "currencyCode": {
+        "description": "Three digit currency code in ISO 4217 format.",
+        "type": "string"
+      },
+      "unitOfMeasure": {
+        "description": "The unit of measure for prices of items sold by weight.",
+        "enum": [
+          "GRAMS",
+          "KILOGRAMS",
+          "OUNCES",
+          "POUNDS"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Order": {
+    "description": "Represents an order placed by Amazon, including the purchase order number, current state, and order details.",
+    "properties": {
+      "orderDetails": {
+        "description": "Details of an order.",
+        "ref": "OrderDetails"
+      },
+      "purchaseOrderNumber": {
+        "description": "The purchase order number for this order.",
+        "type": "string"
+      },
+      "purchaseOrderState": {
+        "description": "This field will contain the current state of the purchase order.",
+        "enum": [
+          "Acknowledged",
+          "Closed",
+          "New"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "purchaseOrderNumber",
+      "purchaseOrderState"
+    ],
+    "type": "object"
+  },
+  "OrderAcknowledgement": {
+    "description": "Represents an acknowledgement for an order, including the purchase order number, selling party details, acknowledgement date, and a list of acknowledged items.",
+    "properties": {
+      "acknowledgementDate": {
+        "description": "The date and time when the purchase order is acknowledged, in ISO-8601 date/time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "items": {
+        "description": "A list of the items being acknowledged with associated details.",
+        "ref": "OrderAcknowledgementItem",
+        "type": "array"
+      },
+      "purchaseOrderNumber": {
+        "description": "The purchase order number.",
+        "type": "string"
+      },
+      "sellingParty": {
+        "description": "Name, address and tax details of the party receiving a shipment of products.",
+        "ref": "PartyIdentification"
+      }
+    },
+    "required": [
+      "acknowledgementDate",
+      "items",
+      "purchaseOrderNumber",
+      "sellingParty"
+    ],
+    "type": "object"
+  },
+  "OrderAcknowledgementItem": {
+    "description": "Details of the item being acknowledged.",
+    "properties": {
+      "amazonProductIdentifier": {
+        "description": "Amazon Standard Identification Number (ASIN) of an item.",
+        "type": "string"
+      },
+      "discountMultiplier": {
+        "description": "The discount multiplier that should be applied to the price if a vendor sells books with a list price.",
+        "type": "string"
+      },
+      "itemAcknowledgements": {
+        "description": "This is used to indicate acknowledged quantity.",
+        "ref": "OrderItemAcknowledgement",
+        "type": "array"
+      },
+      "itemSequenceNumber": {
+        "description": "Line item sequence number for the item.",
+        "type": "string"
+      },
+      "listPrice": {
+        "description": "The list price of an item per each or weight unit.",
+        "ref": "Money"
+      },
+      "netCost": {
+        "description": "The net cost of an item per each or weight unit that must match the cost on the invoice.",
+        "ref": "Money"
+      },
+      "orderedQuantity": {
+        "description": "The quantity of this item ordered.",
+        "ref": "ItemQuantity"
+      },
+      "vendorProductIdentifier": {
+        "description": "The vendor selected product identification of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "itemAcknowledgements",
+      "orderedQuantity"
+    ],
+    "type": "object"
+  },
+  "OrderDetails": {
+    "description": "Details of an order.",
+    "properties": {
+      "billToParty": {
+        "description": "Name/Address and tax details of the bill to party.",
+        "ref": "PartyIdentification"
+      },
+      "buyingParty": {
+        "description": "Name/Address and tax details of the buying party.",
+        "ref": "PartyIdentification"
+      },
+      "dealCode": {
+        "description": "If requested by the recipient, this field will contain a promotional/deal number.",
+        "type": "string"
+      },
+      "deliveryWindow": {
+        "description": "This indicates the delivery window.",
+        "ref": "DateTimeInterval"
+      },
+      "importDetails": {
+        "description": "If the purchase order is an import order, the details for the import order.",
+        "ref": "ImportDetails"
+      },
+      "items": {
+        "description": "A list of items in this purchase order.",
+        "ref": "OrderItem",
+        "type": "array"
+      },
+      "paymentMethod": {
+        "description": "Payment method used.",
+        "enum": [
+          "Consignment",
+          "CreditCard",
+          "Invoice",
+          "Prepaid"
+        ],
+        "type": "string"
+      },
+      "purchaseOrderChangedDate": {
+        "description": "The date when purchase order was last changed by Amazon after the order was placed.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "purchaseOrderDate": {
+        "description": "The date the purchase order was placed.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "purchaseOrderStateChangedDate": {
+        "description": "The date when current purchase order state was changed.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "purchaseOrderType": {
+        "description": "Type of purchase order.",
+        "enum": [
+          "ConsignedOrder",
+          "NewProductIntroduction",
+          "RegularOrder",
+          "RushOrder"
+        ],
+        "type": "string"
+      },
+      "sellingParty": {
+        "description": "Name/Address and tax details of the selling party.",
+        "ref": "PartyIdentification"
+      },
+      "shipToParty": {
+        "description": "Name/Address and tax details of the ship to party.",
+        "ref": "PartyIdentification"
+      },
+      "shipWindow": {
+        "description": "This indicates the ship window.",
+        "ref": "DateTimeInterval"
+      }
+    },
+    "required": [
+      "items",
+      "purchaseOrderDate",
+      "purchaseOrderStateChangedDate"
+    ],
+    "type": "object"
+  },
+  "OrderItem": {
+    "description": "Represents an individual item in an order, including item details, quantities, pricing, and backorder information.",
+    "properties": {
+      "amazonProductIdentifier": {
+        "description": "Amazon Standard Identification Number (ASIN) of an item.",
+        "type": "string"
+      },
+      "isBackOrderAllowed": {
+        "description": "When true, we will accept backorder confirmations for this item.",
+        "type": "boolean"
+      },
+      "itemSequenceNumber": {
+        "description": "Numbering of the item on the purchase order.",
+        "type": "string"
+      },
+      "listPrice": {
+        "description": "The list price of an item per each or weight unit.",
+        "ref": "Money"
+      },
+      "netCost": {
+        "description": "The net cost of an item per each or weight unit.",
+        "ref": "Money"
+      },
+      "orderedQuantity": {
+        "description": "Item quantity ordered.",
+        "ref": "ItemQuantity"
+      },
+      "vendorProductIdentifier": {
+        "description": "The vendor selected product identification of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "isBackOrderAllowed",
+      "itemSequenceNumber",
+      "orderedQuantity"
+    ],
+    "type": "object"
+  },
+  "OrderItemAcknowledgement": {
+    "description": "Represents the acknowledgement details for an individual order item, including the acknowledgement code, acknowledged quantity, scheduled ship and delivery dates, and rejection reason (if applicable).",
+    "properties": {
+      "acknowledgedQuantity": {
+        "description": "Details of quantity acknowledged with the above acknowledgement code.",
+        "ref": "ItemQuantity"
+      },
+      "acknowledgementCode": {
+        "description": "This indicates the acknowledgement code.",
+        "enum": [
+          "Accepted",
+          "Backordered",
+          "Rejected"
+        ],
+        "type": "string"
+      },
+      "rejectionReason": {
+        "description": "Indicates the reason for rejection.",
+        "enum": [
+          "InvalidProductIdentifier",
+          "ObsoleteProduct",
+          "TemporarilyUnavailable"
+        ],
+        "type": "string"
+      },
+      "scheduledDeliveryDate": {
+        "description": "Estimated delivery date per line item.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "scheduledShipDate": {
+        "description": "Estimated ship date per line item.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "acknowledgedQuantity",
+      "acknowledgementCode"
+    ],
+    "type": "object"
+  },
+  "OrderItemStatus": {
+    "description": "Represents the current status of an order item, including acknowledgement and receiving details.",
+    "properties": {
+      "acknowledgementStatus": {
+        "description": "Acknowledgement status information.",
+        "type": "object"
+      },
+      "buyerProductIdentifier": {
+        "description": "Buyer's Standard Identification Number (ASIN) of an item.",
+        "type": "string"
+      },
+      "itemSequenceNumber": {
+        "description": "Numbering of the item on the purchase order.",
+        "type": "string"
+      },
+      "listPrice": {
+        "description": "The list price of an item per each or weight unit.",
+        "ref": "Money"
+      },
+      "netCost": {
+        "description": "The net cost of an item per each or weight unit.",
+        "ref": "Money"
+      },
+      "orderedQuantity": {
+        "description": "Ordered quantity information.",
+        "type": "object"
+      },
+      "receivingStatus": {
+        "description": "Item receive status at the buyer's warehouse.",
+        "type": "object"
+      },
+      "vendorProductIdentifier": {
+        "description": "The vendor selected product identification of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "itemSequenceNumber"
+    ],
+    "type": "object"
+  },
+  "OrderList": {
+    "description": "A list of orders returned as response.",
+    "properties": {
+      "orders": {
+        "description": "Represents an individual order within the OrderList.",
+        "ref": "Order",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderListStatus": {
+    "description": "A list of order statuses.",
+    "properties": {
+      "ordersStatus": {
+        "description": "Represents an order status within the OrderListStatus.",
+        "ref": "OrderStatus",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OrderStatus": {
+    "description": "Current status of a purchase order.",
+    "properties": {
+      "itemStatus": {
+        "description": "Detailed order status.",
+        "ref": "ItemStatus"
+      },
+      "lastUpdatedDate": {
+        "description": "The date when the purchase order was last updated.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "purchaseOrderDate": {
+        "description": "The date the purchase order was placed.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "purchaseOrderNumber": {
+        "description": "The buyer's purchase order number for this order.",
+        "type": "string"
+      },
+      "purchaseOrderStatus": {
+        "description": "The status of the buyer's purchase order for this order.",
+        "enum": [
+          "CLOSED",
+          "OPEN"
+        ],
+        "type": "string"
+      },
+      "sellingParty": {
+        "description": "Name/Address and tax details of the selling party.",
+        "ref": "PartyIdentification"
+      },
+      "shipToParty": {
+        "description": "Name/Address and tax details of the ship to party.",
+        "ref": "PartyIdentification"
+      }
+    },
+    "required": [
+      "itemStatus",
+      "purchaseOrderDate",
+      "purchaseOrderNumber",
+      "purchaseOrderStatus",
+      "sellingParty",
+      "shipToParty"
+    ],
+    "type": "object"
+  },
+  "OrderedQuantityDetails": {
+    "description": "Details of item quantity ordered.",
+    "properties": {
+      "cancelledQuantity": {
+        "description": "Item quantity ordered.",
+        "ref": "ItemQuantity"
+      },
+      "orderedQuantity": {
+        "description": "Item quantity ordered.",
+        "ref": "ItemQuantity"
+      },
+      "updatedDate": {
+        "description": "The date when the line item quantity was updated by buyer.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "The pagination elements required to retrieve the remaining data.",
+    "properties": {
+      "nextToken": {
+        "description": "A generated string used to pass information to your next request.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PartyIdentification": {
+    "description": "Name, address and tax details of a party.",
+    "properties": {
+      "address": {
+        "description": "Identification of the party by address.",
+        "ref": "Address"
+      },
+      "partyId": {
+        "description": "Assigned identification for the party.",
+        "type": "string"
+      },
+      "taxInfo": {
+        "description": "Tax registration details of the party.",
+        "ref": "TaxRegistrationDetails"
+      }
+    },
+    "required": [
+      "partyId"
+    ],
+    "type": "object"
+  },
+  "SubmitAcknowledgementRequest": {
+    "description": "The request schema for the submitAcknowledgment operation.",
+    "properties": {
+      "acknowledgements": {
+        "description": "An array of order acknowledgements to be submitted.",
+        "ref": "OrderAcknowledgement",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SubmitAcknowledgementResponse": {
+    "description": "The response schema for the submitAcknowledgement operation",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the submitAcknowledgement operation.",
+        "ref": "TransactionId"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TaxRegistrationDetails": {
+    "description": "Tax registration details of the entity.",
+    "properties": {
+      "taxRegistrationNumber": {
+        "description": "Tax registration number for the entity.",
+        "type": "string"
+      },
+      "taxRegistrationType": {
+        "description": "Tax registration type for the entity.",
+        "enum": [
+          "GST",
+          "VAT"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "taxRegistrationNumber",
+      "taxRegistrationType"
+    ],
+    "type": "object"
+  },
+  "TransactionId": {
+    "description": "Response containing the transaction ID.",
+    "properties": {
+      "transactionId": {
+        "description": "GUID assigned by Amazon to identify this transaction.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

@@ -1,0 +1,5138 @@
+{
+ "docs": [
+  "docs/mcp/mcp-overview.md",
+  "docs/mcp/get-started.md",
+  "docs/mcp/get-started-lite.md",
+  "docs/mcp/oauth.md"
+ ],
+ "endpoints": {
+  "lite": {
+   "EU": "https://advertising-ai-eu.amazon.com/mcp/lite",
+   "FE": "https://advertising-ai-fe.amazon.com/mcp/lite",
+   "NA": "https://advertising-ai.amazon.com/mcp/lite"
+  },
+  "regular": {
+   "EU": "https://advertising-ai-eu.amazon.com/mcp",
+   "FE": "https://advertising-ai-fe.amazon.com/mcp",
+   "NA": "https://advertising-ai.amazon.com/mcp"
+  }
+ },
+ "groups": [
+  {
+   "file": "specs/mcp/account_management.json",
+   "group": "account_management",
+   "title": "MCP tools related to account_management",
+   "toolCount": 7
+  },
+  {
+   "file": "specs/mcp/ads_accounts.json",
+   "group": "ads_accounts",
+   "title": "MCP tools related to ads_accounts",
+   "toolCount": 3
+  },
+  {
+   "file": "specs/mcp/advertiser_product_group_eligibility.json",
+   "group": "advertiser_product_group_eligibility",
+   "title": "MCP tools related to advertiser_product_group_eligibility",
+   "toolCount": 2
+  },
+  {
+   "file": "specs/mcp/amazon_live.json",
+   "group": "amazon_live",
+   "title": "MCP tools related to amazon_live",
+   "toolCount": 23
+  },
+  {
+   "file": "specs/mcp/amc.json",
+   "group": "amc",
+   "title": "MCP tools related to amc",
+   "toolCount": 10
+  },
+  {
+   "file": "specs/mcp/billing.json",
+   "group": "billing",
+   "title": "MCP tools related to billing",
+   "toolCount": 4
+  },
+  {
+   "file": "specs/mcp/campaign_management.json",
+   "group": "campaign_management",
+   "title": "MCP tools related to campaign_management",
+   "toolCount": 32
+  },
+  {
+   "file": "specs/mcp/eligibility.json",
+   "group": "eligibility",
+   "title": "MCP tools related to eligibility",
+   "toolCount": 2
+  },
+  {
+   "file": "specs/mcp/manager_accounts.json",
+   "group": "manager_accounts",
+   "title": "MCP tools related to manager_accounts",
+   "toolCount": 4
+  },
+  {
+   "file": "specs/mcp/promotions.json",
+   "group": "promotions",
+   "title": "MCP tools related to promotions",
+   "toolCount": 3
+  },
+  {
+   "file": "specs/mcp/reporting.json",
+   "group": "reporting",
+   "title": "MCP tools related to reporting",
+   "toolCount": 6
+  },
+  {
+   "file": "specs/mcp/terms_token.json",
+   "group": "terms_token",
+   "title": "MCP tools related to terms_token",
+   "toolCount": 2
+  },
+  {
+   "file": "specs/mcp/test_accounts.json",
+   "group": "test_accounts",
+   "title": "MCP tools related to test_accounts",
+   "toolCount": 2
+  },
+  {
+   "file": "specs/mcp/user_invitation.json",
+   "group": "user_invitation",
+   "title": "MCP tools related to user_invitation",
+   "toolCount": 2
+  },
+  {
+   "file": "specs/mcp/user_invitations.json",
+   "group": "user_invitations",
+   "title": "MCP tools related to user_invitations",
+   "toolCount": 3
+  },
+  {
+   "file": "specs/mcp/user_permissions.json",
+   "group": "user_permissions",
+   "title": "MCP tools related to user_permissions",
+   "toolCount": 3
+  },
+  {
+   "file": "specs/mcp/user_roles.json",
+   "group": "user_roles",
+   "title": "MCP tools related to user_roles",
+   "toolCount": 1
+  },
+  {
+   "file": "specs/mcp/users.json",
+   "group": "users",
+   "title": "MCP tools related to users",
+   "toolCount": 1
+  }
+ ],
+ "liteMetaTools": [
+  "amazon_ads_mcp-search_tools",
+  "amazon_ads_mcp-describe_tools",
+  "amazon_ads_mcp-invoke_tool"
+ ],
+ "status": "open beta",
+ "toolCount": 110,
+ "tools": [
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdvertiserAccountsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "CreateAdvertiserAccount",
+     "path": "/adsApi/v1/create/advertiserAccounts"
+    }
+   ],
+   "description": "Create a new advertiser account (Global Account). Returns an advertiserAccountId in the format amzn1.ads-account.g.*. The account starts in REGISTRATION_IN_PROGRESS status. Requires businessDetails with a valid address.",
+   "endpointPath": "/mcp/create_advertiser_account",
+   "fullName": "account_management-create_advertiser_account",
+   "group": "account_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "advertiserAccounts": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_advertiser_account",
+   "sideEffect": "mutates",
+   "tags": [
+    "account_management"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAccountLinksContract_beta",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "QueryAccountLink",
+     "path": "/adsApi/v1/query/accountLinks"
+    }
+   ],
+   "description": "Query account links. Manager Account users can retrieve details about all accounts linked to their Manager Accounts. Additionally, advertiser account users can find all Manager Accounts linked to their advertising account.",
+   "endpointPath": "/mcp/query_account_link",
+   "fullName": "account_management-query_account_link",
+   "group": "account_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      },
+      "relationshipTypeFilter": {
+       "description": null,
+       "required": true,
+       "type": "object"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "query_account_link",
+   "sideEffect": "none",
+   "tags": [
+    "account_management"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdvertiserAccountsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "QueryAdvertiserAccount",
+     "path": "/adsApi/v1/query/advertiserAccounts"
+    }
+   ],
+   "description": "List or query advertiser accounts the user has access to. Without filters, returns global accounts. Use `isGlobalAccountFilter: { include: [true] }` for global or `{ include: [false] }` for non-global accounts. Use `advertiserAccountIdFilter` to query specific global accounts by ID (e.g. `amzn1.ads-account.g.XXXXX`). Returns `alternateIds` containing DSP advertiser IDs (`dspAdvertiserId`), Sponso…",
+   "endpointPath": "/mcp/query_advertiser_account",
+   "fullName": "account_management-query_advertiser_account",
+   "group": "account_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "advertiserAccountIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "isGlobalAccountFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "query_advertiser_account",
+   "sideEffect": "none",
+   "tags": [
+    "account_management"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdvertiserAccountsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "UpdateAdvertiserAccount",
+     "path": "/adsApi/v1/update/advertiserAccounts"
+    }
+   ],
+   "description": "Update the currency code of an advertiser account.",
+   "endpointPath": "/mcp/update_account_currency",
+   "fullName": "account_management-update_account_currency",
+   "group": "account_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "advertiserAccounts": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "update_account_currency",
+   "sideEffect": "mutates",
+   "tags": [
+    "account_management"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdvertiserAccountsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "UpdateAdvertiserAccount",
+     "path": "/adsApi/v1/update/advertiserAccounts"
+    }
+   ],
+   "description": "Update the display name of an advertiser account.",
+   "endpointPath": "/mcp/update_account_name",
+   "fullName": "account_management-update_account_name",
+   "group": "account_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "advertiserAccounts": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "update_account_name",
+   "sideEffect": "mutates",
+   "tags": [
+    "account_management"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdvertiserAccountsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "UpdateAdvertiserAccount",
+     "path": "/adsApi/v1/update/advertiserAccounts"
+    }
+   ],
+   "description": "Update the timezone of an advertiser account.",
+   "endpointPath": "/mcp/update_account_timezone",
+   "fullName": "account_management-update_account_timezone",
+   "group": "account_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "advertiserAccounts": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "update_account_timezone",
+   "sideEffect": "mutates",
+   "tags": [
+    "account_management"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdvertiserAccountsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "UpdateAdvertiserAccount",
+     "path": "/adsApi/v1/update/advertiserAccounts"
+    }
+   ],
+   "description": "Update an advertiser account.",
+   "endpointPath": "/mcp/update_advertiser_account",
+   "fullName": "account_management-update_advertiser_account",
+   "group": "account_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "advertiserAccounts": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_advertiser_account",
+   "sideEffect": "mutates",
+   "tags": [
+    "account_management"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingAccounts",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "RegisterAdsAccount",
+     "path": "/adsAccounts"
+    }
+   ],
+   "description": "Create a new advertising account tied to a specific Amazon vendor, seller or author, or to a business who does not sell on Amazon.",
+   "endpointPath": "/mcp/create_ads_account",
+   "fullName": "ads_accounts-create_ads_account",
+   "group": "ads_accounts",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accountName": {
+       "description": "Account names are typically the name of the company or brand being advertised. Avoid using personal details such as fir…",
+       "required": false,
+       "type": "string"
+      },
+      "associations": {
+       "description": "Associations to link to this advertising account. Could be Amazon Vendor, Seller, or a regular business.",
+       "required": false,
+       "type": "array"
+      },
+      "countryCodes": {
+       "description": "The countries that you want this account to operate in.",
+       "required": false,
+       "type": "array"
+      },
+      "termsToken": {
+       "description": "Optional. An obfuscated identifier of the termsToken activated when an advertiser accepts the Amazon Ads Agreement. Not…",
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_ads_account",
+   "sideEffect": "mutates",
+   "tags": [
+    "ads_accounts"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingAccounts",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "GET",
+     "operationId": "GetAccount",
+     "path": "/adsAccounts/{advertisingAccountId}"
+    }
+   ],
+   "description": "Request attributes of a given advertising account.",
+   "endpointPath": "/mcp/get_ads_account",
+   "fullName": "ads_accounts-get_ads_account",
+   "group": "ads_accounts",
+   "inputs": {
+    "pathParameters": {
+     "fields": {
+      "advertisingAccountId": {
+       "description": "The global advertising account Id.",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "get_ads_account",
+   "sideEffect": "none",
+   "tags": [
+    "ads_accounts"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingAccounts",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "ListAdsAccounts",
+     "path": "/adsAccounts/list"
+    }
+   ],
+   "description": "List all advertising accounts for the user associated with the access token.",
+   "endpointPath": "/mcp/list_ads_accounts",
+   "fullName": "ads_accounts-list_ads_accounts",
+   "group": "ads_accounts",
+   "inputs": {
+    "body": {
+     "fields": {
+      "maxResults": {
+       "description": "Maximum number of results to return. Default is 100.",
+       "required": false,
+       "type": "number"
+      },
+      "nextToken": {
+       "description": "Token used to fetch the next page of results if they exist.",
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "list_ads_accounts",
+   "sideEffect": "none",
+   "tags": [
+    "ads_accounts"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdvertiserProductGroupEligibilitiesContract_beta",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "CreateAdvertiserProductGroupEligibility",
+     "path": "/adsApi/v1/create/advertiserProductGroupEligibilities"
+    }
+   ],
+   "description": "Create request for specific advertiser product group eligibility (e.g., ADSP).",
+   "endpointPath": "/mcp/create",
+   "fullName": "advertiser_product_group_eligibility-create",
+   "group": "advertiser_product_group_eligibility",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "advertiserProductGroupEligibilities": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create",
+   "sideEffect": "mutates",
+   "tags": [
+    "advertiser_product_group_eligibility"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdvertiserProductGroupEligibilitiesContract_beta",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "QueryAdvertiserProductGroupEligibility",
+     "path": "/adsApi/v1/query/advertiserProductGroupEligibilities"
+    }
+   ],
+   "description": "Query requests for advertiser product group eligibility based on advertiser account ID.",
+   "endpointPath": "/mcp/query",
+   "fullName": "advertiser_product_group_eligibility-query",
+   "group": "advertiser_product_group_eligibility",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "maxResults": {
+       "description": "Max results (0-10)",
+       "required": false,
+       "type": "number"
+      },
+      "nextToken": {
+       "description": "Pagination token",
+       "required": false,
+       "type": "string"
+      },
+      "statusFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "query",
+   "sideEffect": "none",
+   "tags": [
+    "advertiser_product_group_eligibility"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Create a new Amazon Live broadcast scheduled on a specific channel. Required: title, channelId. Optional: scheduledStartDateTime, videoSource, streamingOrientation, isPublic, isPractice, includesDeals. Returns the created broadcast with a server-assigned broadcastId and initial broadcastStatus. Practice broadcasts (isPractice=true) are test broadcasts that do not appear to end viewers.",
+   "endpointPath": "/mcp/create_broadcast",
+   "fullName": "amazon_live-create_broadcast",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "broadcasts": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_broadcast",
+   "sideEffect": "mutates",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Create a media asset (thumbnail, sponsored image, HLS stream, MP4 video, or video clip) associated with an Amazon Live broadcast. Required: broadcastId, type, and at least one of content or metadata (either a binary upload or a metadata record must be supplied). Server assigns mediaAssetId, format, url, and version on creation. Use appropriate type: THUMBNAIL_IMAGE, SPONSORED_IMAGE, HLS_STREAM, M…",
+   "endpointPath": "/mcp/create_broadcast_media_asset",
+   "fullName": "amazon_live-create_broadcast_media_asset",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "broadcastMediaAssets": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_broadcast_media_asset",
+   "sideEffect": "mutates",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Create carousel items (products or landing pages) to be shown during an Amazon Live broadcast. Supports bulk create up to 45 items per call. Required per item: broadcastId, type (PRODUCT or CUSTOM), carouselMetadata. For PRODUCT type, provide ProductCarouselMetadata with productId (ASIN). For CUSTOM type, provide LandingPageCarouselMetadata with title and description; linkUrl and imageUrl are opt…",
+   "endpointPath": "/mcp/create_carousel_item",
+   "fullName": "amazon_live-create_carousel_item",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "carouselItems": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_carousel_item",
+   "sideEffect": "mutates",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Create a new Amazon Live channel for a brand. A channel is the persistent home for a brand's livestreams. Required: title, brandId. Optional: brandAlternateIds, logoUrl. Returns the created channel with a server-assigned channelId and initial channelState (OFFLINE).",
+   "endpointPath": "/mcp/create_channel",
+   "fullName": "amazon_live-create_channel",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "channels": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_channel",
+   "sideEffect": "mutates",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Associate a promotion code with an Amazon Live broadcast. The promo code string must already exist in the Amazon promotions system. Required: broadcastId, promoCode. The discount percentage, validity window, and associated product IDs are derived from the promo code in the promotions system and cannot be set directly here. Returns the created association with a server-assigned id.",
+   "endpointPath": "/mcp/create_promo_code",
+   "fullName": "amazon_live-create_promo_code",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "promoCodes": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_promo_code",
+   "sideEffect": "mutates",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Delete an Amazon Live broadcast by its broadcastId. This permanently removes the broadcast and cannot be undone. Only broadcasts that are not currently LIVE can be deleted.",
+   "endpointPath": "/mcp/delete_broadcast",
+   "fullName": "amazon_live-delete_broadcast",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "broadcastIds": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "delete_broadcast",
+   "sideEffect": "destructive",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "List media assets (thumbnails, sponsored images, HLS streams, MP4 videos, video clips) associated with an Amazon Live broadcast. Returns asset type, URL, format, and metadata such as dimensions, orientation, and duration.",
+   "endpointPath": "/mcp/list_broadcast_media_assets",
+   "fullName": "amazon_live-list_broadcast_media_assets",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      }
+     },
+     "required": false
+    },
+    "queryParameters": {
+     "fields": {
+      "broadcastId": {
+       "description": null,
+       "required": true,
+       "type": "string"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "list_broadcast_media_assets",
+   "sideEffect": "none",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "List all Amazon Live broadcasts for a specific channel. Returns paginated broadcast details filtered by channelId. Use this when you know the channel and want all its broadcasts.",
+   "endpointPath": "/mcp/list_broadcasts",
+   "fullName": "amazon_live-list_broadcasts",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      }
+     },
+     "required": false
+    },
+    "queryParameters": {
+     "fields": {
+      "channelId": {
+       "description": null,
+       "required": true,
+       "type": "string"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "list_broadcasts",
+   "sideEffect": "none",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "List carousel items (products or landing pages) shown during an Amazon Live broadcast. Returns display order, activation status, carousel type (PRODUCT or CUSTOM), and metadata such as product ID or landing page details. Use this to see what items are being showcased during a broadcast.",
+   "endpointPath": "/mcp/list_carousel_items",
+   "fullName": "amazon_live-list_carousel_items",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      }
+     },
+     "required": false
+    },
+    "queryParameters": {
+     "fields": {
+      "broadcastId": {
+       "description": null,
+       "required": true,
+       "type": "string"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "list_carousel_items",
+   "sideEffect": "none",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "List all Amazon Live channels for the current advertiser account. No filters required — returns all channels the advertiser has access to, including channelId, title, state (OFFLINE/PREVIEWING/LIVE), logo URL, and feature flags. Use this as the starting point to discover which channels exist before querying broadcasts or livestream details.",
+   "endpointPath": "/mcp/list_channels",
+   "fullName": "amazon_live-list_channels",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      }
+     },
+     "required": false
+    },
+    "queryParameters": {
+     "fields": {
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "list_channels",
+   "sideEffect": "none",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "List livestream technical details (streaming infrastructure) for an Amazon Live channel. Returns ingest endpoint, ingest type (WEBRTC/RTMPS/SRT), preview URL, stream state (bitrate/resolution/frame rate), and validation status. Stream keys are NOT included in list responses. Use this to inspect the streaming setup for a channel.",
+   "endpointPath": "/mcp/list_livestream_details",
+   "fullName": "amazon_live-list_livestream_details",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      }
+     },
+     "required": false
+    },
+    "queryParameters": {
+     "fields": {
+      "channelId": {
+       "description": null,
+       "required": true,
+       "type": "string"
+      },
+      "ingestType": {
+       "description": "Type of streaming protocol used",
+       "required": false,
+       "type": "string"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "list_livestream_details",
+   "sideEffect": "none",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "List promotion codes associated with an Amazon Live broadcast. Returns promo code details including the code string, discount percentage, start/end times, and associated product IDs (ASINs). Use this to see what deals are offered during a broadcast.",
+   "endpointPath": "/mcp/list_promo_codes",
+   "fullName": "amazon_live-list_promo_codes",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      }
+     },
+     "required": false
+    },
+    "queryParameters": {
+     "fields": {
+      "broadcastId": {
+       "description": null,
+       "required": true,
+       "type": "string"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "list_promo_codes",
+   "sideEffect": "none",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Query Amazon Live broadcasts for a brand. Supports filtering by brand ID, brand alternate IDs, creation date range, and broadcast status (UNSCHEDULED, SCHEDULED, PRE_LIVE, LIVE, COMPLETED). Returns paginated broadcast details including title, status, scheduled times, and channel association. Use this to find broadcasts matching specific criteria.",
+   "endpointPath": "/mcp/query_broadcasts",
+   "fullName": "amazon_live-query_broadcasts",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "brandAlternateIdsFilter": {
+       "description": "Alternate brand identifiers (e.g., BRAND_ENTITY_ID) used for filtering broadcasts.",
+       "required": false,
+       "type": "object"
+      },
+      "brandIdFilter": {
+       "description": "Internal brand ID. Use to filter broadcasts for a specific brand.",
+       "required": false,
+       "type": "object"
+      },
+      "broadcastStatusFilter": {
+       "description": "Filter by broadcast lifecycle status. Use EXACT_MATCH with values: UNSCHEDULED, SCHEDULED, PRE_LIVE, LIVE, COMPLETED.",
+       "required": false,
+       "type": "object"
+      },
+      "creationDateTimeFilter": {
+       "description": "Filter broadcasts by creation date/time range.",
+       "required": true,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "query_broadcasts",
+   "sideEffect": "none",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Query Amazon Live channels for a brand. Returns channel details including title, follower count, state (OFFLINE/PREVIEWING/LIVE), feature flags, and associated stream IDs. Use this to find channels owned by a brand.",
+   "endpointPath": "/mcp/query_channels",
+   "fullName": "amazon_live-query_channels",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "brandAlternateIdsFilter": {
+       "description": "Alternate brand identifiers (e.g., BRAND_ENTITY_ID) used for filtering channels.",
+       "required": false,
+       "type": "object"
+      },
+      "brandIdFilter": {
+       "description": "Internal brand ID to filter channels for a specific brand.",
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "query_channels",
+   "sideEffect": "none",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Validate promotion codes by querying Amazon's promotions system. Required: broadcastId filter and promoCode filter (up to 10 codes). Returns validated promo code details including discount percentage, validity window, and associated product IDs (ASINs). Use this to check if a promo code exists and is valid before associating it with a broadcast.",
+   "endpointPath": "/mcp/query_promo_code",
+   "fullName": "amazon_live-query_promo_code",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "broadcastIdFilter": {
+       "description": "Required filter. The broadcast ID context for validation.",
+       "required": true,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      },
+      "promoCodeFilter": {
+       "description": "Required filter. Up to 10 promo code strings to validate.",
+       "required": true,
+       "type": "object"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "query_promo_code",
+   "sideEffect": "none",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Retrieve a specific Amazon Live broadcast by its broadcastId. Returns full broadcast details including status, scheduling, chat details, moderation events, carousel item IDs, media asset IDs, and promo code IDs. Use the dedicated list tools (list_carousel_items, list_broadcast_media_assets, list_promo_codes) to retrieve full details for these associated resources.",
+   "endpointPath": "/mcp/retrieve_broadcast",
+   "fullName": "amazon_live-retrieve_broadcast",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "broadcastIds": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "retrieve_broadcast",
+   "sideEffect": "none",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Retrieve a specific Amazon Live channel by its channelId. Returns full channel details including title, follower count, logo URL, state, feature flags, and associated stream detail IDs.",
+   "endpointPath": "/mcp/retrieve_channel",
+   "fullName": "amazon_live-retrieve_channel",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "channelIds": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "retrieve_channel",
+   "sideEffect": "none",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Retrieve a specific promotion code by its id. Returns full promo code details including the code string, discount percentage, validity window, and associated product IDs.",
+   "endpointPath": "/mcp/retrieve_promo_code",
+   "fullName": "amazon_live-retrieve_promo_code",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "ids": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "retrieve_promo_code",
+   "sideEffect": "none",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Update an existing Amazon Live broadcast. Required: broadcastId. Only provided fields are modified; others remain unchanged. CAUTION: broadcastStatus transitions are significant - moving to LIVE starts the stream, moving to COMPLETED ends it permanently. Prefer the dedicated go-live and end-broadcast workflows over direct status updates when possible.",
+   "endpointPath": "/mcp/update_broadcast",
+   "fullName": "amazon_live-update_broadcast",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "broadcasts": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_broadcast",
+   "sideEffect": "mutates",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Update an existing broadcast media asset's metadata or content. Required: mediaAssetId. Only provided fields are modified. mediaAssetId, url, format, creationDateTime, and version are server-managed and immutable.",
+   "endpointPath": "/mcp/update_broadcast_media_asset",
+   "fullName": "amazon_live-update_broadcast_media_asset",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "broadcastMediaAssets": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_broadcast_media_asset",
+   "sideEffect": "mutates",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Update existing carousel items (products or landing pages) in an Amazon Live broadcast. Supports bulk update up to 45 items per call. Required per item: carouselItemId. Only provided fields are modified; others remain unchanged. The type field is immutable after creation. Use isActive=false to hide an item without deleting it.",
+   "endpointPath": "/mcp/update_carousel_item",
+   "fullName": "amazon_live-update_carousel_item",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "carouselItems": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_carousel_item",
+   "sideEffect": "mutates",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Update an existing Amazon Live channel. Required: channelId. Only provided fields are modified; others remain unchanged. channelState, followers, featureFlags, and streamDetailIds are managed by the system and cannot be updated via this tool.",
+   "endpointPath": "/mcp/update_channel",
+   "fullName": "amazon_live-update_channel",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "channels": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_channel",
+   "sideEffect": "mutates",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": "no matching operation in the published Ads API specs",
+   "backingOperations": [],
+   "description": "Update an existing promo code association on an Amazon Live broadcast. Required: id. Only the associated promo code string and broadcast can be updated here; discount percentage, validity window, and product IDs are derived from the promotions system.",
+   "endpointPath": "/mcp/update_promo_code",
+   "fullName": "amazon_live-update_promo_code",
+   "group": "amazon_live",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "promoCodes": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_promo_code",
+   "sideEffect": "mutates",
+   "tags": [
+    "amazon_live"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "WorkflowManagementService",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "createWorkflow",
+     "path": "/amc/reporting/{instanceId}/workflows"
+    }
+   ],
+   "description": "Creates a new Amazon Marketing Cloud (AMC) workflow that can be used to generate reports.",
+   "endpointPath": "/mcp/create_workflow",
+   "fullName": "amc-create_workflow",
+   "group": "amc",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": null
+      },
+      "inputParameters": {
+       "description": "Defines the parameters that can be referenced by workflow definition. If workflow references a parameter not defined he…",
+       "required": false,
+       "type": "array"
+      },
+      "sqlQuery": {
+       "description": "The SQL query to run to produce output for the workflow",
+       "required": true,
+       "type": "string"
+      },
+      "workflowId": {
+       "description": "User-supplied ID of the workflow",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": true
+    },
+    "pathParameters": {
+     "fields": {
+      "amcInstanceId": {
+       "description": "The AMC instance ID",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "create_workflow",
+   "sideEffect": "mutates",
+   "tags": [
+    "amc"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "WorkflowManagementService",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "DELETE",
+     "operationId": "deleteWorkflow",
+     "path": "/amc/reporting/{instanceId}/workflows/{workflowId}"
+    }
+   ],
+   "description": "Deletes the specified Amazon Marketing Cloud (AMC) workflow by id. Workflows are defined as a set of operations that take previously defined data sources as input and use them to generate reports.",
+   "endpointPath": "/mcp/delete_workflow",
+   "fullName": "amc-delete_workflow",
+   "group": "amc",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "object"
+      }
+     },
+     "required": true
+    },
+    "pathParameters": {
+     "fields": {
+      "amcInstanceId": {
+       "description": "The AMC instance ID",
+       "required": true,
+       "type": "string"
+      },
+      "workflowId": {
+       "description": "The workflow ID",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "delete_workflow",
+   "sideEffect": "destructive",
+   "tags": [
+    "amc"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "WorkflowManagementService",
+     "confidence": "inferred",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "createWorkflowExecution",
+     "path": "/amc/reporting/{instanceId}/workflowExecutions"
+    }
+   ],
+   "description": "Executes an ad-hoc SQL query on Amazon Marketing Cloud (AMC) without requiring a pre-existing workflow.",
+   "endpointPath": "/mcp/execute_query",
+   "fullName": "amc-execute_query",
+   "group": "amc",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "object"
+      },
+      "parameterValues": {
+       "description": "Values to use for the parameters specified in the SQL query.",
+       "required": false,
+       "type": "object"
+      },
+      "requireSyntheticData": {
+       "description": "if true the execution will only be allowed to use data sets that only contain synthetic data.",
+       "required": false,
+       "type": "boolean"
+      },
+      "timeWindowEnd": {
+       "description": "Only used with a timeWindowType of EXPLICIT. The end of the time window for input data for the execution. This is a nom…",
+       "required": false,
+       "type": "string"
+      },
+      "timeWindowStart": {
+       "description": "Only used with a timeWindowType of `EXPLICIT`. The start of the time window for input data for the execution. This is a…",
+       "required": false,
+       "type": "string"
+      },
+      "timeWindowTimeZone": {
+       "description": "The time zone of the specified time window. This applies to both time window start and end if specified for time window…",
+       "required": false,
+       "type": "string"
+      },
+      "timeWindowType": {
+       "description": "The type of time window to use for specifying input data for the execution. If not provided, the time window type of `M…",
+       "required": false,
+       "type": "string"
+      },
+      "workflow": {
+       "description": "Inline workflow definition containing the SQL query to execute.",
+       "required": true,
+       "type": "object"
+      }
+     },
+     "required": true
+    },
+    "pathParameters": {
+     "fields": {
+      "amcInstanceId": {
+       "description": "The AMC instance ID",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "execute_query",
+   "sideEffect": "starts-job",
+   "tags": [
+    "amc"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "WorkflowManagementService",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "createWorkflowExecution",
+     "path": "/amc/reporting/{instanceId}/workflowExecutions"
+    }
+   ],
+   "description": "Creates a new, ad-hoc execution of an existing Amazon Marketing Cloud (AMC) workflow",
+   "endpointPath": "/mcp/execute_workflow",
+   "fullName": "amc-execute_workflow",
+   "group": "amc",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": null
+      },
+      "parameterValues": {
+       "description": "Values to use for the parameters specified in the workflow.",
+       "required": false,
+       "type": "object"
+      },
+      "timeWindowEnd": {
+       "description": "Only used with a timeWindowType of EXPLICIT. The end of the time window for input data for the workflow execution. This…",
+       "required": false,
+       "type": "string"
+      },
+      "timeWindowStart": {
+       "description": "Only used with a timeWindowType of `EXPLICIT`. The start of the time window for input data for the workflow execution. …",
+       "required": false,
+       "type": "string"
+      },
+      "timeWindowTimeZone": {
+       "description": "The time zone of the specified time window. This applies to both time window start and end if specified for time window…",
+       "required": false,
+       "type": "string"
+      },
+      "timeWindowType": {
+       "description": "The type of time window to use to for specifying input data for the workflow execution. If not provided, the time windo…",
+       "required": false,
+       "type": "string"
+      },
+      "workflowId": {
+       "description": "The ID of the workflow to execute.",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": true
+    },
+    "pathParameters": {
+     "fields": {
+      "amcInstanceId": {
+       "description": "The AMC instance ID",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "execute_workflow",
+   "sideEffect": "starts-job",
+   "tags": [
+    "amc"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "WorkflowManagementService",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "GET",
+     "operationId": "getDataSource",
+     "path": "/amc/reporting/{instanceId}/dataSources/{dataSourceId}"
+    }
+   ],
+   "description": "Gets the requested Amazon Marketing Cloud (AMC) data source by id. Data sources can be used as input for reporting workflows. Each data source has a flat schema consisting of a list of columns that each have a name, a data type, and a column typeof metric or dimension.",
+   "endpointPath": "/mcp/get_data_source",
+   "fullName": "amc-get_data_source",
+   "group": "amc",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": null
+      }
+     },
+     "required": true
+    },
+    "pathParameters": {
+     "fields": {
+      "amcInstanceId": {
+       "description": "The AMC instance ID",
+       "required": true,
+       "type": "string"
+      },
+      "dataSourceId": {
+       "description": "The data source ID",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "get_data_source",
+   "sideEffect": "none",
+   "tags": [
+    "amc"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "WorkflowManagementService",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "GET",
+     "operationId": "listDataSources",
+     "path": "/amc/reporting/{instanceId}/dataSources"
+    }
+   ],
+   "description": "Returns a list of Amazon Marketing Cloud (AMC) data sources for a given instance and AMC Account",
+   "endpointPath": "/mcp/get_data_sources",
+   "fullName": "amc-get_data_sources",
+   "group": "amc",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": null
+      }
+     },
+     "required": true
+    },
+    "pathParameters": {
+     "fields": {
+      "amcInstanceId": {
+       "description": "The AMC instance ID",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": true
+    },
+    "queryParameters": {
+     "fields": {
+      "limit": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "get_data_sources",
+   "sideEffect": "none",
+   "tags": [
+    "amc"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "WorkflowManagementService",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "GET",
+     "operationId": "getWorkflow",
+     "path": "/amc/reporting/{instanceId}/workflows/{workflowId}"
+    }
+   ],
+   "description": "Gets the requested Amazon Marketing Cloud (AMC) workflow by id. Workflows are defined as a set of operations that take previously defined data sources as input and use them to generate reports.",
+   "endpointPath": "/mcp/get_workflow",
+   "fullName": "amc-get_workflow",
+   "group": "amc",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": null
+      }
+     },
+     "required": true
+    },
+    "pathParameters": {
+     "fields": {
+      "amcInstanceId": {
+       "description": "The AMC instance ID",
+       "required": true,
+       "type": "string"
+      },
+      "workflowId": {
+       "description": "The workflow ID",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "get_workflow",
+   "sideEffect": "none",
+   "tags": [
+    "amc"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "WorkflowManagementService",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "GET",
+     "operationId": "getWorkflowExecutionDownloadUrls",
+     "path": "/amc/reporting/{instanceId}/workflowExecutions/{workflowExecutionId}/downloadUrls"
+    }
+   ],
+   "description": "Retrieves pre-signed url for downloading Amazon Marketing Cloud (AMC) workflow execution results from S3",
+   "endpointPath": "/mcp/get_workflow_execution_download_url",
+   "fullName": "amc-get_workflow_execution_download_url",
+   "group": "amc",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": null
+      }
+     },
+     "required": true
+    },
+    "pathParameters": {
+     "fields": {
+      "amcInstanceId": {
+       "description": "The AMC instance ID",
+       "required": true,
+       "type": "string"
+      },
+      "workflowExecutionId": {
+       "description": "The workflow execution ID",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "get_workflow_execution_download_url",
+   "sideEffect": "none",
+   "tags": [
+    "amc"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "WorkflowManagementService",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "GET",
+     "operationId": "getWorkflowExecution",
+     "path": "/amc/reporting/{instanceId}/workflowExecutions/{workflowExecutionId}"
+    }
+   ],
+   "description": "Gets status information about the requested Amazon Marketing Cloud (AMC) workflow execution",
+   "endpointPath": "/mcp/get_workflow_execution_status",
+   "fullName": "amc-get_workflow_execution_status",
+   "group": "amc",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": null
+      }
+     },
+     "required": true
+    },
+    "pathParameters": {
+     "fields": {
+      "amcInstanceId": {
+       "description": "The AMC instance ID",
+       "required": true,
+       "type": "string"
+      },
+      "workflowExecutionId": {
+       "description": "The workflow execution ID",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "get_workflow_execution_status",
+   "sideEffect": "none",
+   "tags": [
+    "amc"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "WorkflowManagementService",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "GET",
+     "operationId": "listWorkflows",
+     "path": "/amc/reporting/{instanceId}/workflows"
+    }
+   ],
+   "description": "Returns a list of Amazon Marketing Cloud (AMC) workflows for the given instance and AMC Account",
+   "endpointPath": "/mcp/get_workflows",
+   "fullName": "amc-get_workflows",
+   "group": "amc",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": null
+      }
+     },
+     "required": true
+    },
+    "pathParameters": {
+     "fields": {
+      "amcInstanceId": {
+       "description": "The AMC instance ID",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": true
+    },
+    "queryParameters": {
+     "fields": {
+      "limit": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "get_workflows",
+   "sideEffect": "none",
+   "tags": [
+    "amc"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingBilling",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "GetBillingProfileUsages",
+     "path": "/billingProfileUsages/list"
+    }
+   ],
+   "description": "Lists the billing profiles linked to each country of a global ads account. Can filter by advertiser and optionally expand billing profile details.",
+   "endpointPath": "/mcp/list_billing_profile_usages",
+   "fullName": "billing-list_billing_profile_usages",
+   "group": "billing",
+   "inputs": {
+    "body": {
+     "fields": {
+      "expandBillingProfile": {
+       "description": "Set true to include full billing profile content. Default false.",
+       "required": false,
+       "type": "boolean"
+      },
+      "expandFallbackBillingProfile": {
+       "description": "Set true to include fallback billing profile[actually visible on the invoice] info. Default false.",
+       "required": false,
+       "type": "boolean"
+      },
+      "filters": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": "Max results per page. Default 100.",
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": "Offset to fetch next page of billing profile usages.",
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "list_billing_profile_usages",
+   "sideEffect": "none",
+   "tags": [
+    "billing"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingBilling",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "GetBillingInvoiceSummaries",
+     "path": "/invoiceSummaries/list"
+    }
+   ],
+   "description": "Lists billing invoice summaries in a global ads account. Supports filtering by date range, country, status, payment method, invoice number, and reserve order number. Also supports sorting and aggregation.",
+   "endpointPath": "/mcp/list_invoice_summaries",
+   "fullName": "billing-list_invoice_summaries",
+   "group": "billing",
+   "inputs": {
+    "body": {
+     "fields": {
+      "aggregation": {
+       "description": "Aggregation query configuration.",
+       "required": false,
+       "type": "object"
+      },
+      "countryValueFilter": {
+       "description": "Filter by country values.",
+       "required": false,
+       "type": "object"
+      },
+      "invoiceDueDateRangeFilter": {
+       "description": "Filter by invoice due date range.",
+       "required": false,
+       "type": "object"
+      },
+      "invoiceIssuedDateRangeFilter": {
+       "description": "Filter by invoice issued date range.",
+       "required": false,
+       "type": "object"
+      },
+      "invoiceNumberFilter": {
+       "description": "Filter by invoice numbers.",
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": "Max results per page. Default 100.",
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": "Offset to fetch next page of billing invoice summaries.",
+       "required": false,
+       "type": "string"
+      },
+      "paymentMethodTypeValueFilter": {
+       "description": "Filter by payment method type.",
+       "required": false,
+       "type": "object"
+      },
+      "reserveOrderNumberFilter": {
+       "description": "Filter by reserve order numbers.",
+       "required": false,
+       "type": "object"
+      },
+      "sort": {
+       "description": "Sort configuration.",
+       "required": false,
+       "type": "object"
+      },
+      "statusValueFilter": {
+       "description": "Filter by invoice status values.",
+       "required": false,
+       "type": "object"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "list_invoice_summaries",
+   "sideEffect": "none",
+   "tags": [
+    "billing"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingBilling",
+     "confidence": "inferred",
+     "generation": "v0",
+     "method": "GET",
+     "operationId": "getAdvertiserInvoices",
+     "path": "/invoices"
+    }
+   ],
+   "description": "This tool allows retrieving invoices for Amazon advertising accounts. The tool fetches invoices across an advertiser account, allowing an account to access comprehensive invoicing and charges summary. It provides detailed invoicing information for the account such as the invoice amounts, fees, due dates, the payment method for the invoice, payment terms, invoice status etc. It supports flexible f…",
+   "endpointPath": "/mcp/list_invoices",
+   "fullName": "billing-list_invoices",
+   "group": "billing",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      }
+     },
+     "required": false
+    },
+    "queryParameters": {
+     "fields": {
+      "count": {
+       "description": "Number of records to include in the paged response. Defaults to 100. Cannot be combined with the cursor parameter.",
+       "required": false,
+       "type": "integer"
+      },
+      "cursor": {
+       "description": "A cursor representing how far into a result set this query should begin. In the absence of a cursor the request will de…",
+       "required": false,
+       "type": "string"
+      },
+      "endDate": {
+       "description": "The ending date (inclusive) of the date range for filtering invoices. Please provide the date in ISO-8601 format, repre…",
+       "required": false,
+       "type": null
+      },
+      "invoiceStatuses": {
+       "description": "* `ISSUED`: An invoice is issued when its charges are finalized and tax is computed on the total amount. * `PAID_IN_PAR…",
+       "required": false,
+       "type": "array"
+      },
+      "startDate": {
+       "description": "The starting date (inclusive) of the date range for filtering invoices. Please provide the date in ISO-8601 format, rep…",
+       "required": false,
+       "type": null
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "list_invoices",
+   "sideEffect": "none",
+   "tags": [
+    "billing"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingBilling",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "bulkGetBillingNotifications",
+     "path": "/billing/notifications"
+    }
+   ],
+   "description": "This tool allows retrieving comprehensive billing notifications for Amazon advertising accounts. The tool provides a comprehensive set of billing-related notifications for an advertiser account, enabling advertisers to understand the billing status for their accounts. These notifications also cover various billing scenarios such as payment method issues, billing profile problems, account suspensi…",
+   "endpointPath": "/mcp/query_billing_notifications",
+   "fullName": "billing-query_billing_notifications",
+   "group": "billing",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "advertiserMarketplaces": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      },
+      "locale": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "query_billing_notifications",
+   "sideEffect": "none",
+   "tags": [
+    "billing"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPISPGLOBALCampaignsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "SPGlobalUpdateCampaign",
+     "path": "/adsApi/v1/update/campaigns"
+    }
+   ],
+   "description": "Add countries to existing Amazon Ads Sponsored Products Manual campaigns with country-specific budget caps. Enables advertisers to expand campaign reach to new geographical markets while maintaining granular budget control per country. Only supports SPONSORED_PRODUCTS Manual campaigns. Only the first maximum 10 unique ASINs/SKUs under the campaign will be considered for ad creation under the give…",
+   "endpointPath": "/mcp/add_country_campaign",
+   "fullName": "campaign_management-add_country_campaign",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "campaigns": {
+       "description": "Array of campaign objects to add countries to (maximum 1 campaign per request).",
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "add_country_campaign",
+   "sideEffect": "mutates",
+   "tags": [
+    "Campaign"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "Eligibility",
+     "confidence": "inferred",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "productEligibility",
+     "path": "/eligibility/product/list"
+    }
+   ],
+   "description": "Checks whether products are eligible for a specific ad product type. Returns eligibility status per product with detail reasons and help URLs for resolving issues.",
+   "endpointPath": "/mcp/check_product_eligibility",
+   "fullName": "campaign_management-check_product_eligibility",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adProduct": {
+       "description": "The advertising product type to check eligibility for. Only SPONSORED_PRODUCTS is supported for global advertiser.",
+       "required": true,
+       "type": "string"
+      },
+      "language": {
+       "description": "The language for eligibility messages. Defaults to en_US if not provided.",
+       "required": false,
+       "type": "string"
+      },
+      "products": {
+       "description": "List of products to check eligibility for.",
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "check_product_eligibility",
+   "sideEffect": "none",
+   "tags": [
+    "Eligibility"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "CreateAd",
+     "path": "/adsApi/v1/create/ads"
+    }
+   ],
+   "description": "Create Amazon Ads. Create individual ads within ad groups across all Amazon advertising products.",
+   "endpointPath": "/mcp/create_ad",
+   "fullName": "campaign_management-create_ad",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "ads": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_ad",
+   "sideEffect": "mutates",
+   "tags": [
+    "Ad"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdAssociationsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "CreateAdAssociation",
+     "path": "/adsApi/v1/create/adAssociations"
+    }
+   ],
+   "description": "Create Amazon Ads Ad Associations. Associate ads with ad groups across Amazon advertising products.",
+   "endpointPath": "/mcp/create_ad_association",
+   "fullName": "campaign_management-create_ad_association",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adAssociations": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_ad_association",
+   "sideEffect": "mutates",
+   "tags": [
+    "Ad Association"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdGroupsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "CreateAdGroup",
+     "path": "/adsApi/v1/create/adGroups"
+    }
+   ],
+   "description": "Create Amazon Ads Ad Groups. Create ad groups for organizing ads within campaigns across all Amazon advertising products.",
+   "endpointPath": "/mcp/create_ad_group",
+   "fullName": "campaign_management-create_ad_group",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adGroups": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_ad_group",
+   "sideEffect": "mutates",
+   "tags": [
+    "Ad Group"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "BidAdjustments",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "CreateBidAdjustmentRule",
+     "path": "/dsp/rules/adjustments"
+    }
+   ],
+   "description": "Creates a bid adjustment rule and associates it with a DSP ad group. A bid adjustment rule contains dimension-based expressions with conditions and actions that define how bids are adjusted based on targeting dimensions such as device type, browser, geography, and more.",
+   "endpointPath": "/mcp/create_bid_adjustment_rule",
+   "fullName": "campaign_management-create_bid_adjustment_rule",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "object"
+      },
+      "rule": {
+       "description": null,
+       "required": true,
+       "type": "object"
+      },
+      "ruleLink": {
+       "description": null,
+       "required": true,
+       "type": "object"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "create_bid_adjustment_rule",
+   "sideEffect": "mutates",
+   "tags": [
+    "Bid Adjustment"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLCampaignsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "CreateCampaign",
+     "path": "/adsApi/v1/create/campaigns"
+    }
+   ],
+   "description": "Create an Amazon Ads Campaign. This tools supports Sponsored Products, Sponsored Brands and ADSP.",
+   "endpointPath": "/mcp/create_campaign",
+   "fullName": "campaign_management-create_campaign",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "campaigns": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_campaign",
+   "sideEffect": "mutates",
+   "tags": [
+    "Campaign"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "Portfolios",
+     "confidence": "inferred",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "CreatePortfolios",
+     "path": "/portfolios"
+    }
+   ],
+   "description": "Create an Amazon Ads Portfolios.",
+   "endpointPath": "/mcp/create_portfolio",
+   "fullName": "campaign_management-create_portfolio",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "portfolios": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_portfolio",
+   "sideEffect": "mutates",
+   "tags": [
+    "Portfolio"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "Portfolios",
+     "confidence": "inferred",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "CreatePortfolios",
+     "path": "/portfolios"
+    },
+    {
+     "api": "AmazonAdsAPIALLCampaignsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "UpdateCampaign",
+     "path": "/adsApi/v1/update/campaigns"
+    }
+   ],
+   "description": "Creates an Amazon Ads Portfolio and associates it with a campaign in a single operation.",
+   "endpointPath": "/mcp/create_singleshot_portfolio",
+   "fullName": "campaign_management-create_singleshot_portfolio",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "portfolios": {
+       "description": "List of portfolio requests. Each creates a new portfolio or associates an existing portfolio with a campaign.",
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_singleshot_portfolio",
+   "sideEffect": "mutates",
+   "tags": [
+    "Portfolio"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPISPGLOBALCampaignsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "SPGlobalCreateCampaign",
+     "path": "/adsApi/v1/create/campaigns"
+    },
+    {
+     "api": "AmazonAdsAPISPGLOBALAdGroupsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "SPGlobalCreateAdGroup",
+     "path": "/adsApi/v1/create/adGroups"
+    },
+    {
+     "api": "AmazonAdsAPISPGLOBALAdsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "SPGlobalCreateAd",
+     "path": "/adsApi/v1/create/ads"
+    },
+    {
+     "api": "AmazonAdsAPISPGLOBALTargetsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "SPGlobalCreateTarget",
+     "path": "/adsApi/v1/create/targets"
+    }
+   ],
+   "description": "Creates a complete Sponsored Products campaign (campaign + ad group + ads) across multiple marketplaces in a single operation. Supports both AUTO targeting (default) and MANUAL targeting with explicit targets. Use autoCreateTargets=false with a target field to create a MANUAL campaign. Creates ONE global campaign with country-specific budgets and ASINs, not separate campaigns per country.",
+   "endpointPath": "/mcp/create_singleshot_sp_campaign",
+   "fullName": "campaign_management-create_singleshot_sp_campaign",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "oneshotCampaigns": {
+       "description": "List of oneshot campaign requests. Each creates campaign + ad group + ads.",
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_singleshot_sp_campaign",
+   "sideEffect": "mutates",
+   "tags": [
+    "Campaign"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLTargetsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "CreateTarget",
+     "path": "/adsApi/v1/create/targets"
+    }
+   ],
+   "description": "Create Amazon Ads Targets. Create targeting criteria including keywords, products, categories, and audiences.",
+   "endpointPath": "/mcp/create_target",
+   "fullName": "campaign_management-create_target",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "targets": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_target",
+   "sideEffect": "mutates",
+   "tags": [
+    "Target"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "DeleteAd",
+     "path": "/adsApi/v1/delete/ads"
+    }
+   ],
+   "description": "Delete Amazon Ads. Remove individual ads from ad groups.",
+   "endpointPath": "/mcp/delete_ad",
+   "fullName": "campaign_management-delete_ad",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adIds": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "delete_ad",
+   "sideEffect": "destructive",
+   "tags": [
+    "Ad"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdAssociationsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "DeleteAdAssociation",
+     "path": "/adsApi/v1/delete/adAssociations"
+    }
+   ],
+   "description": "Delete Amazon Ads Ad Associations. Remove associations between ads and ad groups.",
+   "endpointPath": "/mcp/delete_ad_association",
+   "fullName": "campaign_management-delete_ad_association",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adAssociationIds": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "delete_ad_association",
+   "sideEffect": "destructive",
+   "tags": [
+    "Ad Association"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdGroupsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "DeleteAdGroup",
+     "path": "/adsApi/v1/delete/adGroups"
+    }
+   ],
+   "description": "Delete Amazon Ads Ad Groups. Remove ad groups and their associated ads from campaigns.",
+   "endpointPath": "/mcp/delete_ad_group",
+   "fullName": "campaign_management-delete_ad_group",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adGroupIds": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "delete_ad_group",
+   "sideEffect": "destructive",
+   "tags": [
+    "Ad Group"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLCampaignsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "DeleteCampaign",
+     "path": "/adsApi/v1/delete/campaigns"
+    }
+   ],
+   "description": "Delete Amazon Ads Campaigns. Remove campaigns and all associated ad groups, ads, and targets.",
+   "endpointPath": "/mcp/delete_campaign",
+   "fullName": "campaign_management-delete_campaign",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "campaignIds": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "delete_campaign",
+   "sideEffect": "destructive",
+   "tags": [
+    "Campaign"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLTargetsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "DeleteTarget",
+     "path": "/adsApi/v1/delete/targets"
+    }
+   ],
+   "description": "Delete Amazon Ads Targets. Remove targeting criteria from ad groups.",
+   "endpointPath": "/mcp/delete_target",
+   "fullName": "campaign_management-delete_target",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "targetIds": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "delete_target",
+   "sideEffect": "destructive",
+   "tags": [
+    "Target"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "CampaignConversionTracking-Products-V1",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "DspPostProductConversionTrackingV1",
+     "path": "/dsp/v1/campaigns/{campaignId}/conversionTracking/products"
+    }
+   ],
+   "description": "Adds products to a DSP campaign to enable product-related conversion metrics. Newly added products will be appended to an existing list. Products may be added in batches of 2,000 and a campaign can track a maximum of 500,000 products.",
+   "endpointPath": "/mcp/dsp_create_conversion_tracking_products",
+   "fullName": "campaign_management-dsp_create_conversion_tracking_products",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "productTrackingList": {
+       "description": "List of products to add for conversion tracking. Products are appended to the existing list.",
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": true
+    },
+    "pathParameters": {
+     "fields": {
+      "campaignId": {
+       "description": "The identifier of the DSP campaign to add conversion tracking products to.",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "dsp_create_conversion_tracking_products",
+   "sideEffect": "mutates",
+   "tags": [
+    "Conversion"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "QueryAd",
+     "path": "/adsApi/v1/query/ads"
+    }
+   ],
+   "description": "Query Amazon Ads with advanced filtering capabilities. Search and filter individual ads across all Amazon advertising products.",
+   "endpointPath": "/mcp/query_ad",
+   "fullName": "campaign_management-query_ad",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adGroupIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "adIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "adProductFilter": {
+       "description": null,
+       "required": true,
+       "type": "object"
+      },
+      "campaignIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "marketplaceScopeFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nameFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      },
+      "stateFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "query_ad",
+   "sideEffect": "none",
+   "tags": [
+    "Ad"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdAssociationsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "QueryAdAssociation",
+     "path": "/adsApi/v1/query/adAssociations"
+    }
+   ],
+   "description": "Query Amazon Ads Ad Associations with advanced filtering capabilities. Search for associations between ads and ad groups.",
+   "endpointPath": "/mcp/query_ad_association",
+   "fullName": "campaign_management-query_ad_association",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adAssociationIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "adGroupIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "adIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "query_ad_association",
+   "sideEffect": "none",
+   "tags": [
+    "Ad Association"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdGroupsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "QueryAdGroup",
+     "path": "/adsApi/v1/query/adGroups"
+    }
+   ],
+   "description": "Query Amazon Ads Ad Groups with advanced filtering capabilities. Search and filter ad groups across all Amazon advertising products.",
+   "endpointPath": "/mcp/query_ad_group",
+   "fullName": "campaign_management-query_ad_group",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adGroupIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "adProductFilter": {
+       "description": null,
+       "required": true,
+       "type": "object"
+      },
+      "campaignIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "marketplaceScopeFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nameFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      },
+      "stateFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "query_ad_group",
+   "sideEffect": "none",
+   "tags": [
+    "Ad Group"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLCampaignsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "QueryCampaign",
+     "path": "/adsApi/v1/query/campaigns"
+    }
+   ],
+   "description": "Query Amazon Ads Campaigns with advanced filtering capabilities. Supports Sponsored Products, Sponsored Brands, Sponsored Display, Sponsored Television, and Amazon DSP campaigns.",
+   "endpointPath": "/mcp/query_campaign",
+   "fullName": "campaign_management-query_campaign",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adProductFilter": {
+       "description": null,
+       "required": true,
+       "type": "object"
+      },
+      "campaignIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "goalFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "marketplaceScopeFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nameFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      },
+      "portfolioIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "stateFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "query_campaign",
+   "sideEffect": "none",
+   "tags": [
+    "Campaign"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "Portfolios",
+     "confidence": "inferred",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "ListPortfolios",
+     "path": "/portfolios/list"
+    }
+   ],
+   "description": "Query an Amazon Ads Portfolios.",
+   "endpointPath": "/mcp/query_portfolio",
+   "fullName": "campaign_management-query_portfolio",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "marketplaceScopeFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nameFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      },
+      "portfolioIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "stateFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "query_portfolio",
+   "sideEffect": "none",
+   "tags": [
+    "Portfolio"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLTargetsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "QueryTarget",
+     "path": "/adsApi/v1/query/targets"
+    }
+   ],
+   "description": "Query Amazon Ads Targets with advanced filtering capabilities. Search for keywords, products, categories, audiences, and other targeting options.",
+   "endpointPath": "/mcp/query_target",
+   "fullName": "campaign_management-query_target",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adGroupIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "adProductFilter": {
+       "description": null,
+       "required": true,
+       "type": "object"
+      },
+      "campaignIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "keywordFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "marketplaceScopeFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "matchTypeFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": null,
+       "required": false,
+       "type": "integer"
+      },
+      "nativeLanguageLocaleFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "negativeFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "nextToken": {
+       "description": null,
+       "required": false,
+       "type": "string"
+      },
+      "productIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "stateFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "targetIdFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      },
+      "targetTypeFilter": {
+       "description": null,
+       "required": false,
+       "type": "object"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "query_target",
+   "sideEffect": "none",
+   "tags": [
+    "Target"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "UpdateAd",
+     "path": "/adsApi/v1/update/ads"
+    }
+   ],
+   "description": "Update Amazon Ads. Modify individual ad settings including name and state.",
+   "endpointPath": "/mcp/update_ad",
+   "fullName": "campaign_management-update_ad",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "ads": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_ad",
+   "sideEffect": "mutates",
+   "tags": [
+    "Ad"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdAssociationsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "UpdateAdAssociation",
+     "path": "/adsApi/v1/update/adAssociations"
+    }
+   ],
+   "description": "Update Amazon Ads Ad Associations. Modify associations between ads and ad groups.",
+   "endpointPath": "/mcp/update_ad_association",
+   "fullName": "campaign_management-update_ad_association",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adAssociations": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_ad_association",
+   "sideEffect": "mutates",
+   "tags": [
+    "Ad Association"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLAdGroupsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "UpdateAdGroup",
+     "path": "/adsApi/v1/update/adGroups"
+    }
+   ],
+   "description": "Update Amazon Ads Ad Groups. Modify ad group settings including name, state, and default bid.",
+   "endpointPath": "/mcp/update_ad_group",
+   "fullName": "campaign_management-update_ad_group",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adGroups": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_ad_group",
+   "sideEffect": "mutates",
+   "tags": [
+    "Ad Group"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLCampaignsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "UpdateCampaign",
+     "path": "/adsApi/v1/update/campaigns"
+    }
+   ],
+   "description": "Update Amazon Ads Campaigns. Modify campaign settings including name, state, budget, and targeting options.",
+   "endpointPath": "/mcp/update_campaign",
+   "fullName": "campaign_management-update_campaign",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "campaigns": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_campaign",
+   "sideEffect": "mutates",
+   "tags": [
+    "Campaign"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLCampaignsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "UpdateCampaign",
+     "path": "/adsApi/v1/update/campaigns"
+    }
+   ],
+   "description": "Update Campaign Budget.",
+   "endpointPath": "/mcp/update_campaign_budget",
+   "fullName": "campaign_management-update_campaign_budget",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "campaigns": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_campaign_budget",
+   "sideEffect": "mutates",
+   "tags": [
+    "Campaign"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLCampaignsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "UpdateCampaign",
+     "path": "/adsApi/v1/update/campaigns"
+    }
+   ],
+   "description": "Update Campaign State.",
+   "endpointPath": "/mcp/update_campaign_state",
+   "fullName": "campaign_management-update_campaign_state",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "campaigns": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_campaign_state",
+   "sideEffect": "mutates",
+   "tags": [
+    "Campaign"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "Portfolios",
+     "confidence": "inferred",
+     "generation": "v0",
+     "method": "PUT",
+     "operationId": "UpdatePortfolios",
+     "path": "/portfolios"
+    }
+   ],
+   "description": "Update an Amazon Ads Portfolios.",
+   "endpointPath": "/mcp/update_portfolio",
+   "fullName": "campaign_management-update_portfolio",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "portfolios": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_portfolio",
+   "sideEffect": "mutates",
+   "tags": [
+    "Portfolio"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLTargetsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "UpdateTarget",
+     "path": "/adsApi/v1/update/targets"
+    }
+   ],
+   "description": "Update Amazon Ads Targets. Modify targeting criteria including bids, state, and targeting parameters.",
+   "endpointPath": "/mcp/update_target",
+   "fullName": "campaign_management-update_target",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "targets": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_target",
+   "sideEffect": "mutates",
+   "tags": [
+    "Target"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLTargetsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "UpdateTarget",
+     "path": "/adsApi/v1/update/targets"
+    }
+   ],
+   "description": "Update Target Bid.",
+   "endpointPath": "/mcp/update_target_bid",
+   "fullName": "campaign_management-update_target_bid",
+   "group": "campaign_management",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "targets": {
+       "description": null,
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_target_bid",
+   "sideEffect": "mutates",
+   "tags": [
+    "Target"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "Eligibility",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "productEligibility",
+     "path": "/eligibility/product/list"
+    }
+   ],
+   "description": "Gets advertising eligibility status for a list of products. Returns eligibility objects for products sold by the merchant associated with the profile. If a product is not eligible, includes reasons for ineligibility.",
+   "endpointPath": "/mcp/product_list",
+   "fullName": "eligibility-product_list",
+   "group": "eligibility",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "adType": {
+       "description": "Ad type to check eligibility for.",
+       "required": false,
+       "type": "string"
+      },
+      "locale": {
+       "description": "Locale for response language (e.g., en_US).",
+       "required": false,
+       "type": "string"
+      },
+      "productDetailsList": {
+       "description": "List of product identifier objects (1-50 items).",
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "product_list",
+   "sideEffect": "none",
+   "tags": [
+    "eligibility"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "Eligibility",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "ProgramEligibility",
+     "path": "/eligibility/programs"
+    }
+   ],
+   "description": "Checks advertiser eligibility for ad programs (Sponsored Products, Sponsored Brands, Sponsored Display, Stores, etc).",
+   "endpointPath": "/mcp/programs",
+   "fullName": "eligibility-programs",
+   "group": "eligibility",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "skipChecks": {
+       "description": "Optional checks to skip",
+       "required": false,
+       "type": "object"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "programs",
+   "sideEffect": "none",
+   "tags": [
+    "eligibility"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "ManagerAccount",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "LinkAdvertisingAccountsToManagerAccountPublicAPI",
+     "path": "/managerAccounts/{managerAccountId}/associate"
+    }
+   ],
+   "description": "Link Amazon Advertising accounts or advertisers with a Manager Account.",
+   "endpointPath": "/mcp/associate_accounts",
+   "fullName": "manager_accounts-associate_accounts",
+   "group": "manager_accounts",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accounts": {
+       "description": "List of Advertising accounts or advertisers to link with Manager Account. Maximum of 20 accounts/advertisers using any …",
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    },
+    "pathParameters": {
+     "fields": {
+      "managerAccountId": {
+       "description": "Id of the Manager Account.",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "associate_accounts",
+   "sideEffect": "mutates",
+   "tags": [
+    "manager_accounts"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "ManagerAccount",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "createManagerAccount",
+     "path": "/managerAccounts"
+    }
+   ],
+   "description": "Creates a new Amazon Advertising Manager account.",
+   "endpointPath": "/mcp/create_manager_account",
+   "fullName": "manager_accounts-create_manager_account",
+   "group": "manager_accounts",
+   "inputs": {
+    "body": {
+     "fields": {
+      "managerAccountName": {
+       "description": "Name of the Manager account.",
+       "required": false,
+       "type": "string"
+      },
+      "managerAccountType": {
+       "description": "Type of the Manager account. Use Advertiser if the Manager account will be used for your own products and services, or …",
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_manager_account",
+   "sideEffect": "mutates",
+   "tags": [
+    "manager_accounts"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "ManagerAccount",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "UnlinkAdvertisingAccountsToManagerAccountPublicAPI",
+     "path": "/managerAccounts/{managerAccountId}/disassociate"
+    }
+   ],
+   "description": "Unlink Amazon Advertising accounts or advertisers from a Manager Account.",
+   "endpointPath": "/mcp/disassociate_accounts",
+   "fullName": "manager_accounts-disassociate_accounts",
+   "group": "manager_accounts",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accounts": {
+       "description": "List of Advertising accounts or advertisers to unlink from Manager Account. Maximum of 20 accounts/advertisers using an…",
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    },
+    "pathParameters": {
+     "fields": {
+      "managerAccountId": {
+       "description": "Id of the Manager Account.",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "disassociate_accounts",
+   "sideEffect": "destructive",
+   "tags": [
+    "manager_accounts"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "ManagerAccount",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "GET",
+     "operationId": "getManagerAccountsForUser",
+     "path": "/managerAccounts"
+    }
+   ],
+   "description": "Returns all manager accounts that a user has access to, along with metadata for the Amazon Ads accounts linked to each manager account. NOTE: A maximum of 50 linked accounts are returned for each manager account.",
+   "endpointPath": "/mcp/get_manager_accounts",
+   "fullName": "manager_accounts-get_manager_accounts",
+   "group": "manager_accounts",
+   "inputs": {},
+   "name": "get_manager_accounts",
+   "sideEffect": "none",
+   "tags": [
+    "manager_accounts"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLPromotionOffersContract_beta",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "QueryPromotionOffer",
+     "path": "/adsApi/v1/query/promotionOffers"
+    }
+   ],
+   "description": "Query and list promotion offers available for an advertiser account. Returns promotion details including status, marketplace, promotion campaign info, fulfilment criteria, and reward information. Supports filtering by marketplace and offer status. A promotion offer represents an opportunity to earn a reward by meeting specific criteria. The fulfilment criteria defines what the advertiser must do …",
+   "endpointPath": "/mcp/query_promotion_offers",
+   "fullName": "promotions-query_promotion_offers",
+   "group": "promotions",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "marketplaceFilter": {
+       "description": "Filter results by marketplace country codes",
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": "Maximum number of promotion offers to return (1-100, default 100)",
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": "Pagination token from a previous response to retrieve the next page of results",
+       "required": false,
+       "type": "string"
+      },
+      "statusFilter": {
+       "description": "Filter results by promotion offer status. AVAILABLE: offer is active and the advertiser has not yet started fulfilling …",
+       "required": false,
+       "type": "object"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "query_promotion_offers",
+   "sideEffect": "none",
+   "tags": [
+    "promotions"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLPromotionRewardsContract_beta",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "QueryPromotionReward",
+     "path": "/adsApi/v1/query/promotionRewards"
+    }
+   ],
+   "description": "Query and list promotion rewards for an advertiser account. A promotion reward represents financial credit that has been granted to an advertiser and is tracked from issuance to full consumption. Returns reward details including total reward amount, remaining amount, reward type, marketplace, and validity dates. Supports filtering by reward ID, type, marketplace, and start or end date ranges. Opt…",
+   "endpointPath": "/mcp/query_promotion_rewards",
+   "fullName": "promotions-query_promotion_rewards",
+   "group": "promotions",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "endDateTimeFilter": {
+       "description": "Filter by reward end date. Accepts one value for an exact date match, or two values (from, to) for an inclusive range. …",
+       "required": false,
+       "type": "object"
+      },
+      "includePromotionRewardConsumptionFilter": {
+       "description": "When include is [true], the response includes a per-invoice consumption breakdown for each reward. Default excludes con…",
+       "required": false,
+       "type": "object"
+      },
+      "marketplaceFilter": {
+       "description": "Filter by marketplace country codes. Accepts up to 28 marketplaces",
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": "Maximum number of promotion rewards to return (1-25, default 25)",
+       "required": false,
+       "type": "integer"
+      },
+      "nextToken": {
+       "description": "Pagination token from a previous response to retrieve the next page of results",
+       "required": false,
+       "type": "string"
+      },
+      "promotionRewardIdFilter": {
+       "description": "Filter by specific promotion reward IDs. Accepts up to 10 IDs",
+       "required": false,
+       "type": "object"
+      },
+      "promotionRewardTypeFilter": {
+       "description": "Filter by reward type. ADHOC: one-off reward granted for specific business reasons. SIGNUP: reward granted when an adve…",
+       "required": false,
+       "type": "object"
+      },
+      "startDateTimeFilter": {
+       "description": "Filter by reward start date. Accepts one value for an exact date match, or two values (from, to) for an inclusive range…",
+       "required": false,
+       "type": "object"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "query_promotion_rewards",
+   "sideEffect": "none",
+   "tags": [
+    "promotions"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLPromotionCodeRedemptionsContract_beta",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "CreatePromotionCodeRedemption",
+     "path": "/adsApi/v1/create/promotionCodeRedemptions"
+    }
+   ],
+   "description": "Redeem a promotion code for an advertiser account. Creates a promotion code redemption that activates a promotional offer for the specified marketplace. Returns the redemption result including the associated promotion offer. On failure, returns error code: INVALID_PROMOTION_CODE (code does not exist), EXPIRED_PROMOTION_CODE (code has expired), MAXIMUM_REDEMPTIONS_REACHED (max redemptions for acco…",
+   "endpointPath": "/mcp/redeem_promotion_code",
+   "fullName": "promotions-redeem_promotion_code",
+   "group": "promotions",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": null,
+       "required": true,
+       "type": "oneOf"
+      },
+      "promotionCodeRedemptions": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": true
+    }
+   },
+   "name": "redeem_promotion_code",
+   "sideEffect": "mutates",
+   "tags": [
+    "promotions"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLReportsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "AdsApiv1CreateReport",
+     "path": "/adsApi/v1/create/reports"
+    }
+   ],
+   "description": "Create a Campaign report.",
+   "endpointPath": "/mcp/create_campaign_report",
+   "fullName": "reporting-create_campaign_report",
+   "group": "reporting",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccounts": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      },
+      "reports": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_campaign_report",
+   "sideEffect": "starts-job",
+   "tags": [
+    "reporting"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLReportsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "AdsApiv1CreateReport",
+     "path": "/adsApi/v1/create/reports"
+    }
+   ],
+   "description": "Create an Inventory report.",
+   "endpointPath": "/mcp/create_inventory_report",
+   "fullName": "reporting-create_inventory_report",
+   "group": "reporting",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccounts": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      },
+      "reports": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_inventory_report",
+   "sideEffect": "starts-job",
+   "tags": [
+    "reporting"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLReportsContract",
+     "confidence": "inferred",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "AdsApiv1CreateReport",
+     "path": "/adsApi/v1/create/reports"
+    }
+   ],
+   "description": "Create a Product report.",
+   "endpointPath": "/mcp/create_product_report",
+   "fullName": "reporting-create_product_report",
+   "group": "reporting",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccounts": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      },
+      "reports": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_product_report",
+   "sideEffect": "starts-job",
+   "tags": [
+    "reporting"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLReportsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "AdsApiv1CreateReport",
+     "path": "/adsApi/v1/create/reports"
+    }
+   ],
+   "description": "Create a report.",
+   "endpointPath": "/mcp/create_report",
+   "fullName": "reporting-create_report",
+   "group": "reporting",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccounts": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      },
+      "reports": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_report",
+   "sideEffect": "starts-job",
+   "tags": [
+    "reporting"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLReportsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "AdsApiv1DeleteReport",
+     "path": "/adsApi/v1/delete/reports"
+    }
+   ],
+   "description": "Delete a report.",
+   "endpointPath": "/mcp/delete_report",
+   "fullName": "reporting-delete_report",
+   "group": "reporting",
+   "inputs": {
+    "body": {
+     "fields": {
+      "reportIds": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "delete_report",
+   "sideEffect": "destructive",
+   "tags": [
+    "reporting"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AmazonAdsAPIALLReportsContract",
+     "confidence": "direct",
+     "generation": "v1",
+     "method": "POST",
+     "operationId": "AdsApiv1RetrieveReport",
+     "path": "/adsApi/v1/retrieve/reports"
+    }
+   ],
+   "description": "Retrieve a report.",
+   "endpointPath": "/mcp/retrieve_report",
+   "fullName": "reporting-retrieve_report",
+   "group": "reporting",
+   "inputs": {
+    "body": {
+     "fields": {
+      "reportIds": {
+       "description": null,
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "retrieve_report",
+   "sideEffect": "none",
+   "tags": [
+    "reporting"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingAccounts",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "CreateTermsToken",
+     "path": "/termsTokens"
+    }
+   ],
+   "description": "Create a new UUID terms token for the customer to accept advertising terms.",
+   "endpointPath": "/mcp/create_terms_token",
+   "fullName": "terms_token-create_terms_token",
+   "group": "terms_token",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accountId": {
+       "description": "Optional. A global advertising account ID (amzn1.ads-account.g.*) or manager account ID (amzn1.ads1.ma1.*) to associate…",
+       "required": false,
+       "type": "string"
+      },
+      "termsType": {
+       "description": "Type of terms and conditions for different Amazon advertising platforms.",
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_terms_token",
+   "sideEffect": "mutates",
+   "tags": [
+    "terms_token"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingAccounts",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "GET",
+     "operationId": "GetTermsToken",
+     "path": "/termsTokens/{termsToken}"
+    }
+   ],
+   "description": "Get the terms token status for the customer.",
+   "endpointPath": "/mcp/get_terms_token",
+   "fullName": "terms_token-get_terms_token",
+   "group": "terms_token",
+   "inputs": {
+    "pathParameters": {
+     "fields": {
+      "termsToken": {
+       "description": "A Terms Token refers to an UUID token used for terms and conditions acceptance.",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "get_terms_token",
+   "sideEffect": "none",
+   "tags": [
+    "terms_token"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingTestAccount",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "createAccount",
+     "path": "/testAccounts"
+    }
+   ],
+   "description": "Submit an async test account creation request (e.g. { body: { accountType: \"VENDOR\", countryCode: \"US\" } }). Limit 1 per account type per marketplace. AUTHOR supported in all marketplaces; VENDOR only in US, CA, MX, BR, UK, DE, FR, ES, IT, JP. Returns a requestId — use test_accounts-get_test_accounts to check status.",
+   "endpointPath": "/mcp/create_test_account",
+   "fullName": "test_accounts-create_test_account",
+   "group": "test_accounts",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accountMetaData": {
+       "description": "Optional metadata for the account (e.g., vendorCode for VENDOR type).",
+       "required": false,
+       "type": "object"
+      },
+      "accountType": {
+       "description": "Type of test account.",
+       "required": true,
+       "type": "string"
+      },
+      "countryCode": {
+       "description": "Country code of the test account.",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create_test_account",
+   "sideEffect": "mutates",
+   "tags": [
+    "test_accounts"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingTestAccount",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "GET",
+     "operationId": "GetAccountInformation",
+     "path": "/testAccounts"
+    }
+   ],
+   "description": "Get test account creation status and details. Pass requestId from a previous create call to check that request, or omit to list all test accounts for the current user.",
+   "endpointPath": "/mcp/get_test_accounts",
+   "fullName": "test_accounts-get_test_accounts",
+   "group": "test_accounts",
+   "inputs": {
+    "queryParameters": {
+     "fields": {
+      "requestId": {
+       "description": "Request ID from a previous test account creation request.",
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "get_test_accounts",
+   "sideEffect": "none",
+   "tags": [
+    "test_accounts"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingInvitations",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "GET",
+     "operationId": "GetUserInvitation",
+     "path": "/user-invitations/{invitationId}"
+    }
+   ],
+   "description": "Get details of a specific user invitation by its invitationId (e.g. { pathParameters: { invitationId: \"<id>\" } }). Use user_invitations-list first to obtain invitation IDs. Returns invitation state, permissionSet (role or custom permissions), invited user email, expiration, targetId (account), and termsTypes required before redemption.",
+   "endpointPath": "/mcp/get",
+   "fullName": "user_invitation-get",
+   "group": "user_invitation",
+   "inputs": {
+    "pathParameters": {
+     "fields": {
+      "invitationId": {
+       "description": "Identifier of the invitation to fetch",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "get",
+   "sideEffect": "none",
+   "tags": [
+    "user_invitation"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingInvitations",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "PUT",
+     "operationId": "RedeemUserInvitation",
+     "path": "/user-invitations/redeem"
+    }
+   ],
+   "description": "Redeem a user invitation to gain access to an advertising account.",
+   "endpointPath": "/mcp/redeem",
+   "fullName": "user_invitation-redeem",
+   "group": "user_invitation",
+   "inputs": {
+    "body": {
+     "fields": {
+      "invitationId": {
+       "description": "Identifier of the invitation to redeem",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "redeem",
+   "sideEffect": "mutates",
+   "tags": [
+    "user_invitation"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingInvitations",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "CreateUserInvitations",
+     "path": "/user-invitations"
+    }
+   ],
+   "description": "Create user invitations for an advertising account. Pass accessRequestedAccount in the body to specify the account. Each invitation needs a user (emailAddress + userName), permissionSet (type: ROLE or CUSTOM_PERMISSION_SET), and optionally countries. Max 50 per request. Invitations expire after 2 weeks.",
+   "endpointPath": "/mcp/create",
+   "fullName": "user_invitations-create",
+   "group": "user_invitations",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": "The advertiser account to perform the operation on.",
+       "required": false,
+       "type": "object"
+      },
+      "notifyInvitedUsers": {
+       "description": "Indicates if an invitation email will be sent to the invited user. Default: false",
+       "required": false,
+       "type": "boolean"
+      },
+      "userInvitationRequests": {
+       "description": "List of invitations to be sent to users.",
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "create",
+   "sideEffect": "mutates",
+   "tags": [
+    "user_invitations"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingInvitations",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "ListUserInvitations",
+     "path": "/user-invitations/list"
+    }
+   ],
+   "description": "List all user invitations for an advertising account. Pass accessRequestedAccount in the body to specify the account.",
+   "endpointPath": "/mcp/list",
+   "fullName": "user_invitations-list",
+   "group": "user_invitations",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": "The advertiser account to perform the operation on.",
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": "Max results per page (1-50)",
+       "required": false,
+       "type": "number"
+      },
+      "nextToken": {
+       "description": "Pagination token for next page",
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "list",
+   "sideEffect": "none",
+   "tags": [
+    "user_invitations"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingInvitations",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "PUT",
+     "operationId": "UpdateUserInvitations",
+     "path": "/user-invitations"
+    }
+   ],
+   "description": "Update user invitations — revoke or resend. Pass accessRequestedAccount in the body to specify the account. Each update needs invitationId (from user_invitations-list) and state (REVOKED or RESENT). Max 50 per request.",
+   "endpointPath": "/mcp/update",
+   "fullName": "user_invitations-update",
+   "group": "user_invitations",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": "The advertiser account to perform the operation on.",
+       "required": false,
+       "type": "object"
+      },
+      "notifyInvitedUsers": {
+       "description": "Indicates if an invitation email will be sent. Default: false",
+       "required": false,
+       "type": "boolean"
+      },
+      "updates": {
+       "description": "List of updates to perform for invitations.",
+       "required": true,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update",
+   "sideEffect": "mutates",
+   "tags": [
+    "user_invitations"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingUserPermissionsManagement",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "DeleteUserPermissions",
+     "path": "/userPermissions/delete"
+    }
+   ],
+   "description": "Delete user permissions from an advertising account. Pass accessRequestedAccount in the body to specify the account.",
+   "endpointPath": "/mcp/delete_user_permissions",
+   "fullName": "user_permissions-delete_user_permissions",
+   "group": "user_permissions",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": "The advertiser account to perform the operation on.",
+       "required": false,
+       "type": "object"
+      },
+      "users": {
+       "description": "List of users to remove permissions for (1-200 items).",
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "delete_user_permissions",
+   "sideEffect": "destructive",
+   "tags": [
+    "user_permissions"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingUserPermissionsManagement",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "QueryUserPermissions",
+     "path": "/userPermissions/list"
+    }
+   ],
+   "description": "Query user permissions for a specific user on an advertising account. Pass accessRequestedAccount in the body to specify the account.",
+   "endpointPath": "/mcp/list_user_permissions",
+   "fullName": "user_permissions-list_user_permissions",
+   "group": "user_permissions",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": "The advertiser account to perform the operation on.",
+       "required": false,
+       "type": "object"
+      },
+      "accessScopeFilter": {
+       "description": "Filter by access scope.",
+       "required": false,
+       "type": "object"
+      },
+      "countryCodesFilter": {
+       "description": "Filter by country codes.",
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": "Max results for pagination (1-100).",
+       "required": false,
+       "type": "number"
+      },
+      "nextToken": {
+       "description": "Pagination token for next page.",
+       "required": false,
+       "type": "string"
+      },
+      "userId": {
+       "description": "User ID for the request.",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "list_user_permissions",
+   "sideEffect": "none",
+   "tags": [
+    "user_permissions"
+   ]
+  },
+  {
+   "access": "write",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingUserPermissionsManagement",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "PUT",
+     "operationId": "UpdateUserPermissions",
+     "path": "/userPermissions"
+    }
+   ],
+   "description": "Update user permissions for an advertising account. Pass accessRequestedAccount in the body to specify the account. First call user_permissions-list_user_permissions to get the current permission object structure, then pass { body: { accessRequestedAccount: { advertiserAccountId: \"<id>\" }, userPermissions: [...] } } with the updated objects.",
+   "endpointPath": "/mcp/update_user_permissions",
+   "fullName": "user_permissions-update_user_permissions",
+   "group": "user_permissions",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": "The advertiser account to perform the operation on.",
+       "required": false,
+       "type": "object"
+      },
+      "userPermissions": {
+       "description": "List of user permissions to update.",
+       "required": false,
+       "type": "array"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "update_user_permissions",
+   "sideEffect": "mutates",
+   "tags": [
+    "user_permissions"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingUserPermissionsManagement",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "QueryUserRoles",
+     "path": "/userRoles/list"
+    }
+   ],
+   "description": "Query roles for a specific user on an advertising account (e.g. { body: { accessRequestedAccount: { advertiserAccountId: \"<id>\" }, userId: \"<id>\" } }). Requires userId from users-list_users. Pass accessRequestedAccount in the body to specify the account. Returns role names and country scopes.",
+   "endpointPath": "/mcp/list_user_roles",
+   "fullName": "user_roles-list_user_roles",
+   "group": "user_roles",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": "The advertiser account to perform the operation on.",
+       "required": false,
+       "type": "object"
+      },
+      "countryCodesFilter": {
+       "description": "Filter by country codes.",
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": "Max results for pagination (1-100).",
+       "required": false,
+       "type": "number"
+      },
+      "nextToken": {
+       "description": "Pagination token for next page.",
+       "required": false,
+       "type": "string"
+      },
+      "userId": {
+       "description": "User ID to query roles for. Obtain from users-list_users.",
+       "required": true,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "list_user_roles",
+   "sideEffect": "none",
+   "tags": [
+    "user_roles"
+   ]
+  },
+  {
+   "access": "read",
+   "backingNote": null,
+   "backingOperations": [
+    {
+     "api": "AdvertisingUserPermissionsManagement",
+     "confidence": "direct",
+     "generation": "v0",
+     "method": "POST",
+     "operationId": "ListUsers",
+     "path": "/users/list"
+    }
+   ],
+   "description": "List users with access to an advertising account. Pass accessRequestedAccount in the body to specify the account. Returns userId and masked email for each user. Include maxResults/nextToken in body for pagination.",
+   "endpointPath": "/mcp/list_users",
+   "fullName": "users-list_users",
+   "group": "users",
+   "inputs": {
+    "body": {
+     "fields": {
+      "accessRequestedAccount": {
+       "description": "The advertiser account to perform the operation on.",
+       "required": false,
+       "type": "object"
+      },
+      "accessScopeFilter": {
+       "description": "Filter by access scope.",
+       "required": false,
+       "type": "object"
+      },
+      "countryCodesFilter": {
+       "description": "Filter by country codes.",
+       "required": false,
+       "type": "object"
+      },
+      "maxResults": {
+       "description": "Max results for pagination (1-100).",
+       "required": false,
+       "type": "number"
+      },
+      "nextToken": {
+       "description": "Pagination token for next page.",
+       "required": false,
+       "type": "string"
+      }
+     },
+     "required": false
+    }
+   },
+   "name": "list_users",
+   "sideEffect": "none",
+   "tags": [
+    "users"
+   ]
+  }
+ ]
+}

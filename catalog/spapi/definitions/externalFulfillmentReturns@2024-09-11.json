@@ -1,0 +1,326 @@
+{
+  "DateTime": {
+    "description": "A date and time in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "An object containing a list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses returned when a request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "InvoiceInformation": {
+    "description": "Invoice-related information for the return created for Amazon SmartConnect.",
+    "properties": {
+      "id": {
+        "description": "The unique ID of the invoice that corresponds to the return.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id"
+    ],
+    "type": "object"
+  },
+  "MarketplaceChannel": {
+    "description": "The marketplace and channel name.",
+    "properties": {
+      "channelName": {
+        "description": "The name of the channel within the marketplace.",
+        "type": "string"
+      },
+      "marketplaceName": {
+        "description": "The name of the marketplace.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "MarketplaceChannelDetails": {
+    "description": "Marketplace channel-specific attributes for the return.",
+    "properties": {
+      "channelSku": {
+        "description": "The Amazon SmartConnect SKU of the channel.",
+        "type": "string"
+      },
+      "customerOrderId": {
+        "description": "The marketplace-specific customer order ID.",
+        "type": "string"
+      },
+      "exchangeOrderId": {
+        "description": "The Amazon SmartConnect ID of the exchange order.",
+        "type": "string"
+      },
+      "marketplaceChannel": {
+        "ref": "MarketplaceChannel"
+      },
+      "merchantId": {
+        "description": "The ID of the merchant or seller to whom this return is created in the marketplace.",
+        "type": "string"
+      },
+      "returnLocationId": {
+        "description": "The Amazon SmartConnect ID of the location to which this return is created.",
+        "type": "string"
+      },
+      "shipmentId": {
+        "description": "The marketplace-specific shipment ID.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OtpDetails": {
+    "description": "One-time password (OTP) details of the return item.",
+    "properties": {
+      "otp": {
+        "description": "One-time password to validate the return delivered to the seller.",
+        "type": "string"
+      },
+      "validTill": {
+        "description": "The UNIX timestamp of when the verification code expires.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "otp",
+      "validTill"
+    ],
+    "type": "object"
+  },
+  "ReplanningDetails": {
+    "description": "Provides details about the replanned returns.",
+    "properties": {
+      "previousTrackingInfo": {
+        "description": "A list of all the previous tracking information for the return.",
+        "ref": "TrackingInfo",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Return": {
+    "description": "Information about the return item.",
+    "properties": {
+      "creationDateTime": {
+        "description": "The date and time when the return was created.",
+        "ref": "DateTime"
+      },
+      "fulfillmentLocationId": {
+        "description": "The ID of the location that fulfilled the order.",
+        "type": "string"
+      },
+      "id": {
+        "description": "The return item's ID.",
+        "type": "string"
+      },
+      "lastUpdatedDateTime": {
+        "description": "The date and time of the most recent update to the return.",
+        "ref": "DateTime"
+      },
+      "marketplaceChannelDetails": {
+        "description": "Channel-specific attributes for the return.",
+        "ref": "MarketplaceChannelDetails"
+      },
+      "merchantSku": {
+        "description": "The seller's identifier for the SKU.",
+        "type": "string"
+      },
+      "numberOfUnits": {
+        "description": "The total number of units in the return.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "otpDetails": {
+        "description": "The one-time password (OTP) details of the return item.",
+        "ref": "OtpDetails"
+      },
+      "packageDeliveryMode": {
+        "description": "The package delivery mode.",
+        "enum": [
+          "WITHOUT_OTP",
+          "WITH_OTP"
+        ],
+        "type": "string"
+      },
+      "replanningDetails": {
+        "description": "Details about the replanned returns.",
+        "ref": "ReplanningDetails"
+      },
+      "returnLocationId": {
+        "description": "The SmartConnect identifier for where the return item was dropped for delivery.",
+        "type": "string"
+      },
+      "returnMetadata": {
+        "description": "Metadata about the return item.",
+        "ref": "ReturnMetadata"
+      },
+      "returnShippingInfo": {
+        "description": "Information about the shipping of the return packages.",
+        "ref": "ReturnShippingInfo"
+      },
+      "returnSubType": {
+        "description": "The sub-type of return.",
+        "enum": [
+          "EXCHANGE",
+          "NORMAL",
+          "REPLACEMENT"
+        ],
+        "type": "string"
+      },
+      "returnType": {
+        "description": "The type of return.",
+        "enum": [
+          "CUSTOMER",
+          "REJECT"
+        ],
+        "type": "string"
+      },
+      "status": {
+        "description": "The current status of the return.",
+        "enum": [
+          "CANCELLED",
+          "CARRIER_NOTIFIED_TO_PICK_UP_FROM_CUSTOMER",
+          "CARRIER_OUT_FOR_PICK_UP_FROM_CUSTOMER",
+          "CREATED",
+          "CUSTOMER_CANCELLED_PICK_UP",
+          "CUSTOMER_DROPPED_OFF",
+          "CUSTOMER_RESCHEDULED_PICK_UP",
+          "DELIVERED",
+          "IN_TRANSIT",
+          "OUT_FOR_DELIVERY",
+          "PARTIALLY_PROCESSED",
+          "PICKED_FROM_CUSTOMER",
+          "PROCESSED",
+          "REJECTED",
+          "REPLANNED"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "fulfillmentLocationId",
+      "id",
+      "lastUpdatedDateTime",
+      "marketplaceChannelDetails",
+      "returnMetadata",
+      "returnShippingInfo",
+      "returnType",
+      "status"
+    ],
+    "type": "object"
+  },
+  "ReturnMetadata": {
+    "description": "Metadata about the return item.",
+    "properties": {
+      "fulfillmentOrderId": {
+        "description": "The SmartConnect ID of the fulfillment order for which the return was placed.",
+        "type": "string"
+      },
+      "invoiceInformation": {
+        "ref": "InvoiceInformation"
+      },
+      "returnReason": {
+        "description": "The reason for the return.",
+        "type": "string"
+      },
+      "rmaId": {
+        "description": "The RMA ID of the return.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "returnReason"
+    ],
+    "type": "object"
+  },
+  "ReturnShippingInfo": {
+    "description": "Information about the shipping of the return packages.",
+    "properties": {
+      "deliveryDateTime": {
+        "description": "The date and time when the seller received the return.",
+        "ref": "DateTime"
+      },
+      "forwardTrackingInfo": {
+        "ref": "TrackingInfo"
+      },
+      "pickupDateTime": {
+        "description": "The date and time when the return was picked up.",
+        "ref": "DateTime"
+      },
+      "reverseTrackingInfo": {
+        "ref": "TrackingInfo"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ReturnsResponse": {
+    "description": "The response to the `listReturns` operation.",
+    "properties": {
+      "nextToken": {
+        "description": "A token that you use to retrieve the next page of results.",
+        "type": "string"
+      },
+      "returns": {
+        "description": "A list of returns.",
+        "ref": "Return",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TrackingInfo": {
+    "description": "Information for tracking a return.",
+    "properties": {
+      "carrierName": {
+        "description": "The name of the third party courier service used to ship the return package.",
+        "type": "string"
+      },
+      "trackingId": {
+        "description": "The tracking ID of the return package.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "carrierName",
+      "trackingId"
+    ],
+    "type": "object"
+  }
+}

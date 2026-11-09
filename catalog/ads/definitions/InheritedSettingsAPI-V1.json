@@ -1,0 +1,993 @@
+{
+ "api": "InheritedSettingsAPI-V1",
+ "file": "specs/dest/InheritedSettingsAPI-V1_prod_3p.json",
+ "schemas": {
+  "BatchError": {
+   "description": "Represents an error that occurred during a batch operation for creating or deleting inherited settings.",
+   "properties": {
+    "index": {
+     "description": "The index of the failed operation in the request array.",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "number"
+    },
+    "subErrors": {
+     "description": "An array of `SubError` objects representing the detailed errors.",
+     "items": {
+      "$ref": "SubError"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "index",
+    "subErrors"
+   ],
+   "type": "object"
+  },
+  "BrandSafetyCategory": {
+   "description": "<li>ACCIDENTS_DISASTERS_AND_TRAGEDIES: Content related to sensitive tragedies, man-made or natural disasters and calamities, including content that graphically depicts such events.</li> <li>WEAPONS: Content related to r…",
+   "enum": [
+    "ACCIDENTS_DISASTERS_AND_TRAGEDIES",
+    "ALCOHOL_AND_RELATED_PRODUCTS",
+    "BLOOD_GORE_VIOLENCE",
+    "CRIME",
+    "DRUG_REFERENCES_OR_USE",
+    "GAMBLING",
+    "HIGHLY_DEBATED_SOCIAL_ISSUES",
+    "OTHER",
+    "POLITICS",
+    "PROFANITY",
+    "RELIGIOUS_CONTENT",
+    "SEXUAL_REFERENCES_AND_SUGGESTIVE",
+    "SHOCK_AND_HORROR",
+    "TOBACCO_AND_RELATED_PRODUCTS",
+    "UNRATED_MEDIA_CONTENT",
+    "WEAPONS"
+   ],
+   "type": "string"
+  },
+  "BrandSafetyCategoryInheritedSettingDetails": {
+   "description": "Target based on, if any, the classifications of unsuitable contexts that may pose a risk to a brand's reputation of content being viewed.",
+   "properties": {
+    "brandSafetyCategory": {
+     "$ref": "BrandSafetyCategory"
+    },
+    "inheritedSettingType": {
+     "$ref": "BrandSafetyCategoryInheritedSettingType"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) supply that matches the given target when serving an ad.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "brandSafetyCategory",
+    "inheritedSettingType",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "BrandSafetyCategoryInheritedSettingType": {
+   "enum": [
+    "BRAND_SAFETY_CATEGORY"
+   ],
+   "type": "string"
+  },
+  "BrandSafetyTier": {
+   "description": "<li>EXPANDED: Tier that maximizes reach across all ad-eligible inventory. This tier is suitable for brands with a greater risk tolerance for advertising alongside a wide variety of content.</li> <li>STANDARD: Tier that …",
+   "enum": [
+    "EXPANDED",
+    "OTHER",
+    "RESTRICTIVE",
+    "STANDARD"
+   ],
+   "type": "string"
+  },
+  "BrandSafetyTierInheritedSettingDetails": {
+   "description": "Target based on the brand suitability risk levels of content being viewed. The limit is 1.",
+   "properties": {
+    "brandSafetyTier": {
+     "$ref": "BrandSafetyTier"
+    },
+    "inheritedSettingType": {
+     "$ref": "BrandSafetyTierInheritedSettingType"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) supply that matches the given target when serving an ad.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "brandSafetyTier",
+    "inheritedSettingType",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "BrandSafetyTierInheritedSettingType": {
+   "enum": [
+    "BRAND_SAFETY_TIER"
+   ],
+   "type": "string"
+  },
+  "CreateGeneralInheritedSettingsRequestContent": {
+   "description": "Represents the request content for creating general inherited settings.",
+   "properties": {
+    "generalInheritedSettings": {
+     "items": {
+      "$ref": "GeneralInheritedSetting"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "generalInheritedSettings"
+   ],
+   "type": "object"
+  },
+  "CreateInheritedSettingsRequestContent": {
+   "description": "Represents the request content for creating inherited settings.",
+   "properties": {
+    "inheritedSettings": {
+     "items": {
+      "$ref": "InheritedSetting"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "inheritedSettings"
+   ],
+   "type": "object"
+  },
+  "DeleteGeneralInheritedSettingsRequestContent": {
+   "description": "Represents the request content for deleting general inherited settings.",
+   "properties": {
+    "generalInheritedSettings": {
+     "items": {
+      "$ref": "GeneralInheritedSetting"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "generalInheritedSettings"
+   ],
+   "type": "object"
+  },
+  "DeleteInheritedSettingsRequestContent": {
+   "description": "Represents the request content for deleting inherited settings.",
+   "properties": {
+    "inheritedSettings": {
+     "items": {
+      "$ref": "InheritedSetting"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "inheritedSettings"
+   ],
+   "type": "object"
+  },
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GeneralInheritedSetting": {
+   "description": "Represents a general inherited setting with its level and details.",
+   "properties": {
+    "generalInheritedSettingDetails": {
+     "$ref": "GeneralInheritedSettingDetails"
+    },
+    "inheritedSettingsLevel": {
+     "$ref": "InheritedSettingsLevel"
+    }
+   },
+   "required": [
+    "generalInheritedSettingDetails",
+    "inheritedSettingsLevel"
+   ],
+   "type": "object"
+  },
+  "GeneralInheritedSettingDetails": {
+   "description": "The details of the general inherited setting, which can be one of the following: `brandSafetyTierInheritedSettingDetails`. `brandSafetyCategoryInheritedSettingDetails`",
+   "oneOf": [
+    {
+     "properties": {
+      "brandSafetyTierInheritedSettingDetails": {
+       "$ref": "BrandSafetyTierInheritedSettingDetails"
+      }
+     },
+     "required": [
+      "brandSafetyTierInheritedSettingDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "brandSafetyCategoryInheritedSettingDetails": {
+       "$ref": "BrandSafetyCategoryInheritedSettingDetails"
+      }
+     },
+     "required": [
+      "brandSafetyCategoryInheritedSettingDetails"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "GeneralInheritedSettingResponse": {
+   "description": "Represents the response for creating or deleting general inherited settings.",
+   "properties": {
+    "error": {
+     "description": "An array of `BatchError` objects representing the failed operations.",
+     "items": {
+      "$ref": "BatchError"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    },
+    "success": {
+     "description": "An array of `MutateGeneralInheritedSettingSuccess` objects representing the successful operations.",
+     "items": {
+      "$ref": "MutateGeneralInheritedSettingSuccess"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "GeneralInheritedSettingType": {
+   "enum": [
+    "BRAND_SAFETY_CATEGORY",
+    "BRAND_SAFETY_TIER"
+   ],
+   "type": "string"
+  },
+  "InheritedSetting": {
+   "description": "Represents an inherited setting with its inventory type, level, and details.",
+   "properties": {
+    "inheritedSettingDetails": {
+     "$ref": "InheritedSettingDetails"
+    },
+    "inheritedSettingsLevel": {
+     "$ref": "InheritedSettingsLevel"
+    },
+    "inventoryType": {
+     "$ref": "InventoryType"
+    }
+   },
+   "required": [
+    "inheritedSettingDetails",
+    "inheritedSettingsLevel",
+    "inventoryType"
+   ],
+   "type": "object"
+  },
+  "InheritedSettingDetails": {
+   "description": "The details of the inherited setting, which can be one of the following: `inventorySourceInheritedSettingDetails`, `inventoryGroupInheritedSettingDetails`, `viewabilityInheritedSettingDetails`, `thirdPartySellerSupplier…",
+   "oneOf": [
+    {
+     "properties": {
+      "inventorySourceInheritedSettingDetails": {
+       "$ref": "InventorySourceInheritedSettingDetails"
+      }
+     },
+     "required": [
+      "inventorySourceInheritedSettingDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "inventoryGroupInheritedSettingDetails": {
+       "$ref": "InventoryGroupInheritedSettingDetails"
+      }
+     },
+     "required": [
+      "inventoryGroupInheritedSettingDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "viewabilityInheritedSettingDetails": {
+       "$ref": "ViewabilityInheritedSettingDetails"
+      }
+     },
+     "required": [
+      "viewabilityInheritedSettingDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "thirdPartySellerSupplierInheritedSettingDetails": {
+       "$ref": "ThirdPartySellerSupplierInheritedSettingDetails"
+      }
+     },
+     "required": [
+      "thirdPartySellerSupplierInheritedSettingDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "streamingTVAppBlockingInheritedSettingDetails": {
+       "$ref": "StreamingTVAppBlockingInheritedSettingDetails"
+      }
+     },
+     "required": [
+      "streamingTVAppBlockingInheritedSettingDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "mobileAppInheritedSettingDetails": {
+       "$ref": "MobileAppInheritedSettingDetails"
+      }
+     },
+     "required": [
+      "mobileAppInheritedSettingDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "priorityAdjustmentInheritedSettingDetails": {
+       "$ref": "PriorityAdjustmentInheritedSettingDetails"
+      }
+     },
+     "required": [
+      "priorityAdjustmentInheritedSettingDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "brandSafetyTierInheritedSettingDetails": {
+       "$ref": "BrandSafetyTierInheritedSettingDetails"
+      }
+     },
+     "required": [
+      "brandSafetyTierInheritedSettingDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "brandSafetyCategoryInheritedSettingDetails": {
+       "$ref": "BrandSafetyCategoryInheritedSettingDetails"
+      }
+     },
+     "required": [
+      "brandSafetyCategoryInheritedSettingDetails"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "InheritedSettingResponse": {
+   "description": "Represents the response for creating or deleting inherited settings.",
+   "properties": {
+    "error": {
+     "description": "An array of `BatchError` objects representing the failed operations.",
+     "items": {
+      "$ref": "BatchError"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    },
+    "success": {
+     "description": "An array of `MutateInheritedSettingSuccess` objects representing the successful operations.",
+     "items": {
+      "$ref": "MutateInheritedSettingSuccess"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "InheritedSettingType": {
+   "enum": [
+    "BRAND_SAFETY_CATEGORY",
+    "BRAND_SAFETY_TIER",
+    "INVENTORY_GROUP",
+    "INVENTORY_SOURCE",
+    "MOBILE_APP",
+    "PRIORITY_ADJUSTMENT",
+    "STV_APP_BLOCKING",
+    "THIRD_PARTY_SELLER_SUPPLIER",
+    "VIEWABILITY"
+   ],
+   "type": "string"
+  },
+  "InheritedSettingsLevel": {
+   "description": "The level at which the inherited setting is applied (ADVERTISER or MANAGER_ACCOUNT).",
+   "enum": [
+    "ADVERTISER",
+    "MANAGER_ACCOUNT"
+   ],
+   "type": "string"
+  },
+  "InventoryGroupInheritedSettingDetails": {
+   "description": "Defines the details of an inherited setting for an inventory group, including its ID. Limit 5 inventory groups per entity/advertiser.",
+   "properties": {
+    "inheritedSettingType": {
+     "$ref": "InventoryGroupInheritedSettingType"
+    },
+    "inventoryGroupId": {
+     "description": "The inventory group identifier can be retrieved from the [inventory group](https://advertising.amazon.com/API/docs/en-us/dsp-inventory-groups) discovery endpoints.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "inheritedSettingType",
+    "inventoryGroupId"
+   ],
+   "type": "object"
+  },
+  "InventoryGroupInheritedSettingType": {
+   "enum": [
+    "INVENTORY_GROUP"
+   ],
+   "type": "string"
+  },
+  "InventorySourceInheritedSettingDetails": {
+   "description": "Defines the details of an inherited setting for an inventory source, including the source ID and type.",
+   "properties": {
+    "inheritedSettingType": {
+     "$ref": "InventorySourceInheritedSettingType"
+    },
+    "inventorySourceId": {
+     "description": "The inventory source identifier can be retrieved from the [exchanges](https://advertising.amazon.com/API/docs/en-us/dsp-discovery-inventory-source-exchanges) discovery endpoints.",
+     "type": "string"
+    },
+    "inventorySourceType": {
+     "$ref": "InventorySourceType"
+    }
+   },
+   "required": [
+    "inheritedSettingType",
+    "inventorySourceId",
+    "inventorySourceType"
+   ],
+   "type": "object"
+  },
+  "InventorySourceInheritedSettingType": {
+   "enum": [
+    "INVENTORY_SOURCE"
+   ],
+   "type": "string"
+  },
+  "InventorySourceType": {
+   "enum": [
+    "AMAZON",
+    "AMAZON_PUBLISHER_DIRECT",
+    "THIRD_PARTY_EXCHANGE"
+   ],
+   "type": "string"
+  },
+  "InventoryType": {
+   "description": "The type of inventory for which the inherited setting is applicable (`DISPLAY`, `STREAMING_TV`, `ONLINE_VIDEO`).",
+   "enum": [
+    "DISPLAY",
+    "ONLINE_VIDEO",
+    "STREAMING_TV"
+   ],
+   "type": "string"
+  },
+  "ListGeneralInheritedSettingsFilters": {
+   "description": "Represents the filters for listing general inherited settings.",
+   "properties": {
+    "generalInheritedSettingTypeFilter": {
+     "description": "Optional field to filter results and include only a specific array of `generalInheritedSettingType`.",
+     "items": {
+      "$ref": "GeneralInheritedSettingType"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "inheritedSettingsLevelFilter": {
+     "$ref": "InheritedSettingsLevel"
+    }
+   },
+   "required": [
+    "inheritedSettingsLevelFilter"
+   ],
+   "type": "object"
+  },
+  "ListGeneralInheritedSettingsRequestContent": {
+   "description": "Represents the request content for listing general inherited settings.",
+   "properties": {
+    "filters": {
+     "$ref": "ListGeneralInheritedSettingsFilters"
+    },
+    "maxResults": {
+     "maximum": 5000,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "filters"
+   ],
+   "type": "object"
+  },
+  "ListGeneralInheritedSettingsResponseContent": {
+   "description": "Represents the response content for listing general inherited settings.",
+   "properties": {
+    "generalInheritedSettings": {
+     "items": {
+      "$ref": "GeneralInheritedSetting"
+     },
+     "maxItems": 5000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "generalInheritedSettings"
+   ],
+   "type": "object"
+  },
+  "ListInheritedSettingsFilters": {
+   "description": "Represents the filters for listing inherited settings.",
+   "properties": {
+    "inheritedSettingTypeFilter": {
+     "description": "Optional field to filter results and include only a specific array of `inheritedSettingType`.",
+     "items": {
+      "$ref": "InheritedSettingType"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "inheritedSettingsLevelFilter": {
+     "$ref": "InheritedSettingsLevel"
+    },
+    "inventoryTypeFilter": {
+     "description": "Optional field to filter results and include only a specific array of `inventoryTypeFilter`.",
+     "items": {
+      "$ref": "InventoryType"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "inheritedSettingsLevelFilter"
+   ],
+   "type": "object"
+  },
+  "ListInheritedSettingsRequestContent": {
+   "description": "Represents the request content for listing inherited settings.",
+   "properties": {
+    "filters": {
+     "$ref": "ListInheritedSettingsFilters"
+    },
+    "maxResults": {
+     "maximum": 5000,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "filters"
+   ],
+   "type": "object"
+  },
+  "ListInheritedSettingsResponseContent": {
+   "description": "Represents the response content for listing inherited settings.",
+   "properties": {
+    "inheritedSettings": {
+     "items": {
+      "$ref": "InheritedSetting"
+     },
+     "maxItems": 5000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "inheritedSettings"
+   ],
+   "type": "object"
+  },
+  "MobileAppInheritedSettingDetails": {
+   "description": "The inherited setting details for mobile app. Do not use mobile app inherited settings until we announce the launch in our release notes.",
+   "properties": {
+    "inheritedSettingType": {
+     "$ref": "MobileAppInheritedSettingType"
+    },
+    "negative": {
+     "description": "Targeting conditions can can be `inclusions` (negative = false) or `exclusions` (negative = true, also known as negative targets).",
+     "type": "boolean"
+    },
+    "savedGroupId": {
+     "description": "The save group identifier can be retrieved from the saved group endpoints.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "inheritedSettingType",
+    "negative",
+    "savedGroupId"
+   ],
+   "type": "object"
+  },
+  "MobileAppInheritedSettingType": {
+   "enum": [
+    "MOBILE_APP"
+   ],
+   "type": "string"
+  },
+  "MutateGeneralInheritedSettingSuccess": {
+   "description": "Represents a successful operation for creating or deleting a general inherited setting.",
+   "properties": {
+    "index": {
+     "description": "The index of the successful operation in the request array.",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "MutateInheritedSettingSuccess": {
+   "description": "Represents a successful operation for creating or deleting an inherited setting.",
+   "properties": {
+    "index": {
+     "description": "The index of the successful operation in the request array.",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "PriorityAdjustmentInheritedSettingDetails": {
+   "description": "The inherited setting details for priority adjustment ruleId. Limit 1 ruleId per entity/advertiser.",
+   "properties": {
+    "inheritedSettingType": {
+     "$ref": "PriorityAdjustmentInheritedSettingType"
+    },
+    "priorityAdjustmentRuleId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "inheritedSettingType",
+    "priorityAdjustmentRuleId"
+   ],
+   "type": "object"
+  },
+  "PriorityAdjustmentInheritedSettingType": {
+   "enum": [
+    "PRIORITY_ADJUSTMENT"
+   ],
+   "type": "string"
+  },
+  "StreamingTVAppBlockingInheritedSettingDetails": {
+   "description": "The inherited setting details for STV app blocking. Do not use STV app blocking inherited settings until we announce the launch in our release notes.",
+   "properties": {
+    "inheritedSettingType": {
+     "$ref": "StvAppBlockingInheritedSettingType"
+    },
+    "savedGroupId": {
+     "description": "The save group identifier can be retrieved from the saved group endpoints.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "inheritedSettingType",
+    "savedGroupId"
+   ],
+   "type": "object"
+  },
+  "StvAppBlockingInheritedSettingType": {
+   "enum": [
+    "STV_APP_BLOCKING"
+   ],
+   "type": "string"
+  },
+  "SubError": {
+   "description": "Represents a detailed error that occurred during a batch operation.",
+   "properties": {
+    "errorCode": {
+     "description": "The code of the error.",
+     "type": "string"
+    },
+    "errorMessage": {
+     "description": "The error message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ThirdPartySellerSupplierInheritedSettingDetails": {
+   "description": "The inherited setting details for third party inventory seller supplier type. Do not use third party seller supplier inherited settings until we announce the launch in our release notes.",
+   "properties": {
+    "inheritedSettingType": {
+     "$ref": "ThirdPartySellerSupplierInheritedSettingType"
+    },
+    "thirdPartySellerSupplierType": {
+     "$ref": "ThirdPartySellerSupplierType"
+    }
+   },
+   "required": [
+    "inheritedSettingType",
+    "thirdPartySellerSupplierType"
+   ],
+   "type": "object"
+  },
+  "ThirdPartySellerSupplierInheritedSettingType": {
+   "enum": [
+    "THIRD_PARTY_SELLER_SUPPLIER"
+   ],
+   "type": "string"
+  },
+  "ThirdPartySellerSupplierType": {
+   "enum": [
+    "DIRECT_AND_RESOLD",
+    "DIRECT_ONLY"
+   ],
+   "type": "string"
+  },
+  "ViewabilityInheritedSettingDetails": {
+   "description": "Defines the details of an inherited setting for viewability, including the viewability tier and whether to include unmeasurable impressions.",
+   "properties": {
+    "includeUnmeasurableImpressions": {
+     "description": "Must be false if `viewabilityTier` is set to ALL_TIERS. You can set to true to include impressions that can not be measured when a viewabilityTier other than ALL_TIERS is selected. We recommend setting to false if high …",
+     "type": "boolean"
+    },
+    "inheritedSettingType": {
+     "$ref": "ViewabilityInheritedSettingType"
+    },
+    "viewabilityTier": {
+     "$ref": "ViewabilityTier"
+    }
+   },
+   "required": [
+    "includeUnmeasurableImpressions",
+    "inheritedSettingType",
+    "viewabilityTier"
+   ],
+   "type": "object"
+  },
+  "ViewabilityInheritedSettingType": {
+   "enum": [
+    "VIEWABILITY"
+   ],
+   "type": "string"
+  },
+  "ViewabilityTier": {
+   "enum": [
+    "ALL_TIERS",
+    "GREATER_THAN_40_PERCENT",
+    "GREATER_THAN_50_PERCENT",
+    "GREATER_THAN_60_PERCENT",
+    "GREATER_THAN_70_PERCENT",
+    "LESS_THAN_40_PERCENT"
+   ],
+   "type": "string"
+  }
+ }
+}

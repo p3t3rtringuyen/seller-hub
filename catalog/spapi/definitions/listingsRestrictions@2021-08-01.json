@@ -1,0 +1,139 @@
+{
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "Link": {
+    "description": "A link to resources related to a listing restriction.",
+    "properties": {
+      "resource": {
+        "description": "The URI of the related resource.",
+        "format": "uri",
+        "type": "string"
+      },
+      "title": {
+        "description": "The title of the related resource.",
+        "type": "string"
+      },
+      "type": {
+        "description": "The media type of the related resource.",
+        "type": "string"
+      },
+      "verb": {
+        "description": "The HTTP verb used to interact with the related resource.",
+        "enum": [
+          "GET"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "resource",
+      "verb"
+    ],
+    "type": "object"
+  },
+  "Reason": {
+    "description": "A reason for the restriction, including path forward links that may allow Selling Partners to remove the restriction, if available.",
+    "properties": {
+      "links": {
+        "description": "A list of path forward links that may allow Selling Partners to remove the restriction.",
+        "ref": "Link",
+        "type": "array"
+      },
+      "message": {
+        "description": "A message describing the reason for the restriction.",
+        "type": "string"
+      },
+      "reasonCode": {
+        "description": "A code indicating why the listing is restricted.",
+        "enum": [
+          "APPROVAL_REQUIRED",
+          "ASIN_NOT_FOUND",
+          "NOT_ELIGIBLE"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "message"
+    ],
+    "type": "object"
+  },
+  "Restriction": {
+    "description": "A listing restriction, optionally qualified by a condition, with a list of reasons for the restriction.",
+    "properties": {
+      "conditionType": {
+        "description": "The condition that applies to the restriction.",
+        "enum": [
+          "club_club",
+          "collectible_acceptable",
+          "collectible_good",
+          "collectible_like_new",
+          "collectible_very_good",
+          "new_new",
+          "new_oem",
+          "new_open_box",
+          "refurbished_refurbished",
+          "used_acceptable",
+          "used_good",
+          "used_like_new",
+          "used_very_good"
+        ],
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "A marketplace identifier.",
+        "type": "string"
+      },
+      "reasons": {
+        "description": "A list of reasons for the restriction.",
+        "ref": "Reason",
+        "type": "array"
+      }
+    },
+    "required": [
+      "marketplaceId"
+    ],
+    "type": "object"
+  },
+  "RestrictionList": {
+    "description": "A list of restrictions for the specified Amazon catalog item.",
+    "properties": {
+      "restrictions": {
+        "description": "A list of restrictions.",
+        "ref": "Restriction",
+        "type": "array"
+      }
+    },
+    "required": [
+      "restrictions"
+    ],
+    "type": "object"
+  }
+}

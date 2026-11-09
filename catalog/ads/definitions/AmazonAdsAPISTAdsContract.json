@@ -1,0 +1,985 @@
+{
+ "api": "AmazonAdsAPISTAdsContract",
+ "file": "specs/dest/AmazonAdsAPISTAdsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "STAd": {
+   "properties": {
+    "adGroupId": {
+     "description": "The ad group associated with the ad.",
+     "type": "string"
+    },
+    "adId": {
+     "description": "The identifier of the ad.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "STAdProduct"
+    },
+    "adType": {
+     "$ref": "STAdType"
+    },
+    "campaignId": {
+     "description": "The campaign associated with the ad. It's a read-only field.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date time that the ad was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "creative": {
+     "$ref": "STCreative"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time that the ad was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceScope": {
+     "$ref": "STMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad is applicable. For Sponsored Ads, the marketplaces included should either be same as or subset of parent ad group. For ADSP, this represe…",
+     "items": {
+      "$ref": "STMarketplace"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "STState"
+    },
+    "status": {
+     "$ref": "STStatus"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "adId",
+    "adProduct",
+    "adType",
+    "campaignId",
+    "creationDateTime",
+    "creative",
+    "lastUpdatedDateTime",
+    "marketplaceScope",
+    "marketplaces",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "STAdAdGroupIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STAdAdIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STAdAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `SPONSORED_TELEVISION` | Sponsored Television ad product. |",
+     "items": {
+      "$ref": "STAdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STAdCampaignIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STAdCreate": {
+   "properties": {
+    "adGroupId": {
+     "description": "The ad group associated with the ad.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "STAdProduct"
+    },
+    "adType": {
+     "$ref": "STAdType"
+    },
+    "creative": {
+     "$ref": "STCreateCreative"
+    },
+    "name": {
+     "description": "The name of the ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "STCreateState"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "adProduct",
+    "adType",
+    "creative",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "STAdMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "STAdMultiStatusSuccess"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "STAdMultiStatusSuccess": {
+   "properties": {
+    "ad": {
+     "$ref": "STAd"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "ad",
+    "index"
+   ],
+   "type": "object"
+  },
+  "STAdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `SPONSORED_TELEVISION` | Sponsored Television ad product. |",
+   "enum": [
+    "SPONSORED_TELEVISION"
+   ],
+   "type": "string"
+  },
+  "STAdStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `ENABLED` | The object is set active by user and eligible for delivery. | | `PAUSED` | The object is stopped by user and not eligible for delivery. | | `ARCHIVED` …",
+     "items": {
+      "$ref": "STState"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "STAdSuccessResponse": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "STAd"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "STAdType": {
+   "description": "**AdType Enum:** | AdType | Description | |------|------| | `VIDEO` | A creative that features one or more videos. |",
+   "enum": [
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "STAdUpdate": {
+   "properties": {
+    "adId": {
+     "description": "The identifier of the ad.",
+     "type": "string"
+    },
+    "creative": {
+     "$ref": "STUpdateCreative"
+    },
+    "name": {
+     "description": "The name of the ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "STUpdateState"
+    }
+   },
+   "required": [
+    "adId"
+   ],
+   "type": "object"
+  },
+  "STAdvertisedProducts": {
+   "properties": {
+    "productId": {
+     "description": "The identifier of the advertised product.",
+     "type": "string"
+    },
+    "productIdType": {
+     "$ref": "STProductIdType"
+    },
+    "resolvedProductId": {
+     "description": "The identifier of product associated with the advertised product. It's a read-only field.",
+     "type": "string"
+    },
+    "resolvedProductIdType": {
+     "$ref": "STProductIdType"
+    }
+   },
+   "required": [
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "STCreateAdRequest": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "STAdCreate"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "ads"
+   ],
+   "type": "object"
+  },
+  "STCreateAdvertisedProducts": {
+   "properties": {
+    "productId": {
+     "description": "The identifier of the advertised product.",
+     "type": "string"
+    },
+    "productIdType": {
+     "$ref": "STProductIdType"
+    }
+   },
+   "required": [
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "STCreateCreative": {
+   "oneOf": [
+    {
+     "properties": {
+      "videoCreative": {
+       "$ref": "STCreateVideoCreative"
+      }
+     },
+     "required": [
+      "videoCreative"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "STCreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "STCreateStreamingTvSettings": {
+   "properties": {
+    "landingPage": {
+     "$ref": "STCreateVideoLandingPage"
+    },
+    "products": {
+     "description": "The product advertised on this video creative.",
+     "items": {
+      "$ref": "STCreateAdvertisedProducts"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videos": {
+     "$ref": "STCreateVideo"
+    }
+   },
+   "required": [
+    "videos"
+   ],
+   "type": "object"
+  },
+  "STCreateVideo": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the video asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the video asset.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "STCreateVideoCreative": {
+   "properties": {
+    "streamingTvSettings": {
+     "$ref": "STCreateStreamingTvSettings"
+    }
+   },
+   "type": "object"
+  },
+  "STCreateVideoLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "STVideoLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "STCreative": {
+   "oneOf": [
+    {
+     "properties": {
+      "videoCreative": {
+       "$ref": "STVideoCreative"
+      }
+     },
+     "required": [
+      "videoCreative"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "STCreativeStatus": {
+   "properties": {
+    "moderationStatus": {
+     "$ref": "STModerationStatus"
+    }
+   },
+   "required": [
+    "moderationStatus"
+   ],
+   "type": "object"
+  },
+  "STDeleteAdRequest": {
+   "properties": {
+    "adIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adIds"
+   ],
+   "type": "object"
+  },
+  "STDeliveryReason": {
+   "enum": [
+    "AD_CREATIVES_NOT_RUNNING",
+    "AD_GROUPS_NOT_RUNNING",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_ENDED",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_START_DATE",
+    "AD_GROUP_POLICING_SUSPENDED",
+    "AD_NOT_APPROVED_FOR_ALL_AD_GROUPS",
+    "AD_NOT_ASSOCIATED_WITH_AD_GROUP",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_POLICING_SUSPENDED",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "STDeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | |------|------| | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplac…",
+   "enum": [
+    "DELIVERING",
+    "LIMITED",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "STMarketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "SG",
+    "US"
+   ],
+   "type": "string"
+  },
+  "STMarketplaceScope": {
+   "enum": [
+    "SINGLE_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "STModerationStatus": {
+   "description": "**ModerationStatus Enum:** | ModerationStatus | Description | |------|------| | `PUBLISHED` | The creative passed moderation and is serving. | | `REJECTED_BY_MODERATION` | The creative was rejected during the moderation…",
+   "enum": [
+    "PUBLISHED",
+    "REJECTED_BY_MODERATION",
+    "SUBMITTED_FOR_MODERATION"
+   ],
+   "type": "string"
+  },
+  "STProductIdType": {
+   "description": "**ProductIdType Enum:** | ProductIdType | Description | |------|------| | `ASIN` | ASIN identifier type. | | `SKU` | SKU identifier type. |",
+   "enum": [
+    "ASIN",
+    "SKU"
+   ],
+   "type": "string"
+  },
+  "STQueryAdRequest": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "STAdAdGroupIdFilter"
+    },
+    "adIdFilter": {
+     "$ref": "STAdAdIdFilter"
+    },
+    "adProductFilter": {
+     "$ref": "STAdAdProductFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "STAdCampaignIdFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "STAdStateFilter"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "STState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "STStatus": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "STDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "STDeliveryStatus"
+    }
+   },
+   "required": [
+    "deliveryStatus"
+   ],
+   "type": "object"
+  },
+  "STStreamingTvSettings": {
+   "properties": {
+    "landingPage": {
+     "$ref": "STVideoLandingPage"
+    },
+    "moderationStatus": {
+     "$ref": "STCreativeStatus"
+    },
+    "products": {
+     "description": "The product advertised on this video creative.",
+     "items": {
+      "$ref": "STAdvertisedProducts"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videos": {
+     "$ref": "STVideo"
+    }
+   },
+   "required": [
+    "videos"
+   ],
+   "type": "object"
+  },
+  "STUpdateAdRequest": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "STAdUpdate"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "ads"
+   ],
+   "type": "object"
+  },
+  "STUpdateCreative": {
+   "oneOf": [
+    {
+     "properties": {
+      "videoCreative": {
+       "$ref": "STUpdateVideoCreative"
+      }
+     },
+     "required": [
+      "videoCreative"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "STUpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "STUpdateStreamingTvSettings": {
+   "properties": {
+    "videos": {
+     "$ref": "STUpdateVideo"
+    }
+   },
+   "type": "object"
+  },
+  "STUpdateVideo": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the video asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the video asset.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "STUpdateVideoCreative": {
+   "properties": {
+    "streamingTvSettings": {
+     "$ref": "STUpdateStreamingTvSettings"
+    }
+   },
+   "type": "object"
+  },
+  "STVideo": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the video asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the video asset.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "STVideoCreative": {
+   "properties": {
+    "streamingTvSettings": {
+     "$ref": "STStreamingTvSettings"
+    }
+   },
+   "type": "object"
+  },
+  "STVideoLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "STVideoLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "STVideoLandingPageType": {
+   "description": "**VideoLandingPageType Enum:** | VideoLandingPageType | Description | |------|------| | `OFF_AMAZON_LINK` | An off-Amazon landing page. | | `STORE` | A brand Store landing page. |",
+   "enum": [
+    "OFF_AMAZON_LINK",
+    "STORE"
+   ],
+   "type": "string"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

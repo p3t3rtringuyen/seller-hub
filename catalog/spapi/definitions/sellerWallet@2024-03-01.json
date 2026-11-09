@@ -1,0 +1,943 @@
+{
+  "Balance": {
+    "description": "The balance amount in the Amazon Seller Wallet bank account.",
+    "properties": {
+      "accountId": {
+        "description": "The unique identifier provided by Amazon to identify the account.",
+        "type": "string"
+      },
+      "balanceAmount": {
+        "description": "The balance amount in number format.",
+        "ref": "BigDecimal"
+      },
+      "balanceCurrency": {
+        "description": "The Amazon Seller Wallet bank account currency code in ISO 4217 format.",
+        "type": "string"
+      },
+      "balanceType": {
+        "description": "The type of balance.",
+        "ref": "BalanceType"
+      },
+      "lastUpdateDate": {
+        "description": "The date of the most recent account balance update.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "accountId",
+      "balanceAmount",
+      "balanceCurrency",
+      "lastUpdateDate"
+    ],
+    "type": "object"
+  },
+  "BalanceListing": {
+    "description": "A list of balances in the seller account.",
+    "properties": {
+      "balances": {
+        "description": "A list of balances in the seller account.",
+        "ref": "Balance",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BalanceType": {
+    "description": "The type of bank account balance.",
+    "enum": [
+      "AVAILABLE",
+      "LOCKED_IN",
+      "LOCKED_OUT",
+      "TOTAL"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "BankAccount": {
+    "description": "Details of an Amazon Seller Wallet bank account.",
+    "properties": {
+      "accountCountryCode": {
+        "description": "The two-digit country code in ISO 3166 format.",
+        "type": "string"
+      },
+      "accountCurrency": {
+        "description": "Bank account currency code in ISO 4217 format.",
+        "type": "string"
+      },
+      "accountHolderName": {
+        "description": "The bank account holder's name (expected to be an Amazon customer).",
+        "type": "string"
+      },
+      "accountId": {
+        "description": "The unique bank account identifier provided by Amazon.",
+        "type": "string"
+      },
+      "bankAccountHolderStatus": {
+        "description": "The compliance status of the bank account holder.",
+        "ref": "BankAccountHolderStatus"
+      },
+      "bankAccountNumberFormat": {
+        "description": "The format in which the bank account number is provided for `THIRD_PARTY` transaction requests.",
+        "ref": "BankAccountNumberFormat"
+      },
+      "bankAccountNumberTail": {
+        "description": "The last 3 digit of the bank account number.",
+        "type": "string"
+      },
+      "bankAccountOwnershipType": {
+        "description": "Type of ownership of the bank account.",
+        "ref": "BankAccountOwnershipType"
+      },
+      "bankName": {
+        "description": "The name of the bank.",
+        "type": "string"
+      },
+      "bankNumberFormat": {
+        "description": "The bank number format or routing number type for `THIRD_PARTY` transaction requests.",
+        "ref": "BankNumberFormat"
+      },
+      "routingNumber": {
+        "description": "Routing number for automated clearing house transfers for `THIRD_PARTY` transaction requests.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "accountCountryCode",
+      "accountCurrency",
+      "bankAccountNumberTail",
+      "bankAccountOwnershipType"
+    ],
+    "type": "object"
+  },
+  "BankAccountHolderStatus": {
+    "description": "The status of the Amazon Seller Wallet account holder.",
+    "enum": [
+      "ACTIVE",
+      "INACTIVE",
+      "UNDER_REVIEW",
+      "VERIFICATION_FAILED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "BankAccountListing": {
+    "description": "A list of bank accounts.",
+    "properties": {
+      "accounts": {
+        "description": "A list of bank accounts.",
+        "ref": "BankAccount",
+        "type": "array"
+      }
+    },
+    "required": [
+      "accounts"
+    ],
+    "type": "object"
+  },
+  "BankAccountNumberFormat": {
+    "description": "The format of the bank account number.",
+    "enum": [
+      "BBAN",
+      "IBAN"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "BankAccountOwnershipType": {
+    "description": "The destination bank account's ownership type.",
+    "enum": [
+      "SELF",
+      "THIRD_PARTY"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "BankNumberFormat": {
+    "description": "The format of the bank number.",
+    "enum": [
+      "BASIC",
+      "BIC"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "BigDecimal": {
+    "description": "A decimal number, such as an amount or FX rate.",
+    "properties": {},
+    "required": [],
+    "type": "number"
+  },
+  "CreateTransactionResponse": {
+    "description": "The transaction response and historical details related to it.",
+    "properties": {
+      "callBackURL": {
+        "description": "The callback URL for the transaction which the user have to click to approve/consent the transaction",
+        "type": "string"
+      },
+      "transaction": {
+        "description": "The transaction response details.",
+        "ref": "Transaction"
+      }
+    },
+    "required": [
+      "callBackURL",
+      "transaction"
+    ],
+    "type": "object"
+  },
+  "Currency": {
+    "description": "A currency type and amount.",
+    "properties": {
+      "currencyAmount": {
+        "description": "The monetary value.",
+        "ref": "BigDecimal"
+      },
+      "currencyCode": {
+        "description": "The three-digit currency code in ISO 4217 format.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DeleteTransferSchedule": {
+    "description": "The response returned when the schedule transfer's delete request is successful.",
+    "properties": {
+      "code": {
+        "description": "A success code that specifies that the delete operation was successful.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand the operation execution.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the success condition of the delete schedule transaction.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "List of errors",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "Fee": {
+    "description": "Details of the fee.",
+    "properties": {
+      "feeAmount": {
+        "description": "The actual value of the fee in numeric format.",
+        "ref": "Currency"
+      },
+      "feeId": {
+        "description": "The unique identifier assigned to the fee.",
+        "type": "string"
+      },
+      "feeRateValue": {
+        "description": "The value of the fee in percentage format.",
+        "type": "string"
+      },
+      "feeType": {
+        "description": "The type of the fee.",
+        "ref": "FeeType"
+      }
+    },
+    "required": [
+      "feeAmount",
+      "feeId",
+      "feeRateValue",
+      "feeType"
+    ],
+    "type": "object"
+  },
+  "FeeType": {
+    "description": "The type of fee on the transaction.",
+    "enum": [
+      "MISCELLANEOUS_FEE",
+      "TAX",
+      "TRANSACTION_FEE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "FxRateDetails": {
+    "description": "Foreign exchange rate details.",
+    "properties": {
+      "baseRate": {
+        "description": "The market foreign exchange rate.",
+        "ref": "BigDecimal"
+      },
+      "effectiveFxRate": {
+        "description": "The total rate applied to the money transfer.",
+        "ref": "BigDecimal"
+      },
+      "fxRateId": {
+        "description": "The unique identifier assigned to the fees / foreign exchange rate of a transaction.",
+        "type": "string"
+      },
+      "rateDirection": {
+        "description": "Whether the customer is buying or selling the source currency.",
+        "ref": "RateDirection"
+      }
+    },
+    "required": [
+      "baseRate",
+      "effectiveFxRate",
+      "fxRateId",
+      "rateDirection"
+    ],
+    "type": "object"
+  },
+  "PayeeContactInformation": {
+    "description": "The contact information of the payee.",
+    "properties": {
+      "addressLine1": {
+        "description": "Address Line 1 of the public address.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Address Line 2 of the public address.",
+        "type": "string"
+      },
+      "city": {
+        "description": "City name of the public address.",
+        "type": "string"
+      },
+      "country": {
+        "description": "Country name of the public address.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two digit country code, in ISO 3166 format.",
+        "type": "string"
+      },
+      "emailAddress": {
+        "description": "Email address of the payee.",
+        "type": "string"
+      },
+      "payeeEntityType": {
+        "description": "Type of entity of the payee.",
+        "ref": "PayeeEntityType"
+      },
+      "payeeFirstName": {
+        "description": "First name of the payee.",
+        "type": "string"
+      },
+      "payeeLastName": {
+        "description": "Last name of the payee.",
+        "type": "string"
+      },
+      "payeeMiddleName": {
+        "description": "Middle name of the payee.",
+        "type": "string"
+      },
+      "phoneNumber": {
+        "description": "Valid phone number of the payee.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "Postal code of the public address.",
+        "type": "string"
+      },
+      "state": {
+        "description": "State name of the public address.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "addressLine1",
+      "city",
+      "countryCode",
+      "emailAddress",
+      "payeeEntityType",
+      "payeeFirstName",
+      "payeeLastName",
+      "phoneNumber",
+      "postalCode",
+      "state"
+    ],
+    "type": "object"
+  },
+  "PayeeEntityType": {
+    "description": "The entity type of the transaction payee when the bank account ownership type is `THIRD_PARTY`.",
+    "enum": [
+      "BUSINESS",
+      "INDIVIDUAL",
+      "TAX_AUTHORITY"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PaymentPreference": {
+    "description": "The type of payment preference in which the transfer is being scheduled.",
+    "properties": {
+      "paymentPreferencePaymentType": {
+        "description": "The preferred payment type for the scheduled transaction.",
+        "ref": "PaymentPreferencePaymentType"
+      },
+      "value": {
+        "description": "The value of the payment preference.",
+        "ref": "BigDecimal"
+      }
+    },
+    "required": [
+      "paymentPreferencePaymentType",
+      "value"
+    ],
+    "type": "object"
+  },
+  "PaymentPreferencePaymentType": {
+    "description": "The type of payment preference.",
+    "enum": [
+      "AMOUNT",
+      "PERCENTAGE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "RateDirection": {
+    "description": "Whether the customer is buying or selling the source currency.",
+    "enum": [
+      "BUY",
+      "SELL"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "RecurringFrequency": {
+    "description": "The frequency at which the transaction is repeated.",
+    "enum": [
+      "BIWEEKLY",
+      "DAILY",
+      "MONTHLY",
+      "WEEKLY"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ScheduleExpression": {
+    "description": "The configuration of the schedule.",
+    "properties": {
+      "recurringFrequency": {
+        "description": "How often the scheduled transfer happens.",
+        "ref": "RecurringFrequency"
+      },
+      "scheduleExpressionType": {
+        "description": "The type of the scheduled transfer.",
+        "ref": "ScheduleExpressionType"
+      }
+    },
+    "required": [
+      "scheduleExpressionType"
+    ],
+    "type": "object"
+  },
+  "ScheduleExpressionType": {
+    "description": "The type of scheduled transfer expression.",
+    "enum": [
+      "ONE_TIME",
+      "RECURRING"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ScheduleTransferType": {
+    "description": "The type of schedule the transfer is on.",
+    "enum": [
+      "TIME_BASED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Transaction": {
+    "description": "The current transaction status and related historical details.",
+    "properties": {
+      "accountId": {
+        "description": "The unique identifier of the Amazon Seller Wallet bank account from which the money is debited.",
+        "type": "string"
+      },
+      "expectedCompletionDate": {
+        "description": "The expected completion date of the transaction.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "lastUpdateDate": {
+        "description": "The date of the most recent account balance update.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "requesterName": {
+        "description": "The Amazon Seller Wallet customer who requested the transaction.",
+        "type": "string"
+      },
+      "transactionActualCompletionDate": {
+        "description": "The transaction's completion date.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "transactionDescription": {
+        "description": "A description of the transaction that the requester provides when they initiate the transaction.",
+        "type": "string"
+      },
+      "transactionDestinationAccount": {
+        "description": "The destination bank account details in the transaction.",
+        "ref": "TransactionAccount"
+      },
+      "transactionFailureReason": {
+        "description": "The reason the transaction failed, if applicable.",
+        "type": "string"
+      },
+      "transactionFinalAmount": {
+        "description": "The amount of completed transaction in the destination account currency.",
+        "ref": "Currency"
+      },
+      "transactionId": {
+        "description": "The unique identifier provided by Amazon to the transaction.",
+        "type": "string"
+      },
+      "transactionRequestAmount": {
+        "description": "The amount for which the transfer was initiated.",
+        "ref": "Currency"
+      },
+      "transactionRequestDate": {
+        "description": "The date when the transaction was initiated.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "transactionRequesterSource": {
+        "description": "The transaction initiation source.",
+        "type": "string"
+      },
+      "transactionSourceAccount": {
+        "description": "The source bank account details in the transaction.",
+        "ref": "TransactionAccount"
+      },
+      "transactionStatus": {
+        "description": "The status of the transaction.",
+        "ref": "TransactionStatus"
+      },
+      "transactionType": {
+        "description": "The type of the transaction.",
+        "ref": "TransactionType"
+      },
+      "transferRateDetails": {
+        "description": "The fees and rates that apply to the transaction, as applicable.",
+        "ref": "TransferRatePreview"
+      }
+    },
+    "required": [
+      "accountId",
+      "lastUpdateDate",
+      "transactionDescription",
+      "transactionDestinationAccount",
+      "transactionId",
+      "transactionRequestAmount",
+      "transactionRequestDate",
+      "transactionRequesterSource",
+      "transactionStatus",
+      "transactionType",
+      "transferRateDetails"
+    ],
+    "type": "object"
+  },
+  "TransactionAccount": {
+    "description": "Details of the bank account involved in the transaction.",
+    "properties": {
+      "accountId": {
+        "description": "The unique identifier provided by Amazon to identify the account.",
+        "type": "string"
+      },
+      "bankAccountCountryCode": {
+        "description": "The two-digit country code, in ISO 3166 format.",
+        "type": "string"
+      },
+      "bankAccountCurrency": {
+        "description": "The currency code in ISO 4217 format.",
+        "type": "string"
+      },
+      "bankAccountHolderName": {
+        "description": "The account holder's name.",
+        "type": "string"
+      },
+      "bankAccountNumberFormat": {
+        "description": "The format for the bank account number.",
+        "ref": "BankAccountNumberFormat"
+      },
+      "bankAccountNumberTail": {
+        "description": "The last three digits of the bank account number.",
+        "type": "string"
+      },
+      "bankName": {
+        "description": "The name of the bank.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "bankAccountCurrency",
+      "bankAccountNumberFormat",
+      "bankName"
+    ],
+    "type": "object"
+  },
+  "TransactionInitiationRequest": {
+    "description": "Request body to initiate a transaction from a Seller Wallet bank account to another customer-defined bank account.",
+    "properties": {
+      "customerPaymentReference": {
+        "description": "If the payment is for VAT (Value-Added-Tax) then enter VAT identification number in this field which will be mandatory.",
+        "type": "string"
+      },
+      "destinationAccountId": {
+        "description": "The unique identifier of the destination bank account where the money is deposited.",
+        "type": "string"
+      },
+      "destinationTransactionInstrument": {
+        "description": "Details of the destination bank account in the transaction request.",
+        "ref": "TransactionInstrumentDetails"
+      },
+      "payeeContactInformation": {
+        "description": "The contact information of a payee.",
+        "ref": "PayeeContactInformation"
+      },
+      "requestTime": {
+        "description": "The time at which the transaction was initiated in [ISO 8601 date time format](https://developer-docs.amazon.com/sp-api/docs/iso-8601).",
+        "format": "date-time",
+        "type": "string"
+      },
+      "sourceAccountId": {
+        "description": "The unique identifier of the source Amazon Seller Wallet bank account from which the money is debited.",
+        "type": "string"
+      },
+      "sourceAmount": {
+        "description": "The transaction amount in the source account's currency format.",
+        "ref": "Currency"
+      },
+      "transactionDescription": {
+        "description": "A description of the transaction.",
+        "type": "string"
+      },
+      "transferRateDetails": {
+        "description": "The fees and foreign exchange rates that apply to the transaction.",
+        "ref": "TransferRatePreview"
+      }
+    },
+    "required": [
+      "destinationTransactionInstrument",
+      "requestTime",
+      "sourceAccountId",
+      "sourceAmount"
+    ],
+    "type": "object"
+  },
+  "TransactionInstrumentDetails": {
+    "description": "Details of the destination bank account in the transaction request.",
+    "properties": {
+      "accountHolderName": {
+        "description": "The bank account holder's name (expected to be an Amazon customer).",
+        "type": "string"
+      },
+      "bankAccount": {
+        "description": "Details of the destination bank account.",
+        "ref": "BankAccount"
+      },
+      "bankAccountNumber": {
+        "description": "The bank account number of the destination payment method.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "accountHolderName",
+      "bankAccount",
+      "bankAccountNumber"
+    ],
+    "type": "object"
+  },
+  "TransactionListing": {
+    "description": "A list of transactions.",
+    "properties": {
+      "nextPageToken": {
+        "description": "A token that you use to retrieve the next page of results.",
+        "type": "string"
+      },
+      "transactions": {
+        "description": "A list of transactions.",
+        "ref": "Transaction",
+        "type": "array"
+      }
+    },
+    "required": [
+      "transactions"
+    ],
+    "type": "object"
+  },
+  "TransactionStatus": {
+    "description": "The current status of the transaction.",
+    "enum": [
+      "EXPIRED",
+      "FAILED",
+      "FAILED_CREDITS_APPLIED",
+      "IN_PROGRESS",
+      "PENDING_USER_APPROVAL",
+      "SUCCESSFUL"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "TransactionType": {
+    "description": "The type of transaction.",
+    "enum": [
+      "CREDIT",
+      "DEBIT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "TransferRatePreview": {
+    "description": "The fees and foreign exchange rates that apply to the transaction.",
+    "properties": {
+      "baseAmount": {
+        "description": "The base amount of the transaction.",
+        "ref": "Currency"
+      },
+      "fees": {
+        "description": "A list of fees.",
+        "ref": "Fee",
+        "type": "array"
+      },
+      "fxRateDetails": {
+        "description": "The foreign exchange rate value of the transaction.",
+        "ref": "FxRateDetails"
+      },
+      "transferAmount": {
+        "description": "The final amount transferred, which includes both the fee deduction and currency conversion rate.",
+        "ref": "Currency"
+      }
+    },
+    "required": [
+      "baseAmount",
+      "fees",
+      "fxRateDetails",
+      "transferAmount"
+    ],
+    "type": "object"
+  },
+  "TransferSchedule": {
+    "description": "Transfer schedule details and related historical details.",
+    "properties": {
+      "paymentPreference": {
+        "description": "The payment preference of the scheduled transfer.",
+        "ref": "PaymentPreference"
+      },
+      "transactionDestinationAccount": {
+        "description": "Details of the destination bank account in the scheduled transfer.",
+        "ref": "TransactionAccount"
+      },
+      "transactionSourceAccount": {
+        "description": "Details of the source bank account in the scheduled transfer.",
+        "ref": "TransactionAccount"
+      },
+      "transactionType": {
+        "description": "The type of transfer.",
+        "ref": "TransactionType"
+      },
+      "transferScheduleFailures": {
+        "description": "A list of transfer schedule failures.",
+        "ref": "TransferScheduleFailures",
+        "type": "array"
+      },
+      "transferScheduleId": {
+        "description": "The unique identifier provided by Amazon to the scheduled transfer.",
+        "type": "string"
+      },
+      "transferScheduleInformation": {
+        "description": "The fields required for the scheduled transfer.",
+        "ref": "TransferScheduleInformation"
+      },
+      "transferScheduleStatus": {
+        "description": "The type of transfer schedule.",
+        "ref": "TransferScheduleStatus"
+      }
+    },
+    "required": [
+      "transactionDestinationAccount",
+      "transactionType",
+      "transferScheduleFailures",
+      "transferScheduleId",
+      "transferScheduleInformation",
+      "transferScheduleStatus"
+    ],
+    "type": "object"
+  },
+  "TransferScheduleFailures": {
+    "description": "The time of and reason for the transfer schedule failure.",
+    "properties": {
+      "transferScheduleFailureDate": {
+        "description": "The transfer schedule failure date.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "transferScheduleFailureReason": {
+        "description": "The reason listed for the failure of the transfer schedule.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "transferScheduleFailureDate",
+      "transferScheduleFailureReason"
+    ],
+    "type": "object"
+  },
+  "TransferScheduleInformation": {
+    "description": "Mandatory information for initiating a schedule transfer.",
+    "properties": {
+      "scheduleEndDate": {
+        "description": "The end date of the scheduled transfer.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "scheduleExpression": {
+        "description": "How often the scheduled transfer repeats.",
+        "ref": "ScheduleExpression"
+      },
+      "scheduleStartDate": {
+        "description": "The start date of the scheduled transfer.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "scheduleType": {
+        "description": "The type of schedule.",
+        "ref": "ScheduleTransferType"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TransferScheduleListing": {
+    "description": "A list of transfer schedules.",
+    "properties": {
+      "nextPageToken": {
+        "description": "A token that you use to retrieve the next page of results.",
+        "type": "string"
+      },
+      "transferSchedules": {
+        "description": "A list of transfer schedules.",
+        "ref": "TransferSchedule",
+        "type": "array"
+      }
+    },
+    "required": [
+      "transferSchedules"
+    ],
+    "type": "object"
+  },
+  "TransferScheduleRequest": {
+    "description": "Request body to initiate a scheduled transfer from a Seller Wallet bank account to another customer-defined bank account.",
+    "properties": {
+      "destinationAccountId": {
+        "description": "The unique identifier of the destination bank account where the money is deposited.",
+        "type": "string"
+      },
+      "destinationTransactionInstrument": {
+        "description": "Details of the destination bank account in the transaction request.",
+        "ref": "TransactionInstrumentDetails"
+      },
+      "paymentPreference": {
+        "description": "The payment preference of the scheduled transfer.",
+        "ref": "PaymentPreference"
+      },
+      "sourceAccountId": {
+        "description": "The unique identifier of the source Amazon Seller Wallet bank account from which money is debited.",
+        "type": "string"
+      },
+      "sourceCurrencyCode": {
+        "description": "The three-letter currency code of the source payment method country, in ISO 4217 format.",
+        "type": "string"
+      },
+      "transactionType": {
+        "description": "The type of the scheduled transaction.",
+        "ref": "TransactionType"
+      },
+      "transferScheduleInformation": {
+        "description": "The configuration of the scheduled transfer.",
+        "ref": "TransferScheduleInformation"
+      },
+      "transferScheduleStatus": {
+        "description": "The type of transaction schedule.",
+        "ref": "TransferScheduleStatus"
+      }
+    },
+    "required": [
+      "destinationAccountId",
+      "destinationTransactionInstrument",
+      "paymentPreference",
+      "sourceAccountId",
+      "sourceCurrencyCode",
+      "transactionType",
+      "transferScheduleInformation"
+    ],
+    "type": "object"
+  },
+  "TransferScheduleStatus": {
+    "description": "The schedule status of the transfer.",
+    "enum": [
+      "DELETED",
+      "DISABLED",
+      "ENABLED",
+      "EXPIRED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  }
+}

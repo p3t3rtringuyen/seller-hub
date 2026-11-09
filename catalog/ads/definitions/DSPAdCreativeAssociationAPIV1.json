@@ -1,0 +1,1259 @@
+{
+ "api": "DSPAdCreativeAssociationAPIV1",
+ "file": "specs/dest/DSPAdCreativeAssociationAPIV1_prod_3p.json",
+ "schemas": {
+  "DspAdCreativeAssociationExtendedData": {
+   "properties": {
+    "adCreative": {
+     "$ref": "DspAdCreativeSummaryContent"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdCreativeFormatProperties": {
+   "oneOf": [
+    {
+     "$ref": "DspDisplayAdCreativeProperties"
+    },
+    {
+     "$ref": "DspVideoAdCreativeProperties"
+    },
+    {
+     "$ref": "DspAudioAdCreativeProperties"
+    },
+    {
+     "$ref": "DspThirdPartyAdCreativeProperties"
+    },
+    {
+     "$ref": "DspComponentAdCreativeProperties"
+    },
+    {
+     "$ref": "DspLegacyAdCreativeProperties"
+    }
+   ],
+   "type": "object"
+  },
+  "DspAdCreativeFormatTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "Ad Creative type to filter and include in the search. Wildcard is supported.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DspAdCreativeLanguage": {
+   "description": "The language used in the creative in ISO_639-1 standard.",
+   "enum": [
+    "aa",
+    "ab",
+    "ae",
+    "af",
+    "ak",
+    "am",
+    "an",
+    "ar",
+    "as",
+    "av",
+    "ay",
+    "az",
+    "ba",
+    "be",
+    "bg",
+    "bh",
+    "bi",
+    "bm",
+    "bn",
+    "bo",
+    "br",
+    "bs",
+    "ca",
+    "ce",
+    "ch",
+    "co",
+    "cr",
+    "cs",
+    "cu",
+    "cv",
+    "cy",
+    "da",
+    "de",
+    "dv",
+    "dz",
+    "ee",
+    "el",
+    "en",
+    "eo",
+    "es",
+    "et",
+    "eu",
+    "fa",
+    "ff",
+    "fi",
+    "fj",
+    "fo",
+    "fr",
+    "fy",
+    "ga",
+    "gd",
+    "gl",
+    "gn",
+    "gu",
+    "gv",
+    "ha",
+    "he",
+    "hi",
+    "ho",
+    "hr",
+    "ht",
+    "hu",
+    "hy",
+    "hz",
+    "ia",
+    "id",
+    "ie",
+    "ig",
+    "ii",
+    "ik",
+    "in",
+    "io",
+    "is",
+    "it",
+    "iu",
+    "iw",
+    "ja",
+    "ji",
+    "jv",
+    "ka",
+    "kg",
+    "ki",
+    "kj",
+    "kk",
+    "kl",
+    "km",
+    "kn",
+    "ko",
+    "kr",
+    "ks",
+    "ku",
+    "kv",
+    "kw",
+    "ky",
+    "la",
+    "lb",
+    "lg",
+    "li",
+    "ln",
+    "lo",
+    "lt",
+    "lu",
+    "lv",
+    "mg",
+    "mh",
+    "mi",
+    "mk",
+    "ml",
+    "mn",
+    "mo",
+    "mr",
+    "ms",
+    "mt",
+    "my",
+    "na",
+    "nb",
+    "nd",
+    "ne",
+    "ng",
+    "nl",
+    "nn",
+    "no",
+    "nr",
+    "nv",
+    "ny",
+    "oc",
+    "oj",
+    "om",
+    "or",
+    "os",
+    "pa",
+    "pi",
+    "pl",
+    "ps",
+    "pt",
+    "qu",
+    "rm",
+    "rn",
+    "ro",
+    "ru",
+    "rw",
+    "sa",
+    "sc",
+    "sd",
+    "se",
+    "sg",
+    "si",
+    "sk",
+    "sl",
+    "sm",
+    "sn",
+    "so",
+    "sq",
+    "sr",
+    "ss",
+    "st",
+    "su",
+    "sv",
+    "sw",
+    "ta",
+    "te",
+    "tg",
+    "th",
+    "ti",
+    "tk",
+    "tl",
+    "tn",
+    "to",
+    "tr",
+    "ts",
+    "tt",
+    "tw",
+    "ty",
+    "ug",
+    "uk",
+    "ur",
+    "uz",
+    "ve",
+    "vi",
+    "vo",
+    "wa",
+    "wo",
+    "xh",
+    "yi",
+    "yo",
+    "za",
+    "zh",
+    "zu"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeLanguageFilter": {
+   "properties": {
+    "include": {
+     "description": "Ad Creative language to filter and include in the search.",
+     "items": {
+      "$ref": "DspAdCreativeLanguage"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DspAdCreativeModerationStatusFilter": {
+   "properties": {
+    "include": {
+     "description": "Ad Creative moderation status to filter and include in the search.",
+     "items": {
+      "$ref": "DspAdCreativeScanStatus"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DspAdCreativeScanStatus": {
+   "enum": [
+    "APPROVED",
+    "NOT_APPROVED",
+    "PENDING"
+   ],
+   "type": "string"
+  },
+  "DspAdCreativeSummaryContent": {
+   "properties": {
+    "adCreativeFormatProperties": {
+     "$ref": "DspAdCreativeFormatProperties"
+    },
+    "adCreativeModerationStatus": {
+     "$ref": "DspAdCreativeScanStatus"
+    },
+    "country": {
+     "$ref": "DspCountry"
+    },
+    "createdDate": {
+     "description": "When the Ad Creative was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "language": {
+     "$ref": "DspAdCreativeLanguage"
+    },
+    "lastUpdatedDate": {
+     "description": "When the Ad Creative was last modified.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdGroupIdFilter": {
+   "properties": {
+    "include": {
+     "description": "Ids to filter and include in the search.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DspAudioAdCreativeProperties": {
+   "description": "Properties of the audio format.",
+   "properties": {
+    "adCreativeFormatType": {
+     "$ref": "DspAudioAdCreativeType"
+    },
+    "creativeSizes": {
+     "description": "List of sizes supported by the Ad Creative.",
+     "items": {
+      "$ref": "DspAudioAdCreativeSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspAudioAdCreativeSize": {
+   "properties": {
+    "height": {
+     "description": "The height of the Ad Creative in pixels.",
+     "type": "number"
+    },
+    "responsive": {
+     "description": "Whether all available sizes of the Ad Creative in Ad Experiences are in use.",
+     "type": "boolean"
+    },
+    "width": {
+     "description": "The width of the Ad Creative in pixels.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspAudioAdCreativeType": {
+   "enum": [
+    "AUDIO"
+   ],
+   "type": "string"
+  },
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspComponentAdCreativeProperties": {
+   "description": "Properties of the component format.",
+   "properties": {
+    "adCreativeFormatType": {
+     "$ref": "DspComponentAdCreativeType"
+    },
+    "creativeSizes": {
+     "description": "List of sizes supported by the Ad creative.",
+     "items": {
+      "$ref": "DspComponentAdCreativeSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspComponentAdCreativeSize": {
+   "properties": {
+    "height": {
+     "description": "The height of the Ad Creative in pixels.",
+     "type": "number"
+    },
+    "responsive": {
+     "description": "Whether all available sizes of the Ad Creative in Ad Experiences are in use.",
+     "type": "boolean"
+    },
+    "width": {
+     "description": "The width of the Ad Creative in pixels.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspComponentAdCreativeType": {
+   "enum": [
+    "COMPONENT"
+   ],
+   "type": "string"
+  },
+  "DspConflictExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCountry": {
+   "description": "The country code.",
+   "enum": [
+    "AE",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "SA",
+    "SE",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "DspCreateCreativeAssociationsInputContent": {
+   "properties": {
+    "associations": {
+     "items": {
+      "$ref": "DspCreativeAssociationsContentBasic"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "associations"
+   ],
+   "type": "object"
+  },
+  "DspCreativeAssociationActivationStatus": {
+   "enum": [
+    "ACTIVE",
+    "INACTIVE"
+   ],
+   "type": "string"
+  },
+  "DspCreativeAssociationAdExperienceContent": {
+   "properties": {
+    "adExperience": {
+     "description": "The name of the Ad Experience.",
+     "type": "string"
+    },
+    "associationModerationStatus": {
+     "$ref": "DspCreativeAssociationScanStatus"
+    }
+   },
+   "required": [
+    "adExperience"
+   ],
+   "type": "object"
+  },
+  "DspCreativeAssociationAdExperienceModerationContent": {
+   "properties": {
+    "adExperience": {
+     "description": "The name of the Ad Experience.",
+     "type": "string"
+    },
+    "associationModerationReasons": {
+     "description": "The moderation reason of unapproved Ad Experience given the Ad Group.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "associationModerationStatus": {
+     "$ref": "DspCreativeAssociationScanStatus"
+    }
+   },
+   "required": [
+    "adExperience",
+    "associationModerationStatus"
+   ],
+   "type": "object"
+  },
+  "DspCreativeAssociationOverallStatus": {
+   "enum": [
+    "APPROVED",
+    "APPROVED_WITH_EXCEPTIONS",
+    "NOT_APPROVED",
+    "PENDING"
+   ],
+   "type": "string"
+  },
+  "DspCreativeAssociationScanStatus": {
+   "enum": [
+    "APPROVED",
+    "APPROVED_WITH_EXCEPTIONS",
+    "NOT_APPROVED",
+    "PENDING"
+   ],
+   "type": "string"
+  },
+  "DspCreativeAssociationsContentBasic": {
+   "properties": {
+    "adCreativeId": {
+     "description": "Id of the Ad Creative.",
+     "type": "string"
+    },
+    "adGroupId": {
+     "description": "Id of the Ad Group.",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The end time override of the Ad Creative association. If this isn't set, end time of Ad Group will be used.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The start time override of the Ad Creative association. If this isn't set, start time of Ad Group will be used.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DspCreativeAssociationActivationStatus"
+    },
+    "weight": {
+     "description": "The relative percentage of traffic which would be directed to the associated Ad Creative in the Ad Group.",
+     "maximum": 999,
+     "minimum": 1,
+     "type": "number"
+    }
+   },
+   "required": [
+    "adCreativeId",
+    "adGroupId"
+   ],
+   "type": "object"
+  },
+  "DspDeleteCreativeAssociationsContent": {
+   "properties": {
+    "adCreativeId": {
+     "description": "Id of the Ad Creative.",
+     "type": "string"
+    },
+    "adGroupId": {
+     "description": "Id of the Ad Group.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adCreativeId",
+    "adGroupId"
+   ],
+   "type": "object"
+  },
+  "DspDeleteCreativeAssociationsInputContent": {
+   "properties": {
+    "associations": {
+     "items": {
+      "$ref": "DspDeleteCreativeAssociationsContent"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "associations"
+   ],
+   "type": "object"
+  },
+  "DspDisplayAdCreativeProperties": {
+   "description": "Properties of the display format.",
+   "properties": {
+    "adCreativeFormatType": {
+     "$ref": "DspDisplayAdCreativeType"
+    },
+    "creativeSizes": {
+     "description": "List of sizes supported by the Ad Creative.",
+     "items": {
+      "$ref": "DspDisplayAdCreativeSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspDisplayAdCreativeSize": {
+   "properties": {
+    "height": {
+     "description": "The height of the Ad Creative in pixels.",
+     "type": "number"
+    },
+    "responsive": {
+     "description": "Whether all available sizes of the Ad Creative in Ad Experiences are in use.",
+     "type": "boolean"
+    },
+    "width": {
+     "description": "The width of the Ad Creative in pixels.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspDisplayAdCreativeType": {
+   "enum": [
+    "DISPLAY"
+   ],
+   "type": "string"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspLegacyAdCreativeProperties": {
+   "description": "Properties of the legacy creative.",
+   "properties": {
+    "adCreativeFormatType": {
+     "description": "Template type of the legacy creative.",
+     "type": "string"
+    },
+    "creativeSizes": {
+     "description": "List of sizes supported by the Ad Creative.",
+     "items": {
+      "$ref": "DspLegacyAdCreativeSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspLegacyAdCreativeSize": {
+   "properties": {
+    "height": {
+     "description": "The height of the Ad Creative in pixels.",
+     "type": "number"
+    },
+    "responsive": {
+     "description": "Whether all available sizes of the Ad Creative in Ad Experiences are in use.",
+     "type": "boolean"
+    },
+    "width": {
+     "description": "The width of the Ad Creative in pixels.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspListCreativeAssociationContent": {
+   "properties": {
+    "adCreativeId": {
+     "description": "Id of the Ad Creative.",
+     "type": "string"
+    },
+    "adCreativeName": {
+     "description": "Name of the ad creative.",
+     "type": "string"
+    },
+    "adExperiences": {
+     "description": "List of association statuses from each Ad Experience.",
+     "items": {
+      "$ref": "DspCreativeAssociationAdExperienceContent"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "adGroupId": {
+     "description": "Id of the Ad Group.",
+     "type": "string"
+    },
+    "creativeAssociationStatus": {
+     "$ref": "DspCreativeAssociationOverallStatus"
+    },
+    "endDate": {
+     "description": "The end time override of the Ad Creative association.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "extendedData": {
+     "$ref": "DspAdCreativeAssociationExtendedData"
+    },
+    "startDate": {
+     "description": "The start time override of the Ad Creative association.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DspCreativeAssociationActivationStatus"
+    },
+    "weight": {
+     "description": "The relative percentage of traffic which would be directed to the associated Ad Creative in the ad group.",
+     "maximum": 999,
+     "minimum": 1,
+     "type": "number"
+    }
+   },
+   "required": [
+    "adCreativeId",
+    "adGroupId"
+   ],
+   "type": "object"
+  },
+  "DspListCreativeAssociationModerationsContent": {
+   "properties": {
+    "adCreativeId": {
+     "description": "Id of the Ad Creative.",
+     "type": "string"
+    },
+    "adExperiences": {
+     "items": {
+      "$ref": "DspCreativeAssociationAdExperienceModerationContent"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "adGroupId": {
+     "description": "Id of the Ad Group.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adCreativeId",
+    "adGroupId"
+   ],
+   "type": "object"
+  },
+  "DspListCreativeAssociationModerationsInputContent": {
+   "properties": {
+    "adCreativeIdFilter": {
+     "$ref": "DspObjectIdFilter"
+    },
+    "adGroupIdFilter": {
+     "$ref": "DspObjectIdFilter"
+    },
+    "fullFunnelCampaignIdFilter": {
+     "$ref": "DspObjectIdFilter"
+    },
+    "maxResults": {
+     "description": "Maximum count of items to return in each page.",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Token to fetch the next page.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListCreativeAssociationModerationsOutputContent": {
+   "properties": {
+    "associationStatuses": {
+     "items": {
+      "$ref": "DspListCreativeAssociationModerationsContent"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token to fetch the next page.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "Total count of items of all pages.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspListCreativeAssociationsInputContent": {
+   "properties": {
+    "adCreativeIdFilter": {
+     "$ref": "DspObjectIdFilter"
+    },
+    "adGroupIdFilter": {
+     "$ref": "DspObjectIdFilter"
+    },
+    "fullFunnelCampaignIdFilter": {
+     "$ref": "DspObjectIdFilter"
+    },
+    "includeExtendedDataFields": {
+     "description": "Whether to include additional Ad Creative fields in the response.",
+     "type": "boolean"
+    },
+    "maxResults": {
+     "description": "Maximum count of items to return in each page.",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Token to fetch the next page.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListCreativeAssociationsOutputContent": {
+   "properties": {
+    "associations": {
+     "items": {
+      "$ref": "DspListCreativeAssociationContent"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token to fetch the next page.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "Total count of items of all pages.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspListEligibleCreativesContent": {
+   "properties": {
+    "adCreativeId": {
+     "description": "Id of the ad creative.",
+     "type": "string"
+    },
+    "adCreativeName": {
+     "description": "Name of the ad creative.",
+     "type": "string"
+    },
+    "eligibleAdGroupIds": {
+     "description": "List of eligible ad group ids.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "extendedData": {
+     "$ref": "DspAdCreativeSummaryContent"
+    }
+   },
+   "required": [
+    "adCreativeId",
+    "adCreativeName",
+    "eligibleAdGroupIds"
+   ],
+   "type": "object"
+  },
+  "DspListEligibleCreativesInputContent": {
+   "properties": {
+    "adCreativeFormatTypeFilter": {
+     "$ref": "DspAdCreativeFormatTypeFilter"
+    },
+    "adCreativeIdFilter": {
+     "$ref": "DspObjectIdFilter"
+    },
+    "adCreativeLanguageFilter": {
+     "$ref": "DspAdCreativeLanguageFilter"
+    },
+    "adCreativeModerationStatusFilter": {
+     "$ref": "DspAdCreativeModerationStatusFilter"
+    },
+    "adCreativeNameFilter": {
+     "$ref": "DspObjectNameFilter"
+    },
+    "adGroupIdFilter": {
+     "$ref": "DspAdGroupIdFilter"
+    },
+    "includeExtendedDataFields": {
+     "description": "Whether to include more Ad Creative fields in the response.",
+     "type": "boolean"
+    },
+    "maxResults": {
+     "description": "Maximum count of items to return in each page.",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Token to fetch the next page.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListEligibleCreativesOutputContent": {
+   "properties": {
+    "adCreatives": {
+     "items": {
+      "$ref": "DspListEligibleCreativesContent"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token to fetch the next page.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "Total count of items of all pages.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspMutateCreativeAssociationsErrorOutputContent": {
+   "properties": {
+    "adCreativeId": {
+     "description": "Id of the Ad Creative.",
+     "type": "string"
+    },
+    "adGroupId": {
+     "description": "Id of the Ad Group.",
+     "type": "string"
+    },
+    "code": {
+     "description": "Error code.",
+     "type": "string"
+    },
+    "description": {
+     "description": "Description of the error.",
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the association from the input.",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "adCreativeId",
+    "adGroupId",
+    "index"
+   ],
+   "type": "object"
+  },
+  "DspMutateCreativeAssociationsOutputContent": {
+   "properties": {
+    "error": {
+     "description": "List of unsuccessful associations.",
+     "items": {
+      "$ref": "DspMutateCreativeAssociationsErrorOutputContent"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "description": "List of successful associations.",
+     "items": {
+      "$ref": "DspMutateCreativeAssociationsSuccessOutputContent"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspMutateCreativeAssociationsSuccessOutputContent": {
+   "properties": {
+    "adCreativeId": {
+     "description": "Id of the Ad Creative.",
+     "type": "string"
+    },
+    "adGroupId": {
+     "description": "Id of the Ad Group.",
+     "type": "string"
+    },
+    "index": {
+     "description": "The index of the association from the input.",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "adCreativeId",
+    "adGroupId",
+    "index"
+   ],
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspObjectIdFilter": {
+   "properties": {
+    "include": {
+     "description": "Ids to filter and include in the search.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DspObjectNameFilter": {
+   "properties": {
+    "include": {
+     "description": "Names to filter and include in the search. Wildcard is supported.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DspPatchCreativeAssociationsInputContent": {
+   "properties": {
+    "associations": {
+     "items": {
+      "$ref": "DspCreativeAssociationsContentBasic"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "associations"
+   ],
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspThirdPartyAdCreativeProperties": {
+   "description": "Properties of the third party format.",
+   "properties": {
+    "adCreativeFormatType": {
+     "$ref": "DspThirdPartyAdCreativeType"
+    },
+    "creativeSizes": {
+     "description": "List of sizes supported by the Ad Creative.",
+     "items": {
+      "$ref": "DspThirdPartyAdCreativeSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspThirdPartyAdCreativeSize": {
+   "properties": {
+    "height": {
+     "description": "The height of the Ad Creative in pixels.",
+     "type": "number"
+    },
+    "responsive": {
+     "description": "Whether all available sizes of the Ad Creative in Ad Experiences are in use.",
+     "type": "boolean"
+    },
+    "width": {
+     "description": "The width of the Ad Creative in pixels.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DspThirdPartyAdCreativeType": {
+   "enum": [
+    "THIRD_PARTY"
+   ],
+   "type": "string"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspVideoAdCreativeProperties": {
+   "description": "Properties of the video format.",
+   "properties": {
+    "adCreativeFormatType": {
+     "$ref": "DspVideoAdCreativeType"
+    }
+   },
+   "type": "object"
+  },
+  "DspVideoAdCreativeType": {
+   "enum": [
+    "VIDEO"
+   ],
+   "type": "string"
+  }
+ }
+}

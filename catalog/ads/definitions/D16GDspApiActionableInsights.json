@@ -1,0 +1,632 @@
+{
+ "api": "D16GDspApiActionableInsights",
+ "file": "specs/dest/D16GDspApiActionableInsights_prod_3p.json",
+ "schemas": {
+  "AdGroupFrequencyCapFilter": {
+   "description": "Filter that can be set for adgroup level frequency cap.",
+   "properties": {
+    "adGroupIds": {
+     "description": "List of adGroup Ids. When this list is empty, frequency savings insights from all frequency group under the advertiser will be returned in the response. When the list is not empty, frequency savings insights will be fil…",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "campaignIds": {
+     "description": "List of campaign Ids.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "frequencyCapType": {
+     "$ref": "AdgroupFrequencyCapType"
+    }
+   },
+   "type": "object"
+  },
+  "AdgroupFrequencyCapType": {
+   "enum": [
+    "ADGROUP_FREQUENCY_CAP"
+   ],
+   "type": "string"
+  },
+  "CampaignFrequencyCapFilter": {
+   "description": "Filter that can be set for campaign level frequency cap.",
+   "properties": {
+    "campaignIds": {
+     "description": "List of campaign Ids.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "frequencyCapType": {
+     "$ref": "CampaignFrequencyCapType"
+    }
+   },
+   "type": "object"
+  },
+  "CampaignFrequencyCapType": {
+   "enum": [
+    "CAMPAIGN_FREQUENCY_CAP"
+   ],
+   "type": "string"
+  },
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "FrequencyBin": {
+   "enum": [
+    "1",
+    "10+",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9"
+   ],
+   "type": "string"
+  },
+  "FrequencyCapType": {
+   "enum": [
+    "ADGROUP_FREQUENCY_CAP",
+    "CAMPAIGN_FREQUENCY_CAP",
+    "FREQUENCY_GROUP_FREQUENCY_CAP"
+   ],
+   "type": "string"
+  },
+  "FrequencyCapTypeFilterUnion": {
+   "oneOf": [
+    {
+     "properties": {
+      "campaignFrequencyCapFilter": {
+       "$ref": "CampaignFrequencyCapFilter"
+      }
+     },
+     "required": [
+      "campaignFrequencyCapFilter"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "adGroupFrequencyCapFilter": {
+       "$ref": "AdGroupFrequencyCapFilter"
+      }
+     },
+     "required": [
+      "adGroupFrequencyCapFilter"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "frequencyGroupFrequencyCapFilter": {
+       "$ref": "FrequencyGroupFrequencyCapFilter"
+      }
+     },
+     "required": [
+      "frequencyGroupFrequencyCapFilter"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "FrequencyDistributionItem": {
+   "description": "Frequency distribution insight item.",
+   "properties": {
+    "adGroupId": {
+     "description": "ID of the ad group. Only included when level is AD_GROUP.",
+     "type": "string"
+    },
+    "advertiserId": {
+     "description": "ID of the advertiser.",
+     "type": "string"
+    },
+    "campaignCountry": {
+     "description": "The 2-letter ISO country code of the campaign (e.g., US, CA, MX).",
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "ID of the campaign. Always included.",
+     "type": "string"
+    },
+    "date": {
+     "description": "The date for which the data is reported.",
+     "type": "string"
+    },
+    "frequency": {
+     "$ref": "FrequencyBin"
+    },
+    "level": {
+     "$ref": "Level"
+    },
+    "metrics": {
+     "description": "Performance metrics for this frequency bin.",
+     "items": {
+      "$ref": "FrequencyDistributionMetric"
+     },
+     "type": "array"
+    },
+    "timeGrain": {
+     "$ref": "TimeGrain"
+    }
+   },
+   "type": "object"
+  },
+  "FrequencyDistributionMetric": {
+   "description": "Performance metric data.",
+   "properties": {
+    "metricName": {
+     "$ref": "FrequencyDistributionMetricName"
+    },
+    "metricValue": {
+     "description": "Value of the performance metric.",
+     "format": "double",
+     "type": "number"
+    },
+    "noDataReasonCode": {
+     "$ref": "FrequencyDistributionNoDataReasonCode"
+    }
+   },
+   "type": "object"
+  },
+  "FrequencyDistributionMetricName": {
+   "enum": [
+    "COMBINED_ROAS",
+    "COMPLETION_RATE",
+    "CPA",
+    "CPC",
+    "CPD",
+    "CPDPV",
+    "CPVC",
+    "CTR",
+    "DPVR",
+    "HOUSEHOLD_COMBINED_ROAS",
+    "HOUSEHOLD_COMPLETION_RATE",
+    "HOUSEHOLD_CPA",
+    "HOUSEHOLD_CPC",
+    "HOUSEHOLD_CPD",
+    "HOUSEHOLD_CPDPV",
+    "HOUSEHOLD_CPVC",
+    "HOUSEHOLD_CTR",
+    "HOUSEHOLD_DPVR",
+    "HOUSEHOLD_REACH",
+    "HOUSEHOLD_ROAS",
+    "HOUSEHOLD_TOTAL_CPSU",
+    "HOUSEHOLD_TOTAL_ROAS",
+    "REACH",
+    "ROAS",
+    "TOTAL_CPSU",
+    "TOTAL_ROAS"
+   ],
+   "type": "string"
+  },
+  "FrequencyDistributionNoDataReasonCode": {
+   "description": "Reason why metric data is not available. INSUFFICIENT_DATA indicates not enough data points to calculate the metric reliably. METRIC_NOT_APPLICABLE indicates the metric is not applicable for the specific ad format or ca…",
+   "enum": [
+    "INSUFFICIENT_DATA",
+    "METRIC_NOT_APPLICABLE"
+   ],
+   "type": "string"
+  },
+  "FrequencyDistributionRequest": {
+   "description": "Request object to fetch frequency distribution insights for ad groups and campaigns.",
+   "properties": {
+    "filters": {
+     "$ref": "FrequencyDistributionRequestFilters"
+    },
+    "maxResults": {
+     "description": "Maximum number of results to return per page. Minimum: 0, Maximum: 10000, Default: 10000",
+     "maximum": 10000,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token to fetch additional results (if any). Subsequent calls must be made with same parameters as in the previous requests.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "filters"
+   ],
+   "type": "object"
+  },
+  "FrequencyDistributionRequestFilters": {
+   "description": "Filters to apply to the frequency distribution insights.",
+   "properties": {
+    "adGroupIdFilter": {
+     "description": "List of ad group IDs to filter by. Only applicable when level is AD_GROUP.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "advertiserIdFilter": {
+     "description": "List of advertiser IDs to filter by. If not provided, data for all advertisers the user has access to will be returned. Currently, only one advertiser ID is supported, but the API is designed to support multiple IDs in …",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "campaignIdFilter": {
+     "description": "List of campaign IDs to filter by. When level is CAMPAIGN, this filter specifies which campaigns to retrieve data for. When level is AD_GROUP, this filter specifies the parent campaign and the API will return requested …",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "endDateFilter": {
+     "description": "End date until which frequency distribution insights will be returned. Must be within the past 90 days. If not set, defaults to current date. If only end date is set, returns data from end date - 90 days to end date. If…",
+     "type": "string"
+    },
+    "levelFilter": {
+     "$ref": "Level"
+    },
+    "metricsFilter": {
+     "description": "List of performance metrics to include in the response.",
+     "items": {
+      "$ref": "FrequencyDistributionMetricName"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "startDateFilter": {
+     "description": "Start date from which frequency distribution insights will be returned. Must be within the past 90 days. If not set, defaults to last 15 days from end date. If only start date is set, returns data from start date to sta…",
+     "type": "string"
+    },
+    "timeGrainFilter": {
+     "$ref": "TimeGrain"
+    }
+   },
+   "type": "object"
+  },
+  "FrequencyDistributionResponse": {
+   "description": "Response object containing frequency distribution insights.",
+   "properties": {
+    "frequencyDistributionInsights": {
+     "description": "List of frequency distribution insights.",
+     "items": {
+      "$ref": "FrequencyDistributionItem"
+     },
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token to fetch additional results (if any). Subsequent calls must be made with same parameters as in the previous requests.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "FrequencyGroupFrequencyCapFilter": {
+   "description": "Filter that can be set for frequency group level frequency cap.",
+   "properties": {
+    "frequencyCapType": {
+     "$ref": "FrequencyGroupFrequencyCapType"
+    },
+    "frequencyGroupIds": {
+     "description": "List of frequency group Ids. When this list is empty, frequency savings insights from all frequency group under the advertiser will be returned in the response. When the list is not empty, frequency savings insights wil…",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "FrequencyGroupFrequencyCapType": {
+   "enum": [
+    "FREQUENCY_GROUP_FREQUENCY_CAP"
+   ],
+   "type": "string"
+  },
+  "FrequencySavingsInsights": {
+   "properties": {
+    "adGroupId": {
+     "description": "Represents the ID of the adgroup associated with the frequency savings insight. Will be included if adGroupFrequencyCapFilter is used and adGroupIds are not empty.",
+     "type": "string"
+    },
+    "advertiserId": {
+     "description": "Represents the ID of the advertiser associated with the frequency savings insight.",
+     "type": "string"
+    },
+    "campaignCountry": {
+     "description": "The 2-letter ISO country code of the campaign (e.g., US, CA, MX).",
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "Represents the ID of the campaign associated with the insight. Will be included if campaignFrequencyCapFilter or adGroupFrequencyCapFilter filter is used and campaignIds are not empty.",
+     "type": "string"
+    },
+    "date": {
+     "description": "Represents the day of the insight.",
+     "type": "string"
+    },
+    "frequencyGroupId": {
+     "description": "Represents the ID of the frequency group associated with the insight. Will be included if frequencyGroupFrequencyCapfilter is used and frequencyGroupIds are not empty.",
+     "type": "string"
+    },
+    "metrics": {
+     "$ref": "Metrics"
+    }
+   },
+   "type": "object"
+  },
+  "Level": {
+   "enum": [
+    "AD_GROUP",
+    "CAMPAIGN"
+   ],
+   "type": "string"
+  },
+  "ListFrequencySavingsInsightsRequestContent": {
+   "description": "Request object to fetch frequency savings insights.",
+   "properties": {
+    "filters": {
+     "$ref": "ListFrequencySavingsInsightsRequestFilters"
+    },
+    "maxResults": {
+     "description": "max results to return per page.",
+     "maximum": 10000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token to fetch additional results (if any). Subsequent calls must be made with same parameters as in the previous requests.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "filters"
+   ],
+   "type": "object"
+  },
+  "ListFrequencySavingsInsightsRequestFilters": {
+   "properties": {
+    "advertiserIdFilter": {
+     "description": "List of advertiser Ids.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "endDateFilter": {
+     "description": "end date until which frequency savings insights will be returned.",
+     "type": "string"
+    },
+    "frequencyCapTypeFilter": {
+     "$ref": "FrequencyCapTypeFilterUnion"
+    },
+    "metricsFilter": {
+     "description": "List of metric names you would like to be included in the results.",
+     "items": {
+      "$ref": "MetricName"
+     },
+     "maxItems": 4,
+     "minItems": 1,
+     "type": "array"
+    },
+    "startDateFilter": {
+     "description": "start date from which frequency savings insights will be returned.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListFrequencySavingsInsightsResponseContent": {
+   "description": "Response object containing frequency savings insights.",
+   "properties": {
+    "frequencyCapType": {
+     "$ref": "FrequencyCapType"
+    },
+    "frequencySavingsInsights": {
+     "description": "List of frequency savings insights.",
+     "items": {
+      "$ref": "FrequencySavingsInsights"
+     },
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token to fetch additional results (if any). Subsequent calls must be made with same parameters as in the previous requests.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "MetricName": {
+   "enum": [
+    "HOUSEHOLD_SAVINGS_REINVESTED_AMOUNT",
+    "INCREMENTAL_HOUSEHOLD_COUNT",
+    "INCREMENTAL_USERS_COUNT",
+    "SAVED_HOUSEHOLD_IMPRESSIONS_COUNT",
+    "SAVED_IMPRESSIONS_COUNT",
+    "SAVINGS_REINVESTED_AMOUNT",
+    "UNIQUE_HOUSEHOLD_COUNT",
+    "UNIQUE_USERS_COUNT"
+   ],
+   "type": "string"
+  },
+  "Metrics": {
+   "properties": {
+    "currencyCode": {
+     "type": "string"
+    },
+    "metricName": {
+     "$ref": "MetricName"
+    },
+    "metricValue": {
+     "format": "double",
+     "type": "number"
+    },
+    "noDataReasonCode": {
+     "$ref": "NoDataReasonCode"
+    }
+   },
+   "type": "object"
+  },
+  "NoDataReasonCode": {
+   "enum": [
+    "FREQUENCY_CAP_NOT_REACHED",
+    "FREQUENCY_CAP_NOT_SET",
+    "NOT_AVAILABLE"
+   ],
+   "type": "string"
+  },
+  "TimeGrain": {
+   "enum": [
+    "DAILY",
+    "MONTHLY",
+    "WEEKLY"
+   ],
+   "type": "string"
+  }
+ }
+}

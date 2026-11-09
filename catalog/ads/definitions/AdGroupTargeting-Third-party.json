@@ -1,0 +1,1182 @@
+{
+ "api": "AdGroupTargeting-Third-party",
+ "file": "specs/dest/AdGroupTargeting-Third-party_prod_3p.json",
+ "schemas": {
+  "AverageCompletionAndFullyViewableRateTargetingEnum": {
+   "description": "The type of average completion and fully viewable rate targeting.",
+   "enum": [
+    "ALLOW_ALL",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_10",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_20",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_25",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_30",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_35",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_40"
+   ],
+   "type": "string"
+  },
+  "BrandExposureViewabilityTargetingEnum": {
+   "description": "The type of brand exposure viewability targeting.",
+   "enum": [
+    "ALLOW_ALL",
+    "BRAND_EXPOSURE_VIEWABILITY_GTE_10_SEC_AVG_DURATION",
+    "BRAND_EXPOSURE_VIEWABILITY_GTE_15_SEC_AVG_DURATION",
+    "BRAND_EXPOSURE_VIEWABILITY_GTE_5_SEC_AVG_DURATION"
+   ],
+   "type": "string"
+  },
+  "BrandSuitabilityRiskLevelEnum": {
+   "description": "The Double Verify brand suitability risk level.",
+   "enum": [
+    "ALLOW_ALL",
+    "HIGH",
+    "HIGH_MEDIUM",
+    "HIGH_MEDIUM_LOW"
+   ],
+   "type": "string"
+  },
+  "DVAuthenticAttention": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "universalAttention": {
+     "description": "One omni-channel segment that is informed by data from all DV campaigns to help avoid serving ads on generally poor performing apps and domains.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DVBrandSafetyAppAgeRatingEnum": {
+   "enum": [
+    "ADULTS_ONLY_18_PLUS",
+    "EVERYONE_4_PLUS",
+    "MATURE_17_PLUS",
+    "TEENS_12_PLUS",
+    "TWEENS_9_PLUS",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DVBrandSafetyAppStarRatingEnum": {
+   "description": "App star rating to be used for excluding apps.",
+   "enum": [
+    "ALLOW_ALL",
+    "APP_STAR_RATING_LT_1_POINT_5_STARS",
+    "APP_STAR_RATING_LT_2_POINT_5_STARS",
+    "APP_STAR_RATING_LT_2_STARS",
+    "APP_STAR_RATING_LT_3_POINT_5_STARS",
+    "APP_STAR_RATING_LT_3_STARS",
+    "APP_STAR_RATING_LT_4_POINT_5_STARS",
+    "APP_STAR_RATING_LT_4_STARS"
+   ],
+   "type": "string"
+  },
+  "DVBrandSafetyContentCategoriesWithRisk": {
+   "additionalProperties": {
+    "$ref": "BrandSuitabilityRiskLevelEnum"
+   },
+   "description": "A map from content categories to risk level to exclude from targeting. Available keys are: [ADULT_CONTENT, ALCOHOL, CRIME, DEATH_INJURIES, DISASTER_AVIATION, DISASTER_MAN_MADE, DISASTER_NATURAL, DISASTER_TERRORIST_EVENT…",
+   "type": "object"
+  },
+  "DVBrandSafetyContentCategoryEnum": {
+   "enum": [
+    "AD_SERVER",
+    "CELEBRITY_GOSSIP",
+    "CULTS_SURVIVALISM",
+    "EXTREME_GRAPHIC",
+    "GAMBLING",
+    "INCENTIVIZED_MALWARE_CLUTTER",
+    "INFLAMMATORY_POLITICS_NEWS",
+    "NEGATIVE_NEWS_FINANCIAL",
+    "NEGATIVE_NEWS_PHARMACEUTICAL",
+    "NON_STANDARD_CONTENT_NON_ENGLISH",
+    "NON_STANDARD_CONTENT_PARKING_PAGE",
+    "OCCULT",
+    "PIRACY_COPYRIGHT_INFRINGEMENT",
+    "UNMODERATED_UGC_FORUMS_IMAGES_VIDEO"
+   ],
+   "type": "string"
+  },
+  "DVCustomContextualSegmentId": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "segmentId": {
+     "description": "The custom segment identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DVStandardDisplayBrandSafety": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY'].",
+   "properties": {
+    "contentCategories": {
+     "description": "A list of content categories to exclude from targeting.",
+     "items": {
+      "$ref": "DVBrandSafetyContentCategoryEnum"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "contentCategoriesWithRisk": {
+     "$ref": "DVBrandSafetyContentCategoriesWithRisk"
+    },
+    "unknownContent": {
+     "description": "Set to `true` to exclude unknown content.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DoubleVerifyAuthenticBrandSafety": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "doubleVerifySegmentId": {
+     "description": "The segment identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DoubleVerifyBrandSafety": {
+   "description": "Supported InventoryTypes['AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of consolidated ad groups in…",
+   "properties": {
+    "appAgeRating": {
+     "description": "A list of app age ratings to be used for excluding apps. For example, `TEENS_12_PLUS` will only exclude apps with content rated for everyone ages 12 and over. `UNKNOWN` will exclude apps with content unrated or unknown …",
+     "items": {
+      "$ref": "DVBrandSafetyAppAgeRatingEnum"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "appStarRating": {
+     "$ref": "DVBrandSafetyAppStarRatingEnum"
+    },
+    "contentCategories": {
+     "description": "A list of content categories to exclude from targeting.",
+     "items": {
+      "$ref": "DVBrandSafetyContentCategoryEnum"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "contentCategoriesWithRisk": {
+     "$ref": "DVBrandSafetyContentCategoriesWithRisk"
+    },
+    "excludeAppsWithInsufficientRating": {
+     "description": "Set to true to exclude unofficial apps or apps with insufficient user ratings (<100 lifetime).",
+     "type": "boolean"
+    },
+    "unknownContent": {
+     "description": "Set to `true` to exclude unknown content.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DoubleVerifyFraudInvalidTraffic": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'MOBILE_DISPLAY', AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce th…",
+   "properties": {
+    "blockAppAndSites": {
+     "description": "Set to `true` to block applications and sites with insufficient historical fraud and invalid traffic statistics. This will not be applicable if ALLOW_ALL is chosen.",
+     "type": "boolean"
+    },
+    "excludeAppsAndSites": {
+     "$ref": "ExcludeAppsAndSitesEnum"
+    },
+    "excludeImpressions": {
+     "description": "Set to `true` to exclude impressions delivered to devices identified to be fraudulent or invalid.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DoubleVerifyViewability": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "averageCompletionAndFullyViewableRateTargeting": {
+     "$ref": "AverageCompletionAndFullyViewableRateTargetingEnum"
+    },
+    "brandExposureViewabilityTargeting": {
+     "$ref": "BrandExposureViewabilityTargetingEnum"
+    },
+    "includeUnmeasurableImpressions": {
+     "description": "Set to `true` to include impressions where impressions can't be measured.",
+     "type": "boolean"
+    },
+    "mrcViewabilityTargeting": {
+     "$ref": "MrcViewabilityTargetingEnum"
+    }
+   },
+   "type": "object"
+  },
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspDeleteAdGroup3PTargetingRequestContentV1": {
+   "properties": {
+    "thirdPartyTargets": {
+     "description": "List of target vendor product types for which targeting settings need to be deleted from given ad group id.",
+     "items": {
+      "$ref": "ThirdPartyTargetTypesEnum"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "thirdPartyTargets"
+   ],
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetAdGroup3PTargetingResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    },
+    "thirdPartyTargets": {
+     "description": "List of Third-party targeting settings applied on given ad group id",
+     "items": {
+      "$ref": "ThirdPartyTargetSettings"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "thirdPartyTargets"
+   ],
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspPatchAdGroup3PTargetingRequestContentV1": {
+   "properties": {
+    "thirdPartyTargets": {
+     "description": "List of Third-party targeting settings to be updated on given ad group id.",
+     "items": {
+      "$ref": "ThirdPartyTargetSettings"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "thirdPartyTargets"
+   ],
+   "type": "object"
+  },
+  "DspPostAdGroup3PTargetingRequestContentV1": {
+   "properties": {
+    "thirdPartyTargets": {
+     "description": "List of Third-party targeting settings to be applied on given ad group id",
+     "items": {
+      "$ref": "ThirdPartyTargetSettings"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "thirdPartyTargets"
+   ],
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "EssentialProtectionEnum": {
+   "enum": [
+    "ADULT",
+    "ARMS",
+    "CRIME",
+    "DRUGS",
+    "HATE_SPEECH",
+    "INJURY",
+    "MILITARY",
+    "OBSCENITY",
+    "PIRACY",
+    "TERRORISM",
+    "TOBACCO"
+   ],
+   "type": "string"
+  },
+  "ExcludeAppsAndSitesEnum": {
+   "enum": [
+    "ALLOW_ALL",
+    "FRAUD_TRAFFIC_LEVEL_GTE_02",
+    "FRAUD_TRAFFIC_LEVEL_GTE_04",
+    "FRAUD_TRAFFIC_LEVEL_GTE_06",
+    "FRAUD_TRAFFIC_LEVEL_GTE_08",
+    "FRAUD_TRAFFIC_LEVEL_GTE_10",
+    "FRAUD_TRAFFIC_LEVEL_GTE_100",
+    "FRAUD_TRAFFIC_LEVEL_GTE_25",
+    "FRAUD_TRAFFIC_LEVEL_GTE_50"
+   ],
+   "type": "string"
+  },
+  "IASBrandSafety": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "excludeContent": {
+     "description": "Set to `true` to exclude content that Integral Ad Science is not able to rate.",
+     "type": "boolean"
+    },
+    "iasBrandSafetyAdult": {
+     "$ref": "IASBrandSafetyLevelEnum"
+    },
+    "iasBrandSafetyAlcohol": {
+     "$ref": "IASBrandSafetyLevelEnum"
+    },
+    "iasBrandSafetyGambling": {
+     "$ref": "IASBrandSafetyLevelEnum"
+    },
+    "iasBrandSafetyHateSpeech": {
+     "$ref": "IASBrandSafetyLevelEnum"
+    },
+    "iasBrandSafetyIllegalDownloads": {
+     "$ref": "IASBrandSafetyLevelEnum"
+    },
+    "iasBrandSafetyIllegalDrugs": {
+     "$ref": "IASBrandSafetyLevelEnum"
+    },
+    "iasBrandSafetyOffensiveLanguage": {
+     "$ref": "IASBrandSafetyLevelEnum"
+    },
+    "iasBrandSafetyViolence": {
+     "$ref": "IASBrandSafetyLevelEnum"
+    }
+   },
+   "type": "object"
+  },
+  "IASBrandSafetyLevelEnum": {
+   "description": "The IAS brand safety risk level.",
+   "enum": [
+    "ALLOW_ALL",
+    "BRAND_SAFETY_EXCLUDE_HIGH_AND_MODERATE_RISK",
+    "BRAND_SAFETY_EXCLUDE_HIGH_RISK"
+   ],
+   "type": "string"
+  },
+  "IASContextualAvoidance": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "avoidanceSegments": {
+     "description": "The unique identifier of the IAS contextual avoidance segment",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "IASContextualTargeting": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "topicalSegments": {
+     "description": "The unique identifier of the IAS contextual topical targeting segment",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "verticalSegments": {
+     "description": "The unique identifier of the IAS contextual vertical targeting segment",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "IASFraudInvalidTraffic": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'MOBILE_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce t…",
+   "properties": {
+    "targetSetting": {
+     "$ref": "IASFraudInvalidTrafficEnum"
+    }
+   },
+   "type": "object"
+  },
+  "IASFraudInvalidTrafficEnum": {
+   "description": "The type of fraud invalid traffic.",
+   "enum": [
+    "ALLOW_ALL",
+    "FRAUD_INVALID_TRAFFIC_EXCLUDE_HIGH_MODERATE_RISK",
+    "FRAUD_INVALID_TRAFFIC_EXCLUDE_HIGH_RISK"
+   ],
+   "type": "string"
+  },
+  "IASQualitySync": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "segmentId": {
+     "description": "The unique identifier of the IAS quality sync segment",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "IASViewability": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'DISPLAY', 'VIDEO']. The IAS viewability standard. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the lau…",
+   "properties": {
+    "standard": {
+     "$ref": "IASViewabilityStandardEnum"
+    },
+    "viewabilityTargeting": {
+     "$ref": "ViewabilityTierEnum"
+    }
+   },
+   "required": [
+    "standard"
+   ],
+   "type": "object"
+  },
+  "IASViewabilityStandardEnum": {
+   "description": "The viewability standard.",
+   "enum": [
+    "GROUPM",
+    "MRC",
+    "NONE",
+    "PUBLICIS"
+   ],
+   "type": "string"
+  },
+  "JounceMediaMFA": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "madeForAdvertising": {
+     "description": "Jounce MFA Domain Verification: Exclude bid requests from Made For Advertising(MFA) domains identified by Jounce Media. MFA sites usually feature low-quality content and may use tactics such as pop-up ads, auto-play vid…",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "MrcViewabilityTargetingEnum": {
+   "description": "The type of MRC viewability targeting.",
+   "enum": [
+    "ALLOW_ALL",
+    "MRC_VIEWABILITY_GTE_30",
+    "MRC_VIEWABILITY_GTE_40",
+    "MRC_VIEWABILITY_GTE_50",
+    "MRC_VIEWABILITY_GTE_55",
+    "MRC_VIEWABILITY_GTE_60",
+    "MRC_VIEWABILITY_GTE_65",
+    "MRC_VIEWABILITY_GTE_70",
+    "MRC_VIEWABILITY_GTE_75",
+    "MRC_VIEWABILITY_GTE_80"
+   ],
+   "type": "string"
+  },
+  "NewsGuardBrandGuardMisinformationSafety": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'DISPLAY', 'VIDEO']. Only applicable for Web supply. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the l…",
+   "properties": {
+    "avoidanceList": {
+     "items": {
+      "$ref": "NewsGuardBrandGuardMisinformationSafetyEnum"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "NewsGuardBrandGuardMisinformationSafetyEnum": {
+   "description": "NewsGuard BrandGuard Misinformation safety categories to exclude from targeting (Web inventory only).",
+   "enum": [
+    "AI_GENERATED_MFA",
+    "BASIC_EXCLUDE",
+    "CLIMATE_MISINFORMATION",
+    "COVID_MISINFORMATION",
+    "ELECTION_MISINFORMATION",
+    "HEALTH_MISINFORMATION",
+    "HIGH_EXCLUDE",
+    "ISRAEL_HAMAS_MISINFORMATION",
+    "MAX_EXCLUDE",
+    "MISINFORMATION_SITES",
+    "OPINIONATED_NEWS",
+    "QANON_MISINFORMATION",
+    "UKRAINE_MISINFORMATION",
+    "VACCINE_MISINFORMATION"
+   ],
+   "type": "string"
+  },
+  "NewsGuardBrandGuardTrustedNewsTargeting": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'DISPLAY', 'VIDEO']. Only applicable for Web supply. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the l…",
+   "properties": {
+    "targetingList": {
+     "items": {
+      "$ref": "NewsGuardBrandGuardTrustedNewsTargetingEnum"
+     },
+     "maxItems": 15,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "NewsGuardBrandGuardTrustedNewsTargetingEnum": {
+   "description": "NewsGuard BrandGuard trusted news targeting categories to include in targeting (Web inventory only).",
+   "enum": [
+    "BASIC_INCLUDE",
+    "BUSINESS_INCLUDE",
+    "COMMUNITY_INCLUDE",
+    "HEALTH_INCLUDE",
+    "HIGH_INCLUDE",
+    "LIFESTYLE_INCLUDE",
+    "LOCAL_INCLUDE",
+    "MAX_INCLUDE",
+    "POLITICS_INCLUDE",
+    "TECH_INCLUDE"
+   ],
+   "type": "string"
+  },
+  "ODCContextualPredictsSegmentId": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "segmentId": {
+     "description": "The custom segment predict identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ODCCustomSegmentId": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "segmentId": {
+     "description": "The custom segment identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ODCFraudInvalidTraffic": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "targetSetting": {
+     "$ref": "ODCFraudInvalidTrafficEnum"
+    }
+   },
+   "type": "object"
+  },
+  "ODCFraudInvalidTrafficEnum": {
+   "description": "The fraud invalid traffic type.",
+   "enum": [
+    "ALLOW_ALL",
+    "FRAUD_INVALID_TRAFFIC_ESSENTIAL_PROTECTION",
+    "FRAUD_INVALID_TRAFFIC_MAXIMUM_PROTECTION"
+   ],
+   "type": "string"
+  },
+  "ODCStandardPredictsSegmentIds": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "segmentIds": {
+     "description": "The standard predict segment identifiers.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 320,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ODCSyndicatedContextual": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce the launch of conso…",
+   "properties": {
+    "avoidanceSegments": {
+     "description": "The unique identifier of the ODC Syndicated avoidance segments",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingSegments": {
+     "description": "The unique identifier of the ODC Syndicated targeting segments",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ODCViewability": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. The ODC viewability standard. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until w…",
+   "properties": {
+    "standard": {
+     "$ref": "ODCViewabilityStandardEnum"
+    },
+    "viewabilityTargeting": {
+     "$ref": "ViewabilityTargetingEnum"
+    }
+   },
+   "required": [
+    "standard"
+   ],
+   "type": "object"
+  },
+  "ODCViewabilityStandardEnum": {
+   "description": "The viewability standard.",
+   "enum": [
+    "MRC",
+    "NONE"
+   ],
+   "type": "string"
+  },
+  "OracleDataCloudBrandSafety": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. The oracle data cloud brand safety. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type u…",
+   "properties": {
+    "essentialProtection": {
+     "items": {
+      "$ref": "EssentialProtectionEnum"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "targetingOption": {
+     "$ref": "TargetingOptionEnum"
+    }
+   },
+   "type": "object"
+  },
+  "PixalateFraudInvalidTraffic": {
+   "description": "Supported InventoryTypes['STANDARD_DISPLAY', 'MOBILE_DISPLAY', AAP_MOBILE_APP', 'DISPLAY', 'VIDEO']. DISPLAY is a new consolidated type that includes all display type ad groups. Do not use this type until we announce th…",
+   "properties": {
+    "excludeAppsAndDomains": {
+     "description": "Set to true to exclude traffic from Apps and Domains identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeIpAddressAndUserAgents": {
+     "description": "Set to true to exclude traffic from IPV4 and IPV6 addresses and user agents identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeOttAndMobileDevices": {
+     "description": "Set to true to exclude traffic from OTT and Mobile devices identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeRemovedAppsFromAppStores": {
+     "description": "Set to true to exlude traffic from Apps that have been removed from the google play and apple app stores in the last 6 months.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingOptionEnum": {
+   "enum": [
+    "ESSENTIAL_PROTECTION",
+    "MAXIMUM_PROTECTION",
+    "NO_BRAND_SAFETY"
+   ],
+   "type": "string"
+  },
+  "ThirdPartyTargetSettings": {
+   "oneOf": [
+    {
+     "properties": {
+      "doubleVerifyFraudInvalidTraffic": {
+       "$ref": "DoubleVerifyFraudInvalidTraffic"
+      }
+     },
+     "required": [
+      "doubleVerifyFraudInvalidTraffic"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceFraudInvalidTraffic": {
+       "$ref": "IASFraudInvalidTraffic"
+      }
+     },
+     "required": [
+      "integralAdScienceFraudInvalidTraffic"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "oracleDataCloudFraudInvalidTraffic": {
+       "$ref": "ODCFraudInvalidTraffic"
+      }
+     },
+     "required": [
+      "oracleDataCloudFraudInvalidTraffic"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "pixalateFraudInvalidTraffic": {
+       "$ref": "PixalateFraudInvalidTraffic"
+      }
+     },
+     "required": [
+      "pixalateFraudInvalidTraffic"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyStandardDisplayBrandSafety": {
+       "$ref": "DVStandardDisplayBrandSafety"
+      }
+     },
+     "required": [
+      "doubleVerifyStandardDisplayBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyBrandSafety": {
+       "$ref": "DoubleVerifyBrandSafety"
+      }
+     },
+     "required": [
+      "doubleVerifyBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceBrandSafety": {
+       "$ref": "IASBrandSafety"
+      }
+     },
+     "required": [
+      "integralAdScienceBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "oracleDataCloudBrandSafety": {
+       "$ref": "OracleDataCloudBrandSafety"
+      }
+     },
+     "required": [
+      "oracleDataCloudBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyViewability": {
+       "$ref": "DoubleVerifyViewability"
+      }
+     },
+     "required": [
+      "doubleVerifyViewability"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceViewability": {
+       "$ref": "IASViewability"
+      }
+     },
+     "required": [
+      "integralAdScienceViewability"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "oracleDataCloudViewability": {
+       "$ref": "ODCViewability"
+      }
+     },
+     "required": [
+      "oracleDataCloudViewability"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyAuthenticBrandSafety": {
+       "$ref": "DoubleVerifyAuthenticBrandSafety"
+      }
+     },
+     "required": [
+      "doubleVerifyAuthenticBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyCustomContextualSegmentId": {
+       "$ref": "DVCustomContextualSegmentId"
+      }
+     },
+     "required": [
+      "doubleVerifyCustomContextualSegmentId"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "oracleDataCloudCustomSegmentId": {
+       "$ref": "ODCCustomSegmentId"
+      }
+     },
+     "required": [
+      "oracleDataCloudCustomSegmentId"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "oracleDataCloudContextualPredictsSegmentId": {
+       "$ref": "ODCContextualPredictsSegmentId"
+      }
+     },
+     "required": [
+      "oracleDataCloudContextualPredictsSegmentId"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "oracleDataCloudStandardPredictsSegmentIds": {
+       "$ref": "ODCStandardPredictsSegmentIds"
+      }
+     },
+     "required": [
+      "oracleDataCloudStandardPredictsSegmentIds"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceContextualTargeting": {
+       "$ref": "IASContextualTargeting"
+      }
+     },
+     "required": [
+      "integralAdScienceContextualTargeting"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceContextualAvoidance": {
+       "$ref": "IASContextualAvoidance"
+      }
+     },
+     "required": [
+      "integralAdScienceContextualAvoidance"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyAuthenticAttention": {
+       "$ref": "DVAuthenticAttention"
+      }
+     },
+     "required": [
+      "doubleVerifyAuthenticAttention"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "oracleDataCloudSyndicatedContextual": {
+       "$ref": "ODCSyndicatedContextual"
+      }
+     },
+     "required": [
+      "oracleDataCloudSyndicatedContextual"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "jounceMediaMfa": {
+       "$ref": "JounceMediaMFA"
+      }
+     },
+     "required": [
+      "jounceMediaMfa"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceQualitySync": {
+       "$ref": "IASQualitySync"
+      }
+     },
+     "required": [
+      "integralAdScienceQualitySync"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "newsGuardBrandGuardTrustedNewsTargeting": {
+       "$ref": "NewsGuardBrandGuardTrustedNewsTargeting"
+      }
+     },
+     "required": [
+      "newsGuardBrandGuardTrustedNewsTargeting"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "newsGuardBrandGuardMisinformationSafety": {
+       "$ref": "NewsGuardBrandGuardMisinformationSafety"
+      }
+     },
+     "required": [
+      "newsGuardBrandGuardMisinformationSafety"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ThirdPartyTargetTypesEnum": {
+   "enum": [
+    "DOUBLE_VERIFY_AUTHENTIC_ATTENTION",
+    "DOUBLE_VERIFY_AUTHENTIC_BRAND_SAFETY",
+    "DOUBLE_VERIFY_BRAND_SAFETY",
+    "DOUBLE_VERIFY_CUSTOM_CONTEXTUAL_SEGMENT_ID",
+    "DOUBLE_VERIFY_FRAUD_INVALID_TRAFFIC",
+    "DOUBLE_VERIFY_STANDARD_DISPLAY_BRAND_SAFETY",
+    "DOUBLE_VERIFY_VIEWABILITY",
+    "INTEGRAL_AD_SCIENCE_BRAND_SAFETY",
+    "INTEGRAL_AD_SCIENCE_CONTEXTUAL_AVOIDANCE",
+    "INTEGRAL_AD_SCIENCE_CONTEXTUAL_TARGETING",
+    "INTEGRAL_AD_SCIENCE_FRAUD_INVALID_TRAFFIC",
+    "INTEGRAL_AD_SCIENCE_QUALITY_SYNC",
+    "INTEGRAL_AD_SCIENCE_VIEWABILITY",
+    "JOUNCE_MEDIA_MFA",
+    "NEWS_GUARD_BRAND_GUARD_MISINFORMATION_SAFETY",
+    "NEWS_GUARD_BRAND_GUARD_TRUSTED_NEWS_TARGETING",
+    "ORACLE_DATA_CLOUD_BRAND_SAFETY",
+    "ORACLE_DATA_CLOUD_CONTEXTUAL_PREDICTS_SEGMENT_ID",
+    "ORACLE_DATA_CLOUD_CUSTOM_SEGMENT_ID",
+    "ORACLE_DATA_CLOUD_FRAUD_INVALID_TRAFFIC",
+    "ORACLE_DATA_CLOUD_STANDARD_PREDICTS_SEGMENT_IDS",
+    "ORACLE_DATA_CLOUD_SYNDICATED_CONTEXTUAL",
+    "ORACLE_DATA_CLOUD_VIEWABILITY",
+    "PIXALATE_FRAUD_INVALID_TRAFFIC"
+   ],
+   "type": "string"
+  },
+  "ViewabilityTargetingEnum": {
+   "description": "The type of ODC MRC viewability tier.",
+   "enum": [
+    "VIEWABILITY_TIER_GT_20",
+    "VIEWABILITY_TIER_GT_30",
+    "VIEWABILITY_TIER_GT_40",
+    "VIEWABILITY_TIER_GT_50",
+    "VIEWABILITY_TIER_GT_60",
+    "VIEWABILITY_TIER_GT_70",
+    "VIEWABILITY_TIER_GT_80"
+   ],
+   "type": "string"
+  },
+  "ViewabilityTierEnum": {
+   "description": "The type of viewability tier.",
+   "enum": [
+    "ALLOW_ALL",
+    "VIEWABILITY_TIER_GT_40",
+    "VIEWABILITY_TIER_GT_50",
+    "VIEWABILITY_TIER_GT_60",
+    "VIEWABILITY_TIER_GT_70",
+    "VIEWABILITY_TIER_LT_40"
+   ],
+   "type": "string"
+  }
+ }
+}

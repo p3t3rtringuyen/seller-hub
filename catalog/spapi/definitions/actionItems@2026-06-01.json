@@ -1,0 +1,550 @@
+{
+  "ActionItem": {
+    "description": "A specific actionable item surfaced to a selling partner.",
+    "properties": {
+      "actionItemId": {
+        "description": "Uniquely and permanently identifies the action item throughout its lifecycle.",
+        "type": "string"
+      },
+      "description": {
+        "description": "A localized explanation of why Amazon is surfacing this action item.",
+        "ref": "LocalizedText"
+      },
+      "dueDate": {
+        "description": "The date by which action must be taken.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "impacts": {
+        "description": "The business impacts associated with this action item.",
+        "ref": "ActionItemImpacts"
+      },
+      "lastUpdatedDate": {
+        "description": "When the action item was last updated.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "references": {
+        "description": "The entities this action item applies to.",
+        "ref": "References"
+      },
+      "resolutions": {
+        "description": "The available ways the selling partner can act on this action item.",
+        "ref": "Resolutions"
+      },
+      "status": {
+        "description": "The current state of the action item.",
+        "ref": "ActionItemStatuses"
+      },
+      "type": {
+        "description": "The structured classification of this action item and a reference to the definition it instantiates.",
+        "ref": "ActionItemType"
+      }
+    },
+    "required": [
+      "actionItemId",
+      "description",
+      "lastUpdatedDate",
+      "status",
+      "type"
+    ],
+    "type": "object"
+  },
+  "ActionItemImpacts": {
+    "description": "The business impacts associated with an action item.",
+    "properties": {},
+    "ref": "Impact",
+    "required": [],
+    "type": "array"
+  },
+  "ActionItemStatus": {
+    "description": "A state or capability of an action item.",
+    "enum": [
+      "ACTIONED",
+      "AUTOMATABLE",
+      "DISMISSABLE",
+      "DISMISSED",
+      "OVERDUE",
+      "PENDING_SELLING_PARTNER",
+      "RESOLVED",
+      "SNOOZABLE",
+      "SNOOZED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ActionItemStatuses": {
+    "description": "The state of an action item, expressed as a list combining lifecycle state with currently available capabilities.",
+    "properties": {},
+    "ref": "ActionItemStatus",
+    "required": [],
+    "type": "array"
+  },
+  "ActionItemType": {
+    "description": "The structured classification of an action item and a reference to the definition it instantiates.",
+    "properties": {
+      "classifications": {
+        "description": "One or more classifications for this action item.",
+        "ref": "ActionItemTypeClassifications"
+      },
+      "definition": {
+        "description": "A reference to the versioned action item definition this item is an instance of.",
+        "ref": "ActionItemTypeDefinition"
+      }
+    },
+    "required": [
+      "classifications",
+      "definition"
+    ],
+    "type": "object"
+  },
+  "ActionItemTypeClassification": {
+    "description": "The classification of an action item.",
+    "enum": [
+      "ISSUE",
+      "RECOMMENDATION",
+      "TASK"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ActionItemTypeClassifications": {
+    "description": "A list of action item classifications.",
+    "properties": {},
+    "ref": "ActionItemTypeClassification",
+    "required": [],
+    "type": "array"
+  },
+  "ActionItemTypeDefinition": {
+    "description": "A reference to the versioned action item definition, with a localized display name.",
+    "properties": {
+      "displayName": {
+        "description": "Localized display name of the definition.",
+        "ref": "LocalizedText"
+      },
+      "typeDefinitionId": {
+        "description": "The semantic identifier of the action item definition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "typeDefinitionId"
+    ],
+    "type": "object"
+  },
+  "ActionPlanReference": {
+    "description": "A reference to an action plan offered by a resolution.",
+    "properties": {
+      "actionPlanId": {
+        "description": "The identifier of the created plan instance, when one exists.",
+        "type": "string"
+      },
+      "actionPlanTemplateId": {
+        "description": "The identifier of the plan template.",
+        "type": "string"
+      },
+      "description": {
+        "ref": "LocalizedText"
+      },
+      "url": {
+        "description": "Optional deep link to the action plan experience for this template.",
+        "format": "uri",
+        "type": "string"
+      }
+    },
+    "required": [
+      "actionPlanTemplateId"
+    ],
+    "type": "object"
+  },
+  "CatalogReference": {
+    "description": "A reference to a catalog, scoped to one or more Amazon stores.",
+    "properties": {
+      "catalogId": {
+        "description": "The catalog identifier.",
+        "type": "string"
+      },
+      "marketplaceIds": {
+        "description": "The Amazon store identifiers to which this catalog reference applies.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "catalogId"
+    ],
+    "type": "object"
+  },
+  "DismissActionItemRequest": {
+    "description": "Request body for dismissing an action item.",
+    "properties": {
+      "reason": {
+        "description": "The reason for dismissing the action item.",
+        "ref": "DismissalReason"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DismissActionItemResponse": {
+    "description": "The response schema for the `dismissActionItem` operation.",
+    "properties": {
+      "actionItemId": {
+        "description": "The identifier of the dismissed action item.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The action item's status after dismissal; contains `DISMISSED`.",
+        "ref": "ActionItemStatuses"
+      }
+    },
+    "required": [
+      "actionItemId",
+      "status"
+    ],
+    "type": "object"
+  },
+  "DismissalReason": {
+    "description": "The reason a selling partner is dismissing an action item.",
+    "properties": {
+      "reasonTypes": {
+        "description": "One or more reasons for dismissing the action item.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "reasonTypes"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "Estimate": {
+    "description": "A quantified estimate for an impact.",
+    "properties": {
+      "currencyCode": {
+        "description": "ISO 4217 currency code.",
+        "type": "string"
+      },
+      "definition": {
+        "description": "Reference to the estimate's type definition, with a localized display name.",
+        "ref": "EstimateDefinitionRef"
+      },
+      "maximum": {
+        "description": "The upper bound of a range estimate.",
+        "type": "number"
+      },
+      "minimum": {
+        "description": "The lower bound of a range estimate.",
+        "type": "number"
+      },
+      "type": {
+        "description": "The type of estimate.",
+        "enum": [
+          "COUNT",
+          "MONEY",
+          "PERCENT"
+        ],
+        "type": "string"
+      },
+      "value": {
+        "description": "A single-point estimate value.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "type"
+    ],
+    "type": "object"
+  },
+  "EstimateDefinitionRef": {
+    "description": "A reference to an estimate type definition with a localized display name.",
+    "properties": {
+      "displayName": {
+        "description": "Localized display name.",
+        "ref": "LocalizedText"
+      },
+      "estimateDefinitionId": {
+        "description": "Machine-readable identifier of the estimate type.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "estimateDefinitionId"
+    ],
+    "type": "object"
+  },
+  "GetActionItemResponse": {
+    "description": "The response schema for the `getActionItem` operation.",
+    "properties": {
+      "actionItem": {
+        "ref": "ActionItem"
+      }
+    },
+    "required": [
+      "actionItem"
+    ],
+    "type": "object"
+  },
+  "Impact": {
+    "description": "A typed impact associated with an action item, classified as a cost, benefit, or enforcement, and optionally quantified with one or more estimates.",
+    "properties": {
+      "classifications": {
+        "description": "One or more impact classifications (`COST`, `BENEFIT`, `ENFORCEMENT`).",
+        "ref": "ImpactClassification",
+        "type": "array"
+      },
+      "definition": {
+        "description": "Reference to the impact type definition, with a localized display name.",
+        "ref": "ImpactDefinitionRef"
+      },
+      "description": {
+        "description": "Optional localized description specific to this impact line.",
+        "ref": "LocalizedText"
+      },
+      "estimates": {
+        "description": "Quantified estimates for this impact.",
+        "ref": "Estimate",
+        "type": "array"
+      }
+    },
+    "required": [
+      "classifications",
+      "definition"
+    ],
+    "type": "object"
+  },
+  "ImpactClassification": {
+    "description": "The classification of an impact.",
+    "enum": [
+      "BENEFIT",
+      "COST",
+      "ENFORCEMENT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ImpactDefinitionRef": {
+    "description": "A reference to an impact type definition with a localized display name.",
+    "properties": {
+      "displayName": {
+        "description": "Localized display name.",
+        "ref": "LocalizedText"
+      },
+      "impactDefinitionId": {
+        "description": "Machine-readable identifier of the impact type.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "impactDefinitionId"
+    ],
+    "type": "object"
+  },
+  "ListActionItemsResponse": {
+    "description": "The response schema for the `listActionItems` operation.",
+    "properties": {
+      "actionItems": {
+        "description": "The action items matching the query, as full `ActionItem` objects.",
+        "ref": "ActionItem",
+        "type": "array"
+      },
+      "pagination": {
+        "description": "Pagination details for the response.",
+        "ref": "Pagination"
+      },
+      "refinements": {
+        "description": "Facet counts for progressive filtering across the full filtered result set.",
+        "ref": "SearchRefinements"
+      }
+    },
+    "required": [
+      "actionItems"
+    ],
+    "type": "object"
+  },
+  "LocalizedText": {
+    "description": "A localized text value paired with the locale it is rendered in.",
+    "properties": {
+      "locale": {
+        "description": "A BCP 47 language tag.",
+        "type": "string"
+      },
+      "text": {
+        "description": "The localized text.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "locale",
+      "text"
+    ],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "Pagination details for list responses.",
+    "properties": {
+      "nextToken": {
+        "description": "A token to retrieve the next page of results.",
+        "type": "string"
+      },
+      "previousToken": {
+        "description": "A token to retrieve the previous page of results.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "References": {
+    "description": "Entities referenced by an action item.",
+    "properties": {
+      "actionPlans": {
+        "description": "The most recent action plan associated with this action item, if any.",
+        "ref": "ActionPlanReference",
+        "type": "array"
+      },
+      "catalogs": {
+        "description": "Catalog references associated with the action item.",
+        "ref": "CatalogReference",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Resolution": {
+    "description": "An end state that resolves the action item.",
+    "properties": {
+      "actionPlans": {
+        "description": "Automated pathways for accomplishing this resolution.",
+        "ref": "ActionPlanReference",
+        "type": "array"
+      },
+      "definition": {
+        "ref": "ResolutionDefinitionRef"
+      },
+      "description": {
+        "ref": "LocalizedText"
+      },
+      "type": {
+        "ref": "ResolutionType"
+      },
+      "url": {
+        "description": "Pathway for the selling partner to accomplish this resolution themselves: a URL to an existing experience.",
+        "format": "uri",
+        "type": "string"
+      }
+    },
+    "required": [
+      "definition",
+      "type"
+    ],
+    "type": "object"
+  },
+  "ResolutionDefinitionRef": {
+    "description": "Details of a resolution, drawn from a catalog of resolution definitions that can be shared across action item types.",
+    "properties": {
+      "displayName": {
+        "description": "Localized display name of the resolution.",
+        "ref": "LocalizedText"
+      },
+      "resolutionDefinitionId": {
+        "description": "Machine-readable identifier of the resolution definition (the change this resolution produces).",
+        "type": "string"
+      }
+    },
+    "required": [
+      "resolutionDefinitionId"
+    ],
+    "type": "object"
+  },
+  "ResolutionType": {
+    "description": "The top-level mechanism for reaching this resolution's end state, expressed as a verb (for example, `EXPAND_CROSS_STORE`).",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Resolutions": {
+    "description": "The available ways the selling partner can act on an action item.",
+    "properties": {},
+    "ref": "Resolution",
+    "required": [],
+    "type": "array"
+  },
+  "SearchRefinementValue": {
+    "description": "A refinement value with its count in the full filtered result set.",
+    "properties": {
+      "count": {
+        "description": "Number of results matching this refinement value.",
+        "type": "integer"
+      },
+      "displayName": {
+        "description": "Human-readable label for the refinement value.",
+        "type": "string"
+      },
+      "value": {
+        "description": "The refinement value to pass back as a filter.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "count",
+      "displayName",
+      "value"
+    ],
+    "type": "object"
+  },
+  "SearchRefinementValues": {
+    "description": "The list of refinement values for a given refinement key.",
+    "properties": {},
+    "ref": "SearchRefinementValue",
+    "required": [],
+    "type": "array"
+  },
+  "SearchRefinements": {
+    "description": "Search refinements (facets) for progressive filtering.",
+    "properties": {},
+    "ref": "SearchRefinementValues",
+    "required": [],
+    "type": "object"
+  }
+}

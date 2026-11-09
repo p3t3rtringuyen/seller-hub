@@ -1,0 +1,577 @@
+{
+  "AmazonPayContext": {
+    "description": "Additional information related to Amazon Pay.",
+    "properties": {
+      "channel": {
+        "description": "The channel of the transaction.",
+        "type": "string"
+      },
+      "orderType": {
+        "description": "The order type of the transaction.",
+        "type": "string"
+      },
+      "storeName": {
+        "description": "The name of the store that is related to the transaction.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Balance": {
+    "description": "All information relevant to a balance.",
+    "properties": {
+      "amount": {
+        "description": "Total amount of the balance type.",
+        "ref": "Currency"
+      },
+      "asOfDate": {
+        "description": "The date for which the ending balance was calculated.",
+        "ref": "Date"
+      },
+      "balanceType": {
+        "description": "The type of balance.",
+        "enum": [
+          "ACCOUNT_LEVEL_RESERVE",
+          "AVAILABLE",
+          "DEFERRED",
+          "RESERVED",
+          "TOTAL"
+        ],
+        "type": "string"
+      },
+      "balances": {
+        "description": "A list of balances that comprise this balance.",
+        "ref": "Balance",
+        "type": "array"
+      },
+      "lastUpdatedTime": {
+        "description": "The date and time when the balance was last updated, in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "partnerMetadata": {
+        "description": "Metadata describing the seller.",
+        "ref": "PartnerMetadata"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Balances": {
+    "description": "A list of balances.",
+    "properties": {},
+    "ref": "Balance",
+    "required": [],
+    "type": "array"
+  },
+  "BigDecimal": {
+    "description": "A signed decimal number.",
+    "properties": {},
+    "required": [],
+    "type": "number"
+  },
+  "Breakdown": {
+    "description": "Details about the movement of money in the financial transaction.",
+    "properties": {
+      "breakdownAmount": {
+        "description": "The monetary amount of the charge.",
+        "ref": "Currency"
+      },
+      "breakdownType": {
+        "description": "The type of charge.",
+        "type": "string"
+      },
+      "breakdowns": {
+        "description": "A list of breakdowns that detail how the total amount is calculated for the transaction.",
+        "ref": "Breakdown",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Breakdowns": {
+    "description": "A list of breakdowns that detail how the total amount is calculated for the transaction.",
+    "properties": {},
+    "ref": "Breakdown",
+    "required": [],
+    "type": "array"
+  },
+  "BusinessContext": {
+    "description": "Information about the line of business associated with a transaction.",
+    "properties": {
+      "storeName": {
+        "description": "The store name associated with the transaction.",
+        "enum": [
+          "AMAZON_HAUL"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Context": {
+    "allOf": [
+      "AmazonPayContext",
+      "BusinessContext",
+      "DeferredContext",
+      "PaymentsContext",
+      "ProductContext",
+      "TimeRangeContext"
+    ],
+    "description": "Additional information about the item.",
+    "properties": {
+      "contextType": {
+        "description": "The type of context.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "contextType"
+    ],
+    "type": "object"
+  },
+  "Contexts": {
+    "description": "A list of additional information about the item.",
+    "properties": {},
+    "ref": "Context",
+    "required": [],
+    "type": "array"
+  },
+  "Currency": {
+    "description": "A currency type and amount.",
+    "properties": {
+      "currencyAmount": {
+        "description": "The monetary value.",
+        "ref": "BigDecimal"
+      },
+      "currencyCode": {
+        "description": "The three-digit currency code in ISO 4217 format.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Date": {
+    "description": "A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.",
+    "format": "date-time",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "DeferredContext": {
+    "description": "Additional information related to deferred transactions.",
+    "properties": {
+      "deferralReason": {
+        "description": "The deferral policy applied to the transaction.",
+        "type": "string"
+      },
+      "maturityDate": {
+        "description": "The release date of the transaction.",
+        "ref": "Date"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "An error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "The error responses that are returned when the request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "Item": {
+    "description": "Additional information about an item in a transaction.",
+    "properties": {
+      "breakdowns": {
+        "description": "A list of breakdowns that detail how the total amount is calculated for the transaction.",
+        "ref": "Breakdown",
+        "type": "array"
+      },
+      "contexts": {
+        "description": "Additional Information about the item.",
+        "ref": "Contexts"
+      },
+      "description": {
+        "description": "A description of the items in a transaction.",
+        "type": "string"
+      },
+      "relatedIdentifiers": {
+        "description": "Related business identifiers of the item.",
+        "ref": "ItemRelatedIdentifiers"
+      },
+      "totalAmount": {
+        "description": "The total monetary amount of the item.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemRelatedIdentifier": {
+    "description": "Related business identifiers of the item.",
+    "properties": {
+      "itemRelatedIdentifierName": {
+        "description": "Enumerated set of related item identifier names for the item.",
+        "enum": [
+          "COUPON_ID",
+          "ORDER_ADJUSTMENT_ITEM_ID",
+          "REMOVAL_SHIPMENT_ITEM_ID",
+          "TRANSACTION_ID"
+        ],
+        "type": "string"
+      },
+      "itemRelatedIdentifierValue": {
+        "description": "Corresponding value to `ItemRelatedIdentifierName`.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemRelatedIdentifiers": {
+    "description": "Related business identifiers of the item in the transaction.",
+    "properties": {},
+    "ref": "ItemRelatedIdentifier",
+    "required": [],
+    "type": "array"
+  },
+  "Items": {
+    "description": "A list of items in the transaction.",
+    "properties": {},
+    "ref": "Item",
+    "required": [],
+    "type": "array"
+  },
+  "ListBalancesResponse": {
+    "description": "The response to the `listBalances` operation.",
+    "properties": {
+      "balances": {
+        "ref": "Balances"
+      },
+      "nextToken": {
+        "description": "A token to retrieve the next page of results.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListTransactionsResponse": {
+    "description": "The response to the `listTransactions` operation.",
+    "properties": {
+      "payload": {
+        "description": "The payload for the `listTransactions` operation.",
+        "ref": "TransactionsPayload"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "MarketplaceDetails": {
+    "description": "Information about the marketplace where the transaction occurred.",
+    "properties": {
+      "marketplaceId": {
+        "description": "The identifier of the marketplace where the transaction occurred.",
+        "type": "string"
+      },
+      "marketplaceName": {
+        "description": "The name of the marketplace where the transaction occurred.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PartnerMetadata": {
+    "description": "Metadata that describes the seller.",
+    "properties": {
+      "accountType": {
+        "description": "The type of account.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The identifier of the marketplace where the transaction occurred.",
+        "type": "string"
+      },
+      "partnerId": {
+        "description": "The unique seller identifier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PaymentsContext": {
+    "description": "Additional information related to payments-related transactions.",
+    "properties": {
+      "paymentDate": {
+        "description": "The date of the payment.",
+        "ref": "Date"
+      },
+      "paymentMethod": {
+        "description": "The method of payment.",
+        "type": "string"
+      },
+      "paymentReference": {
+        "description": "The reference number of the payment.",
+        "type": "string"
+      },
+      "paymentType": {
+        "description": "The type of payment.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ProductContext": {
+    "description": "Additional information related to the product.",
+    "properties": {
+      "asin": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      },
+      "fulfillmentNetwork": {
+        "description": "The fulfillment network of the item.",
+        "type": "string"
+      },
+      "quantityShipped": {
+        "description": "The quantity of the item shipped.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "sku": {
+        "description": "The Stock Keeping Unit (SKU) of the item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RelatedIdentifier": {
+    "description": "Related business identifier of the transaction.",
+    "properties": {
+      "relatedIdentifierName": {
+        "description": "An enumerated set of related business identifier names.",
+        "enum": [
+          "DEFERRED_TRANSACTION_ID",
+          "DISBURSEMENT_ID",
+          "FINANCIAL_EVENT_GROUP_ID",
+          "INVOICE_ID",
+          "ORDER_ID",
+          "REFUND_ID",
+          "RELEASE_TRANSACTION_ID",
+          "SETTLEMENT_ID",
+          "SHIPMENT_ID",
+          "TRANSFER_ID"
+        ],
+        "type": "string"
+      },
+      "relatedIdentifierValue": {
+        "description": "Corresponding value of `RelatedIdentifierName`.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RelatedIdentifiers": {
+    "description": "Related business identifiers of the transaction.",
+    "properties": {},
+    "ref": "RelatedIdentifier",
+    "required": [],
+    "type": "array"
+  },
+  "SellingPartnerMetadata": {
+    "description": "Metadata that describes the seller.",
+    "properties": {
+      "accountType": {
+        "description": "The type of account in the transaction.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The identifier of the marketplace where the transaction occurred.",
+        "type": "string"
+      },
+      "sellingPartnerId": {
+        "description": "The unique seller identifier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Summary": {
+    "description": "Contains all information related to the financial summary.",
+    "properties": {
+      "breakdowns": {
+        "description": "A list of breakdowns that detail how the net proceeds are calculated.",
+        "ref": "Breakdowns"
+      },
+      "netProceeds": {
+        "description": "The net proceeds for the summary period.",
+        "ref": "Currency"
+      },
+      "partnerMetadata": {
+        "description": "Metadata describing the seller.",
+        "ref": "PartnerMetadata"
+      },
+      "periodEnd": {
+        "description": "The end date and time of the summary.",
+        "ref": "Date"
+      },
+      "periodStart": {
+        "description": "The start date and time of the summary.",
+        "ref": "Date"
+      },
+      "relatedIdentifiers": {
+        "description": "Identifiers related to the summary, such as the settlement ID.",
+        "ref": "RelatedIdentifiers"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SummaryResponse": {
+    "description": "The response to the `listSummary` operation.",
+    "properties": {
+      "nextToken": {
+        "description": "A token to retrieve the next page of results.",
+        "type": "string"
+      },
+      "summaries": {
+        "description": "A list of financial summaries.",
+        "ref": "Summary",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TimeRangeContext": {
+    "description": "Additional information that is related to the time range of the transaction.",
+    "properties": {
+      "endTime": {
+        "description": "The end time of the transaction.",
+        "ref": "Date"
+      },
+      "startTime": {
+        "description": "The start time of the transaction.",
+        "ref": "Date"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Transaction": {
+    "description": "All the information related to a transaction.",
+    "properties": {
+      "breakdowns": {
+        "description": "A list of breakdowns that detail how the total amount is calculated for the transaction.",
+        "ref": "Breakdown",
+        "type": "array"
+      },
+      "contexts": {
+        "description": "Additional Information about the transaction.",
+        "ref": "Contexts"
+      },
+      "description": {
+        "description": "Describes the reasons for the transaction.",
+        "type": "string"
+      },
+      "items": {
+        "description": "Additional information about the items in the transaction.",
+        "ref": "Items"
+      },
+      "marketplaceDetails": {
+        "description": "Information about the marketplace where the transaction occurred.",
+        "ref": "MarketplaceDetails"
+      },
+      "postedDate": {
+        "description": "The date and time when the transaction was posted.",
+        "ref": "Date"
+      },
+      "relatedIdentifiers": {
+        "description": "Identifiers related to the transaction, such as order and shipment IDs.",
+        "ref": "RelatedIdentifiers"
+      },
+      "sellingPartnerMetadata": {
+        "description": "Metadata that describes the seller.",
+        "ref": "SellingPartnerMetadata"
+      },
+      "totalAmount": {
+        "description": "The total amount of money in the transaction.",
+        "ref": "Currency"
+      },
+      "transactionId": {
+        "description": "The unique identifier of the transaction.",
+        "type": "string"
+      },
+      "transactionStatus": {
+        "description": "The status of the transaction.",
+        "type": "string"
+      },
+      "transactionType": {
+        "description": "The type of transaction.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Transactions": {
+    "description": "A list of transactions within the specified time period.",
+    "properties": {},
+    "ref": "Transaction",
+    "required": [],
+    "type": "array"
+  },
+  "TransactionsPayload": {
+    "description": "The payload for the `listTransactions` operation.",
+    "properties": {
+      "nextToken": {
+        "description": "The response includes `nextToken` when the number of results exceeds the specified `pageSize` value.",
+        "type": "string"
+      },
+      "transactions": {
+        "ref": "Transactions"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

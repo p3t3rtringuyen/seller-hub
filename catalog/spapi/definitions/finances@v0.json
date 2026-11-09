@@ -1,0 +1,1846 @@
+{
+  "AdhocDisbursementEvent": {
+    "description": "An event related to an Adhoc Disbursement.",
+    "properties": {
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "TransactionAmount": {
+        "description": "The amount of the transaction.",
+        "ref": "Currency"
+      },
+      "TransactionId": {
+        "description": "The identifier for the transaction.",
+        "type": "string"
+      },
+      "TransactionType": {
+        "description": "The type of transaction.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AdhocDisbursementEventList": {
+    "description": "A list of `AdhocDisbursement` events.",
+    "properties": {},
+    "ref": "AdhocDisbursementEvent",
+    "required": [],
+    "type": "array"
+  },
+  "AdjustmentEvent": {
+    "description": "An adjustment to the seller's account.",
+    "properties": {
+      "AdjustmentAmount": {
+        "description": "The amount adjusted as part of this event.",
+        "ref": "Currency"
+      },
+      "AdjustmentItemList": {
+        "description": "A list of information about adjustments to an account.",
+        "ref": "AdjustmentItemList"
+      },
+      "AdjustmentType": {
+        "description": "The type of adjustment.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "StoreName": {
+        "description": "The name of the store where the event occurred.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AdjustmentEventList": {
+    "description": "A list of adjustment event information for the seller's account.",
+    "properties": {},
+    "ref": "AdjustmentEvent",
+    "required": [],
+    "type": "array"
+  },
+  "AdjustmentItem": {
+    "description": "An item in an adjustment to the seller's account.",
+    "properties": {
+      "ASIN": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      },
+      "FnSKU": {
+        "description": "A unique identifier assigned to products stored in and fulfilled from a fulfillment center.",
+        "type": "string"
+      },
+      "PerUnitAmount": {
+        "description": "The per-unit value of the item.",
+        "ref": "Currency"
+      },
+      "ProductDescription": {
+        "description": "A short description of the item.",
+        "type": "string"
+      },
+      "Quantity": {
+        "description": "Represents the number of units in the seller's inventory when the `AdjustmentType` is `FBAInventoryReimbursement`.",
+        "type": "string"
+      },
+      "SellerSKU": {
+        "description": "The seller SKU of the item.",
+        "type": "string"
+      },
+      "TotalAmount": {
+        "description": "The total value of the item.",
+        "ref": "Currency"
+      },
+      "TransactionNumber": {
+        "description": "The transaction number that is related to the adjustment.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AdjustmentItemList": {
+    "description": "A list of information about items in an adjustment to the seller's account.",
+    "properties": {},
+    "ref": "AdjustmentItem",
+    "required": [],
+    "type": "array"
+  },
+  "AffordabilityExpenseEvent": {
+    "description": "An expense related to an affordability promotion.",
+    "properties": {
+      "AmazonOrderId": {
+        "description": "An Amazon-defined identifier for an order.",
+        "type": "string"
+      },
+      "BaseExpense": {
+        "description": "The amount charged for clicks incurred under the Sponsored Products program.",
+        "ref": "Currency"
+      },
+      "MarketplaceId": {
+        "description": "The Amazon-defined marketplace identifier.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was created.",
+        "ref": "Date"
+      },
+      "TaxTypeCGST": {
+        "description": "Central Goods and Service Tax, charged and collected by the central government.",
+        "ref": "Currency"
+      },
+      "TaxTypeIGST": {
+        "description": "Integrated Goods and Service Tax, charged and collected by the central government.",
+        "ref": "Currency"
+      },
+      "TaxTypeSGST": {
+        "description": "State Goods and Service Tax, charged and collected by the state government.",
+        "ref": "Currency"
+      },
+      "TotalExpense": {
+        "description": "The total amount charged to the seller.",
+        "ref": "Currency"
+      },
+      "TransactionType": {
+        "description": "The type of transaction.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "TaxTypeCGST",
+      "TaxTypeIGST",
+      "TaxTypeSGST"
+    ],
+    "type": "object"
+  },
+  "AffordabilityExpenseEventList": {
+    "description": "A list of expense information related to an affordability promotion.",
+    "properties": {},
+    "ref": "AffordabilityExpenseEvent",
+    "required": [],
+    "type": "array"
+  },
+  "BigDecimal": {
+    "description": "A signed decimal number.",
+    "properties": {},
+    "required": [],
+    "type": "number"
+  },
+  "CapacityReservationBillingEvent": {
+    "description": "An event related to a capacity reservation billing charge.",
+    "properties": {
+      "Description": {
+        "description": "A short description of the capacity reservation billing event.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "TransactionAmount": {
+        "description": "The amount of the capacity reservation billing event.",
+        "ref": "Currency"
+      },
+      "TransactionType": {
+        "description": "The transaction type.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CapacityReservationBillingEventList": {
+    "description": "A list of `CapacityReservationBillingEvent` events.",
+    "properties": {},
+    "ref": "CapacityReservationBillingEvent",
+    "required": [],
+    "type": "array"
+  },
+  "ChargeComponent": {
+    "description": "A charge on the seller's account.",
+    "properties": {
+      "ChargeAmount": {
+        "description": "The amount of the charge.",
+        "ref": "Currency"
+      },
+      "ChargeType": {
+        "description": "The type of charge.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ChargeComponentList": {
+    "description": "A list of charge information on the seller's account.",
+    "properties": {},
+    "ref": "ChargeComponent",
+    "required": [],
+    "type": "array"
+  },
+  "ChargeInstrument": {
+    "description": "A payment instrument.",
+    "properties": {
+      "Amount": {
+        "description": "The amount charged to this charge instrument.",
+        "ref": "Currency"
+      },
+      "Description": {
+        "description": "A short description of the charge instrument.",
+        "type": "string"
+      },
+      "Tail": {
+        "description": "The account tail (trailing digits) of the charge instrument.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ChargeInstrumentList": {
+    "description": "A list of payment instruments.",
+    "properties": {},
+    "ref": "ChargeInstrument",
+    "required": [],
+    "type": "array"
+  },
+  "ChargeRefundEvent": {
+    "description": "An event related to charge refund.",
+    "properties": {
+      "ChargeRefundTransactions": {
+        "description": "The amount of the charge refund credit.",
+        "ref": "ChargeRefundTransactions"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "ReasonCode": {
+        "description": "The reason given for a charge refund.",
+        "type": "string"
+      },
+      "ReasonCodeDescription": {
+        "description": "A description of the Reason Code.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ChargeRefundEventList": {
+    "description": "A list of charge refund events.",
+    "properties": {},
+    "ref": "ChargeRefundEvent",
+    "required": [],
+    "type": "array"
+  },
+  "ChargeRefundTransaction": {
+    "description": "The charge refund transaction.",
+    "properties": {
+      "ChargeAmount": {
+        "description": "The amount of the charge refund credit.",
+        "ref": "Currency"
+      },
+      "ChargeType": {
+        "description": "The type of charge.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ChargeRefundTransactions": {
+    "description": "A list of `ChargeRefund` transactions",
+    "properties": {},
+    "ref": "ChargeRefundTransaction",
+    "required": [],
+    "type": "array"
+  },
+  "CouponPaymentEvent": {
+    "description": "An event related to coupon payments.",
+    "properties": {
+      "ChargeComponent": {
+        "ref": "ChargeComponent"
+      },
+      "ClipOrRedemptionCount": {
+        "description": "The number of coupon clips or redemptions.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "CouponId": {
+        "description": "A coupon identifier.",
+        "type": "string"
+      },
+      "FeeComponent": {
+        "ref": "FeeComponent"
+      },
+      "PaymentEventId": {
+        "description": "A payment event identifier.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "SellerCouponDescription": {
+        "description": "The description provided by the seller when they created the coupon.",
+        "type": "string"
+      },
+      "TotalAmount": {
+        "description": "The `FeeComponent` value plus the `ChargeComponent` value.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CouponPaymentEventList": {
+    "description": "A list of coupon payment event information.",
+    "properties": {},
+    "ref": "CouponPaymentEvent",
+    "required": [],
+    "type": "array"
+  },
+  "Currency": {
+    "description": "A currency type and amount.",
+    "properties": {
+      "CurrencyAmount": {
+        "description": "The monetary value.",
+        "ref": "BigDecimal"
+      },
+      "CurrencyCode": {
+        "description": "The three-digit currency code in ISO 4217 format.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Date": {
+    "description": "A date in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.",
+    "format": "date-time",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "DebtRecoveryEvent": {
+    "description": "A debt payment or debt adjustment.",
+    "properties": {
+      "ChargeInstrumentList": {
+        "ref": "ChargeInstrumentList"
+      },
+      "DebtRecoveryItemList": {
+        "ref": "DebtRecoveryItemList"
+      },
+      "DebtRecoveryType": {
+        "description": "The debt recovery type.",
+        "type": "string"
+      },
+      "OverPaymentCredit": {
+        "description": "The amount returned for overpayment.",
+        "ref": "Currency"
+      },
+      "RecoveryAmount": {
+        "description": "The amount applied for recovery.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DebtRecoveryEventList": {
+    "description": "A list of debt recovery event information.",
+    "properties": {},
+    "ref": "DebtRecoveryEvent",
+    "required": [],
+    "type": "array"
+  },
+  "DebtRecoveryItem": {
+    "description": "An item of a debt payment or debt adjustment.",
+    "properties": {
+      "GroupBeginDate": {
+        "description": "The start date and time of the financial event group that contains the debt.",
+        "ref": "Date"
+      },
+      "GroupEndDate": {
+        "description": "The end date and time of the financial event group that contains the debt.",
+        "ref": "Date"
+      },
+      "OriginalAmount": {
+        "description": "The original debt amount.",
+        "ref": "Currency"
+      },
+      "RecoveryAmount": {
+        "description": "The amount applied for the recovery item.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DebtRecoveryItemList": {
+    "description": "A list of debt recovery item information.",
+    "properties": {},
+    "ref": "DebtRecoveryItem",
+    "required": [],
+    "type": "array"
+  },
+  "DirectPayment": {
+    "description": "A payment made directly to a seller.",
+    "properties": {
+      "DirectPaymentAmount": {
+        "description": "The amount of the direct payment.",
+        "ref": "Currency"
+      },
+      "DirectPaymentType": {
+        "description": "The type of payment.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DirectPaymentList": {
+    "description": "A list of direct payment information.",
+    "properties": {},
+    "ref": "DirectPayment",
+    "required": [],
+    "type": "array"
+  },
+  "EBTRefundReimbursementOnlyEvent": {
+    "description": "An EBT refund reimbursement event.",
+    "properties": {
+      "Amount": {
+        "description": "The amount reimbursed during this event.",
+        "ref": "Currency"
+      },
+      "OrderId": {
+        "description": "The identifier of an order.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "EBTRefundReimbursementOnlyEventList": {
+    "description": "A list of EBT refund reimbursement events.",
+    "properties": {},
+    "ref": "EBTRefundReimbursementOnlyEvent",
+    "required": [],
+    "type": "array"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition in a human-readable form.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "FBALiquidationEvent": {
+    "description": "A payment event for Fulfillment by Amazon (FBA) inventory liquidation.",
+    "properties": {
+      "LiquidationFeeAmount": {
+        "description": "The fee charged to the seller by Amazon for liquidating the seller's FBA inventory.",
+        "ref": "Currency"
+      },
+      "LiquidationProceedsAmount": {
+        "description": "The amount paid by the liquidator for the seller's inventory.",
+        "ref": "Currency"
+      },
+      "OriginalRemovalOrderId": {
+        "description": "The identifier for the original removal order.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "FBALiquidationEventList": {
+    "description": "A list of FBA inventory liquidation payment events.",
+    "properties": {},
+    "ref": "FBALiquidationEvent",
+    "required": [],
+    "type": "array"
+  },
+  "FailedAdhocDisbursementEvent": {
+    "description": "Failed ad hoc disbursement event list.",
+    "properties": {
+      "DisbursementId": {
+        "description": "The disbursement identifier.",
+        "type": "string"
+      },
+      "FundsTransfersType": {
+        "description": "The type of fund transfer.",
+        "type": "string"
+      },
+      "PaymentDisbursementType": {
+        "description": "The type of payment for disbursement.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "Status": {
+        "description": "The status of the failed `AdhocDisbursement`.",
+        "type": "string"
+      },
+      "TransferAmount": {
+        "description": "The amount of the Adhoc Disbursement.",
+        "ref": "Currency"
+      },
+      "TransferId": {
+        "description": "The transfer identifier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "FailedAdhocDisbursementEventList": {
+    "description": "A list of `FailedAdhocDisbursementEvent`.",
+    "properties": {},
+    "ref": "FailedAdhocDisbursementEvent",
+    "required": [],
+    "type": "array"
+  },
+  "FeeComponent": {
+    "description": "A fee associated with the event.",
+    "properties": {
+      "FeeAmount": {
+        "description": "The amount of the fee.",
+        "ref": "Currency"
+      },
+      "FeeType": {
+        "description": "The type of fee.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "FeeComponentList": {
+    "description": "A list of fee component information.",
+    "properties": {},
+    "ref": "FeeComponent",
+    "required": [],
+    "type": "array"
+  },
+  "FinancialEventGroup": {
+    "description": "Information related to a financial event group.",
+    "properties": {
+      "AccountTail": {
+        "description": "The account tail of the payment instrument.",
+        "type": "string"
+      },
+      "BeginningBalance": {
+        "description": "The balance at the start of the settlement period.",
+        "ref": "Currency"
+      },
+      "ConvertedTotal": {
+        "description": "The total amount in the currency of the marketplace in which the funds were disbursed.",
+        "ref": "Currency"
+      },
+      "FinancialEventGroupEnd": {
+        "description": "The date and time at which the financial event group is closed.",
+        "ref": "Date"
+      },
+      "FinancialEventGroupId": {
+        "description": "A unique identifier for the financial event group.",
+        "type": "string"
+      },
+      "FinancialEventGroupStart": {
+        "description": "The date and time at which the financial event group is opened.",
+        "ref": "Date"
+      },
+      "FundTransferDate": {
+        "description": "The date and time when the disbursement or charge was initiated.",
+        "ref": "Date"
+      },
+      "FundTransferStatus": {
+        "description": "The status of the fund transfer.",
+        "type": "string"
+      },
+      "OriginalTotal": {
+        "description": "The total amount in the currency of the marketplace in which the transactions occurred.",
+        "ref": "Currency"
+      },
+      "ProcessingStatus": {
+        "description": "The processing status of the financial event group indicates whether the balance of the financial event group is settled.",
+        "type": "string"
+      },
+      "TraceId": {
+        "description": "The trace identifier used by sellers to look up transactions externally.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "FinancialEventGroupList": {
+    "description": "A list of financial event group information.",
+    "properties": {},
+    "ref": "FinancialEventGroup",
+    "required": [],
+    "type": "array"
+  },
+  "FinancialEvents": {
+    "description": "All the information that is related to a financial event.",
+    "properties": {
+      "AdhocDisbursementEventList": {
+        "ref": "AdhocDisbursementEventList"
+      },
+      "AdjustmentEventList": {
+        "ref": "AdjustmentEventList"
+      },
+      "AffordabilityExpenseEventList": {
+        "ref": "AffordabilityExpenseEventList"
+      },
+      "AffordabilityExpenseReversalEventList": {
+        "ref": "AffordabilityExpenseEventList"
+      },
+      "CapacityReservationBillingEventList": {
+        "ref": "CapacityReservationBillingEventList"
+      },
+      "ChargeRefundEventList": {
+        "ref": "ChargeRefundEventList"
+      },
+      "ChargebackEventList": {
+        "description": "A list of chargeback events.",
+        "ref": "ShipmentEventList"
+      },
+      "CouponPaymentEventList": {
+        "ref": "CouponPaymentEventList"
+      },
+      "DebtRecoveryEventList": {
+        "ref": "DebtRecoveryEventList"
+      },
+      "EBTRefundReimbursementOnlyEventList": {
+        "description": "A list of EBT refund reimbursement events.",
+        "ref": "EBTRefundReimbursementOnlyEventList"
+      },
+      "FBALiquidationEventList": {
+        "ref": "FBALiquidationEventList"
+      },
+      "FailedAdhocDisbursementEventList": {
+        "ref": "FailedAdhocDisbursementEventList"
+      },
+      "GuaranteeClaimEventList": {
+        "description": "A list of guarantee claim events.",
+        "ref": "ShipmentEventList"
+      },
+      "ImagingServicesFeeEventList": {
+        "ref": "ImagingServicesFeeEventList"
+      },
+      "LoanServicingEventList": {
+        "ref": "LoanServicingEventList"
+      },
+      "NetworkComminglingTransactionEventList": {
+        "ref": "NetworkComminglingTransactionEventList"
+      },
+      "PayWithAmazonEventList": {
+        "ref": "PayWithAmazonEventList"
+      },
+      "ProductAdsPaymentEventList": {
+        "ref": "ProductAdsPaymentEventList"
+      },
+      "RefundEventList": {
+        "description": "A list of refund events.",
+        "ref": "ShipmentEventList"
+      },
+      "RemovalShipmentAdjustmentEventList": {
+        "ref": "RemovalShipmentAdjustmentEventList"
+      },
+      "RemovalShipmentEventList": {
+        "ref": "RemovalShipmentEventList"
+      },
+      "RentalTransactionEventList": {
+        "ref": "RentalTransactionEventList"
+      },
+      "RetrochargeEventList": {
+        "ref": "RetrochargeEventList"
+      },
+      "SAFETReimbursementEventList": {
+        "ref": "SAFETReimbursementEventList"
+      },
+      "SellerDealPaymentEventList": {
+        "ref": "SellerDealPaymentEventList"
+      },
+      "SellerReviewEnrollmentPaymentEventList": {
+        "ref": "SellerReviewEnrollmentPaymentEventList"
+      },
+      "ServiceFeeEventList": {
+        "ref": "ServiceFeeEventList"
+      },
+      "ServiceProviderCreditEventList": {
+        "ref": "SolutionProviderCreditEventList"
+      },
+      "ShipmentEventList": {
+        "description": "A list of shipment events.",
+        "ref": "ShipmentEventList"
+      },
+      "ShipmentSettleEventList": {
+        "description": "A list of Shipment Settle events.",
+        "ref": "ShipmentSettleEventList"
+      },
+      "TDSReimbursementEventList": {
+        "ref": "TDSReimbursementEventList"
+      },
+      "TaxWithholdingEventList": {
+        "ref": "TaxWithholdingEventList"
+      },
+      "TrialShipmentEventList": {
+        "ref": "TrialShipmentEventList"
+      },
+      "ValueAddedServiceChargeEventList": {
+        "ref": "ValueAddedServiceChargeEventList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ImagingServicesFeeEvent": {
+    "description": "A fee event related to Amazon Imaging services.",
+    "properties": {
+      "ASIN": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item for which the imaging service was requested.",
+        "type": "string"
+      },
+      "FeeList": {
+        "description": "A list of fees associated with the event.",
+        "ref": "FeeComponentList"
+      },
+      "ImagingRequestBillingItemID": {
+        "description": "The identifier for the imaging services request.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ImagingServicesFeeEventList": {
+    "description": "A list of fee events related to Amazon Imaging services.",
+    "properties": {},
+    "ref": "ImagingServicesFeeEvent",
+    "required": [],
+    "type": "array"
+  },
+  "ListFinancialEventGroupsPayload": {
+    "description": "The payload for the `listFinancialEventGroups` operation.",
+    "properties": {
+      "FinancialEventGroupList": {
+        "ref": "FinancialEventGroupList"
+      },
+      "NextToken": {
+        "description": "When present and not empty, pass this string token in the next request to return the next response page.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListFinancialEventGroupsResponse": {
+    "description": "The response schema for the `listFinancialEventGroups` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `listFinancialEventGroups` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `listFinancialEventGroups` operation.",
+        "ref": "ListFinancialEventGroupsPayload"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListFinancialEventsPayload": {
+    "description": "The payload for the `listFinancialEvents` operation.",
+    "properties": {
+      "FinancialEvents": {
+        "ref": "FinancialEvents"
+      },
+      "NextToken": {
+        "description": "When present and not empty, pass this string token in the next request to return the next response page.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListFinancialEventsResponse": {
+    "description": "The response schema for the `listFinancialEvents` operation.",
+    "properties": {
+      "errors": {
+        "description": "One or more unexpected errors occurred during the `listFinancialEvents` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `listFinancialEvents` operation.",
+        "ref": "ListFinancialEventsPayload"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "LoanServicingEvent": {
+    "description": "A loan advance, loan payment, or loan refund.",
+    "properties": {
+      "LoanAmount": {
+        "description": "The amount of the loan.",
+        "ref": "Currency"
+      },
+      "SourceBusinessEventType": {
+        "description": "The type of event.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "LoanServicingEventList": {
+    "description": "A list of loan servicing events.",
+    "properties": {},
+    "ref": "LoanServicingEvent",
+    "required": [],
+    "type": "array"
+  },
+  "NetworkComminglingTransactionEvent": {
+    "description": "A network commingling transaction event.",
+    "properties": {
+      "ASIN": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the swapped item.",
+        "type": "string"
+      },
+      "MarketplaceId": {
+        "description": "The marketplace in which the event took place.",
+        "type": "string"
+      },
+      "NetCoTransactionID": {
+        "description": "The identifier for the network item swap.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "SwapReason": {
+        "description": "The reason for the network item swap.",
+        "type": "string"
+      },
+      "TaxAmount": {
+        "description": "The tax on the network item swap paid by the seller.",
+        "ref": "Currency"
+      },
+      "TaxExclusiveAmount": {
+        "description": "The price of the swapped item minus `TaxAmount`.",
+        "ref": "Currency"
+      },
+      "TransactionType": {
+        "description": "The type of network item swap.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "NetworkComminglingTransactionEventList": {
+    "description": "A list of network commingling transaction events.",
+    "properties": {},
+    "ref": "NetworkComminglingTransactionEvent",
+    "required": [],
+    "type": "array"
+  },
+  "PayWithAmazonEvent": {
+    "description": "An event related to the seller's Pay with Amazon account.",
+    "properties": {
+      "AmountDescription": {
+        "description": "A short description of this payment event.",
+        "type": "string"
+      },
+      "BusinessObjectType": {
+        "description": "The type of business object.",
+        "type": "string"
+      },
+      "Charge": {
+        "description": "The charge associated with the event.",
+        "ref": "ChargeComponent"
+      },
+      "FeeList": {
+        "description": "A list of fees associated with the event.",
+        "ref": "FeeComponentList"
+      },
+      "FulfillmentChannel": {
+        "description": "The fulfillment channel.",
+        "type": "string"
+      },
+      "PaymentAmountType": {
+        "description": "The type of payment.",
+        "type": "string"
+      },
+      "SalesChannel": {
+        "description": "The sales channel for the transaction.",
+        "type": "string"
+      },
+      "SellerOrderId": {
+        "description": "An order identifier that is specified by the seller.",
+        "type": "string"
+      },
+      "StoreName": {
+        "description": "The name of the store where the event occurred.",
+        "type": "string"
+      },
+      "TransactionPostedDate": {
+        "description": "The date and time when the payment transaction is posted.",
+        "ref": "Date"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PayWithAmazonEventList": {
+    "description": "A list of events related to the seller's Pay with Amazon account.",
+    "properties": {},
+    "ref": "PayWithAmazonEvent",
+    "required": [],
+    "type": "array"
+  },
+  "ProductAdsPaymentEvent": {
+    "description": "A Sponsored Products payment event.",
+    "properties": {
+      "baseValue": {
+        "description": "Base amount of the transaction, before tax.",
+        "ref": "Currency"
+      },
+      "invoiceId": {
+        "description": "The identifier for the invoice that includes the transaction.",
+        "type": "string"
+      },
+      "postedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "taxValue": {
+        "description": "Tax amount of the transaction.",
+        "ref": "Currency"
+      },
+      "transactionType": {
+        "description": "Indicates if the transaction is for a charge or a refund.",
+        "type": "string"
+      },
+      "transactionValue": {
+        "description": "The total amount of the transaction.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ProductAdsPaymentEventList": {
+    "description": "A list of sponsored products payment events.",
+    "properties": {},
+    "ref": "ProductAdsPaymentEvent",
+    "required": [],
+    "type": "array"
+  },
+  "Promotion": {
+    "description": "A promotion applied to an item.",
+    "properties": {
+      "PromotionAmount": {
+        "description": "The amount of promotional discount applied to the item.",
+        "ref": "Currency"
+      },
+      "PromotionId": {
+        "description": "The seller-specified identifier for the promotion.",
+        "type": "string"
+      },
+      "PromotionType": {
+        "description": "The type of promotion.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PromotionList": {
+    "description": "A list of promotions.",
+    "properties": {},
+    "ref": "Promotion",
+    "required": [],
+    "type": "array"
+  },
+  "RemovalShipmentAdjustmentEvent": {
+    "description": "A financial adjustment event for FBA liquidated inventory.",
+    "properties": {
+      "AdjustmentEventId": {
+        "description": "The unique identifier for the adjustment event.",
+        "type": "string"
+      },
+      "MerchantOrderId": {
+        "description": "The merchant removal orderId.",
+        "type": "string"
+      },
+      "OrderId": {
+        "description": "The orderId for shipping inventory.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date when the financial event was posted.",
+        "ref": "Date"
+      },
+      "RemovalShipmentItemAdjustmentList": {
+        "description": "A comma-delimited list of `RemovalShipmentItemAdjustment` details for FBA inventory.",
+        "ref": "RemovalShipmentItemAdjustment",
+        "type": "array"
+      },
+      "TransactionType": {
+        "description": "The type of removal order.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RemovalShipmentAdjustmentEventList": {
+    "description": "A comma-delimited list of `RemovalShipmentAdjustment` details for FBA inventory.",
+    "properties": {},
+    "ref": "RemovalShipmentAdjustmentEvent",
+    "required": [],
+    "type": "array"
+  },
+  "RemovalShipmentEvent": {
+    "description": "A removal shipment event for a removal order.",
+    "properties": {
+      "MerchantOrderId": {
+        "description": "The merchant removal `orderId`.",
+        "type": "string"
+      },
+      "OrderId": {
+        "description": "The identifier for the removal shipment order.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "RemovalShipmentItemList": {
+        "description": "A list of removal shipment items.",
+        "ref": "RemovalShipmentItemList"
+      },
+      "StoreName": {
+        "description": "The name of the store where the event occurred.",
+        "type": "string"
+      },
+      "TransactionType": {
+        "description": "The type of removal order.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RemovalShipmentEventList": {
+    "description": "A list of removal shipment event information.",
+    "properties": {},
+    "ref": "RemovalShipmentEvent",
+    "required": [],
+    "type": "array"
+  },
+  "RemovalShipmentItem": {
+    "description": "Item-level information for a removal shipment.",
+    "properties": {
+      "FeeAmount": {
+        "description": "The fee that Amazon charged to the seller for the removal of the item.",
+        "ref": "Currency"
+      },
+      "FulfillmentNetworkSKU": {
+        "description": "The Amazon fulfillment network SKU for the item.",
+        "type": "string"
+      },
+      "Quantity": {
+        "description": "The quantity of the item.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "RemovalShipmentItemId": {
+        "description": "An identifier for an item in a removal shipment.",
+        "type": "string"
+      },
+      "Revenue": {
+        "description": "The total amount paid to the seller for the removed item.",
+        "ref": "Currency"
+      },
+      "TaxAmount": {
+        "description": "Tax collected on the revenue.",
+        "ref": "Currency"
+      },
+      "TaxCollectionModel": {
+        "description": "The tax collection model that is applied to the item.",
+        "type": "string"
+      },
+      "TaxWithheld": {
+        "description": "The tax withheld and remitted to the taxing authority by Amazon on behalf of the seller.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RemovalShipmentItemAdjustment": {
+    "description": "Item-level information for a removal shipment item adjustment.",
+    "properties": {
+      "AdjustedQuantity": {
+        "description": "Adjusted quantity of `RemovalShipmentItemAdjustment` items.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "FulfillmentNetworkSKU": {
+        "description": "The Amazon fulfillment network SKU for the item.",
+        "type": "string"
+      },
+      "RemovalShipmentItemId": {
+        "description": "An identifier for an item in a removal shipment.",
+        "type": "string"
+      },
+      "RevenueAdjustment": {
+        "description": "The total amount adjusted for disputed items.",
+        "ref": "Currency"
+      },
+      "TaxAmountAdjustment": {
+        "description": "Adjustment on the tax collected amount on the adjusted revenue.",
+        "ref": "Currency"
+      },
+      "TaxCollectionModel": {
+        "description": "The tax collection model that is applied to the item.",
+        "type": "string"
+      },
+      "TaxWithheldAdjustment": {
+        "description": "Adjustment of the tax that is withheld and remitted to the taxing authority by Amazon on behalf of the seller.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RemovalShipmentItemList": {
+    "description": "A list of `RemovalShipmentItem`.",
+    "properties": {},
+    "ref": "RemovalShipmentItem",
+    "required": [],
+    "type": "array"
+  },
+  "RentalTransactionEvent": {
+    "description": "An event related to a rental transaction.",
+    "properties": {
+      "AmazonOrderId": {
+        "description": "An Amazon-defined identifier for an order.",
+        "type": "string"
+      },
+      "ExtensionLength": {
+        "description": "The number of days that the buyer extended an already rented item.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "MarketplaceName": {
+        "description": "The name of the marketplace.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "RentalChargeList": {
+        "description": "A list of charges associated with the rental event.",
+        "ref": "ChargeComponentList"
+      },
+      "RentalEventType": {
+        "description": "The type of rental event.",
+        "type": "string"
+      },
+      "RentalFeeList": {
+        "description": "A list of fees associated with the rental event.",
+        "ref": "FeeComponentList"
+      },
+      "RentalInitialValue": {
+        "description": "The amount of money that the customer originally paid to rent the item.",
+        "ref": "Currency"
+      },
+      "RentalReimbursement": {
+        "description": "The amount of money that Amazon sends the seller to compensate for a lost item or a failed charge.",
+        "ref": "Currency"
+      },
+      "RentalTaxWithheldList": {
+        "description": "A list of taxes withheld information for a rental item.",
+        "ref": "TaxWithheldComponentList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RentalTransactionEventList": {
+    "description": "A list of rental transaction event information.",
+    "properties": {},
+    "ref": "RentalTransactionEvent",
+    "required": [],
+    "type": "array"
+  },
+  "RetrochargeEvent": {
+    "description": "A retrocharge or retrocharge reversal.",
+    "properties": {
+      "AmazonOrderId": {
+        "description": "An Amazon-defined identifier for an order.",
+        "type": "string"
+      },
+      "BaseTax": {
+        "description": "The base tax associated with the retrocharge event.",
+        "ref": "Currency"
+      },
+      "MarketplaceName": {
+        "description": "The name of the marketplace where the retrocharge event occurred.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "RetrochargeEventType": {
+        "description": "The type of event.",
+        "type": "string"
+      },
+      "RetrochargeTaxWithheldList": {
+        "description": "A list of information about taxes withheld.",
+        "ref": "TaxWithheldComponentList"
+      },
+      "ShippingTax": {
+        "description": "The shipping tax associated with the retrocharge event.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RetrochargeEventList": {
+    "description": "A list of information about `Retrocharge` or `RetrochargeReversal` events.",
+    "properties": {},
+    "ref": "RetrochargeEvent",
+    "required": [],
+    "type": "array"
+  },
+  "SAFETReimbursementEvent": {
+    "description": "A SAFE-T claim reimbursement on the seller's account.",
+    "properties": {
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "ReasonCode": {
+        "description": "Indicates why the seller was reimbursed.",
+        "type": "string"
+      },
+      "ReimbursedAmount": {
+        "description": "The amount of the reimbursement.",
+        "ref": "Currency"
+      },
+      "SAFETClaimId": {
+        "description": "A SAFE-T claim identifier.",
+        "type": "string"
+      },
+      "SAFETReimbursementItemList": {
+        "ref": "SAFETReimbursementItemList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SAFETReimbursementEventList": {
+    "description": "A list of `SAFETReimbursementEvent`.",
+    "properties": {},
+    "ref": "SAFETReimbursementEvent",
+    "required": [],
+    "type": "array"
+  },
+  "SAFETReimbursementItem": {
+    "description": "An item from a SAFE-T claim reimbursement.",
+    "properties": {
+      "itemChargeList": {
+        "description": "A list of charges associated with the item.",
+        "ref": "ChargeComponentList"
+      },
+      "productDescription": {
+        "description": "The description of the item as shown on the product detail page on the retail website.",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "The number of units of the item being reimbursed.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SAFETReimbursementItemList": {
+    "description": "A list of `SAFETReimbursementItem`.",
+    "properties": {},
+    "ref": "SAFETReimbursementItem",
+    "required": [],
+    "type": "array"
+  },
+  "SellerDealPaymentEvent": {
+    "description": "An event linked to the payment of a fee related to the specified deal.",
+    "properties": {
+      "dealDescription": {
+        "description": "The internal description of the deal.",
+        "type": "string"
+      },
+      "dealId": {
+        "description": "The unique identifier of the deal.",
+        "type": "string"
+      },
+      "eventType": {
+        "description": "The type of event: `SellerDealComplete`.",
+        "type": "string"
+      },
+      "feeAmount": {
+        "description": "The monetary amount of the fee.",
+        "ref": "Currency"
+      },
+      "feeType": {
+        "description": "The type of fee: `RunLightningDealFee`.",
+        "type": "string"
+      },
+      "postedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "taxAmount": {
+        "description": "The monetary amount of the tax applied.",
+        "ref": "Currency"
+      },
+      "totalAmount": {
+        "description": "The total monetary amount paid.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SellerDealPaymentEventList": {
+    "description": "A list of payment events for deal-related fees.",
+    "properties": {},
+    "ref": "SellerDealPaymentEvent",
+    "required": [],
+    "type": "array"
+  },
+  "SellerReviewEnrollmentPaymentEvent": {
+    "description": "A fee payment event for the Early Reviewer Program.",
+    "properties": {
+      "ChargeComponent": {
+        "ref": "ChargeComponent"
+      },
+      "EnrollmentId": {
+        "description": "An enrollment identifier.",
+        "type": "string"
+      },
+      "FeeComponent": {
+        "ref": "FeeComponent"
+      },
+      "ParentASIN": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item that was enrolled in the Early Reviewer Program.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "TotalAmount": {
+        "description": "The `FeeComponent` value plus the `ChargeComponent` value.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SellerReviewEnrollmentPaymentEventList": {
+    "description": "A list of information about fee events for the Early Reviewer Program.",
+    "properties": {},
+    "ref": "SellerReviewEnrollmentPaymentEvent",
+    "required": [],
+    "type": "array"
+  },
+  "ServiceFeeEvent": {
+    "description": "A service fee on the seller's account.",
+    "properties": {
+      "ASIN": {
+        "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+        "type": "string"
+      },
+      "AmazonOrderId": {
+        "description": "An Amazon-defined identifier for an order.",
+        "type": "string"
+      },
+      "FeeDescription": {
+        "description": "A short description of the service fee event.",
+        "type": "string"
+      },
+      "FeeList": {
+        "description": "A list of fee components associated with the service fee.",
+        "ref": "FeeComponentList"
+      },
+      "FeeReason": {
+        "description": "A short description of the service fee reason.",
+        "type": "string"
+      },
+      "FnSKU": {
+        "description": "A unique identifier assigned by Amazon to products stored in and fulfilled from an Amazon fulfillment center.",
+        "type": "string"
+      },
+      "SellerSKU": {
+        "description": "The seller SKU of the item.",
+        "type": "string"
+      },
+      "StoreName": {
+        "description": "The name of the store where the event occurred.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ServiceFeeEventList": {
+    "description": "A list of information about service fee events.",
+    "properties": {},
+    "ref": "ServiceFeeEvent",
+    "required": [],
+    "type": "array"
+  },
+  "ShipmentEvent": {
+    "description": "A shipment, refund, guarantee claim, or chargeback.",
+    "properties": {
+      "AmazonOrderId": {
+        "description": "An Amazon-defined identifier for an order.",
+        "type": "string"
+      },
+      "DirectPaymentList": {
+        "description": "A list of transactions where buyers pay Amazon through one of the credit cards offered by Amazon or where buyers pay a seller directly through COD.",
+        "ref": "DirectPaymentList"
+      },
+      "MarketplaceName": {
+        "description": "The name of the marketplace where the event occurred.",
+        "type": "string"
+      },
+      "OrderChargeAdjustmentList": {
+        "description": "A list of order-level charge adjustments.",
+        "ref": "ChargeComponentList"
+      },
+      "OrderChargeList": {
+        "description": "A list of order-level charges.",
+        "ref": "ChargeComponentList"
+      },
+      "OrderFeeAdjustmentList": {
+        "description": "A list of order-level fee adjustments.",
+        "ref": "FeeComponentList"
+      },
+      "OrderFeeList": {
+        "description": "A list of order-level fees.",
+        "ref": "FeeComponentList"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "SellerOrderId": {
+        "description": "A seller-defined identifier for an order.",
+        "type": "string"
+      },
+      "ShipmentFeeAdjustmentList": {
+        "description": "A list of shipment-level fee adjustments.",
+        "ref": "FeeComponentList"
+      },
+      "ShipmentFeeList": {
+        "description": "A list of shipment-level fees.",
+        "ref": "FeeComponentList"
+      },
+      "ShipmentItemAdjustmentList": {
+        "description": "A list of shipment item adjustments.",
+        "ref": "ShipmentItemList"
+      },
+      "ShipmentItemList": {
+        "ref": "ShipmentItemList"
+      },
+      "StoreName": {
+        "description": "The name of the store where the event occurred.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ShipmentEventList": {
+    "description": "A list of shipment event information.",
+    "properties": {},
+    "ref": "ShipmentEvent",
+    "required": [],
+    "type": "array"
+  },
+  "ShipmentItem": {
+    "description": "An item of a shipment, refund, guarantee claim, or chargeback.",
+    "properties": {
+      "CostOfPointsGranted": {
+        "description": "The cost of Amazon Points granted for a shipment item.",
+        "ref": "Currency"
+      },
+      "CostOfPointsReturned": {
+        "description": "The cost of Amazon Points returned for a shipment item.",
+        "ref": "Currency"
+      },
+      "ItemChargeAdjustmentList": {
+        "description": "A list of charge adjustments associated with the shipment item.",
+        "ref": "ChargeComponentList"
+      },
+      "ItemChargeList": {
+        "description": "A list of charges associated with the shipment item.",
+        "ref": "ChargeComponentList"
+      },
+      "ItemFeeAdjustmentList": {
+        "description": "A list of fee adjustments associated with the shipment item.",
+        "ref": "FeeComponentList"
+      },
+      "ItemFeeList": {
+        "description": "A list of fees associated with the shipment item.",
+        "ref": "FeeComponentList"
+      },
+      "ItemTaxWithheldList": {
+        "description": "A list of taxes withheld information for a shipment item.",
+        "ref": "TaxWithheldComponentList"
+      },
+      "OrderAdjustmentItemId": {
+        "description": "An Amazon-defined order adjustment identifier defined for refunds, guarantee claims, and chargeback events.",
+        "type": "string"
+      },
+      "OrderItemId": {
+        "description": "An Amazon-defined order item identifier.",
+        "type": "string"
+      },
+      "PromotionAdjustmentList": {
+        "description": "A list of promotion adjustments associated with the shipment item.",
+        "ref": "PromotionList"
+      },
+      "PromotionList": {
+        "ref": "PromotionList"
+      },
+      "QuantityShipped": {
+        "description": "The number of items shipped.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "SellerSKU": {
+        "description": "The seller SKU of the item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ShipmentItemList": {
+    "description": "A list of shipment items.",
+    "properties": {},
+    "ref": "ShipmentItem",
+    "required": [],
+    "type": "array"
+  },
+  "ShipmentSettleEventList": {
+    "description": "A list of `ShipmentEvent` items.",
+    "properties": {},
+    "ref": "ShipmentEvent",
+    "required": [],
+    "type": "array"
+  },
+  "SolutionProviderCreditEvent": {
+    "description": "A credit given to a solution provider.",
+    "properties": {
+      "MarketplaceCountryCode": {
+        "description": "The two-letter country code of the country associated with the marketplace where the order was placed.",
+        "type": "string"
+      },
+      "MarketplaceId": {
+        "description": "The identifier of the marketplace where the order was placed.",
+        "type": "string"
+      },
+      "ProviderId": {
+        "description": "The Amazon-defined identifier of the solution provider.",
+        "type": "string"
+      },
+      "ProviderStoreName": {
+        "description": "The store name where the payment event occurred.",
+        "type": "string"
+      },
+      "ProviderTransactionType": {
+        "description": "The transaction type.",
+        "type": "string"
+      },
+      "SellerId": {
+        "description": "The Amazon-defined identifier of the seller.",
+        "type": "string"
+      },
+      "SellerOrderId": {
+        "description": "A seller-defined identifier for an order.",
+        "type": "string"
+      },
+      "SellerStoreName": {
+        "description": "The store name where the payment event occurred.",
+        "type": "string"
+      },
+      "TransactionAmount": {
+        "description": "The amount of the credit.",
+        "ref": "Currency"
+      },
+      "TransactionCreationDate": {
+        "description": "The date and time that the credit transaction was created, in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.",
+        "ref": "Date"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SolutionProviderCreditEventList": {
+    "description": "A list of `SolutionProviderCreditEvent`.",
+    "properties": {},
+    "ref": "SolutionProviderCreditEvent",
+    "required": [],
+    "type": "array"
+  },
+  "TDSReimbursementEvent": {
+    "description": "An event related to a Tax-Deducted-at-Source (TDS) reimbursement.",
+    "properties": {
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "ReimbursedAmount": {
+        "description": "The amount reimbursed.",
+        "ref": "Currency"
+      },
+      "TDSOrderId": {
+        "description": "The Tax-Deducted-at-Source (TDS) identifier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TDSReimbursementEventList": {
+    "description": "A list of `TDSReimbursementEvent` items.",
+    "properties": {},
+    "ref": "TDSReimbursementEvent",
+    "required": [],
+    "type": "array"
+  },
+  "TaxWithheldComponent": {
+    "description": "Information about the taxes withheld.",
+    "properties": {
+      "TaxCollectionModel": {
+        "description": "The tax collection model applied to the item.",
+        "type": "string"
+      },
+      "TaxesWithheld": {
+        "description": "A list of charges that represent the types and amounts of taxes withheld.",
+        "ref": "ChargeComponentList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TaxWithheldComponentList": {
+    "description": "A list of information about taxes withheld.",
+    "properties": {},
+    "ref": "TaxWithheldComponent",
+    "required": [],
+    "type": "array"
+  },
+  "TaxWithholdingEvent": {
+    "description": "A tax withholding event on a seller's account.",
+    "properties": {
+      "BaseAmount": {
+        "description": "The amount which tax was withheld against.",
+        "ref": "Currency"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "TaxWithholdingPeriod": {
+        "description": "Time period for which tax is withheld.",
+        "ref": "TaxWithholdingPeriod"
+      },
+      "WithheldAmount": {
+        "description": "The amount of the tax withholding deducted from seller's account.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TaxWithholdingEventList": {
+    "description": "A list of tax withholding events.",
+    "properties": {},
+    "ref": "TaxWithholdingEvent",
+    "required": [],
+    "type": "array"
+  },
+  "TaxWithholdingPeriod": {
+    "description": "The period during which tax withholding on a seller's account is calculated.",
+    "properties": {
+      "EndDate": {
+        "description": "End of the time range.",
+        "ref": "Date"
+      },
+      "StartDate": {
+        "description": "Start of the time range.",
+        "ref": "Date"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TrialShipmentEvent": {
+    "description": "An event related to a trial shipment.",
+    "properties": {
+      "AmazonOrderId": {
+        "description": "An Amazon-defined identifier for an order.",
+        "type": "string"
+      },
+      "FeeList": {
+        "description": "A list of fees charged by Amazon for trial shipments.",
+        "ref": "FeeComponentList"
+      },
+      "FinancialEventGroupId": {
+        "description": "The identifier of the financial event group.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "SKU": {
+        "description": "The seller SKU of the item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TrialShipmentEventList": {
+    "description": "A list of information about trial shipment financial events.",
+    "properties": {},
+    "ref": "TrialShipmentEvent",
+    "required": [],
+    "type": "array"
+  },
+  "ValueAddedServiceChargeEvent": {
+    "description": "An event related to a value added service charge.",
+    "properties": {
+      "Description": {
+        "description": "A short description of the service charge event.",
+        "type": "string"
+      },
+      "PostedDate": {
+        "description": "The date and time when the financial event was posted.",
+        "ref": "Date"
+      },
+      "TransactionAmount": {
+        "description": "The amount of the service charge event.",
+        "ref": "Currency"
+      },
+      "TransactionType": {
+        "description": "The transaction type.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ValueAddedServiceChargeEventList": {
+    "description": "A list of `ValueAddedServiceCharge` events.",
+    "properties": {},
+    "ref": "ValueAddedServiceChargeEvent",
+    "required": [],
+    "type": "array"
+  }
+}

@@ -1,0 +1,810 @@
+{
+  "BrandRefinement": {
+    "description": "A brand that you can use to refine your search.",
+    "properties": {
+      "brandName": {
+        "description": "The brand name that you can use to refine your search.",
+        "type": "string"
+      },
+      "numberOfResults": {
+        "description": "The estimated number of results that would be returned if you refine your search by the specified `brandName`.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "brandName",
+      "numberOfResults"
+    ],
+    "type": "object"
+  },
+  "ClassificationRefinement": {
+    "description": "A classification that you can use to refine your search.",
+    "properties": {
+      "classificationId": {
+        "description": "The identifier of the classification that you can use to refine your search.",
+        "type": "string"
+      },
+      "displayName": {
+        "description": "Display name for the classification.",
+        "type": "string"
+      },
+      "numberOfResults": {
+        "description": "The estimated number of results that would be returned if you refine your search by the specified `classificationId`.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "classificationId",
+      "displayName",
+      "numberOfResults"
+    ],
+    "type": "object"
+  },
+  "Dimension": {
+    "description": "The value of an individual dimension for an Amazon catalog item or item package.",
+    "properties": {
+      "unit": {
+        "description": "Unit of measurement for the dimension value.",
+        "type": "string"
+      },
+      "value": {
+        "description": "Numeric value of the dimension.",
+        "type": "number"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Dimensions": {
+    "description": "Dimensions of an Amazon catalog item or item in its packaging.",
+    "properties": {
+      "height": {
+        "description": "Height of an item or item package.",
+        "ref": "Dimension"
+      },
+      "length": {
+        "description": "Length of an item or item package.",
+        "ref": "Dimension"
+      },
+      "weight": {
+        "description": "Weight of an item or item package.",
+        "ref": "Dimension"
+      },
+      "width": {
+        "description": "Width of an item or item package.",
+        "ref": "Dimension"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses returned when a request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "Item": {
+    "description": "An item in the Amazon catalog.",
+    "properties": {
+      "asin": {
+        "ref": "ItemAsin"
+      },
+      "attributes": {
+        "ref": "ItemAttributes"
+      },
+      "classifications": {
+        "ref": "ItemBrowseClassifications"
+      },
+      "dimensions": {
+        "ref": "ItemDimensions"
+      },
+      "identifiers": {
+        "ref": "ItemIdentifiers"
+      },
+      "images": {
+        "ref": "ItemImages"
+      },
+      "productTypes": {
+        "ref": "ItemProductTypes"
+      },
+      "relationships": {
+        "ref": "ItemRelationships"
+      },
+      "salesRanks": {
+        "ref": "ItemSalesRanks"
+      },
+      "summaries": {
+        "ref": "ItemSummaries"
+      },
+      "vendorDetails": {
+        "ref": "ItemVendorDetails"
+      }
+    },
+    "required": [
+      "asin"
+    ],
+    "type": "object"
+  },
+  "ItemAsin": {
+    "description": "The unique identifier of an item in the Amazon catalog.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ItemAttributes": {
+    "description": "A JSON object containing structured item attribute data that is keyed by attribute name.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "ItemBrowseClassification": {
+    "description": "Classification (browse node) for an Amazon catalog item.",
+    "properties": {
+      "classificationId": {
+        "description": "Identifier of the classification.",
+        "type": "string"
+      },
+      "displayName": {
+        "description": "Display name for the classification.",
+        "type": "string"
+      },
+      "parent": {
+        "description": "Parent classification of the current classification.",
+        "ref": "ItemBrowseClassification"
+      }
+    },
+    "required": [
+      "classificationId",
+      "displayName"
+    ],
+    "type": "object"
+  },
+  "ItemBrowseClassifications": {
+    "description": "An array of classifications (browse nodes) that is associated with the item in the Amazon catalog, grouped by `marketplaceId`.",
+    "properties": {},
+    "ref": "ItemBrowseClassificationsByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemBrowseClassificationsByMarketplace": {
+    "description": "Classifications (browse nodes) that are associated with the item in the Amazon catalog for the indicated `marketplaceId`.",
+    "properties": {
+      "classifications": {
+        "description": "Classifications (browse nodes) that are associated with the item in the Amazon catalog.",
+        "ref": "ItemBrowseClassification",
+        "type": "array"
+      },
+      "marketplaceId": {
+        "description": "Amazon marketplace identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "marketplaceId"
+    ],
+    "type": "object"
+  },
+  "ItemClassificationSalesRank": {
+    "description": "Sales rank of an Amazon catalog item.",
+    "properties": {
+      "classificationId": {
+        "description": "Identifier of the classification that is associated with the sales rank.",
+        "type": "string"
+      },
+      "link": {
+        "description": "Corresponding Amazon retail website URL for the sales category.",
+        "type": "string"
+      },
+      "rank": {
+        "description": "Sales rank.",
+        "type": "integer"
+      },
+      "title": {
+        "description": "Name of the sales rank.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "classificationId",
+      "rank",
+      "title"
+    ],
+    "type": "object"
+  },
+  "ItemContributor": {
+    "description": "Individual contributor to the creation of an item, such as an author or actor.",
+    "properties": {
+      "role": {
+        "ref": "ItemContributorRole"
+      },
+      "value": {
+        "description": "Name of the contributor, such as `Jane Austen`.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "role",
+      "value"
+    ],
+    "type": "object"
+  },
+  "ItemContributorRole": {
+    "description": "Role of an individual contributor in the creation of an item, such as author or actor.",
+    "properties": {
+      "displayName": {
+        "description": "Display name of the role in the requested locale, such as `Author` or `Actor`.",
+        "type": "string"
+      },
+      "value": {
+        "description": "Role value for the Amazon catalog item, such as `author` or `actor`.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "value"
+    ],
+    "type": "object"
+  },
+  "ItemDimensions": {
+    "description": "An array of dimensions that are associated with the item in the Amazon catalog, grouped by `marketplaceId`.",
+    "properties": {},
+    "ref": "ItemDimensionsByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemDimensionsByMarketplace": {
+    "description": "Dimensions that are associated with the item in the Amazon catalog for the indicated `marketplaceId`.",
+    "properties": {
+      "item": {
+        "description": "Dimensions of an Amazon catalog item.",
+        "ref": "Dimensions"
+      },
+      "marketplaceId": {
+        "description": "Amazon marketplace identifier.",
+        "type": "string"
+      },
+      "package": {
+        "description": "Dimensions of a package that contains an Amazon catalog item.",
+        "ref": "Dimensions"
+      }
+    },
+    "required": [
+      "marketplaceId"
+    ],
+    "type": "object"
+  },
+  "ItemDisplayGroupSalesRank": {
+    "description": "Sales rank of an Amazon catalog item, grouped by website display group.",
+    "properties": {
+      "link": {
+        "description": "Corresponding Amazon retail website URL for the sales rank.",
+        "type": "string"
+      },
+      "rank": {
+        "description": "Sales rank.",
+        "type": "integer"
+      },
+      "title": {
+        "description": "Name of the sales rank.",
+        "type": "string"
+      },
+      "websiteDisplayGroup": {
+        "description": "Name of the website display group that is associated with the sales rank",
+        "type": "string"
+      }
+    },
+    "required": [
+      "rank",
+      "title",
+      "websiteDisplayGroup"
+    ],
+    "type": "object"
+  },
+  "ItemIdentifier": {
+    "description": "The identifier that is associated with the item in the Amazon catalog, such as a UPC or EAN identifier.",
+    "properties": {
+      "identifier": {
+        "description": "Identifier of the item.",
+        "type": "string"
+      },
+      "identifierType": {
+        "description": "Type of identifier, such as UPC, EAN, or ISBN.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "identifier",
+      "identifierType"
+    ],
+    "type": "object"
+  },
+  "ItemIdentifiers": {
+    "description": "Identifiers associated with the item in the Amazon catalog, such as UPC and EAN identifiers.",
+    "properties": {},
+    "ref": "ItemIdentifiersByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemIdentifiersByMarketplace": {
+    "description": "Identifiers that are associated with the item in the Amazon catalog, grouped by `marketplaceId`.",
+    "properties": {
+      "identifiers": {
+        "description": "Identifiers associated with the item in the Amazon catalog for the indicated `marketplaceId`.",
+        "ref": "ItemIdentifier",
+        "type": "array"
+      },
+      "marketplaceId": {
+        "description": "Amazon marketplace identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "identifiers",
+      "marketplaceId"
+    ],
+    "type": "object"
+  },
+  "ItemImage": {
+    "description": "Image for an item in the Amazon catalog.",
+    "properties": {
+      "height": {
+        "description": "Height of the image in pixels.",
+        "type": "integer"
+      },
+      "link": {
+        "description": "URL for the image.",
+        "type": "string"
+      },
+      "variant": {
+        "description": "Variant of the image, such as `MAIN` or `PT01`.",
+        "enum": [
+          "MAIN",
+          "PT01",
+          "PT02",
+          "PT03",
+          "PT04",
+          "PT05",
+          "PT06",
+          "PT07",
+          "PT08",
+          "SWCH"
+        ],
+        "type": "string"
+      },
+      "width": {
+        "description": "Width of the image in pixels.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "height",
+      "link",
+      "variant",
+      "width"
+    ],
+    "type": "object"
+  },
+  "ItemImages": {
+    "description": "The images for an item in the Amazon catalog.",
+    "properties": {},
+    "ref": "ItemImagesByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemImagesByMarketplace": {
+    "description": "Images for an item in the Amazon catalog, grouped by `marketplaceId`.",
+    "properties": {
+      "images": {
+        "description": "Images for an item in the Amazon catalog, grouped by `marketplaceId`.",
+        "ref": "ItemImage",
+        "type": "array"
+      },
+      "marketplaceId": {
+        "description": "Amazon marketplace identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "images",
+      "marketplaceId"
+    ],
+    "type": "object"
+  },
+  "ItemProductTypeByMarketplace": {
+    "description": "Product type that is associated with the Amazon catalog item, grouped by `marketplaceId`.",
+    "properties": {
+      "marketplaceId": {
+        "description": "Amazon marketplace identifier.",
+        "type": "string"
+      },
+      "productType": {
+        "description": "Name of the product type that is associated with the Amazon catalog item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemProductTypes": {
+    "description": "Product types that are associated with the Amazon catalog item.",
+    "properties": {},
+    "ref": "ItemProductTypeByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemRelationship": {
+    "description": "Relationship details for an Amazon catalog item.",
+    "properties": {
+      "childAsins": {
+        "description": "ASINs of the related items that are children of this item.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "parentAsins": {
+        "description": "ASINs of the related items that are parents of this item.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "type": {
+        "description": "Type of relationship.",
+        "enum": [
+          "PACKAGE_HIERARCHY",
+          "VARIATION"
+        ],
+        "type": "string"
+      },
+      "variationTheme": {
+        "description": "For `VARIATION` relationships, the variation theme indicates the combination of Amazon catalog item attributes that define the variation family.",
+        "ref": "ItemVariationTheme"
+      }
+    },
+    "required": [
+      "type"
+    ],
+    "type": "object"
+  },
+  "ItemRelationships": {
+    "description": "Relationships grouped by `marketplaceId` for an Amazon catalog item (for example, variations).",
+    "properties": {},
+    "ref": "ItemRelationshipsByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemRelationshipsByMarketplace": {
+    "description": "Relationship details for the Amazon catalog item for the specified Amazon `marketplaceId`.",
+    "properties": {
+      "marketplaceId": {
+        "description": "Amazon marketplace identifier.",
+        "type": "string"
+      },
+      "relationships": {
+        "description": "Relationships for the item.",
+        "ref": "ItemRelationship",
+        "type": "array"
+      }
+    },
+    "required": [
+      "marketplaceId",
+      "relationships"
+    ],
+    "type": "object"
+  },
+  "ItemSalesRanks": {
+    "description": "Sales ranks of an Amazon catalog item.",
+    "properties": {},
+    "ref": "ItemSalesRanksByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemSalesRanksByMarketplace": {
+    "description": "Sales ranks of an Amazon catalog item, grouped by `marketplaceId`.",
+    "properties": {
+      "classificationRanks": {
+        "description": "Sales ranks of an Amazon catalog item for a `marketplaceId`, grouped by classification.",
+        "ref": "ItemClassificationSalesRank",
+        "type": "array"
+      },
+      "displayGroupRanks": {
+        "description": "Sales ranks of an Amazon catalog item for a `marketplaceId`, grouped by website display group.",
+        "ref": "ItemDisplayGroupSalesRank",
+        "type": "array"
+      },
+      "marketplaceId": {
+        "description": "Amazon marketplace identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "marketplaceId"
+    ],
+    "type": "object"
+  },
+  "ItemSearchResults": {
+    "description": "Items in the Amazon catalog and search-related metadata.",
+    "properties": {
+      "items": {
+        "description": "A list of items from the Amazon catalog.",
+        "ref": "Item",
+        "type": "array"
+      },
+      "numberOfResults": {
+        "description": "For searches that are based on `identifiers`, `numberOfResults` is the total number of Amazon catalog items found.",
+        "type": "integer"
+      },
+      "pagination": {
+        "description": "The `nextToken` and `previousToken` values that are required to retrieve paginated results.",
+        "ref": "Pagination"
+      },
+      "refinements": {
+        "description": "Search refinements for searches that are based on `keywords`.",
+        "ref": "Refinements"
+      }
+    },
+    "required": [
+      "items",
+      "numberOfResults"
+    ],
+    "type": "object"
+  },
+  "ItemSummaries": {
+    "description": "Summaries of Amazon catalog items.",
+    "properties": {},
+    "ref": "ItemSummaryByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemSummaryByMarketplace": {
+    "description": "Information about an Amazon catalog item for the indicated `marketplaceId`.",
+    "properties": {
+      "adultProduct": {
+        "description": "When `true`, the Amazon catalog item is intended for an adult audience or is sexual in nature.",
+        "type": "boolean"
+      },
+      "autographed": {
+        "description": "When `true`, the Amazon catalog item is autographed.",
+        "type": "boolean"
+      },
+      "brand": {
+        "description": "Name of the brand that is associated with the Amazon catalog item.",
+        "type": "string"
+      },
+      "browseClassification": {
+        "description": "Classification (browse node) that is associated with the Amazon catalog item.",
+        "ref": "ItemBrowseClassification"
+      },
+      "color": {
+        "description": "The color that is associated with the Amazon catalog item.",
+        "type": "string"
+      },
+      "contributors": {
+        "description": "Individual contributors to the creation of the item, such as the authors or actors.",
+        "ref": "ItemContributor",
+        "type": "array"
+      },
+      "itemClassification": {
+        "description": "Classification type that is associated with the Amazon catalog item.",
+        "enum": [
+          "BASE_PRODUCT",
+          "OTHER",
+          "PRODUCT_BUNDLE",
+          "VARIATION_PARENT"
+        ],
+        "type": "string"
+      },
+      "itemName": {
+        "description": "The name that is associated with the Amazon catalog item.",
+        "type": "string"
+      },
+      "manufacturer": {
+        "description": "The name of the manufacturer that is associated with the Amazon catalog item.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "Amazon marketplace identifier.",
+        "type": "string"
+      },
+      "memorabilia": {
+        "description": "When true, the item is classified as memorabilia.",
+        "type": "boolean"
+      },
+      "modelNumber": {
+        "description": "The model number that is associated with the Amazon catalog item.",
+        "type": "string"
+      },
+      "packageQuantity": {
+        "description": "The quantity of the Amazon catalog item within one package.",
+        "type": "integer"
+      },
+      "partNumber": {
+        "description": "The part number that is associated with the Amazon catalog item.",
+        "type": "string"
+      },
+      "releaseDate": {
+        "description": "The earliest date on which the Amazon catalog item can be shipped to customers.",
+        "format": "date",
+        "type": "string"
+      },
+      "size": {
+        "description": "The name of the size of the Amazon catalog item.",
+        "type": "string"
+      },
+      "style": {
+        "description": "The name of the style that is associated with the Amazon catalog item.",
+        "type": "string"
+      },
+      "tradeInEligible": {
+        "description": "When true, the Amazon catalog item is eligible for trade-in.",
+        "type": "boolean"
+      },
+      "websiteDisplayGroup": {
+        "description": "The identifier of the website display group that is associated with the Amazon catalog item.",
+        "type": "string"
+      },
+      "websiteDisplayGroupName": {
+        "description": "The display name of the website display group that is associated with the Amazon catalog item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "marketplaceId"
+    ],
+    "type": "object"
+  },
+  "ItemVariationTheme": {
+    "description": "The variation theme is a list of Amazon catalog item attributes that define the variation family.",
+    "properties": {
+      "attributes": {
+        "description": "Names of the Amazon catalog item attributes that are associated with the variation theme.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "theme": {
+        "description": "Variation theme that indicates the combination of Amazon catalog item attributes that define the variation family.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemVendorDetails": {
+    "description": "The vendor details that are associated with an Amazon catalog item.",
+    "properties": {},
+    "ref": "ItemVendorDetailsByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemVendorDetailsByMarketplace": {
+    "description": "The vendor details that are associated with an Amazon catalog item for the specified `marketplaceId`.",
+    "properties": {
+      "brandCode": {
+        "description": "The brand code that is associated with an Amazon catalog item.",
+        "type": "string"
+      },
+      "manufacturerCode": {
+        "description": "The manufacturer code that is associated with an Amazon catalog item.",
+        "type": "string"
+      },
+      "manufacturerCodeParent": {
+        "description": "The parent vendor code of the manufacturer code.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "Amazon marketplace identifier.",
+        "type": "string"
+      },
+      "productCategory": {
+        "description": "The product category that is associated with an Amazon catalog item.",
+        "ref": "ItemVendorDetailsCategory"
+      },
+      "productGroup": {
+        "description": "The product group that is associated with an Amazon catalog item.",
+        "type": "string"
+      },
+      "productSubcategory": {
+        "description": "The product subcategory that is associated with an Amazon catalog item.",
+        "ref": "ItemVendorDetailsCategory"
+      },
+      "replenishmentCategory": {
+        "description": "The replenishment category that is associated with an Amazon catalog item.",
+        "enum": [
+          "ALLOCATED",
+          "BASIC_REPLENISHMENT",
+          "IN_SEASON",
+          "LIMITED_REPLENISHMENT",
+          "MANUFACTURER_OUT_OF_STOCK",
+          "NEW_PRODUCT",
+          "NON_REPLENISHABLE",
+          "NON_STOCKUPABLE",
+          "OBSOLETE",
+          "PLANNED_REPLENISHMENT"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "marketplaceId"
+    ],
+    "type": "object"
+  },
+  "ItemVendorDetailsCategory": {
+    "description": "The product category or subcategory that is associated with an Amazon catalog item.",
+    "properties": {
+      "displayName": {
+        "description": "The display name of the product category or subcategory.",
+        "type": "string"
+      },
+      "value": {
+        "description": "The code that identifies the product category or subcategory.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "Pagination occurs when a request produces a response that exceeds the `pageSize`.",
+    "properties": {
+      "nextToken": {
+        "description": "A token that you can use to retrieve the next page.",
+        "type": "string"
+      },
+      "previousToken": {
+        "description": "A token that you can use to retrieve the previous page.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Refinements": {
+    "description": "Optional fields that you can use to refine your search results.",
+    "properties": {
+      "brands": {
+        "description": "A list of brands you can use to refine your search.",
+        "ref": "BrandRefinement",
+        "type": "array"
+      },
+      "classifications": {
+        "description": "A list of classifications you can use to refine your search.",
+        "ref": "ClassificationRefinement",
+        "type": "array"
+      }
+    },
+    "required": [
+      "brands",
+      "classifications"
+    ],
+    "type": "object"
+  }
+}

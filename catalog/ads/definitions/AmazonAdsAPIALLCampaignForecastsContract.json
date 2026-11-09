@@ -1,0 +1,4240 @@
+{
+ "api": "AmazonAdsAPIALLCampaignForecastsContract",
+ "file": "specs/dest/AmazonAdsAPIALLCampaignForecastsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DSPAcrossGroupOperator": {
+   "description": "**AcrossGroupOperator Enum:** | AcrossGroupOperator | Description | | --- | --- | | `ANY` | Matches if at least one condition is true. AcrossGroupOperator is used among audiences between audience groups. This is a read-…",
+   "enum": [
+    "ALL",
+    "ANY"
+   ],
+   "type": "string"
+  },
+  "DSPAdGroupBid": {
+   "properties": {
+    "baseBid": {
+     "description": "The lower bound bid used for the ads in the ad group. This field is optional for ad groups that use automated bid optimization; when omitted, the system manages bidding on your behalf. It remains required when automated…",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "$ref": "DSPCurrencyCode"
+    },
+    "maxAverageBid": {
+     "description": "The max average bid that will be targeted on the ad group across all of the bids (a single bid could be lower or higher that this number).",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currencyCode"
+   ],
+   "type": "object"
+  },
+  "DSPAdGroupBudgetSettings": {
+   "properties": {
+    "budgetAllocation": {
+     "$ref": "DSPBudgetAllocation"
+    },
+    "dailyMinSpendValue": {
+     "description": "Denotes the daily minimum spend on the ad group in local currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DSPAdInitiationTarget": {
+   "description": "Target based on how the video ad will be started.",
+   "properties": {
+    "videoInitiationType": {
+     "$ref": "DSPVideoInitiationType"
+    }
+   },
+   "required": [
+    "videoInitiationType"
+   ],
+   "type": "object"
+  },
+  "DSPAdPlayerSize": {
+   "description": "**AdPlayerSize Enum:** | AdPlayerSize | Description | | --- | --- | | `SMALL` | Small video player. | | `MEDIUM` | Medium video player. | | `LARGE` | Large video player. | | `UNKNOWN` | Unknown player size. |",
+   "enum": [
+    "LARGE",
+    "MEDIUM",
+    "SMALL",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPAdPlayerSizeTarget": {
+   "description": "Target based on the size of the ad player.",
+   "properties": {
+    "adPlayerSize": {
+     "$ref": "DSPAdPlayerSize"
+    }
+   },
+   "required": [
+    "adPlayerSize"
+   ],
+   "type": "object"
+  },
+  "DSPAdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "DSPAdvertiserDomainList": {
+   "description": "Targets domains based on list inherited from the advertiser.",
+   "properties": {
+    "inheritFromAdvertiser": {
+     "description": "Set to TRUE to inherit domain list from advertiser.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "inheritFromAdvertiser"
+   ],
+   "type": "object"
+  },
+  "DSPAmazonViewability": {
+   "properties": {
+    "includeUnmeasurableImpressions": {
+     "description": "Must be false if viewabilityTier is set to ALL_TIERS. You can set to true to include impressions that can not be measured when a viewabilityTier other than ALL_TIERS is selected. We recommend setting to false if high vi…",
+     "type": "boolean"
+    },
+    "viewabilityTier": {
+     "$ref": "DSPViewabilityTier"
+    }
+   },
+   "required": [
+    "includeUnmeasurableImpressions",
+    "viewabilityTier"
+   ],
+   "type": "object"
+  },
+  "DSPAppTarget": {
+   "description": "Target based on user application.",
+   "properties": {
+    "appId": {
+     "description": "The app identifier being targeted.",
+     "type": "string"
+    },
+    "appType": {
+     "$ref": "DSPAppType"
+    }
+   },
+   "required": [
+    "appId",
+    "appType"
+   ],
+   "type": "object"
+  },
+  "DSPAppType": {
+   "description": "**AppType Enum:** | AppType | Description | | --- | --- | | `MOBILE` | Mobile application. | | `STREAMING_TV` | Streaming TV application. |",
+   "enum": [
+    "MOBILE",
+    "STREAMING_TV"
+   ],
+   "type": "string"
+  },
+  "DSPAudienceTarget": {
+   "description": "Target based on a specified audience ID.",
+   "properties": {
+    "acrossGroupOperator": {
+     "$ref": "DSPAcrossGroupOperator"
+    },
+    "audienceId": {
+     "$ref": "DSPMarketplaceStringValue"
+    },
+    "groupId": {
+     "description": "The string identifying a group of audiences. Only numbers formatted as strings are accepted (e.g. '1'). To add audiences to a new group, choose any string not currently being used on this ad group. To add audiences to a…",
+     "type": "string"
+    },
+    "inGroupOperator": {
+     "$ref": "DSPInGroupOperator"
+    }
+   },
+   "required": [
+    "audienceId"
+   ],
+   "type": "object"
+  },
+  "DSPAutoCreationSettings": {
+   "type": "object"
+  },
+  "DSPAutomatedTargetingTactic": {
+   "description": "**AutomatedTargetingTactic Enum:** | AutomatedTargetingTactic | Description | | --- | --- | | `REMARKETING` | Ad Group Tactic (P+) that reaches shoppers who have viewed a product detail page, searched for your product, …",
+   "enum": [
+    "AWARENESS",
+    "CUSTOMER_ACQUISITION",
+    "MAXIMIZE_PERFORMANCE",
+    "PROSPECTING",
+    "REMARKETING",
+    "RETENTION",
+    "SEARCH"
+   ],
+   "type": "string"
+  },
+  "DSPAverageCompletionAndFullyViewableRateTargetingType": {
+   "description": "The type of average completion and fully viewable rate targeting.",
+   "enum": [
+    "ALLOW_ALL",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_10",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_20",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_25",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_30",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_35",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_40"
+   ],
+   "type": "string"
+  },
+  "DSPBidSettings": {
+   "properties": {
+    "bidStrategy": {
+     "$ref": "DSPBidStrategy"
+    }
+   },
+   "type": "object"
+  },
+  "DSPBidStrategy": {
+   "description": "**BidStrategy Enum:** | BidStrategy | Description | | --- | --- | | `SPEND_BUDGET_IN_FULL` | Prioritize spending full budget, while maximizing performance | | `PRIORITIZE_KPI_TARGET` | Optimizes bidding to achieve the K…",
+   "enum": [
+    "PRIORITIZE_BRAND_OUTCOME",
+    "PRIORITIZE_KPI_TARGET",
+    "SPEND_BUDGET_IN_FULL",
+    "USE_CAMPAIGN_STRATEGY"
+   ],
+   "type": "string"
+  },
+  "DSPBrandExposureViewabilityTargetingType": {
+   "description": "The type of brand exposure viewability targeting.",
+   "enum": [
+    "ALLOW_ALL",
+    "BRAND_EXPOSURE_VIEWABILITY_GTE_10_SEC_AVG_DURATION",
+    "BRAND_EXPOSURE_VIEWABILITY_GTE_15_SEC_AVG_DURATION",
+    "BRAND_EXPOSURE_VIEWABILITY_GTE_5_SEC_AVG_DURATION"
+   ],
+   "type": "string"
+  },
+  "DSPBrandSafetyCategory": {
+   "description": "**BrandSafetyCategory Enum:** | BrandSafetyCategory | Description | | --- | --- | | `ACCIDENTS_DISASTERS_AND_TRAGEDIES` | Content related to sensitive tragedies, man-made or natural disasters and calamities, including c…",
+   "enum": [
+    "ACCIDENTS_DISASTERS_AND_TRAGEDIES",
+    "ALCOHOL_AND_RELATED_PRODUCTS",
+    "BLOOD_GORE_VIOLENCE",
+    "CRIME",
+    "DRUG_REFERENCES_OR_USE",
+    "GAMBLING",
+    "HIGHLY_DEBATED_SOCIAL_ISSUES",
+    "POLITICS",
+    "PROFANITY",
+    "RELIGIOUS_CONTENT",
+    "SEXUAL_REFERENCES_AND_SUGGESTIVE",
+    "SHOCK_AND_HORROR",
+    "TOBACCO_AND_RELATED_PRODUCTS",
+    "UNRATED_MEDIA_CONTENT",
+    "WEAPONS"
+   ],
+   "type": "string"
+  },
+  "DSPBrandSafetyCategoryTarget": {
+   "description": "Target based on, if any, the classifications of unsuitable contexts that may pose a risk to a brand's reputation of content being viewed.",
+   "properties": {
+    "brandSafetyCategory": {
+     "$ref": "DSPBrandSafetyCategory"
+    }
+   },
+   "required": [
+    "brandSafetyCategory"
+   ],
+   "type": "object"
+  },
+  "DSPBrandSafetyTier": {
+   "description": "**BrandSafetyTier Enum:** | BrandSafetyTier | Description | | --- | --- | | `EXPANDED` | Tier that maximizes reach across all ad-eligible inventory. This tier is suitable for brands with a greater risk tolerance for adv…",
+   "enum": [
+    "EXPANDED",
+    "RESTRICTIVE",
+    "STANDARD"
+   ],
+   "type": "string"
+  },
+  "DSPBrandSafetyTierTarget": {
+   "description": "Target based on the brand suitability risk levels of content being viewed.",
+   "properties": {
+    "brandSafetyTier": {
+     "$ref": "DSPBrandSafetyTier"
+    }
+   },
+   "required": [
+    "brandSafetyTier"
+   ],
+   "type": "object"
+  },
+  "DSPBrandSuitabilityRiskLevelType": {
+   "description": "The Double Verify brand suitability risk level.",
+   "enum": [
+    "ALLOW_ALL",
+    "HIGH",
+    "HIGH_MEDIUM",
+    "HIGH_MEDIUM_LOW"
+   ],
+   "type": "string"
+  },
+  "DSPBudget": {
+   "properties": {
+    "budgetType": {
+     "$ref": "DSPBudgetType"
+    },
+    "budgetValue": {
+     "$ref": "DSPBudgetValue"
+    },
+    "recurrenceTimePeriod": {
+     "$ref": "DSPRecurrence"
+    }
+   },
+   "required": [
+    "budgetType",
+    "budgetValue",
+    "recurrenceTimePeriod"
+   ],
+   "type": "object"
+  },
+  "DSPBudgetAllocation": {
+   "description": "**BudgetAllocation Enum:** | BudgetAllocation | Description | | --- | --- | | `AUTO` | Automatically allocate budget to better performing ad groups based on the selected goal KPI. | | `MANUAL` | Manually allocate budget…",
+   "enum": [
+    "AUTO",
+    "MANUAL"
+   ],
+   "type": "string"
+  },
+  "DSPBudgetSettings": {
+   "properties": {
+    "budgetAllocation": {
+     "$ref": "DSPBudgetAllocation"
+    },
+    "flightBudgetRolloverStrategy": {
+     "$ref": "DSPRolloverStrategy"
+    }
+   },
+   "type": "object"
+  },
+  "DSPBudgetType": {
+   "enum": [
+    "MONETARY"
+   ],
+   "type": "string"
+  },
+  "DSPBudgetValue": {
+   "oneOf": [
+    {
+     "properties": {
+      "monetaryBudgetValue": {
+       "$ref": "DSPMonetaryBudgetValue"
+      }
+     },
+     "required": [
+      "monetaryBudgetValue"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCampaignFee": {
+   "properties": {
+    "feeType": {
+     "$ref": "DSPCampaignFeeType"
+    },
+    "feeValue": {
+     "description": "A service fee that is subtracted from the campaign budget as a percent of budget. This setting can’t be changed after an ad group has been added to a campaign.",
+     "format": "double",
+     "type": "number"
+    },
+    "feeValueType": {
+     "$ref": "DSPCampaignFeeValueType"
+    }
+   },
+   "required": [
+    "feeType",
+    "feeValue",
+    "feeValueType"
+   ],
+   "type": "object"
+  },
+  "DSPCampaignFeeType": {
+   "description": "**CampaignFeeType Enum:** | CampaignFeeType | Description | | --- | --- | | `AGENCY` | A service fee that is subtracted from the campaign budget as a percent of budget. |",
+   "enum": [
+    "AGENCY"
+   ],
+   "type": "string"
+  },
+  "DSPCampaignFeeValueType": {
+   "description": "**CampaignFeeValueType Enum:** | CampaignFeeValueType | Description | | --- | --- | | `PERCENTAGE_OF_BUDGET` | Subtracted from the campaign budget as a percent of budget |",
+   "enum": [
+    "PERCENTAGE_OF_BUDGET"
+   ],
+   "type": "string"
+  },
+  "DSPCampaignFlight": {
+   "properties": {
+    "budget": {
+     "$ref": "DSPFlightBudget"
+    },
+    "endDateTime": {
+     "description": "The end date of the flight.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "flightId": {
+     "description": "The ID associated with the flight.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the flight.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date of the flight.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "budget",
+    "endDateTime",
+    "startDateTime"
+   ],
+   "type": "object"
+  },
+  "DSPCampaignForecast": {
+   "properties": {
+    "availableForecastFlights": {
+     "description": "The combination of existing flight settings and proposed flight settings based on forecasting.",
+     "items": {
+      "$ref": "DSPForecastFlight"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "campaignDisplayName": {
+     "description": "The display name of the campaign used for the forecast.",
+     "type": "string"
+    },
+    "campaignForecastDescription": {
+     "$ref": "DSPCampaignForecastDescription"
+    },
+    "campaignGoalSettings": {
+     "$ref": "DSPGoalSettings"
+    },
+    "creationDateTime": {
+     "description": "The creation date of the campaign forecast.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "flightForecasts": {
+     "description": "The forecast results of multiple flights of the campaign.",
+     "items": {
+      "$ref": "DSPFlightForecast"
+     },
+     "maxItems": 150,
+     "minItems": 0,
+     "type": "array"
+    },
+    "hasExistingGuidance": {
+     "description": "Indicates whether there are existing recommendations/guidance available for the campaign from the Noble ListGuidance API.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "campaignDisplayName",
+    "campaignForecastDescription",
+    "creationDateTime"
+   ],
+   "type": "object"
+  },
+  "DSPCampaignForecastDescription": {
+   "description": "The description of which campaign and what features are enabled for a forecast.",
+   "properties": {
+    "campaignId": {
+     "description": "The unique identifier of the campaign.",
+     "type": "string"
+    },
+    "enabledFeatures": {
+     "$ref": "DSPEnabledFeaturesInCampaignForecast"
+    },
+    "flightIds": {
+     "description": "The unique identifier of the flight.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 150,
+     "minItems": 0,
+     "type": "array"
+    },
+    "replanningSettings": {
+     "$ref": "DSPReplanningSettings"
+    }
+   },
+   "required": [
+    "campaignId"
+   ],
+   "type": "object"
+  },
+  "DSPCampaignForecastMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "DSPCampaignForecastMultiStatusSuccess"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCampaignForecastMultiStatusSuccess": {
+   "properties": {
+    "campaignForecast": {
+     "$ref": "DSPCampaignForecast"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 0,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "campaignForecast",
+    "index"
+   ],
+   "type": "object"
+  },
+  "DSPCampaignOptimizations": {
+   "properties": {
+    "bidSettings": {
+     "$ref": "DSPBidSettings"
+    },
+    "budgetSettings": {
+     "$ref": "DSPBudgetSettings"
+    },
+    "goalSettings": {
+     "$ref": "DSPGoalSettings"
+    },
+    "primaryInventoryTypes": {
+     "description": "Primary inventory type of the campaign for filtering KPIs and recommending tactics.",
+     "items": {
+      "$ref": "DSPPrimaryInventoryType"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPContentCategoryTarget": {
+   "description": "Target based on the category of content being viewed.",
+   "properties": {
+    "contentCategoryId": {
+     "description": "The content category being targeted.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "contentCategoryId"
+   ],
+   "type": "object"
+  },
+  "DSPContentGenre": {
+   "description": "Content genre for targeting. Supported values depend on the ad group's inventoryType. Using a value not supported for the given inventoryType will result in an error. Supported values per inventoryType: - `ONLINE_VIDEO`…",
+   "enum": [
+    "ACTION",
+    "ADVENTURE",
+    "ALTERNATIVE_ROCK",
+    "ANIMATION",
+    "ARTS",
+    "BIOGRAPHY",
+    "BLUES",
+    "BUSINESS",
+    "CHILDRENS_MUSIC",
+    "CHRISTIAN_GOSPEL",
+    "CHRISTMAS_HOLIDAY",
+    "CLASSICAL",
+    "CLASSIC_ROCK",
+    "COLLEGE_RADIO",
+    "COMEDY",
+    "COUNTRY",
+    "CRIME",
+    "DANCE_DJ",
+    "DOCUMENTARY",
+    "DRAMA",
+    "EASY_LISTENING",
+    "EDUCATION",
+    "EUROPEAN_POP_FOLK",
+    "FAMILY",
+    "FANTASY",
+    "FICTION",
+    "FILM_NOIR",
+    "FOLK",
+    "FRENCH_VARIETY",
+    "GAME_SHOW",
+    "GENRE_NOT_AVAILABLE",
+    "GERMAN_ROCK_POP",
+    "GOVERNMENT",
+    "HARD_ROCK_METAL",
+    "HEALTH_AND_FITNESS",
+    "HISTORY",
+    "HORROR",
+    "INTERNATIONAL",
+    "JAPANESE",
+    "JAZZ",
+    "KIDS_AND_FAMILY",
+    "LATIN_MUSIC",
+    "LEISURE",
+    "MISCELLANEOUS",
+    "MUSIC",
+    "MUSICAL",
+    "MUSICALS_CABARET",
+    "MYSTERY",
+    "NEWS",
+    "NEW_AGE",
+    "OLDIES_ADULT_STANDARDS",
+    "POP",
+    "RAP_HIP_HOP",
+    "RB",
+    "REALITY_TV",
+    "REGGAE_ISLAND",
+    "RELIGION_AND_SPIRITUALITY",
+    "ROCK",
+    "ROMANCE",
+    "SCIENCE",
+    "SCIENCE_FICTION",
+    "SHORT",
+    "SOCIETY_AND_CULTURE",
+    "SOUNDTRACKS",
+    "SPORT",
+    "SUPER_HERO",
+    "TALK_SHOW",
+    "TECHNOLOGY",
+    "THRILLER",
+    "TRUE_CRIME",
+    "TV_AND_FILM",
+    "WAR",
+    "WESTERN"
+   ],
+   "type": "string"
+  },
+  "DSPContentGenreTarget": {
+   "description": "Target based on the genre of content being viewed.",
+   "properties": {
+    "contentGenre": {
+     "$ref": "DSPContentGenre"
+    }
+   },
+   "required": [
+    "contentGenre"
+   ],
+   "type": "object"
+  },
+  "DSPContentInstreamPosition": {
+   "description": "**ContentInstreamPosition Enum:** | ContentInstreamPosition | Description | | --- | --- | | `PRE_ROLL` | Ad plays before the main video content. | | `MID_ROLL` | Ad plays during the main video content. | | `POST_ROLL` |…",
+   "enum": [
+    "MID_ROLL",
+    "POST_ROLL",
+    "PRE_ROLL",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPContentInstreamPositionTarget": {
+   "description": "Targets ads in the specified content instream position",
+   "properties": {
+    "instreamPosition": {
+     "$ref": "DSPContentInstreamPosition"
+    }
+   },
+   "required": [
+    "instreamPosition"
+   ],
+   "type": "object"
+  },
+  "DSPContentOutstreamPosition": {
+   "description": "**ContentOutstreamPosition Enum:** | ContentOutstreamPosition | Description | | --- | --- | | `STANDALONE` | Ad plays as a standalone unit outside video content. | | `ACCOMPANYING_CONTENT` | Ad plays alongside editorial…",
+   "enum": [
+    "ACCOMPANYING_CONTENT",
+    "INTERSTITIAL",
+    "STANDALONE",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPContentOutstreamPositionTarget": {
+   "description": "Targets ads in the specified content outstream position",
+   "properties": {
+    "outstreamPosition": {
+     "$ref": "DSPContentOutstreamPosition"
+    }
+   },
+   "required": [
+    "outstreamPosition"
+   ],
+   "type": "object"
+  },
+  "DSPContentRating": {
+   "oneOf": [
+    {
+     "properties": {
+      "dspContentRating": {
+       "$ref": "DSPDspContentRating"
+      }
+     },
+     "required": [
+      "dspContentRating"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "twitchContentRating": {
+       "$ref": "DSPTwitchContentRating"
+      }
+     },
+     "required": [
+      "twitchContentRating"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPContentRatingTarget": {
+   "description": "Target based on the rating of content being viewed.",
+   "properties": {
+    "contentRatingType": {
+     "$ref": "DSPContentRatingTypes"
+    },
+    "contentRatingTypeDetails": {
+     "$ref": "DSPContentRating"
+    }
+   },
+   "required": [
+    "contentRatingType",
+    "contentRatingTypeDetails"
+   ],
+   "type": "object"
+  },
+  "DSPContentRatingTypes": {
+   "description": "**ContentRatingTypes Enum:** | ContentRatingTypes | Description | | --- | --- | | `DSP_CONTENT_RATING` | Content rating based on DSP content classification. | | `TWITCH_CONTENT_RATING` | Content rating based on Twitch c…",
+   "enum": [
+    "DSP_CONTENT_RATING",
+    "TWITCH_CONTENT_RATING"
+   ],
+   "type": "string"
+  },
+  "DSPCountryCode": {
+   "enum": [
+    "AE",
+    "AT",
+    "AU",
+    "BE",
+    "BH",
+    "BR",
+    "CA",
+    "CH",
+    "DE",
+    "DK",
+    "EG",
+    "ES",
+    "FI",
+    "FR",
+    "GB",
+    "IE",
+    "IL",
+    "IN",
+    "IT",
+    "JO",
+    "JP",
+    "KW",
+    "LU",
+    "MA",
+    "MX",
+    "NL",
+    "NO",
+    "NZ",
+    "OM",
+    "QA",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "DSPCreativeRotationType": {
+   "description": "**CreativeRotationType Enum:** | CreativeRotationType | Description | | --- | --- | | `RANDOM` | Creatives are rotated randomly with equal weight. | | `WEIGHTED` | Creatives are rotated based on assigned weights. |",
+   "enum": [
+    "RANDOM",
+    "WEIGHTED"
+   ],
+   "type": "string"
+  },
+  "DSPCurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | | --- | --- | | `AED` | United Arab Emirates Dirham | | `ARS` | Argentine Peso | | `AUD` | Australian Dollar | | `BGN` | Bulgarian Lev | | `BHD` | Bahraini Dinar | |…",
+   "enum": [
+    "AED",
+    "ARS",
+    "AUD",
+    "BGN",
+    "BHD",
+    "BOB",
+    "BRL",
+    "CAD",
+    "CHF",
+    "CLP",
+    "CNY",
+    "COP",
+    "CRC",
+    "CZK",
+    "DKK",
+    "DOP",
+    "DZD",
+    "EUR",
+    "GBP",
+    "GTQ",
+    "HKD",
+    "HNL",
+    "HRK",
+    "HUF",
+    "IDR",
+    "ILS",
+    "INR",
+    "JMD",
+    "JPY",
+    "KRW",
+    "KWD",
+    "MAD",
+    "MXN",
+    "MYR",
+    "NOK",
+    "PAB",
+    "PEN",
+    "PHP",
+    "PKR",
+    "PYG",
+    "QAR",
+    "RON",
+    "RSD",
+    "RUB",
+    "SAR",
+    "SEK",
+    "SGD",
+    "THB",
+    "TND",
+    "TRY",
+    "TWD",
+    "UAH",
+    "USD",
+    "UYU",
+    "VND"
+   ],
+   "type": "string"
+  },
+  "DSPCurve": {
+   "description": "The forecast curve of Bid/Spend vs the metric type based on periodicity.",
+   "properties": {
+    "focusPoint": {
+     "items": {
+      "$ref": "DSPPoint"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "periodicity": {
+     "$ref": "DSPForecastPeriodicity"
+    },
+    "points": {
+     "items": {
+      "$ref": "DSPPoint"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDVBrandSafetyAppAgeRatingType": {
+   "enum": [
+    "ADULTS_ONLY_18_PLUS",
+    "EVERYONE_4_PLUS",
+    "MATURE_17_PLUS",
+    "TEENS_12_PLUS",
+    "TWEENS_9_PLUS",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPDVBrandSafetyAppStarRatingType": {
+   "description": "App star rating to be used for excluding apps.",
+   "enum": [
+    "ALLOW_ALL",
+    "APP_STAR_RATING_LT_1_POINT_5_STARS",
+    "APP_STAR_RATING_LT_2_POINT_5_STARS",
+    "APP_STAR_RATING_LT_2_STARS",
+    "APP_STAR_RATING_LT_3_POINT_5_STARS",
+    "APP_STAR_RATING_LT_3_STARS",
+    "APP_STAR_RATING_LT_4_POINT_5_STARS",
+    "APP_STAR_RATING_LT_4_STARS"
+   ],
+   "type": "string"
+  },
+  "DSPDVBrandSafetyContentCategoriesWithRiskMap": {
+   "description": "A map from content categories to risk level to exclude from targeting. Available keys are: [ADULT_CONTENT, ALCOHOL, CRIME, DEATH_INJURIES, DISASTER_AVIATION, DISASTER_MAN_MADE, DISASTER_NATURAL, DISASTER_TERRORIST_EVENT…",
+   "properties": {
+    "key": {
+     "description": "Available keys are: [ADULT_CONTENT, ALCOHOL, CRIME, DEATH_INJURIES, DISASTER_AVIATION, DISASTER_MAN_MADE, DISASTER_NATURAL, DISASTER_TERRORIST_EVENTS, DISASTER_VEHICLE, HATE_SPEECH, PROFANITY, SUBSTANCE_ABUSE, TOBACCO_E…",
+     "type": "string"
+    },
+    "value": {
+     "$ref": "DSPBrandSuitabilityRiskLevelType"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPDVBrandSafetyContentCategoryType": {
+   "enum": [
+    "AD_SERVER",
+    "CELEBRITY_GOSSIP",
+    "CULTS_SURVIVALISM",
+    "EXTREME_GRAPHIC",
+    "GAMBLING",
+    "INCENTIVIZED_MALWARE_CLUTTER",
+    "INFLAMMATORY_POLITICS_NEWS",
+    "NEGATIVE_NEWS_FINANCIAL",
+    "NEGATIVE_NEWS_PHARMACEUTICAL",
+    "NON_STANDARD_CONTENT_NON_ENGLISH",
+    "NON_STANDARD_CONTENT_PARKING_PAGE",
+    "OCCULT",
+    "PIRACY_COPYRIGHT_INFRINGEMENT",
+    "UNMODERATED_UGC_FORUMS_IMAGES_VIDEO"
+   ],
+   "type": "string"
+  },
+  "DSPDayOfWeek": {
+   "description": "**DayOfWeek Enum:** | DayOfWeek | Description | | --- | --- | | `MONDAY` | Monday. | | `TUESDAY` | Tuesday. | | `WEDNESDAY` | Wednesday. | | `THURSDAY` | Thursday. | | `FRIDAY` | Friday. | | `SATURDAY` | Saturday. | | `…",
+   "enum": [
+    "FRIDAY",
+    "MONDAY",
+    "SATURDAY",
+    "SUNDAY",
+    "THURSDAY",
+    "TUESDAY",
+    "WEDNESDAY"
+   ],
+   "type": "string"
+  },
+  "DSPDayPartTarget": {
+   "description": "Target based on time of day.",
+   "properties": {
+    "dayOfWeek": {
+     "$ref": "DSPDayOfWeek"
+    },
+    "timeOfDay": {
+     "$ref": "DSPTimeOfDay"
+    }
+   },
+   "required": [
+    "dayOfWeek",
+    "timeOfDay"
+   ],
+   "type": "object"
+  },
+  "DSPDefaultAudienceTargetingMatchType": {
+   "description": "Match type for audience targeting inclusion groups, if any. You can enhance your ad group’s reach to consumers with similar shopping, streaming, and browsing behaviors or interests as your selected audiences across all …",
+   "enum": [
+    "EXACT",
+    "SIMILAR"
+   ],
+   "type": "string"
+  },
+  "DSPDeliverInFullConfidence": {
+   "description": "Description of how confident we delivery 100% of the ads for the specific metric.",
+   "properties": {
+    "value": {
+     "$ref": "DSPDeliverInFullConfidenceLevel"
+    }
+   },
+   "required": [
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPDeliverInFullConfidenceLevel": {
+   "description": "**DeliverInFullConfidenceLevel Enum:** | DeliverInFullConfidenceLevel | Description | | --- | --- | | `HIGH` | There is a high level of confidence that the campaign or flight will fully deliver its planned budget or imp…",
+   "enum": [
+    "HIGH",
+    "LOW",
+    "MEDIUM",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "DSPDeliveryDataBasis": {
+   "description": "Identifies which version of the campaign settings the delivery data was observed under. SAVED_SETTINGS and PREVIOUS_SETTINGS differ in where the mismatch lies: SAVED_SETTINGS means the request differs from the saved cam…",
+   "enum": [
+    "FORECASTED_SETTINGS",
+    "PREVIOUS_SETTINGS",
+    "SAVED_SETTINGS"
+   ],
+   "type": "string"
+  },
+  "DSPDeliveryProfile": {
+   "description": "**DeliveryProfile Enum:** | DeliveryProfile | Description | | --- | --- | | `EVEN` | Even pacing spends your budget consistently across the length of the campaign. | | `PACE_AHEAD` | Pace Ahead can deliver up to 25% mor…",
+   "enum": [
+    "ASAP",
+    "EVEN",
+    "PACE_AHEAD"
+   ],
+   "type": "string"
+  },
+  "DSPDeliveryReason": {
+   "description": "**DeliveryReason Enum:** | DeliveryReason | Description | | --- | --- | | `AD_CREATIVES_NOT_RUNNING` | | | `AD_GROUP_ARCHIVED` | | | `AD_GROUP_ENDED` | | | `AD_GROUP_INELIGIBLE_GOAL_KPI` | Indicates that the ad group is…",
+   "enum": [
+    "AD_CREATIVES_NOT_RUNNING",
+    "AD_GROUPS_NOT_RUNNING",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_ENDED",
+    "AD_GROUP_INELIGIBLE_GOAL_KPI",
+    "AD_GROUP_MISSING_CONVERSION_TRACKING_SELECTIONS",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_START_DATE",
+    "AD_GROUP_POLICING_SUSPENDED",
+    "AD_GROUP_TOO_FEW_CONVERSION_TRACKING_SELECTIONS",
+    "AD_GROUP_TOO_MANY_CONVERSION_TRACKING_SELECTIONS",
+    "AD_NOT_APPROVED_FOR_ALL_AD_GROUPS",
+    "AD_NOT_ASSOCIATED_WITH_AD_GROUP",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_POLICING_SUSPENDED",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DSPDeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | | --- | --- | | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplaces…",
+   "enum": [
+    "DELIVERING",
+    "LIMITED",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "DSPDeviceOrientation": {
+   "description": "**DeviceOrientation Enum:** | DeviceOrientation | Description | | --- | --- | | `PORTRAIT` | Device held vertically. | | `LANDSCAPE` | Device held horizontally. |",
+   "enum": [
+    "LANDSCAPE",
+    "PORTRAIT"
+   ],
+   "type": "string"
+  },
+  "DSPDeviceTarget": {
+   "description": "Target based on user device.",
+   "properties": {
+    "deviceOrientation": {
+     "$ref": "DSPDeviceOrientation"
+    },
+    "deviceType": {
+     "$ref": "DSPDeviceType"
+    },
+    "mobileDevice": {
+     "$ref": "DSPMobileDevice"
+    },
+    "mobileEnvironment": {
+     "$ref": "DSPMobileEnvironment"
+    },
+    "mobileOs": {
+     "$ref": "DSPMobileOs"
+    }
+   },
+   "required": [
+    "deviceType"
+   ],
+   "type": "object"
+  },
+  "DSPDeviceType": {
+   "description": "**DeviceType Enum:** | DeviceType | Description | | --- | --- | | `DESKTOP` | Desktop computers and laptops. | | `MOBILE` | Mobile phones and tablets. | | `CONNECTED_TV` | Connected TV devices. | | `CONNECTED_DEVICE` | …",
+   "enum": [
+    "CONNECTED_DEVICE",
+    "CONNECTED_TV",
+    "DESKTOP",
+    "MOBILE"
+   ],
+   "type": "string"
+  },
+  "DSPDomainFileTarget": {
+   "description": "Targets domains based on list provided via file upload.",
+   "properties": {
+    "domainFileId": {
+     "description": "The ID associated to the domain file to target. Read-only and created based on the inputted domainFileKey.",
+     "type": "string"
+    },
+    "domainFileKey": {
+     "description": "The S3 key of the uploaded file which can be obtained from the file upload policy endpoint. A max of 10 files may be associated to one ad group.",
+     "type": "string"
+    },
+    "domainFileName": {
+     "description": "The name of the file.",
+     "type": "string"
+    },
+    "domainFileUrl": {
+     "description": "The file containing the domains uploaded. It expires in one hour.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDomainListTarget": {
+   "description": "Targets domains based on an existing domain list.",
+   "properties": {
+    "domainListId": {
+     "description": "The ID of the domain list to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "domainListId"
+   ],
+   "type": "object"
+  },
+  "DSPDomainNameTarget": {
+   "description": "Targets domains based on URL.",
+   "properties": {
+    "domainName": {
+     "description": "The URL of the domain to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "domainName"
+   ],
+   "type": "object"
+  },
+  "DSPDomainTarget": {
+   "description": "Target based on a specified domain.",
+   "properties": {
+    "domainTargetDetails": {
+     "$ref": "DSPDomainTargetDetails"
+    },
+    "domainTargetType": {
+     "$ref": "DSPDomainTargetTypes"
+    }
+   },
+   "required": [
+    "domainTargetDetails",
+    "domainTargetType"
+   ],
+   "type": "object"
+  },
+  "DSPDomainTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "domainListTarget": {
+       "$ref": "DSPDomainListTarget"
+      }
+     },
+     "required": [
+      "domainListTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "domainNameTarget": {
+       "$ref": "DSPDomainNameTarget"
+      }
+     },
+     "required": [
+      "domainNameTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "domainFileTarget": {
+       "$ref": "DSPDomainFileTarget"
+      }
+     },
+     "required": [
+      "domainFileTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "advertiserDomainList": {
+       "$ref": "DSPAdvertiserDomainList"
+      }
+     },
+     "required": [
+      "advertiserDomainList"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPDomainTargetTypes": {
+   "description": "**DomainTargetTypes Enum:** | DomainTargetTypes | Description | | --- | --- | | `DOMAIN_LIST` | Target domains from an existing domain list. | | `DOMAIN_NAME` | Target a specific domain by URL. | | `DOMAIN_FILE` | Targe…",
+   "enum": [
+    "ADVERTISER_DOMAIN_LIST",
+    "DOMAIN_FILE",
+    "DOMAIN_LIST",
+    "DOMAIN_NAME"
+   ],
+   "type": "string"
+  },
+  "DSPDoubleVerifyAuthenticAttention": {
+   "properties": {
+    "universalAttention": {
+     "description": "One omni-channel segment that is informed by data from all DV campaigns to help avoid serving ads on generally poor performing apps and domains.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "universalAttention"
+   ],
+   "type": "object"
+  },
+  "DSPDoubleVerifyAuthenticBrandSafety": {
+   "properties": {
+    "doubleVerifySegmentId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDoubleVerifyBrandSafety": {
+   "properties": {
+    "appAgeRating": {
+     "description": "A list of app age ratings to be used for excluding apps. For example, TEENS_12_PLUS will only exclude apps with content rated for everyone ages 12 and over. UNKNOWN will exclude apps with content unrated or unknown to D…",
+     "items": {
+      "$ref": "DSPDVBrandSafetyAppAgeRatingType"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "appStarRating": {
+     "$ref": "DSPDVBrandSafetyAppStarRatingType"
+    },
+    "contentCategories": {
+     "description": "A list of content categories to exclude from targeting.",
+     "items": {
+      "$ref": "DSPDVBrandSafetyContentCategoryType"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "contentCategoriesWithRisk": {
+     "items": {
+      "$ref": "DSPDVBrandSafetyContentCategoriesWithRiskMap"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "excludeAppsWithInsufficientRating": {
+     "description": "Set to true to exclude unofficial apps or apps with insufficient user ratings (<100 lifetime).",
+     "type": "boolean"
+    },
+    "unknownContent": {
+     "description": "Set to true to exclude unknown content.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDoubleVerifyCustomContextualSegmentId": {
+   "properties": {
+    "doubleVerifySegmentId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDoubleVerifyFraudInvalidTraffic": {
+   "properties": {
+    "blockAppAndSites": {
+     "description": "Set to true to block applications and sites with insufficient historical fraud and invalid traffic statistics. This will not be applicable if ALLOW_ALL is chosen.",
+     "type": "boolean"
+    },
+    "excludeAppsAndSites": {
+     "$ref": "DSPExcludeAppsAndSitesType"
+    },
+    "excludeImpressions": {
+     "description": "Set to true to exclude impressions delivered to devices identified to be fraudulent or invalid.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDoubleVerifyStandardDisplayBrandSafety": {
+   "properties": {
+    "contentCategories": {
+     "description": "A list of content categories to exclude from targeting.",
+     "items": {
+      "$ref": "DSPDVBrandSafetyContentCategoryType"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "contentCategoriesWithRisk": {
+     "items": {
+      "$ref": "DSPDVBrandSafetyContentCategoriesWithRiskMap"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "unknownContent": {
+     "description": "Set to true to exclude unknown content.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDoubleVerifyViewability": {
+   "properties": {
+    "averageCompletionAndFullyViewableRateTargeting": {
+     "$ref": "DSPAverageCompletionAndFullyViewableRateTargetingType"
+    },
+    "brandExposureViewabilityTargeting": {
+     "$ref": "DSPBrandExposureViewabilityTargetingType"
+    },
+    "includeUnmeasurableImpressions": {
+     "description": "Set to true to include impressions where impressions can't be measured.",
+     "type": "boolean"
+    },
+    "mrcViewabilityTargeting": {
+     "$ref": "DSPMrcViewabilityTargetingType"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDspContentRating": {
+   "properties": {
+    "dspContentRating": {
+     "$ref": "DSPDspContentRatingEnum"
+    }
+   },
+   "required": [
+    "dspContentRating"
+   ],
+   "type": "object"
+  },
+  "DSPDspContentRatingEnum": {
+   "description": "**DspContentRatingEnum Enum:** | DspContentRatingEnum | Description | | --- | --- | | `SUITABLE_FOR_ALL_AUDIENCES` | Equivalent to content that is rated G (film), TV-Y (TV), TV-Y7 (TV), TV-G (TV), EC (game), or E (game)…",
+   "enum": [
+    "RATING_NOT_AVAILABLE",
+    "SUITABLE_FOR_ADULTS",
+    "SUITABLE_FOR_ALL_AUDIENCES",
+    "SUITABLE_FOR_MATURE_AUDIENCES",
+    "SUITABLE_FOR_MOST_AUDIENCES_WITH_PARENTAL_GUIDANCE",
+    "SUITABLE_FOR_TEEN_AND_OLDER_AUDIENCES"
+   ],
+   "type": "string"
+  },
+  "DSPEnabledFeaturesInCampaignForecast": {
+   "description": "For the user to specify which features to enable in the forecast result.",
+   "properties": {
+    "campaignSettingsCache": {
+     "description": "Describe if the forecast will use cached settings of a campaign.",
+     "type": "boolean"
+    },
+    "curve": {
+     "description": "Describe if the user want to see curve or not.",
+     "type": "boolean"
+    },
+    "deliveryMetrics": {
+     "description": "Describe if the user wants to see delivery metrics, e.g. spend, projected spend, additional spend potential, and delivery rate.",
+     "type": "boolean"
+    },
+    "insights": {
+     "description": "Describe if the user want to see detailed insights for leading drivers of forecast results.",
+     "type": "boolean"
+    },
+    "metrics": {
+     "$ref": "DSPForecastMetricsDescription"
+    },
+    "replanning": {
+     "description": "Describe if the forecast will show replanning recommendation.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPExcludeAppsAndSitesType": {
+   "enum": [
+    "ALLOW_ALL",
+    "FRAUD_TRAFFIC_LEVEL_GTE_02",
+    "FRAUD_TRAFFIC_LEVEL_GTE_04",
+    "FRAUD_TRAFFIC_LEVEL_GTE_06",
+    "FRAUD_TRAFFIC_LEVEL_GTE_08",
+    "FRAUD_TRAFFIC_LEVEL_GTE_10",
+    "FRAUD_TRAFFIC_LEVEL_GTE_100",
+    "FRAUD_TRAFFIC_LEVEL_GTE_25",
+    "FRAUD_TRAFFIC_LEVEL_GTE_50"
+   ],
+   "type": "string"
+  },
+  "DSPFee": {
+   "properties": {
+    "addToBudgetSpentAmount": {
+     "description": "Applies only to THIRD_PARTY_APPLIED_FEE. When set to true, third-party applied fees are are added on top of the total ad group budget spent amount in reports.",
+     "type": "boolean"
+    },
+    "currencyCode": {
+     "$ref": "DSPCurrencyCode"
+    },
+    "feeType": {
+     "$ref": "DSPFeeType"
+    },
+    "feeValue": {
+     "description": "The fee amount expressed as the feeValueType. AMAZON_AUDIENCE_FEE AND THIRD_PARTY_AUDIENCE_FEE is in the currency of the marketplace. All other CPM based fees are in the currency of the advertiser. For percentages, 100 …",
+     "format": "double",
+     "type": "number"
+    },
+    "feeValueType": {
+     "$ref": "DSPFeeValueType"
+    },
+    "thirdPartyProvider": {
+     "$ref": "DSPFeesThirdPartyProvider"
+    }
+   },
+   "required": [
+    "feeType",
+    "feeValue",
+    "feeValueType"
+   ],
+   "type": "object"
+  },
+  "DSPFeeType": {
+   "description": "**FeeType Enum:** | FeeType | Description | | --- | --- | | `AMAZON_DSP` | A service fee for using Amazon DSP and subtracted from the budget. This fee is applied as a percent of supply cost. | | `AMAZON_AUDIENCE` | CPM …",
+   "enum": [
+    "AMAZON_AUDIENCE",
+    "AMAZON_DSP",
+    "MANAGED_SERVICE_FEE",
+    "OMNICHANNEL_METRICS",
+    "THIRD_PARTY_APPLIED",
+    "THIRD_PARTY_AUDIENCE",
+    "THIRD_PARTY_TARGETING"
+   ],
+   "type": "string"
+  },
+  "DSPFeeValueType": {
+   "description": "**FeeValueType Enum:** | FeeValueType | Description | | --- | --- | | `FIXED_CPM` | Charged based on a fixed CPM. The currency depends on the feeType. | | `PERCENTAGE_OF_SUPPLY_COST` | Charged as a percent of supply (me…",
+   "enum": [
+    "FIXED_CPM",
+    "PERCENTAGE_OF_BUDGET",
+    "PERCENTAGE_OF_SUPPLY_COST"
+   ],
+   "type": "string"
+  },
+  "DSPFeesThirdPartyProvider": {
+   "enum": [
+    "COM_SCORE",
+    "CPM_1",
+    "CPM_2",
+    "CPM_3",
+    "DOUBLE_CLICK_CAMPAIGN_MANAGER",
+    "DOUBLE_VERIFY",
+    "INTEGRAL_AD_SCIENCE"
+   ],
+   "type": "string"
+  },
+  "DSPFlightBudget": {
+   "properties": {
+    "budgetType": {
+     "$ref": "DSPBudgetType"
+    },
+    "budgetValue": {
+     "$ref": "DSPBudgetValue"
+    }
+   },
+   "required": [
+    "budgetType",
+    "budgetValue"
+   ],
+   "type": "object"
+  },
+  "DSPFlightForecast": {
+   "description": "The forecast result of a specific flight.",
+   "properties": {
+    "additionalSpendPotential": {
+     "description": "The additional spend potential beyond the current flight budget. Only populated for in-flight campaigns.",
+     "format": "double",
+     "type": "number"
+    },
+    "budgetAtRisk": {
+     "$ref": "DSPMonetaryBudget"
+    },
+    "currencyCode": {
+     "$ref": "DSPCurrencyCode"
+    },
+    "curves": {
+     "description": "The forecasting curves of a flight based on different periodicities.",
+     "items": {
+      "$ref": "DSPCurve"
+     },
+     "maxItems": 4,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliverInFullConfidence": {
+     "$ref": "DSPDeliverInFullConfidence"
+    },
+    "deliveryDataBasis": {
+     "$ref": "DSPDeliveryDataBasis"
+    },
+    "deliveryRate": {
+     "description": "The delivery rate of the current flight as a decimal (0 to 1). Only populated for in-flight campaigns.",
+     "format": "double",
+     "type": "number"
+    },
+    "flightId": {
+     "description": "The flightId of the flight.",
+     "type": "string"
+    },
+    "forecastEndDateTime": {
+     "description": "The endtime of the flight for forecasting.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "forecastStartDateTime": {
+     "description": "The starttime of the flight for forecasting.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "insights": {
+     "$ref": "DSPFlightForecastInsights"
+    },
+    "metrics": {
+     "description": "The different metrics to measure the performance of the flight.",
+     "items": {
+      "$ref": "DSPForecastMetric"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "projectedSpend": {
+     "description": "The projected total spend by end of the current flight. Only populated for in-flight campaigns.",
+     "format": "double",
+     "type": "number"
+    },
+    "replanning": {
+     "description": "The recommendation for replanning.",
+     "items": {
+      "$ref": "DSPReplanning"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "spend": {
+     "description": "The amount of money spend for this flight.",
+     "format": "double",
+     "type": "number"
+    },
+    "totalBudget": {
+     "$ref": "DSPMonetaryBudget"
+    },
+    "warnings": {
+     "description": "Warnings of the campaign forecast.",
+     "items": {
+      "$ref": "DSPWarning"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "flightId",
+    "forecastEndDateTime",
+    "forecastStartDateTime"
+   ],
+   "type": "object"
+  },
+  "DSPFlightForecastInsights": {
+   "description": "Collection of insights for a particular flight forecast.",
+   "properties": {
+    "forecastExplainabilityInsights": {
+     "description": "Detailed insights explaining leading drivers of the flight forecast results, per entity (e.g. campaign or its line items).",
+     "items": {
+      "$ref": "DSPForecastInsightsGroup"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "topExplainabilityFactors": {
+     "description": "Top factors affecting the forecast results, e.g. max bid, frequency cap, etc.",
+     "items": {
+      "$ref": "DSPInsightFeature"
+     },
+     "maxItems": 4,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPFoldPosition": {
+   "description": "**FoldPosition Enum:** | FoldPosition | Description | | --- | --- | | `ABOVE_THE_FOLD` | Ad placement visible without scrolling. | | `BELOW_THE_FOLD` | Ad placement visible only after scrolling. | | `UNKNOWN` | Unknown …",
+   "enum": [
+    "ABOVE_THE_FOLD",
+    "BELOW_THE_FOLD",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPFoldPositionTarget": {
+   "description": "Targets ads in the specified fold position",
+   "properties": {
+    "foldPosition": {
+     "$ref": "DSPFoldPosition"
+    }
+   },
+   "required": [
+    "foldPosition"
+   ],
+   "type": "object"
+  },
+  "DSPForecastAdGroup": {
+   "description": "Ad group domain model",
+   "properties": {
+    "adGroupId": {
+     "description": "The unique identifier of the ad group.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "DSPAdProduct"
+    },
+    "advertisedProductCategoryIds": {
+     "description": "The array of identifiers of advertised product categories associated with the forecast.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "bid": {
+     "$ref": "DSPAdGroupBid"
+    },
+    "budgets": {
+     "description": "An object containing budget details for the ad group.",
+     "items": {
+      "$ref": "DSPBudget"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "campaignId": {
+     "description": "The unique identifier of the campaign the ad group belongs to.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date time that the ad group was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "creativeRotationType": {
+     "$ref": "DSPCreativeRotationType"
+    },
+    "endDateTime": {
+     "description": "The end date time for the ad group.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fees": {
+     "description": "The fees associated with the ad group.",
+     "items": {
+      "$ref": "DSPFee"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "frequencies": {
+     "description": "An object containing frequency details for the ad group.",
+     "items": {
+      "$ref": "DSPFrequency"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "globalAdGroupId": {
+     "description": "The global adGroup identifier that manages this marketplace adGroup.",
+     "type": "string"
+    },
+    "inventoryType": {
+     "$ref": "DSPInventoryType"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time that the ad group was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global ad group that enables overriding certain attributes at individual marketplace level. For example, if a global ad group state is ENABLED and needs to be PAUSED onl…",
+     "items": {
+      "$ref": "DSPMarketplaceAdGroupConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaceScope": {
+     "$ref": "DSPMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "A list of country codes representing Amazon marketplaces",
+     "items": {
+      "$ref": "DSPMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "DSPOptimization"
+    },
+    "pacing": {
+     "$ref": "DSPPacing"
+    },
+    "purchaseOrderNumber": {
+     "description": "The purchase order number associated with the ad group.",
+     "type": "string"
+    },
+    "retailerId": {
+     "description": "Identifier for retailer associated with this ad group.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date time for the ad group.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DSPState"
+    },
+    "status": {
+     "$ref": "DSPStatus"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad group",
+     "items": {
+      "$ref": "DSPTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingSettings": {
+     "$ref": "DSPTargetingSettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPForecastCampaign": {
+   "description": "Campaign domain model",
+   "properties": {
+    "adProduct": {
+     "$ref": "DSPAdProduct"
+    },
+    "adomains": {
+     "description": "OpenRTB standard naming meaning: Advertiser domain for block list checking. This can be an array of strings for the case of rotating creatives. Exchanges can mandate that only one domain is allowed.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "autoCreationSettings": {
+     "$ref": "DSPAutoCreationSettings"
+    },
+    "brandId": {
+     "description": "This is the ID of the brand that the campaign is associated with.",
+     "type": "string"
+    },
+    "budgets": {
+     "description": "The object containing budget details for the campaign (for campaigns that support multiple budgets).",
+     "items": {
+      "$ref": "DSPBudget"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "campaignId": {
+     "description": "A unique identifier for a campaign.",
+     "type": "string"
+    },
+    "campaignPresetId": {
+     "description": "This is the ID of the originally generated campaign preset that the campaign is associated with.",
+     "type": "string"
+    },
+    "countries": {
+     "description": "This field is used in Sponsored Ads and ADSP and impacts targeted supply. For Sponsored Ads, the campaign.countries field determines what Amazon retail supply (Amazon.com, Amazon.co.uk, Amazon.mx, etc) the campaign will…",
+     "items": {
+      "$ref": "DSPCountryCode"
+     },
+     "maxItems": 249,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creationDateTime": {
+     "description": "The date time that the campaign was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "eligibleAutomatedTargetingTactics": {
+     "description": "List of tactic type and inventory type pairs that are eligible for use with this campaign",
+     "items": {
+      "$ref": "DSPTacticKey"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "endDate": {
+     "description": "The end date of the campaign.",
+     "format": "date",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The end date time for the campaign.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fees": {
+     "description": "Any fees associated with the campaign.",
+     "items": {
+      "$ref": "DSPCampaignFee"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "flights": {
+     "description": "Flight details associated with the campaign.",
+     "items": {
+      "$ref": "DSPCampaignFlight"
+     },
+     "maxItems": 150,
+     "minItems": 0,
+     "type": "array"
+    },
+    "frequencies": {
+     "description": "Any frequency caps associated with the campaign.",
+     "items": {
+      "$ref": "DSPFrequency"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "globalCampaignId": {
+     "description": "The global campaign identifier that manages this marketplace campaign.",
+     "type": "string"
+    },
+    "ineligibleAutomatedTargetingTactics": {
+     "description": "List of tactic type and inventory type pairs that are ineligible for use with this campaign, along with reasons for ineligibility",
+     "items": {
+      "$ref": "DSPIneligibleAutomatedTargetingTactic"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time that the campaign was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global campaign that enables overriding certain attributes at individual marketplace level. For example, if a global campaign is ENABLED and startDate '2024-06-01' but n…",
+     "items": {
+      "$ref": "DSPMarketplaceCampaignConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaceScope": {
+     "$ref": "DSPMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "A list of country codes representing Amazon marketplaces",
+     "items": {
+      "$ref": "DSPMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the campaign.",
+     "type": "string"
+    },
+    "optimizations": {
+     "$ref": "DSPCampaignOptimizations"
+    },
+    "portfolioId": {
+     "description": "The ID of the portfolio associated with the campaign.",
+     "type": "string"
+    },
+    "productCategoryId": {
+     "description": "This is the ID of the product category that the campaign is associated with.",
+     "type": "string"
+    },
+    "purchaseOrderNumber": {
+     "description": "The purchase order number associated with the campaign.",
+     "type": "string"
+    },
+    "skanAppId": {
+     "description": "StoreKit AdNetwork application ID. Represents iTunes application ID with which SKAN-enabled campaigns are associated.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The start date of the campaign.",
+     "format": "date",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date time for the campaign.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DSPState"
+    },
+    "status": {
+     "$ref": "DSPStatus"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the campaign",
+     "items": {
+      "$ref": "DSPTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetedPGDealId": {
+     "description": "DealId associated with the campaign.",
+     "type": "string"
+    },
+    "targetsAmazonDeal": {
+     "description": "If the campaign is targeting an Amazon deal, the value will be true, and the campaign and ad group(s) will be read-only.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPForecastFlight": {
+   "properties": {
+    "budget": {
+     "$ref": "DSPForecastFlightBudget"
+    },
+    "endDateTime": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "flightId": {
+     "description": "The ID associated with the flight.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date of the flight.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "budget",
+    "endDateTime",
+    "startDateTime"
+   ],
+   "type": "object"
+  },
+  "DSPForecastFlightBudget": {
+   "properties": {
+    "budgetValue": {
+     "$ref": "DSPBudgetValue"
+    }
+   },
+   "required": [
+    "budgetValue"
+   ],
+   "type": "object"
+  },
+  "DSPForecastInsightsGroup": {
+   "description": "Insights for leading drivers of forecast results for a specific entity, e.g. campaign frequency cap, line item max bid.",
+   "properties": {
+    "coldStartDealNames": {
+     "description": "The names of audience deals attached to the entity, that are newly created and may not be accurately incorporated into the forecast.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 99,
+     "minItems": 0,
+     "type": "array"
+    },
+    "coldStartSegmentNames": {
+     "description": "The names of audience segments attached to the entity, that are newly created and may not be accurately incorporated into the forecast.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 99,
+     "minItems": 0,
+     "type": "array"
+    },
+    "displayName": {
+     "description": "The display name for the entity this insight is for, e.g. campaign/line item display name.",
+     "type": "string"
+    },
+    "groupType": {
+     "$ref": "DSPRecommendedObjectType"
+    },
+    "insightsFeatures": {
+     "description": "The features corresponding to this group of insights, e.g. array of line item max bid, campaign frequency cap, etc.",
+     "items": {
+      "$ref": "DSPInsightFeature"
+     },
+     "maxItems": 9,
+     "minItems": 1,
+     "type": "array"
+    },
+    "tag": {
+     "description": "The unique identifier for the entity this group of insights refers to, e.g. line item ID, campaign ID, etc.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "displayName",
+    "groupType",
+    "insightsFeatures",
+    "tag"
+   ],
+   "type": "object"
+  },
+  "DSPForecastMetric": {
+   "description": "The forecast based on metric and periodicity.",
+   "properties": {
+    "metric": {
+     "$ref": "DSPSelectedForecastMetric"
+    },
+    "periodicity": {
+     "$ref": "DSPForecastPeriodicity"
+    },
+    "value": {
+     "$ref": "DSPForecastValue"
+    }
+   },
+   "required": [
+    "metric",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPForecastMetricsDescription": {
+   "description": "Describe how user select to see all metrics or selected ones.",
+   "properties": {
+    "allMetrics": {
+     "description": "If it is true, all the supported metrics would return.",
+     "type": "boolean"
+    },
+    "selectedMetrics": {
+     "description": "The list of selected metrics in order.",
+     "items": {
+      "$ref": "DSPSelectedForecastMetric"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "allMetrics"
+   ],
+   "type": "object"
+  },
+  "DSPForecastPeriodicity": {
+   "description": "**ForecastPeriodicity Enum:** | ForecastPeriodicity | Description | | --- | --- | | `DAILY` | Forecast results are generated and presented for each individual day. | | `LIFETIME` | Forecast results represent the total p…",
+   "enum": [
+    "DAILY",
+    "LIFETIME",
+    "MONTHLY",
+    "WEEKLY"
+   ],
+   "type": "string"
+  },
+  "DSPForecastTarget": {
+   "properties": {
+    "adGroupId": {
+     "description": "A unique identifier for the ad group associated with the target. Only used for ad-group level targets.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "DSPAdProduct"
+    },
+    "bid": {
+     "$ref": "DSPTargetBid"
+    },
+    "campaignId": {
+     "description": "A unique identifier for the campaign associated with the target. Only used for campaign-level targets.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date time the target was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "globalTargetId": {
+     "description": "The global target identifier that manages this marketplace target.",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time the target was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global target that enables overriding certain attributes at individual marketplace level. For example, if a global target is ENABLED but needs to be PAUSED in DE marketp…",
+     "items": {
+      "$ref": "DSPMarketplaceTargetConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaceScope": {
+     "$ref": "DSPMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "A list of country codes representing Amazon marketplaces",
+     "items": {
+      "$ref": "DSPMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "negative": {
+     "description": "Indicates whether the target is negative or not.",
+     "type": "boolean"
+    },
+    "state": {
+     "$ref": "DSPState"
+    },
+    "status": {
+     "$ref": "DSPStatus"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the target",
+     "items": {
+      "$ref": "DSPTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetDetails": {
+     "$ref": "DSPTargetDetails"
+    },
+    "targetId": {
+     "description": "A unique identifier for the target.",
+     "type": "string"
+    },
+    "targetLevel": {
+     "$ref": "DSPTargetLevel"
+    },
+    "targetType": {
+     "$ref": "DSPTargetType"
+    }
+   },
+   "type": "object"
+  },
+  "DSPForecastValue": {
+   "properties": {
+    "high": {
+     "format": "double",
+     "type": "number"
+    },
+    "low": {
+     "format": "double",
+     "type": "number"
+    },
+    "mean": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "high",
+    "low",
+    "mean"
+   ],
+   "type": "object"
+  },
+  "DSPFrequency": {
+   "properties": {
+    "eventMaxCount": {
+     "description": "The maximum number of times an EventType is served per user. For ADSP ad group, maximum supported value is 500.",
+     "format": "int32",
+     "maximum": 99000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "frequencyTargetingSetting": {
+     "$ref": "DSPFrequencyTargetingSetting"
+    },
+    "timeCount": {
+     "description": "The value associated with the time and unit of time for this frequency cap.",
+     "format": "int32",
+     "maximum": 60,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "timeUnit": {
+     "$ref": "DSPTimeUnit"
+    }
+   },
+   "required": [
+    "eventMaxCount",
+    "frequencyTargetingSetting"
+   ],
+   "type": "object"
+  },
+  "DSPFrequencyTargetingSetting": {
+   "description": "**FrequencyTargetingSetting Enum:** | FrequencyTargetingSetting | Description | | --- | --- | | `USER` | Control frequency an ad will be selected to a person. | | `HOUSEHOLD` | Control frequency an ad will be selected a…",
+   "enum": [
+    "HOUSEHOLD",
+    "USER"
+   ],
+   "type": "string"
+  },
+  "DSPGoal": {
+   "description": "**Goal Enum:** | Goal | Description | | --- | --- | | `AWARENESS` | Indicates a goal of driving awareness. | | `CONSIDERATION` | Indicates a goal of driving consideration. | | `CONVERSIONS` | Indicates a goal of driving…",
+   "enum": [
+    "AWARENESS",
+    "CONSIDERATION",
+    "CONVERSIONS"
+   ],
+   "type": "string"
+  },
+  "DSPGoalSettings": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "DSPCurrencyCode"
+    },
+    "goal": {
+     "$ref": "DSPGoal"
+    },
+    "kpi": {
+     "$ref": "DSPKPI"
+    },
+    "kpiValue": {
+     "description": "The value of the KPI that the campaign is working to optimize.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "goal"
+   ],
+   "type": "object"
+  },
+  "DSPIASBrandSafetyLevelType": {
+   "description": "The IAS brand safety risk level.",
+   "enum": [
+    "ALLOW_ALL",
+    "BRAND_SAFETY_EXCLUDE_HIGH_AND_MODERATE_RISK",
+    "BRAND_SAFETY_EXCLUDE_HIGH_RISK"
+   ],
+   "type": "string"
+  },
+  "DSPIASFraudInvalidTrafficType": {
+   "description": "The type of fraud invalid traffic.",
+   "enum": [
+    "ALLOW_ALL",
+    "FRAUD_INVALID_TRAFFIC_EXCLUDE_HIGH_MODERATE_RISK",
+    "FRAUD_INVALID_TRAFFIC_EXCLUDE_HIGH_RISK"
+   ],
+   "type": "string"
+  },
+  "DSPIASViewabilityStandardType": {
+   "description": "The viewability standard.",
+   "enum": [
+    "GROUPM",
+    "MRC",
+    "NONE",
+    "PUBLICIS"
+   ],
+   "type": "string"
+  },
+  "DSPInGroupOperator": {
+   "description": "**InGroupOperator Enum:** | InGroupOperator | Description | | --- | --- | | `ANY` | Matches if at least one condition is true. InGroupOperator is used among audiences within the same audience group. This is a read-only …",
+   "enum": [
+    "ALL",
+    "ANY"
+   ],
+   "type": "string"
+  },
+  "DSPIneligibleAutomatedTargetingTactic": {
+   "description": "Information about an ineligible tactic key and the reasons for ineligibility",
+   "type": "object"
+  },
+  "DSPInsightFeature": {
+   "description": "**InsightFeature Enum:** | InsightFeature | Description | | --- | --- | | `LINE_ITEM_FREQUENCY_CAP` | Insight associated with line item having restrictive frequency cap setting. | | `LINE_ITEM_MAX_BID` | Insight associa…",
+   "enum": [
+    "CAMPAIGN_FREQUENCY_CAP",
+    "LINE_ITEM_APPBLOCKING_TARGETING",
+    "LINE_ITEM_COLD_START_DEALS",
+    "LINE_ITEM_COLD_START_SEGMENTS",
+    "LINE_ITEM_CONTEXTUAL_TARGETING",
+    "LINE_ITEM_DOMAINLIST_TARGETING",
+    "LINE_ITEM_FREQUENCY_CAP",
+    "LINE_ITEM_GEO_TARGETING",
+    "LINE_ITEM_LARGE_TARGETING",
+    "LINE_ITEM_MAX_BID",
+    "LINE_ITEM_MOBILE_DEVICES_TARGETING",
+    "LINE_ITEM_NARROW_SEGMENTS",
+    "LINE_ITEM_SIMILAR_AUDIENCES",
+    "LINE_ITEM_TOO_FAR_IN_FUTURE",
+    "LINE_ITEM_UNSUPPORTED_CONTEXTUAL_TARGETING",
+    "LINE_ITEM_UNSUPPORTED_KEYWORD_TARGETING"
+   ],
+   "type": "string"
+  },
+  "DSPIntegralAdScienceBrandSafety": {
+   "properties": {
+    "excludeContent": {
+     "description": "Set to true to exclude content that Integral Ad Science is not able to rate.",
+     "type": "boolean"
+    },
+    "iasBrandSafetyAdult": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyAlcohol": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyGambling": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyHateSpeech": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyIllegalDownloads": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyIllegalDrugs": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyOffensiveLanguage": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyViolence": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    }
+   },
+   "type": "object"
+  },
+  "DSPIntegralAdScienceContextualAvoidance": {
+   "properties": {
+    "avoidanceSegments": {
+     "description": "The unique identifier of the IAS contextual avoidance segment",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPIntegralAdScienceContextualTargeting": {
+   "properties": {
+    "topicalSegments": {
+     "description": "The unique identifier of the IAS contextual topical targeting segment",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "verticalSegments": {
+     "description": "The unique identifier of the IAS contextual vertical targeting segment",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPIntegralAdScienceFraudInvalidTraffic": {
+   "properties": {
+    "targetSetting": {
+     "$ref": "DSPIASFraudInvalidTrafficType"
+    }
+   },
+   "type": "object"
+  },
+  "DSPIntegralAdScienceQualitySync": {
+   "properties": {
+    "segmentId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPIntegralAdScienceViewability": {
+   "description": "The IAS viewability standard.",
+   "properties": {
+    "standard": {
+     "$ref": "DSPIASViewabilityStandardType"
+    },
+    "viewabilityTargeting": {
+     "$ref": "DSPViewabilityTierType"
+    }
+   },
+   "required": [
+    "standard"
+   ],
+   "type": "object"
+  },
+  "DSPInventorySourceTarget": {
+   "description": "Target based on the source of the inventory.",
+   "properties": {
+    "inventorySourceId": {
+     "$ref": "DSPMarketplaceStringValue"
+    },
+    "inventorySourceType": {
+     "$ref": "DSPInventorySourceType"
+    }
+   },
+   "required": [
+    "inventorySourceId",
+    "inventorySourceType"
+   ],
+   "type": "object"
+  },
+  "DSPInventorySourceType": {
+   "description": "**InventorySourceType Enum:** | InventorySourceType | Description | | --- | --- | | `AMAZON` | Amazon-owned inventory. | | `APD` | Amazon Publisher Direct inventory. | | `THIRD_PARTY_EXCHANGE` | Third-party exchange inv…",
+   "enum": [
+    "AMAZON",
+    "APD",
+    "DEAL",
+    "INVENTORY_GROUP",
+    "THIRD_PARTY_EXCHANGE"
+   ],
+   "type": "string"
+  },
+  "DSPInventoryType": {
+   "description": "**InventoryType Enum:** | InventoryType | Description | | --- | --- | | `STANDARD_DISPLAY` | | | `AMAZON_MOBILE_DISPLAY` | | | `AAP_MOBILE_APP` | | | `DISPLAY` | | | `VIDEO` | | | `STREAMING_TV` | | | `ONLINE_VIDEO` | |…",
+   "enum": [
+    "AAP_MOBILE_APP",
+    "AMAZON_MOBILE_DISPLAY",
+    "AUDIO",
+    "AUDIO_AMAZON_DEAL",
+    "DISPLAY",
+    "LIVE_EVENTS",
+    "ONLINE_VIDEO",
+    "PODCAST",
+    "STANDARD_DISPLAY",
+    "STREAMING_TV",
+    "STREAMING_TV_AMAZON_DEAL",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "DSPKPI": {
+   "description": "**KPI Enum:** | KPI | Description | | --- | --- | | `CLICK_THROUGH_RATE` | Indicates a goal of driving clickthrough rate. | | `COMBINED_RETURN_ON_AD_SPEND` | Deprecated. Please use ROAS_COMBINED. | | `COST_PER_ACTION` |…",
+   "enum": [
+    "CLICK_THROUGH_RATE",
+    "COMBINED_RETURN_ON_AD_SPEND",
+    "COST_PER_ACTION",
+    "COST_PER_CLICK",
+    "COST_PER_CONVERSION_OFF_AMAZON",
+    "COST_PER_DETAIL_PAGE_VIEW",
+    "COST_PER_FIRST_APP_OPEN",
+    "COST_PER_INSTALL",
+    "COST_PER_SIGN_UP",
+    "COST_PER_VIDEO_COMPLETION",
+    "DETAIL_PAGE_VIEW_RATE",
+    "FREQUENCY_AVERAGE",
+    "REACH",
+    "RETURN_ON_AD_SPEND",
+    "ROAS",
+    "ROAS_COMBINED",
+    "ROAS_PROMOTED",
+    "TOTAL_RETURN_ON_AD_SPEND",
+    "VIDEO_COMPLETION_RATE"
+   ],
+   "type": "string"
+  },
+  "DSPKeywordMatchType": {
+   "description": "**KeywordMatchType Enum:** | KeywordMatchType | Description | | --- | --- | | `BROAD` | Broad match search terms. This expands matching on user intent beyond PHRASE. |",
+   "enum": [
+    "BROAD"
+   ],
+   "type": "string"
+  },
+  "DSPKeywordTarget": {
+   "description": "Targets a specific customer search term.",
+   "properties": {
+    "keyword": {
+     "description": "The customer search term or text to target. For valid characters and constraints, [see keyword character constraints](https://advertising.amazon.com/API/docs/en-us/reference/concepts/limits#keyword-character-constraints…",
+     "type": "string"
+    },
+    "matchType": {
+     "$ref": "DSPKeywordMatchType"
+    }
+   },
+   "required": [
+    "keyword",
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "DSPLocationTarget": {
+   "description": "Target based on geographic location.",
+   "properties": {
+    "locationId": {
+     "description": "The ID of the geographic location to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "locationId"
+   ],
+   "type": "object"
+  },
+  "DSPMarketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "SA",
+    "SE",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "DSPMarketplaceAdGroupConfigurations": {
+   "type": "object"
+  },
+  "DSPMarketplaceCampaignConfigurations": {
+   "type": "object"
+  },
+  "DSPMarketplaceScope": {
+   "enum": [
+    "SINGLE_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "DSPMarketplaceStringValue": {
+   "properties": {
+    "defaultValue": {
+     "description": "The default value. Either the default value or the marketplace settings should always be specified",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPMarketplaceTargetConfigurations": {
+   "type": "object"
+  },
+  "DSPMobileDevice": {
+   "description": "**MobileDevice Enum:** | MobileDevice | Description | | --- | --- | | `IPHONE` | Apple iPhone. | | `IPAD` | Apple iPad. | | `ANDROID` | Android device. | | `KINDLE_FIRE` | Amazon Kindle Fire. | | `KINDLE_FIRE_HD` | Amaz…",
+   "enum": [
+    "ANDROID",
+    "IPAD",
+    "IPHONE",
+    "KINDLE_FIRE",
+    "KINDLE_FIRE_HD"
+   ],
+   "type": "string"
+  },
+  "DSPMobileEnvironment": {
+   "description": "**MobileEnvironment Enum:** | MobileEnvironment | Description | | --- | --- | | `WEB` | Mobile web browser. | | `APP` | Mobile application. |",
+   "enum": [
+    "APP",
+    "WEB"
+   ],
+   "type": "string"
+  },
+  "DSPMobileOs": {
+   "description": "**MobileOs Enum:** | MobileOs | Description | | --- | --- | | `IOS` | Apple iOS operating system. | | `ANDROID` | Google Android operating system. |",
+   "enum": [
+    "ANDROID",
+    "IOS"
+   ],
+   "type": "string"
+  },
+  "DSPMonetaryBudget": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "DSPCurrencyCode"
+    },
+    "value": {
+     "description": "The monetary amount of the budget cap in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPMonetaryBudgetValue": {
+   "properties": {
+    "monetaryBudget": {
+     "$ref": "DSPMonetaryBudget"
+    }
+   },
+   "type": "object"
+  },
+  "DSPMrcViewabilityTargetingType": {
+   "description": "The type of MRC viewability targeting.",
+   "enum": [
+    "ALLOW_ALL",
+    "MRC_VIEWABILITY_GTE_30",
+    "MRC_VIEWABILITY_GTE_40",
+    "MRC_VIEWABILITY_GTE_50",
+    "MRC_VIEWABILITY_GTE_55",
+    "MRC_VIEWABILITY_GTE_60",
+    "MRC_VIEWABILITY_GTE_65",
+    "MRC_VIEWABILITY_GTE_70",
+    "MRC_VIEWABILITY_GTE_75",
+    "MRC_VIEWABILITY_GTE_80"
+   ],
+   "type": "string"
+  },
+  "DSPNativeContentPosition": {
+   "description": "**NativeContentPosition Enum:** | NativeContentPosition | Description | | --- | --- | | `IN_ARTICLE` | Positioned in the atomic unit of the content (e.g., in the article page or single image page). | | `IN_FEED` | Posit…",
+   "enum": [
+    "IN_ARTICLE",
+    "IN_FEED",
+    "PERIPHERAL",
+    "RECOMMENDATION",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPNativeContentPositionTarget": {
+   "description": "Targets ads to a specific native content position",
+   "properties": {
+    "nativePosition": {
+     "$ref": "DSPNativeContentPosition"
+    }
+   },
+   "required": [
+    "nativePosition"
+   ],
+   "type": "object"
+  },
+  "DSPNewsGuardBrandGuardMisinformationSafety": {
+   "properties": {
+    "avoidanceList": {
+     "description": "The unique identifiers of misinformation targets",
+     "items": {
+      "$ref": "DSPNewsGuardBrandGuardMisinformationSafetyType"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPNewsGuardBrandGuardMisinformationSafetyType": {
+   "enum": [
+    "AI_GENERATED_MFA",
+    "BASIC_EXCLUDE",
+    "CLIMATE_MISINFORMATION",
+    "COVID_MISINFORMATION",
+    "ELECTION_MISINFORMATION",
+    "HEALTH_MISINFORMATION",
+    "HIGH_EXCLUDE",
+    "ISRAEL_HAMAS_MISINFORMATION",
+    "MAX_EXCLUDE",
+    "MISINFORMATION_SITES",
+    "OPINIONATED_NEWS",
+    "QANON_MISINFORMATION",
+    "UKRAINE_MISINFORMATION",
+    "VACCINE_MISINFORMATION"
+   ],
+   "type": "string"
+  },
+  "DSPNewsGuardBrandGuardTrustedNewsTargeting": {
+   "description": "Only applicable for Web supply.",
+   "properties": {
+    "targetingList": {
+     "description": "The unique identifiers of trusted news targets",
+     "items": {
+      "$ref": "DSPNewsGuardBrandGuardTrustedNewsTargetingType"
+     },
+     "maxItems": 15,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPNewsGuardBrandGuardTrustedNewsTargetingType": {
+   "enum": [
+    "BASIC_INCLUDE",
+    "BUSINESS_INCLUDE",
+    "COMMUNITY_INCLUDE",
+    "HEALTH_INCLUDE",
+    "HIGH_INCLUDE",
+    "LIFESTYLE_INCLUDE",
+    "LOCAL_INCLUDE",
+    "MAX_INCLUDE",
+    "POLITICS_INCLUDE",
+    "TECH_INCLUDE"
+   ],
+   "type": "string"
+  },
+  "DSPOptimization": {
+   "properties": {
+    "bidStrategy": {
+     "$ref": "DSPBidStrategy"
+    },
+    "budgetSettings": {
+     "$ref": "DSPAdGroupBudgetSettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPPacing": {
+   "properties": {
+    "deliveryProfile": {
+     "$ref": "DSPDeliveryProfile"
+    }
+   },
+   "type": "object"
+  },
+  "DSPPixalateFraudInvalidTraffic": {
+   "properties": {
+    "excludeAppsAndDomains": {
+     "description": "Set to true to exclude traffic from Apps and Domains identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeIpAddressAndUserAgents": {
+     "description": "Set to true to exclude traffic from IPV4 and IPV6 addresses and user agents identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeOttAndMobileDevices": {
+     "description": "Set to true to exclude traffic from OTT and Mobile devices identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeRemovedAppsFromAppStores": {
+     "description": "Set to true to exlude traffic from Apps that have been removed from the google play and apple app stores in the last 6 months.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPPlacementType": {
+   "description": "**PlacementType Enum:** | PlacementType | Description | | --- | --- | | `REWARDED` | Rewarded video type where users receive rewards from the publisher for watching ads. |",
+   "enum": [
+    "REWARDED"
+   ],
+   "type": "string"
+  },
+  "DSPPlacementTypeTarget": {
+   "description": "Target based on the placement type.",
+   "properties": {
+    "placementType": {
+     "$ref": "DSPPlacementType"
+    }
+   },
+   "required": [
+    "placementType"
+   ],
+   "type": "object"
+  },
+  "DSPPoint": {
+   "properties": {
+    "pointType": {
+     "type": "string"
+    },
+    "x": {
+     "$ref": "DSPXPoint"
+    },
+    "y": {
+     "items": {
+      "$ref": "DSPYPoint"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "x"
+   ],
+   "type": "object"
+  },
+  "DSPPointLabel": {
+   "description": "**PointLabel Enum:** | PointLabel | Description | | --- | --- | | `SPEND` | Spend in monetary value. | | `BID` | Bid in monetary value. | | `DC` | Delivery confidence. | | `TAS` | Total available spend. | | `AIMP` | Ava…",
+   "enum": [
+    "AIMP",
+    "AREA",
+    "BID",
+    "CAS",
+    "CPA",
+    "CPC",
+    "CPM",
+    "DC",
+    "EIMP",
+    "EREA",
+    "ROAS",
+    "SPEND",
+    "TAS"
+   ],
+   "type": "string"
+  },
+  "DSPPrimaryInventoryType": {
+   "description": "**PrimaryInventoryType Enum:** | PrimaryInventoryType | Description | | --- | --- | | `DISPLAY` | Image ads that serve across Amazon and third-party inventory. | | `VIDEO_OLV` | Video ads that serve on online video inve…",
+   "enum": [
+    "AUDIO",
+    "DISPLAY",
+    "VIDEO_OLV",
+    "VIDEO_STV"
+   ],
+   "type": "string"
+  },
+  "DSPProductCategoryRefinement": {
+   "properties": {
+    "productCategoryId": {
+     "description": "The product category ID to target.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPProductCategoryRefinementValue": {
+   "properties": {
+    "productCategoryRefinement": {
+     "$ref": "DSPProductCategoryRefinement"
+    }
+   },
+   "type": "object"
+  },
+  "DSPProductCategoryTarget": {
+   "description": "Targets a specific customer search term.",
+   "properties": {
+    "productCategoryRefinement": {
+     "$ref": "DSPProductCategoryRefinementValue"
+    }
+   },
+   "required": [
+    "productCategoryRefinement"
+   ],
+   "type": "object"
+  },
+  "DSPProductIdType": {
+   "description": "**ProductIdType Enum:** | ProductIdType | Description | | --- | --- | | `ASIN` | ASIN identifier type. |",
+   "enum": [
+    "ASIN"
+   ],
+   "type": "string"
+  },
+  "DSPProductMarketplaceSetting": {
+   "properties": {
+    "marketplace": {
+     "$ref": "DSPMarketplace"
+    },
+    "productId": {
+     "description": "The product id applicable at the specified marketplace.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "marketplace",
+    "productId"
+   ],
+   "type": "object"
+  },
+  "DSPProductMatchType": {
+   "description": "**ProductMatchType Enum:** | ProductMatchType | Description | | --- | --- | | `PRODUCT_EXACT` | Products exactly matching the specified product. |",
+   "enum": [
+    "PRODUCT_EXACT"
+   ],
+   "type": "string"
+  },
+  "DSPProductTarget": {
+   "description": "Targets a specific product.",
+   "properties": {
+    "matchType": {
+     "$ref": "DSPProductMatchType"
+    },
+    "product": {
+     "$ref": "DSPProductValue"
+    },
+    "productIdType": {
+     "$ref": "DSPProductIdType"
+    }
+   },
+   "required": [
+    "matchType",
+    "product",
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "DSPProductValue": {
+   "properties": {
+    "marketplaceSettings": {
+     "description": "The product ids at specific marketplace level. Either the product id or the marketplace settings should always be specified",
+     "items": {
+      "$ref": "DSPProductMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productId": {
+     "description": "The product identifier. Either the product id or the marketplace settings should always be specified",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPRecommendedObjectType": {
+   "description": "**RecommendedObjectType Enum:** | RecommendedObjectType | Description | | --- | --- | | `CAMPAIGN` | An advertising campaign that groups together ad groups and ads | | `ADGROUP` | A group of ads within a campaign that s…",
+   "enum": [
+    "ADGROUP",
+    "CAMPAIGN"
+   ],
+   "type": "string"
+  },
+  "DSPRecurrence": {
+   "enum": [
+    "DAILY",
+    "LIFETIME",
+    "MONTHLY"
+   ],
+   "type": "string"
+  },
+  "DSPReplanning": {
+   "description": "Recommendation for replanning.",
+   "properties": {
+    "content": {
+     "type": "string"
+    },
+    "curves": {
+     "items": {
+      "$ref": "DSPCurve"
+     },
+     "maxItems": 4,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliverInFullConfidence": {
+     "$ref": "DSPDeliverInFullConfidence"
+    },
+    "metrics": {
+     "items": {
+      "$ref": "DSPForecastMetric"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "scenarioFlight": {
+     "$ref": "DSPForecastFlight"
+    },
+    "scenarioType": {
+     "type": "string"
+    },
+    "selectedMetrics": {
+     "description": "**SelectedForecastMetric Enum:** | SelectedForecastMetric | Description | | --- | --- | | `DC` | Delivery confidence. | | `TAS` | Total available spend. | | `AIMP` | Available impressions. | | `AREA` | Available reach. …",
+     "items": {
+      "$ref": "DSPSelectedForecastMetric"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "title": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "content",
+    "title"
+   ],
+   "type": "object"
+  },
+  "DSPReplanningSettings": {
+   "description": "Forecast request of a campaign, adGroups, flights, and targets with adjusted settings.",
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "DSPForecastAdGroup"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "campaign": {
+     "$ref": "DSPForecastCampaign"
+    },
+    "flights": {
+     "items": {
+      "$ref": "DSPForecastFlight"
+     },
+     "maxItems": 150,
+     "minItems": 0,
+     "type": "array"
+    },
+    "tags": {
+     "items": {
+      "$ref": "DSPTag"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targets": {
+     "items": {
+      "$ref": "DSPForecastTarget"
+     },
+     "maxItems": 2000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPRetrieveCampaignForecastRequest": {
+   "properties": {
+    "campaignForecastDescriptions": {
+     "items": {
+      "$ref": "DSPCampaignForecastDescription"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaignForecastDescriptions"
+   ],
+   "type": "object"
+  },
+  "DSPRolloverStrategy": {
+   "description": "**RolloverStrategy Enum:** | RolloverStrategy | Description | | --- | --- | | `NO_ROLLOVER` | Do not rollover flight budgets. | | `PRIOR_BUDGET_ROLLOVER` | Rollover prior flight unused budget. | | `CUMULATIVE_BUDGET_ROL…",
+   "enum": [
+    "CUMULATIVE_BUDGET_ROLLOVER",
+    "NO_ROLLOVER",
+    "PRIOR_BUDGET_ROLLOVER"
+   ],
+   "type": "string"
+  },
+  "DSPSelectedForecastMetric": {
+   "description": "**SelectedForecastMetric Enum:** | SelectedForecastMetric | Description | | --- | --- | | `DC` | Delivery confidence. | | `TAS` | Total available spend. | | `AIMP` | Available impressions. | | `AREA` | Available reach. …",
+   "enum": [
+    "AIMP",
+    "AREA",
+    "CAS",
+    "CPA",
+    "CPC",
+    "CPM",
+    "DC",
+    "EIMP",
+    "EIMPCR",
+    "EREA",
+    "EREACR",
+    "IREA",
+    "ROAS",
+    "TAS",
+    "TASCR"
+   ],
+   "type": "string"
+  },
+  "DSPSiteLanguage": {
+   "description": "**SiteLanguage Enum:** | SiteLanguage | Description | | --- | --- | | `AR` | Arabic. | | `BN` | Bengali. | | `CS` | Czech. | | `DA` | Danish. | | `DE` | German. | | `EN` | English. | | `ES` | Spanish. | | `FI` | Finnish…",
+   "enum": [
+    "AR",
+    "BN",
+    "CS",
+    "DA",
+    "DE",
+    "EN",
+    "ES",
+    "FI",
+    "FR",
+    "GU",
+    "HI",
+    "IT",
+    "JA",
+    "KN",
+    "ML",
+    "MR",
+    "NL",
+    "NO",
+    "OTHER",
+    "PA",
+    "PL",
+    "PT",
+    "SV",
+    "TA",
+    "TE",
+    "TR",
+    "ZH"
+   ],
+   "type": "string"
+  },
+  "DSPState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "DSPStatus": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "DSPDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "DSPDeliveryStatus"
+    }
+   },
+   "required": [
+    "deliveryStatus"
+   ],
+   "type": "object"
+  },
+  "DSPTacticKey": {
+   "description": "A tactic type paired with its compatible inventory type",
+   "type": "object"
+  },
+  "DSPTacticsConvertersExclusionType": {
+   "description": "**TacticsConvertersExclusionType Enum:** | TacticsConvertersExclusionType | Description | | --- | --- | | `NO_EXCLUSION` | Do not exclude any converters from targeting. | | `RECENT_CONVERTERS` | Exclude recent converter…",
+   "enum": [
+    "NO_EXCLUSION",
+    "RECENT_CONVERTERS"
+   ],
+   "type": "string"
+  },
+  "DSPTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPTargetBid": {
+   "type": "object"
+  },
+  "DSPTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "keywordTarget": {
+       "$ref": "DSPKeywordTarget"
+      }
+     },
+     "required": [
+      "keywordTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productTarget": {
+       "$ref": "DSPProductTarget"
+      }
+     },
+     "required": [
+      "productTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productCategoryTarget": {
+       "$ref": "DSPProductCategoryTarget"
+      }
+     },
+     "required": [
+      "productCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "audienceTarget": {
+       "$ref": "DSPAudienceTarget"
+      }
+     },
+     "required": [
+      "audienceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "locationTarget": {
+       "$ref": "DSPLocationTarget"
+      }
+     },
+     "required": [
+      "locationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "domainTarget": {
+       "$ref": "DSPDomainTarget"
+      }
+     },
+     "required": [
+      "domainTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "appTarget": {
+       "$ref": "DSPAppTarget"
+      }
+     },
+     "required": [
+      "appTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "deviceTarget": {
+       "$ref": "DSPDeviceTarget"
+      }
+     },
+     "required": [
+      "deviceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "dayPartTarget": {
+       "$ref": "DSPDayPartTarget"
+      }
+     },
+     "required": [
+      "dayPartTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentCategoryTarget": {
+       "$ref": "DSPContentCategoryTarget"
+      }
+     },
+     "required": [
+      "contentCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentGenreTarget": {
+       "$ref": "DSPContentGenreTarget"
+      }
+     },
+     "required": [
+      "contentGenreTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentRatingTarget": {
+       "$ref": "DSPContentRatingTarget"
+      }
+     },
+     "required": [
+      "contentRatingTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "brandSafetyTierTarget": {
+       "$ref": "DSPBrandSafetyTierTarget"
+      }
+     },
+     "required": [
+      "brandSafetyTierTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "brandSafetyCategoryTarget": {
+       "$ref": "DSPBrandSafetyCategoryTarget"
+      }
+     },
+     "required": [
+      "brandSafetyCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "inventorySourceTarget": {
+       "$ref": "DSPInventorySourceTarget"
+      }
+     },
+     "required": [
+      "inventorySourceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "adInitiationTarget": {
+       "$ref": "DSPAdInitiationTarget"
+      }
+     },
+     "required": [
+      "adInitiationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "adPlayerSizeTarget": {
+       "$ref": "DSPAdPlayerSizeTarget"
+      }
+     },
+     "required": [
+      "adPlayerSizeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoAdFormatTarget": {
+       "$ref": "DSPVideoAdFormatTarget"
+      }
+     },
+     "required": [
+      "videoAdFormatTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "thirdPartyTarget": {
+       "$ref": "DSPThirdPartyTarget"
+      }
+     },
+     "required": [
+      "thirdPartyTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "themeTarget": {
+       "$ref": "DSPThemeTarget"
+      }
+     },
+     "required": [
+      "themeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentInstreamPositionTarget": {
+       "$ref": "DSPContentInstreamPositionTarget"
+      }
+     },
+     "required": [
+      "contentInstreamPositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentOutstreamPositionTarget": {
+       "$ref": "DSPContentOutstreamPositionTarget"
+      }
+     },
+     "required": [
+      "contentOutstreamPositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoContentDurationTarget": {
+       "$ref": "DSPVideoContentDurationTarget"
+      }
+     },
+     "required": [
+      "videoContentDurationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "foldPositionTarget": {
+       "$ref": "DSPFoldPositionTarget"
+      }
+     },
+     "required": [
+      "foldPositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "nativeContentPositionTarget": {
+       "$ref": "DSPNativeContentPositionTarget"
+      }
+     },
+     "required": [
+      "nativeContentPositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "placementTypeTarget": {
+       "$ref": "DSPPlacementTypeTarget"
+      }
+     },
+     "required": [
+      "placementTypeTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPTargetLevel": {
+   "description": "**TargetLevel Enum:** | TargetLevel | Description | | --- | --- | | `AD_GROUP` | Target applied at the ad group level. |",
+   "enum": [
+    "AD_GROUP"
+   ],
+   "type": "string"
+  },
+  "DSPTargetType": {
+   "description": "**TargetType Enum:** | TargetType | Description | | --- | --- | | `KEYWORD` | Target based on customer search terms. | | `PRODUCT` | Target based on a specific product. | | `PRODUCT_CATEGORY` | Target based on a product…",
+   "enum": [
+    "AD_INITIATION",
+    "AD_PLAYER_SIZE",
+    "APP",
+    "AUDIENCE",
+    "BRAND_SAFETY_CATEGORY",
+    "BRAND_SAFETY_TIER",
+    "CONTENT_CATEGORY",
+    "CONTENT_GENRE",
+    "CONTENT_INSTREAM_POSITION",
+    "CONTENT_OUTSTREAM_POSITION",
+    "CONTENT_RATING",
+    "DAYPART",
+    "DEVICE",
+    "DOMAIN",
+    "FOLD_POSITION",
+    "INVENTORY_SOURCE",
+    "KEYWORD",
+    "LOCATION",
+    "NATIVE_CONTENT_POSITION",
+    "PLACEMENT_TYPE",
+    "PRODUCT",
+    "PRODUCT_CATEGORY",
+    "THEME",
+    "THIRD_PARTY",
+    "VIDEO_AD_FORMAT",
+    "VIDEO_CONTENT_DURATION"
+   ],
+   "type": "string"
+  },
+  "DSPTargetingSettings": {
+   "properties": {
+    "amazonViewability": {
+     "$ref": "DSPAmazonViewability"
+    },
+    "automatedTargetingTactic": {
+     "$ref": "DSPAutomatedTargetingTactic"
+    },
+    "defaultAudienceTargetingMatchType": {
+     "$ref": "DSPDefaultAudienceTargetingMatchType"
+    },
+    "enableLanguageTargeting": {
+     "description": "If set to true, creatives will only target supply where the content language matches the creative language.",
+     "type": "boolean"
+    },
+    "siteLanguage": {
+     "$ref": "DSPSiteLanguage"
+    },
+    "tacticsConvertersExclusionType": {
+     "$ref": "DSPTacticsConvertersExclusionType"
+    },
+    "targetedPGDealId": {
+     "description": "The deal Id (advertisingDealId in Ads API v1, deal.id in v0) to be targeted by the Ad Group being created. If you are creating an ad group targeting a programmatic guaranteed deal, the deal is provided at time of ad gro…",
+     "type": "string"
+    },
+    "timeZoneType": {
+     "$ref": "DSPTimeZoneType"
+    },
+    "userLocationSignal": {
+     "$ref": "DSPUserLocationSignal"
+    },
+    "videoCompletionTier": {
+     "$ref": "DSPVideoCompletionTier"
+    }
+   },
+   "type": "object"
+  },
+  "DSPThemeMatchType": {
+   "description": "**ThemeMatchType Enum:** | ThemeMatchType | Description | | --- | --- | | `PRODUCTS_SIMILAR_TO_ADVERTISED_PRODUCTS` | Products similar to products advertised as part of the ad group. |",
+   "enum": [
+    "PRODUCTS_SIMILAR_TO_ADVERTISED_PRODUCTS"
+   ],
+   "type": "string"
+  },
+  "DSPThemeTarget": {
+   "description": "Theme targets let advertisers select high-performing targets based on a common theme.",
+   "properties": {
+    "matchType": {
+     "$ref": "DSPThemeMatchType"
+    }
+   },
+   "required": [
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "DSPThirdPartyTarget": {
+   "properties": {
+    "thirdPartyTargetDetails": {
+     "$ref": "DSPThirdPartyTargetDetails"
+    },
+    "thirdPartyTargetType": {
+     "$ref": "DSPThirdPartyTargetType"
+    }
+   },
+   "required": [
+    "thirdPartyTargetDetails",
+    "thirdPartyTargetType"
+   ],
+   "type": "object"
+  },
+  "DSPThirdPartyTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "doubleVerifyFraudInvalidTraffic": {
+       "$ref": "DSPDoubleVerifyFraudInvalidTraffic"
+      }
+     },
+     "required": [
+      "doubleVerifyFraudInvalidTraffic"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyStandardDisplayBrandSafety": {
+       "$ref": "DSPDoubleVerifyStandardDisplayBrandSafety"
+      }
+     },
+     "required": [
+      "doubleVerifyStandardDisplayBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyBrandSafety": {
+       "$ref": "DSPDoubleVerifyBrandSafety"
+      }
+     },
+     "required": [
+      "doubleVerifyBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyViewability": {
+       "$ref": "DSPDoubleVerifyViewability"
+      }
+     },
+     "required": [
+      "doubleVerifyViewability"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyAuthenticBrandSafety": {
+       "$ref": "DSPDoubleVerifyAuthenticBrandSafety"
+      }
+     },
+     "required": [
+      "doubleVerifyAuthenticBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyCustomContextualSegmentId": {
+       "$ref": "DSPDoubleVerifyCustomContextualSegmentId"
+      }
+     },
+     "required": [
+      "doubleVerifyCustomContextualSegmentId"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyAuthenticAttention": {
+       "$ref": "DSPDoubleVerifyAuthenticAttention"
+      }
+     },
+     "required": [
+      "doubleVerifyAuthenticAttention"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceFraudInvalidTraffic": {
+       "$ref": "DSPIntegralAdScienceFraudInvalidTraffic"
+      }
+     },
+     "required": [
+      "integralAdScienceFraudInvalidTraffic"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceBrandSafety": {
+       "$ref": "DSPIntegralAdScienceBrandSafety"
+      }
+     },
+     "required": [
+      "integralAdScienceBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceViewability": {
+       "$ref": "DSPIntegralAdScienceViewability"
+      }
+     },
+     "required": [
+      "integralAdScienceViewability"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceContextualTargeting": {
+       "$ref": "DSPIntegralAdScienceContextualTargeting"
+      }
+     },
+     "required": [
+      "integralAdScienceContextualTargeting"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceContextualAvoidance": {
+       "$ref": "DSPIntegralAdScienceContextualAvoidance"
+      }
+     },
+     "required": [
+      "integralAdScienceContextualAvoidance"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "pixalateFraudInvalidTraffic": {
+       "$ref": "DSPPixalateFraudInvalidTraffic"
+      }
+     },
+     "required": [
+      "pixalateFraudInvalidTraffic"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceQualitySync": {
+       "$ref": "DSPIntegralAdScienceQualitySync"
+      }
+     },
+     "required": [
+      "integralAdScienceQualitySync"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "newsGuardBrandGuardTrustedNewsTargeting": {
+       "$ref": "DSPNewsGuardBrandGuardTrustedNewsTargeting"
+      }
+     },
+     "required": [
+      "newsGuardBrandGuardTrustedNewsTargeting"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "newsGuardBrandGuardMisinformationSafety": {
+       "$ref": "DSPNewsGuardBrandGuardMisinformationSafety"
+      }
+     },
+     "required": [
+      "newsGuardBrandGuardMisinformationSafety"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPThirdPartyTargetType": {
+   "description": "**ThirdPartyTargetType Enum:** | ThirdPartyTargetType | Description | | --- | --- | | `DOUBLE_VERIFY_FRAUD_INVALID_TRAFFIC` | | | `DOUBLE_VERIFY_STANDARD_DISPLAY_BRAND_SAFETY` | | | `DOUBLE_VERIFY_BRAND_SAFETY` | | | `D…",
+   "enum": [
+    "DOUBLE_VERIFY_AUTHENTIC_ATTENTION",
+    "DOUBLE_VERIFY_AUTHENTIC_BRAND_SAFETY",
+    "DOUBLE_VERIFY_BRAND_SAFETY",
+    "DOUBLE_VERIFY_CUSTOM_CONTEXTUAL_SEGMENT_ID",
+    "DOUBLE_VERIFY_FRAUD_INVALID_TRAFFIC",
+    "DOUBLE_VERIFY_STANDARD_DISPLAY_BRAND_SAFETY",
+    "DOUBLE_VERIFY_VIEWABILITY",
+    "INTEGRAL_AD_SCIENCE_BRAND_SAFETY",
+    "INTEGRAL_AD_SCIENCE_CONTEXTUAL_AVOIDANCE",
+    "INTEGRAL_AD_SCIENCE_CONTEXTUAL_TARGETING",
+    "INTEGRAL_AD_SCIENCE_FRAUD_INVALID_TRAFFIC",
+    "INTEGRAL_AD_SCIENCE_QUALITY_SYNC",
+    "INTEGRAL_AD_SCIENCE_VIEWABILITY",
+    "NEWS_GUARD_BRAND_GUARD_MISINFORMATION_SAFETY",
+    "NEWS_GUARD_BRAND_GUARD_TRUSTED_NEWS_TARGETING",
+    "PIXALATE_FRAUD_INVALID_TRAFFIC"
+   ],
+   "type": "string"
+  },
+  "DSPTimeOfDay": {
+   "properties": {
+    "endTime": {
+     "description": "Selected end time",
+     "type": "string"
+    },
+    "startTime": {
+     "description": "Selected start time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "endTime",
+    "startTime"
+   ],
+   "type": "object"
+  },
+  "DSPTimeUnit": {
+   "enum": [
+    "DAYS",
+    "HOURS",
+    "MINUTES"
+   ],
+   "type": "string"
+  },
+  "DSPTimeZoneType": {
+   "description": "**TimeZoneType Enum:** | TimeZoneType | Description | | --- | --- | | `VIEWER` | Use the viewer's local time zone for daypart targeting. | | `ADVERTISER_REGION` | Use the advertiser's regional time zone for daypart targ…",
+   "enum": [
+    "ADVERTISER_REGION",
+    "VIEWER"
+   ],
+   "type": "string"
+  },
+  "DSPTwitchContentRating": {
+   "properties": {
+    "twitchContentRating": {
+     "$ref": "DSPTwitchContentRatingEnum"
+    }
+   },
+   "required": [
+    "twitchContentRating"
+   ],
+   "type": "object"
+  },
+  "DSPTwitchContentRatingEnum": {
+   "description": "**TwitchContentRatingEnum Enum:** | TwitchContentRatingEnum | Description | | --- | --- | | `TWITCH_MODERATE` | Twitch Content with moderate content exclusions based on content classification labels received from Twitch…",
+   "enum": [
+    "TWITCH_MODERATE",
+    "TWITCH_RESTRICTIVE"
+   ],
+   "type": "string"
+  },
+  "DSPUserLocationSignal": {
+   "description": "**UserLocationSignal Enum:** | UserLocationSignal | Description | | --- | --- | | `CURRENT` | Target users based on their current geographic location. | | `MULTIPLE_SIGNALS` | Target users based on multiple location sig…",
+   "enum": [
+    "CURRENT",
+    "MULTIPLE_SIGNALS"
+   ],
+   "type": "string"
+  },
+  "DSPVideoAdFormat": {
+   "description": "**VideoAdFormat Enum:** | VideoAdFormat | Description | | --- | --- | | `INSTREAM` | Video ad plays within streaming video content. | | `FULL_EPISODE_PLAYER` | Video ad plays within a full episode player. | | `OUTSTREAM…",
+   "enum": [
+    "FULL_EPISODE_PLAYER",
+    "INSTREAM",
+    "OUTSTREAM"
+   ],
+   "type": "string"
+  },
+  "DSPVideoAdFormatTarget": {
+   "description": "Target based on the video ad format.",
+   "properties": {
+    "videoAdFormat": {
+     "$ref": "DSPVideoAdFormat"
+    }
+   },
+   "required": [
+    "videoAdFormat"
+   ],
+   "type": "object"
+  },
+  "DSPVideoCompletionTier": {
+   "description": "**VideoCompletionTier Enum:** | VideoCompletionTier | Description | | --- | --- | | `ALL_TIERS` | Target all video completion tiers. | | `GREATER_THAN_10_PERCENT` | Target videos with greater than 10% predicted completi…",
+   "enum": [
+    "ALL_TIERS",
+    "GREATER_THAN_10_PERCENT",
+    "GREATER_THAN_20_PERCENT",
+    "GREATER_THAN_30_PERCENT",
+    "GREATER_THAN_40_PERCENT",
+    "GREATER_THAN_50_PERCENT",
+    "GREATER_THAN_60_PERCENT",
+    "GREATER_THAN_70_PERCENT",
+    "GREATER_THAN_80_PERCENT",
+    "GREATER_THAN_90_PERCENT"
+   ],
+   "type": "string"
+  },
+  "DSPVideoContentDuration": {
+   "description": "**VideoContentDuration Enum:** | VideoContentDuration | Description | | --- | --- | | `SHORT` | Video content duration of 0 to 10 minutes | | `MEDIUM` | Video content duration of 10 to 30 minutes | | `LONG` | Video cont…",
+   "enum": [
+    "EXTENDED",
+    "LONG",
+    "MEDIUM",
+    "SHORT",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPVideoContentDurationTarget": {
+   "description": "Targets ads to a specific video content duration",
+   "properties": {
+    "duration": {
+     "$ref": "DSPVideoContentDuration"
+    }
+   },
+   "required": [
+    "duration"
+   ],
+   "type": "object"
+  },
+  "DSPVideoInitiationType": {
+   "description": "**VideoInitiationType Enum:** | VideoInitiationType | Description | | --- | --- | | `USER_INITIATED` | Video ad started by user action such as a click. | | `AUTOPLAY` | Video ad starts automatically without user action.…",
+   "enum": [
+    "AUTOPLAY",
+    "UNKNOWN",
+    "USER_INITIATED"
+   ],
+   "type": "string"
+  },
+  "DSPViewabilityTier": {
+   "description": "**ViewabilityTier Enum:** | ViewabilityTier | Description | | --- | --- | | `ALL_TIERS` | Target all viewability tiers with no filtering. | | `LESS_THAN_40_PERCENT` | Target impressions with less than 40% predicted view…",
+   "enum": [
+    "ALL_TIERS",
+    "GREATER_THAN_40_PERCENT",
+    "GREATER_THAN_50_PERCENT",
+    "GREATER_THAN_60_PERCENT",
+    "GREATER_THAN_70_PERCENT",
+    "LESS_THAN_40_PERCENT"
+   ],
+   "type": "string"
+  },
+  "DSPViewabilityTierType": {
+   "description": "The type of viewability tier.",
+   "enum": [
+    "ALLOW_ALL",
+    "VIEWABILITY_TIER_GT_40",
+    "VIEWABILITY_TIER_GT_50",
+    "VIEWABILITY_TIER_GT_60",
+    "VIEWABILITY_TIER_GT_70",
+    "VIEWABILITY_TIER_LT_40"
+   ],
+   "type": "string"
+  },
+  "DSPWarning": {
+   "description": "The warning message of a forecast.",
+   "properties": {
+    "adGroupIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "messageParameters": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "warningLevel": {
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DSPXPoint": {
+   "description": "The label and value on X axis of the curve.",
+   "properties": {
+    "label": {
+     "$ref": "DSPPointLabel"
+    },
+    "value": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "label",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPYPoint": {
+   "description": "The label and value on Y axis of the curve.",
+   "properties": {
+    "label": {
+     "$ref": "DSPPointLabel"
+    },
+    "value": {
+     "$ref": "DSPForecastValue"
+    }
+   },
+   "required": [
+    "label",
+    "value"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `BAD_REQUEST` | The request is not valid considering the documented schema. |",
+   "enum": [
+    "BAD_REQUEST"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 0,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

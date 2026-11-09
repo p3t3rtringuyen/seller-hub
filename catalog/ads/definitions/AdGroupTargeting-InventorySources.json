@@ -1,0 +1,323 @@
+{
+ "api": "AdGroupTargeting-InventorySources",
+ "file": "specs/dest/AdGroupTargeting-InventorySources_prod_3p.json",
+ "schemas": {
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateAdGroupInventorySourceTargetV1": {
+   "properties": {
+    "inventorySourceId": {
+     "description": "The inventory source identifier can be retrieved from the <a href='https://advertising.amazon.com/API/docs/en-us/dsp-discovery-inventory-source-exchanges'>exchanges</a> or <a href='https://advertising.amazon.com/API/doc…",
+     "type": "string"
+    },
+    "inventorySourceType": {
+     "$ref": "InventorySourceTypePostV1"
+    }
+   },
+   "required": [
+    "inventorySourceId",
+    "inventorySourceType"
+   ],
+   "type": "object"
+  },
+  "DspCreateAdGroupInventorySourceTargetsRequestContentV1": {
+   "properties": {
+    "inventorySourceTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspCreateAdGroupInventorySourceTargetV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "inventorySourceTargets"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupInventorySourceTargetV1": {
+   "properties": {
+    "inventorySourceId": {
+     "description": "The inventory source identifier can be retrieved from the <a href='https://advertising.amazon.com/API/docs/en-us/dsp-discovery-inventory-source-exchanges'>exchanges</a> or <a href='https://advertising.amazon.com/API/doc…",
+     "type": "string"
+    },
+    "inventorySourceType": {
+     "$ref": "InventorySourceTypePostV1"
+    }
+   },
+   "required": [
+    "inventorySourceId",
+    "inventorySourceType"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupInventorySourceTargetsRequestContentV1": {
+   "properties": {
+    "inventorySourceTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspDeleteAdGroupInventorySourceTargetV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "inventorySourceTargets"
+   ],
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspFunctionalPatchDefaultAdGroupInventorySourceTargetsOutputPayload": {},
+  "DspFunctionalPatchDefaultAdGroupInventorySourceTargetsRequestContent": {
+   "properties": {
+    "create": {
+     "type": "boolean"
+    },
+    "finalize": {
+     "type": "boolean"
+    },
+    "flights": {
+     "type": "array"
+    },
+    "resourceId": {
+     "type": "string"
+    },
+    "validate": {
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetAdGroupInventorySourceTargetV1": {
+   "properties": {
+    "inventorySourceId": {
+     "description": "The inventory source identifier can be retrieved from the <a href='https://advertising.amazon.com/API/docs/en-us/dsp-discovery-inventory-source-exchanges'>exchanges</a> or <a href='https://advertising.amazon.com/API/doc…",
+     "type": "string"
+    },
+    "inventorySourceType": {
+     "$ref": "InventorySourceTypeGetV1"
+    }
+   },
+   "required": [
+    "inventorySourceId",
+    "inventorySourceType"
+   ],
+   "type": "object"
+  },
+  "DspGetAdGroupInventorySourceTargetsResponseContent": {
+   "properties": {
+    "inventorySourceTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspGetAdGroupInventorySourceTargetV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "inventorySourceTargets"
+   ],
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "InventorySourceTypeGetV1": {
+   "description": "The type of inventory source to be targeted. * AMAZON: Amazon owned and operated inventory. * APD: Amazon Publisher Direct inventory. * THIRD_PARTY_EXCHANGE: Third-party exchange inventory. * DEAL: Deal inventory. * INV…",
+   "enum": [
+    "AMAZON",
+    "APD",
+    "THIRD_PARTY_EXCHANGE",
+    "DEAL",
+    "INVENTORY_GROUP",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "InventorySourceTypePostV1": {
+   "description": "The type of inventory source to be targeted. * AMAZON: Amazon owned and operated inventory. * APD: Amazon Publisher Direct inventory. * THIRD_PARTY_EXCHANGE: Third-party exchange inventory. * DEAL: Deal inventory. * INV…",
+   "enum": [
+    "AMAZON",
+    "APD",
+    "THIRD_PARTY_EXCHANGE",
+    "DEAL",
+    "INVENTORY_GROUP"
+   ],
+   "type": "string"
+  }
+ }
+}

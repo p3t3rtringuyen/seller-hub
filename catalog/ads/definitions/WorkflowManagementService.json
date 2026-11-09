@@ -1,0 +1,865 @@
+{
+ "api": "WorkflowManagementService",
+ "file": "specs/dest/WorkflowManagementService_prod_3p.json",
+ "schemas": {
+  "AdvertiserType": {
+   "description": "The advertiser type values",
+   "enum": [
+    "DISPLAY",
+    "SAS",
+    "SPONSORED_ADS"
+   ],
+   "type": "string"
+  },
+  "AmcAdvertiserIdentifier": {
+   "description": "Identifying properties of an advertiser.",
+   "properties": {
+    "id": {
+     "description": "Depending on the value for advertiserType, this contains the CFID of a DSP, entity Id for a Sponsored Ads, or advertiser Id for a SAS advertiser.",
+     "type": "string"
+    },
+    "marketplaceId": {
+     "description": "For Sponsored Ads and SAS advertisers, this contains the corresponding marketplaceId. This will be null for DSP advertisers.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "AdvertiserType"
+    }
+   },
+   "required": [
+    "id",
+    "type"
+   ],
+   "type": "object"
+  },
+  "CreateScheduleRequest": {
+   "allOf": [
+    {
+     "$ref": "Schedule"
+    },
+    {
+     "properties": {
+      "marketplaceId": {
+       "description": "The identifier of the marketplace associated with the account.",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "CreateScheduleResponse": {
+   "description": "Empty response object denoting successful creation of a schedule.",
+   "type": "object"
+  },
+  "CreateWorkflowExecutionRequest": {
+   "properties": {
+    "additionalAcrResultsReceivers": {
+     "description": "AWS account IDs of additional customer-owned members which should receive the results of this execution through AWS Clean Rooms (ACR). The specified AWS accounts must be defined as members of the instance's ACR collabor…",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "advertisers": {
+     "description": "Optional - if specified, the execution will only read data for the provided advertisers. If not specified, the execution will read data for all advertisers queryable for the instance.",
+     "items": {
+      "$ref": "AmcAdvertiserIdentifier"
+     },
+     "type": "array"
+    },
+    "disableAggregationControls": {
+     "description": "Optional - if true privacy controls will NOT be applied to the workflow. Query output can still be retrieved when privacy protection is skipped if only requireSyntheticData is true.",
+     "type": "boolean"
+    },
+    "dryRun": {
+     "default": false,
+     "description": "Optional - if true, the execution will be processed but not submitted to compute, at which point the execution will be marked as complete. This can be used to quickly validate workflow executions (e.g., the sqlQuery) wi…",
+     "type": "boolean"
+    },
+    "maxCertifiedTime": {
+     "description": "The maximum certified time that will be used for input data sets. This parameter can be used to execute a workflow against older versions of data. The use of this parameter is subject to the limitations that older versi…",
+     "type": "string"
+    },
+    "maxDimensionTime": {
+     "description": "The maximum time window end that that will be used for dimension data sets. This parameter can be used to execute a workflow against older versions of dimension data. The required format is yyyy-MM-dd'T'HH:mm:ss (e.g. 2…",
+     "type": "string"
+    },
+    "parameterValues": {
+     "additionalProperties": {
+      "type": "string"
+     },
+     "description": "Values to use for the parameters specified in the workflow.",
+     "type": "object"
+    },
+    "requireSyntheticData": {
+     "description": "Optional - if true the execution will only be allowed to use data sets that only contain synthetic data.",
+     "type": "boolean"
+    },
+    "skipPublish": {
+     "description": "Optional - if true the workflow will be run without writing out results.",
+     "type": "boolean"
+    },
+    "timeWindowEnd": {
+     "description": "Optional. Only used with a timeWindowType of EXPLICIT. The end of the time window for input data for the workflow execution. This is a nominal time window and not a guarantee that timestamps on any rows will be inside t…",
+     "type": "string"
+    },
+    "timeWindowStart": {
+     "description": "Optional. Only used with a timeWindowType of `EXPLICIT`. The start of the time window for input data for the workflow execution. This is a nominal time window and not a guarantee that timestamps on any rows will be insi…",
+     "type": "string"
+    },
+    "timeWindowTimeZone": {
+     "description": "Optional. The time zone of the specified time window. This applies to both time window start and end if specified for time window type `EXPLICIT` and to the determination of day and month boundaries for other time windo…",
+     "type": "string"
+    },
+    "timeWindowType": {
+     "description": "Optional. The type of time window to use to for specifying input data for the workflow execution. If not provided, the time window type of `MOST_RECENT_DAY` will be used. The following table lists available types: |Stat…",
+     "enum": [
+      "ALL",
+      "CURRENT_MONTH",
+      "EXPLICIT",
+      "MOST_RECENT_DAY",
+      "MOST_RECENT_WEEK",
+      "PREVIOUS_MONTH"
+     ],
+     "type": "string"
+    },
+    "workflow": {
+     "$ref": "Workflow"
+    },
+    "workflowExecutionTimeoutSeconds": {
+     "description": "Optional. If specified, limits the workflow query execution time to the specified number of seconds. The value is required to be at least 900 seconds (15 minutes). Unless configured otherwise, the maximum allowed timeou…",
+     "type": "integer"
+    },
+    "workflowId": {
+     "description": "The ID of the workflow to execute, if executing an existing workflow. Required if a sqlQuery is not provided. Cannot be populated at the same time as sqlQuery.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CreateWorkflowExecutionResponse": {
+   "properties": {
+    "workflowExecution": {
+     "$ref": "WorkflowExecution"
+    }
+   },
+   "type": "object"
+  },
+  "CreateWorkflowResponse": {
+   "description": "Empty response object denoting successful creation of a workflow.",
+   "type": "object"
+  },
+  "DataSource": {
+   "description": "Defines a type of data that may be used as a source for queries in workflows or data views. A data source has a flat schema defined by one or more columns. A data source may only be referenced directly in a query by the…",
+   "properties": {
+    "columns": {
+     "description": "List of data source columns.",
+     "items": {
+      "description": "Defines a column in a data source.",
+      "properties": {
+       "columnType": {
+        "description": "The type of a data source column. The following table lists available types: |Type Name|Description| |-----------|-----------| |METRIC|The column is a quantity or value rather than a dimension. In queries, metric column…",
+        "enum": [
+         "DIMENSION",
+         "METRIC"
+        ],
+        "type": "string"
+       },
+       "description": {
+        "description": "The human-readable description of what the column contains.",
+        "type": "string"
+       },
+       "name": {
+        "description": "The name of the column.",
+        "type": "string"
+       }
+      },
+      "type": "object"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "dataSourceId": {
+     "description": "The identifier of the data source.",
+     "type": "string"
+    },
+    "description": {
+     "description": "The human-readable description of what the data source contains.",
+     "type": "string"
+    },
+    "outputChannels": {
+     "description": "The possible channels for retrieving workflow execution output in this instance with information about whether or not it's possible to retrieve the output of workflow executions that read from this data source through t…",
+     "items": {
+      "$ref": "DataSourceOutputChannel"
+     },
+     "type": "array"
+    },
+    "owner": {
+     "description": "The owner of a data source. The following table lists available owners: |Type Name|Description| |-----------|-----------| |AMAZON|The data source is owned by Amazon.| |CUSTOMER|The data source is owned by an external en…",
+     "enum": [
+      "AMAZON",
+      "CUSTOMER"
+     ],
+     "type": "string"
+    },
+    "provider": {
+     "description": "The provider of the data source.",
+     "enum": [
+      "ADVERTISER_DATA_UPLOAD",
+      "AMAZON"
+     ],
+     "type": "string"
+    },
+    "tags": {
+     "description": "List of human-readable tags associated with a data source.",
+     "items": {
+      "description": "Defines a tag associated with a data source.",
+      "properties": {
+       "description": {
+        "description": "The human-readable description of the data source tag.",
+        "type": "string"
+       },
+       "subtext": {
+        "description": "Field denoting the ad product relevant to the data source (e.g., \"Amazon DSP\").",
+        "type": "string"
+       },
+       "title": {
+        "description": "The title of the data source tag.",
+        "type": "string"
+       },
+       "type": {
+        "description": "The type of a data source tag.",
+        "enum": [
+         "DEPRECATED",
+         "NEW",
+         "RENAMED"
+        ],
+        "type": "string"
+       }
+      },
+      "type": "object"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "warnings": {
+     "description": "Customer-facing warnings associated with the data source. Defaults to an empty list.",
+     "items": {
+      "$ref": "DataSourceWarning"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DataSourceOutputChannel": {
+   "description": "Contains information about a channel for retrieving workflow execution output in an instance and information about whether or not the output of executions that read from this data source can be retrieved through this ch…",
+   "properties": {
+    "channel": {
+     "$ref": "OutputChannel"
+    },
+    "outputAvailable": {
+     "description": "True if output would be available through this channel for a workflow execution that read from this data source, barring execution-level restrictions.",
+     "type": "boolean"
+    },
+    "outputUnavailableReason": {
+     "description": "If output cannot be retrieved through this channel (i.e. `outputAvailable` is false), contains a description of why not. Otherwise, is null.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "channel",
+    "outputAvailable"
+   ],
+   "type": "object"
+  },
+  "DataSourceWarning": {
+   "description": "A customer-facing warning associated with a data source. For now a warning carries only a human-readable message, but the intent is that additional properties (e.g. a category or severity) may be added in the future.",
+   "properties": {
+    "message": {
+     "description": "A human-readable, customer-facing description of the warning.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteScheduleResponse": {
+   "description": "Empty response object denoting successful deletion of a schedule.",
+   "type": "object"
+  },
+  "DeleteWorkflowResponse": {
+   "description": "Empty response object denoting successful deletion of a workflow.",
+   "type": "object"
+  },
+  "Error": {
+   "description": "The error response object.",
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetDataSourceResponse": {
+   "properties": {
+    "dataSource": {
+     "$ref": "DataSource"
+    }
+   },
+   "type": "object"
+  },
+  "GetScheduleResponse": {
+   "properties": {
+    "schedule": {
+     "$ref": "Schedule"
+    }
+   },
+   "type": "object"
+  },
+  "GetWorkflowExecutionDownloadUrlsResponse": {
+   "properties": {
+    "downloadUrls": {
+     "description": "A list of pre-signed S3 URLs for the workflow execution's results. Multiple URLs will be given for results that produce multiple files.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "metadataDownloadUrls": {
+     "description": "A list of pre-signed S3 URLs for the workflow execution's metadata used during execution.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "[Placeholder - To be used as a Future Scope] Token to use in subsequent request to retrieve next page of results. Null if all results have been returned.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetWorkflowExecutionResponse": {
+   "properties": {
+    "workflowExecution": {
+     "$ref": "WorkflowExecution"
+    }
+   },
+   "type": "object"
+  },
+  "GetWorkflowResponse": {
+   "properties": {
+    "workflow": {
+     "$ref": "Workflow"
+    }
+   },
+   "type": "object"
+  },
+  "ListDataSourcesResponse": {
+   "properties": {
+    "dataSources": {
+     "description": "List of data sources.",
+     "items": {
+      "$ref": "DataSource"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Optional. Token to use in subsequent request to retrieve next page of results. Null if all results have been returned.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListSchedulesResponse": {
+   "properties": {
+    "nextToken": {
+     "description": "Optional. Token to use in subsequent request to retrieve next page of results. Null if all results have been returned.",
+     "type": "string"
+    },
+    "schedules": {
+     "description": "List of schedules.",
+     "items": {
+      "$ref": "Schedule"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListWorkflowExecutionsResponse": {
+   "properties": {
+    "executions": {
+     "description": "List of workflow executions.",
+     "items": {
+      "$ref": "WorkflowExecution"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Optional. Token to use in subsequent request to retrieve next page of results. Null if all results have been returned.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListWorkflowsResponse": {
+   "properties": {
+    "nextToken": {
+     "description": "Optional. Token to use in subsequent request to retrieve next page of results. Null if all results have been returned.",
+     "type": "string"
+    },
+    "workflows": {
+     "description": "List of workflows.",
+     "items": {
+      "$ref": "Workflow"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "OutputChannel": {
+   "description": "Contains information about a channel for retrieving workflow execution output in an instance.",
+   "properties": {
+    "acrMemberId": {
+     "description": "The account ID of the AWS Clean Rooms member to which results were delivered. Is only populated for the ACR channel type.",
+     "type": "string"
+    },
+    "acrMembershipId": {
+     "description": "The membership ID of the AWS Clean Rooms member to which results were delivered. Is only populated for the ACR channel type.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "OutputChannelType"
+    }
+   },
+   "required": [
+    "type"
+   ],
+   "type": "object"
+  },
+  "OutputChannelType": {
+   "description": "Defines the mechanism for retrieving output for a workflow execution. The following are the possible output channel types: |Type|Description| |-----------|-----------| |DOWNLOAD|The output can be downloaded directly fro…",
+   "enum": [
+    "ACR",
+    "DOWNLOAD",
+    "PUBLISH"
+   ],
+   "type": "string"
+  },
+  "Schedule": {
+   "properties": {
+    "aggregationHourUtc": {
+     "description": "Specifies the number of hours of offset from UTC, which designates the delineating hour for workflow runs.",
+     "type": "integer"
+    },
+    "aggregationPeriod": {
+     "description": "The cadence at which to run a workflow. The following table lists available periods: |Period Name|Description| |-----------|-----------| |Daily|Schedule a workflow to run every day. If selected, `aggregationStartDay` is…",
+     "enum": [
+      "Daily",
+      "Weekly"
+     ],
+     "type": "string"
+    },
+    "aggregationStartDay": {
+     "description": "Day of week to start aggregations. If not specified, this defaults to the day of week that the schedule is created.",
+     "enum": [
+      "Friday",
+      "Monday",
+      "Saturday",
+      "Sunday",
+      "Thursday",
+      "Tuesday",
+      "Wednesday"
+     ],
+     "type": "string"
+    },
+    "disableAggregationControls": {
+     "description": "If true aggregation controls were NOT applied to the workflow. Query output could still be retrieved when aggregation controls were skipped if only requireSyntheticData was true.",
+     "type": "boolean"
+    },
+    "requireSyntheticData": {
+     "description": "If true the execution was allowed to use data sets that only contain synthetic data.",
+     "type": "boolean"
+    },
+    "scheduleEnabled": {
+     "description": "Boolean flag to signify whether or not the schedule is enabled. Disabled schedules will not run workflows.",
+     "type": "boolean"
+    },
+    "scheduleId": {
+     "description": "User-supplied identifier of the schedule.",
+     "type": "string"
+    },
+    "workflowId": {
+     "description": "The identifier of the workflow associated with the schedule.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateScheduleResponse": {
+   "description": "Empty response object denoting successful update of a schedule.",
+   "type": "object"
+  },
+  "UpdateWorkflowExecutionResponse": {
+   "description": "Empty response object denoting a successful update of a workflow execution.",
+   "type": "object"
+  },
+  "UpdateWorkflowResponse": {
+   "description": "Empty response object denoting a successful update of a workflow.",
+   "type": "object"
+  },
+  "Workflow": {
+   "description": "Workflows are defined as a set of operations that take previously defined data sources as input and use them to generate reports. Further information can be found in the AMC documentation hosted [here](https://advertisi…",
+   "properties": {
+    "filteredMetricsDiscriminatorColumn": {
+     "description": "If this field is not provided, rows which do not meet the minimum distinct user count requirements will be completely filtered out of the workflow output. If this field is provided, rows which do not meet the minimum di…",
+     "type": "string"
+    },
+    "inputParameters": {
+     "description": "Optional. Defines the parameters that can be referenced by workflow definition. If workflow references a parameter not defined here the compilation fails.",
+     "items": {
+      "properties": {
+       "columnType": {
+        "description": "The type of the column corresponding to the parameter. The following table lists available types: |Type Name|Description| |-----------|-----------| |METRIC|The column is a quantity or value rather than a dimension. In q…",
+        "enum": [
+         "DIMENSION",
+         "METRIC"
+        ],
+        "type": "string"
+       },
+       "dataType": {
+        "description": "The data type of the parameter corresponding to the data type of a column. The following table lists available types: |Type Name|Description| |-----------|-----------| |BINARY|Binary data.| |BOOLEAN|TRUE or FALSE.| |BYT…",
+        "enum": [
+         "BINARY",
+         "BOOLEAN",
+         "BYTE",
+         "CALENDAR_INTERVAL",
+         "DATE",
+         "DECIMAL",
+         "DOUBLE",
+         "FLOAT",
+         "INTEGER",
+         "LONG",
+         "SHORT",
+         "STRING",
+         "TIMESTAMP"
+        ],
+        "type": "string"
+       },
+       "defaultValue": {
+        "description": "The value to assign to the parameter if no value is provided.",
+        "type": "string"
+       },
+       "description": {
+        "description": "The human-readable description of what the parameter is used for.",
+        "type": "string"
+       },
+       "displayName": {
+        "description": "The human-readable name of the parameter.",
+        "type": "string"
+       },
+       "name": {
+        "description": "The name of the parameter used as a variable in SQL.",
+        "type": "string"
+       }
+      },
+      "type": "object"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inputSchema": {
+     "description": "Optional. 'null' schema if not provided. Provides the schema to use when resolving unqualified data sources to avoid collisions. Data sources include their schema in their ids, ex: 'sandbox.dsp_impressions' has a schema…",
+     "type": "string"
+    },
+    "outputColumns": {
+     "description": "Optional. The columns that the workflow must produce as output. If provided, the workflow will be validated during compilation to ensure that the schema of the output from the workflow exactly matches the [outputColumns…",
+     "items": {
+      "properties": {
+       "columnType": {
+        "description": "The type of the column. The following table lists available types: |Type Name|Description| |-----------|-----------| |METRIC|The column is a quantity or value rather than a dimension. In queries, metric columns are aggr…",
+        "enum": [
+         "DIMENSION",
+         "METRIC"
+        ],
+        "type": "string"
+       },
+       "dataType": {
+        "description": "The data type of the column. The following table lists available types: |Type Name|Description| |-----------|-----------| |BINARY|Binary data.| |BOOLEAN|TRUE or FALSE.| |BYTE|8 bit signed integral numeric data.| |CALEND…",
+        "enum": [
+         "BINARY",
+         "BOOLEAN",
+         "BYTE",
+         "CALENDAR_INTERVAL",
+         "DATE",
+         "DECIMAL",
+         "DOUBLE",
+         "FLOAT",
+         "INTEGER",
+         "LONG",
+         "SHORT",
+         "STRING",
+         "TIMESTAMP"
+        ],
+        "type": "string"
+       },
+       "dataTypePrecision": {
+        "description": "Specifies additional information about the dataType for DataType.DECIMAL. Corresponds to the total number of digits.",
+        "type": "integer"
+       },
+       "dataTypeScale": {
+        "description": "Specifies additional information about the dataType DataType.DECIMAL. Corresponds to the number of digits to the right of the decimal point.",
+        "type": "integer"
+       },
+       "description": {
+        "description": "The human-readable description of what the parameter is used for.",
+        "type": "string"
+       },
+       "name": {
+        "description": "The name of the column.",
+        "type": "string"
+       }
+      },
+      "type": "object"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "outputFormat": {
+     "description": "Specifies the CSV output format for a workflow.",
+     "properties": {
+      "escapeCharacter": {
+       "description": "The character to use for escaping characters inside a quoted field.",
+       "type": "string"
+      },
+      "quoteCharacter": {
+       "description": "The character to use for quoting fields that need it.",
+       "type": "string"
+      },
+      "separatorCharacter": {
+       "description": "The character to use for separating fields.",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "privacyFilteringBehavior": {
+     "description": "Specifies how workflow output will be processed after sensitive values have been removed. The following table lists available behaviors: |Behavior|Description| |-----------|-----------| |REMOVE_VALUES|If a row does not …",
+     "enum": [
+      "REMOVE_ROWS",
+      "REMOVE_VALUES"
+     ],
+     "type": "string"
+    },
+    "query": {
+     "description": "Defines a list of [operations] that produce a set of output data based on input data from one or more [DataSource]s. The first operation in a query must be a [SelectOperation] that uses a [DataSource] as its input data …",
+     "items": {
+      "format": "byte",
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "sqlQuery": {
+     "description": "The SQL query to run to produce output for the workflow. If a [sqlQuery] and a [query] are both provided, the [sqlQuery] will be used.",
+     "type": "string"
+    },
+    "workflowId": {
+     "description": "User-supplied identifier of the workflow.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "WorkflowExecution": {
+   "properties": {
+    "acrCollaborationId": {
+     "description": "The ID of the ACR collaboration that the execution is being executed in. Will only be populated for executions where at least one customer-owned member will be receiving results directly from ACR.",
+     "type": "string"
+    },
+    "acrCustomerMembershipId": {
+     "description": "The ID of the ACR membership for the primary customer-owned member. Will only be populated for executions where the primary customer-owned member will be receiving results directly from ACR.",
+     "type": "string"
+    },
+    "acrDetailPageUrl": {
+     "description": "The URL for the detail page of the ACR protected query performing the compute for this execution. Will only be populated for executions where the primary customer-owned member will be receiving results directly from ACR…",
+     "type": "string"
+    },
+    "acrProtectedQueryId": {
+     "description": "The ID for the ACR protected query performing the compute for this execution. Will only be populated for executions where at least one customer-owned member will be receiving results directly from ACR and where a protec…",
+     "type": "string"
+    },
+    "advertisers": {
+     "description": "If the execution was configured to read data for only a specified list of advertisers queryable for the instance, contains the advertisers for which data was read. Null if the execution was not configured to read data f…",
+     "items": {
+      "$ref": "AmcAdvertiserIdentifier"
+     },
+     "type": "array"
+    },
+    "createTime": {
+     "description": "The time the workflow execution was created. This field is in UTC and is formatted as yyyy-MM-dd'T'HH:mm:ss'Z'.",
+     "type": "string"
+    },
+    "disableAggregationControls": {
+     "description": "If true aggregation controls were NOT applied to the workflow. Query output could still be retrieved when aggregation controls were skipped if only requireSyntheticData was true.",
+     "type": "boolean"
+    },
+    "expireTime": {
+     "description": "The time at which the workflow execution will alarm due to SLA breach (if it has not already started running). This field is in UTC and is formatted as yyyy-MM-dd'T'HH:mm:ss'Z'.",
+     "type": "string"
+    },
+    "invalidationOffsetSecs": {
+     "description": "How much wider of a time range should be used for fact invalidation data than for fact data, in seconds. For example, an offset of 259200 (72 hours) would mean that a workflow that read fact data for 2019-07-04T00:00:00…",
+     "type": "integer"
+    },
+    "lastUpdatedTime": {
+     "description": "The last time the workflow execution was updated. This field is in UTC and is formatted as yyyy-MM-dd'T'HH:mm:ss'Z'.",
+     "type": "string"
+    },
+    "outputChannels": {
+     "description": "The possible channels for retrieving workflow execution output in this instance with information about whether or not it's possible to retrieve the output of this workflow execution through the channel and if not, why. …",
+     "items": {
+      "$ref": "WorkflowExecutionOutputChannel"
+     },
+     "type": "array"
+    },
+    "outputS3URI": {
+     "description": "The fully qualified S3 path at which the output files for the workflow execution will be created inside the AMC instance. Note that the path the files will be created in your AWS account will be the same except for the …",
+     "type": "string"
+    },
+    "requireSyntheticData": {
+     "description": "If true the execution was allowed to use data sets that only contain synthetic data.",
+     "type": "boolean"
+    },
+    "sqlQuery": {
+     "description": "The SQL query that was executed. Will only be populated if includeWorkflow was true for the request to retrieve the execution and the workflow used a SQL query.",
+     "type": "string"
+    },
+    "status": {
+     "description": "The current status of the workflow execution. The following table lists available statuses: |Status Name|Description| |-----------|-----------| |PENDING|The workflow execution has not yet started running. It may be queu…",
+     "enum": [
+      "CANCELLED",
+      "FAILED",
+      "PENDING",
+      "RUNNING",
+      "SUCCEEDED"
+     ],
+     "type": "string"
+    },
+    "timeWindowEnd": {
+     "description": "The end of the time window for data being used as input for the workflow execution. This is a nominal time window and not a guarantee that timestamps on any rows will be inside this window. This field is in UTC and is f…",
+     "type": "string"
+    },
+    "timeWindowEndOriginal": {
+     "description": "The originally provided end of the time window. This field is in the original timezone and is formatted as yyyy-MM-dd'T'HH:mm:ss with no offset. The value will be in UTC when the execution was created before this field …",
+     "type": "string"
+    },
+    "timeWindowStart": {
+     "description": "The start of the time window for data being used as input for the workflow execution. This is a nominal time window and not a guarantee that timestamps on any rows will be inside this window. This field is in UTC and is…",
+     "type": "string"
+    },
+    "timeWindowStartOriginal": {
+     "description": "The originally provided start of the time window. This field is in the original timezone and is formatted as yyyy-MM-dd'T'HH:mm:ss with no offset. The value will be in UTC when the execution was created before this fiel…",
+     "type": "string"
+    },
+    "timeWindowTimeZoneOriginal": {
+     "description": "The timezone provided when creating the workflow execution. This field allows using the timeWindowStartOriginal and timeWindowEndOriginal fields to produce the original localized time window. This field is formatted as …",
+     "type": "string"
+    },
+    "waitUntil": {
+     "description": "The time at which the workflow execution will not start running before. This field is in UTC and is formatted as yyyy-MM-dd'T'HH:mm:ss'Z'.",
+     "type": "string"
+    },
+    "warnings": {
+     "description": "Customer-facing warnings associated with the workflow execution. Defaults to an empty list.",
+     "items": {
+      "$ref": "WorkflowExecutionWarning"
+     },
+     "type": "array"
+    },
+    "workflowExecutionId": {
+     "description": "The unique identifier of the workflow execution.",
+     "type": "string"
+    },
+    "workflowExecutionTimeoutSeconds": {
+     "description": "The amount of time that the workflow is allowed to execute in the compute engine. If a workflow exceeds this value, the execution will timeout.",
+     "type": "integer"
+    },
+    "workflowId": {
+     "description": "The ID of the workflow being executed. This ID is automatically generated when a new execution is created and can be used to retrieve the status of the execution via the read workflow execution endpoint.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "WorkflowExecutionOutputChannel": {
+   "description": "Contains information about a channel for retrieving workflow execution output in an instance and information about whether or not the output of a specific workflow execution can be retrieved through the channel and if n…",
+   "properties": {
+    "acrDetailPageUrl": {
+     "description": "The URL of the AWS Clean Rooms protected query detail page URL which can be used to view information about this protected query, including information about where the output can be retrieved. Is only populated for the `…",
+     "type": "string"
+    },
+    "channel": {
+     "$ref": "OutputChannel"
+    },
+    "status": {
+     "$ref": "WorkflowExecutionOutputChannelStatus"
+    },
+    "statusReason": {
+     "description": "If output cannot be retrieved through this channel, contains a description of why not. Otherwise, is null.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "channel",
+    "status"
+   ],
+   "type": "object"
+  },
+  "WorkflowExecutionOutputChannelStatus": {
+   "description": "Defines the status of output being available for a workflow execution through a given channel. The following are the possible statuses: |Status|Description| |-----------|-----------| |PENDING|The output is not yet avail…",
+   "enum": [
+    "AVAILABLE",
+    "FAILED",
+    "PENDING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "WorkflowExecutionWarning": {
+   "description": "A customer-facing warning associated with a workflow execution. For now a warning carries only a human-readable message, but the intent is that additional properties (e.g. a category or severity) may be added in the fut…",
+   "properties": {
+    "message": {
+     "description": "A human-readable, customer-facing description of the warning.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

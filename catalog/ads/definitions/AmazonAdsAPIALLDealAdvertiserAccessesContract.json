@@ -1,0 +1,365 @@
+{
+ "api": "AmazonAdsAPIALLDealAdvertiserAccessesContract",
+ "file": "specs/dest/AmazonAdsAPIALLDealAdvertiserAccessesContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "AdvertiserAccessStrategy": {
+   "description": "**AdvertiserAccessStrategy Enum:** | AdvertiserAccessStrategy | Description | |------|------| | `ALLOW` | Advertisers in the list CAN target this deal. All other advertisers are blocked. | | `BLOCK` | Advertisers in the…",
+   "enum": [
+    "ALLOW",
+    "BLOCK"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateDealAdvertiserAccessRequest": {
+   "properties": {
+    "dealAdvertiserAccesses": {
+     "items": {
+      "$ref": "DealAdvertiserAccessCreate"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "dealAdvertiserAccesses"
+   ],
+   "type": "object"
+  },
+  "DealAdvertiserAccess": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertisingDealId": {
+     "description": "Reference to the associated advertising deal.",
+     "type": "string"
+    },
+    "createdDateTime": {
+     "description": "Timestamp when the access record was first created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "dealAdvertiserAccessId": {
+     "description": "A unique identifier for the access record.",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "Timestamp when the access record was last modified.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "strategy": {
+     "$ref": "AdvertiserAccessStrategy"
+    }
+   },
+   "required": [
+    "advertisingDealId",
+    "dealAdvertiserAccessId",
+    "strategy"
+   ],
+   "type": "object"
+  },
+  "DealAdvertiserAccessCreate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertisingDealId": {
+     "description": "Reference to the associated advertising deal.",
+     "type": "string"
+    },
+    "strategy": {
+     "$ref": "AdvertiserAccessStrategy"
+    }
+   },
+   "required": [
+    "advertisingDealId",
+    "strategy"
+   ],
+   "type": "object"
+  },
+  "DealAdvertiserAccessMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "DealAdvertiserAccessMultiStatusSuccess"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DealAdvertiserAccessMultiStatusSuccess": {
+   "properties": {
+    "dealAdvertiserAccess": {
+     "$ref": "DealAdvertiserAccess"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 0,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "dealAdvertiserAccess",
+    "index"
+   ],
+   "type": "object"
+  },
+  "DeleteDealAdvertiserAccessRequest": {
+   "properties": {
+    "dealAdvertiserAccessIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "dealAdvertiserAccessIds"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `FORBIDDEN` | The caller is not authorized to make the given request. | |…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "RESOURCE_ID_NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 19,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "RetrieveDealAdvertiserAccessRequest": {
+   "properties": {
+    "dealAdvertiserAccessIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "dealAdvertiserAccessIds"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

@@ -1,0 +1,996 @@
+{
+ "api": "AmazonAdsAPIALLAccountLinkInvitesContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLAccountLinkInvitesContract_prod_3p_BETA.json",
+ "schemas": {
+  "AccountId": {
+   "description": "| AccountId | Description | |------|------| | `advertiserAccountId` | This represents an advertiser account. It can be a global advertiser account that works across countries (ex: amzn1.ads-account.g.a1bc2de3fg4hi5jk6lm…",
+   "oneOf": [
+    {
+     "properties": {
+      "advertiserAccountId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "advertiserAccountId"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "managerAccountId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "managerAccountId"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "AccountLinkInvite": {
+   "properties": {
+    "accountLinkInviteId": {
+     "description": "Unique system-generated identifier for this invite.",
+     "type": "string"
+    },
+    "accountLinkPermissions": {
+     "description": "Accounts to link and their permissions. Set at creation for GRANT_ACCESS or by the approver at redemption for REQUEST_ACCESS.",
+     "items": {
+      "$ref": "AccountLinkPermission"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "approverAccount": {
+     "$ref": "AccountId"
+    },
+    "createdByUserId": {
+     "description": "User who created the invite.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "ISO-8601 timestamp when the invite was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "expirationDateTime": {
+     "description": "ISO-8601 timestamp when the invite expires if not acted upon.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "inviteType": {
+     "$ref": "InviteType"
+    },
+    "lastModifiedByUserId": {
+     "description": "User who last modified the invite.",
+     "type": "string"
+    },
+    "lastModifiedDateTime": {
+     "description": "ISO-8601 timestamp when the invite was last modified.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "requesterAccount": {
+     "$ref": "AccountId"
+    },
+    "status": {
+     "$ref": "AccountLinkInviteStatus"
+    }
+   },
+   "required": [
+    "accountLinkInviteId",
+    "createdByUserId",
+    "creationDateTime",
+    "expirationDateTime",
+    "inviteType",
+    "lastModifiedByUserId",
+    "lastModifiedDateTime",
+    "requesterAccount",
+    "status"
+   ],
+   "type": "object"
+  },
+  "AccountLinkInviteAccountLinkInviteIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AccountLinkInviteAccountLinkInviteStatusFilter": {
+   "properties": {
+    "include": {
+     "description": "**Status Enum:** | Status | Description | | --- | --- | | `PENDING` | Awaiting action from the approver. | | `APPROVED` | Approver accepted; AccountLink(s) created. Maps to REDEEMED in AccountLinkRequest. | | `REJECTED`…",
+     "items": {
+      "$ref": "AccountLinkInviteStatus"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AccountLinkInviteApproverAccountFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "AccountId"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AccountLinkInviteCreate": {
+   "properties": {
+    "accountLinkPermissions": {
+     "description": "Accounts to link and their permissions. Set at creation for GRANT_ACCESS or by the approver at redemption for REQUEST_ACCESS.",
+     "items": {
+      "$ref": "CreateAccountLinkPermission"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "approverAccount": {
+     "$ref": "AccountId"
+    },
+    "inviteType": {
+     "$ref": "InviteType"
+    }
+   },
+   "required": [
+    "inviteType"
+   ],
+   "type": "object"
+  },
+  "AccountLinkInviteInviteTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**InviteType Enum:** | InviteType | Description | | --- | --- | | `REQUEST_ACCESS` | Requester requests access to the approver's account. |",
+     "items": {
+      "$ref": "InviteType"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AccountLinkInviteMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "AccountLinkInviteMultiStatusSuccess"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AccountLinkInviteMultiStatusSuccess": {
+   "properties": {
+    "accountLinkInvite": {
+     "$ref": "AccountLinkInvite"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 49,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "accountLinkInvite",
+    "index"
+   ],
+   "type": "object"
+  },
+  "AccountLinkInviteRequesterAccountFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "AccountId"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AccountLinkInviteStatus": {
+   "description": "Lifecycle states of an AccountLinkInvite. **AccountLinkInviteStatus Enum:** | AccountLinkInviteStatus | Description | |------|------| | `APPROVED` | Approver accepted; AccountLink(s) created. Maps to REDEEMED in Account…",
+   "enum": [
+    "APPROVED",
+    "EXPIRED",
+    "PENDING",
+    "REJECTED",
+    "REVOKED"
+   ],
+   "type": "string"
+  },
+  "AccountLinkInviteSuccessResponse": {
+   "properties": {
+    "accountLinkInvites": {
+     "items": {
+      "$ref": "AccountLinkInvite"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AccountLinkInviteUpdate": {
+   "properties": {
+    "accountLinkInviteId": {
+     "description": "Unique system-generated identifier for this invite.",
+     "type": "string"
+    },
+    "accountLinkPermissions": {
+     "description": "Accounts to link and their permissions. Set at creation for GRANT_ACCESS or by the approver at redemption for REQUEST_ACCESS.",
+     "items": {
+      "$ref": "CreateAccountLinkPermission"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "approverAccount": {
+     "$ref": "AccountId"
+    }
+   },
+   "required": [
+    "accountLinkInviteId"
+   ],
+   "type": "object"
+  },
+  "AccountLinkPermission": {
+   "description": "Per-account link entry specifying the target account, permissions, and optional marketplace restrictions.",
+   "properties": {
+    "countryCodes": {
+     "description": "Optional marketplace restrictions for Global Account or Single Global Account types.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "linkResult": {
+     "$ref": "LinkResult"
+    },
+    "linkResultMessage": {
+     "description": "Detail message when linkResult is FAILED.",
+     "type": "string"
+    },
+    "linkedAccount": {
+     "$ref": "AccountId"
+    },
+    "permissionSet": {
+     "$ref": "PermissionSet"
+    }
+   },
+   "type": "object"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CountryCode": {
+   "enum": [
+    "AD",
+    "AE",
+    "AF",
+    "AG",
+    "AI",
+    "AL",
+    "AM",
+    "AO",
+    "AQ",
+    "AR",
+    "AS",
+    "AT",
+    "AU",
+    "AW",
+    "AX",
+    "AZ",
+    "BA",
+    "BB",
+    "BD",
+    "BE",
+    "BF",
+    "BG",
+    "BH",
+    "BI",
+    "BJ",
+    "BL",
+    "BM",
+    "BN",
+    "BO",
+    "BQ",
+    "BR",
+    "BS",
+    "BT",
+    "BV",
+    "BW",
+    "BY",
+    "BZ",
+    "CA",
+    "CC",
+    "CD",
+    "CF",
+    "CG",
+    "CH",
+    "CI",
+    "CK",
+    "CL",
+    "CM",
+    "CN",
+    "CO",
+    "CR",
+    "CU",
+    "CV",
+    "CW",
+    "CX",
+    "CY",
+    "CZ",
+    "DE",
+    "DJ",
+    "DK",
+    "DM",
+    "DO",
+    "DZ",
+    "EC",
+    "EE",
+    "EG",
+    "EH",
+    "ER",
+    "ES",
+    "ET",
+    "FI",
+    "FJ",
+    "FK",
+    "FM",
+    "FO",
+    "FR",
+    "GA",
+    "GB",
+    "GD",
+    "GE",
+    "GF",
+    "GG",
+    "GH",
+    "GI",
+    "GL",
+    "GM",
+    "GN",
+    "GP",
+    "GQ",
+    "GR",
+    "GS",
+    "GT",
+    "GU",
+    "GW",
+    "GY",
+    "HK",
+    "HM",
+    "HN",
+    "HR",
+    "HT",
+    "HU",
+    "ID",
+    "IE",
+    "IL",
+    "IM",
+    "IN",
+    "IO",
+    "IQ",
+    "IR",
+    "IS",
+    "IT",
+    "JE",
+    "JM",
+    "JO",
+    "JP",
+    "KE",
+    "KG",
+    "KH",
+    "KI",
+    "KM",
+    "KN",
+    "KP",
+    "KR",
+    "KW",
+    "KY",
+    "KZ",
+    "LA",
+    "LB",
+    "LC",
+    "LI",
+    "LK",
+    "LR",
+    "LS",
+    "LT",
+    "LU",
+    "LV",
+    "LY",
+    "MA",
+    "MC",
+    "MD",
+    "ME",
+    "MF",
+    "MG",
+    "MH",
+    "MK",
+    "ML",
+    "MM",
+    "MN",
+    "MO",
+    "MP",
+    "MQ",
+    "MR",
+    "MS",
+    "MT",
+    "MU",
+    "MV",
+    "MW",
+    "MX",
+    "MY",
+    "MZ",
+    "NA",
+    "NC",
+    "NE",
+    "NF",
+    "NG",
+    "NI",
+    "NL",
+    "NO",
+    "NP",
+    "NR",
+    "NU",
+    "NZ",
+    "OM",
+    "OTHER",
+    "OTHER_EEA",
+    "PA",
+    "PE",
+    "PF",
+    "PG",
+    "PH",
+    "PK",
+    "PL",
+    "PM",
+    "PN",
+    "PR",
+    "PS",
+    "PT",
+    "PW",
+    "PY",
+    "QA",
+    "RE",
+    "RO",
+    "RS",
+    "RU",
+    "RW",
+    "SA",
+    "SB",
+    "SC",
+    "SD",
+    "SE",
+    "SG",
+    "SH",
+    "SI",
+    "SJ",
+    "SK",
+    "SL",
+    "SM",
+    "SN",
+    "SO",
+    "SR",
+    "SS",
+    "ST",
+    "SV",
+    "SX",
+    "SY",
+    "SZ",
+    "TC",
+    "TD",
+    "TF",
+    "TG",
+    "TH",
+    "TJ",
+    "TK",
+    "TL",
+    "TM",
+    "TN",
+    "TO",
+    "TR",
+    "TT",
+    "TV",
+    "TW",
+    "TZ",
+    "UA",
+    "UG",
+    "UM",
+    "US",
+    "UY",
+    "UZ",
+    "VA",
+    "VC",
+    "VE",
+    "VG",
+    "VI",
+    "VN",
+    "VU",
+    "WF",
+    "WS",
+    "YE",
+    "YT",
+    "ZA",
+    "ZM",
+    "ZW",
+    "ZZ"
+   ],
+   "type": "string"
+  },
+  "CreateAccountLinkInviteRequest": {
+   "properties": {
+    "accountLinkInvites": {
+     "items": {
+      "$ref": "AccountLinkInviteCreate"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "accountLinkInvites"
+   ],
+   "type": "object"
+  },
+  "CreateAccountLinkPermission": {
+   "description": "Per-account link entry specifying the target account, permissions, and optional marketplace restrictions.",
+   "properties": {
+    "countryCodes": {
+     "description": "Optional marketplace restrictions for Global Account or Single Global Account types.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "linkedAccount": {
+     "$ref": "AccountId"
+    },
+    "permissionSet": {
+     "$ref": "CreatePermissionSet"
+    }
+   },
+   "type": "object"
+  },
+  "CreatePermission": {
+   "description": "A permission specifies what actions user/account is allowed to take on account. Ads AM’s actions include create, edit, view, and/or more specific actions depending on ads application (i.e. campaign management) or progra…",
+   "properties": {
+    "permissionName": {
+     "$ref": "PermissionName"
+    }
+   },
+   "required": [
+    "permissionName"
+   ],
+   "type": "object"
+  },
+  "CreatePermissionSet": {
+   "description": "Permissions for an account to account or user to account link",
+   "properties": {
+    "customPermissionSet": {
+     "description": "The custom permission list",
+     "items": {
+      "$ref": "CreatePermission"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "role": {
+     "$ref": "CreateRole"
+    }
+   },
+   "type": "object"
+  },
+  "CreateRole": {
+   "description": "A role refers to a collection of roles and permissions that are assigned to a user/account. Roles help streamline and simplify the process of managing access control by grouping together common set of permissions. Ads A…",
+   "properties": {
+    "roleName": {
+     "$ref": "RoleType"
+    }
+   },
+   "required": [
+    "roleName"
+   ],
+   "type": "object"
+  },
+  "DeleteAccountLinkInviteRequest": {
+   "properties": {
+    "accountLinkInviteIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "accountLinkInviteIds"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `CONFLICT` | Operation could not be completed due to a conflict. Please r…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONFLICT",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 49,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InviteType": {
+   "description": "Direction of an account link invite. **InviteType Enum:** | InviteType | Description | |------|------| | `REQUEST_ACCESS` | Requester requests access to the approver's account. |",
+   "enum": [
+    "REQUEST_ACCESS"
+   ],
+   "type": "string"
+  },
+  "LinkResult": {
+   "description": "Outcome of a single account link creation attempt during redemption. **LinkResult Enum:** | LinkResult | Description | |------|------| | `FAILED` | Account link creation failed. | | `SUCCESS` | Account link created succ…",
+   "enum": [
+    "FAILED",
+    "SUCCESS"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Permission": {
+   "description": "A permission specifies what actions user/account is allowed to take on account. Ads AM’s actions include create, edit, view, and/or more specific actions depending on ads application (i.e. campaign management) or progra…",
+   "properties": {
+    "permissionName": {
+     "$ref": "PermissionName"
+    }
+   },
+   "required": [
+    "permissionName"
+   ],
+   "type": "object"
+  },
+  "PermissionName": {
+   "enum": [
+    "DATA_SHARING",
+    "REPORTS_LIMITED"
+   ],
+   "type": "string"
+  },
+  "PermissionSet": {
+   "description": "Permissions for an account to account or user to account link",
+   "properties": {
+    "customPermissionSet": {
+     "description": "The custom permission list",
+     "items": {
+      "$ref": "Permission"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "role": {
+     "$ref": "Role"
+    }
+   },
+   "type": "object"
+  },
+  "QueryAccountLinkInviteRequest": {
+   "properties": {
+    "accountLinkInviteIdFilter": {
+     "$ref": "AccountLinkInviteAccountLinkInviteIdFilter"
+    },
+    "approverAccountFilter": {
+     "$ref": "AccountLinkInviteApproverAccountFilter"
+    },
+    "inviteTypeFilter": {
+     "$ref": "AccountLinkInviteInviteTypeFilter"
+    },
+    "maxResults": {
+     "default": 50,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "requesterAccountFilter": {
+     "$ref": "AccountLinkInviteRequesterAccountFilter"
+    },
+    "statusFilter": {
+     "$ref": "AccountLinkInviteAccountLinkInviteStatusFilter"
+    }
+   },
+   "type": "object"
+  },
+  "Role": {
+   "description": "A role refers to a collection of roles and permissions that are assigned to a user/account. Roles help streamline and simplify the process of managing access control by grouping together common set of permissions. Ads A…",
+   "properties": {
+    "roleName": {
+     "$ref": "RoleType"
+    }
+   },
+   "required": [
+    "roleName"
+   ],
+   "type": "object"
+  },
+  "RoleType": {
+   "description": "**RoleType Enum:** | RoleType | Description | |------|------| | `ADMIN` | | | `CUSTOM` | Custom role with a user-defined set of permissions. | | `EDITOR` | | | `VIEWER` | |",
+   "enum": [
+    "ADMIN",
+    "CUSTOM",
+    "EDITOR",
+    "VIEWER"
+   ],
+   "type": "string"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateAccountLinkInviteRequest": {
+   "properties": {
+    "accountLinkInvites": {
+     "items": {
+      "$ref": "AccountLinkInviteUpdate"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "accountLinkInvites"
+   ],
+   "type": "object"
+  }
+ }
+}

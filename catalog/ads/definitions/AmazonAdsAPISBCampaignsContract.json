@@ -1,0 +1,1539 @@
+{
+ "api": "AmazonAdsAPISBCampaignsContract",
+ "file": "specs/dest/AmazonAdsAPISBCampaignsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FEATURE_NOT_AVAILABLE",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SBAdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `SPONSORED_BRANDS` | Sponsored Brands ad product. |",
+   "enum": [
+    "SPONSORED_BRANDS"
+   ],
+   "type": "string"
+  },
+  "SBAudienceBidAdjustment": {
+   "properties": {
+    "audienceId": {
+     "description": "The unique identifier of the Audience to apply bid adjustment.",
+     "type": "string"
+    },
+    "percentage": {
+     "description": "The selection of the percentage change associated with a given audience and bid adjustment settings. Null removes audience",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "audienceId"
+   ],
+   "type": "object"
+  },
+  "SBAutoCreationSettings": {
+   "properties": {
+    "autoCreateTargets": {
+     "description": "Gives Amazon permission to automatically create targets associated with the campaign based on the products being advertised.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "SBBidAdjustments": {
+   "properties": {
+    "audienceBidAdjustments": {
+     "description": "Bid Adjustments based on the audiences",
+     "items": {
+      "$ref": "SBAudienceBidAdjustment"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "placementBidAdjustments": {
+     "description": "Bid adjustments based on ad placements. Not supported for Sponsored Brands campaigns using the SALES_UP_AND_DOWN bid strategy.",
+     "items": {
+      "$ref": "SBPlacementBidAdjustment"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "shopperSegmentBidAdjustments": {
+     "description": "Legacy SB field (marked for deprecation)",
+     "items": {
+      "$ref": "SBShopperSegmentBidAdjustment"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBBidSettings": {
+   "properties": {
+    "bidAdjustments": {
+     "$ref": "SBBidAdjustments"
+    },
+    "bidStrategy": {
+     "$ref": "SBBidStrategy"
+    }
+   },
+   "type": "object"
+  },
+  "SBBidStrategy": {
+   "description": "**BidStrategy Enum:** | BidStrategy | Description | |------|------| | `MANUAL` | Uses your exact bid and any placement adjustments you set, and is not subject to dynamic bidding. | | `SALES_UP_AND_DOWN` | Increases or d…",
+   "enum": [
+    "MANUAL",
+    "SALES_UP_AND_DOWN"
+   ],
+   "type": "string"
+  },
+  "SBBudget": {
+   "properties": {
+    "budgetType": {
+     "$ref": "SBBudgetType"
+    },
+    "budgetValue": {
+     "$ref": "SBBudgetValue"
+    },
+    "recurrenceTimePeriod": {
+     "$ref": "SBRecurrence"
+    }
+   },
+   "required": [
+    "budgetType",
+    "budgetValue",
+    "recurrenceTimePeriod"
+   ],
+   "type": "object"
+  },
+  "SBBudgetType": {
+   "enum": [
+    "MONETARY"
+   ],
+   "type": "string"
+  },
+  "SBBudgetValue": {
+   "oneOf": [
+    {
+     "properties": {
+      "monetaryBudgetValue": {
+       "$ref": "SBMonetaryBudgetValue"
+      }
+     },
+     "required": [
+      "monetaryBudgetValue"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBCampaign": {
+   "properties": {
+    "adProduct": {
+     "$ref": "SBAdProduct"
+    },
+    "autoCreationSettings": {
+     "$ref": "SBAutoCreationSettings"
+    },
+    "brandId": {
+     "description": "This is the ID of the brand that the campaign is associated with.",
+     "type": "string"
+    },
+    "budgets": {
+     "description": "The object containing budget details for the campaign (for campaigns that support multiple budgets).",
+     "items": {
+      "$ref": "SBBudget"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "campaignId": {
+     "description": "A unique identifier for a campaign.",
+     "type": "string"
+    },
+    "costType": {
+     "$ref": "SBCostType"
+    },
+    "countries": {
+     "description": "This field is used in Sponsored Ads and ADSP and impacts targeted supply. For Sponsored Ads, the campaign.countries field determines what Amazon retail supply (Amazon.com, Amazon.co.uk, Amazon.mx, etc) the campaign will…",
+     "items": {
+      "$ref": "SBCountryCode"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creationDateTime": {
+     "description": "The date time that the campaign was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The end date time for the campaign.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "isMultiAdGroupsEnabled": {
+     "description": "A read-only field that indicates whether a campaign supports multiple adGroups.",
+     "type": "boolean"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time that the campaign was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceScope": {
+     "$ref": "SBMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "This represents retail domains such as Amazon.com, Amazon.co.uk, and Amazon.mx, each corresponding to a country where an Amazon customer can shop. ADSP campaigns can be created by specifying either countries or marketpl…",
+     "items": {
+      "$ref": "SBMarketplace"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the campaign.",
+     "type": "string"
+    },
+    "optimizations": {
+     "$ref": "SBCampaignOptimizations"
+    },
+    "portfolioId": {
+     "description": "The ID of the portfolio associated with the campaign.",
+     "type": "string"
+    },
+    "salesChannel": {
+     "$ref": "SBSalesChannel"
+    },
+    "siteRestrictions": {
+     "description": "Restrict the ad to a particular site",
+     "items": {
+      "$ref": "SBSiteRestriction"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "startDateTime": {
+     "description": "The start date time for the campaign.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SBState"
+    },
+    "status": {
+     "$ref": "SBStatus"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the campaign",
+     "items": {
+      "$ref": "SBTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetedPGDealId": {
+     "description": "DealId associated with the campaign.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adProduct",
+    "budgets",
+    "campaignId",
+    "costType",
+    "creationDateTime",
+    "isMultiAdGroupsEnabled",
+    "lastUpdatedDateTime",
+    "marketplaceScope",
+    "name",
+    "startDateTime",
+    "state"
+   ],
+   "type": "object"
+  },
+  "SBCampaignAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `SPONSORED_BRANDS` | Sponsored Brands ad product. |",
+     "items": {
+      "$ref": "SBAdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBCampaignCampaignIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBCampaignCreate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "SBAdProduct"
+    },
+    "autoCreationSettings": {
+     "$ref": "SBCreateAutoCreationSettings"
+    },
+    "brandId": {
+     "description": "This is the ID of the brand that the campaign is associated with.",
+     "type": "string"
+    },
+    "budgets": {
+     "description": "The object containing budget details for the campaign (for campaigns that support multiple budgets).",
+     "items": {
+      "$ref": "SBCreateBudget"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "costType": {
+     "$ref": "SBCostType"
+    },
+    "countries": {
+     "description": "This field is used in Sponsored Ads and ADSP and impacts targeted supply. For Sponsored Ads, the campaign.countries field determines what Amazon retail supply (Amazon.com, Amazon.co.uk, Amazon.mx, etc) the campaign will…",
+     "items": {
+      "$ref": "SBCountryCode"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "endDateTime": {
+     "description": "The end date time for the campaign.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceScope": {
+     "$ref": "SBMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "This represents retail domains such as Amazon.com, Amazon.co.uk, and Amazon.mx, each corresponding to a country where an Amazon customer can shop. ADSP campaigns can be created by specifying either countries or marketpl…",
+     "items": {
+      "$ref": "SBMarketplace"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the campaign.",
+     "type": "string"
+    },
+    "optimizations": {
+     "$ref": "SBCreateCampaignOptimizations"
+    },
+    "portfolioId": {
+     "description": "The ID of the portfolio associated with the campaign.",
+     "type": "string"
+    },
+    "salesChannel": {
+     "$ref": "SBSalesChannel"
+    },
+    "siteRestrictions": {
+     "description": "Restrict the ad to a particular site",
+     "items": {
+      "$ref": "SBSiteRestriction"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "startDateTime": {
+     "description": "The start date time for the campaign.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SBCreateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the campaign",
+     "items": {
+      "$ref": "SBCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetedPGDealId": {
+     "description": "DealId associated with the campaign.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adProduct",
+    "budgets",
+    "costType",
+    "marketplaceScope",
+    "name",
+    "startDateTime",
+    "state"
+   ],
+   "type": "object"
+  },
+  "SBCampaignGoalFilter": {
+   "properties": {
+    "include": {
+     "description": "**Goal Enum:** | Goal | Description | | --- | --- | | `AWARENESS` | Indicates a goal of driving awareness. | | `CONSIDERATION` | Indicates a goal of driving consideration. | | `CONVERSIONS` | Indicates a goal of driving…",
+     "items": {
+      "$ref": "SBGoal"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBCampaignMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "SBCampaignMultiStatusSuccess"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBCampaignMultiStatusSuccess": {
+   "properties": {
+    "campaign": {
+     "$ref": "SBCampaign"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "campaign",
+    "index"
+   ],
+   "type": "object"
+  },
+  "SBCampaignNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "SBCampaignNameFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "SBCampaignNameFilterType": {
+   "description": "**CampaignNameFilterType Enum:** | CampaignNameFilterType | Description | | --- | --- | | `EXACT_MATCH` | Filter by exact match. | | `BROAD_MATCH` | Filter by broad match. |",
+   "enum": [
+    "BROAD_MATCH",
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "SBCampaignOptimizations": {
+   "properties": {
+    "bidSettings": {
+     "$ref": "SBBidSettings"
+    },
+    "goalSettings": {
+     "$ref": "SBGoalSettings"
+    }
+   },
+   "type": "object"
+  },
+  "SBCampaignPortfolioIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBCampaignStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `ENABLED` | The object is set active by user and eligible for delivery. | | `PAUSED` | The object is stopped by user and not eligible for delivery. | | `ARCHIVED` …",
+     "items": {
+      "$ref": "SBState"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBCampaignSuccessResponse": {
+   "properties": {
+    "campaigns": {
+     "items": {
+      "$ref": "SBCampaign"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SBCampaignUpdate": {
+   "properties": {
+    "budgets": {
+     "description": "The object containing budget details for the campaign (for campaigns that support multiple budgets).",
+     "items": {
+      "$ref": "SBCreateBudget"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "campaignId": {
+     "description": "A unique identifier for a campaign.",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The end date time for the campaign.",
+     "format": "date-time",
+     "nullable": true,
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the campaign.",
+     "type": "string"
+    },
+    "optimizations": {
+     "$ref": "SBUpdateCampaignOptimizations"
+    },
+    "portfolioId": {
+     "description": "The ID of the portfolio associated with the campaign.",
+     "nullable": true,
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date time for the campaign.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SBUpdateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the campaign",
+     "items": {
+      "$ref": "SBCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetedPGDealId": {
+     "description": "DealId associated with the campaign.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "campaignId"
+   ],
+   "type": "object"
+  },
+  "SBCostType": {
+   "description": "**CostType Enum:** | CostType | Description | |------|------| | `CPC` | Cost per click. | | `CPM` | Cost per thousand impressions. | | `FIXED_PRICE` | Sale price for a specific ad placement regardless of auction perform…",
+   "enum": [
+    "CPC",
+    "CPM",
+    "FIXED_PRICE",
+    "VCPM"
+   ],
+   "type": "string"
+  },
+  "SBCountryCode": {
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "SBCreateAudienceBidAdjustment": {
+   "properties": {
+    "audienceId": {
+     "description": "The unique identifier of the Audience to apply bid adjustment.",
+     "type": "string"
+    },
+    "percentage": {
+     "description": "The selection of the percentage change associated with a given audience and bid adjustment settings. Null removes audience",
+     "format": "int32",
+     "nullable": true,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "audienceId"
+   ],
+   "type": "object"
+  },
+  "SBCreateAutoCreationSettings": {
+   "properties": {
+    "autoCreateTargets": {
+     "description": "Gives Amazon permission to automatically create targets associated with the campaign based on the products being advertised.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "SBCreateBidAdjustments": {
+   "properties": {
+    "audienceBidAdjustments": {
+     "description": "Bid Adjustments based on the audiences",
+     "items": {
+      "$ref": "SBCreateAudienceBidAdjustment"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "placementBidAdjustments": {
+     "description": "Bid adjustments based on ad placements. Not supported for Sponsored Brands campaigns using the SALES_UP_AND_DOWN bid strategy.",
+     "items": {
+      "$ref": "SBCreatePlacementBidAdjustment"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "shopperSegmentBidAdjustments": {
+     "description": "Legacy SB field (marked for deprecation)",
+     "items": {
+      "$ref": "SBCreateShopperSegmentBidAdjustment"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBCreateBidSettings": {
+   "properties": {
+    "bidAdjustments": {
+     "$ref": "SBCreateBidAdjustments"
+    },
+    "bidStrategy": {
+     "$ref": "SBBidStrategy"
+    }
+   },
+   "type": "object"
+  },
+  "SBCreateBudget": {
+   "properties": {
+    "budgetType": {
+     "$ref": "SBBudgetType"
+    },
+    "budgetValue": {
+     "$ref": "SBCreateBudgetValue"
+    },
+    "recurrenceTimePeriod": {
+     "$ref": "SBRecurrence"
+    }
+   },
+   "required": [
+    "budgetType",
+    "budgetValue",
+    "recurrenceTimePeriod"
+   ],
+   "type": "object"
+  },
+  "SBCreateBudgetValue": {
+   "oneOf": [
+    {
+     "properties": {
+      "monetaryBudgetValue": {
+       "$ref": "SBCreateMonetaryBudgetValue"
+      }
+     },
+     "required": [
+      "monetaryBudgetValue"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBCreateCampaignOptimizations": {
+   "properties": {
+    "bidSettings": {
+     "$ref": "SBCreateBidSettings"
+    },
+    "goalSettings": {
+     "$ref": "SBCreateGoalSettings"
+    }
+   },
+   "type": "object"
+  },
+  "SBCreateCampaignRequest": {
+   "properties": {
+    "campaigns": {
+     "items": {
+      "$ref": "SBCampaignCreate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaigns"
+   ],
+   "type": "object"
+  },
+  "SBCreateGoalSettings": {
+   "properties": {
+    "kpi": {
+     "$ref": "SBKPI"
+    }
+   },
+   "required": [
+    "kpi"
+   ],
+   "type": "object"
+  },
+  "SBCreateMonetaryBudget": {
+   "properties": {
+    "value": {
+     "description": "The monetary amount of the budget cap in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "value"
+   ],
+   "type": "object"
+  },
+  "SBCreateMonetaryBudgetValue": {
+   "properties": {
+    "monetaryBudget": {
+     "$ref": "SBCreateMonetaryBudget"
+    }
+   },
+   "required": [
+    "monetaryBudget"
+   ],
+   "type": "object"
+  },
+  "SBCreatePlacementBidAdjustment": {
+   "properties": {
+    "percentage": {
+     "description": "The selection of the percentage change associated with a given placement and bid adjustment settings.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "placement": {
+     "$ref": "SBPlacement"
+    }
+   },
+   "required": [
+    "percentage",
+    "placement"
+   ],
+   "type": "object"
+  },
+  "SBCreateShopperSegmentBidAdjustment": {
+   "type": "object"
+  },
+  "SBCreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SBCreateTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SBCurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | |------|------| | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `CHF` | Swiss Franc | …",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CHF",
+    "CNY",
+    "DKK",
+    "EGP",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "MXP",
+    "NGN",
+    "NOK",
+    "NZD",
+    "PLN",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "SBDeleteCampaignRequest": {
+   "properties": {
+    "campaignIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaignIds"
+   ],
+   "type": "object"
+  },
+  "SBDeliveryReason": {
+   "description": "**DeliveryReason Enum:** | DeliveryReason | Description | |------|------| | `ADVERTISER_ARCHIVED` | | | `ADVERTISER_INELIGIBLE` | | | `ADVERTISER_OUT_OF_BUDGET` | Indicates that an advertiser is out of budget for Sponso…",
+   "enum": [
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_INELIGIBLE",
+    "ADVERTISER_OUT_OF_BUDGET",
+    "ADVERTISER_OUT_OF_POSTPAY_CREDIT_LIMIT",
+    "ADVERTISER_OUT_OF_POSTPAY_MONTHLY_BUDGET",
+    "ADVERTISER_OUT_OF_PREPAY_BALANCE",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_POLICING_PENDING_REVIEW",
+    "ADVERTISER_POLICING_SUSPENDED",
+    "AD_ARCHIVED",
+    "AD_CREATION_FAILED",
+    "AD_CREATION_IN_PROGRESS",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_INCOMPLETE",
+    "AD_GROUP_LOW_BID",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_REVIEW",
+    "AD_GROUP_POLICING_PENDING_REVIEW",
+    "AD_GROUP_REJECTED",
+    "AD_INELIGIBLE",
+    "AD_MISSING_DECORATION",
+    "AD_MISSING_IMAGE",
+    "AD_NOT_DELIVERING",
+    "AD_PAUSED",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "BRAND_INELIGIBLE",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_REVIEW",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_REJECTED",
+    "CREATIVE_MISSING_ASSET",
+    "CREATIVE_PENDING_REVIEW",
+    "CREATIVE_REJECTED",
+    "LANDING_PAGE_INELIGIBLE",
+    "LANDING_PAGE_NOT_AVAILABLE",
+    "OTHER",
+    "PORTFOLIO_ARCHIVED",
+    "PORTFOLIO_END_DATE_REACHED",
+    "PORTFOLIO_OUT_OF_BUDGET",
+    "PORTFOLIO_PAUSED",
+    "PORTFOLIO_PENDING_START_DATE",
+    "STATUS_UNAVAILABLE",
+    "TARGET_ARCHIVED",
+    "TARGET_BLOCKED",
+    "TARGET_PAUSED",
+    "TARGET_POLICING_SUSPENDED"
+   ],
+   "type": "string"
+  },
+  "SBDeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | |------|------| | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplac…",
+   "enum": [
+    "DELIVERING",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "SBGoal": {
+   "description": "**Goal Enum:** | Goal | Description | |------|------| | `AWARENESS` | Indicates a goal of driving awareness. | | `CONSIDERATION` | Indicates a goal of driving consideration. | | `CONVERSIONS` | Indicates a goal of drivi…",
+   "enum": [
+    "AWARENESS",
+    "CONSIDERATION",
+    "CONVERSIONS"
+   ],
+   "type": "string"
+  },
+  "SBGoalSettings": {
+   "properties": {
+    "goal": {
+     "$ref": "SBGoal"
+    },
+    "kpi": {
+     "$ref": "SBKPI"
+    }
+   },
+   "required": [
+    "goal",
+    "kpi"
+   ],
+   "type": "object"
+  },
+  "SBKPI": {
+   "description": "**KPI Enum:** | KPI | Description | |------|------| | `CLICKS` | Indicates a goal of driving clicks. | | `TOP_OF_SEARCH_IMPRESSION_SHARE` | Indicates a goal of maximizing impression for top search placement. |",
+   "enum": [
+    "CLICKS",
+    "TOP_OF_SEARCH_IMPRESSION_SHARE"
+   ],
+   "type": "string"
+  },
+  "SBMarketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "SBMarketplaceScope": {
+   "enum": [
+    "SINGLE_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "SBMonetaryBudget": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "SBCurrencyCode"
+    },
+    "ruleValue": {
+     "description": "The monetary amount of the budget when a budget rule is applied.",
+     "format": "double",
+     "type": "number"
+    },
+    "value": {
+     "description": "The monetary amount of the budget cap in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SBMonetaryBudgetValue": {
+   "properties": {
+    "monetaryBudget": {
+     "$ref": "SBMonetaryBudget"
+    }
+   },
+   "required": [
+    "monetaryBudget"
+   ],
+   "type": "object"
+  },
+  "SBPlacement": {
+   "description": "**Placement Enum:** | Placement | Description | |------|------| | `HOME_PAGE` | Home page. | | `PRODUCT_PAGE` | Placements on the product detail page, and all nonsearch placements such as the add-to-cart page. | | `REST…",
+   "enum": [
+    "HOME_PAGE",
+    "PRODUCT_PAGE",
+    "REST_OF_SEARCH",
+    "TOP_OF_SEARCH"
+   ],
+   "type": "string"
+  },
+  "SBPlacementBidAdjustment": {
+   "properties": {
+    "percentage": {
+     "description": "The selection of the percentage change associated with a given placement and bid adjustment settings.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "placement": {
+     "$ref": "SBPlacement"
+    }
+   },
+   "required": [
+    "percentage",
+    "placement"
+   ],
+   "type": "object"
+  },
+  "SBQueryCampaignRequest": {
+   "properties": {
+    "adProductFilter": {
+     "$ref": "SBCampaignAdProductFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "SBCampaignCampaignIdFilter"
+    },
+    "goalFilter": {
+     "$ref": "SBCampaignGoalFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "SBCampaignNameFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "portfolioIdFilter": {
+     "$ref": "SBCampaignPortfolioIdFilter"
+    },
+    "stateFilter": {
+     "$ref": "SBCampaignStateFilter"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "SBRecurrence": {
+   "enum": [
+    "DAILY",
+    "LIFETIME"
+   ],
+   "type": "string"
+  },
+  "SBSalesChannel": {
+   "description": "**SalesChannel Enum:** | SalesChannel | Description | |------|------| | `AMAZON` | A product sold on Amazon-owned sites. | | `OFF_AMAZON` | A product sold on a site not owned by Amazon. |",
+   "enum": [
+    "AMAZON",
+    "OFF_AMAZON"
+   ],
+   "type": "string"
+  },
+  "SBShopperSegment": {
+   "enum": [
+    "NEW_TO_BRAND"
+   ],
+   "type": "string"
+  },
+  "SBShopperSegmentBidAdjustment": {
+   "properties": {
+    "percentage": {
+     "description": "The selection of the percentage change associated with a given shopper segment and bid adjustment settings.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "shopperSegment": {
+     "$ref": "SBShopperSegment"
+    }
+   },
+   "required": [
+    "percentage",
+    "shopperSegment"
+   ],
+   "type": "object"
+  },
+  "SBSiteRestriction": {
+   "description": "**SiteRestriction Enum:** | SiteRestriction | Description | |------|------| | `AMAZON_BUSINESS` | Restrict the ad to only show on Amazon Business. |",
+   "enum": [
+    "AMAZON_BUSINESS"
+   ],
+   "type": "string"
+  },
+  "SBState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SBStatus": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "SBDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "SBDeliveryStatus"
+    }
+   },
+   "required": [
+    "deliveryStatus"
+   ],
+   "type": "object"
+  },
+  "SBTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SBUpdateBidAdjustments": {
+   "properties": {
+    "audienceBidAdjustments": {
+     "description": "Bid Adjustments based on the audiences",
+     "items": {
+      "$ref": "SBCreateAudienceBidAdjustment"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "placementBidAdjustments": {
+     "description": "Bid adjustments based on ad placements. Not supported for Sponsored Brands campaigns using the SALES_UP_AND_DOWN bid strategy.",
+     "items": {
+      "$ref": "SBCreatePlacementBidAdjustment"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "shopperSegmentBidAdjustments": {
+     "description": "Legacy SB field (marked for deprecation)",
+     "items": {
+      "$ref": "SBCreateShopperSegmentBidAdjustment"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateBidSettings": {
+   "properties": {
+    "bidAdjustments": {
+     "$ref": "SBUpdateBidAdjustments"
+    },
+    "bidStrategy": {
+     "$ref": "SBBidStrategy"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateCampaignOptimizations": {
+   "properties": {
+    "bidSettings": {
+     "$ref": "SBUpdateBidSettings"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateCampaignRequest": {
+   "properties": {
+    "campaigns": {
+     "items": {
+      "$ref": "SBCampaignUpdate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaigns"
+   ],
+   "type": "object"
+  },
+  "SBUpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

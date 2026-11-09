@@ -1,0 +1,5426 @@
+{
+ "api": "sponsored-display-3-0",
+ "file": "specs/sponsored-display/3-0/openapi.yaml",
+ "schemas": {
+  "ASIN": {
+   "description": "Amazon Standard Identification Number",
+   "type": "string"
+  },
+  "AdGroup": {
+   "allOf": [
+    {
+     "$ref": "BaseAdGroup"
+    },
+    {
+     "properties": {
+      "adGroupId": {
+       "$ref": "AdGroupId"
+      },
+      "creativeType": {
+       "$ref": "CreativeType"
+      },
+      "tactic": {
+       "$ref": "Tactic"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "AdGroupId": {
+   "description": "The identifier of the ad group.",
+   "format": "int64",
+   "type": "integer"
+  },
+  "AdGroupResponse": {
+   "properties": {
+    "adGroupId": {
+     "$ref": "AdGroupId"
+    },
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "description": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdGroupResponseEx": {
+   "description": "Object containing an extended set of data fields for an Ad Group.",
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the ad group.",
+     "type": "number"
+    },
+    "bidOptimization": {
+     "description": "Bid optimization type for the Adgroup. Default behavior is to optimize for clicks. Note, reach, clicks are only accepted with productAds that include landingPageURL OFF_AMAZON_LINK. |Name|CostType|Description| |----|---…",
+     "enum": [
+      "reach",
+      "clicks",
+      "conversions"
+     ],
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "The identifier of the campaign that this ad group is associated with.",
+     "type": "number"
+    },
+    "creationDate": {
+     "description": "Epoch time the ad group was created.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "creativeType": {
+     "$ref": "CreativeTypeInCreativeResponse"
+    },
+    "defaultBid": {
+     "description": "The amount of the default bid associated with the ad group. Used if no bid is specified.",
+     "format": "double",
+     "type": "number"
+    },
+    "lastUpdatedDate": {
+     "description": "Epoch time any property in the ad group was last updated.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "servingStatus": {
+     "description": "The status of the ad group.",
+     "enum": [
+      "ADVERTISER_STATUS_ENABLED",
+      "STATUS_UNAVAILABLE",
+      "ADVERTISER_PAUSED",
+      "ACCOUNT_OUT_OF_BUDGET",
+      "ADVERTISER_PAYMENT_FAILURE",
+      "CAMPAIGN_PAUSED",
+      "CAMPAIGN_ARCHIVED",
+      "PENDING_START_DATE",
+      "ENDED",
+      "CAMPAIGN_OUT_OF_BUDGET",
+      "AD_GROUP_STATUS_ENABLED",
+      "AD_GROUP_PAUSED",
+      "AD_GROUP_ARCHIVED",
+      "AD_GROUP_INCOMPLETE",
+      "AD_GROUP_LOW_BID",
+      "ADGROUP_POLICING_PENDING_REVIEW",
+      "ADGROUP_POLICING_CREATIVE_REJECTED",
+      "ADVERTISER_EXCEED_SPENDS_LIMIT",
+      "AD_POLICING_PENDING_REVIEW",
+      "CAMPAIGN_INCOMPLETE",
+      "INELIGIBLE",
+      "PORTFOLIO_ENDED",
+      "PORTFOLIO_OUT_OF_BUDGET",
+      "ADVERTISER_ARCHIVED",
+      "ADVERTISER_ACCOUNT_OUT_OF_BUDGET"
+     ],
+     "type": "string"
+    },
+    "state": {
+     "description": "The delivery state of the ad group.",
+     "enum": [
+      "enabled",
+      "paused",
+      "archived"
+     ],
+     "type": "string"
+    },
+    "tactic": {
+     "$ref": "Tactic"
+    }
+   },
+   "type": "object"
+  },
+  "AdId": {
+   "description": "The identifier of the product ad.",
+   "format": "int64",
+   "type": "integer"
+  },
+  "AdName": {
+   "description": "The name of the ad. Note that this field is not supported when using ASIN or SKU fields.",
+   "type": "string"
+  },
+  "ArchiveLocationRequest": {
+   "description": "Request body for the Archive Locations API",
+   "properties": {
+    "locationExpressionIdFilter": {
+     "$ref": "LocationExpressionIdFilter"
+    }
+   },
+   "required": [
+    "LocationExpressionIdFilter"
+   ],
+   "type": "object"
+  },
+  "ArchiveLocationResponse": {
+   "properties": {
+    "code": {
+     "description": "Returns \"SUCCESS\" for a successful response, otherwise a HTTP error code",
+     "type": "string"
+    },
+    "description": {
+     "description": "A human-readable description of the response if there is an error",
+     "type": "string"
+    },
+    "locationExpressionId": {
+     "$ref": "LocationExpressionId"
+    }
+   },
+   "type": "object"
+  },
+  "AssociatedBudgetRuleResponse": {
+   "properties": {
+    "code": {
+     "description": "An enumerated success or error code for machine use.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the error, if unsuccessful",
+     "type": "string"
+    },
+    "ruleId": {
+     "description": "The budget rule identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AssociatedCampaign": {
+   "properties": {
+    "campaignId": {
+     "description": "The campaign identifier.",
+     "type": "string"
+    },
+    "campaignName": {
+     "description": "The campaign name.",
+     "type": "string"
+    },
+    "ruleStatus": {
+     "description": "The budget rule evaluation status for this campaign. Read-only.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "campaignId",
+    "campaignName",
+    "ruleStatus"
+   ],
+   "type": "object"
+  },
+  "Background": {
+   "description": "This field denotes background which are displayed on the ad. This field is optional and mutable.",
+   "properties": {
+    "color": {
+     "description": "The standard HTML hex color codes of the background (e.g. '#3cb371').",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BackgroundCreativeProperties": {
+   "description": "User-customizable properties of a creative with background. Only supported for productAds with landingPageType of OFF_AMAZON_LINK.",
+   "properties": {
+    "backgrounds": {
+     "description": "An optional collection of backgrounds which are displayed on the ad.",
+     "items": {
+      "$ref": "Background"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BaseAdGroup": {
+   "properties": {
+    "bidOptimization": {
+     "description": "Bid Optimization for the Adgroup. Default behavior is to optimize for clicks. |Name|CostType|Description| |----|--------|-----------| |reach |vcpm|Optimize for viewable impressions. $1 is the minimum bid for vCPM.| |cli…",
+     "enum": [
+      "reach",
+      "clicks",
+      "conversions"
+     ],
+     "type": "string"
+    },
+    "campaignId": {
+     "$ref": "CampaignId"
+    },
+    "defaultBid": {
+     "description": "The amount of the default bid associated with the ad group. Used if no bid is specified.",
+     "format": "double",
+     "type": "number"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "state": {
+     "description": "The state of the ad group.",
+     "enum": [
+      "enabled",
+      "paused",
+      "archived"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BaseCampaign": {
+   "properties": {
+    "budget": {
+     "description": "The amount of the budget.",
+     "format": "double",
+     "type": "number"
+    },
+    "budgetType": {
+     "description": "The time period over which the amount specified in the `budget` property is allocated.",
+     "enum": [
+      "daily"
+     ],
+     "type": "string"
+    },
+    "costType": {
+     "description": "Determines how the campaign will bid and charge. |Name|Description| |----|----------| |cpc |[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |The performance of this campa…",
+     "enum": [
+      "cpc",
+      "vcpm"
+     ],
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The YYYYMMDD end date of the campaign.",
+     "nullable": true,
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the campaign.",
+     "type": "string"
+    },
+    "portfolioId": {
+     "description": "Identifier of the portfolio that will be associated with the campaign. If null then the campaign will be disassociated from existing portfolio. Campaigns with CPC and vCPM costType are supported.",
+     "format": "int64",
+     "nullable": true,
+     "type": "integer"
+    },
+    "startDate": {
+     "description": "The YYYYMMDD start date of the campaign. The date must be today or in the future.",
+     "type": "string"
+    },
+    "state": {
+     "description": "The state of the campaign.",
+     "enum": [
+      "enabled",
+      "paused",
+      "archived"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BaseLocation": {
+   "properties": {
+    "state": {
+     "enum": [
+      "enabled"
+     ],
+     "type": "string"
+    }
+   }
+  },
+  "BaseNegativeTargetingClause": {
+   "properties": {
+    "state": {
+     "enum": [
+      "enabled",
+      "paused",
+      "archived"
+     ],
+     "type": "string"
+    }
+   }
+  },
+  "BaseOptimizationRule": {
+   "properties": {
+    "ruleConditions": {
+     "description": "A list of rule conditions that define the advertiser's intent for the outcome of the rule. The rule uses 'AND' logic to combine every condition in this list, and will validate the combination when the rule is created or…",
+     "items": {
+      "$ref": "RuleCondition"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "ruleName": {
+     "description": "The name of the optimization rule.",
+     "type": "string"
+    },
+    "state": {
+     "description": "The state of the optimization rule.",
+     "enum": [
+      "enabled",
+      "paused [COMING LATER]"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BaseProductAd": {
+   "properties": {
+    "state": {
+     "description": "The state of the campaign associated with the product ad.",
+     "enum": [
+      "enabled",
+      "paused",
+      "archived"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BaseTargetingClause": {
+   "properties": {
+    "bid": {
+     "description": "The bid will override the adGroup bid if specified. This field is not used for negative targeting clauses. The bid must be less than the maximum allowable bid for the campaign's marketplace; for a list of maximum allowa…",
+     "format": "float",
+     "minimum": 0.02,
+     "nullable": true,
+     "type": "number"
+    },
+    "state": {
+     "enum": [
+      "enabled",
+      "paused",
+      "archived"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BrandSafetyDenyListDomain": {
+   "properties": {
+    "name": {
+     "description": "The website or app identifier. This can be in the form of full domain (eg. 'example.com' or 'example.net'), or mobile app identifier (eg. 'com.example.app' for Android apps or '1234567890' for iOS apps)",
+     "maxLength": 250,
+     "type": "string"
+    },
+    "type": {
+     "$ref": "BrandSafetyDenyListDomainType"
+    }
+   },
+   "required": [
+    "name",
+    "type"
+   ],
+   "type": "object"
+  },
+  "BrandSafetyDenyListDomainState": {
+   "default": "ENABLED",
+   "description": "The state of the domain.",
+   "enum": [
+    "ENABLED",
+    "ARCHIVED"
+   ],
+   "type": "string"
+  },
+  "BrandSafetyDenyListDomainType": {
+   "description": "The domain type.",
+   "enum": [
+    "WEBSITE",
+    "APP"
+   ],
+   "type": "string"
+  },
+  "BrandSafetyDenyListDomainUpdateResultStatus": {
+   "default": "SUCCESS",
+   "description": "The state of the domain.",
+   "enum": [
+    "SUCCESS",
+    "FAILURE"
+   ],
+   "type": "string"
+  },
+  "BrandSafetyDenyListProcessedDomain": {
+   "properties": {
+    "createdAt": {
+     "description": "The date time the domain was created at. Format YYYY-MM-ddT:HH:mm:ssZ",
+     "format": "date-time",
+     "type": "string"
+    },
+    "domainId": {
+     "description": "The identifier of the Brand Safety List domain.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "lastModified": {
+     "description": "The date time the domain was last modified. Format YYYY-MM-ddT:HH:mm:ssZ",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The website or app identifier. This can be in the form of full domain (eg. 'example.com' or 'example.net'), or mobile app identifier (eg. 'com.example.app' for Android apps or '1234567890' for iOS apps)",
+     "maxLength": 250,
+     "type": "string"
+    },
+    "state": {
+     "$ref": "BrandSafetyDenyListDomainState"
+    },
+    "type": {
+     "$ref": "BrandSafetyDenyListDomainType"
+    }
+   },
+   "type": "object"
+  },
+  "BrandSafetyGetResponse": {
+   "description": "Response for Brand Safety Deny List GET requests",
+   "properties": {
+    "domains": {
+     "description": "List of Brand Safety Deny List Domains",
+     "items": {
+      "$ref": "BrandSafetyDenyListProcessedDomain"
+     },
+     "type": "array"
+    },
+    "pagination": {
+     "$ref": "BrandSafetyGetResponsePagination"
+    }
+   }
+  },
+  "BrandSafetyGetResponsePagination": {
+   "description": "Response pagination info for Brand Safety Deny List GET requests",
+   "properties": {
+    "limit": {
+     "description": "The maximum number of deny list domains returned from GET request",
+     "type": "integer"
+    },
+    "offset": {
+     "description": "The number of deny list domains skipped",
+     "type": "integer"
+    },
+    "total": {
+     "description": "The total number of deny list domains created by the advertiser",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "BrandSafetyListRequestStatusResponse": {
+   "description": "List of all requests' status.",
+   "properties": {
+    "requestStatusList": {
+     "description": "List of all requests' status.",
+     "items": {
+      "$ref": "BrandSafetyRequestStatus"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BrandSafetyPostRequest": {
+   "description": "POST Request for Brand Safety",
+   "properties": {
+    "domains": {
+     "items": {
+      "$ref": "BrandSafetyDenyListDomain"
+     },
+     "maxItems": 10000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "domains"
+   ]
+  },
+  "BrandSafetyRequestResult": {
+   "properties": {
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "domainId": {
+     "description": "The identifier of the Brand Safety Deny List Domain.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "name": {
+     "description": "The website or app identifier.",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "BrandSafetyDenyListDomainUpdateResultStatus"
+    }
+   },
+   "type": "object"
+  },
+  "BrandSafetyRequestResultsResponse": {
+   "properties": {
+    "results": {
+     "description": "A list of results for the given requestId",
+     "items": {
+      "$ref": "BrandSafetyRequestResult"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BrandSafetyRequestStatus": {
+   "properties": {
+    "requestId": {
+     "description": "Request ID",
+     "type": "string"
+    },
+    "status": {
+     "description": "The status of the request",
+     "enum": [
+      "IN_PROGRESS",
+      "COMPLETED",
+      "FAILURE"
+     ],
+     "type": "string"
+    },
+    "statusDetails": {
+     "description": "Details related to the request status",
+     "type": "string"
+    },
+    "timestamp": {
+     "description": "Request timestamp",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BrandSafetyRequestStatusResponse": {
+   "description": "The status of the request.",
+   "properties": {
+    "requestStatus": {
+     "$ref": "BrandSafetyRequestStatus"
+    }
+   },
+   "type": "object"
+  },
+  "BrandSafetyUpdateResponse": {
+   "description": "Response for Brand Safety POST and DELETE requests",
+   "properties": {
+    "requestId": {
+     "description": "The identifier of the request",
+     "type": "string"
+    }
+   }
+  },
+  "BudgetChangeType": {
+   "description": "The value by which to update the budget of the budget rule.",
+   "enum": [
+    "PERCENT"
+   ],
+   "type": "string"
+  },
+  "BudgetRuleError": {
+   "description": "The Error Response Object.",
+   "properties": {
+    "code": {
+     "description": "An enumerated error code for machine use.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetRuleResponse": {
+   "properties": {
+    "associatedCampaignIds": {
+     "items": {
+      "description": "The campaign identifier for which rule based budget may get updated",
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "code": {
+     "description": "An enumerated success or error code for machine use.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the error, if unsuccessful",
+     "type": "string"
+    },
+    "ruleId": {
+     "description": "The rule identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetUsageCampaign": {
+   "properties": {
+    "budget": {
+     "description": "Budget amount of resource requested",
+     "type": "number"
+    },
+    "budgetUsagePercent": {
+     "description": "Budget usage percentage (spend / available budget) for the given budget policy.",
+     "type": "number"
+    },
+    "campaignId": {
+     "description": "ID of requested resource",
+     "type": "string"
+    },
+    "index": {
+     "description": "An index to maintain order of the campaignIds",
+     "type": "number"
+    },
+    "usageUpdatedTimestamp": {
+     "description": "Last evaluation time for budget usage",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetUsageCampaignBatchError": {
+   "properties": {
+    "campaignId": {
+     "description": "ID of requested resource",
+     "type": "string"
+    },
+    "code": {
+     "description": "An enumerated error code for machine use.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "index": {
+     "description": "An index to maintain order of the campaignIds",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetUsageCampaignRequest": {
+   "properties": {
+    "campaignIds": {
+     "description": "A list of campaign IDs",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetUsageCampaignResponse": {
+   "properties": {
+    "error": {
+     "description": "List of budget usage percentages that failed to pull",
+     "items": {
+      "$ref": "BudgetUsageCampaignBatchError"
+     },
+     "type": "array"
+    },
+    "success": {
+     "description": "List of budget usage percentages that were successfully pulled",
+     "items": {
+      "$ref": "BudgetUsageCampaign"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetUsageError": {
+   "description": "The Error Response Object.",
+   "properties": {
+    "code": {
+     "description": "An enumerated error code for machine use.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Campaign": {
+   "allOf": [
+    {
+     "$ref": "BaseCampaign"
+    },
+    {
+     "properties": {
+      "campaignId": {
+       "$ref": "CampaignId"
+      },
+      "deliveryProfile": {
+       "enum": [
+        "as_soon_as_possible"
+       ],
+       "type": "string"
+      },
+      "ruleBasedBudget": {
+       "$ref": "RuleBasedBudget"
+      },
+      "tactic": {
+       "$ref": "Tactic"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "CampaignId": {
+   "description": "The identifier of the campaign.",
+   "format": "int64",
+   "type": "integer"
+  },
+  "CampaignResponse": {
+   "properties": {
+    "campaignId": {
+     "$ref": "CampaignId"
+    },
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "description": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CampaignResponseEx": {
+   "properties": {
+    "budget": {
+     "description": "The amount of the budget.",
+     "format": "double",
+     "type": "number"
+    },
+    "budgetType": {
+     "description": "The time period over which the amount specified in the `budget` property is allocated.",
+     "enum": [
+      "daily"
+     ],
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "The identifier of the campaign.",
+     "type": "number"
+    },
+    "costType": {
+     "description": "Determines how the campaign will bid and charge. |Name|Description| |----|----------|-----------| |cpc |[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm|The performance of…",
+     "enum": [
+      "cpc",
+      "vcpm"
+     ],
+     "type": "string"
+    },
+    "creationDate": {
+     "description": "Epoch date the campaign was created.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "endDate": {
+     "description": "The YYYYMMDD end date of the campaign.",
+     "type": "string"
+    },
+    "lastUpdatedDate": {
+     "description": "Epoch date of the last update to any property associated with the campaign.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "name": {
+     "description": "The name of the campaign.",
+     "type": "string"
+    },
+    "portfolioId": {
+     "description": "Identifier of the portfolio that will be associated with the campaign. If null then the campaign will be disassociated from existing portfolio. Campaigns with CPC and vCPM costType are supported.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "ruleBasedBudget": {
+     "$ref": "RuleBasedBudget"
+    },
+    "servingStatus": {
+     "description": "The status of the campaign.",
+     "enum": [
+      "ADVERTISER_STATUS_ENABLED",
+      "STATUS_UNAVAILABLE",
+      "ADVERTISER_PAUSED",
+      "ACCOUNT_OUT_OF_BUDGET",
+      "ADVERTISER_PAYMENT_FAILURE",
+      "CAMPAIGN_PAUSED",
+      "CAMPAIGN_ARCHIVED",
+      "PENDING_START_DATE",
+      "ENDED",
+      "CAMPAIGN_OUT_OF_BUDGET",
+      "ADVERTISER_EXCEED_SPENDS_LIMIT",
+      "AD_POLICING_PENDING_REVIEW",
+      "CAMPAIGN_INCOMPLETE",
+      "INELIGIBLE",
+      "PORTFOLIO_ENDED",
+      "PORTFOLIO_OUT_OF_BUDGET",
+      "ADVERTISER_ARCHIVED",
+      "ADVERTISER_ACCOUNT_OUT_OF_BUDGET"
+     ],
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The YYYYMMDD start date of the campaign. The date must be today or in the future.",
+     "type": "string"
+    },
+    "state": {
+     "description": "The state of the campaign.",
+     "enum": [
+      "enabled",
+      "paused",
+      "archived"
+     ],
+     "type": "string"
+    },
+    "tactic": {
+     "$ref": "Tactic"
+    }
+   },
+   "type": "object"
+  },
+  "ComparisonOperator": {
+   "description": "The comparison operator.",
+   "enum": [
+    "GREATER_THAN",
+    "LESS_THAN",
+    "LESS_THAN_OR_EQUAL_TO",
+    "GREATER_THAN_OR_EQUAL_TO"
+   ],
+   "type": "string"
+  },
+  "ContentTargetingPredicate": {
+   "description": "A predicate to match against in the content targeting expression.",
+   "properties": {
+    "type": {
+     "enum": [
+      "contentCategorySameAs"
+     ],
+     "type": "string"
+    },
+    "value": {
+     "description": "The value to be targeted. The following table shows all possible values of the `contentCategorySameAs` predicate. | Category | Subcategory | Value | |-----------------------|-----------------------------------------|---…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CreateAdGroup": {
+   "allOf": [
+    {
+     "$ref": "BaseAdGroup"
+    },
+    {
+     "properties": {
+      "creativeType": {
+       "$ref": "CreativeType"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "required": [
+    "campaignId",
+    "name",
+    "state"
+   ]
+  },
+  "CreateAssociatedBudgetRulesRequest": {
+   "properties": {
+    "budgetRuleIds": {
+     "description": "A list of budget rule identifiers.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 25,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateAssociatedBudgetRulesResponse": {
+   "properties": {
+    "responses": {
+     "items": {
+      "$ref": "AssociatedBudgetRuleResponse"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateAssociatedOptimizationRulesRequest": {
+   "properties": {
+    "optimizationRuleIds": {
+     "description": "A list of optimization rule identifiers.",
+     "items": {
+      "$ref": "RuleId"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateBudgetRulesResponse": {
+   "properties": {
+    "responses": {
+     "items": {
+      "$ref": "BudgetRuleResponse"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateCampaign": {
+   "allOf": [
+    {
+     "$ref": "BaseCampaign"
+    },
+    {
+     "properties": {
+      "tactic": {
+       "$ref": "Tactic"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "CreateCreative": {
+   "description": "Creative create model.",
+   "properties": {
+    "adGroupId": {
+     "description": "Unqiue identifier for the ad group associated with the creative.",
+     "type": "number"
+    },
+    "consentToTranslate": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "creativeType": {
+     "$ref": "CreativeTypeInCreativeRequest"
+    },
+    "properties": {
+     "$ref": "CreativeProperties"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "properties"
+   ],
+   "type": "object"
+  },
+  "CreateLocation": {
+   "allOf": [
+    {
+     "$ref": "BaseLocation"
+    },
+    {
+     "properties": {
+      "adGroupId": {
+       "$ref": "AdGroupId"
+      },
+      "expression": {
+       "description": "The location definition.",
+       "items": {
+        "$ref": "LocationExpression"
+       },
+       "type": "array"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "required": [
+    "adGroupId",
+    "expression",
+    "state"
+   ]
+  },
+  "CreateNegativeTargetingClause": {
+   "allOf": [
+    {
+     "$ref": "BaseNegativeTargetingClause"
+    },
+    {
+     "properties": {
+      "adGroupId": {
+       "$ref": "AdGroupId"
+      },
+      "expression": {
+       "description": "The expression to negatively match against. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression, you mu…",
+       "items": {
+        "$ref": "NegativeTargetingExpression"
+       },
+       "type": "array"
+      },
+      "expressionType": {
+       "enum": [
+        "manual",
+        "auto"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "required": [
+    "adGroupId",
+    "expressionType",
+    "expression",
+    "state"
+   ]
+  },
+  "CreateOptimizationRule": {
+   "allOf": [
+    {
+     "$ref": "BaseOptimizationRule"
+    }
+   ],
+   "required": [
+    "state",
+    "ruleConditions"
+   ]
+  },
+  "CreateProductAd": {
+   "allOf": [
+    {
+     "$ref": "BaseProductAd"
+    },
+    {
+     "properties": {
+      "adGroupId": {
+       "$ref": "AdGroupId"
+      },
+      "adName": {
+       "$ref": "AdName"
+      },
+      "asin": {
+       "description": "The ASIN of the product advertised by the product ad. Defined for vendors only.",
+       "type": "string"
+      },
+      "campaignId": {
+       "$ref": "CampaignId"
+      },
+      "landingPageType": {
+       "$ref": "LandingPageType"
+      },
+      "landingPageURL": {
+       "$ref": "LandingPageURL"
+      },
+      "sku": {
+       "description": "The SKU of the product advertised by the product ad. Defined for seller accounts only.",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "required": [
+    "campaignId",
+    "adGroupId",
+    "state"
+   ]
+  },
+  "CreateSDBudgetRulesRequest": {
+   "properties": {
+    "budgetRulesDetails": {
+     "description": "A list of budget rule details.",
+     "items": {
+      "$ref": "SDBudgetRuleDetails"
+     },
+     "maxItems": 25,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateTargetingClause": {
+   "allOf": [
+    {
+     "$ref": "BaseTargetingClause"
+    },
+    {
+     "properties": {
+      "adGroupId": {
+       "$ref": "AdGroupId"
+      },
+      "expression": {
+       "$ref": "CreateTargetingExpression"
+      },
+      "expressionType": {
+       "description": "Tactic T00020 ad groups only allow manual targeting.",
+       "enum": [
+        "manual",
+        "auto"
+       ],
+       "type": "string"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "required": [
+    "adGroupId",
+    "expressionType",
+    "expression"
+   ]
+  },
+  "CreateTargetingExpression": {
+   "description": "The targeting expression to match against. ------- Applicable to contextual targeting (T00020) ------- * A 'TargetingExpression' in a contextual targeting campaign can only contain 'TargetingPredicate' components. * Exp…",
+   "items": {
+    "oneOf": [
+     {
+      "$ref": "TargetingPredicate"
+     },
+     {
+      "$ref": "ContentTargetingPredicate"
+     },
+     {
+      "$ref": "TargetingPredicateNested"
+     }
+    ]
+   },
+   "type": "array"
+  },
+  "Creative": {
+   "description": "Creative model.",
+   "properties": {
+    "adGroupId": {
+     "$ref": "AdGroupId"
+    },
+    "creativeId": {
+     "description": "Unique identifier of the creative.",
+     "type": "number"
+    },
+    "creativeType": {
+     "$ref": "CreativeTypeInCreativeResponse"
+    },
+    "moderationStatus": {
+     "description": "The moderation status of the creative",
+     "enum": [
+      "APPROVED",
+      "PENDING_REVIEW",
+      "REJECTED"
+     ],
+     "type": "string"
+    },
+    "properties": {
+     "$ref": "CreativeProperties"
+    }
+   },
+   "required": [
+    "creativeId",
+    "adGroupId",
+    "properties",
+    "moderationStatus",
+    "creativeType"
+   ],
+   "type": "object"
+  },
+  "CreativeModeration": {
+   "description": "System generated Creative moderation.",
+   "properties": {
+    "creativeId": {
+     "description": "Unique identifier of the creative.",
+     "type": "number"
+    },
+    "creativeType": {
+     "$ref": "CreativeTypeInCreativeResponse"
+    },
+    "etaForModeration": {
+     "description": "Expected date and time by which moderation will be complete.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "moderationStatus": {
+     "description": "The moderation status of the creative. |Status|Description| |------|-----------| |APPROVED|Moderation for the creative is complete.| |IN_PROGRESS|Moderation for the creative is in progress. The expected date and time fo…",
+     "enum": [
+      "APPROVED",
+      "PENDING_REVIEW",
+      "REJECTED"
+     ],
+     "type": "string"
+    },
+    "policyViolations": {
+     "description": "A list of policy violations for a creative that has failed moderation.",
+     "items": {
+      "properties": {
+       "policyDescription": {
+        "description": "A human-readable description of the policy.",
+        "type": "string"
+       },
+       "policyLinkUrl": {
+        "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+        "type": "string"
+       },
+       "violatingBrandLogoContents": {
+        "description": "Information about the brand logo that violates the specified policy.",
+        "items": {
+         "properties": {
+          "imageEvidences": {
+           "items": {
+            "properties": {
+             "violatingImageCrop": "…"
+            },
+            "type": "object"
+           },
+           "type": "array"
+          },
+          "reviewedImageUrl": {
+           "description": "Address of the image reviewed during moderation.",
+           "type": "string"
+          }
+         },
+         "type": "object"
+        },
+        "type": "array"
+       },
+       "violatingCustomImageContents": {
+        "description": "Information about the custom image that violates the specified policy.",
+        "items": {
+         "properties": {
+          "imageEvidences": {
+           "items": {
+            "properties": {
+             "violatingImageCrop": "…"
+            },
+            "type": "object"
+           },
+           "type": "array"
+          },
+          "reviewedImageUrl": {
+           "description": "Address of the image reviewed during moderation.",
+           "type": "string"
+          }
+         },
+         "type": "object"
+        },
+        "type": "array"
+       },
+       "violatingHeadlineContents": {
+        "description": "Information about the headline text that violates the specified policy.",
+        "items": {
+         "properties": {
+          "reviewedText": {
+           "description": "The specific text reviewed during moderation.",
+           "type": "string"
+          },
+          "textEvidence": {
+           "items": {
+            "properties": {
+             "violatingText": "…",
+             "violatingTextPosition": "…"
+            },
+            "type": "object"
+           },
+           "type": "array"
+          }
+         },
+         "type": "object"
+        },
+        "type": "array"
+       },
+       "violatingVideoContents": {
+        "description": "Information about the video that violates the specified policy.",
+        "items": {
+         "properties": {
+          "reviewedVideoUrl": {
+           "description": "Address of the video reviewed during moderation.",
+           "type": "string"
+          },
+          "videoEvidences": {
+           "items": {
+            "properties": {
+             "violatingVideoPosition": "…"
+            },
+            "type": "object"
+           },
+           "type": "array"
+          }
+         },
+         "type": "object"
+        },
+        "type": "array"
+       }
+      },
+      "type": "object"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "creativeId",
+    "moderationStatus",
+    "etaForModeration",
+    "policyViolations",
+    "creativeType"
+   ],
+   "type": "object"
+  },
+  "CreativePreviewConfiguration": {
+   "description": "Optional configuration for creative preview.",
+   "properties": {
+    "adName": {
+     "$ref": "AdName"
+    },
+    "isMobile": {
+     "description": "Preview the creative as if it is on a mobile environment.",
+     "type": "boolean"
+    },
+    "isOnAmazon": {
+     "description": "Preview the creative as if it is on an amazon site or third party site. The main difference is whether the preview will contain an AdChoices icon.",
+     "type": "boolean"
+    },
+    "landingPageType": {
+     "$ref": "LandingPageType"
+    },
+    "landingPageURL": {
+     "$ref": "LandingPageURL"
+    },
+    "products": {
+     "description": "The products to preview. Currently only the first product is previewable.",
+     "items": {
+      "properties": {
+       "asin": {
+        "description": "The ASIN of the product.",
+        "type": "string"
+       }
+      },
+      "type": "object"
+     },
+     "type": "array"
+    },
+    "size": {
+     "description": "The slot dimension to render the creative. Sponsored Display creatives are responsive to a limited list of width and height pairs, including 300x250, 650x130, 245x250, 414x125, 600x160, 600x300, 728x90, 980x55, 320x50, …",
+     "properties": {
+      "height": {
+       "type": "integer"
+      },
+      "width": {
+       "type": "integer"
+      }
+     },
+     "type": "object"
+    }
+   },
+   "type": "object"
+  },
+  "CreativePreviewConfigurations": {
+   "items": {
+    "$ref": "CreativePreviewConfiguration"
+   },
+   "type": "array"
+  },
+  "CreativePreviewRequest": {
+   "properties": {
+    "creative": {
+     "$ref": "PreviewCreativeModel"
+    },
+    "previewConfiguration": {
+     "$ref": "CreativePreviewConfiguration"
+    },
+    "previewConfigurations": {
+     "$ref": "CreativePreviewConfigurations"
+    }
+   },
+   "required": [
+    "creative",
+    "previewConfiguration"
+   ],
+   "type": "object"
+  },
+  "CreativePreviewResponse": {
+   "properties": {
+    "previewHtml": {
+     "type": "string"
+    },
+    "previewHtmls": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "previewHtml"
+   ],
+   "type": "object"
+  },
+  "CreativeProperties": {
+   "anyOf": [
+    {
+     "$ref": "HeadlineCreativeProperties"
+    },
+    {
+     "$ref": "LogoCreativeProperties"
+    },
+    {
+     "$ref": "CustomImageCreativeProperties"
+    },
+    {
+     "$ref": "VideoCreativeProperties"
+    },
+    {
+     "$ref": "BackgroundCreativeProperties"
+    }
+   ],
+   "description": "Select customizations on your creative from any combination of headline, logo, custom image and backgrounds."
+  },
+  "CreativeResponse": {
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "creativeId": {
+     "description": "The identifier of the creative.",
+     "type": "number"
+    },
+    "description": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CreativeType": {
+   "description": "The type of the associated creative. If the field is empty or null, a default value of IMAGE will be used. One ad group only supports one type (VIDEO or IMAGE) of creativeType at a time. |Name|Description| |----|-------…",
+   "enum": [
+    "IMAGE",
+    "VIDEO"
+   ],
+   "nullable": true,
+   "type": "string"
+  },
+  "CreativeTypeInCreativeRequest": {
+   "description": "The type of the creative. |Name|Description| |----|-----------| |IMAGE |The creative will display static assets (e.g. headline, brandLogo or custom image).| |VIDEO |The creative will display video assets. This type of c…",
+   "enum": [
+    "IMAGE",
+    "VIDEO"
+   ],
+   "nullable": true,
+   "type": "string"
+  },
+  "CreativeTypeInCreativeResponse": {
+   "description": "The type of the creative. |Name|Description| |----|-----------| |IMAGE |The creative will display static assets (e.g. headline, brandLogo or custom image).| |VIDEO |The creative will display video assets. This type of c…",
+   "enum": [
+    "IMAGE",
+    "VIDEO"
+   ],
+   "nullable": false,
+   "type": "string"
+  },
+  "CreativeUpdate": {
+   "description": "Creative update model.",
+   "properties": {
+    "creativeId": {
+     "description": "Unique identifier of the creative.",
+     "type": "number"
+    },
+    "creativeType": {
+     "$ref": "CreativeTypeInCreativeRequest"
+    },
+    "properties": {
+     "$ref": "CreativeProperties"
+    }
+   },
+   "required": [
+    "creativeId",
+    "properties"
+   ],
+   "type": "object"
+  },
+  "Curve": {
+   "description": "Forecast curve of a certain type. The type could be budget vs forecast outcome.",
+   "properties": {
+    "graph": {
+     "description": "Type of Graph.",
+     "enum": [
+      "BUDGET"
+     ],
+     "type": "string"
+    },
+    "meetThreshold": {
+     "description": "True if the budget utilization is good to show the curve.",
+     "type": "boolean"
+    },
+    "points": {
+     "items": {
+      "$ref": "CurvePoint"
+     },
+     "maxItems": 100,
+     "minItems": 50,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CurvePoint": {
+   "description": "A single point on a curve.",
+   "properties": {
+    "isFocus": {
+     "description": "If this point is the point with the focus circle.",
+     "type": "boolean"
+    },
+    "x": {
+     "description": "x-axis value.",
+     "items": {
+      "$ref": "CurvePointFixedValue"
+     },
+     "type": "object"
+    },
+    "y": {
+     "description": "y-axis value of multiple KPI types.",
+     "items": {
+      "$ref": "CurvePointRangedValue"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CurvePointFixedValue": {
+   "properties": {
+    "value": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "CurvePointRangedValue": {
+   "description": "A ranged value.",
+   "properties": {
+    "label": {
+     "description": "KPI label.",
+     "enum": [
+      "CLICKS",
+      "REACH"
+     ],
+     "type": "string"
+    },
+    "value": {
+     "$ref": "ForecastRangeDouble"
+    }
+   },
+   "type": "object"
+  },
+  "CustomImageCreativeProperties": {
+   "description": "User-customizable properties of a custom image creative.",
+   "properties": {
+    "horizontalImages": {
+     "description": "An optional collection of 1.91:1 horizontal images which are displayed on the ad.",
+     "items": {
+      "$ref": "Image"
+     },
+     "type": "array"
+    },
+    "rectCustomImage": {
+     "$ref": "Image"
+    },
+    "squareCustomImage": {
+     "$ref": "Image"
+    },
+    "squareImages": {
+     "description": "An optional collection of 1:1 square images which are displayed on the ad.",
+     "items": {
+      "$ref": "Image"
+     },
+     "type": "array"
+    },
+    "verticalImages": {
+     "description": "An optional collection of 9:16 vertical images which are displayed on the ad.",
+     "items": {
+      "$ref": "Image"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DateRangeTypeRuleDuration": {
+   "description": "Object representing date range type rule duration.",
+   "properties": {
+    "endDate": {
+     "description": "The end date of the budget rule in YYYYMMDD format. The end date is inclusive. Required to be equal or greater than `startDate`.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The start date of the budget rule in YYYYMMDD format. The start date is inclusive. Required to be greater than or equal to current date.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "DayOfWeek": {
+   "description": "The day of the week.",
+   "enum": [
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY",
+    "SATURDAY",
+    "SUNDAY"
+   ],
+   "type": "string"
+  },
+  "DisassociateAssociatedBudgetRuleResponse": {
+   "type": "object"
+  },
+  "Error": {
+   "description": "The error response object.",
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "EventTypeRuleDuration": {
+   "description": "Object representing event type rule duration.",
+   "properties": {
+    "endDate": {
+     "description": "The event end date in YYYYMMDD format. Read-only.",
+     "type": "string"
+    },
+    "eventId": {
+     "description": "The event identifier. This value is available from the budget rules recommendation API.",
+     "type": "string"
+    },
+    "eventName": {
+     "description": "The event name. Read-only.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The event start date in YYYYMMDD format. Read-only. Note that this field is present only for announced events.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "eventId"
+   ],
+   "type": "object"
+  },
+  "Forecast": {
+   "description": "Forecast impressions, clicks, reach, or conversions.",
+   "properties": {
+    "metric": {
+     "description": "Describes which metric is forecasted. |Name|Description| |-----------|------------------------| |IMPRESSIONS| Available impressions| |REACH | Delivered viewable impressions| |CLICKS | Delivered page visits| |CONVERSIONS…",
+     "enum": [
+      "IMPRESSIONS",
+      "REACH",
+      "CLICKS",
+      "CONVERSIONS"
+     ],
+     "type": "string"
+    },
+    "value": {
+     "$ref": "ForecastRange"
+    }
+   },
+   "type": "object"
+  },
+  "ForecastRange": {
+   "description": "Forecast range values.",
+   "properties": {
+    "max": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "min": {
+     "format": "int64",
+     "type": "integer"
+    }
+   }
+  },
+  "ForecastRangeDouble": {
+   "description": "A range of value.",
+   "properties": {
+    "max": {
+     "description": "Upper bound.",
+     "format": "double",
+     "type": "number"
+    },
+    "mean": {
+     "description": "Geometric mean of the upper and lower bounds.",
+     "format": "double",
+     "type": "number"
+    },
+    "min": {
+     "description": "Lower bound.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "ForecastStatus": {
+   "description": "It contains the forecast status. The IMPRESSION_TARGETING_TOO_NARROW field means the targeting clauses are too narrow, and the IMPRESSION_TARGETING_TOO_BROAD field means the targeting clauses are too broad, so our inven…",
+   "enum": [
+    "IMPRESSION_TARGETING_TOO_NARROW",
+    "IMPRESSION_TARGETING_TOO_BROAD",
+    "COMPLETE"
+   ],
+   "type": "string"
+  },
+  "GetOptimizationRuleResponse": {
+   "properties": {
+    "adGroupIds": {
+     "description": "A list of adGroup identifiers that the optimization rule associates with.",
+     "items": {
+      "$ref": "AdGroupId"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "optimizationRule": {
+     "$ref": "OptimizationRule"
+    }
+   },
+   "type": "object"
+  },
+  "GetSDBudgetRuleResponse": {
+   "properties": {
+    "budgetRule": {
+     "$ref": "SDBudgetRule"
+    }
+   },
+   "type": "object"
+  },
+  "GetSDBudgetRulesForAdvertiserResponse": {
+   "properties": {
+    "budgetRulesForAdvertiserResponse": {
+     "description": "A list of rules created by the advertiser.",
+     "items": {
+      "$ref": "SDBudgetRule"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GoalProduct": {
+   "description": "A product an advertisers wants to advertise. Recommendations will be made for specified goal products.",
+   "properties": {
+    "asin": {
+     "$ref": "ASIN"
+    }
+   },
+   "required": [
+    "asin"
+   ]
+  },
+  "HeadlineCreativeProperties": {
+   "description": "User-customizable properties of a creative with headline.",
+   "properties": {
+    "hasTermsAndConditions": {
+     "description": "Indicates that the ad promotes a free product or service (e.g., 'buy one get one free' or 'free one-month trial') and has qualifying terms and conditions applicable to your customer. Only supported for productAds with l…",
+     "type": "boolean"
+    },
+    "headline": {
+     "description": "A marketing phrase to display on the ad. This field is optional and mutable. Maximum number of characters allowed is 50.",
+     "maxLength": 50,
+     "type": "string"
+    },
+    "originalHeadline": {
+     "description": "The original headline submitted by the advertiser. If 'consentToTranslate' is set to true and translation is SUCCESSFUL then `headline` will return the translated headline whereas `originalHeadline` will return the orig…",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Image": {
+   "description": "This field denotes image which is displayed on the ad. This can either be a brand logo or a custom image. This field is optional and mutable. For custom image, both rectCustomImage and squareCustomImage should use the s…",
+   "properties": {
+    "assetId": {
+     "description": "The unique identifier of the image asset. This assetId comes from the Creative Asset Library.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The identifier of the particular image assetversion.",
+     "type": "string"
+    },
+    "croppingCoordinates": {
+     "description": "Optional cropping coordinates to apply to the image.",
+     "properties": {
+      "height": {
+       "description": "Pixel height of the cropping zone.",
+       "minimum": 0,
+       "type": "integer"
+      },
+      "left": {
+       "description": "Pixel distance from the left edge of the cropping zone to the left edge of the original image.",
+       "minimum": 0,
+       "type": "integer"
+      },
+      "top": {
+       "description": "Pixel distance from the top edge of the cropping zone to the top edge of the original image.",
+       "minimum": 0,
+       "type": "integer"
+      },
+      "width": {
+       "description": "Pixel width of the cropping zone.",
+       "minimum": 0,
+       "type": "integer"
+      }
+     },
+     "required": [
+      "top",
+      "left",
+      "width",
+      "height"
+     ],
+     "type": "object"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "Include": {
+   "description": "Array of Location Expression Ids",
+   "items": {
+    "$ref": "LocationExpressionId"
+   },
+   "maxItems": 1000,
+   "minItems": 1,
+   "type": "array"
+  },
+  "LandingPageType": {
+   "description": "The type of the landingPage used. This field is completely optional and will be set in conjunction with the LandingPageURL to indicate the type of landing page that will be set. This field is not supported when using AS…",
+   "enum": [
+    "STORE",
+    "MOMENT",
+    "OFF_AMAZON_LINK"
+   ],
+   "type": "string"
+  },
+  "LandingPageURL": {
+   "description": "The URL where customers will land after clicking on its link. Must be provided if a LandingPageType is set. Please note that if a single product ad sets the landing page url, only one product ad can be added to the ad g…",
+   "type": "string"
+  },
+  "Locale": {
+   "description": "Locale string as described in [BCP 47](https://tools.ietf.org/html/bcp47). For example, `en-US`",
+   "enum": [
+    "en-US",
+    "es-MX",
+    "zh-CN",
+    "es-ES",
+    "it-IT",
+    "fr-FR",
+    "fr-CA",
+    "de-DE",
+    "ja-JP",
+    "ko-KR",
+    "en-GB",
+    "en-CA",
+    "hi-IN",
+    "en-IN",
+    "en-DE",
+    "en-ES",
+    "en-FR",
+    "en-IT",
+    "en-JP",
+    "en-AE",
+    "ar-AE"
+   ],
+   "type": "string"
+  },
+  "Location": {
+   "allOf": [
+    {
+     "$ref": "BaseLocation"
+    },
+    {
+     "properties": {
+      "adGroupId": {
+       "$ref": "AdGroupId"
+      },
+      "expression": {
+       "description": "The Location definition.",
+       "items": {
+        "$ref": "LocationExpression"
+       },
+       "type": "array"
+      },
+      "locationExpressionId": {
+       "$ref": "LocationExpressionId"
+      },
+      "resolvedExpression": {
+       "description": "The human-readable location definition.",
+       "items": {
+        "$ref": "ResolvedLocationExpression"
+       },
+       "type": "array"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "LocationExpression": {
+   "properties": {
+    "type": {
+     "$ref": "LocationPredicate"
+    },
+    "value": {
+     "description": "The location identifier. Currently, this can correspond to either a 'city', 'state', 'dma', 'postal code', or 'country'. Its value is discoverable using the GET /locations API.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "LocationExpressionId": {
+   "description": "The identifier of the location.",
+   "format": "int64",
+   "type": "integer"
+  },
+  "LocationExpressionIdFilter": {
+   "description": "Filter entities by the list of objectIds",
+   "properties": {
+    "include": {
+     "$ref": "Include"
+    }
+   },
+   "required": [
+    "include"
+   ]
+  },
+  "LocationPredicate": {
+   "description": "The location category.",
+   "enum": [
+    "location"
+   ],
+   "type": "string"
+  },
+  "LogoCreativeProperties": {
+   "description": "User-customizable properties of a creative with a logo.",
+   "properties": {
+    "brandLogo": {
+     "$ref": "Image"
+    }
+   },
+   "type": "object"
+  },
+  "NegativeTargetingClause": {
+   "allOf": [
+    {
+     "$ref": "BaseNegativeTargetingClause"
+    },
+    {
+     "properties": {
+      "adGroupId": {
+       "$ref": "AdGroupId"
+      },
+      "expression": {
+       "description": "The expression to negatively match against. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression, you mu…",
+       "items": {
+        "$ref": "NegativeTargetingExpression"
+       },
+       "type": "array"
+      },
+      "expressionType": {
+       "enum": [
+        "manual",
+        "auto"
+       ],
+       "type": "string"
+      },
+      "resolvedExpression": {
+       "description": "The resolved negative targeting expression.",
+       "items": {
+        "$ref": "NegativeTargetingExpression"
+       },
+       "type": "array"
+      },
+      "targetId": {
+       "$ref": "TargetId"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "NegativeTargetingClauseEx": {
+   "properties": {
+    "adGroupId": {
+     "type": "number"
+    },
+    "creationDate": {
+     "description": "Epoch date the target was created.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "expression": {
+     "description": "The expression to negatively match against. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression, you mu…",
+     "items": {
+      "properties": {
+       "type": {
+        "description": "The intent type. See the [targeting topic](https://advertising.amazon.com/help#GQCBASRVERXSARL3) in the Amazon Ads support center for more information.",
+        "enum": [
+         "asinSameAs",
+         "asinBrandSameAs"
+        ],
+        "type": "string"
+       },
+       "value": {
+        "description": "The value to be negatively targeted. Used only in manual expressions.",
+        "type": "string"
+       }
+      },
+      "type": "object"
+     },
+     "type": "array"
+    },
+    "expressionType": {
+     "enum": [
+      "manual",
+      "auto"
+     ],
+     "type": "string"
+    },
+    "lastUpdatedDate": {
+     "description": "Epoch date of the last update to any property associated with the target.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "servingStatus": {
+     "description": "The status of the target.",
+     "enum": [
+      "ADVERTISER_STATUS_ENABLED",
+      "STATUS_UNAVAILABLE",
+      "ADVERTISER_PAUSED",
+      "ACCOUNT_OUT_OF_BUDGET",
+      "ADVERTISER_PAYMENT_FAILURE",
+      "CAMPAIGN_PAUSED",
+      "CAMPAIGN_ARCHIVED",
+      "PENDING_START_DATE",
+      "ENDED",
+      "CAMPAIGN_OUT_OF_BUDGET",
+      "AD_GROUP_STATUS_ENABLED",
+      "AD_GROUP_PAUSED",
+      "AD_GROUP_ARCHIVED",
+      "AD_GROUP_INCOMPLETE",
+      "AD_GROUP_LOW_BID",
+      "TARGET_STATUS_LIVE",
+      "TARGET_STATUS_PAUSED",
+      "TARGET_STATUS_ARCHIVED",
+      "ADVERTISER_EXCEED_SPENDS_LIMIT",
+      "AD_POLICING_PENDING_REVIEW",
+      "CAMPAIGN_INCOMPLETE",
+      "INELIGIBLE",
+      "PORTFOLIO_ENDED",
+      "PORTFOLIO_OUT_OF_BUDGET",
+      "ADVERTISER_ARCHIVED",
+      "ADVERTISER_ACCOUNT_OUT_OF_BUDGET"
+     ],
+     "type": "string"
+    },
+    "state": {
+     "enum": [
+      "enabled",
+      "paused",
+      "archived"
+     ],
+     "type": "string"
+    },
+    "targetId": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "NegativeTargetingExpression": {
+   "properties": {
+    "type": {
+     "description": "The intent type. See the [targeting topic](https://advertising.amazon.com/help#GQCBASRVERXSARL3) in the Amazon Ads support center for more information.",
+     "enum": [
+      "asinSameAs",
+      "asinBrandSameAs"
+     ],
+     "type": "string"
+    },
+    "value": {
+     "description": "The value to be negatively targeted. Used only in manual expressions.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "OptimizationRule": {
+   "allOf": [
+    {
+     "$ref": "BaseOptimizationRule"
+    },
+    {
+     "properties": {
+      "ruleId": {
+       "$ref": "RuleId"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "OptimizationRuleAssociationResponse": {
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "responses": {
+     "description": "An array of response objects. Each response object has code, details and optimizationRuleId.",
+     "items": {
+      "$ref": "SingleOptimizationRuleAssociationResponse"
+     },
+     "maxItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "OptimizationRuleResponse": {
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "description": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "ruleId": {
+     "$ref": "RuleId"
+    }
+   },
+   "type": "object"
+  },
+  "PatchDocument": {
+   "description": "JSONPatch request document.",
+   "properties": {
+    "op": {
+     "description": "The JSONPatch operation type.",
+     "enum": [
+      "add",
+      "remove",
+      "replace"
+     ],
+     "type": "string"
+    },
+    "path": {
+     "description": "A path constructed from the JSON object to be updated.",
+     "type": "string"
+    },
+    "value": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "number"
+      },
+      {
+       "type": "integer"
+      },
+      {
+       "type": "boolean"
+      },
+      {
+       "items": {},
+       "type": "array"
+      },
+      {
+       "type": "object"
+      }
+     ],
+     "description": "The value used by the operation specified in the `op` field."
+    }
+   },
+   "required": [
+    "op",
+    "path"
+   ],
+   "type": "object"
+  },
+  "PatchRequest": {
+   "description": "JSONPatch request request object.",
+   "properties": {
+    "id": {
+     "type": "string"
+    },
+    "request": {
+     "items": {
+      "$ref": "PatchDocument"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "id",
+    "request"
+   ],
+   "type": "object"
+  },
+  "PerformanceMeasureCondition": {
+   "properties": {
+    "comparisonOperator": {
+     "$ref": "ComparisonOperator"
+    },
+    "metricName": {
+     "$ref": "PerformanceMetric"
+    },
+    "threshold": {
+     "description": "The performance threshold value.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "comparisonOperator",
+    "metricName",
+    "threshold"
+   ],
+   "type": "object"
+  },
+  "PerformanceMetric": {
+   "description": "The advertising performance metric.",
+   "enum": [
+    "ACOS",
+    "CTR",
+    "CVR",
+    "ROAS"
+   ],
+   "type": "string"
+  },
+  "PerformanceMetricValue": {
+   "description": "An object giving the name of the performance metric and its value when the rule was evaluated",
+   "properties": {
+    "name": {
+     "description": "Name of the performance metric",
+     "type": "string"
+    },
+    "value": {
+     "description": "Value of the performance metric",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "PlacementType": {
+   "default": "ALL",
+   "description": "Placement type where the rule should be applied, defaults to `ALL`(including home page, detail page, twitch and offsite). **Future** More available placemenTypes will be supported.",
+   "enum": [
+    "ALL"
+   ],
+   "type": "string"
+  },
+  "PreviewCreativeModel": {
+   "description": "Creative model for preview.",
+   "properties": {
+    "creativeType": {
+     "$ref": "CreativeTypeInCreativeRequest"
+    },
+    "properties": {
+     "$ref": "CreativeProperties"
+    }
+   },
+   "type": "object"
+  },
+  "ProductAd": {
+   "allOf": [
+    {
+     "$ref": "BaseProductAd"
+    },
+    {
+     "properties": {
+      "adGroupId": {
+       "$ref": "AdGroupId"
+      },
+      "adId": {
+       "$ref": "AdId"
+      },
+      "adName": {
+       "$ref": "AdName"
+      },
+      "asin": {
+       "description": "The Amazon ASIN of the product advertised by the product ad. This parameter is included in the response for sellers and vendors.",
+       "type": "string"
+      },
+      "campaignId": {
+       "$ref": "CampaignId"
+      },
+      "landingPageType": {
+       "$ref": "LandingPageType"
+      },
+      "landingPageURL": {
+       "$ref": "LandingPageURL"
+      },
+      "sku": {
+       "description": "The Amazon SKU of the product advertised by the product ad. This parameter is included in the response for sellers.",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "ProductAdResponse": {
+   "properties": {
+    "adId": {
+     "description": "The identifier of the ad.",
+     "type": "number"
+    },
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "description": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ProductAdResponseEx": {
+   "properties": {
+    "adGroupId": {
+     "description": "The identifier of the ad group associated with the ad.",
+     "type": "number"
+    },
+    "adId": {
+     "description": "The identifier of the ad.",
+     "type": "number"
+    },
+    "adName": {
+     "$ref": "AdName"
+    },
+    "asin": {
+     "description": "The ASIN of the product being advertised. This parameter is included in the response for sellers and vendors.",
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "The identifier of the campaign associated with the ad.",
+     "type": "number"
+    },
+    "creationDate": {
+     "description": "Epoch date the product ad was created.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "landingPageType": {
+     "$ref": "LandingPageType"
+    },
+    "landingPageURL": {
+     "$ref": "LandingPageURL"
+    },
+    "lastUpdatedDate": {
+     "description": "Epoch date of the last update to any property associated with the product ad.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "servingStatus": {
+     "description": "The status of the product ad.",
+     "enum": [
+      "ADVERTISER_STATUS_ENABLED",
+      "STATUS_UNAVAILABLE",
+      "ADVERTISER_PAUSED",
+      "ACCOUNT_OUT_OF_BUDGET",
+      "ADVERTISER_PAYMENT_FAILURE",
+      "CAMPAIGN_PAUSED",
+      "CAMPAIGN_ARCHIVED",
+      "PENDING_START_DATE",
+      "ENDED",
+      "CAMPAIGN_OUT_OF_BUDGET",
+      "AD_GROUP_STATUS_ENABLED",
+      "AD_GROUP_PAUSED",
+      "AD_GROUP_ARCHIVED",
+      "AD_GROUP_INCOMPLETE",
+      "AD_GROUP_LOW_BID",
+      "AD_STATUS_LIVE",
+      "AD_STATUS_PAUSED",
+      "AD_STATUS_ARCHIVED",
+      "MISSING_IMAGE",
+      "MISSING_DECORATION",
+      "NOT_BUYABLE",
+      "NOT_IN_BUYBOX",
+      "OUT_OF_STOCK",
+      "NOT_IN_POLICY",
+      "ADVERTISER_EXCEED_SPENDS_LIMIT",
+      "AD_POLICING_PENDING_REVIEW",
+      "CAMPAIGN_INCOMPLETE",
+      "INELIGIBLE",
+      "PORTFOLIO_ENDED",
+      "PORTFOLIO_OUT_OF_BUDGET",
+      "ADVERTISER_ARCHIVED",
+      "ADVERTISER_ACCOUNT_OUT_OF_BUDGET"
+     ],
+     "type": "string"
+    },
+    "sku": {
+     "description": "The SKU of the product being advertised. This parameter is included in the response for sellers.",
+     "type": "string"
+    },
+    "state": {
+     "description": "The state of the product ad.",
+     "enum": [
+      "enabled",
+      "paused",
+      "archived"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ProductRecommendation": {
+   "description": "A recommended product to target ads on",
+   "properties": {
+    "asin": {
+     "$ref": "ASIN"
+    },
+    "rank": {
+     "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation",
+     "minimum": 1,
+     "type": "integer"
+    }
+   }
+  },
+  "RecommendationType": {
+   "description": "Signifies a type of recommendation",
+   "enum": [
+    "PRODUCT"
+   ],
+   "type": "string"
+  },
+  "RecommendedHeadline": {
+   "description": "Recommended Headline in response object. Recommended headline will be locale specific, i.e. for an asin input in ES, Recommended headline will be in ES.",
+   "properties": {
+    "headline": {
+     "description": "String that contains Recommended headline.",
+     "maxLength": 50,
+     "type": "string"
+    },
+    "headlineId": {
+     "description": "Unique Id of Recommended headline.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Recurrence": {
+   "properties": {
+    "daysOfWeek": {
+     "description": "Object representing days of the week for weekly type rule. It is not required for daily recurrence type",
+     "items": {
+      "$ref": "DayOfWeek"
+     },
+     "type": "array"
+    },
+    "intraDaySchedule": {
+     "description": "List of objects representing start and end time of desired intra-day budget rule window",
+     "items": {
+      "$ref": "timeOfDay"
+     },
+     "maxItems": 1,
+     "type": "array"
+    },
+    "type": {
+     "$ref": "RecurrenceType"
+    }
+   },
+   "type": "object"
+  },
+  "RecurrenceType": {
+   "description": "depicts the type of recurrence",
+   "enum": [
+    "DAILY",
+    "WEEKLY"
+   ],
+   "type": "string"
+  },
+  "ReportRequest": {
+   "properties": {
+    "metrics": {
+     "description": "A comma-separated list of the metrics to be included in the report. Each report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/guides/reportin…",
+     "type": "string"
+    },
+    "reportDate": {
+     "description": "Date in YYYYMMDD format. The report contains only metrics generated on the specified date. Note that the time zone used for date calculation is the one associated with the profile used to make the request.",
+     "type": "string"
+    },
+    "segment": {
+     "$ref": "Segment"
+    },
+    "tactic": {
+     "$ref": "TacticReport"
+    }
+   },
+   "type": "object"
+  },
+  "ReportResponse": {
+   "properties": {
+    "expiration": {
+     "description": "Epoch date of the expiration of the URI in the `location` property.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "fileSize": {
+     "description": "The size of the report file, in bytes.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "location": {
+     "description": "The URI location of the report.",
+     "type": "string"
+    },
+    "recordType": {
+     "description": "The type of report requested.",
+     "enum": [
+      "CAMPAIGN",
+      "AD_GROUP",
+      "PRODUCT_AD"
+     ],
+     "type": "string"
+    },
+    "reportId": {
+     "description": "The identifier of the report.",
+     "type": "string"
+    },
+    "status": {
+     "description": "The build status of the report.",
+     "enum": [
+      "IN_PROGRESS",
+      "SUCCESS",
+      "FAILURE"
+     ],
+     "type": "string"
+    },
+    "statusDetails": {
+     "description": "A human-readable description of the current status.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ResolvedLocationExpression": {
+   "properties": {
+    "type": {
+     "$ref": "LocationPredicate"
+    },
+    "value": {
+     "description": "The human-readable location name.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RuleBasedBudget": {
+   "properties": {
+    "applicableRuleId": {
+     "type": "string"
+    },
+    "applicableRuleName": {
+     "type": "string"
+    },
+    "isProcessing": {
+     "type": "boolean"
+    },
+    "value": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "RuleCondition": {
+   "description": "A rule condition that defines the advertiser's intent for the outcome of the rule. Certain actions are performed by the product to achieve and maintain the rule condition.",
+   "properties": {
+    "comparisonOperator": {
+     "description": "The comparison operator.",
+     "enum": [
+      "LESS_THAN_OR_EQUAL_TO"
+     ],
+     "type": "string"
+    },
+    "metricName": {
+     "description": "The name of the metric. Supported rule metrics and corresponding supported comparisonOperators: | MetricName |ComparisonOperator |Description| |------------------|--------------------|-------------------| |COST_PER_THOU…",
+     "enum": [
+      "COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS",
+      "COST_PER_CLICK",
+      "COST_PER_ORDER"
+     ],
+     "type": "string"
+    },
+    "threshold": {
+     "description": "The value of the threshold associated with the metric. The threshold values has defined minimums depending on the metric names in the following table: | MetricName | Minimum of `threshold` Value | |---------------------…",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "metricName",
+    "comparisonOperator",
+    "threshold"
+   ],
+   "type": "object"
+  },
+  "RuleDuration": {
+   "properties": {
+    "dateRangeTypeRuleDuration": {
+     "$ref": "DateRangeTypeRuleDuration"
+    },
+    "eventTypeRuleDuration": {
+     "$ref": "EventTypeRuleDuration"
+    }
+   },
+   "type": "object"
+  },
+  "RuleId": {
+   "description": "The identifier of the optimization rule.",
+   "type": "string"
+  },
+  "SDASIN": {
+   "description": "Amazon Standard Identification Number",
+   "type": "string"
+  },
+  "SDAdvertisedProduct": {
+   "description": "Product that advertisers want to advertise. Recommendations will be made for specified products. SDAdvertisedProduct can only contain either asins or landing pages. If landingPageUrl is used, there can only be one item …",
+   "properties": {
+    "asin": {
+     "$ref": "SDASIN"
+    },
+    "landingPageType": {
+     "$ref": "SDLandingPageType"
+    },
+    "landingPageURL": {
+     "$ref": "SDLandingPageURL"
+    }
+   }
+  },
+  "SDAudience": {
+   "description": "The audience identifier",
+   "type": "string"
+  },
+  "SDAudienceCategory": {
+   "description": "An audience category determines the goal of the audience such as In-market, Interest, Lifestyle and Life Event",
+   "enum": [
+    "In-market",
+    "Lifestyle",
+    "Interest",
+    "Life event"
+   ],
+   "type": "string"
+  },
+  "SDAudienceCategoryRecommendations": {
+   "description": "List of recommended standard Amazon audience targets of a specific audience category",
+   "properties": {
+    "audiences": {
+     "description": "List of recommended standard Amazon audience targets",
+     "items": {
+      "$ref": "SDAudienceRecommendation"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "category": {
+     "$ref": "SDAudienceCategory"
+    }
+   }
+  },
+  "SDAudienceRecommendation": {
+   "description": "A recommended standard Amazon audience to target ads on",
+   "properties": {
+    "audience": {
+     "$ref": "SDAudience"
+    },
+    "name": {
+     "description": "The Amazon audience name",
+     "type": "string"
+    },
+    "rank": {
+     "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation",
+     "minimum": 1,
+     "type": "integer"
+    }
+   }
+  },
+  "SDAudienceRecommendations": {
+   "properties": {
+    "audiences": {
+     "description": "List of recommended audience targets, broken down by audience category",
+     "items": {
+      "$ref": "SDAudienceCategoryRecommendations"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SDBidOptimizationV32": {
+   "description": "Determines what the recommended bids will be optimized for. |Name|CostType|Description| |----|--------|-----------| |reach|vcpm|Optimize for viewable impressions. $1 is the minimum bid for vCPM.| |clicks|cpc|Optimize fo…",
+   "enum": [
+    "reach",
+    "clicks",
+    "conversions"
+   ],
+   "type": "string"
+  },
+  "SDBidRecommendationV31": {
+   "description": "A recommended bid range to use for a target.",
+   "properties": {
+    "rangeLower": {
+     "description": "The lowest recommended bid to use to win an ad placement for this target.",
+     "type": "number"
+    },
+    "rangeUpper": {
+     "description": "The highest recommended bid to use to win an ad placement for this target.",
+     "type": "number"
+    },
+    "recommended": {
+     "description": "The recommended bid to use to win an ad placement for this target.",
+     "type": "number"
+    }
+   },
+   "required": [
+    "rangeLower",
+    "rangeUpper",
+    "recommended"
+   ]
+  },
+  "SDBudgetHistory": {
+   "properties": {
+    "history": {
+     "items": {
+      "$ref": "SDRuleBasedBudget"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SDBudgetRecommendation": {
+   "properties": {
+    "campaignId": {
+     "description": "Campaign id.",
+     "type": "string"
+    },
+    "index": {
+     "description": "Correlate the recommendation to the campaign index in the request. Zero-based.",
+     "type": "integer"
+    },
+    "sevenDaysMissedOpportunities": {
+     "$ref": "SDSevenDaysMissedOpportunities"
+    },
+    "suggestedBudget": {
+     "description": "Recommended budget for the campaign. This will be in local currency.",
+     "type": "number"
+    }
+   },
+   "required": [
+    "index",
+    "campaignId",
+    "suggestedBudget",
+    "sevenDaysMissedOpportunities"
+   ]
+  },
+  "SDBudgetRecommendationError": {
+   "properties": {
+    "campaignId": {
+     "description": "Campaign id.",
+     "type": "string"
+    },
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "index": {
+     "description": "Correlate the recommendation to the campaign index in the request. Zero-based.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index",
+    "campaignId",
+    "code",
+    "details"
+   ]
+  },
+  "SDBudgetRecommendationsRequest": {
+   "description": "Request for budget recommendations.",
+   "properties": {
+    "campaignIds": {
+     "description": "A list of campaign ids for which to get budget recommendations and missed opportunities.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaignIds"
+   ]
+  },
+  "SDBudgetRecommendationsResponse": {
+   "properties": {
+    "budgetRecommendationsErrorResults": {
+     "description": "List of errors that occurred when generating budget recommendation.",
+     "items": {
+      "$ref": "SDBudgetRecommendationError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "budgetRecommendationsSuccessResults": {
+     "description": "List of successful budget recommendation for campaigns.",
+     "items": {
+      "$ref": "SDBudgetRecommendation"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "budgetRecommendationsSuccessResults",
+    "budgetRecommendationsErrorResults"
+   ]
+  },
+  "SDBudgetRule": {
+   "properties": {
+    "createdDate": {
+     "description": "Epoch time of budget rule creation. Read-only.",
+     "format": "int64",
+     "type": "number"
+    },
+    "lastUpdatedDate": {
+     "description": "Epoch time of budget rule update. Read-only.",
+     "format": "int64",
+     "type": "number"
+    },
+    "ruleDetails": {
+     "$ref": "SDBudgetRuleDetails"
+    },
+    "ruleId": {
+     "description": "The budget rule identifier.",
+     "type": "string"
+    },
+    "ruleState": {
+     "$ref": "state"
+    },
+    "ruleStatus": {
+     "description": "The budget rule status. Read-only.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "ruleId"
+   ],
+   "type": "object"
+  },
+  "SDBudgetRuleDetails": {
+   "description": "Object representing details of a budget rule for SD campaign",
+   "properties": {
+    "budgetIncreaseBy": {
+     "$ref": "budgetIncreaseBy"
+    },
+    "duration": {
+     "$ref": "RuleDuration"
+    },
+    "name": {
+     "description": "The budget rule name. Required to be unique within a campaign.",
+     "maxLength": 355,
+     "type": "string"
+    },
+    "performanceMeasureCondition": {
+     "$ref": "PerformanceMeasureCondition"
+    },
+    "recurrence": {
+     "$ref": "Recurrence"
+    },
+    "ruleType": {
+     "$ref": "SDRuleType"
+    }
+   },
+   "type": "object"
+  },
+  "SDCategory": {
+   "description": "The category identifier",
+   "type": "integer"
+  },
+  "SDCategoryRecommendation": {
+   "description": "A recommended category to target ads on",
+   "properties": {
+    "category": {
+     "$ref": "SDCategory"
+    },
+    "name": {
+     "description": "The category name",
+     "type": "string"
+    },
+    "path": {
+     "description": "The path of the category within the category catalogue.",
+     "items": {
+      "type": "string"
+     },
+     "minItems": 1,
+     "type": "array"
+    },
+    "rank": {
+     "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation",
+     "minimum": 1,
+     "type": "integer"
+    },
+    "targetableAsinCountRange": {
+     "description": "The range of ASINs available within the category catalogue. If no targetable ASIN counts are available then the targetableAsinCountRange value will be null without any properties.",
+     "properties": {
+      "rangeLower": {
+       "type": "integer"
+      },
+      "rangeUpper": {
+       "type": "integer"
+      }
+     },
+     "type": "object"
+    }
+   }
+  },
+  "SDCategoryRecommendationV33": {
+   "description": "A recommended category to target ads on",
+   "properties": {
+    "category": {
+     "$ref": "SDCategory"
+    },
+    "name": {
+     "description": "The category name",
+     "type": "string"
+    },
+    "path": {
+     "description": "The path of the category within the category catalogue.",
+     "items": {
+      "type": "string"
+     },
+     "minItems": 1,
+     "type": "array"
+    },
+    "rank": {
+     "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation.",
+     "minimum": 1,
+     "type": "integer"
+    },
+    "targetableAsinCountRange": {
+     "description": "The range of ASINs available within the category catalogue.",
+     "properties": {
+      "rangeLower": {
+       "type": "integer"
+      },
+      "rangeUpper": {
+       "type": "integer"
+      }
+     },
+     "type": "object"
+    },
+    "translatedName": {
+     "description": "The translated category name by requested locale, field will not be provided if locale is not provided or campaign localization service is down.",
+     "type": "string"
+    },
+    "translatedPath": {
+     "description": "The translated path of the category within the category catalogue by requested locale, field will not be provided if locale is not provided or campaign localization is down.",
+     "items": {
+      "type": "string"
+     },
+     "minItems": 1,
+     "type": "array"
+    }
+   }
+  },
+  "SDCategoryRecommendations": {
+   "properties": {
+    "categories": {
+     "description": "List of recommended category targets",
+     "items": {
+      "$ref": "SDCategoryRecommendation"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SDCategoryRecommendationsV33": {
+   "properties": {
+    "categories": {
+     "description": "List of recommended category targets.",
+     "items": {
+      "$ref": "SDCategoryRecommendationV33"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SDContentCategory": {
+   "description": "The content category value",
+   "type": "string"
+  },
+  "SDContentCategoryRecommendations": {
+   "description": "A recommended content category to target ads on",
+   "properties": {
+    "contentCategory": {
+     "$ref": "SDContentCategory"
+    },
+    "name": {
+     "description": "The content category name",
+     "type": "string"
+    },
+    "rank": {
+     "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation",
+     "minimum": 1,
+     "type": "integer"
+    }
+   }
+  },
+  "SDContentTargetingPredicateV31": {
+   "description": "A predicate to match against in the content targeting expression.",
+   "properties": {
+    "type": {
+     "enum": [
+      "contentCategorySameAs"
+     ],
+     "type": "string"
+    },
+    "value": {
+     "description": "The value to be targeted.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SDCostTypeV31": {
+   "description": "Determines what performance metric the bid recommendations will be optimized for. |Name|Description| |----|----------|-----------| |cpc|The bid recommendations will be optimized for clicks triggered by the ad.| |vcpm|Th…",
+   "enum": [
+    "cpc",
+    "vcpm"
+   ],
+   "type": "string"
+  },
+  "SDCreativeType": {
+   "description": "The type of the associated creative. If the field is empty or null, a default value of IMAGE will be used. Only supports one type (VIDEO or IMAGE) at a time.",
+   "enum": [
+    "IMAGE",
+    "VIDEO"
+   ],
+   "nullable": true,
+   "type": "string"
+  },
+  "SDErrorResponse": {
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   }
+  },
+  "SDForecastErrorResponse": {
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   }
+  },
+  "SDForecastRequest": {
+   "description": "Request payload for SD forecasting. Below are required and optional fields. Fields not listed will not impact forecast results. |Field |Object |Required| |-------------------|------------------|--------| |startDate |Cam…",
+   "properties": {
+    "adGroup": {
+     "$ref": "AdGroup"
+    },
+    "campaign": {
+     "$ref": "Campaign"
+    },
+    "locationExpressions": {
+     "description": "A list of location expressions. Only applicable for advertisers using landingPageType of OFF_AMAZON_LINK.",
+     "items": {
+      "$ref": "LocationExpression"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "negativeTargetingClauses": {
+     "description": "A list of SD negative targeting clauses.",
+     "items": {
+      "$ref": "NegativeTargetingClause"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "optimizationRules": {
+     "description": "A list of SD optimization rules. Forecast will be affected by the optimization strategy rules. Currently, supported rule metrics by forecast are `COST_PER_CLICK`, `COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS` and `COST_PER_O…",
+     "items": {
+      "$ref": "OptimizationRule"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productAds": {
+     "items": {
+      "$ref": "ProductAd"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "targetingClauses": {
+     "description": "A list of SD targeting clauses.",
+     "items": {
+      "$ref": "SDForecastRequestTargetingClause"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "campaign",
+    "adGroup",
+    "productAds",
+    "targetingClauses"
+   ],
+   "type": "object"
+  },
+  "SDForecastRequestTargetingClause": {
+   "allOf": [
+    {
+     "$ref": "BaseTargetingClause"
+    },
+    {
+     "properties": {
+      "adGroupId": {
+       "$ref": "AdGroupId"
+      },
+      "expression": {
+       "$ref": "TargetingExpression"
+      },
+      "expressionType": {
+       "description": "Tactic T00020 & T00030 ad groups should use 'manual' targeting.",
+       "enum": [
+        "manual",
+        "auto"
+       ],
+       "type": "string"
+      },
+      "resolvedExpression": {
+       "$ref": "TargetingExpression"
+      },
+      "targetId": {
+       "$ref": "TargetId"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "SDForecastResponse": {
+   "description": "Response to a request for SD forecasting.",
+   "properties": {
+    "bidOptimization": {
+     "type": "string"
+    },
+    "curves": {
+     "description": "Forecasting curves.",
+     "items": {
+      "$ref": "Curve"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "dailyForecasts": {
+     "description": "Daily average forecasts.",
+     "items": {
+      "$ref": "Forecast"
+     },
+     "maxItems": 4,
+     "minItems": 1,
+     "type": "array"
+    },
+    "forecastStatus": {
+     "$ref": "ForecastStatus"
+    },
+    "lifetimeForecasts": {
+     "description": "Forecasts for campaign start date and end date. Default end date is start date plus 7 days.",
+     "items": {
+      "$ref": "Forecast"
+     },
+     "maxItems": 4,
+     "minItems": 1,
+     "type": "array"
+    },
+    "weeklyForecasts": {
+     "description": "Weekly average forecasts.",
+     "items": {
+      "$ref": "Forecast"
+     },
+     "maxItems": 4,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SDGetAssociatedCampaignsResponse": {
+   "properties": {
+    "associatedCampaigns": {
+     "description": "A list of campaigns that are associated to this budget rule.",
+     "items": {
+      "$ref": "AssociatedCampaign"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SDGoalProduct": {
+   "description": "A product an advertisers wants to advertise. Recommendations will be made for specified goal products.",
+   "properties": {
+    "asin": {
+     "$ref": "SDASIN"
+    }
+   },
+   "required": [
+    "asin"
+   ]
+  },
+  "SDHeadlineRecommendationAccessDeniedException": {
+   "properties": {
+    "code": {
+     "description": "AccessDeniedErrorCode.",
+     "enum": [
+      "ACCESS_DENIED"
+     ],
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the error response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SDHeadlineRecommendationIdentifierNotfoundException": {
+   "properties": {
+    "code": {
+     "description": "IdentiferNotFoundErrorCode.",
+     "enum": [
+      "IDENTIFIER_NOT_FOUND"
+     ],
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the error response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SDHeadlineRecommendationInternalServerException": {
+   "properties": {
+    "code": {
+     "description": "InternalErrorCode.",
+     "enum": [
+      "INTERNAL_ERROR"
+     ],
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the error response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SDHeadlineRecommendationMarsThrottlingException": {
+   "properties": {
+    "code": {
+     "description": "ThrottledErrorCode.",
+     "enum": [
+      "THROTTLED"
+     ],
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the error response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SDHeadlineRecommendationRequest": {
+   "description": "Request structure of SD headline recommendation API.",
+   "properties": {
+    "adFormat": {
+     "enum": [
+      "SPONSORED_DISPLAY"
+     ],
+     "type": "string"
+    },
+    "asins": {
+     "description": "An array of ASINs associated with the creative.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "maxNumRecommendations": {
+     "description": "Maximum number of recommendations that API should return. Response will [0, maxNumRecommendations] recommendations (recommendations are not guaranteed as there can be instances where the ML model can not generate policy…",
+     "maximum": 10,
+     "minimum": 1,
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "SDHeadlineRecommendationResponse": {
+   "description": "Response structure of SD headline recommendation API.",
+   "properties": {
+    "recommendations": {
+     "description": "Recommendations are sorted, i.e., more suitable headline has lesser array index value.",
+     "items": {
+      "$ref": "RecommendedHeadline"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "description": "An identifier for request made which is generated by server.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SDHeadlineRecommendationSchemaValidationException": {
+   "properties": {
+    "code": {
+     "description": "InvalidArgumentErrorCode.",
+     "enum": [
+      "INVALID_ARGUMENT"
+     ],
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the error response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SDLandingPageType": {
+   "description": "The type of the landingPage used. This field is not supported when using asin field.",
+   "enum": [
+    "OFF_AMAZON_LINK"
+   ],
+   "type": "string"
+  },
+  "SDLandingPageURL": {
+   "description": "The URL where customers will land after clicking on its link. Must be provided if landingPageType field is set. This field is not supported when using asin field. ||Specifications| |------------------|------------------…",
+   "type": "string"
+  },
+  "SDListAssociatedBudgetRulesResponse": {
+   "properties": {
+    "associatedRules": {
+     "description": "A list of associated budget rules.",
+     "items": {
+      "$ref": "SDBudgetRule"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SDProductRecommendation": {
+   "description": "A recommended product to target ads on",
+   "properties": {
+    "asin": {
+     "$ref": "SDASIN"
+    },
+    "rank": {
+     "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation",
+     "minimum": 1,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "SDProductRecommendationV32": {
+   "description": "A recommended product to target ads on",
+   "properties": {
+    "advertisedAsins": {
+     "description": "The top advertised products this recommendation is made for.",
+     "items": {
+      "$ref": "SDASIN"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "asin": {
+     "$ref": "SDASIN"
+    },
+    "rank": {
+     "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation",
+     "minimum": 1,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "SDProductRecommendationsV31": {
+   "properties": {
+    "products": {
+     "description": "List of recommended product targets",
+     "items": {
+      "$ref": "SDProductRecommendation"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SDProductRecommendationsV32": {
+   "properties": {
+    "products": {
+     "description": "List of recommended product targets",
+     "items": {
+      "$ref": "SDProductRecommendationV32"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SDProductTargetingRecommendationsSuccess": {
+   "description": "Recommendation results for contextual targeting.",
+   "properties": {
+    "code": {
+     "description": "HTTP status code 200 indicating a successful response for product recomendations.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The theme name specified in the request.",
+     "type": "string"
+    },
+    "recommendations": {
+     "description": "A list of recommended products.",
+     "items": {
+      "$ref": "SDProductRecommendationV32"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SDProductTargetingRecommendationsSuccessV34": {
+   "description": "Recommendation results for contextual targeting.",
+   "properties": {
+    "code": {
+     "description": "HTTP status code 200 indicating a successful response for product recommendations.",
+     "type": "string"
+    },
+    "expression": {
+     "description": "A list of expressions defining the product targeting theme. The list will define an AND operator on different expressions. For example, asinPriceGreaterThan and asinReviewRatingLessThan can be used to request product re…",
+     "items": {
+      "$ref": "SDProductTargetingThemeExpression"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "name": {
+     "description": "The theme name specified in the request.",
+     "type": "string"
+    },
+    "recommendations": {
+     "description": "A list of recommended products.",
+     "items": {
+      "$ref": "SDProductRecommendationV32"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SDProductTargetingTheme": {
+   "description": "Contextual targeting theme definitions.",
+   "properties": {
+    "expression": {
+     "description": "A list of expressions defining the contextual targeting theme. The list will define an AND operator on different expressions. For example, asinPriceGreaterThan and asinReviewRatingLessThan can be used to request product…",
+     "items": {
+      "$ref": "SDProductTargetingThemeExpression"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "name": {
+     "description": "This is the meaningful theme name which will be used as a unique identifier across various themes in the same request. This identifier will also be used to map the recommendations back to the theme in the response body.…",
+     "maxLength": 100,
+     "type": "string"
+    }
+   },
+   "required": [
+    "name",
+    "expression"
+   ],
+   "type": "object"
+  },
+  "SDProductTargetingThemeExpression": {
+   "description": "The expression used to define the contextual targeting theme.",
+   "properties": {
+    "type": {
+     "description": "The contextual targeting grammar used to define the targeting theme. Note asinAsBestSeller is currently not supported.",
+     "enum": [
+      "asinPriceGreaterThan",
+      "asinBrandSameAs",
+      "asinReviewRatingLessThan",
+      "asinGlanceViewsGreaterThan"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "type"
+   ],
+   "type": "object"
+  },
+  "SDRecommendationType": {
+   "description": "Signifies a type of recommendation",
+   "enum": [
+    "PRODUCT"
+   ],
+   "type": "string"
+  },
+  "SDRecommendationTypeV31": {
+   "description": "Signifies a type of recommendation",
+   "enum": [
+    "PRODUCT",
+    "CATEGORY"
+   ],
+   "type": "string"
+  },
+  "SDRecommendationTypeV32": {
+   "description": "Signifies a type of recommendation. PRODUCT and CATEGORY are supported by tactic T00020. CATEGORY and AUDIENCE are supported by tactic T00030.",
+   "enum": [
+    "PRODUCT",
+    "CATEGORY",
+    "AUDIENCE"
+   ],
+   "type": "string"
+  },
+  "SDRecommendationTypeV33": {
+   "description": "Signifies a type of recommendation. PRODUCT, CATEGORY, and CONTENT_CATEGORY are supported by tactic T00020. CATEGORY, AUDIENCE, and CONTENT_CATEGORY are supported by tactic T00030.",
+   "enum": [
+    "PRODUCT",
+    "CATEGORY",
+    "AUDIENCE",
+    "CONTENT_CATEGORY"
+   ],
+   "type": "string"
+  },
+  "SDRuleBasedBudget": {
+   "properties": {
+    "appliedRule": {
+     "$ref": "SDBudgetRule"
+    },
+    "dailyBudgetValue": {
+     "description": "The daily budget value.",
+     "type": "number"
+    },
+    "executionTime": {
+     "description": "Epoch time of budget rule execution.",
+     "format": "int64",
+     "type": "number"
+    },
+    "performanceMetric": {
+     "$ref": "PerformanceMetricValue"
+    },
+    "ruleBasedBudgetValue": {
+     "description": "The budget value.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "SDRuleType": {
+   "description": "The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.",
+   "enum": [
+    "SCHEDULE",
+    "PERFORMANCE"
+   ],
+   "type": "string"
+  },
+  "SDSevenDaysMissedOpportunities": {
+   "properties": {
+    "endDate": {
+     "description": "End date of the missed opportunities date range (YYYY-MM-DD).",
+     "format": "date",
+     "type": "string"
+    },
+    "estimatedMissedClicksLower": {
+     "description": "Lower bound of the estimated missed clicks.",
+     "type": "integer"
+    },
+    "estimatedMissedClicksUpper": {
+     "description": "Upper bound of the estimated missed clicks.",
+     "type": "integer"
+    },
+    "estimatedMissedImpressionsLower": {
+     "description": "Lower bound of the estimated missed impressions.",
+     "type": "integer"
+    },
+    "estimatedMissedImpressionsUpper": {
+     "description": "Upper bound of the estimated missed impressions.",
+     "type": "integer"
+    },
+    "estimatedMissedSalesLower": {
+     "description": "Lower bound of the estimated missed sales. This will be in local currency.",
+     "type": "number"
+    },
+    "estimatedMissedSalesUpper": {
+     "description": "Upper bound of the estimated missed sales. This will be in local currency.",
+     "type": "number"
+    },
+    "estimatedMissedViewableImpressionsLower": {
+     "description": "Lower bound of the estimated missed viewable impressions for vCPM campaigns.",
+     "type": "integer"
+    },
+    "estimatedMissedViewableImpressionsUpper": {
+     "description": "Upper bound of the estimated missed viewable impressions for vCPM campaigns.",
+     "type": "integer"
+    },
+    "percentTimeInBudget": {
+     "description": "Percentage of time the campaign is active with a budget.",
+     "type": "number"
+    },
+    "startDate": {
+     "description": "Start date of the missed opportunities date range (YYYY-MM-DD).",
+     "format": "date",
+     "type": "string"
+    }
+   }
+  },
+  "SDTactic": {
+   "description": "The advertising tactic associated with the campaign. The following table lists available tactic names: |Tactic Name|Type|Description| |-----------|-----|-----------| |T00020 &nbsp; |Products&nbsp;| Products: Choose indi…",
+   "enum": [
+    "T00020"
+   ],
+   "type": "string"
+  },
+  "SDTacticV31": {
+   "description": "The advertising tactic associated with the campaign. The following table lists available tactic names: |Tactic Name|Type|Description| |-----------|-----|-----------| |T00020 &nbsp; |Products&nbsp;| Products: Choose indi…",
+   "enum": [
+    "T00020",
+    "T00030"
+   ],
+   "type": "string"
+  },
+  "SDTargetExpressionV31": {
+   "oneOf": [
+    {
+     "$ref": "SDTargetingPredicateV31"
+    },
+    {
+     "$ref": "SDTargetingPredicateNestedV31"
+    }
+   ]
+  },
+  "SDTargetExpressionV32": {
+   "oneOf": [
+    {
+     "$ref": "SDTargetingPredicateV31"
+    },
+    {
+     "$ref": "SDTargetingPredicateNestedV31"
+    },
+    {
+     "$ref": "SDContentTargetingPredicateV31"
+    }
+   ]
+  },
+  "SDTargetingBidRecommendationsRequestV31": {
+   "description": "Request for targeting bid recommendations.",
+   "properties": {
+    "products": {
+     "description": "A list of products to tailor bid recommendations for category and audience based targeting clauses.",
+     "items": {
+      "$ref": "SDGoalProduct"
+     },
+     "maxItems": 10000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingClauses": {
+     "description": "A list of targeting clauses to receive bid recommendations for.",
+     "items": {
+      "properties": {
+       "targetingClause": {
+        "$ref": "SDTargetingClauseV31"
+       }
+      },
+      "required": [
+       "targetingClause"
+      ],
+      "type": "object"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targetingClauses"
+   ]
+  },
+  "SDTargetingBidRecommendationsRequestV32": {
+   "description": "Request for targeting bid recommendations.",
+   "properties": {
+    "bidOptimization": {
+     "$ref": "SDBidOptimizationV32"
+    },
+    "costType": {
+     "$ref": "SDCostTypeV31"
+    },
+    "products": {
+     "description": "A list of products to tailor bid recommendations for category and audience based targeting clauses.",
+     "items": {
+      "$ref": "SDGoalProduct"
+     },
+     "maxItems": 10000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingClauses": {
+     "description": "A list of targeting clauses to receive bid recommendations for.",
+     "items": {
+      "properties": {
+       "targetingClause": {
+        "$ref": "SDTargetingClauseV31"
+       }
+      },
+      "required": [
+       "targetingClause"
+      ],
+      "type": "object"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targetingClauses",
+    "bidOptimization",
+    "costType"
+   ]
+  },
+  "SDTargetingBidRecommendationsRequestV33": {
+   "description": "Request for targeting bid recommendations.",
+   "properties": {
+    "bidOptimization": {
+     "$ref": "SDBidOptimizationV32"
+    },
+    "costType": {
+     "$ref": "SDCostTypeV31"
+    },
+    "creativeType": {
+     "$ref": "SDCreativeType"
+    },
+    "products": {
+     "description": "A list of products to tailor bid recommendations for category and audience based targeting clauses.",
+     "items": {
+      "$ref": "SDGoalProduct"
+     },
+     "maxItems": 10000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingClauses": {
+     "description": "A list of targeting clauses to receive bid recommendations for.",
+     "items": {
+      "properties": {
+       "targetingClause": {
+        "$ref": "SDTargetingClauseV31"
+       }
+      },
+      "required": [
+       "targetingClause"
+      ],
+      "type": "object"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targetingClauses",
+    "bidOptimization",
+    "costType"
+   ]
+  },
+  "SDTargetingBidRecommendationsRequestV34": {
+   "description": "Request for targeting bid recommendations.",
+   "properties": {
+    "bidOptimization": {
+     "$ref": "SDBidOptimizationV32"
+    },
+    "costType": {
+     "$ref": "SDCostTypeV31"
+    },
+    "creativeType": {
+     "$ref": "SDCreativeType"
+    },
+    "products": {
+     "description": "A list of products to tailor bid recommendations for category and audience based targeting clauses. This array must contain consistent fields of either asins or landing pages (when linking to other pages), these cannot …",
+     "items": {
+      "$ref": "SDGoalProduct"
+     },
+     "maxItems": 10000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingClauses": {
+     "description": "A list of targeting clauses to receive bid recommendations for.",
+     "items": {
+      "properties": {
+       "targetingClause": {
+        "$ref": "SDTargetingClauseV32"
+       }
+      },
+      "required": [
+       "targetingClause"
+      ],
+      "type": "object"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targetingClauses",
+    "bidOptimization",
+    "costType"
+   ]
+  },
+  "SDTargetingBidRecommendationsResponseItemFailureV31": {
+   "description": "Failed bid recommendation response.",
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of this item.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of this item on error.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "details"
+   ]
+  },
+  "SDTargetingBidRecommendationsResponseItemSuccessV31": {
+   "allOf": [
+    {
+     "description": "Success response for corresponding targeting clause on the request.",
+     "properties": {
+      "code": {
+       "description": "The HTTP status code of this item.",
+       "type": "string"
+      }
+     }
+    },
+    {
+     "$ref": "SDBidRecommendationV31"
+    }
+   ],
+   "description": "A recommended bid range to use for a target.",
+   "required": [
+    "code"
+   ]
+  },
+  "SDTargetingBidRecommendationsResponseV31": {
+   "description": "Response to a request for targeting bid recommendations.",
+   "properties": {
+    "bidRecommendations": {
+     "items": {
+      "oneOf": [
+       {
+        "$ref": "SDTargetingBidRecommendationsResponseItemSuccessV31"
+       },
+       {
+        "$ref": "SDTargetingBidRecommendationsResponseItemFailureV31"
+       }
+      ]
+     },
+     "maxItems": 100,
+     "minItems": 1
+    },
+    "costType": {
+     "$ref": "SDCostTypeV31"
+    }
+   },
+   "required": [
+    "bidRecommendations",
+    "costType"
+   ]
+  },
+  "SDTargetingBidRecommendationsResponseV32": {
+   "description": "Response to a request for targeting bid recommendations.",
+   "properties": {
+    "bidOptimization": {
+     "$ref": "SDBidOptimizationV32"
+    },
+    "bidRecommendations": {
+     "items": {
+      "oneOf": [
+       {
+        "$ref": "SDTargetingBidRecommendationsResponseItemSuccessV31"
+       },
+       {
+        "$ref": "SDTargetingBidRecommendationsResponseItemFailureV31"
+       }
+      ]
+     },
+     "maxItems": 100,
+     "minItems": 1
+    },
+    "costType": {
+     "$ref": "SDCostTypeV31"
+    }
+   },
+   "required": [
+    "bidRecommendations",
+    "costType",
+    "bidOptimization"
+   ]
+  },
+  "SDTargetingClauseV31": {
+   "description": "The targeting clause",
+   "properties": {
+    "expression": {
+     "$ref": "SDTargetingExpressionV31"
+    },
+    "expressionType": {
+     "description": "Tactic T00020 ad groups only allow manual targeting.",
+     "enum": [
+      "manual",
+      "auto"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "expressionType",
+    "expression"
+   ],
+   "type": "object"
+  },
+  "SDTargetingClauseV32": {
+   "description": "The targeting clause",
+   "properties": {
+    "expression": {
+     "$ref": "SDTargetingExpressionV32"
+    },
+    "expressionType": {
+     "description": "Tactic T00020 ad groups only allow manual targeting.",
+     "enum": [
+      "manual",
+      "auto"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "expressionType",
+    "expression"
+   ],
+   "type": "object"
+  },
+  "SDTargetingExpressionV31": {
+   "description": "The targeting expression to match against. ------- Applicable to contextual targeting (T00020) ------- * A 'TargetingExpression' in a contextual targeting campaign can only contain 'TargetingPredicate' components. * Exp…",
+   "items": {
+    "$ref": "SDTargetExpressionV31"
+   },
+   "minItems": 1,
+   "type": "array"
+  },
+  "SDTargetingExpressionV32": {
+   "description": "The targeting expression to match against. ------- Applicable to contextual targeting (T00020) ------- * A 'TargetingExpression' in a contextual targeting campaign can only contain 'TargetingPredicate' or 'ContentTarget…",
+   "items": {
+    "$ref": "SDTargetExpressionV32"
+   },
+   "minItems": 1,
+   "type": "array"
+  },
+  "SDTargetingPredicateBaseV31": {
+   "description": "A predicate to match against inside the TargetingPredicateNested component (only applicable to audience targeting - T00030). * All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon A…",
+   "properties": {
+    "type": {
+     "enum": [
+      "asinCategorySameAs",
+      "asinBrandSameAs",
+      "asinPriceBetween",
+      "asinPriceGreaterThan",
+      "asinPriceLessThan",
+      "asinReviewRatingLessThan",
+      "asinReviewRatingGreaterThan",
+      "asinReviewRatingBetween",
+      "similarProduct",
+      "relatedProduct",
+      "exactProduct",
+      "asinIsPrimeShippingEligible",
+      "asinAgeRangeSameAs",
+      "asinGenreSameAs",
+      "audienceSameAs",
+      "lookback"
+     ],
+     "type": "string"
+    },
+    "value": {
+     "description": "The value to be targeted.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type"
+   ],
+   "type": "object"
+  },
+  "SDTargetingPredicateNestedV31": {
+   "description": "A behavioral event and list of targeting predicates that represents an audience to target (only applicable to audience targeting - T00030). * For manual ASIN-grain targeting, the value array must contain only, 'exactPro…",
+   "properties": {
+    "type": {
+     "enum": [
+      "views",
+      "audience",
+      "purchases"
+     ],
+     "type": "string"
+    },
+    "value": {
+     "items": {
+      "$ref": "SDTargetingPredicateBaseV31"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "type",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SDTargetingPredicateV31": {
+   "description": "A predicate to match against in the Targeting Expression (only applicable to contextual targeting - T00020). * All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system…",
+   "properties": {
+    "type": {
+     "enum": [
+      "asinSameAs",
+      "asinCategorySameAs",
+      "asinBrandSameAs",
+      "asinPriceBetween",
+      "asinPriceGreaterThan",
+      "asinPriceLessThan",
+      "asinReviewRatingLessThan",
+      "asinReviewRatingGreaterThan",
+      "asinReviewRatingBetween",
+      "asinIsPrimeShippingEligible",
+      "asinAgeRangeSameAs",
+      "asinGenreSameAs"
+     ],
+     "type": "string"
+    },
+    "value": {
+     "description": "The value to be targeted.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type"
+   ],
+   "type": "object"
+  },
+  "SDTargetingRecommendations": {
+   "description": "A collection of targeting recommendations. Results will be sorted with strongest recommendations in the beginning.",
+   "properties": {
+    "products": {
+     "description": "List of recommended product targets",
+     "items": {
+      "$ref": "SDProductRecommendation"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   }
+  },
+  "SDTargetingRecommendationsFailure": {
+   "description": "A targeting recommendation failure record.",
+   "properties": {
+    "code": {
+     "description": "HTTP status code indicating a failure response for targeting recomendations.",
+     "type": "string"
+    },
+    "errorMessage": {
+     "description": "A human friendly error message indicating the failure reasons.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The theme name specified in the request. If the themes field is not provided in the request, the value of this field will be set to default.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SDTargetingRecommendationsFailureV34": {
+   "description": "A targeting recommendation failure record.",
+   "properties": {
+    "code": {
+     "description": "HTTP status code indicating a failure response for targeting recomendations.",
+     "type": "string"
+    },
+    "errorMessage": {
+     "description": "A human friendly error message indicating the failure reasons.",
+     "type": "string"
+    },
+    "expression": {
+     "description": "A list of expressions that failed to be applied in the product targeting theme.",
+     "items": {
+      "$ref": "SDProductTargetingThemeExpression"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "name": {
+     "description": "The theme name specified in the request. If the themes field is not provided in the request, the value of this field will be set to default.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SDTargetingRecommendationsLocale": {
+   "description": "List of supported locales.",
+   "enum": [
+    "ar_AE",
+    "de_DE",
+    "en_AE",
+    "en_AU",
+    "en_CA",
+    "en_GB",
+    "en_IN",
+    "en_SG",
+    "en_US",
+    "es_ES",
+    "es_MX",
+    "fr_CA",
+    "fr_FR",
+    "hi_IN",
+    "it_IT",
+    "ja_JP",
+    "ko_KR",
+    "nl_NL",
+    "pl_PL",
+    "pt_BR",
+    "sv_SE",
+    "ta_IN",
+    "th_TH",
+    "tr_TR",
+    "vi_VN",
+    "zh_CN"
+   ],
+   "type": "string"
+  },
+  "SDTargetingRecommendationsProducts": {
+   "description": "A list of products for which to get targeting recommendations",
+   "items": {
+    "$ref": "SDGoalProduct"
+   },
+   "maxItems": 10000,
+   "minItems": 1,
+   "type": "array"
+  },
+  "SDTargetingRecommendationsProductsV31": {
+   "description": "A list of products for which to get targeting recommendations. This array can only contain either asins or landing pages. If landingPageUrl is used, there can only be one item in the array for each request.",
+   "items": {
+    "$ref": "SDAdvertisedProduct"
+   },
+   "maxItems": 10000,
+   "minItems": 1,
+   "type": "array"
+  },
+  "SDTargetingRecommendationsRequest": {
+   "description": "Request for targeting recommendations",
+   "properties": {
+    "products": {
+     "description": "A list of products for which to get targeting recommendations",
+     "items": {
+      "$ref": "SDGoalProduct"
+     },
+     "maxItems": 10000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "tactic": {
+     "$ref": "SDTactic"
+    },
+    "typeFilter": {
+     "description": "A filter to indicate which types of recommendations to request.",
+     "items": {
+      "$ref": "SDRecommendationType"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "tactic",
+    "products",
+    "typeFilter"
+   ]
+  },
+  "SDTargetingRecommendationsRequestV31": {
+   "description": "Request for targeting recommendations",
+   "properties": {
+    "products": {
+     "$ref": "SDTargetingRecommendationsProducts"
+    },
+    "tactic": {
+     "$ref": "SDTacticV31"
+    },
+    "typeFilter": {
+     "$ref": "SDTargetingRecommendationsTypeFilterV31"
+    }
+   },
+   "required": [
+    "tactic",
+    "products",
+    "typeFilter"
+   ]
+  },
+  "SDTargetingRecommendationsRequestV32": {
+   "description": "Request for targeting recommendations for API version 3.2.",
+   "properties": {
+    "products": {
+     "$ref": "SDTargetingRecommendationsProducts"
+    },
+    "tactic": {
+     "$ref": "SDTacticV31"
+    },
+    "themes": {
+     "$ref": "SDTargetingRecommendationsThemes"
+    },
+    "typeFilter": {
+     "$ref": "SDTargetingRecommendationsTypeFilterV31"
+    }
+   },
+   "required": [
+    "tactic",
+    "products",
+    "typeFilter"
+   ]
+  },
+  "SDTargetingRecommendationsRequestV33": {
+   "description": "Request for targeting recommendations for API version 3.3.",
+   "properties": {
+    "products": {
+     "$ref": "SDTargetingRecommendationsProducts"
+    },
+    "tactic": {
+     "$ref": "SDTacticV31"
+    },
+    "themes": {
+     "$ref": "SDTargetingRecommendationsThemes"
+    },
+    "typeFilter": {
+     "$ref": "SDTargetingRecommendationsTypeFilterV32"
+    }
+   },
+   "required": [
+    "tactic",
+    "products",
+    "typeFilter"
+   ]
+  },
+  "SDTargetingRecommendationsRequestV34": {
+   "description": "Request for targeting recommendations for API version 3.4.",
+   "properties": {
+    "products": {
+     "$ref": "SDTargetingRecommendationsProducts"
+    },
+    "tactic": {
+     "$ref": "SDTacticV31"
+    },
+    "themes": {
+     "$ref": "SDTargetingRecommendationsThemes"
+    },
+    "typeFilter": {
+     "$ref": "SDTargetingRecommendationsTypeFilterV32"
+    }
+   },
+   "required": [
+    "tactic",
+    "products",
+    "typeFilter"
+   ]
+  },
+  "SDTargetingRecommendationsRequestV35": {
+   "description": "Request for targeting recommendations for API version 3.5.",
+   "properties": {
+    "categoryType": {
+     "description": "This field is optional unless the field locationExpression is present in the request. It is used for category audience targeting to specify if the audience is for views (re-marketing) or purchases (re-purchasing). The s…",
+     "enum": [
+      "views",
+      "purchases"
+     ],
+     "type": "string"
+    },
+    "locationExpression": {
+     "description": "This optional field is used to specify the locations used in SD location targeting for non-Amazon sellers only at the moment. Therefore it's only supported if the product is a landing page url.",
+     "items": {
+      "$ref": "LocationExpression"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "products": {
+     "$ref": "SDTargetingRecommendationsProductsV31"
+    },
+    "tactic": {
+     "$ref": "SDTacticV31"
+    },
+    "themes": {
+     "$ref": "SDTargetingRecommendationsThemes"
+    },
+    "typeFilter": {
+     "$ref": "SDTargetingRecommendationsTypeFilterV33"
+    }
+   },
+   "required": [
+    "tactic",
+    "products",
+    "typeFilter"
+   ]
+  },
+  "SDTargetingRecommendationsResponse": {
+   "description": "Response to a request for targeting recommendations.",
+   "properties": {
+    "recommendations": {
+     "$ref": "SDTargetingRecommendations"
+    }
+   }
+  },
+  "SDTargetingRecommendationsResponseV31": {
+   "description": "Response to a request for targeting recommendations.",
+   "properties": {
+    "recommendations": {
+     "$ref": "SDTargetingRecommendationsV31"
+    }
+   }
+  },
+  "SDTargetingRecommendationsResponseV32": {
+   "description": "Response to a request for targeting recommendations.",
+   "properties": {
+    "recommendations": {
+     "$ref": "SDTargetingRecommendationsV32"
+    }
+   }
+  },
+  "SDTargetingRecommendationsResponseV33": {
+   "description": "Response to a request for targeting recommendations.",
+   "properties": {
+    "recommendations": {
+     "$ref": "SDTargetingRecommendationsV33"
+    }
+   }
+  },
+  "SDTargetingRecommendationsResponseV34": {
+   "description": "Response to a request for targeting recommendations.",
+   "properties": {
+    "recommendations": {
+     "$ref": "SDTargetingRecommendationsV34"
+    }
+   }
+  },
+  "SDTargetingRecommendationsResponseV35": {
+   "description": "Response to a request for targeting recommendations.",
+   "properties": {
+    "recommendations": {
+     "$ref": "SDTargetingRecommendationsV35"
+    }
+   }
+  },
+  "SDTargetingRecommendationsThemes": {
+   "description": "The themes used to refine the recommendations. Currently only contextual targeting themes are supported.",
+   "properties": {
+    "product": {
+     "description": "A list of themes for product targeting recommendations. If this list is empty, the service will return all the current available theme recommendations. Recommendations will be returned for each theme. If specified, each…",
+     "items": {
+      "$ref": "SDProductTargetingTheme"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SDTargetingRecommendationsTypeFilterV31": {
+   "description": "A filter to indicate which types of recommendations to request.",
+   "items": {
+    "$ref": "SDRecommendationTypeV31"
+   },
+   "maxItems": 2,
+   "minItems": 1,
+   "type": "array"
+  },
+  "SDTargetingRecommendationsTypeFilterV32": {
+   "description": "A filter to indicate which types of recommendations to request.",
+   "items": {
+    "$ref": "SDRecommendationTypeV32"
+   },
+   "maxItems": 2,
+   "minItems": 1,
+   "type": "array"
+  },
+  "SDTargetingRecommendationsTypeFilterV33": {
+   "description": "A filter to indicate which types of recommendations to request.",
+   "items": {
+    "$ref": "SDRecommendationTypeV33"
+   },
+   "maxItems": 3,
+   "minItems": 1,
+   "type": "array"
+  },
+  "SDTargetingRecommendationsV31": {
+   "allOf": [
+    {
+     "$ref": "SDProductRecommendationsV31"
+    },
+    {
+     "$ref": "SDCategoryRecommendations"
+    }
+   ]
+  },
+  "SDTargetingRecommendationsV32": {
+   "allOf": [
+    {
+     "$ref": "SDProductRecommendationsV32"
+    },
+    {
+     "$ref": "SDCategoryRecommendations"
+    },
+    {
+     "$ref": "SDThemeRecommendations"
+    }
+   ],
+   "description": "For v3.2 the service will continue to return the recommendations returned for v3.1 in products field, and return recommendations for contextual targeting themes in themes field."
+  },
+  "SDTargetingRecommendationsV33": {
+   "allOf": [
+    {
+     "$ref": "SDProductRecommendationsV32"
+    },
+    {
+     "$ref": "SDCategoryRecommendationsV33"
+    },
+    {
+     "$ref": "SDAudienceRecommendations"
+    },
+    {
+     "$ref": "SDThemeRecommendations"
+    }
+   ],
+   "description": "For v3.3 the service will continue to return the recommendations returned for v3.2, and return audience recommendations if requested."
+  },
+  "SDTargetingRecommendationsV34": {
+   "description": "For v3.4 the service will continue to return the recommendations returned for v3.2, return audience recommendations if requested, and return the theme expression used in product targeting if requested.",
+   "properties": {
+    "audiences": {
+     "description": "List of recommended audience targets, broken down by audience category",
+     "items": {
+      "$ref": "SDAudienceCategoryRecommendations"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "categories": {
+     "description": "List of recommended category targets",
+     "items": {
+      "$ref": "SDCategoryRecommendationV33"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "products": {
+     "description": "List of recommended product targets",
+     "items": {
+      "$ref": "SDProductRecommendationsV32"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "themes": {
+     "$ref": "SDThemeRecommendationsV34"
+    }
+   },
+   "type": "object"
+  },
+  "SDTargetingRecommendationsV35": {
+   "description": "For v3.5 the service will continue to return the recommendations returned for v3.4, return Entertainment targeting recommendations if requested and return asin-less recommendations if a landing page URL was passed in th…",
+   "properties": {
+    "audiences": {
+     "description": "List of recommended audience targets, broken down by audience category",
+     "items": {
+      "$ref": "SDAudienceCategoryRecommendations"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "categories": {
+     "description": "List of recommended category targets",
+     "items": {
+      "$ref": "SDCategoryRecommendationV33"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "contentCategories": {
+     "description": "List of recommended entertainment targets",
+     "items": {
+      "$ref": "SDContentCategoryRecommendations"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "products": {
+     "description": "List of recommended product targets",
+     "items": {
+      "$ref": "SDProductRecommendationsV32"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "themes": {
+     "$ref": "SDThemeRecommendationsV34"
+    }
+   },
+   "type": "object"
+  },
+  "SDThemeRecommendations": {
+   "properties": {
+    "themes": {
+     "properties": {
+      "products": {
+       "description": "A list of contextual targeting theme recommendations.",
+       "items": {
+        "oneOf": [
+         {
+          "$ref": "SDProductTargetingRecommendationsSuccess"
+         }
+        ]
+       },
+       "maxItems": 5,
+       "minItems": 1,
+       "type": "array"
+      }
+     }
+    }
+   },
+   "type": "object"
+  },
+  "SDThemeRecommendationsV34": {
+   "properties": {
+    "themes": {
+     "properties": {
+      "products": {
+       "description": "A list of contextual targeting theme recommendations.",
+       "items": {
+        "oneOf": [
+         {
+          "$ref": "SDProductTargetingRecommendationsSuccessV34"
+         }
+        ]
+       },
+       "maxItems": 5,
+       "minItems": 1,
+       "type": "array"
+      }
+     }
+    }
+   },
+   "type": "object"
+  },
+  "Segment": {
+   "description": "Optional. A dimension used to further segment certain types of reports. Note: matchedTarget reports only return targets that have generated at least one click. | Dimension | Report types | Tactics | Metrics | Descriptio…",
+   "enum": [
+    "matchedTarget"
+   ],
+   "type": "string"
+  },
+  "SingleOptimizationRuleAssociationResponse": {
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "optimizationRuleId": {
+     "$ref": "RuleId"
+    }
+   },
+   "type": "object"
+  },
+  "SnapshotRequest": {
+   "properties": {
+    "stateFilter": {
+     "description": "Optional. Restricts results to entities with state within the specified comma-separated list. Default behavior is to include 'enabled' and 'paused'. You can include 'enabled', 'paused', and 'archived' or any combination.",
+     "enum": [
+      "enabled",
+      "paused",
+      "archived"
+     ],
+     "type": "string"
+    },
+    "tacticFilter": {
+     "$ref": "TacticFilter"
+    }
+   },
+   "type": "object"
+  },
+  "SnapshotResponse": {
+   "properties": {
+    "expiration": {
+     "description": "The epoch time for expiration of the snapshot file and each snapshot file will be expired in 30 mins after generated. It's only available if status is SUCCESS.",
+     "type": "number"
+    },
+    "fileSize": {
+     "description": "The size of the snapshot file in bytes. It's only available if status is SUCCESS.",
+     "type": "number"
+    },
+    "location": {
+     "description": "The URI for the snapshot. It's only available if status is SUCCESS.",
+     "type": "string"
+    },
+    "recordType": {
+     "description": "The record type of the snapshot file.",
+     "enum": [
+      "campaigns",
+      "adgroups",
+      "productAds",
+      "targets"
+     ],
+     "type": "string"
+    },
+    "snapshotId": {
+     "description": "The identifier of the snapshot that was requested.",
+     "type": "string"
+    },
+    "status": {
+     "description": "The status of the generation of the snapshot.",
+     "enum": [
+      "IN_PROGRESS",
+      "SUCCESS",
+      "FAILURE"
+     ],
+     "type": "string"
+    },
+    "statusDetails": {
+     "description": "Optional description of the status.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Tactic": {
+   "description": "The advertising tactic associated with the campaign. The following table lists available tactic names: |Tactic Name|Type|Description| |-----------|-----|-----------| |T00020 |Contextual targeting | Choose individual pro…",
+   "enum": [
+    "T00020",
+    "T00030"
+   ],
+   "type": "string"
+  },
+  "TacticFilter": {
+   "description": "Optional. Restricts results to entities with the advertising tactic associated with the campaign. Must be one of the following table lists available tactic names: |Tactic Name|Type|Description| |-----------|-----|------…",
+   "enum": [
+    "T00020",
+    "T00030",
+    "T00020,T00030"
+   ],
+   "type": "string"
+  },
+  "TacticReport": {
+   "description": "The advertising tactic associated with the campaign. The following table lists available tactic names: |Tactic Name|Type|Description| |-----------|-----|-----------| |T00020 |Contextual targeting | Choose individual pro…",
+   "enum": [
+    "T00020",
+    "T00030"
+   ],
+   "type": "string"
+  },
+  "TargetId": {
+   "format": "int64",
+   "type": "integer"
+  },
+  "TargetResponse": {
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "description": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "targetId": {
+     "$ref": "TargetId"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingClause": {
+   "allOf": [
+    {
+     "$ref": "BaseTargetingClause"
+    },
+    {
+     "properties": {
+      "adGroupId": {
+       "$ref": "AdGroupId"
+      },
+      "campaignId": {
+       "$ref": "CampaignId"
+      },
+      "expression": {
+       "$ref": "TargetingExpression"
+      },
+      "expressionType": {
+       "description": "Tactic T00020 & T00030 ad groups should use 'manual' targeting.",
+       "enum": [
+        "manual",
+        "auto"
+       ],
+       "type": "string"
+      },
+      "resolvedExpression": {
+       "$ref": "TargetingExpression"
+      },
+      "targetId": {
+       "$ref": "TargetId"
+      }
+     },
+     "type": "object"
+    }
+   ]
+  },
+  "TargetingClauseEx": {
+   "properties": {
+    "adGroupId": {
+     "type": "number"
+    },
+    "bid": {
+     "description": "If a value for `bid` is specified, it overrides the current adGroup bid. When using vcpm costType. $1 is the minimum bid for vCPM. Note that this field is ignored for negative targeting clauses.",
+     "type": "number"
+    },
+    "campaignId": {
+     "type": "number"
+    },
+    "creationDate": {
+     "description": "Epoch date the target was created.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "expression": {
+     "$ref": "TargetingExpression"
+    },
+    "expressionType": {
+     "enum": [
+      "auto",
+      "manual"
+     ],
+     "type": "string"
+    },
+    "lastUpdatedDate": {
+     "description": "Epoch date of the last update to any property associated with the target.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "resolvedExpression": {
+     "$ref": "TargetingExpression"
+    },
+    "servingStatus": {
+     "description": "The status of the target.",
+     "enum": [
+      "ADVERTISER_STATUS_ENABLED",
+      "STATUS_UNAVAILABLE",
+      "ADVERTISER_PAUSED",
+      "ACCOUNT_OUT_OF_BUDGET",
+      "ADVERTISER_PAYMENT_FAILURE",
+      "CAMPAIGN_PAUSED",
+      "CAMPAIGN_ARCHIVED",
+      "PENDING_START_DATE",
+      "ENDED",
+      "CAMPAIGN_OUT_OF_BUDGET",
+      "AD_GROUP_STATUS_ENABLED",
+      "AD_GROUP_PAUSED",
+      "AD_GROUP_ARCHIVED",
+      "AD_GROUP_INCOMPLETE",
+      "AD_GROUP_LOW_BID",
+      "TARGET_STATUS_LIVE",
+      "TARGET_STATUS_PAUSED",
+      "TARGET_STATUS_ARCHIVED",
+      "ADVERTISER_EXCEED_SPENDS_LIMIT",
+      "AD_POLICING_PENDING_REVIEW",
+      "CAMPAIGN_INCOMPLETE",
+      "INELIGIBLE",
+      "PORTFOLIO_ENDED",
+      "PORTFOLIO_OUT_OF_BUDGET",
+      "ADVERTISER_ARCHIVED",
+      "ADVERTISER_ACCOUNT_OUT_OF_BUDGET"
+     ],
+     "type": "string"
+    },
+    "state": {
+     "enum": [
+      "enabled",
+      "paused",
+      "archived"
+     ],
+     "type": "string"
+    },
+    "targetId": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingExpression": {
+   "description": "The targeting expression to match against. ------- Applicable to contextual or content targeting (T00020) ------- * A 'TargetingExpression' in a contextual targeting campaign can contain 'TargetingPredicate' or 'Content…",
+   "items": {
+    "oneOf": [
+     {
+      "$ref": "TargetingPredicate"
+     },
+     {
+      "$ref": "ContentTargetingPredicate"
+     },
+     {
+      "$ref": "TargetingPredicateLegacy"
+     },
+     {
+      "$ref": "TargetingPredicateNested"
+     }
+    ]
+   },
+   "type": "array"
+  },
+  "TargetingPredicate": {
+   "description": "A predicate to match against in the targeting expression (only applicable to contextual targeting - T00020). * All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system…",
+   "properties": {
+    "type": {
+     "enum": [
+      "asinSameAs",
+      "asinCategorySameAs",
+      "asinBrandSameAs",
+      "asinPriceBetween",
+      "asinPriceGreaterThan",
+      "asinPriceLessThan",
+      "asinReviewRatingLessThan",
+      "asinReviewRatingGreaterThan",
+      "asinReviewRatingBetween",
+      "asinIsPrimeShippingEligible",
+      "asinAgeRangeSameAs",
+      "asinGenreSameAs",
+      "similarProduct"
+     ],
+     "type": "string"
+    },
+    "value": {
+     "description": "The value to be targeted.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingPredicateBase": {
+   "description": "A predicate to match against inside the TargetingPredicateNested component (only applicable to audience targeting - T00030). * All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon A…",
+   "properties": {
+    "type": {
+     "enum": [
+      "asinCategorySameAs",
+      "asinBrandSameAs",
+      "asinPriceBetween",
+      "asinPriceGreaterThan",
+      "asinPriceLessThan",
+      "asinReviewRatingLessThan",
+      "asinReviewRatingGreaterThan",
+      "asinReviewRatingBetween",
+      "similarProduct",
+      "exactProduct",
+      "asinIsPrimeShippingEligible",
+      "asinAgeRangeSameAs",
+      "asinGenreSameAs",
+      "audienceSameAs",
+      "lookback",
+      "negative",
+      "relatedProduct"
+     ],
+     "type": "string"
+    },
+    "value": {
+     "description": "The value to be targeted.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingPredicateLegacy": {
+   "properties": {
+    "eventType": {
+     "description": "The type of event that the value applies to. Only available for similarProduct and exactProduct currently. * views event type corresponds to a customer who viewed the detail page of the product(s).",
+     "enum": [
+      "views"
+     ],
+     "type": "string"
+    },
+    "type": {
+     "enum": [
+      "asinSameAs",
+      "asinCategorySameAs",
+      "asinBrandSameAs",
+      "asinPriceBetween",
+      "asinPriceGreaterThan",
+      "asinPriceLessThan",
+      "asinReviewRatingLessThan",
+      "asinReviewRatingGreaterThan",
+      "asinReviewRatingBetween",
+      "similarProduct",
+      "exactProduct",
+      "asinIsPrimeShippingEligible",
+      "asinAgeRangeSameAs",
+      "asinGenreSameAs"
+     ],
+     "type": "string"
+    },
+    "value": {
+     "description": "The value to be targeted.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingPredicateNested": {
+   "description": "A behavioral event and list of targeting predicates that represents an audience to target (only applicable to audience targeting - T00030). * For manual ASIN-grain targeting, the value array must contain only, 'exactPro…",
+   "properties": {
+    "type": {
+     "enum": [
+      "views",
+      "audience",
+      "purchases"
+     ],
+     "type": "string"
+    },
+    "value": {
+     "items": {
+      "$ref": "TargetingPredicateBase"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingRecommendations": {
+   "description": "A collection of targeting recommendations. Results will be sorted with strongest recommendations in the beginning.",
+   "properties": {
+    "products": {
+     "description": "List of recommended product targets",
+     "items": {
+      "$ref": "ProductRecommendation"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   }
+  },
+  "TargetingRecommendationsRequest": {
+   "description": "Request for targeting recommendations",
+   "properties": {
+    "products": {
+     "description": "A list of products for which to get targeting recommendations",
+     "items": {
+      "$ref": "GoalProduct"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "tactic": {
+     "$ref": "Tactic"
+    },
+    "typeFilter": {
+     "description": "A filter to indicate which types of recommendations to request. T00030 only allow \"CATEGORY\".",
+     "items": {
+      "$ref": "RecommendationType"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "tactic",
+    "products",
+    "typeFilter"
+   ]
+  },
+  "TargetingRecommendationsResponse": {
+   "description": "Response to a request for targeting recommendations.",
+   "properties": {
+    "recommendations": {
+     "$ref": "TargetingRecommendations"
+    }
+   }
+  },
+  "UpdateAdGroup": {
+   "allOf": [
+    {
+     "$ref": "BaseAdGroup"
+    },
+    {
+     "properties": {
+      "adGroupId": {
+       "$ref": "AdGroupId"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "required": [
+    "adGroupId"
+   ]
+  },
+  "UpdateBudgetRulesResponse": {
+   "properties": {
+    "responses": {
+     "items": {
+      "$ref": "BudgetRuleResponse"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateCampaign": {
+   "allOf": [
+    {
+     "$ref": "BaseCampaign"
+    },
+    {
+     "properties": {
+      "campaignId": {
+       "$ref": "CampaignId"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "required": [
+    "campaignId"
+   ]
+  },
+  "UpdateNegativeTargetingClause": {
+   "allOf": [
+    {
+     "$ref": "BaseNegativeTargetingClause"
+    },
+    {
+     "properties": {
+      "targetId": {
+       "$ref": "TargetId"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "required": [
+    "targetId"
+   ]
+  },
+  "UpdateOptimizationRule": {
+   "allOf": [
+    {
+     "$ref": "BaseOptimizationRule"
+    },
+    {
+     "properties": {
+      "ruleId": {
+       "$ref": "RuleId"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "required": [
+    "ruleId"
+   ]
+  },
+  "UpdateProductAd": {
+   "allOf": [
+    {
+     "$ref": "BaseProductAd"
+    },
+    {
+     "properties": {
+      "adId": {
+       "$ref": "AdId"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "required": [
+    "adId"
+   ]
+  },
+  "UpdateSDBudgetRulesRequest": {
+   "description": "Request object for updating budget rule for SD campaign",
+   "properties": {
+    "budgetRulesDetails": {
+     "description": "A list of budget rule details.",
+     "items": {
+      "$ref": "SDBudgetRule"
+     },
+     "maxItems": 25,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateTargetingClause": {
+   "allOf": [
+    {
+     "$ref": "BaseTargetingClause"
+    },
+    {
+     "properties": {
+      "targetId": {
+       "$ref": "TargetId"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "required": [
+    "targetId"
+   ]
+  },
+  "Video": {
+   "description": "This field denotes video which is displayed on the ad. This field is optional and mutable. A video asset must be provided for a VIDEO creative. Specific restrictions based on the video are listed in the following table.…",
+   "properties": {
+    "assetId": {
+     "description": "The unique identifier of the video asset. This assetId comes from the Creative Asset Library.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The identifier of the particular video assetversion.",
+     "type": "string"
+    },
+    "originalAssetId": {
+     "description": "The assetId of the original video submitted by the advertiser. If 'consentToTranslate' is set to true and translation is SUCCESSFUL then `originalAssetId` will return the assetId of the original video whereas `assetId` …",
+     "type": "string"
+    },
+    "originalAssetVersion": {
+     "description": "The asset version of the original video submitted by the advertiser. If 'consentToTranslate' is set to true and translation is SUCCESSFUL then `originalAssetVersion` will return the asset version of the original video w…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "VideoCreativeProperties": {
+   "description": "User-customizable properties of a video creative. Use either the 'video' property for a single video, OR one or more of the aspect-ratio-specific collections (squareVideos, horizontalVideos, verticalVideos).",
+   "properties": {
+    "horizontalVideos": {
+     "description": "An optional collection of 16:9 horizontal videos which are displayed on the ad. Currently, only one asset is supported in the array.",
+     "items": {
+      "$ref": "Video"
+     },
+     "type": "array"
+    },
+    "squareVideos": {
+     "description": "An optional collection of 1:1 square videos which are displayed on the ad. Currently, only one asset is supported in the array.",
+     "items": {
+      "$ref": "Video"
+     },
+     "type": "array"
+    },
+    "verticalVideos": {
+     "description": "An optional collection of 9:16 vertical videos which are displayed on the ad. Currently, only one asset is supported in the array.",
+     "items": {
+      "$ref": "Video"
+     },
+     "type": "array"
+    },
+    "video": {
+     "$ref": "Video"
+    }
+   },
+   "type": "object"
+  },
+  "budgetIncreaseBy": {
+   "properties": {
+    "type": {
+     "$ref": "BudgetChangeType"
+    },
+    "value": {
+     "description": "The budget value.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "type",
+    "value"
+   ],
+   "type": "object"
+  },
+  "state": {
+   "description": "The budget rule state.",
+   "enum": [
+    "ACTIVE",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "timeOfDay": {
+   "properties": {
+    "endTime": {
+     "description": "The end time of intra-day budget rule window in the format 'hh:mm:ss'. Required to be greater than start-time.",
+     "type": "string"
+    },
+    "startTime": {
+     "description": "The start time of intra-day budget rule window in the format 'hh:mm:ss'",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

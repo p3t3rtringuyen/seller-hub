@@ -1,0 +1,203 @@
+{
+ "api": "SeatIDs",
+ "file": "specs/dest/SeatIDs_prod_3p.json",
+ "schemas": {
+  "ApiError": {
+   "description": "The error response object.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "FieldError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "A value created by Amazon API Gateway that uniquely identifies your request.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CurrentSeat": {
+   "properties": {
+    "dealCreationId": {
+     "$ref": "DealCreationId"
+    },
+    "exchangeId": {
+     "$ref": "ExchangeId"
+    },
+    "exchangeName": {
+     "$ref": "ExchangeName"
+    },
+    "spendTrackingId": {
+     "$ref": "SpendTrackingId"
+    }
+   },
+   "type": "object"
+  },
+  "CurrentSeatV2": {
+   "properties": {
+    "eligibleSeats": {
+     "$ref": "EligibleSeat"
+    },
+    "exchangeId": {
+     "$ref": "ExchangeId"
+    },
+    "exchangeName": {
+     "$ref": "ExchangeName"
+    }
+   },
+   "type": "object"
+  },
+  "DealCreationId": {
+   "description": "The seat ID used for tracking spend via the exchange's system.",
+   "type": "string"
+  },
+  "EligibleSeat": {
+   "properties": {
+    "maGroupSeats": {
+     "description": "The group seats for current manager account shared with other manager accounts",
+     "properties": {
+      "dealCreationId": {
+       "$ref": "DealCreationId"
+      },
+      "spendTrackingId": {
+       "$ref": "SpendTrackingId"
+      }
+     },
+     "type": "object"
+    },
+    "maSeats": {
+     "description": "The manager account seats specific to only current manager account.",
+     "properties": {
+      "dealCreationId": {
+       "$ref": "DealCreationId"
+      },
+      "spendTrackingId": {
+       "$ref": "SpendTrackingId"
+      }
+     },
+     "type": "object"
+    }
+   },
+   "type": "object"
+  },
+  "ExchangeId": {
+   "description": "The identifier for the exchange (also known as SSP).",
+   "type": "number"
+  },
+  "ExchangeName": {
+   "description": "The name of the exchange (also known as SSP).",
+   "type": "string"
+  },
+  "FieldError": {
+   "description": "The sub error object.",
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ListCurrentSeatIdsRequest": {
+   "allOf": [
+    {
+     "$ref": "PagingRequest"
+    }
+   ],
+   "properties": {
+    "countryIsoCode": {
+     "description": "The ISO country code of the country for which to retrieve seat IDs. Used for AdX. Applicable for India 'IN', can be null for other countries.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListCurrentSeatIdsResponse": {
+   "allOf": [
+    {
+     "$ref": "PagingResponse"
+    }
+   ],
+   "properties": {
+    "currentSeats": {
+     "description": "The seats retrieved.",
+     "items": {
+      "$ref": "CurrentSeat"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ListCurrentSeatIdsResponseV2": {
+   "allOf": [
+    {
+     "$ref": "PagingResponse"
+    }
+   ],
+   "properties": {
+    "seats": {
+     "description": "The seats retrieved.",
+     "items": {
+      "$ref": "CurrentSeatV2"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PagingRequest": {
+   "properties": {
+    "maxResults": {
+     "default": 50,
+     "description": "Sets the maximum number of results in the returned collection. Used in conjunction with 'nextToken' to control pagination. Values less than 1 are considered invalid and will result in an error response.",
+     "maximum": 1000,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Used for pagination, a string that can be sent in the next request to get the next page of results.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PagingResponse": {
+   "properties": {
+    "nextToken": {
+     "description": "Used for pagination, a string that can be sent in the next request to get the next page of results.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The number of results returned.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "SpendTrackingId": {
+   "description": "The seat ID used for creating deals with publishers.",
+   "type": "string"
+  }
+ }
+}

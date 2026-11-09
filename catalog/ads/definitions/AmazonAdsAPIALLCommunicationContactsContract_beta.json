@@ -1,0 +1,496 @@
+{
+ "api": "AmazonAdsAPIALLCommunicationContactsContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLCommunicationContactsContract_prod_3p_BETA.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CommunicationContact": {
+   "properties": {
+    "channel": {
+     "$ref": "ContactChannel"
+    },
+    "communicationContactId": {
+     "description": "Unique identifier for this communication contact.",
+     "type": "string"
+    },
+    "contactAddress": {
+     "$ref": "ContactAddress"
+    },
+    "contactPurpose": {
+     "$ref": "ContactPurpose"
+    },
+    "creationDateTime": {
+     "description": "UTC timestamp of when this communication contact was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "UTC timestamp of the most recent update to this communication contact.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "preferredContact": {
+     "description": "Whether this is the advertiser's preferred contact method when multiple contacts exist for the same purpose (e.g., prefers phone over email for account support).",
+     "type": "boolean"
+    },
+    "timeZone": {
+     "$ref": "TimeZoneIana"
+    }
+   },
+   "required": [
+    "channel",
+    "communicationContactId",
+    "contactAddress",
+    "contactPurpose"
+   ],
+   "type": "object"
+  },
+  "CommunicationContactContactChannelFilter": {
+   "properties": {
+    "include": {
+     "description": "**Channel Enum:** | Channel | Description | | --- | --- | | `EMAIL` | Email address. | | `PHONE` | Phone number. |",
+     "items": {
+      "$ref": "ContactChannel"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "CommunicationContactContactPurposeFilter": {
+   "properties": {
+    "include": {
+     "description": "**ContactPurpose Enum:** | ContactPurpose | Description | | --- | --- | | `ACCOUNT_SUPPORT` | Account support and troubleshooting communications. |",
+     "items": {
+      "$ref": "ContactPurpose"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "CommunicationContactCreate": {
+   "properties": {
+    "channel": {
+     "$ref": "ContactChannel"
+    },
+    "contactAddress": {
+     "$ref": "ContactAddress"
+    },
+    "contactPurpose": {
+     "$ref": "ContactPurpose"
+    },
+    "preferredContact": {
+     "description": "Whether this is the advertiser's preferred contact method when multiple contacts exist for the same purpose (e.g., prefers phone over email for account support).",
+     "type": "boolean"
+    },
+    "timeZone": {
+     "$ref": "TimeZoneIana"
+    }
+   },
+   "required": [
+    "channel",
+    "contactAddress",
+    "contactPurpose"
+   ],
+   "type": "object"
+  },
+  "CommunicationContactMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "CommunicationContactMultiStatusSuccess"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CommunicationContactMultiStatusSuccess": {
+   "properties": {
+    "communicationContact": {
+     "$ref": "CommunicationContact"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "communicationContact",
+    "index"
+   ],
+   "type": "object"
+  },
+  "CommunicationContactSuccessResponse": {
+   "properties": {
+    "communicationContacts": {
+     "items": {
+      "$ref": "CommunicationContact"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ContactAddress": {
+   "description": "The address where the advertiser can be reached — either an email address or a phone number. | ContactAddress | Description | |------|------| | `emailAddress` | Email address. | | `phoneNumber` | Phone number. |",
+   "format": "password",
+   "oneOf": [
+    {
+     "properties": {
+      "emailAddress": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "emailAddress"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "phoneNumber": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "phoneNumber"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ContactChannel": {
+   "description": "Supported channels for contacting an advertiser. **ContactChannel Enum:** | ContactChannel | Description | |------|------| | `EMAIL` | Email address. | | `PHONE` | Phone number. |",
+   "enum": [
+    "EMAIL",
+    "PHONE"
+   ],
+   "type": "string"
+  },
+  "ContactPurpose": {
+   "description": "Purposes for which a communication contact can be registered. **ContactPurpose Enum:** | ContactPurpose | Description | |------|------| | `ACCOUNT_SUPPORT` | Account support and troubleshooting communications. |",
+   "enum": [
+    "ACCOUNT_SUPPORT"
+   ],
+   "type": "string"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateCommunicationContactRequest": {
+   "properties": {
+    "communicationContacts": {
+     "items": {
+      "$ref": "CommunicationContactCreate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "communicationContacts"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `CONTENT_TOO_LARGE` | The request is too large. Consider splitting it int…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryCommunicationContactRequest": {
+   "properties": {
+    "channelFilter": {
+     "$ref": "CommunicationContactContactChannelFilter"
+    },
+    "contactPurposeFilter": {
+     "$ref": "CommunicationContactContactPurposeFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TimeZoneIana": {
+   "description": "Each enum member is in the IANA Time Zone Database **TimeZoneIana Enum:** | TimeZoneIana | Description | |------|------| | `America/Anchorage` | Alaska Time Zone (UTC-09:00) | | `America/Caracas` | Venezuela Time Zone (…",
+   "enum": [
+    "America/Anchorage",
+    "America/Caracas",
+    "America/Chicago",
+    "America/Denver",
+    "America/Halifax",
+    "America/Los_Angeles",
+    "America/Mexico_City",
+    "America/New_York",
+    "America/Sao_Paulo",
+    "America/St_Johns",
+    "Asia/Almaty",
+    "Asia/Baghdad",
+    "Asia/Bangkok",
+    "Asia/Dubai",
+    "Asia/Hong_Kong",
+    "Asia/Kabul",
+    "Asia/Kathmandu",
+    "Asia/Kolkata",
+    "Asia/Magadan",
+    "Asia/Riyadh",
+    "Asia/Shanghai",
+    "Asia/Singapore",
+    "Asia/Tehran",
+    "Asia/Tokyo",
+    "Asia/Yekaterinburg",
+    "Asia/Yerevan",
+    "Atlantic/Azores",
+    "Atlantic/South_Georgia",
+    "Australia/Brisbane",
+    "Australia/Darwin",
+    "Australia/Sydney",
+    "EET",
+    "Europe/Amsterdam",
+    "Europe/Istanbul",
+    "Europe/London",
+    "Europe/Paris",
+    "Europe/Stockholm",
+    "Indian/Cocos",
+    "Pacific/Auckland",
+    "Pacific/Fiji",
+    "Pacific/Honolulu",
+    "Pacific/Kwajalein",
+    "Pacific/Midway",
+    "UTC"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

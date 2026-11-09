@@ -1,0 +1,664 @@
+{
+ "api": "D16GDspApiCampaignInsightsV1",
+ "file": "specs/dest/D16GDspApiCampaignInsightsV1_prod_3p.json",
+ "schemas": {
+  "CampaignInsight": {
+   "properties": {
+    "adGroupId": {
+     "type": "string"
+    },
+    "insights": {
+     "$ref": "InsightsUnion"
+    }
+   },
+   "required": [
+    "insights"
+   ],
+   "type": "object"
+  },
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ErrorResponse": {
+   "properties": {
+    "adGroupId": {
+     "type": "string"
+    },
+    "campaignId": {
+     "type": "string"
+    },
+    "errorCode": {
+     "type": "integer"
+    },
+    "errorMessage": {
+     "type": "string"
+    },
+    "index": {
+     "type": "integer"
+    }
+   },
+   "required": [
+    "campaignId",
+    "errorCode",
+    "errorMessage",
+    "index"
+   ],
+   "type": "object"
+  },
+  "InsightRequest": {
+   "properties": {
+    "adGroupId": {
+     "type": "string"
+    },
+    "campaignId": {
+     "type": "string"
+    },
+    "insightType": {
+     "$ref": "InsightType"
+    }
+   },
+   "required": [
+    "campaignId",
+    "insightType"
+   ],
+   "type": "object"
+  },
+  "InsightType": {
+   "enum": [
+    "PERFORMANCE_PLUS_SHOPPER_TRAIT",
+    "PERSONA",
+    "TARGETING_PERFORMANCE"
+   ],
+   "type": "string"
+  },
+  "InsightsUnion": {
+   "oneOf": [
+    {
+     "properties": {
+      "performancePlusShopperTraitInsight": {
+       "$ref": "PerformancePlusShopperTraitInsight"
+      }
+     },
+     "required": [
+      "performancePlusShopperTraitInsight"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "targetingPerformanceInsight": {
+       "$ref": "TargetingPerformanceInsight"
+      }
+     },
+     "required": [
+      "targetingPerformanceInsight"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "personaInsight": {
+       "$ref": "PersonaInsight"
+      }
+     },
+     "required": [
+      "personaInsight"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ListDspCampaignInsightsRequestContent": {
+   "properties": {
+    "requests": {
+     "items": {
+      "$ref": "InsightRequest"
+     },
+     "maxItems": 25,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "requests"
+   ],
+   "type": "object"
+  },
+  "ListDspCampaignInsightsResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorResponse"
+     },
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "SuccessInsightsResponse"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "MonetaryMetricValue": {
+   "properties": {
+    "baseline": {
+     "$ref": "TargetingPerformanceBaseline"
+    },
+    "value": {
+     "$ref": "MonetaryValue"
+    }
+   },
+   "required": [
+    "baseline",
+    "value"
+   ],
+   "type": "object"
+  },
+  "MonetaryValue": {
+   "properties": {
+    "amount": {
+     "type": "number"
+    },
+    "currencyCode": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "amount",
+    "currencyCode"
+   ],
+   "type": "object"
+  },
+  "NumericMetricValue": {
+   "properties": {
+    "baseline": {
+     "$ref": "TargetingPerformanceBaseline"
+    },
+    "value": {
+     "$ref": "NumericValue"
+    }
+   },
+   "required": [
+    "baseline",
+    "value"
+   ],
+   "type": "object"
+  },
+  "NumericValue": {
+   "properties": {
+    "amount": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "amount"
+   ],
+   "type": "object"
+  },
+  "PerformancePlusShopperTrait": {
+   "properties": {
+    "cost": {
+     "format": "double",
+     "type": "number"
+    },
+    "impressionShare": {
+     "format": "double",
+     "type": "number"
+    },
+    "impressions": {
+     "type": "integer"
+    },
+    "medianTimeToConvertInHoursPerTrait": {
+     "format": "double",
+     "type": "number"
+    },
+    "offAmazonConversions": {
+     "type": "integer"
+    },
+    "shopperTraitDescription": {
+     "type": "string"
+    },
+    "shopperTraitIndex": {
+     "type": "integer"
+    },
+    "shopperTraitName": {
+     "type": "string"
+    },
+    "totalPurchases": {
+     "type": "integer"
+    }
+   },
+   "required": [
+    "impressionShare",
+    "shopperTraitDescription",
+    "shopperTraitIndex",
+    "shopperTraitName"
+   ],
+   "type": "object"
+  },
+  "PerformancePlusShopperTraitInsight": {
+   "properties": {
+    "medianTimeToConvertInHours": {
+     "format": "double",
+     "type": "number"
+    },
+    "performancePlusShopperTraits": {
+     "items": {
+      "$ref": "PerformancePlusShopperTrait"
+     },
+     "type": "array"
+    },
+    "performancePlusTargetingTactic": {
+     "$ref": "PerformancePlusTargetingTactic"
+    },
+    "timeToConvertBuckets": {
+     "items": {
+      "$ref": "TimeToConvertBucket"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "medianTimeToConvertInHours",
+    "performancePlusShopperTraits",
+    "performancePlusTargetingTactic",
+    "timeToConvertBuckets"
+   ],
+   "type": "object"
+  },
+  "PerformancePlusTargetingTactic": {
+   "enum": [
+    "All",
+    "Customer Acquisition",
+    "Prospecting",
+    "Remarketing",
+    "Retention",
+    "Unified Consideration"
+   ],
+   "type": "string"
+  },
+  "Persona": {
+   "properties": {
+    "clickThroughRate": {
+     "$ref": "PersonaMetricValue"
+    },
+    "impressionShare": {
+     "$ref": "PersonaMetricValue"
+    },
+    "offAmazonConversions": {
+     "$ref": "PersonaMetricValue"
+    },
+    "personaDescription": {
+     "type": "string"
+    },
+    "personaName": {
+     "type": "string"
+    },
+    "personaTypes": {
+     "items": {
+      "$ref": "PersonaType"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    },
+    "purchaseRate": {
+     "$ref": "PersonaMetricValue"
+    },
+    "totalCost": {
+     "$ref": "PersonaMonetaryMetricValue"
+    },
+    "totalPurchases": {
+     "$ref": "PersonaMetricValue"
+    }
+   },
+   "required": [
+    "impressionShare",
+    "personaDescription",
+    "personaName",
+    "personaTypes"
+   ],
+   "type": "object"
+  },
+  "PersonaInsight": {
+   "properties": {
+    "performancePlusTargetingTactic": {
+     "$ref": "PerformancePlusTargetingTactic"
+    },
+    "personas": {
+     "items": {
+      "$ref": "Persona"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "personas"
+   ],
+   "type": "object"
+  },
+  "PersonaMetricValue": {
+   "properties": {
+    "value": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "value"
+   ],
+   "type": "object"
+  },
+  "PersonaMonetaryMetricValue": {
+   "properties": {
+    "value": {
+     "$ref": "MonetaryValue"
+    }
+   },
+   "required": [
+    "value"
+   ],
+   "type": "object"
+  },
+  "PersonaType": {
+   "enum": [
+    "BEST_PERFORMING",
+    "HIGHEST_REACH",
+    "MOST_ENGAGING"
+   ],
+   "type": "string"
+  },
+  "SuccessInsightsResponse": {
+   "properties": {
+    "campaignId": {
+     "type": "string"
+    },
+    "campaignInsights": {
+     "items": {
+      "$ref": "CampaignInsight"
+     },
+     "type": "array"
+    },
+    "index": {
+     "type": "integer"
+    },
+    "insightDate": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "campaignId",
+    "campaignInsights",
+    "index"
+   ],
+   "type": "object"
+  },
+  "TargetingPerformanceBaseline": {
+   "properties": {
+    "status": {
+     "$ref": "TargetingPerformanceBaselineStatus"
+    }
+   },
+   "required": [
+    "status"
+   ],
+   "type": "object"
+  },
+  "TargetingPerformanceBaselineStatus": {
+   "enum": [
+    "ABOVE",
+    "AT_BASELINE",
+    "BELOW"
+   ],
+   "type": "string"
+  },
+  "TargetingPerformanceInsight": {
+   "properties": {
+    "targets": {
+     "items": {
+      "$ref": "TargetingPerformanceTarget"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "TargetingPerformanceTarget": {
+   "properties": {
+    "adSpend": {
+     "$ref": "MonetaryMetricValue"
+    },
+    "costPerAction": {
+     "$ref": "MonetaryMetricValue"
+    },
+    "detailPageViewRate": {
+     "$ref": "NumericMetricValue"
+    },
+    "id": {
+     "type": "string"
+    },
+    "impressions": {
+     "$ref": "NumericMetricValue"
+    },
+    "returnOnAdvertiserSpend": {
+     "$ref": "NumericMetricValue"
+    },
+    "type": {
+     "$ref": "TargetingPerformanceTargetType"
+    },
+    "videoCompletionRate": {
+     "$ref": "NumericMetricValue"
+    }
+   },
+   "required": [
+    "adSpend",
+    "id",
+    "impressions",
+    "type"
+   ],
+   "type": "object"
+  },
+  "TargetingPerformanceTargetType": {
+   "enum": [
+    "KEYWORD",
+    "PRODUCT",
+    "PRODUCT_CATEGORY",
+    "PRODUCT_COMPLEMENTS",
+    "PRODUCT_REMARKETING",
+    "PRODUCT_SIMILAR"
+   ],
+   "type": "string"
+  },
+  "TimeToConvertBucket": {
+   "properties": {
+    "conversionShare": {
+     "format": "double",
+     "type": "number"
+    },
+    "range": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "conversionShare",
+    "range"
+   ],
+   "type": "object"
+  }
+ }
+}

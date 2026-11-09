@@ -1,0 +1,275 @@
+{
+ "api": "SponsoredBrandsCategoryBenchmark",
+ "file": "specs/dest/SponsoredBrandsCategoryBenchmark_prod_3p.json",
+ "schemas": {
+  "acosMetric": {
+   "description": "Advertising cost of sales (ACOS) is the percentage of sales spent on advertising (total spend / total sales). A lower ACOS infers higher efficiency of your advertising investment relative to your advertising spend. This…",
+   "properties": {
+    "bottom-25pct": {
+     "description": "The value at which 25% of the lower-performing values lie below. For ACOS, since lower ACOS indicates higher performance, 25% of peer values will be above the bottom 25% value. It is similar to the first/lower quartile.",
+     "type": "number"
+    },
+    "median": {
+     "description": "The middle value of the data set. Half of the values lie below the median and half lie above the median. It is also known as the 50th percentile.",
+     "type": "number"
+    },
+    "top-25pct": {
+     "description": "The value at which 25% of the top performing values lie above. For ACOS, since lower ACOS indicates higher performance, 25% of values will be below the top 25% value. It is similar to the third/upper quartile.",
+     "type": "number"
+    },
+    "value": {
+     "description": "ACOS of your ad",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "brandListResponse": {
+   "description": "A list of brands advertiser has access to",
+   "properties": {
+    "brands": {
+     "items": {
+      "properties": {
+       "name": {
+        "type": "string"
+       }
+      },
+      "type": "object"
+     },
+     "type": "array"
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "brandsAndCategoriesItem": {
+   "description": "Each item contains the metrics for a single brand-category combination",
+   "properties": {
+    "acos": {
+     "$ref": "acosMetric"
+    },
+    "brandName": {
+     "type": "string"
+    },
+    "categoryId": {
+     "description": "This is the same as browse node ID",
+     "type": "string"
+    },
+    "categoryName": {
+     "type": "string"
+    },
+    "ctr": {
+     "$ref": "ctrMetric"
+    },
+    "endDate": {
+     "type": "string"
+    },
+    "impressions": {
+     "$ref": "impressionMetric"
+    },
+    "roas": {
+     "$ref": "roasMetric"
+    },
+    "startDate": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ctrMetric": {
+   "description": "Click Through Rate (CTR): The percentage of shoppers who see your ad and also click it, calculated as clicks divided by impressions (clicks / impressions). A higher CTR infers more users are interested in your ad and ar…",
+   "properties": {
+    "bottom-25pct": {
+     "description": "The value at which 25% of the lower-performing values lie below. For CTR, 25% of peer values will be below the bottom 25% value. It is similar to the first/lower quartile.",
+     "type": "number"
+    },
+    "median": {
+     "description": "The middle value of the data set. Half of the values lie below the median and half lie above the median. It is also known as the 50th percentile.",
+     "type": "number"
+    },
+    "top-25pct": {
+     "description": "The value at which 25% of the top performing values lie above. For CTR, 25% of values will be above the top 25% value. It is similar to the third/upper quartile.",
+     "type": "number"
+    },
+    "value": {
+     "description": "CTR of your ad",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "endDateParam": {
+   "default": "The latest valid endDate",
+   "description": "End of the data range (inclusive) in YYYY-MM-DD format (all <a href=\"https://en.wikipedia.org/wiki/ISO_8601#Dates\">ISO_8601</a> date formats are also supported). The date will be in the Coordinated Universal Time (UTC) …",
+   "type": "string"
+  },
+  "errorResponse": {
+   "description": "Response of an error which contains a message",
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "granularityParam": {
+   "default": "Defaults to the same value as the window param set",
+   "description": "Granularity of time series.",
+   "enum": [
+    "DAY",
+    "MONTH",
+    "WEEK"
+   ],
+   "type": "string"
+  },
+  "impressionMetric": {
+   "description": "An impression occurs whenever an ad is displayed. The impressions metric is a count of how many times your ad has been served to a user. A higher impression value infers more users are seeing your ads. This structure co…",
+   "properties": {
+    "bottom-25pct": {
+     "description": "The value at which 25% of the lower-performing values lie below. For impressions, 25% of peer values will be below the bottom 25% value. It is similar to the first/lower quartile.",
+     "type": "number"
+    },
+    "median": {
+     "description": "The middle value of the data set. Half of the values lie below the median and half lie above the median. It is also known as the 50th percentile.",
+     "type": "number"
+    },
+    "top-25pct": {
+     "description": "The value at which 25% of the top performing values lie above. For impressions, 25% of values will be above the top 25% value. It is similar to the third/upper quartile.",
+     "type": "number"
+    },
+    "value": {
+     "description": "Number of impressions of your ad",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "metricsParam": {
+   "default": "Return all available metrics",
+   "description": "Metrics to be included in the response.",
+   "items": {
+    "enum": [
+     "ACOS",
+     "CTR",
+     "IMPRESSIONS",
+     "ROAS"
+    ],
+    "type": "string"
+   },
+   "type": "array"
+  },
+  "nextPageTokenParam": {
+   "description": "Pagination token.",
+   "type": "string"
+  },
+  "programTypeParam": {
+   "default": "SB",
+   "description": "Ad program Type. We currently only support Sponsored Brands (SB).",
+   "enum": [
+    "SB"
+   ],
+   "type": "string"
+  },
+  "reportResponse": {
+   "description": "Response model of an entire benchmark report",
+   "properties": {
+    "brandsAndCategories": {
+     "items": {
+      "$ref": "brandsAndCategoriesItem"
+     },
+     "type": "array"
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "roasMetric": {
+   "description": "Return on advertising spend (ROAS) divides the total sales by the total ad spend (total ad sales / total ad spend). A higher ROAS infers higher efficiency of your advertising investment relative to your advertising spen…",
+   "properties": {
+    "bottom-25pct": {
+     "description": "The value at which 25% of the lower-performing values lie below. For ROAS, 25% of peer values will be below the bottom 25% value. It is similar to the first/lower quartile.",
+     "type": "number"
+    },
+    "median": {
+     "description": "The middle value of the data set. Half of the values lie below the median and half lie above the median. It is also known as the 50th percentile.",
+     "type": "number"
+    },
+    "top-25pct": {
+     "description": "The value at which 25% of the top performing values lie above. For ROAS, 25% of values will be above the top 25% value. It is similar to the third/upper quartile.",
+     "type": "number"
+    },
+    "value": {
+     "description": "ROAS of your ad",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "startDateParam": {
+   "default": "30 days in the past from the endDateParam",
+   "description": "Beginning of the data range (inclusive) in YYYY-MM-DD format (all <a href=\"https://en.wikipedia.org/wiki/ISO_8601#Dates\">ISO_8601</a> date formats are also supported). The startDate cannot be earlier than 90 days in the…",
+   "type": "string"
+  },
+  "timeSeriesItem": {
+   "description": "An item in the time series array which represents the data for a single point",
+   "properties": {
+    "acos": {
+     "$ref": "acosMetric"
+    },
+    "ctr": {
+     "$ref": "ctrMetric"
+    },
+    "endDate": {
+     "type": "string"
+    },
+    "impressions": {
+     "$ref": "impressionMetric"
+    },
+    "roas": {
+     "$ref": "roasMetric"
+    },
+    "startDate": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "timeSeriesResponse": {
+   "description": "Response model of time series data",
+   "properties": {
+    "category": {
+     "type": "string"
+    },
+    "nextPageToken": {
+     "type": "string"
+    },
+    "timeSeries": {
+     "items": {
+      "$ref": "timeSeriesItem"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "windowParam": {
+   "default": "DAY",
+   "description": "Period of aggregation.",
+   "enum": [
+    "DAY",
+    "MONTH",
+    "WEEK"
+   ],
+   "type": "string"
+  }
+ }
+}

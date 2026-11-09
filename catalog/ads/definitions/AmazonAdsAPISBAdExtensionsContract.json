@@ -1,0 +1,754 @@
+{
+ "api": "AmazonAdsAPISBAdExtensionsContract",
+ "file": "specs/dest/AmazonAdsAPISBAdExtensionsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FEATURE_NOT_AVAILABLE",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SBAdExtension": {
+   "properties": {
+    "adExtensionId": {
+     "description": "A unique identifier for the ad_extension.",
+     "type": "string"
+    },
+    "adExtensionSettings": {
+     "$ref": "SBAdExtensionSettings"
+    },
+    "adExtensionStatus": {
+     "$ref": "SBAdExtensionStatus"
+    },
+    "adExtensionType": {
+     "$ref": "SBAdExtensionType"
+    },
+    "adGroupId": {
+     "description": "A unique identifier for the ad group associated with the ad_extension.",
+     "type": "string"
+    },
+    "adId": {
+     "description": "A unique identifier for the ad associated with the ad_extension.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "SBAdProduct"
+    },
+    "creationDateTime": {
+     "description": "The date time the ad_extension was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time the ad_extension was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceScope": {
+     "$ref": "SBMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of marketplace in which the global ad_extension is applicable. The marketplaces included should either be same as or subset of parent campaign/adGroup/ad",
+     "items": {
+      "$ref": "SBMarketplace"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "state": {
+     "$ref": "SBState"
+    }
+   },
+   "required": [
+    "adExtensionId",
+    "adExtensionSettings",
+    "adExtensionType",
+    "adProduct",
+    "creationDateTime",
+    "lastUpdatedDateTime",
+    "marketplaceScope",
+    "marketplaces",
+    "state"
+   ],
+   "type": "object"
+  },
+  "SBAdExtensionAdExtensionIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdExtensionAdExtensionStatusFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdExtensionStatus Enum:** | AdExtensionStatus | Description | | --- | --- | | `OPTED_OUT` | If the advertiser has opted out of this Ad Extension. |",
+     "items": {
+      "$ref": "SBAdExtensionStatus"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdExtensionAdExtensionTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdExtensionType Enum:** | AdExtensionType | Description | | --- | --- | | `PROMPTS` | Enables Prompt based Ad Extension. |",
+     "items": {
+      "$ref": "SBAdExtensionType"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdExtensionAdGroupIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdExtensionAdIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 300,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdExtensionAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `SPONSORED_BRANDS` | Sponsored Brands ad product. |",
+     "items": {
+      "$ref": "SBAdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdExtensionCreate": {
+   "properties": {
+    "adExtensionSettings": {
+     "$ref": "SBCreateAdExtensionSettings"
+    },
+    "adExtensionStatus": {
+     "$ref": "SBAdExtensionStatus"
+    },
+    "adExtensionType": {
+     "$ref": "SBAdExtensionType"
+    },
+    "adGroupId": {
+     "description": "A unique identifier for the ad group associated with the ad_extension.",
+     "type": "string"
+    },
+    "adId": {
+     "description": "A unique identifier for the ad associated with the ad_extension.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "SBAdProduct"
+    },
+    "marketplaceScope": {
+     "$ref": "SBMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of marketplace in which the global ad_extension is applicable. The marketplaces included should either be same as or subset of parent campaign/adGroup/ad",
+     "items": {
+      "$ref": "SBMarketplace"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "state": {
+     "$ref": "SBCreateState"
+    }
+   },
+   "required": [
+    "adExtensionSettings",
+    "adExtensionType",
+    "adProduct",
+    "marketplaceScope",
+    "marketplaces",
+    "state"
+   ],
+   "type": "object"
+  },
+  "SBAdExtensionMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "SBAdExtensionMultiStatusSuccess"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBAdExtensionMultiStatusSuccess": {
+   "properties": {
+    "adExtension": {
+     "$ref": "SBAdExtension"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 49,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "adExtension",
+    "index"
+   ],
+   "type": "object"
+  },
+  "SBAdExtensionSettings": {
+   "oneOf": [
+    {
+     "properties": {
+      "promptExtension": {
+       "$ref": "SBPromptExtension"
+      }
+     },
+     "required": [
+      "promptExtension"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBAdExtensionStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `ENABLED` | The object is set active by user and eligible for delivery. | | `PAUSED` | The object is stopped by user and not eligible for delivery. | | `ARCHIVED` …",
+     "items": {
+      "$ref": "SBState"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdExtensionStatus": {
+   "description": "Ad Extension Status. **AdExtensionStatus Enum:** | AdExtensionStatus | Description | |------|------| | `OPTED_OUT` | If the advertiser has opted out of this Ad Extension. |",
+   "enum": [
+    "OPTED_OUT"
+   ],
+   "type": "string"
+  },
+  "SBAdExtensionSuccessResponse": {
+   "properties": {
+    "adExtensions": {
+     "items": {
+      "$ref": "SBAdExtension"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SBAdExtensionType": {
+   "description": "Ad Extension Type. **AdExtensionType Enum:** | AdExtensionType | Description | |------|------| | `PROMPTS` | Enables Prompt based Ad Extension. |",
+   "enum": [
+    "PROMPTS"
+   ],
+   "type": "string"
+  },
+  "SBAdExtensionUpdate": {
+   "properties": {
+    "adExtensionId": {
+     "description": "A unique identifier for the ad_extension.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SBUpdateState"
+    }
+   },
+   "required": [
+    "adExtensionId"
+   ],
+   "type": "object"
+  },
+  "SBAdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `SPONSORED_BRANDS` | Sponsored Brands ad product. |",
+   "enum": [
+    "SPONSORED_BRANDS"
+   ],
+   "type": "string"
+  },
+  "SBCreateAdExtensionRequest": {
+   "properties": {
+    "adExtensions": {
+     "items": {
+      "$ref": "SBAdExtensionCreate"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adExtensions"
+   ],
+   "type": "object"
+  },
+  "SBCreateAdExtensionSettings": {
+   "oneOf": [
+    {
+     "properties": {
+      "promptExtension": {
+       "$ref": "SBCreatePromptExtension"
+      }
+     },
+     "required": [
+      "promptExtension"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBCreatePromptExtension": {
+   "description": "Prompts Ad Extension",
+   "properties": {
+    "promptText": {
+     "description": "The prompt text rendered in the ads",
+     "type": "string"
+    }
+   },
+   "required": [
+    "promptText"
+   ],
+   "type": "object"
+  },
+  "SBCreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SBMarketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "SBMarketplaceScope": {
+   "enum": [
+    "SINGLE_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "SBPromptExtension": {
+   "description": "Prompts Ad Extension",
+   "properties": {
+    "promptText": {
+     "description": "The prompt text rendered in the ads",
+     "type": "string"
+    }
+   },
+   "required": [
+    "promptText"
+   ],
+   "type": "object"
+  },
+  "SBQueryAdExtensionRequest": {
+   "properties": {
+    "adExtensionIdFilter": {
+     "$ref": "SBAdExtensionAdExtensionIdFilter"
+    },
+    "adExtensionStatusFilter": {
+     "$ref": "SBAdExtensionAdExtensionStatusFilter"
+    },
+    "adExtensionTypeFilter": {
+     "$ref": "SBAdExtensionAdExtensionTypeFilter"
+    },
+    "adGroupIdFilter": {
+     "$ref": "SBAdExtensionAdGroupIdFilter"
+    },
+    "adIdFilter": {
+     "$ref": "SBAdExtensionAdIdFilter"
+    },
+    "adProductFilter": {
+     "$ref": "SBAdExtensionAdProductFilter"
+    },
+    "maxResults": {
+     "default": 1000,
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "SBAdExtensionStateFilter"
+    }
+   },
+   "type": "object"
+  },
+  "SBState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SBUpdateAdExtensionRequest": {
+   "properties": {
+    "adExtensions": {
+     "items": {
+      "$ref": "SBAdExtensionUpdate"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adExtensions"
+   ],
+   "type": "object"
+  },
+  "SBUpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

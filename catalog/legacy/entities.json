@@ -1,0 +1,3572 @@
+{
+ "meta": {
+  "task": "P1-API",
+  "classes": {
+   "amazon-mirror": "copy of an Amazon object",
+   "app-owned": "the application own data",
+   "internal": "company-specific (departments, internal engines, warehouse feeds)"
+  },
+  "counts": {
+   "amazon-mirror": 17,
+   "app-owned": 19,
+   "internal": 39
+  },
+  "notes": [
+   "Base embedded struct adds created_at/updated_at/deleted_at and created_by/updated_by/deleted_by (soft delete) to most tables.",
+   "Only db/migrations/sku_performance_data.sql exists as DDL; every other table is known from GORM models, so column types and indexes are as declared in struct tags.",
+   "Roughly 150 Go structs live in model/entity; this file lists the persisted ones plus the main report read models. Remaining structs are JSON column types (e.g. Budget, DynamicBidding, TargetExpression) or response DTOs.",
+   "There is no tenant or seller-account column anywhere: tenancy is the profile id (one table, many profiles, one company)."
+  ]
+ },
+ "entities": [
+  {
+   "entity": "Campaigns",
+   "table": "campaigns",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/campaign.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AWSCampaignID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "PortfolioID",
+     "type": "string"
+    },
+    {
+     "name": "Name",
+     "type": "string"
+    },
+    {
+     "name": "AWSName",
+     "type": "string"
+    },
+    {
+     "name": "TargetingType",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "DynamicBidding",
+     "type": "datatypes.JSONType[DynamicBidding]"
+    },
+    {
+     "name": "StartDate",
+     "type": "string"
+    },
+    {
+     "name": "EndDate",
+     "type": "string"
+    },
+    {
+     "name": "RequestDate",
+     "type": "int64"
+    },
+    {
+     "name": "RequestEndDate",
+     "type": "int64"
+    },
+    {
+     "name": "Budget",
+     "type": "datatypes.JSONType[Budget]"
+    },
+    {
+     "name": "ExtendedData",
+     "type": "datatypes.JSONType[ExtendedData]"
+    },
+    {
+     "name": "AdGroups",
+     "type": "[]AdGroups"
+    },
+    {
+     "name": "CostType",
+     "type": "string"
+    },
+    {
+     "name": "Tactic",
+     "type": "string"
+    },
+    {
+     "name": "BrandEntityId",
+     "type": "string"
+    },
+    {
+     "name": "Bidding",
+     "type": "datatypes.JSONType[SBBidding]"
+    },
+    {
+     "name": "ProductLocation",
+     "type": "string"
+    },
+    {
+     "name": "Tags",
+     "type": "datatypes.JSONType[SBTags]"
+    },
+    {
+     "name": "SiteRestrictions",
+     "type": "datatypes.JSONType[[]string]"
+    },
+    {
+     "name": "CampaignNegativeProducts",
+     "type": "[]CampaignNegativeProduct"
+    },
+    {
+     "name": "CampaignNegativeKeywords",
+     "type": "[]CampaignNegativeKeyword"
+    },
+    {
+     "name": "Goal",
+     "type": "string"
+    },
+    {
+     "name": "AutoInfo",
+     "type": "datatypes.JSONType[AutoInfo]"
+    },
+    {
+     "name": "OptimizationRuleCPC",
+     "type": "OptimizationRuleCPC"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "Campaign (SP/SB/SD): campaignId, name, state, targetingType, budget, dynamicBidding, startDate/endDate, portfolioId, extended servingStatus",
+   "notes": "One table for all three ad products (CampaignType column). Also holds local-only fields: AWSName vs Name (display name), RequestDate/RequestEndDate (epoch), auto-info flags for automation bots. JSONB columns for budget, dynamicBidding, extendedData."
+  },
+  {
+   "entity": "AdGroups",
+   "table": "ad_groups",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/adgroup.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AWSAdGroupID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "Name",
+     "type": "string"
+    },
+    {
+     "name": "AWSName",
+     "type": "string"
+    },
+    {
+     "name": "DefaultBid",
+     "type": "float64"
+    },
+    {
+     "name": "ProductAds",
+     "type": "[]ProductAds"
+    },
+    {
+     "name": "Targets",
+     "type": "[]Targets"
+    },
+    {
+     "name": "NegativeTargets",
+     "type": "[]NegativeTargets"
+    },
+    {
+     "name": "Keywords",
+     "type": "[]Keywords"
+    },
+    {
+     "name": "NegativeKeywords",
+     "type": "[]NegativeKeywords"
+    },
+    {
+     "name": "Creatives",
+     "type": "[]Creatives"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "TargetTypeAdGroup",
+     "type": "string"
+    },
+    {
+     "name": "BidOptimization",
+     "type": "string"
+    },
+    {
+     "name": "CreativeType",
+     "type": "string"
+    },
+    {
+     "name": "Tactic",
+     "type": "string"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "AdGroup (SP/SB/SD): adGroupId, name, state, defaultBid, bidOptimization, tactic, creativeType",
+   "notes": "Parent of product ads, targets, keywords, negatives and creatives. Name unique per campaign (rule enforced in code)."
+  },
+  {
+   "entity": "ProductAds",
+   "table": "product_ads",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/productad.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AwsAdID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "AdGroupIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "CustomText",
+     "type": "string"
+    },
+    {
+     "name": "Asin",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "SKU",
+     "type": "string"
+    },
+    {
+     "name": "LandingPageURL",
+     "type": "string"
+    },
+    {
+     "name": "LandingPageType",
+     "type": "string"
+    },
+    {
+     "name": "LandingPageAsins",
+     "type": "pq.StringArray"
+    },
+    {
+     "name": "AdName",
+     "type": "string"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "Creative",
+     "type": "datatypes.JSONType[SBCreative]"
+    },
+    {
+     "name": "CreativeVersion",
+     "type": "string"
+    },
+    {
+     "name": "CreativeType",
+     "type": "string"
+    },
+    {
+     "name": "CreativeHistories",
+     "type": "[]CreativeHistories"
+    },
+    {
+     "name": "ExtendedData",
+     "type": "ExtendedData"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "ProductAd (SP/SD) / Ad (SB): adId, asin, sku, state, SB creative and landing page",
+   "notes": "SB creative stored as JSONB (headline, brand logo, custom images, landing page); creative history in creative_histories."
+  },
+  {
+   "entity": "Targets",
+   "table": "targets",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/target.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AwsID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "AdGroupIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "Bid",
+     "type": "float64"
+    },
+    {
+     "name": "Expression",
+     "type": "datatypes.JSONType[TargetExpressionList]"
+    },
+    {
+     "name": "ExpressionType",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "TargetingClause (SP/SD) / Target (SB): targetId, expression[] (type,value), expressionType, bid, state",
+   "notes": "Expression stored as JSONB list."
+  },
+  {
+   "entity": "Keywords",
+   "table": "keywords",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/keyword.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AwsID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "AdGroupIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "MatchType",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "Bid",
+     "type": "float64"
+    },
+    {
+     "name": "KeywordText",
+     "type": "string"
+    },
+    {
+     "name": "Theme",
+     "type": "string"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "NativeLanguageKeyword",
+     "type": "string"
+    },
+    {
+     "name": "NativeLanguageLocale",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "Keyword (SP/SB): keywordId, keywordText, matchType, bid, state; SB theme",
+   "notes": "Extra local column: NativeLanguageKeyword/Locale for cross-marketplace cloning."
+  },
+  {
+   "entity": "NegativeKeywords",
+   "table": "negative_keywords",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/negative_keyword.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AwsID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "AdGroupIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "MatchType",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "KeywordText",
+     "type": "string"
+    },
+    {
+     "name": "Theme",
+     "type": "string"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "NegativeKeyword (ad-group level)",
+   "notes": null
+  },
+  {
+   "entity": "NegativeTargets",
+   "table": "negative_targets",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/negative_target.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AwsID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "AdGroupIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "Expression",
+     "type": "datatypes.JSONType[TargetExpressionList]"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "NegativeTargetingClause (ad-group level)",
+   "notes": "Expression JSONB; single-expression only is considered by the automation duplicate check."
+  },
+  {
+   "entity": "CampaignNegativeKeyword",
+   "table": "campaign_negative_keywords",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/campaign_negative_keyword.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AwsID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "MatchType",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "KeywordText",
+     "type": "string"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "CampaignNegativeKeyword (SP)",
+   "notes": null
+  },
+  {
+   "entity": "CampaignNegativeProduct",
+   "table": "campaign_negative_products",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/campaign_negative_product.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AwsID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "Expression",
+     "type": "datatypes.JSONType[TargetExpressionList]"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "CampaignNegativeTargetingClause (SP)",
+   "notes": null
+  },
+  {
+   "entity": "Creatives",
+   "table": "creatives",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/creative.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AwsID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "AdGroupIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "CreativeType",
+     "type": "string"
+    },
+    {
+     "name": "Properties",
+     "type": "datatypes.JSONType[CreativeProperties]"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "SD creative / SB creative asset set per ad group",
+   "notes": "Properties JSONB (headline, images with cropping coordinates)."
+  },
+  {
+   "entity": "CreativeHistories",
+   "table": "creative_histories",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/creative_history.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "AdGroupIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "AdIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "CreativeVersion",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "Version history of an ad creative edit, written by the app."
+  },
+  {
+   "entity": "Audience",
+   "table": "audiences",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/audience.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "ShopperCohortBidding",
+     "type": "datatypes.JSONType[ShopperCohortBidding]"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "MetricsAudience",
+     "type": "embedded"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "SD audience target (shopperCohort/audience segments) + a metrics snapshot",
+   "notes": "Mirror of audience targeting per campaign with cached metrics."
+  },
+  {
+   "entity": "BudgetRules",
+   "table": "budget_rules",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/budget_rule.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AWSRuleID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "IsMigrateRule",
+     "type": "bool"
+    },
+    {
+     "name": "BudgetName",
+     "type": "string"
+    },
+    {
+     "name": "AwsRuleName",
+     "type": "string"
+    },
+    {
+     "name": "RuleStartDate",
+     "type": "time.Time"
+    },
+    {
+     "name": "RuleEndDate",
+     "type": "*time.Time"
+    },
+    {
+     "name": "RuleDetails",
+     "type": "datatypes.JSONType[RuleDetails]"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    },
+    {
+     "name": "AssignedRuleHistories",
+     "type": "[]AssignedRules"
+    },
+    {
+     "name": "BudgetType",
+     "type": "int"
+    },
+    {
+     "name": "BudgetRuleType",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "BudgetRule (SP/SB/SD): ruleId, name, ruleType, duration, recurrence, budgetIncreaseBy, performanceMeasureCondition",
+   "notes": "Unique AWSRuleID; BudgetType/IsMigrateRule are local flags; RuleDetails JSONB mirrors Amazon rule details."
+  },
+  {
+   "entity": "AssignedRules",
+   "table": "assigned_rules",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/budget_rule.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "BudgetRulesID",
+     "type": "uint"
+    },
+    {
+     "name": "CampaignID",
+     "type": "string"
+    },
+    {
+     "name": "BudgetIncrementValue",
+     "type": "float32"
+    },
+    {
+     "name": "Status",
+     "type": "int"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "Association campaign <-> budget rule",
+   "notes": "Status 1 assigned / 0 unassigned (soft record of history)."
+  },
+  {
+   "entity": "OptimizationRuleCPC",
+   "table": "optimization_rule_cpcs",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/optimization_rule_cpc.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "OptimizationRuleID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "Data",
+     "type": "datatypes.JSONType[[]OptimizationRuleData]"
+    },
+    {
+     "name": "IsEnabled",
+     "type": "bool"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "OptimizationRule (SP \"bid optimization\" / SB rule) and its campaign association",
+   "notes": "Rule data JSONB; IsEnabled local."
+  },
+  {
+   "entity": "Portfolio",
+   "table": "portfolios",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/portfolio.go",
+   "fields": [
+    {
+     "name": "PortfolioID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "Portfolio: portfolioId, name, state (only id/profile/status kept)",
+   "notes": "Unique (portfolio_id, profile_id). The app does not keep the portfolio name; names come from Amazon at read time."
+  },
+  {
+   "entity": "Profile",
+   "table": "profiles",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/profile.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "Name",
+     "type": "string"
+    },
+    {
+     "name": "OrgCode",
+     "type": "string"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "Profile (v0 /v2/profiles): profileId, countryCode, accountInfo",
+   "notes": "Also carries OrgCode (internal org)."
+  },
+  {
+   "entity": "Categories",
+   "table": "categories",
+   "tableSource": "inferred (GORM default naming; no explicit table name found)",
+   "sourceFile": "services/ads-api/model/entity/category.go",
+   "fields": [
+    {
+     "name": "CategoryID",
+     "type": "string"
+    },
+    {
+     "name": "NA",
+     "type": "string"
+    },
+    {
+     "name": "TA",
+     "type": "string"
+    },
+    {
+     "name": "ParentID",
+     "type": "*string"
+    },
+    {
+     "name": "CountryCode",
+     "type": "string"
+    },
+    {
+     "name": "AsinCountMin",
+     "type": "float64"
+    },
+    {
+     "name": "AsinCountMax",
+     "type": "float64"
+    },
+    {
+     "name": "HasChild",
+     "type": "int"
+    },
+    {
+     "name": "PathName",
+     "type": "string"
+    },
+    {
+     "name": "PathEng",
+     "type": "string"
+    },
+    {
+     "name": "TN",
+     "type": "string"
+    }
+   ],
+   "class": "amazon-mirror",
+   "amazonObject": "Amazon product-category tree (SP category targeting)",
+   "notes": "Reference data refreshed from Amazon category recommendation/refinement responses."
+  },
+  {
+   "entity": "CompetitorTargetProduct",
+   "table": "competitor_target_products",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/competitor_target_product.go",
+   "fields": [
+    {
+     "name": "ASIN",
+     "type": "string"
+    },
+    {
+     "name": "Country",
+     "type": "string"
+    },
+    {
+     "name": "Title",
+     "type": "string"
+    },
+    {
+     "name": "ImageUrl",
+     "type": "string"
+    },
+    {
+     "name": "DataUpdatedTime",
+     "type": "*time.Time"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "ASIN/country/title/image of competitor products, loaded from the warehouse; used to suggest product targets."
+  },
+  {
+   "entity": "BiddingRules",
+   "table": "bidding_rules",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/bidding_rule.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignIdentify",
+     "type": "embedded"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "Recurrence",
+     "type": "datatypes.JSONType[RecurrenceBiddingRule]"
+    },
+    {
+     "name": "RuleCategory",
+     "type": "string"
+    },
+    {
+     "name": "RuleSubCategory",
+     "type": "string"
+    },
+    {
+     "name": "RuleName",
+     "type": "string"
+    },
+    {
+     "name": "Action",
+     "type": "datatypes.JSONType[ActionBiddingRule]"
+    },
+    {
+     "name": "ActionType",
+     "type": "string"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "MetricField",
+     "type": "string"
+    },
+    {
+     "name": "MetricDateTime",
+     "type": "string"
+    },
+    {
+     "name": "MetricOperation",
+     "type": "string"
+    },
+    {
+     "name": "MetricValue",
+     "type": "float64"
+    },
+    {
+     "name": "DynamicBiddingPP",
+     "type": "float32"
+    },
+    {
+     "name": "DynamicBiddingTOS",
+     "type": "float32"
+    },
+    {
+     "name": "DynamicBiddingROS",
+     "type": "float32"
+    },
+    {
+     "name": "IsRunning",
+     "type": "bool"
+    },
+    {
+     "name": "StatusColor",
+     "type": "string"
+    },
+    {
+     "name": "StatusDescription",
+     "type": "string"
+    },
+    {
+     "name": "IsEdit",
+     "type": "bool"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "App-side scheduler rule: metric (field,date range,operator,value) -> action on placement bid percentages (PP/ROS/TOS) with recurrence window; stores the original placement percentages to restore. Not an Amazon object."
+  },
+  {
+   "entity": "PortfolioUser",
+   "table": "portfolio_users",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/portfolio_user.go",
+   "fields": [
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "PortfolioID",
+     "type": "string"
+    },
+    {
+     "name": "Email",
+     "type": "string"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "User-to-portfolio access assignment."
+  },
+  {
+   "entity": "PortfolioDisable",
+   "table": "portfolio_disables",
+   "tableSource": "inferred (GORM default naming; no explicit table name found)",
+   "sourceFile": "services/ads-api/model/entity/portfolio_disable.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "PortfolioID",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "Portfolios hidden/disabled in the app."
+  },
+  {
+   "entity": "Roles",
+   "table": "roles_ads_management",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/roles.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "Email",
+     "type": "string"
+    },
+    {
+     "name": "Role",
+     "type": "string"
+    },
+    {
+     "name": "RoleGroup",
+     "type": "string"
+    },
+    {
+     "name": "OrgCode",
+     "type": "string"
+    },
+    {
+     "name": "ItemID",
+     "type": "string"
+    },
+    {
+     "name": "IsProfile",
+     "type": "bool"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "PortfolioID",
+     "type": "string"
+    },
+    {
+     "name": "Type",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "RBAC grant: email, role, role group, org code, item id, profile id, portfolio id. Unique over (email, role, role_group, org_code, item_id, profile_id). Synced from an identity/portal service by Kafka events."
+  },
+  {
+   "entity": "User",
+   "table": "users_simulator",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/users.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "Username",
+     "type": "string"
+    },
+    {
+     "name": "Title",
+     "type": "string"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "OrgCode",
+     "type": "string"
+    },
+    {
+     "name": "FirstName",
+     "type": "string"
+    },
+    {
+     "name": "LastName",
+     "type": "string"
+    },
+    {
+     "name": "Email",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "Picture",
+     "type": "string"
+    },
+    {
+     "name": "DepartmentID",
+     "type": "*uint"
+    },
+    {
+     "name": "RolesAdsManagement",
+     "type": "[]Roles"
+    },
+    {
+     "name": "KeycloakUserID",
+     "type": "string"
+    },
+    {
+     "name": "DepartmentSimulator",
+     "type": "Department"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Local copy of users (name, title, email, Keycloak user id, department). \"Simulator\" because it mimics the corporate user directory."
+  },
+  {
+   "entity": "Department",
+   "table": "department_simulator",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/deparment.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "Name",
+     "type": "string"
+    },
+    {
+     "name": "OrgCode",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Corporate department list."
+  },
+  {
+   "entity": "DepartmentProfile",
+   "table": "department_profile",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/department_profile.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "Department",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Which department owns which profile."
+  },
+  {
+   "entity": "NotificationIncidents",
+   "table": "notification_incidents",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/notification_incidents.go",
+   "fields": [
+    {
+     "name": "NotificationID",
+     "type": "uint"
+    },
+    {
+     "name": "ListProfileIds",
+     "type": "pq.StringArray"
+    },
+    {
+     "name": "Description",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "Priority",
+     "type": "string"
+    },
+    {
+     "name": "Recurrence",
+     "type": "datatypes.JSONType[NotificationRecurrence]"
+    },
+    {
+     "name": "IsSeverity",
+     "type": "bool"
+    },
+    {
+     "name": "Type",
+     "type": "string"
+    },
+    {
+     "name": "RuleName",
+     "type": "string"
+    },
+    {
+     "name": "Color",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    },
+    {
+     "name": "IsEdit",
+     "type": "bool"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "Admin-defined incident banners: profile ids, description, priority, recurrence window, severity colour."
+  },
+  {
+   "entity": "TicketManagement",
+   "table": "ticket_managements",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/ticket_management.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "int64"
+    },
+    {
+     "name": "Username",
+     "type": "string"
+    },
+    {
+     "name": "Title",
+     "type": "string"
+    },
+    {
+     "name": "Type",
+     "type": "string"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "Asin",
+     "type": "string"
+    },
+    {
+     "name": "IsMarked",
+     "type": "bool"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Local read/mark state for tickets that live in an internal ticketing system (PIMS); ticket content is not stored."
+  },
+  {
+   "entity": "InventoryAlert",
+   "table": "inventory_alerts",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/inventory_alert.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "Version",
+     "type": "string"
+    },
+    {
+     "name": "Asin",
+     "type": "string"
+    },
+    {
+     "name": "Sku",
+     "type": "string"
+    },
+    {
+     "name": "Country",
+     "type": "string"
+    },
+    {
+     "name": "Action",
+     "type": "string"
+    },
+    {
+     "name": "Level",
+     "type": "string"
+    },
+    {
+     "name": "Doc",
+     "type": "float32"
+    },
+    {
+     "name": "Incoming",
+     "type": "float32"
+    },
+    {
+     "name": "GapDoc",
+     "type": "float32"
+    },
+    {
+     "name": "BauRealSale",
+     "type": "float32"
+    },
+    {
+     "name": "DocComing",
+     "type": "float32"
+    },
+    {
+     "name": "TriggeredRules",
+     "type": "datatypes.JSONType[[]TriggeredRule]"
+    },
+    {
+     "name": "TriggeredAt",
+     "type": "string"
+    },
+    {
+     "name": "TriggerDate",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    },
+    {
+     "name": "Feedbacks",
+     "type": "[]InventoryAlertFeedback"
+    },
+    {
+     "name": "IsHandleAction",
+     "type": "bool"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Alert for an ASIN/SKU/country when cover (days of cover) breaches rules; fed by an internal inventory engine through Kafka. Triggered rules JSONB."
+  },
+  {
+   "entity": "InventoryAlertFeedback",
+   "table": "inventory_alert_feedbacks",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/inventory_alert_feedback.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AlertID",
+     "type": "uint"
+    },
+    {
+     "name": "Message",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "User comment on an inventory alert."
+  },
+  {
+   "entity": "DownloadHistory",
+   "table": "download_histories",
+   "tableSource": "inferred (GORM default naming; no explicit table name found)",
+   "sourceFile": "services/ads-api/model/entity/download_history.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "Name",
+     "type": "string"
+    },
+    {
+     "name": "Url",
+     "type": "string"
+    },
+    {
+     "name": "StartDate",
+     "type": "string"
+    },
+    {
+     "name": "EndDate",
+     "type": "string"
+    },
+    {
+     "name": "MessageError",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "Export job tracker (status, file URL, date range, error)."
+  },
+  {
+   "entity": "KafkaFailedHistory",
+   "table": "kafka_failed_histories",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/kafka_failed_history.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "Topic",
+     "type": "string"
+    },
+    {
+     "name": "Type",
+     "type": "string"
+    },
+    {
+     "name": "GroupID",
+     "type": "string"
+    },
+    {
+     "name": "Data",
+     "type": "datatypes.JSON"
+    },
+    {
+     "name": "ErrorMessage",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "Dead-letter store for failed Kafka messages (topic, group, payload, error)."
+  },
+  {
+   "entity": "KeywordTranslate",
+   "table": "keyword_translates",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/translate_keyword.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "FromCountry",
+     "type": "string"
+    },
+    {
+     "name": "ToCountry",
+     "type": "string"
+    },
+    {
+     "name": "FromText",
+     "type": "string"
+    },
+    {
+     "name": "ToText",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "Cache of keyword translations between marketplaces (from/to country, text)."
+  },
+  {
+   "entity": "LogRequestActions",
+   "table": "log_request_actions",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/log_request_action.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "EmailOrName",
+     "type": "string"
+    },
+    {
+     "name": "Level",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "StartTime",
+     "type": "*time.Time"
+    },
+    {
+     "name": "EndTime",
+     "type": "*time.Time"
+    },
+    {
+     "name": "LogRequestActivities",
+     "type": "[]LogRequestActivity"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "Bulk-request audit: who, level, profile, start/end, status."
+  },
+  {
+   "entity": "LogRequestActivity",
+   "table": "log_request_activities",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/log_request_action.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "Name",
+     "type": "string"
+    },
+    {
+     "name": "ItemID",
+     "type": "string"
+    },
+    {
+     "name": "Type",
+     "type": "string"
+    },
+    {
+     "name": "Action",
+     "type": "string"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "Message",
+     "type": "string"
+    },
+    {
+     "name": "SponsoredType",
+     "type": "string"
+    },
+    {
+     "name": "ChangeFrom",
+     "type": "string"
+    },
+    {
+     "name": "ChangeTo",
+     "type": "string"
+    },
+    {
+     "name": "LogRequestActionsID",
+     "type": "uint"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "Per-item result of a bulk request (change from/to, message)."
+  },
+  {
+   "entity": "OperationLog",
+   "table": "operation_logs",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/operation_log.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "ResourceID",
+     "type": "string"
+    },
+    {
+     "name": "Email",
+     "type": "string"
+    },
+    {
+     "name": "Type",
+     "type": "string"
+    },
+    {
+     "name": "Action",
+     "type": "string"
+    },
+    {
+     "name": "Data",
+     "type": "datatypes.JSON"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "Operation audit (resource id, action, email, data JSON)."
+  },
+  {
+   "entity": "OperationActivityLogs",
+   "table": "operation_activity_logs",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/operation_activity_logs.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "OperationActivityLogsData",
+     "type": "embedded"
+    },
+    {
+     "name": "OperationActivities",
+     "type": "[]OperationActivity"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "Operation activity log header; children OperationActivity/OperationEntityChange."
+  },
+  {
+   "entity": "UserActivityLogs",
+   "table": "user_activity_logs",
+   "tableSource": "inferred (GORM default naming; no explicit table name found)",
+   "sourceFile": "services/ads-api/model/entity/user_activity_logs.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "UserActivityLogsData",
+     "type": "embedded"
+    },
+    {
+     "name": "Activities",
+     "type": "[]Activities"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "User activity audit header; children Activities (type, action, change from/to) and EntityChanges (entity id/level/name). Also published to a search index through Kafka."
+  },
+  {
+   "entity": "LogStatusAsinProductAds",
+   "table": "log_status_asin_product_ads",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/log_status_asin_product_ads.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AWSAdID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "ASIN",
+     "type": "string"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "AWSCampaignID",
+     "type": "string"
+    },
+    {
+     "name": "AWSAdGroupID",
+     "type": "string"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "StatusDetails",
+     "type": "datatypes.JSONType[ExtendedData]"
+    },
+    {
+     "name": "ProductName",
+     "type": "string"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": "Ad/ASIN eligibility status as returned by Amazon (extended data)",
+   "notes": "Append-only log of status transitions for ASINs in ads."
+  },
+  {
+   "entity": "StatusAsinProductAds",
+   "table": "status_asin_product_ads",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/log_status_asin_product_ads.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "AWSAdID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "ASIN",
+     "type": "string"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "AWSCampaignID",
+     "type": "string"
+    },
+    {
+     "name": "AWSAdGroupID",
+     "type": "string"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "ProductName",
+     "type": "string"
+    },
+    {
+     "name": "StatusDetails",
+     "type": "datatypes.JSONType[ExtendedData]"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": "Current ASIN eligibility status for product ads",
+   "notes": "Latest status per ad; used for the ineligible-ASIN export."
+  },
+  {
+   "entity": "BudgetAccount",
+   "table": "budget_accounts",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/budget_profile.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "TicketBudgetID",
+     "type": "int"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "BudgetValue",
+     "type": "float32"
+    },
+    {
+     "name": "RequestDate",
+     "type": "int64"
+    },
+    {
+     "name": "RefBudgetID",
+     "type": "string"
+    },
+    {
+     "name": "Platform",
+     "type": "string"
+    },
+    {
+     "name": "TeamID",
+     "type": "string"
+    },
+    {
+     "name": "Category",
+     "type": "string"
+    },
+    {
+     "name": "ApprovedTime",
+     "type": "int64"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Internal budget allocation per profile/team/category from an internal finance ticket (value, approved time, platform)."
+  },
+  {
+   "entity": "TiketBudgetHistories",
+   "table": "tiket_budget_histories",
+   "tableSource": "inferred (GORM default naming; no explicit table name found)",
+   "sourceFile": "services/ads-api/model/entity/budget_profile.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "TicketBudgetID",
+     "type": "int"
+    },
+    {
+     "name": "BudgetValue",
+     "type": "float64"
+    },
+    {
+     "name": "RequestDate",
+     "type": "int64"
+    },
+    {
+     "name": "Platform",
+     "type": "string"
+    },
+    {
+     "name": "Team",
+     "type": "string"
+    },
+    {
+     "name": "ExcelFileData",
+     "type": "[]ExcelFileData"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "History of internal budget tickets with attached Excel data."
+  },
+  {
+   "entity": "BudgetHistoriesDailyReport",
+   "table": "budget_histories_daily_reports",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/budget_jobs.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "BudgetValue",
+     "type": "float32"
+    },
+    {
+     "name": "TeamID",
+     "type": "string"
+    },
+    {
+     "name": "ReferenceValue",
+     "type": "string"
+    },
+    {
+     "name": "ReportDate",
+     "type": "time.Time"
+    },
+    {
+     "name": "CampaignsReportSpend",
+     "type": "[]CampaignsSpendReport"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Daily budget-vs-spend report per team (budget job output)."
+  },
+  {
+   "entity": "CampaignsSpendReport",
+   "table": "campaigns_spend_reports",
+   "tableSource": "inferred (GORM default naming; no explicit table name found)",
+   "sourceFile": "services/ads-api/model/entity/budget_jobs.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "BudgetHistoriesDailyReportID",
+     "type": "uint"
+    },
+    {
+     "name": "CampaignID",
+     "type": "uint"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "ReportDate",
+     "type": "time.Time"
+    },
+    {
+     "name": "TotalBudgetSpendValue",
+     "type": "float32"
+    },
+    {
+     "name": "DailyBudgetValue",
+     "type": "float32"
+    },
+    {
+     "name": "BudgetRuleSpendReport",
+     "type": "[]BudgetRuleSpendReport"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Per-campaign share of the daily internal budget (budget job output)."
+  },
+  {
+   "entity": "BudgetRuleSpendReport",
+   "table": "budget_rule_spend_reports",
+   "tableSource": "inferred (GORM default naming; no explicit table name found)",
+   "sourceFile": "services/ads-api/model/entity/budget_jobs.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "CampaignsSpendReportID",
+     "type": "uint"
+    },
+    {
+     "name": "BudgetRuleID",
+     "type": "uint"
+    },
+    {
+     "name": "ReportDate",
+     "type": "time.Time"
+    },
+    {
+     "name": "BudgetRulePercentage",
+     "type": "float32"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Per-budget-rule share of campaign spend (budget job output)."
+  },
+  {
+   "entity": "AutoNegativeSearchTerm",
+   "table": "legacy automation store: queue of search terms to negate (v1) | legacy automation store: queue of search terms to negate (v2); queue of negatives to remove (archive)",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/searchterm_negative_auto.go",
+   "fields": [
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignID",
+     "type": "string"
+    },
+    {
+     "name": "AdGroupID",
+     "type": "string"
+    },
+    {
+     "name": "ConfirmToAction",
+     "type": "bool"
+    },
+    {
+     "name": "SearchTerm",
+     "type": "string"
+    },
+    {
+     "name": "MatchType",
+     "type": "string"
+    },
+    {
+     "name": "RuleActionStatus",
+     "type": "int"
+    },
+    {
+     "name": "RuleActionTimestamp",
+     "type": "*time.Time"
+    },
+    {
+     "name": "AddingType",
+     "type": "string"
+    },
+    {
+     "name": "RuleErrorType",
+     "type": "string"
+    },
+    {
+     "name": "DataUpdatedTime",
+     "type": "string"
+    },
+    {
+     "name": "IDKey",
+     "type": "string"
+    },
+    {
+     "name": "KeyTable",
+     "type": "string"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Work queue written by an internal bot (search-term rule engine) in the warehouse: search terms to add as negatives, with status columns written back by ads-api (rule_action_status 1 ok / 0 fail / 3 pending, timestamp, error type)."
+  },
+  {
+   "entity": "AutoGoodSearchTerm",
+   "table": "legacy automation store: queue of search terms to add as keywords/targets",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/searchterm_negative_auto.go",
+   "fields": [
+    {
+     "name": "CampaignID",
+     "type": "string"
+    },
+    {
+     "name": "AdGroupID",
+     "type": "string"
+    },
+    {
+     "name": "ConfirmToAction",
+     "type": "bool"
+    },
+    {
+     "name": "SearchTerm",
+     "type": "string"
+    },
+    {
+     "name": "MatchType",
+     "type": "string"
+    },
+    {
+     "name": "RuleActionStatus",
+     "type": "int"
+    },
+    {
+     "name": "RuleActionTimestamp",
+     "type": "*time.Time"
+    },
+    {
+     "name": "AddingType",
+     "type": "string"
+    },
+    {
+     "name": "RuleErrorType",
+     "type": "string"
+    },
+    {
+     "name": "Bid",
+     "type": "float64"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Work queue: search terms to add as keywords/targets (match type, bid, cumulative clicks/impressions/cost/sales)."
+  },
+  {
+   "entity": "AutoCampaign",
+   "table": "legacy automation store: campaign budget and placement bids | ..._adhoc_budget_adjustment",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/searchterm_negative_auto.go",
+   "fields": [
+    {
+     "name": "CampaignID",
+     "type": "string"
+    },
+    {
+     "name": "Budget",
+     "type": "float64"
+    },
+    {
+     "name": "DynamicBiddingTOS",
+     "type": "float64"
+    },
+    {
+     "name": "DynamicBiddingROS",
+     "type": "float64"
+    },
+    {
+     "name": "DynamicBiddingPP",
+     "type": "float64"
+    },
+    {
+     "name": "RuleActionStatus",
+     "type": "int"
+    },
+    {
+     "name": "RuleActionTimestamp",
+     "type": "*time.Time"
+    },
+    {
+     "name": "RuleErrorType",
+     "type": "string"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Work queue from as the budget rule engine: target budget and placement bid percentages (TOS/ROS/PP) per campaign."
+  },
+  {
+   "entity": "AutoTargetBid",
+   "table": "legacy automation store: target bid adjustments (v1) | legacy automation store: keyword bid adjustments (v2) (v2)",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/searchterm_negative_auto.go",
+   "fields": [
+    {
+     "name": "TargetID",
+     "type": "string"
+    },
+    {
+     "name": "Bid",
+     "type": "float64"
+    },
+    {
+     "name": "PredictedTime",
+     "type": "time.Time"
+    },
+    {
+     "name": "KeyTable",
+     "type": "string"
+    },
+    {
+     "name": "RuleActionStatus",
+     "type": "int"
+    },
+    {
+     "name": "RuleActionTimestamp",
+     "type": "*time.Time"
+    },
+    {
+     "name": "RuleErrorType",
+     "type": "string"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Work queue from as the keyword-bid rule engine: new bid per target/keyword with predicted time."
+  },
+  {
+   "entity": "BudgetAllocateAutomationMktSfoBudgetDailyAdjustment",
+   "table": "legacy automation store: out-of-budget top-up queue",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/campaign_budget.go",
+   "fields": [
+    {
+     "name": "RunTime",
+     "type": "*time.Time"
+    },
+    {
+     "name": "ActionTime",
+     "type": "*time.Time"
+    },
+    {
+     "name": "ActionTimeLA",
+     "type": "*time.Time"
+    },
+    {
+     "name": "CampaignID",
+     "type": "string"
+    },
+    {
+     "name": "FinalBudgetInput",
+     "type": "float64"
+    },
+    {
+     "name": "LastBudget",
+     "type": "float64"
+    },
+    {
+     "name": "RuleIsProcessed",
+     "type": "int"
+    },
+    {
+     "name": "RuleActionTime",
+     "type": "*time.Time"
+    },
+    {
+     "name": "RuleErrorMessage",
+     "type": "string"
+    },
+    {
+     "name": "KeyTable",
+     "type": "string"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Out-of-budget top-up queue: final budget input vs last budget per campaign, processed flag and error message."
+  },
+  {
+   "entity": "BudgetRecommendationQueueRow",
+   "table": "legacy automation store: budget recommendations",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/budget_recommendation entity file",
+   "fields": [
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "AWSCampaignID",
+     "type": "string"
+    },
+    {
+     "name": "AWSAdgroupID",
+     "type": "string"
+    },
+    {
+     "name": "AWSCampaignName",
+     "type": "string"
+    },
+    {
+     "name": "AWSAdgroupName",
+     "type": "string"
+    },
+    {
+     "name": "Department",
+     "type": "string"
+    },
+    {
+     "name": "CountryGroup",
+     "type": "string"
+    },
+    {
+     "name": "Country",
+     "type": "string"
+    },
+    {
+     "name": "Segmentation",
+     "type": "string"
+    },
+    {
+     "name": "Action",
+     "type": "string"
+    },
+    {
+     "name": "CurrentBudget",
+     "type": "float32"
+    },
+    {
+     "name": "RecommendedBudget",
+     "type": "float32"
+    },
+    {
+     "name": "UserConfirmStatus",
+     "type": "bool"
+    },
+    {
+     "name": "UserConfirmBudget",
+     "type": "float32"
+    },
+    {
+     "name": "UserConfirmMessage",
+     "type": "string"
+    },
+    {
+     "name": "RuleActionTimestamp",
+     "type": "*time.Time"
+    },
+    {
+     "name": "RuleErrorType",
+     "type": "string"
+    },
+    {
+     "name": "RuleActionStatus",
+     "type": "int"
+    },
+    {
+     "name": "DataUpdatedTime",
+     "type": "*time.Time"
+    },
+    {
+     "name": "ReportDate",
+     "type": "*time.Time"
+    },
+    {
+     "name": "IDKey",
+     "type": "string"
+    },
+    {
+     "name": "Reason",
+     "type": "string"
+    },
+    {
+     "name": "UserEmailConfirm",
+     "type": "string"
+    },
+    {
+     "name": "CurrencyCode",
+     "type": "string"
+    },
+    {
+     "name": "CurrentBudgetCurrency",
+     "type": "float32"
+    },
+    {
+     "name": "RecommendedBudgetCurrency",
+     "type": "float32"
+    },
+    {
+     "name": "GetAmountTransformed",
+     "type": "float32"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Budget recommendations from as the campaign-creation rule engine (department, country group, segmentation, action, current vs recommended budget) plus the user confirmation columns written by ads-api."
+  },
+  {
+   "entity": "AddKeywordQueueRow",
+   "table": "legacy automation store: queue of search terms to add as keywords/targets",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/add_keyword_queue entity file",
+   "fields": [
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignID",
+     "type": "string"
+    },
+    {
+     "name": "AdGroupID",
+     "type": "string"
+    },
+    {
+     "name": "SearchTerm",
+     "type": "string"
+    },
+    {
+     "name": "AdvertisingType",
+     "type": "string"
+    },
+    {
+     "name": "MatchType",
+     "type": "string"
+    },
+    {
+     "name": "AddingType",
+     "type": "string"
+    },
+    {
+     "name": "Bidding",
+     "type": "float64"
+    },
+    {
+     "name": "ConfirmToAction",
+     "type": "bool"
+    },
+    {
+     "name": "UserTimestamp",
+     "type": "*time.Time"
+    },
+    {
+     "name": "CumulativeClicks",
+     "type": "int"
+    },
+    {
+     "name": "CumulativeImpressions",
+     "type": "int"
+    },
+    {
+     "name": "CumulativeCost",
+     "type": "float64"
+    },
+    {
+     "name": "CumulativeSales",
+     "type": "float64"
+    },
+    {
+     "name": "RuleActionStatus",
+     "type": "int"
+    },
+    {
+     "name": "RuleActionTimestamp",
+     "type": "*time.Time"
+    },
+    {
+     "name": "RuleErrorType",
+     "type": "string"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Same table as AutoGoodSearchTerm in its newer shape."
+  },
+  {
+   "entity": "DimCampaignAutoCampaign1d",
+   "table": "legacy automation store: campaigns to auto-create",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/create_campaign_auto.go",
+   "fields": [
+    {
+     "name": "IdKeyCampaign",
+     "type": "string"
+    },
+    {
+     "name": "DimAdsGroupAutoCampaign1d",
+     "type": "[]DimAdsGroupAutoCampaign1d"
+    },
+    {
+     "name": "CampaignID",
+     "type": "string"
+    },
+    {
+     "name": "PortfolioID",
+     "type": "string"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignName",
+     "type": "string"
+    },
+    {
+     "name": "TargetingType",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "StartDate",
+     "type": "string"
+    },
+    {
+     "name": "EndDate",
+     "type": "string"
+    },
+    {
+     "name": "Status",
+     "type": "string"
+    },
+    {
+     "name": "Budget",
+     "type": "float32"
+    },
+    {
+     "name": "BudgetType",
+     "type": "string"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "Strategy",
+     "type": "string"
+    },
+    {
+     "name": "PlacementTopPercentage",
+     "type": "float64"
+    },
+    {
+     "name": "PlacementProductPagePercentage",
+     "type": "float64"
+    },
+    {
+     "name": "PlacementRestOfSearchPercentage",
+     "type": "float64"
+    },
+    {
+     "name": "ConfirmToAction",
+     "type": "bool"
+    },
+    {
+     "name": "PIC",
+     "type": "string"
+    },
+    {
+     "name": "UserTimestamp",
+     "type": "*time.Time"
+    },
+    {
+     "name": "RuleActionStatus",
+     "type": "int"
+    },
+    {
+     "name": "RuleActionTimestamp",
+     "type": "*time.Time"
+    },
+    {
+     "name": "RuleErrorType",
+     "type": "string"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Specification of campaigns to auto-create (name, targeting, strategy, placement percentages, budget); children: ad groups, targets, product ads."
+  },
+  {
+   "entity": "DimAdsGroupAutoCampaign1d",
+   "table": "legacy automation store: ad groups to auto-create",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/create_campaign_auto.go",
+   "fields": [
+    {
+     "name": "IdKeyAdGroup",
+     "type": "string"
+    },
+    {
+     "name": "AdgroupId",
+     "type": "string"
+    },
+    {
+     "name": "DECampaignID",
+     "type": "string"
+    },
+    {
+     "name": "AdGroupName",
+     "type": "string"
+    },
+    {
+     "name": "DefaultBid",
+     "type": "float64"
+    },
+    {
+     "name": "CampaignName",
+     "type": "string"
+    },
+    {
+     "name": "DimProductAdsAutoCampaign1d",
+     "type": "[]DimProductAdsAutoCampaign1d"
+    },
+    {
+     "name": "DimTargetAutoCampaign1d",
+     "type": "[]DimTargetAutoCampaign1d"
+    },
+    {
+     "name": "DimKeywordAutoCampaign1d",
+     "type": "[]DimTargetAutoCampaign1d"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Ad groups of an auto-created campaign."
+  },
+  {
+   "entity": "DimTargetAutoCampaign1d",
+   "table": "legacy automation store: targets/keywords to auto-create",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/create_campaign_auto.go",
+   "fields": [
+    {
+     "name": "IdKeyTarget",
+     "type": "string"
+    },
+    {
+     "name": "DEAdGroupID",
+     "type": "string"
+    },
+    {
+     "name": "TargetID",
+     "type": "string"
+    },
+    {
+     "name": "ItemType",
+     "type": "string"
+    },
+    {
+     "name": "KeywordText",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "Bid",
+     "type": "float64"
+    },
+    {
+     "name": "ExpressionType",
+     "type": "string"
+    },
+    {
+     "name": "ExpressionValue",
+     "type": "string"
+    },
+    {
+     "name": "ExpressionName",
+     "type": "string"
+    },
+    {
+     "name": "MatchType",
+     "type": "string"
+    },
+    {
+     "name": "Theme",
+     "type": "string"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Targets/keywords of an auto-created campaign."
+  },
+  {
+   "entity": "DimProductAdsAutoCampaign1d",
+   "table": "legacy automation store: product ads to auto-create",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/create_campaign_auto.go",
+   "fields": [
+    {
+     "name": "IdKeyProductAds",
+     "type": "string"
+    },
+    {
+     "name": "ProductID",
+     "type": "string"
+    },
+    {
+     "name": "DEAdGroupID",
+     "type": "string"
+    },
+    {
+     "name": "ItemType",
+     "type": "string"
+    },
+    {
+     "name": "Asin",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "SKU",
+     "type": "string"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Product ads (ASIN/SKU) of an auto-created campaign."
+  },
+  {
+   "entity": "ReportAds",
+   "table": "legacy reporting table: ads daily spend",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/report.go",
+   "fields": [
+    {
+     "name": "ReportDate",
+     "type": "time.Time"
+    },
+    {
+     "name": "ProfileID",
+     "type": "string"
+    },
+    {
+     "name": "Team",
+     "type": "string"
+    },
+    {
+     "name": "SpendUSD",
+     "type": "float64"
+    },
+    {
+     "name": "Sale",
+     "type": "float64"
+    },
+    {
+     "name": "UnitSold",
+     "type": "float64"
+    },
+    {
+     "name": "Acos",
+     "type": "float64"
+    },
+    {
+     "name": "Roas",
+     "type": "float64"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": "Ads report rows loaded by an internal ETL (spend/sales per profile and team)",
+   "notes": "READ-ONLY reporting table owned by another system; \"team\" = company grouping of profiles."
+  },
+  {
+   "entity": "ReportPromotion",
+   "table": "legacy reporting table: promotion spend per ASIN",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/report.go",
+   "fields": [
+    {
+     "name": "ReportDate",
+     "type": "time.Time"
+    },
+    {
+     "name": "Asin",
+     "type": "string"
+    },
+    {
+     "name": "TeamPic",
+     "type": "string"
+    },
+    {
+     "name": "PromotionSpendUsd",
+     "type": "float64"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Promotion spend per ASIN/team from an internal ETL."
+  },
+  {
+   "entity": "SearchTermsReport",
+   "table": "legacy reporting table: search-term report",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/search_terms_report.go",
+   "fields": [
+    {
+     "name": "Added",
+     "type": "pq.StringArray"
+    },
+    {
+     "name": "SearchTerm",
+     "type": "string"
+    },
+    {
+     "name": "KeywordID",
+     "type": "string"
+    },
+    {
+     "name": "KeywordBid",
+     "type": "float64"
+    },
+    {
+     "name": "CampaignID",
+     "type": "string"
+    },
+    {
+     "name": "AdGroupID",
+     "type": "string"
+    },
+    {
+     "name": "AdKeywordStatus",
+     "type": "string"
+    },
+    {
+     "name": "MatchType",
+     "type": "string"
+    },
+    {
+     "name": "KeywordText",
+     "type": "string"
+    },
+    {
+     "name": "ReplicateReportAdDetail",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": "Search-term report (Ads Reporting: SP/SB search term) loaded by an internal ETL",
+   "notes": "READ-ONLY reporting table."
+  },
+  {
+   "entity": "ImpressionShareSummaryCDHRow",
+   "table": "legacy warehouse table: search-term impression share summary",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/impression_share_summary_report.go",
+   "fields": [
+    {
+     "name": "CustomerSearchTerm",
+     "type": "string"
+    },
+    {
+     "name": "CampaignName",
+     "type": "string"
+    },
+    {
+     "name": "AdGroupName",
+     "type": "string"
+    },
+    {
+     "name": "InputCountryCode",
+     "type": "string"
+    },
+    {
+     "name": "InputProfileID",
+     "type": "string"
+    },
+    {
+     "name": "Currency",
+     "type": "string"
+    },
+    {
+     "name": "SearchTermImpressionRank",
+     "type": "*float64"
+    },
+    {
+     "name": "SearchTermImpressionShare",
+     "type": "string"
+    },
+    {
+     "name": "Clicks",
+     "type": "*float64"
+    },
+    {
+     "name": "Impressions",
+     "type": "*float64"
+    },
+    {
+     "name": "ClickThruRateCtr",
+     "type": "string"
+    },
+    {
+     "name": "Spend",
+     "type": "string"
+    },
+    {
+     "name": "CostPerClickCpc",
+     "type": "string"
+    },
+    {
+     "name": "RunDate",
+     "type": "*time.Time"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": "Search-term impression rank/share (Amazon Brand Analytics / search term impression share data)",
+   "notes": "READ-ONLY warehouse table; null when absent."
+  },
+  {
+   "entity": "SkuPerformance",
+   "table": "sku_performance",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/sku_performance.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "int"
+    },
+    {
+     "name": "Month",
+     "type": "string"
+    },
+    {
+     "name": "Sku",
+     "type": "string"
+    },
+    {
+     "name": "Percentage",
+     "type": "float64"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Monthly percentage per SKU from an internal sales-performance model (see db/migrations/sku_performance_data.sql)."
+  },
+  {
+   "entity": "SkuDepartment",
+   "table": "(warehouse view, no table in app DB)",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/sku_department.go",
+   "fields": [
+    {
+     "name": "Sku",
+     "type": "string"
+    },
+    {
+     "name": "Asin",
+     "type": "string"
+    },
+    {
+     "name": "Country",
+     "type": "string"
+    },
+    {
+     "name": "Department",
+     "type": "string"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "SKU/ASIN/country to department ownership."
+  },
+  {
+   "entity": "InventoryMetricsMaster",
+   "table": "legacy datamart table: per-ASIN inventory level metrics",
+   "tableSource": "explicit",
+   "sourceFile": "services/ads-api/model/entity/inventory_metrics_master entity file",
+   "fields": [
+    {
+     "name": "Asin",
+     "type": "string"
+    },
+    {
+     "name": "Country",
+     "type": "string"
+    },
+    {
+     "name": "InventoryLevel",
+     "type": "string"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Per-ASIN inventory level metrics in the datamart, read-only."
+  },
+  {
+   "entity": "MessagePublicFail",
+   "table": "message_public_fails",
+   "tableSource": "inferred (GORM default naming; no explicit table name found)",
+   "sourceFile": "services/ads-api/model/entity/message_public_fail.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "Message",
+     "type": "datatypes.JSON"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "Messages that failed to publish to Kafka."
+  },
+  {
+   "entity": "Log",
+   "table": "logs",
+   "tableSource": "inferred (GORM default naming; no explicit table name found)",
+   "sourceFile": "services/ads-api/model/entity/log.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "uint"
+    },
+    {
+     "name": "FuncID",
+     "type": "string"
+    },
+    {
+     "name": "FuncName",
+     "type": "string"
+    },
+    {
+     "name": "Message",
+     "type": "string"
+    },
+    {
+     "name": "Data",
+     "type": "datatypes.JSONType[interface"
+    },
+    {
+     "name": "Base",
+     "type": "embedded"
+    }
+   ],
+   "class": "app-owned",
+   "amazonObject": null,
+   "notes": "Generic function log rows (func id, name, message, data JSON)."
+  },
+  {
+   "entity": "CampaignReport",
+   "table": null,
+   "tableSource": "read model (query result, no table)",
+   "sourceFile": "services/ads-api/model/entity/report.go",
+   "fields": [
+    {
+     "name": "Campaigns",
+     "type": "embedded"
+    },
+    {
+     "name": "ReplicateReportAdDetail",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Read model used by the reporting grids; not persisted by ads-api."
+  },
+  {
+   "entity": "AdGroupReport",
+   "table": null,
+   "tableSource": "read model (query result, no table)",
+   "sourceFile": "services/ads-api/model/entity/report.go",
+   "fields": [
+    {
+     "name": "AdGroups",
+     "type": "embedded"
+    },
+    {
+     "name": "ReplicateReportAdDetail",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Read model used by the reporting grids; not persisted by ads-api."
+  },
+  {
+   "entity": "AdReport",
+   "table": null,
+   "tableSource": "read model (query result, no table)",
+   "sourceFile": "services/ads-api/model/entity/report.go",
+   "fields": [
+    {
+     "name": "ProductAds",
+     "type": "embedded"
+    },
+    {
+     "name": "ReplicateReportAdDetail",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Read model used by the reporting grids; not persisted by ads-api."
+  },
+  {
+   "entity": "TargetReport",
+   "table": null,
+   "tableSource": "read model (query result, no table)",
+   "sourceFile": "services/ads-api/model/entity/report.go",
+   "fields": [
+    {
+     "name": "Targets",
+     "type": "embedded"
+    },
+    {
+     "name": "ReplicateReportAdDetail",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Read model used by the reporting grids; not persisted by ads-api."
+  },
+  {
+   "entity": "KeywordReport",
+   "table": null,
+   "tableSource": "read model (query result, no table)",
+   "sourceFile": "services/ads-api/model/entity/report.go",
+   "fields": [
+    {
+     "name": "Keywords",
+     "type": "embedded"
+    },
+    {
+     "name": "ReplicateReportAdDetail",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Read model used by the reporting grids; not persisted by ads-api."
+  },
+  {
+   "entity": "PortfolioReport",
+   "table": null,
+   "tableSource": "read model (query result, no table)",
+   "sourceFile": "services/ads-api/model/entity/report.go",
+   "fields": [
+    {
+     "name": "PortfolioID",
+     "type": "string"
+    },
+    {
+     "name": "ReplicateReportAdDetail",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Read model used by the reporting grids; not persisted by ads-api."
+  },
+  {
+   "entity": "ChartReport",
+   "table": null,
+   "tableSource": "read model (query result, no table)",
+   "sourceFile": "services/ads-api/model/entity/report.go",
+   "fields": [
+    {
+     "name": "TimeWindowStart",
+     "type": "time.Time"
+    },
+    {
+     "name": "ReplicateReportAdDetail",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Read model used by the reporting grids; not persisted by ads-api."
+  },
+  {
+   "entity": "ProductReport",
+   "table": null,
+   "tableSource": "read model (query result, no table)",
+   "sourceFile": "services/ads-api/model/entity/report.go",
+   "fields": [
+    {
+     "name": "Asin",
+     "type": "string"
+    },
+    {
+     "name": "AdTypes",
+     "type": "pq.StringArray"
+    },
+    {
+     "name": "ReplicateReportAdDetail",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Read model used by the reporting grids; not persisted by ads-api."
+  },
+  {
+   "entity": "ProductSubReport",
+   "table": null,
+   "tableSource": "read model (query result, no table)",
+   "sourceFile": "services/ads-api/model/entity/report.go",
+   "fields": [
+    {
+     "name": "ID",
+     "type": "string"
+    },
+    {
+     "name": "Name",
+     "type": "string"
+    },
+    {
+     "name": "AwsID",
+     "type": "string"
+    },
+    {
+     "name": "CampaignType",
+     "type": "string"
+    },
+    {
+     "name": "State",
+     "type": "string"
+    },
+    {
+     "name": "ReplicateReportAdDetail",
+     "type": "embedded"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": null,
+   "notes": "Read model used by the reporting grids; not persisted by ads-api."
+  },
+  {
+   "entity": "ReplicateReportAdDetail",
+   "table": null,
+   "tableSource": "read model (query result, no table)",
+   "sourceFile": "services/ads-api/model/entity/report.go",
+   "fields": [
+    {
+     "name": "SpendUSD",
+     "type": "float64"
+    },
+    {
+     "name": "Sale",
+     "type": "float64"
+    },
+    {
+     "name": "UnitSold",
+     "type": "float64"
+    },
+    {
+     "name": "Click",
+     "type": "float64"
+    },
+    {
+     "name": "Impression",
+     "type": "float64"
+    },
+    {
+     "name": "Order",
+     "type": "float64"
+    },
+    {
+     "name": "TopOfSearchIS",
+     "type": "float64"
+    },
+    {
+     "name": "CTR",
+     "type": "float64"
+    },
+    {
+     "name": "CPC",
+     "type": "float64"
+    },
+    {
+     "name": "ACOS",
+     "type": "float64"
+    },
+    {
+     "name": "ROAS",
+     "type": "float64"
+    },
+    {
+     "name": "IsStream",
+     "type": "bool"
+    },
+    {
+     "name": "RunDate",
+     "type": "time.Time"
+    },
+    {
+     "name": "Placement",
+     "type": "string"
+    },
+    {
+     "name": "CR",
+     "type": "float64"
+    },
+    {
+     "name": "CPM",
+     "type": "float64"
+    },
+    {
+     "name": "CPO",
+     "type": "float64"
+    },
+    {
+     "name": "CPU",
+     "type": "float64"
+    },
+    {
+     "name": "AOV",
+     "type": "float64"
+    },
+    {
+     "name": "OOBPercent",
+     "type": "float64"
+    }
+   ],
+   "class": "internal",
+   "amazonObject": "Metrics rows of Ads reports (impressions, clicks, spend, sales, orders, units, ACOS/ROAS, top-of-search impression share, placement)",
+   "notes": "Result shape of grid/chart queries over the reporting DB. Metric columns (spend, sale, unit, click, impression, order, TOS impression share, CTR, CPC, ACOS, ROAS, CR, CPM, CPO, CPU, AOV, OOB%) are the contract seller-hub must reproduce from Ads reports."
+  }
+ ]
+}

@@ -1,0 +1,1015 @@
+{
+  "AcceptedRate": {
+    "description": "The specific rate purchased for the shipment, or null if unpurchased.",
+    "properties": {
+      "billedWeight": {
+        "description": "The weight that was used to calculate the totalCharge.",
+        "ref": "Weight"
+      },
+      "promise": {
+        "ref": "ShippingPromiseSet"
+      },
+      "serviceType": {
+        "ref": "ServiceType"
+      },
+      "totalCharge": {
+        "description": "The total charge that will be billed for the rate.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Account": {
+    "description": "The account related data.",
+    "properties": {
+      "accountId": {
+        "ref": "AccountId"
+      }
+    },
+    "required": [
+      "accountId"
+    ],
+    "type": "object"
+  },
+  "AccountId": {
+    "description": "This is the Amazon Shipping account id generated during the Amazon Shipping onboarding process.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Address": {
+    "description": "The address.",
+    "properties": {
+      "addressLine1": {
+        "description": "First line of that address.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "addressLine3": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "city": {
+        "ref": "City"
+      },
+      "copyEmails": {
+        "description": "The email cc addresses of the contact associated with the address.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "countryCode": {
+        "ref": "CountryCode"
+      },
+      "email": {
+        "description": "The email address of the contact associated with the address.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the person, business or institution at that address.",
+        "type": "string"
+      },
+      "phoneNumber": {
+        "description": "The phone number of the person, business or institution located at that address.",
+        "type": "string"
+      },
+      "postalCode": {
+        "ref": "PostalCode"
+      },
+      "stateOrRegion": {
+        "ref": "StateOrRegion"
+      }
+    },
+    "required": [
+      "addressLine1",
+      "city",
+      "countryCode",
+      "name",
+      "postalCode",
+      "stateOrRegion"
+    ],
+    "type": "object"
+  },
+  "CancelShipmentResponse": {
+    "description": "The response schema for the cancelShipment operation.",
+    "properties": {
+      "errors": {
+        "description": "Encountered errors for the operation.",
+        "ref": "ErrorList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "City": {
+    "description": "The city where the person, business or institution is located.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ClientReferenceId": {
+    "description": "Client reference id.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Container": {
+    "description": "Container in the shipment.",
+    "properties": {
+      "containerReferenceId": {
+        "ref": "ContainerReferenceId"
+      },
+      "containerType": {
+        "description": "The type of physical container being used.",
+        "enum": [
+          "PACKAGE"
+        ],
+        "type": "string"
+      },
+      "dimensions": {
+        "description": "The length, width, height, and weight of the container.",
+        "ref": "Dimensions"
+      },
+      "items": {
+        "description": "A list of the items in the container.",
+        "ref": "ContainerItem",
+        "type": "array"
+      },
+      "value": {
+        "description": "The total value of all items in the container.",
+        "ref": "Currency"
+      },
+      "weight": {
+        "description": "The weight of the container.",
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "containerReferenceId",
+      "dimensions",
+      "items",
+      "value",
+      "weight"
+    ],
+    "type": "object"
+  },
+  "ContainerItem": {
+    "description": "Item in the container.",
+    "properties": {
+      "quantity": {
+        "description": "The quantity of the items of this type in the container.",
+        "type": "number"
+      },
+      "title": {
+        "description": "A descriptive title of the item.",
+        "type": "string"
+      },
+      "unitPrice": {
+        "description": "The unit price of an item of this type (the total value of this item type in the container is unitPrice x quantity).",
+        "ref": "Currency"
+      },
+      "unitWeight": {
+        "description": "The unit weight of an item of this type (the total weight of this item type in the container is unitWeight x quantity).",
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "quantity",
+      "title",
+      "unitPrice",
+      "unitWeight"
+    ],
+    "type": "object"
+  },
+  "ContainerList": {
+    "description": "A list of container.",
+    "properties": {},
+    "ref": "Container",
+    "required": [],
+    "type": "array"
+  },
+  "ContainerReferenceId": {
+    "description": "An identifier for the container.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ContainerSpecification": {
+    "description": "Container specification for checking the service rate.",
+    "properties": {
+      "dimensions": {
+        "description": "The length, width, and height of the container.",
+        "ref": "Dimensions"
+      },
+      "weight": {
+        "description": "The weight of the container.",
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "dimensions",
+      "weight"
+    ],
+    "type": "object"
+  },
+  "ContainerSpecificationList": {
+    "description": "A list of container specifications.",
+    "properties": {},
+    "ref": "ContainerSpecification",
+    "required": [],
+    "type": "array"
+  },
+  "CountryCode": {
+    "description": "The two digit country code.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CreateShipmentRequest": {
+    "description": "The request schema for the createShipment operation.",
+    "properties": {
+      "clientReferenceId": {
+        "ref": "ClientReferenceId"
+      },
+      "containers": {
+        "ref": "ContainerList"
+      },
+      "shipFrom": {
+        "ref": "Address"
+      },
+      "shipTo": {
+        "ref": "Address"
+      }
+    },
+    "required": [
+      "clientReferenceId",
+      "containers",
+      "shipFrom",
+      "shipTo"
+    ],
+    "type": "object"
+  },
+  "CreateShipmentResponse": {
+    "description": "The response schema for the createShipment operation.",
+    "properties": {
+      "errors": {
+        "description": "Encountered errors for the operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for createShipment operation",
+        "ref": "CreateShipmentResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CreateShipmentResult": {
+    "description": "The payload schema for the createShipment operation.",
+    "properties": {
+      "eligibleRates": {
+        "ref": "RateList"
+      },
+      "shipmentId": {
+        "ref": "ShipmentId"
+      }
+    },
+    "required": [
+      "eligibleRates",
+      "shipmentId"
+    ],
+    "type": "object"
+  },
+  "Currency": {
+    "description": "The total value of all items in the container.",
+    "properties": {
+      "unit": {
+        "description": "A 3-character currency code.",
+        "type": "string"
+      },
+      "value": {
+        "description": "The amount of currency.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "unit",
+      "value"
+    ],
+    "type": "object"
+  },
+  "Dimensions": {
+    "description": "A set of measurements for a three-dimensional object.",
+    "properties": {
+      "height": {
+        "description": "The height of the container.",
+        "type": "number"
+      },
+      "length": {
+        "description": "The length of the container.",
+        "type": "number"
+      },
+      "unit": {
+        "description": "The unit of these measurements.",
+        "enum": [
+          "CM",
+          "IN"
+        ],
+        "type": "string"
+      },
+      "width": {
+        "description": "The width of the container.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "height",
+      "length",
+      "unit",
+      "width"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "Event": {
+    "description": "An event of a shipment",
+    "properties": {
+      "eventCode": {
+        "ref": "EventCode"
+      },
+      "eventTime": {
+        "description": "The date and time of an event for a shipment.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "location": {
+        "ref": "Location"
+      }
+    },
+    "required": [
+      "eventCode",
+      "eventTime"
+    ],
+    "type": "object"
+  },
+  "EventCode": {
+    "description": "The event code of a shipment, such as Departed, Received, and ReadyForReceive.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "EventList": {
+    "description": "A list of events of a shipment.",
+    "properties": {},
+    "ref": "Event",
+    "required": [],
+    "type": "array"
+  },
+  "GetAccountResponse": {
+    "description": "The response schema for the getAccount operation.",
+    "properties": {
+      "errors": {
+        "description": "Encountered errors for the operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for getAccount operation",
+        "ref": "Account"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetRatesRequest": {
+    "description": "The payload schema for the getRates operation.",
+    "properties": {
+      "containerSpecifications": {
+        "ref": "ContainerSpecificationList"
+      },
+      "serviceTypes": {
+        "ref": "ServiceTypeList"
+      },
+      "shipDate": {
+        "description": "The start date and time.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "shipFrom": {
+        "ref": "Address"
+      },
+      "shipTo": {
+        "ref": "Address"
+      }
+    },
+    "required": [
+      "containerSpecifications",
+      "serviceTypes",
+      "shipFrom",
+      "shipTo"
+    ],
+    "type": "object"
+  },
+  "GetRatesResponse": {
+    "description": "The response schema for the getRates operation.",
+    "properties": {
+      "errors": {
+        "description": "Encountered errors for the operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for getRates operation",
+        "ref": "GetRatesResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetRatesResult": {
+    "description": "The payload schema for the getRates operation.",
+    "properties": {
+      "serviceRates": {
+        "ref": "ServiceRateList"
+      }
+    },
+    "required": [
+      "serviceRates"
+    ],
+    "type": "object"
+  },
+  "GetShipmentResponse": {
+    "description": "The response schema for the getShipment operation.",
+    "properties": {
+      "errors": {
+        "description": "Encountered errors for the operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for getShipment operation",
+        "ref": "Shipment"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetTrackingInformationResponse": {
+    "description": "The response schema for the getTrackingInformation operation.",
+    "properties": {
+      "errors": {
+        "description": "Encountered errors for the operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for getTrackingInformation operation",
+        "ref": "TrackingInformation"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Label": {
+    "description": "The label details of the container.",
+    "properties": {
+      "labelSpecification": {
+        "ref": "LabelSpecification"
+      },
+      "labelStream": {
+        "ref": "LabelStream"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "LabelResult": {
+    "description": "Label details including label stream, format, size.",
+    "properties": {
+      "containerReferenceId": {
+        "ref": "ContainerReferenceId"
+      },
+      "label": {
+        "ref": "Label"
+      },
+      "trackingId": {
+        "description": "The tracking identifier assigned to the container.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "LabelResultList": {
+    "description": "A list of label results",
+    "properties": {},
+    "ref": "LabelResult",
+    "required": [],
+    "type": "array"
+  },
+  "LabelSpecification": {
+    "description": "The label specification info.",
+    "properties": {
+      "labelFormat": {
+        "description": "The format of the label.",
+        "enum": [
+          "PNG"
+        ],
+        "type": "string"
+      },
+      "labelStockSize": {
+        "description": "The label stock size specification in length and height.",
+        "enum": [
+          "4x6"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "labelFormat",
+      "labelStockSize"
+    ],
+    "type": "object"
+  },
+  "LabelStream": {
+    "description": "Contains binary image data encoded as a base-64 string.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Location": {
+    "description": "The location where the person, business or institution is located.",
+    "properties": {
+      "city": {
+        "ref": "City"
+      },
+      "countryCode": {
+        "ref": "CountryCode"
+      },
+      "postalCode": {
+        "ref": "PostalCode"
+      },
+      "stateOrRegion": {
+        "ref": "StateOrRegion"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Party": {
+    "description": "The account related with the shipment.",
+    "properties": {
+      "accountId": {
+        "ref": "AccountId"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PostalCode": {
+    "description": "The postal code of that address.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PromisedDeliveryDate": {
+    "description": "The promised delivery date and time of a shipment.",
+    "format": "date-time",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PurchaseLabelsRequest": {
+    "description": "The request schema for the purchaseLabels operation.",
+    "properties": {
+      "labelSpecification": {
+        "ref": "LabelSpecification"
+      },
+      "rateId": {
+        "ref": "RateId"
+      }
+    },
+    "required": [
+      "labelSpecification",
+      "rateId"
+    ],
+    "type": "object"
+  },
+  "PurchaseLabelsResponse": {
+    "description": "The response schema for the purchaseLabels operation.",
+    "properties": {
+      "errors": {
+        "description": "Encountered errors for the operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for purchaseLabels operation",
+        "ref": "PurchaseLabelsResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PurchaseLabelsResult": {
+    "description": "The payload schema for the purchaseLabels operation.",
+    "properties": {
+      "acceptedRate": {
+        "ref": "AcceptedRate"
+      },
+      "clientReferenceId": {
+        "ref": "ClientReferenceId"
+      },
+      "labelResults": {
+        "ref": "LabelResultList"
+      },
+      "shipmentId": {
+        "ref": "ShipmentId"
+      }
+    },
+    "required": [
+      "acceptedRate",
+      "labelResults",
+      "shipmentId"
+    ],
+    "type": "object"
+  },
+  "PurchaseShipmentRequest": {
+    "description": "The payload schema for the purchaseShipment operation.",
+    "properties": {
+      "clientReferenceId": {
+        "ref": "ClientReferenceId"
+      },
+      "containers": {
+        "ref": "ContainerList"
+      },
+      "labelSpecification": {
+        "ref": "LabelSpecification"
+      },
+      "serviceType": {
+        "ref": "ServiceType"
+      },
+      "shipDate": {
+        "description": "The start date and time.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "shipFrom": {
+        "ref": "Address"
+      },
+      "shipTo": {
+        "ref": "Address"
+      }
+    },
+    "required": [
+      "clientReferenceId",
+      "containers",
+      "labelSpecification",
+      "serviceType",
+      "shipFrom",
+      "shipTo"
+    ],
+    "type": "object"
+  },
+  "PurchaseShipmentResponse": {
+    "description": "The response schema for the purchaseShipment operation.",
+    "properties": {
+      "errors": {
+        "description": "Encountered errors for the operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for purchaseShipment operation",
+        "ref": "PurchaseShipmentResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PurchaseShipmentResult": {
+    "description": "The payload schema for the purchaseShipment operation.",
+    "properties": {
+      "labelResults": {
+        "ref": "LabelResultList"
+      },
+      "serviceRate": {
+        "ref": "ServiceRate"
+      },
+      "shipmentId": {
+        "ref": "ShipmentId"
+      }
+    },
+    "required": [
+      "labelResults",
+      "serviceRate",
+      "shipmentId"
+    ],
+    "type": "object"
+  },
+  "Rate": {
+    "description": "The available rate that can be used to send the shipment",
+    "properties": {
+      "billedWeight": {
+        "description": "The weight that was used to calculate the totalCharge.",
+        "ref": "Weight"
+      },
+      "expirationTime": {
+        "description": "The time after which the offering will expire.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "promise": {
+        "ref": "ShippingPromiseSet"
+      },
+      "rateId": {
+        "description": "An identifier for the rate.",
+        "type": "string"
+      },
+      "serviceType": {
+        "ref": "ServiceType"
+      },
+      "totalCharge": {
+        "description": "The total charge that will be billed for the rate.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RateId": {
+    "description": "An identifier for the rating.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "RateList": {
+    "description": "A list of all the available rates that can be used to send the shipment.",
+    "properties": {},
+    "ref": "Rate",
+    "required": [],
+    "type": "array"
+  },
+  "RetrieveShippingLabelRequest": {
+    "description": "The request schema for the retrieveShippingLabel operation.",
+    "properties": {
+      "labelSpecification": {
+        "ref": "LabelSpecification"
+      }
+    },
+    "required": [
+      "labelSpecification"
+    ],
+    "type": "object"
+  },
+  "RetrieveShippingLabelResponse": {
+    "description": "The response schema for the retrieveShippingLabel operation.",
+    "properties": {
+      "errors": {
+        "description": "Encountered errors for the operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for retrieveShippingLabel operation",
+        "ref": "RetrieveShippingLabelResult"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RetrieveShippingLabelResult": {
+    "description": "The payload schema for the retrieveShippingLabel operation.",
+    "properties": {
+      "labelSpecification": {
+        "ref": "LabelSpecification"
+      },
+      "labelStream": {
+        "ref": "LabelStream"
+      }
+    },
+    "required": [
+      "labelSpecification",
+      "labelStream"
+    ],
+    "type": "object"
+  },
+  "ServiceRate": {
+    "description": "The specific rate for a shipping service, or null if no service available.",
+    "properties": {
+      "billableWeight": {
+        "description": "The weight that was used to calculate the totalCharge.",
+        "ref": "Weight"
+      },
+      "promise": {
+        "ref": "ShippingPromiseSet"
+      },
+      "serviceType": {
+        "ref": "ServiceType"
+      },
+      "totalCharge": {
+        "description": "The total charge that will be billed for the rate.",
+        "ref": "Currency"
+      }
+    },
+    "required": [
+      "billableWeight",
+      "promise",
+      "serviceType",
+      "totalCharge"
+    ],
+    "type": "object"
+  },
+  "ServiceRateList": {
+    "description": "A list of service rates.",
+    "properties": {},
+    "ref": "ServiceRate",
+    "required": [],
+    "type": "array"
+  },
+  "ServiceType": {
+    "description": "The type of shipping service that will be used for the service offering.",
+    "enum": [
+      "Amazon Shipping Ground",
+      "Amazon Shipping Premium",
+      "Amazon Shipping Standard"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ServiceTypeList": {
+    "description": "A list of service types that can be used to send the shipment.",
+    "properties": {},
+    "ref": "ServiceType",
+    "required": [],
+    "type": "array"
+  },
+  "Shipment": {
+    "description": "The shipment related data.",
+    "properties": {
+      "acceptedRate": {
+        "ref": "AcceptedRate"
+      },
+      "clientReferenceId": {
+        "ref": "ClientReferenceId"
+      },
+      "containers": {
+        "ref": "ContainerList"
+      },
+      "shipFrom": {
+        "ref": "Address"
+      },
+      "shipTo": {
+        "ref": "Address"
+      },
+      "shipmentId": {
+        "ref": "ShipmentId"
+      },
+      "shipper": {
+        "ref": "Party"
+      }
+    },
+    "required": [
+      "clientReferenceId",
+      "containers",
+      "shipFrom",
+      "shipTo",
+      "shipmentId"
+    ],
+    "type": "object"
+  },
+  "ShipmentId": {
+    "description": "The unique shipment identifier.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ShippingPromiseSet": {
+    "description": "The promised delivery time and pickup time.",
+    "properties": {
+      "deliveryWindow": {
+        "description": "The time window in which the shipment will be delivered.",
+        "ref": "TimeRange"
+      },
+      "receiveWindow": {
+        "description": "The time window in which Amazon Shipping will pick up the shipment.",
+        "ref": "TimeRange"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StateOrRegion": {
+    "description": "The state or region where the person, business or institution is located.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "TimeRange": {
+    "description": "The time range.",
+    "properties": {
+      "end": {
+        "description": "The end date and time.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "start": {
+        "description": "The start date and time.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TrackingId": {
+    "description": "The tracking id generated to each shipment.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "TrackingInformation": {
+    "description": "The payload schema for the getTrackingInformation operation.",
+    "properties": {
+      "eventHistory": {
+        "ref": "EventList"
+      },
+      "promisedDeliveryDate": {
+        "ref": "PromisedDeliveryDate"
+      },
+      "summary": {
+        "ref": "TrackingSummary"
+      },
+      "trackingId": {
+        "ref": "TrackingId"
+      }
+    },
+    "required": [
+      "eventHistory",
+      "promisedDeliveryDate",
+      "summary",
+      "trackingId"
+    ],
+    "type": "object"
+  },
+  "TrackingSummary": {
+    "description": "The tracking summary.",
+    "properties": {
+      "status": {
+        "description": "The derived status based on the events in the eventHistory.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Weight": {
+    "description": "The weight.",
+    "properties": {
+      "unit": {
+        "description": "The unit of measurement.",
+        "enum": [
+          "g",
+          "kg",
+          "lb",
+          "oz"
+        ],
+        "type": "string"
+      },
+      "value": {
+        "description": "The measurement value.",
+        "type": "number"
+      }
+    },
+    "required": [
+      "unit",
+      "value"
+    ],
+    "type": "object"
+  }
+}

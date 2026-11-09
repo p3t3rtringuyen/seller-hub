@@ -1,0 +1,1650 @@
+{
+ "api": "ReachPlanningService",
+ "file": "specs/dest/ReachPlanningService_prod_3p.json",
+ "schemas": {
+  "AudienceTargetTypeV1": {
+   "enum": [
+    "AUDIENCE"
+   ],
+   "type": "string"
+  },
+  "AudienceTargetV1": {
+   "properties": {
+    "audienceId": {
+     "description": "The unique identifier for the audience. Use the [audiences](https://advertising.amazon.com/API/docs/en-us/audiences/#/Discovery/listAudiences) discovery resource to look up audience identifiers. <li>Included groups are …",
+     "type": "string"
+    },
+    "groupId": {
+     "description": "The string identifying a group of audiences. Only numbers formatted as strings are accepted (e.g., \"1\"). To add audiences to a new group, choose any string not currently being used on this forecast. To add audiences to …",
+     "type": "string"
+    },
+    "targetType": {
+     "$ref": "AudienceTargetTypeV1"
+    }
+   },
+   "required": [
+    "audienceId",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "BadRequestExceptionResponseContent": {
+   "description": "Bad Request.",
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "description": "Human readable response message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BiddingInfoV1": {
+   "description": "The information about bidding cost.",
+   "properties": {
+    "maxAvgCpm": {
+     "description": "Maximum average CPM rate (cost per thousand impressions). If not provided, we will assume default value based on historical measurement.",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "maxCpc": {
+     "description": "Maximum CPC (cost per click). If not provided, we will assume default value based on historical measurement.",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "maxVCpm": {
+     "description": "Maximum vCPM rate (cost per thousand viewable impressions). If not provided, we will assume default value based on historical measurement.",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetAllocationV1": {
+   "properties": {
+    "reach": {
+     "description": "The reach number of the selected data point of the reach forecast.",
+     "format": "int64",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "reachForecastId": {
+     "description": "The identifier of the Reach Forecast that the specified budget is allocated to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "reach",
+    "reachForecastId"
+   ],
+   "type": "object"
+  },
+  "ContentGenreTargetTypeV1": {
+   "enum": [
+    "CONTENT_GENRE"
+   ],
+   "type": "string"
+  },
+  "ContentGenreTargetV1": {
+   "properties": {
+    "contentGenre": {
+     "$ref": "ContentGenreV1"
+    },
+    "targetType": {
+     "$ref": "ContentGenreTargetTypeV1"
+    }
+   },
+   "required": [
+    "contentGenre",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "ContentGenreV1": {
+   "description": "Include/Exclude content based on genre. Content with GENRE_NOT_AVAILABLE includes content where genre is unavailable or unknown.",
+   "enum": [
+    "ACTION",
+    "ADVENTURE",
+    "ANIMATION",
+    "BIOGRAPHY",
+    "COMEDY",
+    "CRIME",
+    "DOCUMENTARY",
+    "DRAMA",
+    "FAMILY",
+    "FANTASY",
+    "FILM_NOIR",
+    "GAME_SHOW",
+    "GENRE_NOT_AVAILABLE",
+    "HISTORY",
+    "HORROR",
+    "MUSICAL",
+    "MYSTERY",
+    "NEWS",
+    "REALITY_TV",
+    "ROMANCE",
+    "SCIENCE_FICTION",
+    "SHORT",
+    "SPORT",
+    "SUPER_HERO",
+    "TALK_SHOW",
+    "THRILLER",
+    "WAR",
+    "WESTERN"
+   ],
+   "type": "string"
+  },
+  "ContentRatingDetailsV1": {
+   "oneOf": [
+    {
+     "properties": {
+      "dspContentRating": {
+       "$ref": "DspContentRatingV1"
+      }
+     },
+     "required": [
+      "dspContentRating"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ContentRatingTargetTypeV1": {
+   "enum": [
+    "CONTENT_RATING"
+   ],
+   "type": "string"
+  },
+  "ContentRatingTargetV1": {
+   "properties": {
+    "contentRatingDetails": {
+     "$ref": "ContentRatingDetailsV1"
+    },
+    "contentRatingType": {
+     "$ref": "ContentRatingTypeV1"
+    },
+    "targetType": {
+     "$ref": "ContentRatingTargetTypeV1"
+    }
+   },
+   "required": [
+    "contentRatingDetails",
+    "contentRatingType",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "ContentRatingTypeV1": {
+   "enum": [
+    "DSP_CONTENT_RATING"
+   ],
+   "type": "string"
+  },
+  "CountryCodeV1": {
+   "description": "The code of the country for the forecast.",
+   "enum": [
+    "AE",
+    "AT",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "NZ",
+    "SA",
+    "SE",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "CreateDeduplicatedReachForecastsV1RequestContent": {
+   "properties": {
+    "deduplicatedReachForecasts": {
+     "description": "A list of Deduplicate Reach Forecasts to create. Maximum 100 unique Reach Forecasts can be involved in a single request.",
+     "items": {
+      "$ref": "CreateDeduplicatedReachForecastsV1RequestElement"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "deduplicatedReachForecasts"
+   ],
+   "type": "object"
+  },
+  "CreateDeduplicatedReachForecastsV1RequestElement": {
+   "properties": {
+    "budgetAllocations": {
+     "description": "The list of budget allocations for the Reach Forecasts to have their reach deduplicated. Total number of unique Reach Forecast IDs in budgetAllocations in the same request must be less than 100.",
+     "items": {
+      "$ref": "BudgetAllocationV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "budgetAllocations"
+   ],
+   "type": "object"
+  },
+  "CreateDeduplicatedReachForecastsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "CreateDeduplicatedReachForecastsV1ResponseError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "CreateDeduplicatedReachForecastsV1ResponseSuccess"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "CreateDeduplicatedReachForecastsV1ResponseElement": {
+   "properties": {
+    "deduplicatedReach": {
+     "description": "Forecasted deduplicated reach.",
+     "format": "int64",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "deduplicatedReachForecastId": {
+     "description": "This is the unique identifier of the Deduplicated Reach Forecast resource.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deduplicatedReach",
+    "deduplicatedReachForecastId"
+   ],
+   "type": "object"
+  },
+  "CreateDeduplicatedReachForecastsV1ResponseError": {
+   "properties": {
+    "error": {
+     "$ref": "ReachPlanningServiceError"
+    },
+    "index": {
+     "description": "This is the index of the corresponding request element in the request payload.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "error",
+    "index"
+   ],
+   "type": "object"
+  },
+  "CreateDeduplicatedReachForecastsV1ResponseSuccess": {
+   "properties": {
+    "deduplicatedReachForecast": {
+     "$ref": "CreateDeduplicatedReachForecastsV1ResponseElement"
+    },
+    "index": {
+     "description": "This is the index of the corresponding request element in the request payload.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "deduplicatedReachForecast",
+    "index"
+   ],
+   "type": "object"
+  },
+  "CreateReachForecastsV1RequestContent": {
+   "properties": {
+    "commonTargets": {
+     "description": "The list of common targets to be applied to all reach forecasts to be created in this request. The common targets will be added into each forecast specific targets to obtain the final targeting. Targets of the same targ…",
+     "items": {
+      "$ref": "PlanningTargetV1"
+     },
+     "maxItems": 15000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "reachForecasts": {
+     "description": "A list of reach forecast to be created.",
+     "items": {
+      "$ref": "CreateReachForecastsV1RequestElement"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "reachForecasts"
+   ],
+   "type": "object"
+  },
+  "CreateReachForecastsV1RequestElement": {
+   "properties": {
+    "advertisedProductCategoryIds": {
+     "description": "The identifiers of the advertised product categories for the forecast. Use the DSP [ListAdvertisedProductCategories API](https://advertising.amazon.com/API/docs/en-us/dsp-discovery-advertised-product-categories#tag/Disc…",
+     "items": {
+      "maxLength": 50,
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "countryCode": {
+     "$ref": "CountryCodeV1"
+    },
+    "deliveryType": {
+     "$ref": "DeliveryTypeV1"
+    },
+    "endDate": {
+     "description": "The forecast end date in YYYY-MM-DD format.",
+     "format": "date",
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCapV1"
+    },
+    "reachType": {
+     "$ref": "ReachTypeV1"
+    },
+    "startDate": {
+     "description": "The forecast start date in YYYY-MM-DD format.",
+     "format": "date",
+     "type": "string"
+    },
+    "supplyPackage": {
+     "description": "The combination of Ads supply.",
+     "items": {
+      "$ref": "SupplyV1"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "targets": {
+     "description": "The list of targets for the forecast. Targets of the same targetType and of the same negative boolean are combined using OR statements. Targets of different types are associated using AND statements. Note: Audience targ…",
+     "items": {
+      "$ref": "PlanningTargetV1"
+     },
+     "maxItems": 15000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "countryCode",
+    "deliveryType",
+    "endDate",
+    "reachType",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "CreateReachForecastsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "CreateReachForecastsV1ResponseError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "CreateReachForecastsV1ResponseSuccess"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "CreateReachForecastsV1ResponseElement": {
+   "properties": {
+    "availableImpressions": {
+     "description": "The number of impressions available for you to purchase after considering contention (G - booked demand) among the matchingImpressions",
+     "format": "int64",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "avgCpm": {
+     "description": "The CPM rate (cost per thousand impressions).",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "countryCode": {
+     "$ref": "CountryCodeV1"
+    },
+    "cpc": {
+     "description": "The CPC rate (cost per click).",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "creationDateTime": {
+     "description": "The date time that the reach forecast was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCodeV1"
+    },
+    "dataPoints": {
+     "description": "The list of data points for the reach curve.",
+     "items": {
+      "$ref": "ReachCurveDataPointV1"
+     },
+     "maxItems": 120,
+     "minItems": 0,
+     "type": "array"
+    },
+    "matchingImpressions": {
+     "description": "The number of impressions that match your targeting",
+     "format": "int64",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "maxCpm": {
+     "description": "The maximum CPM rate (cost per thousand impressions).",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "reachForecastId": {
+     "description": "This is the unique identifier of the Reach Forecast resource.",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "ReachForecastStatusV1"
+    }
+   },
+   "required": [
+    "countryCode",
+    "creationDateTime",
+    "currencyCode",
+    "dataPoints",
+    "reachForecastId",
+    "status"
+   ],
+   "type": "object"
+  },
+  "CreateReachForecastsV1ResponseError": {
+   "properties": {
+    "error": {
+     "$ref": "ReachPlanningServiceError"
+    },
+    "index": {
+     "description": "This is the index of the corresponding request element in the request payload.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "error",
+    "index"
+   ],
+   "type": "object"
+  },
+  "CreateReachForecastsV1ResponseSuccess": {
+   "properties": {
+    "index": {
+     "description": "This is the index of the corresponding request element in the request payload.",
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "reachForecast": {
+     "$ref": "CreateReachForecastsV1ResponseElement"
+    }
+   },
+   "required": [
+    "index",
+    "reachForecast"
+   ],
+   "type": "object"
+  },
+  "CurrencyCodeV1": {
+   "description": "The currency for an associated monetary value.",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "SAR",
+    "SEK",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "DeliveryTypeV1": {
+   "description": "The delivery method of the envisioned campaign.",
+   "enum": [
+    "GUARANTEED",
+    "NON_GUARANTEED"
+   ],
+   "type": "string"
+  },
+  "DeviceTargetTypeV1": {
+   "enum": [
+    "DEVICE"
+   ],
+   "type": "string"
+  },
+  "DeviceTargetV1": {
+   "properties": {
+    "deviceType": {
+     "$ref": "DeviceTypeV1"
+    },
+    "targetType": {
+     "$ref": "DeviceTargetTypeV1"
+    }
+   },
+   "required": [
+    "deviceType",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "DeviceTypeV1": {
+   "description": "The type of device being targeted.",
+   "enum": [
+    "CONNECTED_DEVICE",
+    "CONNECTED_TV",
+    "DESKTOP",
+    "MOBILE"
+   ],
+   "type": "string"
+  },
+  "DspContentRatingV1": {
+   "description": "Exclude content based on available content rating options: <li> SUITABLE_FOR_ALL_AUDIENCES: Equivalent to content that is rated G (film), TV-Y (TV), TV-Y7 (TV), TV-G (TV), EC (game), or E (game).</li> <li> SUITABLE_FOR_…",
+   "enum": [
+    "RATING_NOT_AVAILABLE",
+    "SUITABLE_FOR_ADULTS",
+    "SUITABLE_FOR_ALL_AUDIENCES",
+    "SUITABLE_FOR_MATURE_AUDIENCES",
+    "SUITABLE_FOR_MOST_AUDIENCES_WITH_PARENTAL_GUIDANCE",
+    "SUITABLE_FOR_TEEN_AND_OLDER_AUDIENCES"
+   ],
+   "type": "string"
+  },
+  "ErrorCode": {
+   "description": "Error code.",
+   "enum": [
+    "INTERNAL_SERVER_ERROR",
+    "INVALID_MULTI_COUNTRY_LOCATION",
+    "MAX_CPC_TOO_LOW",
+    "PERFORMANCE_CURVE_ERROR",
+    "REACH_CURVE_DEDUPLICATION_ERROR",
+    "REACH_CURVE_ERROR",
+    "REACH_FORECAST_NOT_FOUND",
+    "REQUEST_VALIDATION_ERROR",
+    "SERVER_TIMEOUT",
+    "SERVICE_UNAVAILABLE",
+    "TARGETING_TOO_NARROW",
+    "UNAUTHORIZED_ERROR"
+   ],
+   "type": "string"
+  },
+  "ForbiddenExceptionResponseContent": {
+   "description": "Forbidden.",
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "description": "Human readable response message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "FrequencyCapTimeUnitV1": {
+   "description": "The time unit.",
+   "enum": [
+    "DAYS",
+    "MONTHS",
+    "WEEKS"
+   ],
+   "type": "string"
+  },
+  "FrequencyCapTypeV1": {
+   "description": "The type of advertising frequency cap. If UNCAPPED, no other fields are used.",
+   "enum": [
+    "CUSTOM",
+    "UNCAPPED"
+   ],
+   "type": "string"
+  },
+  "FrequencyCapV1": {
+   "description": "The limit of how many times ads appear to the same viewer.",
+   "properties": {
+    "maxImpressions": {
+     "description": "The maximum number of times an ad is displayed.",
+     "format": "int32",
+     "maximum": 500,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "timeUnit": {
+     "$ref": "FrequencyCapTimeUnitV1"
+    },
+    "timeUnitCount": {
+     "description": "The count of time units.",
+     "format": "int32",
+     "maximum": 30,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "type": {
+     "allOf": [
+      {
+       "$ref": "FrequencyCapTypeV1"
+      },
+      {
+       "default": "UNCAPPED"
+      }
+     ]
+    }
+   },
+   "type": "object"
+  },
+  "GeneratePerformanceForecastV1ResponseElement": {
+   "description": "Performance curve for a specific metric",
+   "properties": {
+    "countryCode": {
+     "$ref": "CountryCodeV1"
+    },
+    "creationDateTime": {
+     "description": "The date time that the performance forecast was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCodeV1"
+    },
+    "dataPoints": {
+     "description": "List of data points for the curve",
+     "items": {
+      "$ref": "PerformanceCurveDataPointV1"
+     },
+     "maxItems": 120,
+     "minItems": 0,
+     "type": "array"
+    },
+    "performanceMetric": {
+     "$ref": "PerformanceMetricV1"
+    }
+   },
+   "required": [
+    "countryCode",
+    "creationDateTime",
+    "currencyCode",
+    "dataPoints",
+    "performanceMetric"
+   ],
+   "type": "object"
+  },
+  "GeneratePerformanceForecastsV1RequestContent": {
+   "properties": {
+    "performanceForecasts": {
+     "items": {
+      "$ref": "GeneratePerformanceForecastsV1RequestElement"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "performanceForecasts"
+   ],
+   "type": "object"
+  },
+  "GeneratePerformanceForecastsV1RequestElement": {
+   "properties": {
+    "advertisedProductCategoryIds": {
+     "description": "The identifiers of the advertised product categories for the forecast. Use the DSP [ListAdvertisedProductCategories API](https://advertising.amazon.com/API/docs/en-us/dsp-discovery-advertised-product-categories#tag/Disc…",
+     "items": {
+      "maxLength": 50,
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "biddingInfo": {
+     "$ref": "BiddingInfoV1"
+    },
+    "countryCode": {
+     "$ref": "CountryCodeV1"
+    },
+    "deliveryType": {
+     "$ref": "DeliveryTypeV1"
+    },
+    "endDate": {
+     "description": "The forecast end date in YYYY-MM-DD format.",
+     "format": "date",
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCapV1"
+    },
+    "performanceMetric": {
+     "$ref": "PerformanceMetricV1"
+    },
+    "reachType": {
+     "$ref": "ReachTypeV1"
+    },
+    "startDate": {
+     "description": "The forecast start date in YYYY-MM-DD format.",
+     "format": "date",
+     "type": "string"
+    },
+    "supplyPackage": {
+     "description": "The combination of Ads supply.",
+     "items": {
+      "$ref": "SupplyV1"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "targets": {
+     "items": {
+      "$ref": "PlanningTargetV1"
+     },
+     "maxItems": 15000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "countryCode",
+    "deliveryType",
+    "endDate",
+    "performanceMetric",
+    "reachType",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "GeneratePerformanceForecastsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "GeneratePerformanceForecastsV1ResponseError"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "description": "List of performance curves for each requested performance metric.",
+     "items": {
+      "$ref": "GeneratePerformanceForecastsV1ResponseSuccess"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "GeneratePerformanceForecastsV1ResponseError": {
+   "properties": {
+    "error": {
+     "$ref": "ReachPlanningServiceError"
+    },
+    "index": {
+     "description": "This is the index of the corresponding request element in the request payload.",
+     "format": "int32",
+     "maximum": 4,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "error",
+    "index"
+   ],
+   "type": "object"
+  },
+  "GeneratePerformanceForecastsV1ResponseSuccess": {
+   "properties": {
+    "index": {
+     "description": "This is the index of the corresponding request element in the request payload.",
+     "format": "int32",
+     "maximum": 4,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "performanceForecast": {
+     "$ref": "GeneratePerformanceForecastV1ResponseElement"
+    }
+   },
+   "required": [
+    "index",
+    "performanceForecast"
+   ],
+   "type": "object"
+  },
+  "IABCategoryTargetTypeV1": {
+   "enum": [
+    "IAB_CATEGORY"
+   ],
+   "type": "string"
+  },
+  "IABCategoryTargetV1": {
+   "properties": {
+    "iabContentCategory": {
+     "description": "The IAB content category to target. To get the list of valid values, see https://advertising.amazon.com/API/docs/en-us/dsp-campaigns/#tag/Discovery/operation/getIabContentCategories",
+     "type": "string"
+    },
+    "targetType": {
+     "$ref": "IABCategoryTargetTypeV1"
+    }
+   },
+   "required": [
+    "iabContentCategory",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorExceptionResponseContent": {
+   "description": "Internal Server Error.",
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "description": "Human readable response message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "InventorySourceTargetTypeV1": {
+   "enum": [
+    "INVENTORY_SOURCE"
+   ],
+   "type": "string"
+  },
+  "InventorySourceTargetV1": {
+   "properties": {
+    "inventorySourceId": {
+     "description": "The identifier of the inventory source. These can be obtained from the inventory sources discovery endpoint.",
+     "type": "string"
+    },
+    "inventorySourceType": {
+     "$ref": "InventorySourceTypeV1"
+    },
+    "targetType": {
+     "$ref": "InventorySourceTargetTypeV1"
+    }
+   },
+   "required": [
+    "inventorySourceId",
+    "inventorySourceType",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "InventorySourceTypeV1": {
+   "description": "The type of inventory source to be targeted. <li>DEAL: Deal inventory.",
+   "enum": [
+    "DEAL",
+    "PUBLISHER"
+   ],
+   "type": "string"
+  },
+  "KeywordTargetMatchTypeV1": {
+   "enum": [
+    "BROAD",
+    "EXACT",
+    "PHRASE"
+   ],
+   "type": "string"
+  },
+  "KeywordTargetTypeV1": {
+   "enum": [
+    "KEYWORD"
+   ],
+   "type": "string"
+  },
+  "KeywordTargetV1": {
+   "properties": {
+    "keyword": {
+     "maxLength": 81,
+     "type": "string"
+    },
+    "matchType": {
+     "$ref": "KeywordTargetMatchTypeV1"
+    },
+    "targetType": {
+     "$ref": "KeywordTargetTypeV1"
+    }
+   },
+   "required": [
+    "keyword",
+    "matchType",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "ListReachForecastTargetsV1RequestContent": {
+   "properties": {
+    "maxResults": {
+     "default": "1000",
+     "description": "Number of records to include in the paginated response.",
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token value for navigating to the next response page.",
+     "type": "string"
+    },
+    "reachForecastId": {
+     "description": "This is the unique identifier of the Reach Forecast resource.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "reachForecastId"
+   ],
+   "type": "object"
+  },
+  "ListReachForecastTargetsV1ResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Token value for navigating to the next response page.",
+     "type": "string"
+    },
+    "targets": {
+     "items": {
+      "$ref": "PlanningTargetV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "ListReachForecastsV1RequestContent": {
+   "properties": {
+    "maxResults": {
+     "default": "100",
+     "description": "Number of records to include in the paginated response.",
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token value for navigating to the next response page.",
+     "type": "string"
+    },
+    "reachForecastIds": {
+     "description": "The IDs of Reach Forecasts to be retrived.",
+     "items": {
+      "description": "This is the unique identifier of the Reach Forecast resource.",
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "reachForecastIds"
+   ],
+   "type": "object"
+  },
+  "ListReachForecastsV1ResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Token value for navigating to the next response page.",
+     "type": "string"
+    },
+    "reachForecasts": {
+     "items": {
+      "$ref": "ListReachForecastsV1ResponseElement"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "reachForecasts"
+   ],
+   "type": "object"
+  },
+  "ListReachForecastsV1ResponseElement": {
+   "properties": {
+    "advertisedProductCategoryIds": {
+     "description": "The identifiers of the advertised product categories for the forecast. Use the DSP [ListAdvertisedProductCategories API](https://advertising.amazon.com/API/docs/en-us/dsp-discovery-advertised-product-categories#tag/Disc…",
+     "items": {
+      "maxLength": 50,
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "availableImpressions": {
+     "description": "The number of impressions available for you to purchase after considering contention (G - booked demand) among the matchingImpressions",
+     "format": "int64",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "avgCpm": {
+     "description": "The CPM rate (cost per thousand impressions).",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "countryCode": {
+     "$ref": "CountryCodeV1"
+    },
+    "cpc": {
+     "description": "The CPC rate (cost per click).",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "creationDateTime": {
+     "description": "The date time that the reach forecast was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCodeV1"
+    },
+    "dataPoints": {
+     "description": "The list of data points for the reach curve.",
+     "items": {
+      "$ref": "ReachCurveDataPointV1"
+     },
+     "maxItems": 120,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryType": {
+     "$ref": "DeliveryTypeV1"
+    },
+    "endDate": {
+     "description": "The forecast end date in YYYY-MM-DD format.",
+     "format": "date",
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCapV1"
+    },
+    "matchingImpressions": {
+     "description": "The number of impressions that match your targeting",
+     "format": "int64",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "maxCpm": {
+     "description": "The maximum CPM rate (cost per thousand impressions).",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "reachForecastId": {
+     "description": "This is the unique identifier of the Reach Forecast resource.",
+     "type": "string"
+    },
+    "reachType": {
+     "$ref": "ReachTypeV1"
+    },
+    "startDate": {
+     "description": "The forecast start date in YYYY-MM-DD format.",
+     "format": "date",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "ReachForecastStatusV1"
+    },
+    "supplyPackage": {
+     "description": "The combination of Ads supply.",
+     "items": {
+      "$ref": "SupplyV1"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "countryCode",
+    "creationDateTime",
+    "currencyCode",
+    "dataPoints",
+    "deliveryType",
+    "endDate",
+    "reachForecastId",
+    "reachType",
+    "startDate",
+    "status"
+   ],
+   "type": "object"
+  },
+  "LocationTargetTypeV1": {
+   "enum": [
+    "LOCATION"
+   ],
+   "type": "string"
+  },
+  "LocationTargetV1": {
+   "properties": {
+    "geoLocation": {
+     "description": "The location to target. Use the [GeoLocation API](https://advertising.amazon.com/API/docs/en-us/dsp-campaigns#tag/Discovery/operation/getGeoLocations) to obtain targetable location IDs. Supported location category are \"…",
+     "type": "string"
+    },
+    "targetType": {
+     "$ref": "LocationTargetTypeV1"
+    },
+    "userLocationSignal": {
+     "$ref": "UserLocationSignalV1"
+    }
+   },
+   "required": [
+    "geoLocation",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "NotFoundExceptionResponseContent": {
+   "description": "Not Found.",
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "description": "Human readable response message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PerformanceCurveDataPointV1": {
+   "properties": {
+    "cpc": {
+     "description": "Cost Per Click",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "cpdpv": {
+     "description": "Cost Per Detail Page View",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "cpvc": {
+     "description": "Cost Per Video Completion",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "ctr": {
+     "description": "Click-Through Rate",
+     "format": "double",
+     "maximum": 1,
+     "minimum": 0,
+     "type": "number"
+    },
+    "ecpm": {
+     "description": "Effective Cost Per Mille",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "prediction": {
+     "description": "Prediction for the performance metric requested in the input.",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "spend": {
+     "description": "The monetary spend to achieve the provided prediction (in the currency specified).",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "vcr": {
+     "description": "Video Completion Rate",
+     "format": "double",
+     "maximum": 1,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "prediction",
+    "spend"
+   ],
+   "type": "object"
+  },
+  "PerformanceMetricV1": {
+   "description": "The performance metric to be forecasted.",
+   "enum": [
+    "CLICK",
+    "DETAIL_PAGE_VIEW",
+    "VIDEO_COMPLETION"
+   ],
+   "type": "string"
+  },
+  "PlanningTargetDetailsV1": {
+   "oneOf": [
+    {
+     "properties": {
+      "audienceTarget": {
+       "$ref": "AudienceTargetV1"
+      }
+     },
+     "required": [
+      "audienceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentGenreTarget": {
+       "$ref": "ContentGenreTargetV1"
+      }
+     },
+     "required": [
+      "contentGenreTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentRatingTarget": {
+       "$ref": "ContentRatingTargetV1"
+      }
+     },
+     "required": [
+      "contentRatingTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "deviceTarget": {
+       "$ref": "DeviceTargetV1"
+      }
+     },
+     "required": [
+      "deviceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "iabContentCategoryTarget": {
+       "$ref": "IABCategoryTargetV1"
+      }
+     },
+     "required": [
+      "iabContentCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "inventorySourceTarget": {
+       "$ref": "InventorySourceTargetV1"
+      }
+     },
+     "required": [
+      "inventorySourceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "keywordTarget": {
+       "$ref": "KeywordTargetV1"
+      }
+     },
+     "required": [
+      "keywordTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "locationTarget": {
+       "$ref": "LocationTargetV1"
+      }
+     },
+     "required": [
+      "locationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productCategoryTarget": {
+       "$ref": "ProductCategoryTargetV1"
+      }
+     },
+     "required": [
+      "productCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productTarget": {
+       "$ref": "ProductTargetV1"
+      }
+     },
+     "required": [
+      "productTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "themeTarget": {
+       "$ref": "ThemeTargetV1"
+      }
+     },
+     "required": [
+      "themeTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "PlanningTargetV1": {
+   "properties": {
+    "negative": {
+     "default": "false",
+     "description": "Whether to target (false) or exclude (true) the given target.",
+     "type": "boolean"
+    },
+    "targetDetails": {
+     "$ref": "PlanningTargetDetailsV1"
+    }
+   },
+   "required": [
+    "negative",
+    "targetDetails"
+   ],
+   "type": "object"
+  },
+  "ProductCategoryTargetTypeV1": {
+   "enum": [
+    "PRODUCT_CATEGORY"
+   ],
+   "type": "string"
+  },
+  "ProductCategoryTargetV1": {
+   "properties": {
+    "asinCategory": {
+     "description": "The product category to target.",
+     "type": "string"
+    },
+    "targetType": {
+     "$ref": "ProductCategoryTargetTypeV1"
+    }
+   },
+   "required": [
+    "asinCategory",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "ProductTargetTypeV1": {
+   "enum": [
+    "PRODUCT"
+   ],
+   "type": "string"
+  },
+  "ProductTargetV1": {
+   "properties": {
+    "asin": {
+     "description": "The product asin to target.",
+     "type": "string"
+    },
+    "targetType": {
+     "$ref": "ProductTargetTypeV1"
+    }
+   },
+   "required": [
+    "asin",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "ReachCurveDataPointV1": {
+   "properties": {
+    "impressions": {
+     "description": "The number of on-target impressions.",
+     "format": "int64",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "reach": {
+     "description": "The forecasted on-target reached.",
+     "format": "int64",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "spend": {
+     "description": "The forecasted spend in requested currency based on the estimated average CPM.",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "impressions",
+    "reach",
+    "spend"
+   ],
+   "type": "object"
+  },
+  "ReachForecastStatusV1": {
+   "description": "The status of the reach forecast. SUCCESS: The forecast is run successful. EXPIRED: The forecast data is no longer up-to-date. In order to access the forecast you will need to submit a new request.",
+   "enum": [
+    "EXPIRED",
+    "SUCCESS"
+   ],
+   "type": "string"
+  },
+  "ReachPlanningServiceError": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "description": "Human readable response message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ReachTypeV1": {
+   "description": "The unit of reach represented in the data.",
+   "enum": [
+    "HOUSEHOLDS"
+   ],
+   "type": "string"
+  },
+  "ServerTimeoutExceptionResponseContent": {
+   "description": "Server Timeout.",
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "description": "Human readable response message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableExceptionResponseContent": {
+   "description": "Service Unavailable. The service is temporarily unable to process this request due to high demand.",
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "description": "Human readable response message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SupplyV1": {
+   "enum": [
+    "DSP_ALEXA_DISPLAY",
+    "DSP_AUDIO",
+    "DSP_DISPLAY",
+    "DSP_FIRE_TABLET",
+    "DSP_FIRE_TV",
+    "DSP_FIRE_TV_FIRE_TABLET_ALEXA_DISPLAY",
+    "DSP_OLV",
+    "DSP_PRIME_VIDEO",
+    "DSP_STREAMING_TV",
+    "DSP_TWITCH_DISPLAY",
+    "DSP_TWITCH_VIDEO",
+    "SPONSORED_BRANDS",
+    "SPONSORED_BRANDS_VIDEO",
+    "SPONSORED_DISPLAY",
+    "SPONSORED_PRODUCTS"
+   ],
+   "type": "string"
+  },
+  "ThemeTargetMatchTypeV1": {
+   "enum": [
+    "KEYWORDS_RELATED_TO_YOUR_BRAND",
+    "KEYWORDS_RELATED_TO_YOUR_LANDING_PAGES"
+   ],
+   "type": "string"
+  },
+  "ThemeTargetTypeV1": {
+   "enum": [
+    "THEME"
+   ],
+   "type": "string"
+  },
+  "ThemeTargetV1": {
+   "properties": {
+    "matchType": {
+     "$ref": "ThemeTargetMatchTypeV1"
+    },
+    "targetType": {
+     "$ref": "ThemeTargetTypeV1"
+    }
+   },
+   "required": [
+    "matchType",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsExceptionResponseContent": {
+   "description": "Too Many Requests.",
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "description": "Human readable response message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UnauthorizedExceptionResponseContent": {
+   "description": "Unauthorized.",
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "description": "Human readable response message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UserLocationSignalV1": {
+   "enum": [
+    "CURRENT",
+    "HOME",
+    "MULTIPLE_SIGNALS"
+   ],
+   "type": "string"
+  }
+ }
+}

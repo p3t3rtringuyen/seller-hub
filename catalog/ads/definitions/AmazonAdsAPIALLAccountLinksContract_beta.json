@@ -1,0 +1,1019 @@
+{
+ "api": "AmazonAdsAPIALLAccountLinksContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLAccountLinksContract_prod_3p_BETA.json",
+ "schemas": {
+  "AccountLink": {
+   "properties": {
+    "accountId": {
+     "description": "The destination accountId to which the link is established",
+     "type": "string"
+    },
+    "accountLinkId": {
+     "description": "The unique identifier for the account link.",
+     "type": "string"
+    },
+    "accountName": {
+     "description": "The name of destination account",
+     "type": "string"
+    },
+    "accountType": {
+     "$ref": "AccountType"
+    },
+    "adProductGroups": {
+     "description": "The group of ad products (SPONSORED_ADS or ADSP) that the destination account is enrolled in.",
+     "items": {
+      "$ref": "AdProductGroup"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "alternateIds": {
+     "description": "The list of additional identifiers associated with advertising account.",
+     "items": {
+      "$ref": "AlternateIdentifier"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "countryCode": {
+     "description": "The countries where the account link is set and valid.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "permissionSet": {
+     "$ref": "PermissionSet"
+    },
+    "relationshipType": {
+     "$ref": "RelationshipType"
+    }
+   },
+   "required": [
+    "accountId",
+    "accountLinkId",
+    "accountName",
+    "accountType",
+    "relationshipType"
+   ],
+   "type": "object"
+  },
+  "AccountLinkAccountIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AccountLinkAccountNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AccountLinkAccountTypeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "AccountType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AccountLinkAdProductGroupFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProductGroups Enum:** | AdProductGroups | Description | | --- | --- | | `SPONSORED_ADS` | Include adProducts: SPONSORED_PRODUCTS, SPONSORED_BRANDS, SPONSORED_DISPLAY | | `ADSP` | Include adProducts: ADSP |",
+     "items": {
+      "$ref": "AdProductGroup"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AccountLinkMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "AccountLinkMultiStatusSuccess"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AccountLinkMultiStatusSuccess": {
+   "properties": {
+    "accountLink": {
+     "$ref": "AccountLink"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 49,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "accountLink",
+    "index"
+   ],
+   "type": "object"
+  },
+  "AccountLinkPermissionNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "PermissionName"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AccountLinkRelationshipTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**RelationshipType Enum:** | RelationshipType | Description | | --- | --- | | `PARENT` | Parent Accounts linked to an Advertiser/Manager Account | | `CHILD` | Child Accounts linked to a Manager Account |",
+     "items": {
+      "$ref": "RelationshipType"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AccountLinkRoleTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**RoleName Enum:** | RoleName | Description | | --- | --- | | `ADMIN` | | | `EDITOR` | | | `VIEWER` | | | `CUSTOM` | Custom role with a user-defined set of permissions. |",
+     "items": {
+      "$ref": "RoleType"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AccountLinkSortOption": {
+   "properties": {
+    "by": {
+     "$ref": "AccountLinkSortOptionsFields"
+    },
+    "direction": {
+     "$ref": "SortDirection"
+    }
+   },
+   "required": [
+    "by"
+   ],
+   "type": "object"
+  },
+  "AccountLinkSortOptionsFields": {
+   "description": "Specify which field to order by. | Field Name | Supported Ordering | | --- | --- | | accountName | ASCENDING,DESCENDING |",
+   "enum": [
+    "accountName"
+   ],
+   "type": "string"
+  },
+  "AccountLinkSuccessResponse": {
+   "properties": {
+    "accountLinks": {
+     "items": {
+      "$ref": "AccountLink"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AccountLinkUpdate": {
+   "properties": {
+    "accountLinkId": {
+     "description": "The unique identifier for the account link.",
+     "type": "string"
+    },
+    "countryCode": {
+     "description": "The countries where the account link is set and valid.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "permissionSet": {
+     "$ref": "UpdatePermissionSet"
+    }
+   },
+   "required": [
+    "accountLinkId"
+   ],
+   "type": "object"
+  },
+  "AccountType": {
+   "enum": [
+    "ADVERTISER_ACCOUNT",
+    "MANAGER_ACCOUNT"
+   ],
+   "type": "string"
+  },
+  "AdProductGroup": {
+   "description": "A group of adProducts **AdProductGroup Enum:** | AdProductGroup | Description | |------|------| | `ADSP` | Include adProducts: ADSP | | `SPONSORED_ADS` | Include adProducts: SPONSORED_PRODUCTS, SPONSORED_BRANDS, SPONSOR…",
+   "enum": [
+    "ADSP",
+    "SPONSORED_ADS"
+   ],
+   "type": "string"
+  },
+  "AlternateIdentifier": {
+   "description": "Marketplace identifiers associated with advertising account, including profile ID, dsp advertiser ID and entity ID",
+   "properties": {
+    "countryCode": {
+     "$ref": "CountryCode"
+    },
+    "dspAdvertiserId": {
+     "description": "The regional ADSP advertiser identifier of the advertising account.",
+     "type": "string"
+    },
+    "entityId": {
+     "description": "The marketplace entity identifier of the advertising account.",
+     "type": "string"
+    },
+    "profileId": {
+     "description": "The marketplace profile identifier of the advertising account.",
+     "type": "string"
+    },
+    "region": {
+     "$ref": "RegionCode"
+    }
+   },
+   "type": "object"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CountryCode": {
+   "enum": [
+    "AD",
+    "AE",
+    "AF",
+    "AG",
+    "AI",
+    "AL",
+    "AM",
+    "AO",
+    "AQ",
+    "AR",
+    "AS",
+    "AT",
+    "AU",
+    "AW",
+    "AX",
+    "AZ",
+    "BA",
+    "BB",
+    "BD",
+    "BE",
+    "BF",
+    "BG",
+    "BH",
+    "BI",
+    "BJ",
+    "BL",
+    "BM",
+    "BN",
+    "BO",
+    "BQ",
+    "BR",
+    "BS",
+    "BT",
+    "BV",
+    "BW",
+    "BY",
+    "BZ",
+    "CA",
+    "CC",
+    "CD",
+    "CF",
+    "CG",
+    "CH",
+    "CI",
+    "CK",
+    "CL",
+    "CM",
+    "CN",
+    "CO",
+    "CR",
+    "CU",
+    "CV",
+    "CW",
+    "CX",
+    "CY",
+    "CZ",
+    "DE",
+    "DJ",
+    "DK",
+    "DM",
+    "DO",
+    "DZ",
+    "EC",
+    "EE",
+    "EG",
+    "EH",
+    "ER",
+    "ES",
+    "ET",
+    "FI",
+    "FJ",
+    "FK",
+    "FM",
+    "FO",
+    "FR",
+    "GA",
+    "GB",
+    "GD",
+    "GE",
+    "GF",
+    "GG",
+    "GH",
+    "GI",
+    "GL",
+    "GM",
+    "GN",
+    "GP",
+    "GQ",
+    "GR",
+    "GS",
+    "GT",
+    "GU",
+    "GW",
+    "GY",
+    "HK",
+    "HM",
+    "HN",
+    "HR",
+    "HT",
+    "HU",
+    "ID",
+    "IE",
+    "IL",
+    "IM",
+    "IN",
+    "IO",
+    "IQ",
+    "IR",
+    "IS",
+    "IT",
+    "JE",
+    "JM",
+    "JO",
+    "JP",
+    "KE",
+    "KG",
+    "KH",
+    "KI",
+    "KM",
+    "KN",
+    "KP",
+    "KR",
+    "KW",
+    "KY",
+    "KZ",
+    "LA",
+    "LB",
+    "LC",
+    "LI",
+    "LK",
+    "LR",
+    "LS",
+    "LT",
+    "LU",
+    "LV",
+    "LY",
+    "MA",
+    "MC",
+    "MD",
+    "ME",
+    "MF",
+    "MG",
+    "MH",
+    "MK",
+    "ML",
+    "MM",
+    "MN",
+    "MO",
+    "MP",
+    "MQ",
+    "MR",
+    "MS",
+    "MT",
+    "MU",
+    "MV",
+    "MW",
+    "MX",
+    "MY",
+    "MZ",
+    "NA",
+    "NC",
+    "NE",
+    "NF",
+    "NG",
+    "NI",
+    "NL",
+    "NO",
+    "NP",
+    "NR",
+    "NU",
+    "NZ",
+    "OM",
+    "PA",
+    "PE",
+    "PF",
+    "PG",
+    "PH",
+    "PK",
+    "PL",
+    "PM",
+    "PN",
+    "PR",
+    "PS",
+    "PT",
+    "PW",
+    "PY",
+    "QA",
+    "RE",
+    "RO",
+    "RS",
+    "RU",
+    "RW",
+    "SA",
+    "SB",
+    "SC",
+    "SD",
+    "SE",
+    "SG",
+    "SH",
+    "SI",
+    "SJ",
+    "SK",
+    "SL",
+    "SM",
+    "SN",
+    "SO",
+    "SR",
+    "SS",
+    "ST",
+    "SV",
+    "SX",
+    "SY",
+    "SZ",
+    "TC",
+    "TD",
+    "TF",
+    "TG",
+    "TH",
+    "TJ",
+    "TK",
+    "TL",
+    "TM",
+    "TN",
+    "TO",
+    "TR",
+    "TT",
+    "TV",
+    "TW",
+    "TZ",
+    "UA",
+    "UG",
+    "UM",
+    "US",
+    "UY",
+    "UZ",
+    "VA",
+    "VC",
+    "VE",
+    "VG",
+    "VI",
+    "VN",
+    "VU",
+    "WF",
+    "WS",
+    "YE",
+    "YT",
+    "ZA",
+    "ZM",
+    "ZW"
+   ],
+   "type": "string"
+  },
+  "CreatePermission": {
+   "description": "A permission specifies what actions user/account is allowed to take on account. Ads AM’s actions include create, edit, view, and/or more specific actions depending on ads application (i.e. campaign management) or progra…",
+   "properties": {
+    "permissionName": {
+     "$ref": "PermissionName"
+    }
+   },
+   "required": [
+    "permissionName"
+   ],
+   "type": "object"
+  },
+  "DeleteAccountLinkRequest": {
+   "properties": {
+    "accountLinkIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "accountLinkIds"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `CONTENT_TOO_LARGE` | The request is too large. Consider splitting it int…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 49,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Permission": {
+   "description": "A permission specifies what actions user/account is allowed to take on account. Ads AM’s actions include create, edit, view, and/or more specific actions depending on ads application (i.e. campaign management) or progra…",
+   "properties": {
+    "permissionName": {
+     "$ref": "PermissionName"
+    }
+   },
+   "required": [
+    "permissionName"
+   ],
+   "type": "object"
+  },
+  "PermissionName": {
+   "enum": [
+    "ADVERTISER_CAMPAIGN_EDIT",
+    "ADVERTISER_CAMPAIGN_VIEW",
+    "ADVERTISER_EVENTDATA_EDIT",
+    "ADVERTISER_EVENTDATA_VIEW",
+    "ADVERTISER_SUMMARY_EDIT",
+    "ADVERTISER_SUMMARY_VIEW",
+    "ADV_BILLING_EDIT",
+    "ADV_BILLING_VIEW",
+    "AMAZON_STORES_EDIT",
+    "AMAZON_STORES_VIEW",
+    "BILLING_EDIT",
+    "BILLING_VIEW",
+    "BRAND_POSTS_ADMIN",
+    "BRAND_POSTS_EDIT",
+    "BRAND_POSTS_VIEW",
+    "CAMPAIGN_EDIT",
+    "CLIENT_SAFE",
+    "CREATIVES_EDIT",
+    "DATA_MANAGER_EDIT",
+    "DATA_MANAGER_VIEW",
+    "DATA_SHARING",
+    "INSTANCE_EDIT",
+    "INSTANCE_VIEW",
+    "INVENTORY_EDIT",
+    "INVENTORY_VIEW",
+    "MANAGER_ACCOUNT_EDIT",
+    "MANAGER_ACCOUNT_VIEW",
+    "NEMO_REPORT_EDIT",
+    "NEMO_REPORT_VIEW",
+    "NEMO_TRANSACTIONS_EDIT",
+    "NEMO_TRANSACTIONS_VIEW",
+    "PORTFOLIO_EDIT",
+    "PORTFOLIO_VIEW",
+    "PROGRAM_ACCESS_EDIT",
+    "REPORTING_EDIT",
+    "REPORTING_VIEW",
+    "REPORTS_EDIT",
+    "REPORTS_LIMITED",
+    "SELLER_CONFIGURATION_EDIT",
+    "USER_EDIT",
+    "USER_VIEW"
+   ],
+   "type": "string"
+  },
+  "PermissionSet": {
+   "description": "Permissions for an account to account or user to account link",
+   "properties": {
+    "customPermissionSet": {
+     "description": "The custom permission list",
+     "items": {
+      "$ref": "Permission"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "role": {
+     "$ref": "Role"
+    }
+   },
+   "type": "object"
+  },
+  "QueryAccountLinkRequest": {
+   "properties": {
+    "accountIdFilter": {
+     "$ref": "AccountLinkAccountIdFilter"
+    },
+    "accountNameFilter": {
+     "$ref": "AccountLinkAccountNameFilter"
+    },
+    "accountTypeFilter": {
+     "$ref": "AccountLinkAccountTypeFilter"
+    },
+    "adProductGroupsFilter": {
+     "$ref": "AccountLinkAdProductGroupFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 10,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "permissionNameFilter": {
+     "$ref": "AccountLinkPermissionNameFilter"
+    },
+    "relationshipTypeFilter": {
+     "$ref": "AccountLinkRelationshipTypeFilter"
+    },
+    "roleNameFilter": {
+     "$ref": "AccountLinkRoleTypeFilter"
+    },
+    "sort": {
+     "items": {
+      "$ref": "AccountLinkSortOption"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "relationshipTypeFilter"
+   ],
+   "type": "object"
+  },
+  "RegionCode": {
+   "description": "**RegionCode Enum:** | RegionCode | Description | |------|------| | `EU` | Europe | | `FE` | Far East | | `NA` | North America |",
+   "enum": [
+    "EU",
+    "FE",
+    "NA"
+   ],
+   "type": "string"
+  },
+  "RelationshipType": {
+   "description": "**RelationshipType Enum:** | RelationshipType | Description | |------|------| | `CHILD` | Child Accounts linked to a Manager Account | | `PARENT` | Parent Accounts linked to an Advertiser/Manager Account |",
+   "enum": [
+    "CHILD",
+    "PARENT"
+   ],
+   "type": "string"
+  },
+  "Role": {
+   "description": "A role refers to a collection of roles and permissions that are assigned to a user/account. Roles help streamline and simplify the process of managing access control by grouping together common set of permissions. Ads A…",
+   "properties": {
+    "roleName": {
+     "$ref": "RoleType"
+    }
+   },
+   "required": [
+    "roleName"
+   ],
+   "type": "object"
+  },
+  "RoleType": {
+   "description": "**RoleType Enum:** | RoleType | Description | |------|------| | `ADMIN` | | | `CUSTOM` | Custom role with a user-defined set of permissions. | | `EDITOR` | | | `VIEWER` | |",
+   "enum": [
+    "ADMIN",
+    "CUSTOM",
+    "EDITOR",
+    "VIEWER"
+   ],
+   "type": "string"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SortDirection": {
+   "description": "**SortDirection Enum:** | SortDirection | Description | | --- | --- | | `ASCENDING` | Sort in ascending order | | `DESCENDING` | Sort in descending order |",
+   "enum": [
+    "ASCENDING",
+    "DESCENDING"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateAccountLinkRequest": {
+   "properties": {
+    "accountLinks": {
+     "items": {
+      "$ref": "AccountLinkUpdate"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "accountLinks"
+   ],
+   "type": "object"
+  },
+  "UpdatePermissionSet": {
+   "description": "Permissions for an account to account or user to account link",
+   "properties": {
+    "customPermissionSet": {
+     "description": "The custom permission list",
+     "items": {
+      "$ref": "CreatePermission"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "role": {
+     "$ref": "UpdateRole"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateRole": {
+   "description": "A role refers to a collection of roles and permissions that are assigned to a user/account. Roles help streamline and simplify the process of managing access control by grouping together common set of permissions. Ads A…",
+   "properties": {
+    "roleName": {
+     "$ref": "RoleType"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

@@ -1,0 +1,282 @@
+{
+ "api": "AdGroupTargeting-ProductCategory",
+ "file": "specs/dest/AdGroupTargeting-ProductCategory_prod_3p.json",
+ "schemas": {
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateAdGroupProductCategoryTargetV1": {
+   "properties": {
+    "asinCategory": {
+     "description": "The product category to target.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) the given target.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "asinCategory",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "DspCreateAdGroupProductCategoryTargetsRequestContentV1": {
+   "properties": {
+    "productCategoryTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspCreateAdGroupProductCategoryTargetV1"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "productCategoryTargets"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupProductCategoryTargetV1": {
+   "properties": {
+    "asinCategory": {
+     "description": "The product category to target.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) the given target.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "asinCategory",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupProductCategoryTargetsRequestContentV1": {
+   "properties": {
+    "productCategoryTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspDeleteAdGroupProductCategoryTargetV1"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "productCategoryTargets"
+   ],
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetAdGroupProductCategoryTargetV1": {
+   "properties": {
+    "asinCategory": {
+     "description": "The product category to target.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) the given target.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "asinCategory",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "DspGetAdGroupProductCategoryTargetsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    },
+    "productCategoryTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspGetAdGroupProductCategoryTargetV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "productCategoryTargets"
+   ],
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

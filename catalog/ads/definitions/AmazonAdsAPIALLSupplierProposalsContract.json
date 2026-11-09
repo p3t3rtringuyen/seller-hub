@@ -1,0 +1,1010 @@
+{
+ "api": "AmazonAdsAPIALLSupplierProposalsContract",
+ "file": "specs/dest/AmazonAdsAPIALLSupplierProposalsContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "AmazonMediaExtension": {
+   "description": "Amazon Media specific proposal attributes.",
+   "type": "object"
+  },
+  "AmazonPublisherCloudExtension": {
+   "description": "Target based on Amazon Publisher Service proposal attributes.",
+   "type": "object"
+  },
+  "AmazonPublisherDirectExtension": {
+   "description": "Target based on Amazon Publisher Service proposal attributes.",
+   "type": "object"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CountryCode": {
+   "enum": [
+    "AD",
+    "AE",
+    "AF",
+    "AG",
+    "AI",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IT",
+    "JP",
+    "KR",
+    "MX",
+    "US"
+   ],
+   "type": "string"
+  },
+  "CreateAmazonMediaExtension": {
+   "description": "Amazon Media specific proposal attributes.",
+   "type": "object"
+  },
+  "CreateAmazonPublisherCloudExtension": {
+   "description": "Target based on Amazon Publisher Service proposal attributes.",
+   "type": "object"
+  },
+  "CreateAmazonPublisherDirectExtension": {
+   "description": "Target based on Amazon Publisher Service proposal attributes.",
+   "type": "object"
+  },
+  "CreateNotes": {
+   "description": "Notes for an object with origin information.",
+   "properties": {
+    "note": {
+     "description": "The note content.",
+     "type": "string"
+    },
+    "origin": {
+     "$ref": "NoteOrigin"
+    }
+   },
+   "required": [
+    "note",
+    "origin"
+   ],
+   "type": "object"
+  },
+  "CreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "DRAFT",
+    "PROPOSED"
+   ],
+   "type": "string"
+  },
+  "CreateSupplierProposalExtension": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonMediaExtension": {
+       "$ref": "CreateAmazonMediaExtension"
+      }
+     },
+     "required": [
+      "amazonMediaExtension"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherCloudExtension": {
+       "$ref": "CreateAmazonPublisherCloudExtension"
+      }
+     },
+     "required": [
+      "amazonPublisherCloudExtension"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherDirectExtension": {
+       "$ref": "CreateAmazonPublisherDirectExtension"
+      }
+     },
+     "required": [
+      "amazonPublisherDirectExtension"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateSupplierProposalRequest": {
+   "properties": {
+    "supplierProposals": {
+     "items": {
+      "$ref": "SupplierProposalCreate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "supplierProposals"
+   ],
+   "type": "object"
+  },
+  "CreateSupplierStateReason": {
+   "description": "Additional context for a resource's lifecycle state.",
+   "properties": {
+    "archiveReason": {
+     "$ref": "SupplierArchiveReason"
+    },
+    "description": {
+     "description": "A free text description providing context for the state.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `FORBIDDEN` | The caller is not authorized to make the given request. | |…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 14,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NoteOrigin": {
+   "enum": [
+    "BUYER",
+    "SUPPLIER"
+   ],
+   "type": "string"
+  },
+  "Notes": {
+   "description": "Notes for an object with origin information.",
+   "properties": {
+    "note": {
+     "description": "The note content.",
+     "type": "string"
+    },
+    "origin": {
+     "$ref": "NoteOrigin"
+    }
+   },
+   "required": [
+    "note",
+    "origin"
+   ],
+   "type": "object"
+  },
+  "QuerySupplierProposalRequest": {
+   "properties": {
+    "adProductFilter": {
+     "$ref": "SupplierProposalAdProductFilter"
+    },
+    "advertiserAccountIdFilter": {
+     "$ref": "SupplierProposalAdvertiserAccountIdFilter"
+    },
+    "countriesFilter": {
+     "$ref": "SupplierProposalCountryCodeFilter"
+    },
+    "endDateTimeFilter": {
+     "$ref": "SupplierProposalEndDateTimeFilter"
+    },
+    "maxResults": {
+     "default": 10,
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "SupplierProposalSupplierNameFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "startDateTimeFilter": {
+     "$ref": "SupplierProposalStartDateTimeFilter"
+    },
+    "statusFilter": {
+     "$ref": "SupplierProposalSupplierProposalStatusFilter"
+    },
+    "supplierProposalDestinationIdFilter": {
+     "$ref": "SupplierProposalSupplierProposalDestinationIdFilter"
+    },
+    "supplierProposalIdFilter": {
+     "$ref": "SupplierProposalSupplierProposalIdFilter"
+    }
+   },
+   "required": [
+    "adProductFilter",
+    "advertiserAccountIdFilter"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "State": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "DRAFT",
+    "PROPOSED"
+   ],
+   "type": "string"
+  },
+  "SupplierArchiveReason": {
+   "enum": [
+    "CREATED_ACCIDENTALLY",
+    "CREATED_FOR_TESTING",
+    "DUPLICATE",
+    "NEGOTIATIONS_TERMINATED",
+    "NOT_DELIVERING",
+    "PROLONGED_PAUSE",
+    "UNDERDELIVERING"
+   ],
+   "type": "string"
+  },
+  "SupplierProposal": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertiserAccountId": {
+     "description": "The ADSP advertiserId for this proposal. If advertiserId is null, then we treat it as manager account level proposal.",
+     "type": "string"
+    },
+    "countries": {
+     "description": "The country this proposal is located.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creationDateTime": {
+     "description": "The date time that the proposal was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The proposal end date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "externalProposalId": {
+     "description": "The external proposal identifier from the supplier system.",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time that the proposal was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The user provided proposal name.",
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposal.",
+     "items": {
+      "$ref": "Notes"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "startDateTime": {
+     "description": "The proposal start date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "State"
+    },
+    "stateReason": {
+     "$ref": "SupplierStateReason"
+    },
+    "status": {
+     "$ref": "SupplierProposalStatus"
+    },
+    "supplierProposalDestinationId": {
+     "description": "The supplier proposal destination identifier.",
+     "type": "string"
+    },
+    "supplierProposalExtension": {
+     "$ref": "SupplierProposalExtension"
+    },
+    "supplierProposalId": {
+     "description": "The unique identifier for the proposal.",
+     "type": "string"
+    },
+    "supplierProposalType": {
+     "$ref": "SupplierProposalType"
+    },
+    "supplierProposedDealIds": {
+     "description": "The proposed deals associated with this proposal.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 15,
+     "minItems": 0,
+     "type": "array"
+    },
+    "version": {
+     "description": "The version number of the proposal.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "creationDateTime",
+    "lastUpdatedDateTime",
+    "name",
+    "status",
+    "supplierProposalId",
+    "version"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+     "items": {
+      "$ref": "AdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalAdvertiserAccountIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalCountryCodeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalCreate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertiserAccountId": {
+     "description": "The ADSP advertiserId for this proposal. If advertiserId is null, then we treat it as manager account level proposal.",
+     "type": "string"
+    },
+    "countries": {
+     "description": "The country this proposal is located.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "externalProposalId": {
+     "description": "The external proposal identifier from the supplier system.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The user provided proposal name.",
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposal.",
+     "items": {
+      "$ref": "CreateNotes"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "state": {
+     "$ref": "CreateState"
+    },
+    "stateReason": {
+     "$ref": "CreateSupplierStateReason"
+    },
+    "supplierProposalDestinationId": {
+     "description": "The supplier proposal destination identifier.",
+     "type": "string"
+    },
+    "supplierProposalExtension": {
+     "$ref": "CreateSupplierProposalExtension"
+    },
+    "supplierProposalType": {
+     "$ref": "SupplierProposalType"
+    }
+   },
+   "required": [
+    "name"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalEndDateTimeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "format": "date-time",
+      "type": "string"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalExtension": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonMediaExtension": {
+       "$ref": "AmazonMediaExtension"
+      }
+     },
+     "required": [
+      "amazonMediaExtension"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherCloudExtension": {
+       "$ref": "AmazonPublisherCloudExtension"
+      }
+     },
+     "required": [
+      "amazonPublisherCloudExtension"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherDirectExtension": {
+       "$ref": "AmazonPublisherDirectExtension"
+      }
+     },
+     "required": [
+      "amazonPublisherDirectExtension"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SupplierProposalMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "SupplierProposalMultiStatusSuccess"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SupplierProposalMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "supplierProposal": {
+     "$ref": "SupplierProposal"
+    }
+   },
+   "required": [
+    "index",
+    "supplierProposal"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalStartDateTimeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "format": "date-time",
+      "type": "string"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalStatus": {
+   "description": "**SupplierProposalStatus Enum:** | SupplierProposalStatus | Description | |------|------| | `CANCELLED` | A proposal that was previously submitted to a supplier, but was marked as canceled by the buyer before it was app…",
+   "enum": [
+    "CANCELLED",
+    "COUNTER_DRAFT",
+    "DRAFT",
+    "PENDING",
+    "REJECTED",
+    "REVIEWED",
+    "REVIEWED_PARTIAL",
+    "SUPPLIER_REVIEWED"
+   ],
+   "type": "string"
+  },
+  "SupplierProposalSuccessResponse": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "supplierProposals": {
+     "items": {
+      "$ref": "SupplierProposal"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "SupplierProposalSupplierNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalSupplierProposalDestinationIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalSupplierProposalIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalSupplierProposalStatusFilter": {
+   "properties": {
+    "include": {
+     "description": "**Status Enum:** | Status | Description | | --- | --- | | `CANCELLED` | A proposal that was previously submitted to a supplier, but was marked as canceled by the buyer before it was approved. | | `DRAFT` | A proposal th…",
+     "items": {
+      "$ref": "SupplierProposalStatus"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierProposalType": {
+   "enum": [
+    "AMAZON_MEDIA",
+    "AMAZON_PUBLISHER_CLOUD",
+    "AMAZON_PUBLISHER_DIRECT"
+   ],
+   "type": "string"
+  },
+  "SupplierProposalUpdate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "name": {
+     "description": "The user provided proposal name.",
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposal.",
+     "items": {
+      "$ref": "CreateNotes"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "state": {
+     "$ref": "UpdateState"
+    },
+    "stateReason": {
+     "$ref": "UpdateSupplierStateReason"
+    },
+    "supplierProposalDestinationId": {
+     "description": "The supplier proposal destination identifier.",
+     "type": "string"
+    },
+    "supplierProposalExtension": {
+     "$ref": "UpdateSupplierProposalExtension"
+    },
+    "supplierProposalId": {
+     "description": "The unique identifier for the proposal.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "supplierProposalId"
+   ],
+   "type": "object"
+  },
+  "SupplierStateReason": {
+   "description": "Additional context for a resource's lifecycle state.",
+   "properties": {
+    "archiveReason": {
+     "$ref": "SupplierArchiveReason"
+    },
+    "description": {
+     "description": "A free text description providing context for the state.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateAmazonMediaExtension": {
+   "description": "Amazon Media specific proposal attributes.",
+   "type": "object"
+  },
+  "UpdateAmazonPublisherCloudExtension": {
+   "description": "Target based on Amazon Publisher Service proposal attributes.",
+   "type": "object"
+  },
+  "UpdateAmazonPublisherDirectExtension": {
+   "description": "Target based on Amazon Publisher Service proposal attributes.",
+   "type": "object"
+  },
+  "UpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "DRAFT",
+    "PROPOSED"
+   ],
+   "type": "string"
+  },
+  "UpdateSupplierProposalExtension": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonMediaExtension": {
+       "$ref": "UpdateAmazonMediaExtension"
+      }
+     },
+     "required": [
+      "amazonMediaExtension"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherCloudExtension": {
+       "$ref": "UpdateAmazonPublisherCloudExtension"
+      }
+     },
+     "required": [
+      "amazonPublisherCloudExtension"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherDirectExtension": {
+       "$ref": "UpdateAmazonPublisherDirectExtension"
+      }
+     },
+     "required": [
+      "amazonPublisherDirectExtension"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "UpdateSupplierProposalRequest": {
+   "properties": {
+    "supplierProposals": {
+     "items": {
+      "$ref": "SupplierProposalUpdate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "supplierProposals"
+   ],
+   "type": "object"
+  },
+  "UpdateSupplierStateReason": {
+   "description": "Additional context for a resource's lifecycle state.",
+   "properties": {
+    "archiveReason": {
+     "$ref": "SupplierArchiveReason"
+    },
+    "description": {
+     "description": "A free text description providing context for the state.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

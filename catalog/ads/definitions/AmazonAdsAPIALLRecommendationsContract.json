@@ -1,0 +1,1666 @@
+{
+ "api": "AmazonAdsAPIALLRecommendationsContract",
+ "file": "specs/dest/AmazonAdsAPIALLRecommendationsContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. | | `FULL_FUNNEL` | Full funnel ad product combining multiple ad types. | | `RMS` | Sponsored ads …",
+   "enum": [
+    "AMAZON_DSP",
+    "FULL_FUNNEL",
+    "RMS",
+    "SPONSORED_BRANDS",
+    "SPONSORED_DISPLAY",
+    "SPONSORED_PRODUCTS",
+    "SPONSORED_TELEVISION"
+   ],
+   "type": "string"
+  },
+  "AdvertisedProducts": {
+   "properties": {
+    "productId": {
+     "description": "The identifier of the advertised product.",
+     "type": "string"
+    },
+    "productIdType": {
+     "$ref": "ProductIdType"
+    }
+   },
+   "required": [
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "AutomaticGlobalAdsEnrollmentSettings": {
+   "description": "Enrollment status and observed performance for an advertiser account enrolled in automatic global ads.",
+   "properties": {
+    "daysLeftInFreeTrial": {
+     "description": "Days remaining in the trial. Absent or 0 when the trial has ended.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "daysRemainingToEnrollInFreeTrial": {
+     "description": "Days remaining to enroll for free trial. Absent or 0 when the account is not eligible for free trial enrollment.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "enrollmentStatus": {
+     "$ref": "AutomaticGlobalAdsEnrollmentStatus"
+    },
+    "trialMetrics": {
+     "description": "Performance metrics observed during the trial, one entry per metric.",
+     "items": {
+      "$ref": "TrialMetric"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "enrollmentStatus"
+   ],
+   "type": "object"
+  },
+  "AutomaticGlobalAdsEnrollmentStatus": {
+   "description": "**AutomaticGlobalAdsEnrollmentStatus Enum:** | AutomaticGlobalAdsEnrollmentStatus | Description | |------|------| | `ELIGIBLE_FOR_ENROLLMENT` | Account is eligible to enroll. | | `ELIGIBLE_FOR_FREE_TRIAL_ENROLLMENT` | A…",
+   "enum": [
+    "ELIGIBLE_FOR_ENROLLMENT",
+    "ELIGIBLE_FOR_FREE_TRIAL_ENROLLMENT",
+    "FREE_TRIAL_ENDED",
+    "FREE_TRIAL_EXPIRING",
+    "FREE_TRIAL_STARTED"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BidValueRange": {
+   "description": "A suggested bid value and range. suggested is the recommended amount; lower and upper provide the low and high bounds.",
+   "properties": {
+    "lower": {
+     "description": "Lower bound of the suggested bid range.",
+     "format": "double",
+     "type": "number"
+    },
+    "suggested": {
+     "description": "The suggested bid amount.",
+     "format": "double",
+     "type": "number"
+    },
+    "upper": {
+     "description": "Upper bound of the suggested bid range.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "suggested"
+   ],
+   "type": "object"
+  },
+  "BrandProductKeywordRecommendationTypeDetails": {
+   "description": "Request details for brand product keyword recommendations.",
+   "properties": {
+    "brandId": {
+     "description": "The brand identifier to scope keyword recommendations.",
+     "type": "string"
+    },
+    "brandName": {
+     "description": "The brand name to scope keyword recommendations.",
+     "type": "string"
+    },
+    "inclusions": {
+     "$ref": "ProductScopeInclusions"
+    }
+   },
+   "type": "object"
+  },
+  "BrandProductKeywordSettings": {
+   "description": "A recommended brand product keyword with bid guidance.",
+   "properties": {
+    "keywordTarget": {
+     "$ref": "KeywordTarget"
+    },
+    "keywordTheme": {
+     "description": "The theme classification of the keyword (e.g. Generic, Branded, Seasonal).",
+     "type": "string"
+    },
+    "metrics": {
+     "$ref": "TargetingInsightMetrics"
+    },
+    "recommendedBid": {
+     "$ref": "BidValueRange"
+    }
+   },
+   "required": [
+    "keywordTarget",
+    "recommendedBid"
+   ],
+   "type": "object"
+  },
+  "BrandProductSegmentRecommendationTypeDetails": {
+   "description": "Request details for brand product segment recommendations.",
+   "properties": {
+    "brandId": {
+     "description": "The brand identifier to scope segment recommendations.",
+     "type": "string"
+    },
+    "brandName": {
+     "description": "The brand name to scope segment recommendations.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BrandProductSegmentSettings": {
+   "description": "A recommended brand product segment.",
+   "properties": {
+    "brandProductSegmentId": {
+     "description": "The identifier of the brand product segment (a ProductCategory type).",
+     "type": "string"
+    },
+    "isTopPick": {
+     "description": "Whether this segment is a featured recommendation.",
+     "type": "boolean"
+    },
+    "previewProductIds": {
+     "description": "Product identifiers for previewing this segment.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productCount": {
+     "description": "Number of products in this segment for the brand.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "rationale": {
+     "description": "Reason this segment is recommended.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "brandProductSegmentId",
+    "productCount"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "| ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `CONTENT_TOO_LARGE` | The request is too large. Consider splitting it into multiple requests.…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "INVALID_INPUT",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "EstimatedRange": {
+   "description": "A range estimate with lower bound, upper bound, and optional average.",
+   "properties": {
+    "average": {
+     "description": "Average of the estimate",
+     "format": "int32",
+     "type": "integer"
+    },
+    "lower": {
+     "description": "Lower bound of the estimate",
+     "format": "int32",
+     "type": "integer"
+    },
+    "upper": {
+     "description": "Upper bound of the estimate",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "lower",
+    "upper"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "HttpVerb": {
+   "enum": [
+    "DELETE",
+    "GET",
+    "PATCH",
+    "POST"
+   ],
+   "type": "string"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "KeywordMatchType": {
+   "description": "**KeywordMatchType Enum:** | KeywordMatchType | Description | |------|------| | `BROAD` | Broad match search terms. This expands matching on user intent beyond PHRASE. | | `EXACT` | Exact match search terms. | | `PHRASE…",
+   "enum": [
+    "BROAD",
+    "EXACT",
+    "PHRASE"
+   ],
+   "type": "string"
+  },
+  "KeywordTarget": {
+   "description": "Targets a specific customer search term.",
+   "properties": {
+    "keyword": {
+     "description": "The customer search term or text to target. For valid characters and constraints, [see keyword character constraints](https://advertising.amazon.com/API/docs/en-us/reference/concepts/limits#keyword-character-constraints…",
+     "type": "string"
+    },
+    "matchType": {
+     "$ref": "KeywordMatchType"
+    }
+   },
+   "required": [
+    "keyword",
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "LanguageLocaleIso": {
+   "description": "A combination of ISO-639 standard for language code and ISO-3166 for country code. **LanguageLocaleIso Enum:** | LanguageLocaleIso | Description | |------|------| | `ak-GH` | Akan (Ghana). | | `am-ET` | Amharic (Ethiopi…",
+   "enum": [
+    "ak-GH",
+    "am-ET",
+    "an-ES",
+    "ar-AE",
+    "as-IN",
+    "av-RU",
+    "ay-BO",
+    "ba-RU",
+    "be-BY",
+    "bg-BG",
+    "bh-IN",
+    "bi-VU",
+    "bm-ML",
+    "bo-CN",
+    "bs-BA",
+    "ca-ES",
+    "ce-RU",
+    "ch-GU",
+    "de-DE",
+    "el-GR",
+    "en-AE",
+    "en-AU",
+    "en-CA",
+    "en-GB",
+    "en-IN",
+    "en-SG",
+    "en-US",
+    "eo-INT",
+    "es-CO",
+    "es-ES",
+    "es-MX",
+    "et-EE",
+    "eu-ES",
+    "fa-IR",
+    "fi-FI",
+    "fj-FJ",
+    "fo-FO",
+    "fr-CA",
+    "fr-FR",
+    "fy-NL",
+    "ga-IE",
+    "gd-GB",
+    "gl-ES",
+    "gn-PY",
+    "gu-IN",
+    "gv-IM",
+    "ha-NG",
+    "he-IL",
+    "hi-IN",
+    "ho-PG",
+    "hr-HR",
+    "ht-HT",
+    "hu-HU",
+    "hy-AM",
+    "hz-NA",
+    "ia-INT",
+    "id-ID",
+    "ie-INT",
+    "ig-NG",
+    "ii-CN",
+    "ik-US",
+    "io-INT",
+    "is-IS",
+    "it-IT",
+    "iu-CA",
+    "ja-JP",
+    "jv-ID",
+    "ka-GE",
+    "kg-CD",
+    "ki-KE",
+    "kj-NA",
+    "kk-KZ",
+    "kl-GL",
+    "km-KH",
+    "kn-IN",
+    "ko-KR",
+    "kr-NG",
+    "ks-IN",
+    "ku-TR",
+    "kv-RU",
+    "kw-GB",
+    "ky-KG",
+    "la-VA",
+    "lb-LU",
+    "lg-UG",
+    "li-NL",
+    "ln-CD",
+    "lo-LA",
+    "lt-LT",
+    "lu-CD",
+    "lv-LV",
+    "mg-MG",
+    "mh-MH",
+    "mi-NZ",
+    "mk-MK",
+    "ml-IN",
+    "mn-MN",
+    "mr-IN",
+    "ms-MY",
+    "mt-MT",
+    "my-MM",
+    "na-NR",
+    "nb-NO",
+    "nd-ZW",
+    "ne-NP",
+    "ng-NA",
+    "nl-NL",
+    "nn-NO",
+    "no-NO",
+    "nr-ZA",
+    "nv-US",
+    "ny-MW",
+    "oc-FR",
+    "oj-CA",
+    "om-ET",
+    "or-IN",
+    "os-RU",
+    "pa-IN",
+    "pi-IN",
+    "pl-PL",
+    "ps-AF",
+    "pt-BR",
+    "pt-PT",
+    "qu-PE",
+    "rm-CH",
+    "rn-BI",
+    "ro-RO",
+    "ru-RU",
+    "rw-RW",
+    "sa-IN",
+    "sc-IT",
+    "sd-PK",
+    "se-NO",
+    "sg-CF",
+    "si-LK",
+    "sk-SK",
+    "sl-SI",
+    "sm-WS",
+    "sn-ZW",
+    "so-SO",
+    "sq-AL",
+    "sr-RS",
+    "ss-SZ",
+    "st-LS",
+    "su-ID",
+    "sv-SE",
+    "sw-TZ",
+    "ta-IN",
+    "te-IN",
+    "tg-TJ",
+    "th-TH",
+    "ti-ET",
+    "tk-TM",
+    "tl-PH",
+    "tn-BW",
+    "to-TO",
+    "tr-TR",
+    "ts-ZA",
+    "tt-RU",
+    "tw-GH",
+    "ty-PF",
+    "ug-CN",
+    "uk-UA",
+    "ur-PK",
+    "uz-UZ",
+    "ve-ZA",
+    "vi-VN",
+    "vo-INT",
+    "wa-BE",
+    "wo-SN",
+    "xh-ZA",
+    "yi-IL",
+    "yo-NG",
+    "za-CN",
+    "zh-CN",
+    "zh-TW",
+    "zu-ZA"
+   ],
+   "type": "string"
+  },
+  "Marketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "CL",
+    "CO",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NG",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ObjectSettings": {
+   "oneOf": [
+    {
+     "properties": {
+      "ad": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "ad"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "adGroup": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "adGroup"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "automaticGlobalAdsEnrollmentSettings": {
+       "$ref": "AutomaticGlobalAdsEnrollmentSettings"
+      }
+     },
+     "required": [
+      "automaticGlobalAdsEnrollmentSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "brandProductKeywordSettings": {
+       "$ref": "BrandProductKeywordSettings"
+      }
+     },
+     "required": [
+      "brandProductKeywordSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "brandProductSegmentSettings": {
+       "$ref": "BrandProductSegmentSettings"
+      }
+     },
+     "required": [
+      "brandProductSegmentSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "campaign": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "campaign"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "target": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "target"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "PotentialImpact": {
+   "description": "Estimated impact of the recommendation",
+   "properties": {
+    "marketplaces": {
+     "description": "Specifies the marketplace that will be impacted if an action is taken on the recommendedObject",
+     "items": {
+      "$ref": "Marketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "metric": {
+     "description": "The metric being measured",
+     "type": "string"
+    },
+    "metricUnitClassification": {
+     "$ref": "ReportingFieldClassificationTag"
+    },
+    "metricUnitType": {
+     "$ref": "ReportingFieldDataType"
+    },
+    "range": {
+     "$ref": "EstimatedRange"
+    },
+    "value": {
+     "description": "The estimated value of the impact",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "metric"
+   ],
+   "type": "object"
+  },
+  "ProductIdType": {
+   "description": "**ProductIdType Enum:** | ProductIdType | Description | |------|------| | `ASIN` | ASIN identifier type. |",
+   "enum": [
+    "ASIN"
+   ],
+   "type": "string"
+  },
+  "ProductScopeInclusions": {
+   "description": "Criteria for selecting products to include in a collection.",
+   "properties": {
+    "brandProductSegmentIds": {
+     "description": "Brand product segment identifiers (a ProductCategory type) to include.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "products": {
+     "description": "Products to include in the collection.",
+     "items": {
+      "$ref": "AdvertisedProducts"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "QueryRecommendationRequest": {
+   "properties": {
+    "accessRequestedAccounts": {
+     "items": {
+      "$ref": "QueryRecommendationRequestAccessRequestedAccountItem"
+     },
+     "maxItems": 2000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "adProductFilter": {
+     "$ref": "RecommendationAdProductFilter"
+    },
+    "languageFilter": {
+     "$ref": "RecommendationLanguageLocaleIsoFilter"
+    },
+    "marketplacesFilter": {
+     "$ref": "RecommendationMarketplaceFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "recommendationTypeDetailsFilter": {
+     "$ref": "RecommendationRecommendationTypeDetailsFilter"
+    },
+    "recommendationTypeFilter": {
+     "$ref": "RecommendationRecommendationTypeEnumFilter"
+    }
+   },
+   "required": [
+    "accessRequestedAccounts"
+   ],
+   "type": "object"
+  },
+  "QueryRecommendationRequestAccessRequestedAccountItem": {
+   "description": "| QueryRecommendationRequestAccessRequestedAccountItem | Description | | --- | --- | | `advertiserAccountId` | ADSP Regional Account or Global Account |",
+   "oneOf": [
+    {
+     "properties": {
+      "advertiserAccountId": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "advertiserAccountId"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "Recommendation": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertiserAccount": {
+     "$ref": "RecommendationAdvertiserAccount"
+    },
+    "createdDateTime": {
+     "description": "The date time when the recommendation is created, used for internal purposes only",
+     "format": "date-time",
+     "type": "string"
+    },
+    "deferredUntilDateTime": {
+     "description": "The date time when a snoozed recommendation will be displayed again",
+     "format": "date-time",
+     "type": "string"
+    },
+    "expiryDateTime": {
+     "description": "The date time when the recommendation will expire",
+     "format": "date-time",
+     "type": "string"
+    },
+    "language": {
+     "$ref": "LanguageLocaleIso"
+    },
+    "marketplaces": {
+     "description": "Specifies the marketplaces where the recommendation is exposed to customers. Note that this display marketplace may differ from the actual geographical regions where the recommended actions can be implemented.",
+     "items": {
+      "$ref": "Marketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "potentialImpacts": {
+     "description": "Estimated customer benefits if recommendation is followed",
+     "items": {
+      "$ref": "PotentialImpact"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "publishedDateTime": {
+     "description": "The date time when the recommendation is published",
+     "format": "date-time",
+     "type": "string"
+    },
+    "recommendationId": {
+     "description": "The identifier of the recommendation",
+     "type": "string"
+    },
+    "recommendationInsight": {
+     "$ref": "RecommendationInsight"
+    },
+    "recommendationType": {
+     "$ref": "RecommendationTypeEnum"
+    },
+    "recommendationTypeDetails": {
+     "$ref": "RecommendationTypeDetails"
+    },
+    "recommendedAction": {
+     "$ref": "RecommendedAction"
+    },
+    "recommendedObjects": {
+     "description": "The target objects of the recommendation",
+     "items": {
+      "$ref": "RecommendedObject"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    },
+    "state": {
+     "$ref": "RecommendationState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the recommendation",
+     "items": {
+      "$ref": "Tag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adProduct",
+    "createdDateTime",
+    "language",
+    "publishedDateTime",
+    "recommendationId",
+    "recommendationType",
+    "recommendedObjects",
+    "state"
+   ],
+   "type": "object"
+  },
+  "RecommendationAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `SPONSORED_PRODUCTS` | Sponsored Products ad product. | | `SPONSORED_BRANDS` | Sponsored Brands ad product. | | `SPONSORED_DISPLAY` | Sponsored Display ad …",
+     "items": {
+      "$ref": "AdProduct"
+     },
+     "maxItems": 7,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "RecommendationAdvertiserAccount": {
+   "description": "The advertiser account attributes exposed inline on a recommendation. Mirrors selected fields of the AdvertiserAccount entity so consumers receive account details without a separate lookup.",
+   "properties": {
+    "advertiserAccountId": {
+     "description": "The unique identifier for the advertiser account.",
+     "type": "string"
+    },
+    "displayName": {
+     "description": "Display name for the advertiser account.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "RecommendationInsight": {
+   "description": "Contextual information explaining why this recommendation is relevant, such as title, description, or explanation.",
+   "properties": {
+    "insightTexts": {
+     "description": "Key-value pairs of insight information (e.g. key='description', value='Your campaign ran out of budget 3 times last week').",
+     "items": {
+      "$ref": "Tag"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "insightTexts"
+   ],
+   "type": "object"
+  },
+  "RecommendationLanguageLocaleIsoFilter": {
+   "properties": {
+    "include": {
+     "description": "**Language Enum:** | Language | Description | | --- | --- | | `ak-GH` | Akan (Ghana). | | `am-ET` | Amharic (Ethiopia). | | `an-ES` | Aragonese (Spain). | | `ar-AE` | Arabic (UAE). | | `as-IN` | Assamese (India). | | `a…",
+     "items": {
+      "$ref": "LanguageLocaleIso"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "RecommendationMarketplaceFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "Marketplace"
+     },
+     "maxItems": 26,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "RecommendationRecommendationTypeDetailsFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "RecommendationTypeDetails"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "RecommendationRecommendationTypeEnumFilter": {
+   "properties": {
+    "include": {
+     "description": "**RecommendationType Enum:** | RecommendationType | Description | | --- | --- | | `BRAND_PRODUCT_SEGMENT` | Recommends product groups within a brand that shoppers search for as a distinct need. Requires BrandProductSegm…",
+     "items": {
+      "$ref": "RecommendationTypeEnum"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "RecommendationState": {
+   "enum": [
+    "ACTIVE",
+    "APPLIED",
+    "DEFERRED",
+    "DISMISSED",
+    "EXPIRED",
+    "INACTIVE"
+   ],
+   "type": "string"
+  },
+  "RecommendationSuccessResponse": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "recommendations": {
+     "items": {
+      "$ref": "Recommendation"
+     },
+     "maxItems": 300,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "RecommendationTypeDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandProductKeywordRecommendationTypeDetails": {
+       "$ref": "BrandProductKeywordRecommendationTypeDetails"
+      }
+     },
+     "required": [
+      "brandProductKeywordRecommendationTypeDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "brandProductSegmentRecommendationTypeDetails": {
+       "$ref": "BrandProductSegmentRecommendationTypeDetails"
+      }
+     },
+     "required": [
+      "brandProductSegmentRecommendationTypeDetails"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "RecommendationTypeEnum": {
+   "description": "The unique identifier of the recommendation type. Used to classify and group similar recommendations (e.g. 'BRANDED_KEYWORD'). **RecommendationTypeEnum Enum:** | RecommendationTypeEnum | Description | |------|------| | …",
+   "enum": [
+    "ADS_PLANNER",
+    "AUTOMATIC_GLOBAL_ADS_ENROLLMENT",
+    "BRAND_METRICS_INSIGHTS",
+    "BRAND_PRODUCT_KEYWORD",
+    "BRAND_PRODUCT_SEGMENT",
+    "BUDGETING_INSIGHT_MISSED_SALES",
+    "BUDGET_RULES",
+    "CREDIT_AVAILABLE",
+    "CREDIT_EXPIRING",
+    "ELIGIBLE_PROMOTION",
+    "ENGAGEMENT_ACQUISITION",
+    "FUNNEL_ANALYSIS",
+    "FUNNEL_NEW_TO_BRAND_GROWTH",
+    "GLOBAL_TAILORED_CAMPAIGNS",
+    "GLOBAL_TARGETING_INSIGHT_ABOVE_ZERO_SALES",
+    "GLOBAL_TARGETING_INSIGHT_OPTIMIZE_CONVERSION",
+    "NEW_USER_ENGAGEMENT_CODE",
+    "NEW_USER_SHOPPABLE_IMAGE",
+    "PARTNER_DIRECTORY",
+    "PAUSED_CAMPAIGN_RESUMPTION",
+    "PERFORMANCE_BASED_ADS_TOP_OF_SEARCH",
+    "RULE_BASED_BIDDING",
+    "SB_TAILORED_AUDIENCE_EXISTING",
+    "SB_TAILORED_AUDIENCE_NEW_TO_BRAND",
+    "SB_TAILORED_AUDIENCE_NO_STORE",
+    "SB_TAILORED_AUDIENCE_WITH_STORE",
+    "SCHEDULE_BID_RULE",
+    "SEASONAL_TARGETING_STRATEGY",
+    "SPONSORED_ADS_BOOST",
+    "SP_ONBOARDING_OPTIMIZE_VIDEO",
+    "SP_TARGETING_CONSOLIDATED",
+    "STORE_PRODUCT_COLLECTION",
+    "STV_INCREASE_SALES_VIDEO_AI",
+    "STV_READY",
+    "TAILORED_CAMPAIGNS"
+   ],
+   "type": "string"
+  },
+  "RecommendedAction": {
+   "description": "Suggested behavior for customer to apply the recommendation",
+   "properties": {
+    "href": {
+     "description": "URL Endpoint customers can apply the action",
+     "type": "string"
+    },
+    "linkText": {
+     "description": "Call-to-action for customer to follow. May be exposed directly as link text.",
+     "type": "string"
+    },
+    "method": {
+     "$ref": "HttpVerb"
+    }
+   },
+   "type": "object"
+  },
+  "RecommendedObject": {
+   "description": "Details of the recommended object",
+   "properties": {
+    "currentObjectSettings": {
+     "$ref": "ObjectSettings"
+    },
+    "description": {
+     "description": "Additional information to provide short contextual information about the recommended object",
+     "type": "string"
+    },
+    "displayName": {
+     "description": "Name of the recommendation object",
+     "type": "string"
+    },
+    "recommendedAction": {
+     "$ref": "RecommendedAction"
+    },
+    "recommendedObjectId": {
+     "description": "Id of the recommendation object, eg:campaignId",
+     "type": "string"
+    },
+    "recommendedObjectType": {
+     "$ref": "RecommendedObjectType"
+    }
+   },
+   "required": [
+    "recommendedObjectType"
+   ],
+   "type": "object"
+  },
+  "RecommendedObjectType": {
+   "description": "**RecommendedObjectType Enum:** | RecommendedObjectType | Description | |------|------| | `ADGROUP` | A group of ads within a campaign that share similar targeting | | `AD` | An individual advertisement within an ad gro…",
+   "enum": [
+    "AD",
+    "ADGROUP",
+    "ASIN",
+    "BRAND_PRODUCT_KEYWORD",
+    "BRAND_PRODUCT_SEGMENT",
+    "CAMPAIGN",
+    "OBJECTIVE",
+    "TARGET"
+   ],
+   "type": "string"
+  },
+  "ReportingFieldClassificationTag": {
+   "enum": [
+    "CURRENCY_AED",
+    "CURRENCY_AUD",
+    "CURRENCY_BRL",
+    "CURRENCY_CAD",
+    "CURRENCY_CHF",
+    "CURRENCY_CNY",
+    "CURRENCY_DKK",
+    "CURRENCY_EGP",
+    "CURRENCY_EUR",
+    "CURRENCY_GBP",
+    "CURRENCY_INR",
+    "CURRENCY_JPY",
+    "CURRENCY_MXN",
+    "CURRENCY_MXP",
+    "CURRENCY_NGN",
+    "CURRENCY_NOK",
+    "CURRENCY_NZD",
+    "CURRENCY_PLN",
+    "CURRENCY_SAR",
+    "CURRENCY_SEK",
+    "CURRENCY_SGD",
+    "CURRENCY_TRY",
+    "CURRENCY_USD",
+    "CURRENCY_ZAR"
+   ],
+   "type": "string"
+  },
+  "ReportingFieldDataType": {
+   "enum": [
+    "CURRENCY",
+    "DECIMAL",
+    "LONG",
+    "PERCENTAGE"
+   ],
+   "type": "string"
+  },
+  "SBAlternateBrandIdType": {
+   "description": "The type of identifier for the alternate brand identifier. | AlternateBrandIdType | Description | |------|------| | `BRAND_REGISTRY` | Previous version of brand identifier retrieved from BrandRegistry. Identifiers of th…",
+   "enum": [
+    "BRAND_REGISTRY"
+   ],
+   "type": "string"
+  },
+  "SBBrandAlternateId": {
+   "description": "Other types of brand identifiers for a brand that are used with other operations.",
+   "properties": {
+    "alternateBrandId": {
+     "description": "The alternative brand identifier for the brandId.",
+     "type": "string"
+    },
+    "alternateBrandIdType": {
+     "$ref": "SBAlternateBrandIdType"
+    }
+   },
+   "required": [
+    "alternateBrandId",
+    "alternateBrandIdType"
+   ],
+   "type": "object"
+  },
+  "SBBrandedKeyword": {
+   "properties": {
+    "brandAlternateId": {
+     "$ref": "SBBrandAlternateId"
+    },
+    "keyword": {
+     "description": "Branded keyword",
+     "type": "string"
+    }
+   },
+   "required": [
+    "brandAlternateId",
+    "keyword"
+   ],
+   "type": "object"
+  },
+  "SBBrandedKeywordList": {
+   "properties": {
+    "associatedBrandIds": {
+     "description": "Brand IDs associated with the branded keyword list",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brandedKeyword": {
+     "description": "Branded keywords are specific words or phrases that include a company's brand name or a registered trademark of a brand",
+     "items": {
+      "$ref": "SBBrandedKeyword"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBBrandedKeywordRecommendationTypeDetails": {
+   "properties": {
+    "brandAlternateId": {
+     "items": {
+      "$ref": "SBBrandAlternateId"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "brandIds": {
+     "description": "The brand ID to scope branded keyword recommendations for",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brandAlternateId"
+   ],
+   "type": "object"
+  },
+  "SBCreateBrandAlternateId": {
+   "description": "Other types of brand identifiers for a brand that are used with other operations.",
+   "properties": {
+    "alternateBrandId": {
+     "description": "The alternative brand identifier for the brandId.",
+     "type": "string"
+    },
+    "alternateBrandIdType": {
+     "$ref": "SBAlternateBrandIdType"
+    }
+   },
+   "required": [
+    "alternateBrandId",
+    "alternateBrandIdType"
+   ],
+   "type": "object"
+  },
+  "SBCreateBrandedKeywordRecommendationTypeDetails": {
+   "properties": {
+    "brandAlternateId": {
+     "items": {
+      "$ref": "SBCreateBrandAlternateId"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "brandIds": {
+     "description": "The brand ID to scope branded keyword recommendations for",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brandAlternateId"
+   ],
+   "type": "object"
+  },
+  "SBCreateRecommendationRequest": {
+   "properties": {
+    "recommendations": {
+     "items": {
+      "$ref": "SBRecommendationCreate"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBCreateRecommendationTypeDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandedKeywordRecommendationTypeDetails": {
+       "$ref": "SBCreateBrandedKeywordRecommendationTypeDetails"
+      }
+     },
+     "required": [
+      "brandedKeywordRecommendationTypeDetails"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBObjectSettings": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandedKeywordList": {
+       "$ref": "SBBrandedKeywordList"
+      }
+     },
+     "required": [
+      "brandedKeywordList"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBRecommendation": {
+   "properties": {
+    "recommendationId": {
+     "description": "The identifier of the recommendation",
+     "type": "string"
+    },
+    "recommendationType": {
+     "description": "A unique value to indicate similar recommendations, used for internal purposes only",
+     "type": "string"
+    },
+    "recommendationTypeDetails": {
+     "$ref": "SBRecommendationTypeDetails"
+    },
+    "recommendedObjects": {
+     "description": "The target objects of the recommendation",
+     "items": {
+      "$ref": "SBRecommendedObject"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "recommendationId",
+    "recommendationType",
+    "recommendedObjects"
+   ],
+   "type": "object"
+  },
+  "SBRecommendationCreate": {
+   "properties": {
+    "recommendationType": {
+     "description": "A unique value to indicate similar recommendations, used for internal purposes only",
+     "type": "string"
+    },
+    "recommendationTypeDetails": {
+     "$ref": "SBCreateRecommendationTypeDetails"
+    }
+   },
+   "required": [
+    "recommendationType"
+   ],
+   "type": "object"
+  },
+  "SBRecommendationMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "SBRecommendationMultiStatusSuccess"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBRecommendationMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 0,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "recommendation": {
+     "$ref": "SBRecommendation"
+    }
+   },
+   "required": [
+    "index",
+    "recommendation"
+   ],
+   "type": "object"
+  },
+  "SBRecommendationTypeDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandedKeywordRecommendationTypeDetails": {
+       "$ref": "SBBrandedKeywordRecommendationTypeDetails"
+      }
+     },
+     "required": [
+      "brandedKeywordRecommendationTypeDetails"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBRecommendationTypeEnum": {
+   "description": "The unique identifier of the recommendation type. Used to classify and group similar recommendations (e.g. 'BRANDED_KEYWORD'). **RecommendationTypeEnum Enum:** | RecommendationTypeEnum | Description | | --- | --- | | `B…",
+   "enum": [
+    "BRANDED_KEYWORD"
+   ],
+   "type": "string"
+  },
+  "SBRecommendedObject": {
+   "description": "Details of the recommended object",
+   "properties": {
+    "recommendedObjectSettings": {
+     "$ref": "SBObjectSettings"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Tag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "TargetingInsightMetrics": {
+   "properties": {
+    "impressionRank": {
+     "description": "The rank of all the insight entry compared to all other advertisers.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "impressionShare": {
+     "description": "The percentage share of all your insight entry impressions compared to all other advertisers.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TrialMetric": {
+   "description": "A single observed trial metric with its value and optional comparison vs. baseline.",
+   "properties": {
+    "changePercent": {
+     "description": "Magnitude of change, as a percentage.",
+     "format": "double",
+     "type": "number"
+    },
+    "metricDescription": {
+     "description": "Tooltip text describing the metric, used for rendering in the UI.",
+     "type": "string"
+    },
+    "metricName": {
+     "description": "Which metric this entry reports (e.g. 'ROAS', 'CTR').",
+     "type": "string"
+    },
+    "value": {
+     "description": "The observed value of the metric during the trial.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "metricName",
+    "value"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

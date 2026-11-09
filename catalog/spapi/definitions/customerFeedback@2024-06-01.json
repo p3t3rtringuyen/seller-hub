@@ -1,0 +1,850 @@
+{
+  "BrowseNodeAllOccurrence": {
+    "description": "The browse node review occurrence metrics.",
+    "properties": {
+      "allProducts": {
+        "description": "The percentage of reviews of products in the browse node that mention the topic.",
+        "format": "float",
+        "type": "number"
+      },
+      "topTwentyFivePercentProducts": {
+        "description": "The percentage of reviews of the top 25 percent of products in the browse node that mention the topic.",
+        "format": "float",
+        "type": "number"
+      }
+    },
+    "required": [
+      "allProducts",
+      "topTwentyFivePercentProducts"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeAllStarRatingImpact": {
+    "description": "The effects of a topic on the star ratings in a browse node.",
+    "properties": {
+      "allProducts": {
+        "description": "The effect of the topic on the star rating of all products in the browse node.",
+        "format": "float",
+        "type": "number"
+      },
+      "topTwentyFivePercentProducts": {
+        "description": "The effect of the topic on the star rating of the top 25 percent of products in the browse node.",
+        "format": "float",
+        "type": "number"
+      }
+    },
+    "required": [
+      "allProducts",
+      "topTwentyFivePercentProducts"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeOccurrence": {
+    "description": "The browse node review trend occurrence metrics.",
+    "properties": {
+      "allProducts": {
+        "description": "The percentage of reviews of products in the browse node that mention a topic.",
+        "format": "float",
+        "type": "number"
+      }
+    },
+    "required": [
+      "allProducts"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeResponse": {
+    "description": "The response for the `getItemBrowseNode` operation.",
+    "properties": {
+      "browseNodeId": {
+        "description": "A browse node id is the unique identifier of a given browse node.",
+        "type": "string"
+      },
+      "displayName": {
+        "description": "The display name of the browse node as visible on the Amazon retail website.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "browseNodeId",
+      "displayName"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeReturnTopics": {
+    "description": "Topics from returns for all items in a browse node.",
+    "properties": {
+      "browseNodeMetrics": {
+        "description": "The browse node return topic metrics.",
+        "ref": "BrowseNodeTrendMetrics"
+      },
+      "topic": {
+        "description": "The name of the return feedback topic .",
+        "type": "string"
+      }
+    },
+    "required": [
+      "browseNodeMetrics",
+      "topic"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeReturnTopicsResponse": {
+    "description": "The response for the `getBrowseNodeReturnTopics` operation.",
+    "properties": {
+      "browseNodeId": {
+        "description": "The requested browse node id.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two digit country code of requested marketplace id, in ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "dateRange": {
+        "description": "The range of dates during which the returns were made.",
+        "ref": "DateRange"
+      },
+      "displayName": {
+        "description": "The display name of the browse node, as visible on the Amazon retail website.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The requested marketplace id.",
+        "type": "string"
+      },
+      "topics": {
+        "description": "The list of browse node return topics.",
+        "ref": "BrowseNodeReturnTopics",
+        "type": "array"
+      }
+    },
+    "required": [
+      "browseNodeId",
+      "countryCode",
+      "dateRange",
+      "displayName",
+      "marketplaceId",
+      "topics"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeReturnTrend": {
+    "description": "The trend of return topic metrics for all items in the requested browse node.",
+    "properties": {
+      "topic": {
+        "description": "The name of the topic.",
+        "type": "string"
+      },
+      "trendMetrics": {
+        "description": "The browse node return trend metrics.",
+        "ref": "BrowseNodeReturnTrendPoint",
+        "type": "array"
+      }
+    },
+    "required": [
+      "topic",
+      "trendMetrics"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeReturnTrendPoint": {
+    "description": "The return metrics for a certain month.",
+    "properties": {
+      "browseNodeMetrics": {
+        "description": "The browse node return metrics.",
+        "ref": "BrowseNodeTrendMetrics"
+      },
+      "dateRange": {
+        "description": "The range of dates during which the returns were made.",
+        "ref": "DateRange"
+      }
+    },
+    "required": [
+      "browseNodeMetrics",
+      "dateRange"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeReturnTrendsResponse": {
+    "description": "The response for the `getBrowseNodeReturnTrends` operation.",
+    "properties": {
+      "browseNodeId": {
+        "description": "The requested browse node id.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two digit country code of requested marketplace id, in ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "dateRange": {
+        "description": "The range of dates during which the returns were made.",
+        "ref": "DateRange"
+      },
+      "displayName": {
+        "description": "The display name of the browse node, as visible on the Amazon retail website.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The requested marketplace id.",
+        "type": "string"
+      },
+      "returnTrends": {
+        "description": "The browse node return trends.",
+        "ref": "BrowseNodeReturnTrend",
+        "type": "array"
+      }
+    },
+    "required": [
+      "browseNodeId",
+      "countryCode",
+      "dateRange",
+      "displayName",
+      "marketplaceId",
+      "returnTrends"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeReviewSubtopicMetrics": {
+    "description": "The browse node review subtopic metrics.",
+    "properties": {
+      "occurrencePercentage": {
+        "description": "The percentage of reviews that mention the subtopic.",
+        "format": "float",
+        "type": "number"
+      }
+    },
+    "required": [
+      "occurrencePercentage"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeReviewTopic": {
+    "description": "The browse node review topic.",
+    "properties": {
+      "browseNodeMetrics": {
+        "description": "The percentage of browse node reviews that mention the topic, and the effect the topic has on the star rating.",
+        "ref": "BrowseNodeReviewTopicMetrics"
+      },
+      "reviewSnippets": {
+        "description": "A list of up to three snippets from reviews that contain the topic.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "subtopics": {
+        "description": "A list of the five subtopics that occur most frequently.",
+        "ref": "BrowseNodeSubtopic",
+        "type": "array"
+      },
+      "topic": {
+        "description": "The name browse node review topic.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "browseNodeMetrics",
+      "topic"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeReviewTopicMetrics": {
+    "description": "The browse node review topic metrics.",
+    "properties": {
+      "occurrencePercentage": {
+        "description": "The percentage of reviews that mention a topic.",
+        "ref": "BrowseNodeAllOccurrence"
+      },
+      "starRatingImpact": {
+        "description": "The effect a topic has on the browse node's star rating.",
+        "ref": "BrowseNodeAllStarRatingImpact"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BrowseNodeReviewTopics": {
+    "description": "The 10 most positive and most negative review topics for all items in a browse node.",
+    "properties": {
+      "negativeTopics": {
+        "description": "A list of the most negative review topics.",
+        "ref": "BrowseNodeReviewTopic",
+        "type": "array"
+      },
+      "positiveTopics": {
+        "description": "A list of the most positive review topics.",
+        "ref": "BrowseNodeReviewTopic",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BrowseNodeReviewTopicsResponse": {
+    "description": "The response for the `getBrowseNodeReviewTopics` operation.",
+    "properties": {
+      "browseNodeId": {
+        "description": "The requested browse node id.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two digit country code of requested marketplace id, in ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "dateRange": {
+        "description": "The range of dates in which the reviews were made.",
+        "ref": "DateRange"
+      },
+      "displayName": {
+        "description": "The display name of the requested browse node id.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The requested marketplace id.",
+        "type": "string"
+      },
+      "topics": {
+        "description": "The most positive and most negative topics for all items in the browse node.",
+        "ref": "BrowseNodeReviewTopics"
+      }
+    },
+    "required": [
+      "browseNodeId",
+      "countryCode",
+      "dateRange",
+      "displayName",
+      "marketplaceId",
+      "topics"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeReviewTrend": {
+    "description": "The trend of review topic metrics for all items in the requested browse node.",
+    "properties": {
+      "topic": {
+        "description": "The name of the topic.",
+        "type": "string"
+      },
+      "trendMetrics": {
+        "description": "The browse node's review trend metrics for the past six months.",
+        "ref": "BrowseNodeReviewTrendPoint",
+        "type": "array"
+      }
+    },
+    "required": [
+      "topic",
+      "trendMetrics"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeReviewTrendMetrics": {
+    "description": "The browse node review topic metrics.",
+    "properties": {
+      "occurrencePercentage": {
+        "description": "The percent of reviews that mention the topic.",
+        "ref": "BrowseNodeAllOccurrence"
+      }
+    },
+    "required": [
+      "occurrencePercentage"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeReviewTrendPoint": {
+    "description": "The browse node's review metrics for a certain month.",
+    "properties": {
+      "browseNodeMetrics": {
+        "description": "The browse node review trend metrics.",
+        "ref": "BrowseNodeReviewTrendMetrics"
+      },
+      "dateRange": {
+        "description": "The date range of the browse node review trend metric.",
+        "ref": "DateRange"
+      }
+    },
+    "required": [
+      "browseNodeMetrics",
+      "dateRange"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeReviewTrends": {
+    "description": "The 10 most positive and most negative review topics for all items in a browse node.",
+    "properties": {
+      "negativeTopics": {
+        "description": "The trends of the most negative review topics.",
+        "ref": "BrowseNodeReviewTrend",
+        "type": "array"
+      },
+      "positiveTopics": {
+        "description": "The trends of the most positive review topics.",
+        "ref": "BrowseNodeReviewTrend",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "BrowseNodeReviewTrendsResponse": {
+    "description": "The response for the `getBrowseNodeReviewTrends` operation.",
+    "properties": {
+      "browseNodeId": {
+        "description": "The requested browse node id.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two digit country code of requested marketplace id, in ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "dateRange": {
+        "description": "The range of dates during which the reviews were made.",
+        "ref": "DateRange"
+      },
+      "displayName": {
+        "description": "The display name of the requested browse node id.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The requested marketplace id.",
+        "type": "string"
+      },
+      "reviewTrends": {
+        "description": "Browse Node review trends.",
+        "ref": "BrowseNodeReviewTrends"
+      }
+    },
+    "required": [
+      "browseNodeId",
+      "countryCode",
+      "dateRange",
+      "displayName",
+      "marketplaceId",
+      "reviewTrends"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeStarRatingImpact": {
+    "description": "The effects of a topic on a browse node's star rating.",
+    "properties": {
+      "allProducts": {
+        "description": "The effect of the topic on the star rating for all products in this browse node.",
+        "format": "float",
+        "type": "number"
+      }
+    },
+    "required": [
+      "allProducts"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeSubtopic": {
+    "description": "The browse node review subtopic.",
+    "properties": {
+      "metrics": {
+        "description": "The browse node review subtopic metrics.",
+        "ref": "BrowseNodeReviewSubtopicMetrics"
+      },
+      "reviewSnippets": {
+        "description": "A list of up to three snippets from reviews that contain the topic.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "subtopic": {
+        "description": "The name of the browse node review subtopic.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "metrics",
+      "subtopic"
+    ],
+    "type": "object"
+  },
+  "BrowseNodeTrendMetrics": {
+    "description": "A single browse node review or return trend metric.",
+    "properties": {
+      "occurrencePercentage": {
+        "description": "The percentage of feedback that mentions the topic.",
+        "ref": "BrowseNodeOccurrence"
+      }
+    },
+    "required": [
+      "occurrencePercentage"
+    ],
+    "type": "object"
+  },
+  "ChildAsinMentionMetrics": {
+    "description": "The child ASIN review topic mention metrics.",
+    "properties": {
+      "asin": {
+        "description": "The child ASIN of the requested item.",
+        "type": "string"
+      },
+      "numberOfMentions": {
+        "description": "The number of times reviews of the child ASIN mention the topic.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "asin",
+      "numberOfMentions"
+    ],
+    "type": "object"
+  },
+  "ChildAsinMetrics": {
+    "description": "The review topic metrics for other child ASINs that have the same parent ASIN.",
+    "properties": {
+      "leastMentions": {
+        "description": "The child ASIN for which reviews mention the topic the least number of times, and the number of times reviews mention the topic.",
+        "ref": "ChildAsinMentionMetrics"
+      },
+      "mostMentions": {
+        "description": "The child ASIN for which reviews mention the topic the greatest number of times, and the number of times reviews mention the topic.",
+        "ref": "ChildAsinMentionMetrics"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DateRange": {
+    "description": "A date range.",
+    "properties": {
+      "endDate": {
+        "description": "The end date of the date range in ISO-8601 date/time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startDate": {
+        "description": "The start date of the date range in ISO-8601 date/time format.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "endDate",
+      "startDate"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "List of errors.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "ItemReviewBrowseNodeMetrics": {
+    "description": "The browse node review topic metrics.",
+    "properties": {
+      "occurrencePercentage": {
+        "description": "The percentage of reviews that mention the topic.",
+        "ref": "BrowseNodeOccurrence"
+      },
+      "starRatingImpact": {
+        "description": "The effect of the topic on the star rating of items in the browse node.",
+        "ref": "BrowseNodeStarRatingImpact"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemReviewSubtopic": {
+    "description": "Details of the subtopic for an item review topic.",
+    "properties": {
+      "metrics": {
+        "description": "The subtopic metrics.",
+        "ref": "ItemReviewSubtopicMetrics"
+      },
+      "reviewSnippets": {
+        "description": "A list of up to three snippets from reviews that contain the subtopic.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "subtopic": {
+        "description": "The name of the subtopic.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "metrics",
+      "subtopic"
+    ],
+    "type": "object"
+  },
+  "ItemReviewSubtopicMetrics": {
+    "description": "The item review subtopic metrics.",
+    "properties": {
+      "numberOfMentions": {
+        "description": "The number of times that reviews mention the subtopic.",
+        "type": "integer"
+      },
+      "occurrencePercentage": {
+        "description": "The percentage of reviews that mention the subtopic.",
+        "format": "float",
+        "type": "number"
+      }
+    },
+    "required": [
+      "numberOfMentions",
+      "occurrencePercentage"
+    ],
+    "type": "object"
+  },
+  "ItemReviewTopic": {
+    "description": "Details of item review topic.",
+    "properties": {
+      "asinMetrics": {
+        "description": "The ASIN's review topic metrics.",
+        "ref": "ItemReviewTopicMetrics"
+      },
+      "browseNodeMetrics": {
+        "description": "The browse node's review topic metrics.",
+        "ref": "ItemReviewBrowseNodeMetrics"
+      },
+      "childAsinMetrics": {
+        "description": "The review topic metrics for other child ASINs that have the same parent ASIN.",
+        "ref": "ChildAsinMetrics"
+      },
+      "parentAsinMetrics": {
+        "description": "The parent ASIN's review topic metrics.",
+        "ref": "ItemReviewTopicMetrics"
+      },
+      "reviewSnippets": {
+        "description": "A list of up to three snippets from reviews that contain the topic.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "subtopics": {
+        "description": "A list of up to five top subtopics for the topic.",
+        "ref": "ItemReviewSubtopic",
+        "type": "array"
+      },
+      "topic": {
+        "description": "The name of the item review topic.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "asinMetrics",
+      "topic"
+    ],
+    "type": "object"
+  },
+  "ItemReviewTopicMetrics": {
+    "description": "The item review topic metrics.",
+    "properties": {
+      "numberOfMentions": {
+        "description": "The number of times that reviews mention the topic.",
+        "type": "integer"
+      },
+      "occurrencePercentage": {
+        "description": "The percentage of customer reviews that mention the topic.",
+        "format": "float",
+        "type": "number"
+      },
+      "starRatingImpact": {
+        "description": "The effect of the topic on the star rating of the ASIN.",
+        "format": "float",
+        "type": "number"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemReviewTopics": {
+    "description": "The top 10 positive and negative item review topics.",
+    "properties": {
+      "negativeTopics": {
+        "description": "A list of the most negative review topics.",
+        "ref": "ItemReviewTopic",
+        "type": "array"
+      },
+      "positiveTopics": {
+        "description": "A list of the most positive review topics.",
+        "ref": "ItemReviewTopic",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemReviewTopicsResponse": {
+    "description": "The response for the `getItemReviewTopics` operation.",
+    "properties": {
+      "asin": {
+        "description": "The requested ASIN.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two digit country code of the requested marketplace id, in ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "dateRange": {
+        "description": "The date range of the item review topics.",
+        "ref": "DateRange"
+      },
+      "itemName": {
+        "description": "The product title of the requested ASIN.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The requested marketplace id.",
+        "type": "string"
+      },
+      "topics": {
+        "description": "The item review topics for the requested ASIN.",
+        "ref": "ItemReviewTopics"
+      }
+    },
+    "required": [
+      "asin",
+      "countryCode",
+      "dateRange",
+      "itemName",
+      "marketplaceId",
+      "topics"
+    ],
+    "type": "object"
+  },
+  "ItemReviewTrend": {
+    "description": "The trend of review topic metrics for the requested item.",
+    "properties": {
+      "topic": {
+        "description": "The name of the item review topic.",
+        "type": "string"
+      },
+      "trendMetrics": {
+        "description": "The item's review trend metrics for the past six months.",
+        "ref": "ItemReviewTrendPoint",
+        "type": "array"
+      }
+    },
+    "required": [
+      "topic",
+      "trendMetrics"
+    ],
+    "type": "object"
+  },
+  "ItemReviewTrendPoint": {
+    "description": "The review metrics for a certain month.",
+    "properties": {
+      "asinMetrics": {
+        "description": "The ASIN's review trend metrics.",
+        "ref": "ReviewTrendMetrics"
+      },
+      "browseNodeMetrics": {
+        "description": "The browse node's review trend metrics.",
+        "ref": "BrowseNodeTrendMetrics"
+      },
+      "dateRange": {
+        "description": "The date range of the item review trend metric.",
+        "ref": "DateRange"
+      },
+      "parentAsinMetrics": {
+        "description": "The parent ASIN's review trend metrics.",
+        "ref": "ReviewTrendMetrics"
+      }
+    },
+    "required": [
+      "asinMetrics",
+      "dateRange"
+    ],
+    "type": "object"
+  },
+  "ItemReviewTrends": {
+    "description": "The 10 most positive and most negative review topics for all items in a browse node.",
+    "properties": {
+      "negativeTopics": {
+        "description": "A list of the most negative review topics.",
+        "ref": "ItemReviewTrend",
+        "type": "array"
+      },
+      "positiveTopics": {
+        "description": "A list of the most positive review topics.",
+        "ref": "ItemReviewTrend",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemReviewTrendsResponse": {
+    "description": "The response for the `getItemReviewTrends` operation.",
+    "properties": {
+      "asin": {
+        "description": "The requested ASIN.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two digit country code of the requested marketplace id, in ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "dateRange": {
+        "description": "The range of dates in which the reviews were made.",
+        "ref": "DateRange"
+      },
+      "itemName": {
+        "description": "The product title of the requested ASIN.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The requested marketplace id.",
+        "type": "string"
+      },
+      "reviewTrends": {
+        "description": "The item review trends.",
+        "ref": "ItemReviewTrends"
+      }
+    },
+    "required": [
+      "asin",
+      "countryCode",
+      "dateRange",
+      "itemName",
+      "marketplaceId",
+      "reviewTrends"
+    ],
+    "type": "object"
+  },
+  "ReviewTrendMetrics": {
+    "description": "The item review trend metrics.",
+    "properties": {
+      "occurrencePercentage": {
+        "description": "The percentage of reviews that mention the topic.",
+        "format": "float",
+        "type": "number"
+      }
+    },
+    "required": [
+      "occurrencePercentage"
+    ],
+    "type": "object"
+  }
+}

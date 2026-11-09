@@ -1,0 +1,844 @@
+{
+  "AmountThreshold": {
+    "description": "Amount-based purchase conditions for basket building promotions.",
+    "properties": {
+      "currency": {
+        "description": "The minimum spend amount customers must meet.",
+        "ref": "Currency"
+      },
+      "type": {
+        "description": "The type of amount requirement.",
+        "enum": [
+          "AT_LEAST"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "currency",
+      "type"
+    ],
+    "type": "object"
+  },
+  "BenefitTier": {
+    "description": "Defines a progressive (multi-tier) benefit tier that applies when customers exceed a higher purchase quantity for basket building promotions.",
+    "properties": {
+      "discount": {
+        "description": "The discount configuration for this tier.",
+        "ref": "Discount"
+      },
+      "purchaseCondition": {
+        "description": "The purchase condition that must be met to receive this tier's enhanced discount.",
+        "ref": "PurchaseCondition"
+      }
+    },
+    "required": [
+      "discount",
+      "purchaseCondition"
+    ],
+    "type": "object"
+  },
+  "BrandSegmentDetails": {
+    "description": "Additional details specific to the `BRAND` segments type.",
+    "properties": {
+      "brandId": {
+        "description": "Brand identifier.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "brandId"
+    ],
+    "type": "object"
+  },
+  "Budget": {
+    "description": "Budget configuration for spending limits.",
+    "properties": {
+      "currencyCode": {
+        "description": "The currency code in ISO 4217 format.",
+        "type": "string"
+      },
+      "type": {
+        "description": "The budget type, either monetary or unit-based.",
+        "enum": [
+          "AMOUNT",
+          "UNITS"
+        ],
+        "type": "string"
+      },
+      "value": {
+        "description": "Budget value (amount or unit count).",
+        "type": "number"
+      }
+    },
+    "required": [
+      "type",
+      "value"
+    ],
+    "type": "object"
+  },
+  "ClaimCode": {
+    "description": "Claim code configuration for accessing the promotion.",
+    "properties": {
+      "type": {
+        "description": "The type of claim code.",
+        "enum": [
+          "GROUP",
+          "INDIVIDUAL"
+        ],
+        "type": "string"
+      },
+      "value": {
+        "description": "The claim code (6-12 alphanumeric uppercase).",
+        "type": "string"
+      }
+    },
+    "required": [
+      "type"
+    ],
+    "type": "object"
+  },
+  "CouponType": {
+    "description": "The subtype of a `COUPON` promotion.",
+    "enum": [
+      "REORDER_REWARDS",
+      "STANDARD",
+      "SUBSCRIBE_AND_SAVE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Currency": {
+    "description": "Currency amount with ISO 4217 currency code.",
+    "properties": {
+      "amount": {
+        "description": "Amount value.",
+        "type": "number"
+      },
+      "currencyCode": {
+        "description": "ISO 4217 currency code.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "amount",
+      "currencyCode"
+    ],
+    "type": "object"
+  },
+  "CustomerSegment": {
+    "description": "The customer segment.",
+    "properties": {
+      "segmentDetails": {
+        "description": "Additional segment-specific details.",
+        "ref": "CustomerSegmentDetails"
+      },
+      "segmentId": {
+        "description": "The segment identifier.",
+        "type": "string"
+      },
+      "segmentType": {
+        "description": "Top-level segment type.",
+        "ref": "CustomerSegmentType"
+      }
+    },
+    "required": [
+      "segmentId",
+      "segmentType"
+    ],
+    "type": "object"
+  },
+  "CustomerSegmentDetails": {
+    "description": "Additional segment type-specific details.",
+    "properties": {
+      "brandSegmentDetails": {
+        "description": "Brand segment details.",
+        "ref": "BrandSegmentDetails"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CustomerSegmentType": {
+    "description": "The segment type for targeting specific customer cohorts.",
+    "enum": [
+      "BRAND",
+      "PROGRAM"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Discount": {
+    "description": "The discount configuration shared across benefit types.",
+    "properties": {
+      "amountOff": {
+        "description": "The amount off value.",
+        "type": "number"
+      },
+      "currencyCode": {
+        "description": "The currency code in ISO 4217 format.",
+        "type": "string"
+      },
+      "percentOff": {
+        "description": "The percentage discount value (1-100).",
+        "type": "number"
+      },
+      "type": {
+        "description": "The method used to calculate the discount amount.",
+        "enum": [
+          "AMOUNT_OFF",
+          "FREE_ITEM",
+          "PERCENTAGE_OFF"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "type"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "itemIdentifier": {
+        "description": "Identifier of the item that this error is associated with.",
+        "ref": "ItemIdentifier"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "List of errors.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "FeeFrequency": {
+    "description": "For participation fees, the frequency at which fees are charged.",
+    "enum": [
+      "DAILY",
+      "ONE_TIME"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "GetPromotionResponse": {
+    "allOf": [
+      "PromotionRevisionAttributes"
+    ],
+    "description": "The response schema for `getPromotion`.",
+    "properties": {
+      "latestRevision": {
+        "description": "Contains the latest revision data when it diverges from the published revision.",
+        "ref": "LatestRevision"
+      },
+      "status": {
+        "description": "Current promotion status indicating the lifecycle state of the promotion.",
+        "enum": [
+          "CANCELLED",
+          "CANCELLING",
+          "EXPIRED",
+          "FAILED",
+          "PROCESSING",
+          "RUNNING",
+          "UPCOMING"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "status"
+    ],
+    "type": "object"
+  },
+  "GetSelectionResponse": {
+    "description": "The response schema for `getSelection`.",
+    "properties": {
+      "selection": {
+        "ref": "Selection"
+      }
+    },
+    "required": [
+      "selection"
+    ],
+    "type": "object"
+  },
+  "Issue": {
+    "description": "Issue information with code, message, and severity.",
+    "properties": {
+      "code": {
+        "description": "Issue code identifier.",
+        "type": "string"
+      },
+      "message": {
+        "description": "Issue description.",
+        "type": "string"
+      },
+      "severity": {
+        "description": "Issue severity level.",
+        "enum": [
+          "ERROR",
+          "WARNING"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message",
+      "severity"
+    ],
+    "type": "object"
+  },
+  "Item": {
+    "description": "An item in the Amazon catalog for promotion selection.",
+    "properties": {
+      "asin": {
+        "description": "The Amazon Standard Identification Number (ASIN) is the unique identifier for an item in the Amazon catalog.",
+        "type": "string"
+      },
+      "benefit": {
+        "description": "Item-level benefit configuration.",
+        "ref": "ItemBenefit"
+      },
+      "budget": {
+        "description": "Item-level budget configuration.",
+        "ref": "Budget"
+      },
+      "sku": {
+        "description": "The Stock Keeping Unit (SKU).",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemBenefit": {
+    "description": "Item-level benefit configuration with pricing options.",
+    "properties": {
+      "discount": {
+        "description": "The discount configuration when using `DISCOUNTED_PRICE` type.",
+        "ref": "Discount"
+      },
+      "perCustomerUses": {
+        "description": "The maximum number of uses per customer for this item benefit.",
+        "type": "integer"
+      },
+      "price": {
+        "description": "Fixed price.",
+        "ref": "Currency"
+      },
+      "type": {
+        "description": "The benefit type for item-level pricing.",
+        "enum": [
+          "DISCOUNTED_PRICE",
+          "FIXED_PRICE"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "type"
+    ],
+    "type": "object"
+  },
+  "ItemIdentifier": {
+    "description": "The key identifiers of an item.",
+    "properties": {
+      "asin": {
+        "description": "Amazon Standard Identification Number (ASIN).",
+        "type": "string"
+      },
+      "sku": {
+        "description": "Stock Keeping Unit (SKU).",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemIssue": {
+    "allOf": [
+      "Issue"
+    ],
+    "description": "An item-level validation issue.",
+    "properties": {
+      "identifier": {
+        "description": "Identifier of the item associated with this issue.",
+        "ref": "ItemIdentifier"
+      }
+    },
+    "required": [
+      "identifier"
+    ],
+    "type": "object"
+  },
+  "LatestRevision": {
+    "allOf": [
+      "PromotionRevisionAttributes"
+    ],
+    "description": "The latest revision data, when it diverges from the published revision.",
+    "properties": {
+      "revisionStatus": {
+        "description": "The processing status of the latest revision.",
+        "enum": [
+          "FAILED",
+          "PROCESSING"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "revisionStatus"
+    ],
+    "type": "object"
+  },
+  "Merchandising": {
+    "description": "The merchandising configuration for displaying promotions on the retail website.",
+    "properties": {
+      "displayOnWebsite": {
+        "description": "Whether the promotion badge and details are displayed on the product detail pages and search results on the retail website.",
+        "enum": [
+          "ALLOWED",
+          "NOT_ALLOWED"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "When a request produces a list that is larger than the page size, pagination occurs.",
+    "properties": {
+      "nextToken": {
+        "description": "A token that can be used to retrieve the next page from the current page of results.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PreviewedFeeRates": {
+    "description": "Fee rates that were previewed to the selling partner.",
+    "properties": {
+      "upfrontFee": {
+        "ref": "UpfrontFee"
+      },
+      "variableFee": {
+        "ref": "VariableFee"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PromotionBenefit": {
+    "description": "Promotion-level benefit configuration.",
+    "properties": {
+      "additionalTiers": {
+        "description": "Progressive discount tiers offering increased benefits as customers purchase more.",
+        "ref": "BenefitTier",
+        "type": "array"
+      },
+      "benefitQuantity": {
+        "description": "The quantity of items from the benefit selection that receive the discount after the customer satisfies purchase conditions.",
+        "type": "integer"
+      },
+      "discount": {
+        "description": "The discount configuration for the promotion.",
+        "ref": "Discount"
+      },
+      "perCustomerUses": {
+        "description": "The maximum number of uses per customer for this promotion.",
+        "type": "integer"
+      },
+      "stacking": {
+        "description": "Whether this benefit can be stacked with other promotions.",
+        "enum": [
+          "ALLOWED",
+          "NOT_ALLOWED"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PromotionFeeSnapshot": {
+    "description": "The promotion's fee information (rates and incentive programs) that was locked at the time of promotion creation.",
+    "properties": {
+      "previewedFeeRates": {
+        "ref": "PreviewedFeeRates"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PromotionIssue": {
+    "allOf": [
+      "Issue"
+    ],
+    "description": "A promotion-level validation issue.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "PromotionRevisionAttributes": {
+    "description": "Common promotion fields shared between the published promotion and the latest revision.",
+    "properties": {
+      "benefit": {
+        "description": "Promotion-level benefit configuration.",
+        "ref": "PromotionBenefit"
+      },
+      "budget": {
+        "description": "Promotion-level budget configuration.",
+        "ref": "Budget"
+      },
+      "couponType": {
+        "description": "The subtype of a COUPON promotion.",
+        "ref": "CouponType"
+      },
+      "createdDate": {
+        "description": "When the promotion was created.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "customerSegments": {
+        "description": "The target customer segments for the promotion.",
+        "ref": "CustomerSegment",
+        "type": "array"
+      },
+      "feeSnapshot": {
+        "ref": "PromotionFeeSnapshot"
+      },
+      "issues": {
+        "description": "Promotion-level validation issues found during processing.",
+        "ref": "PromotionIssue",
+        "type": "array"
+      },
+      "lastUpdatedDate": {
+        "description": "When the promotion was last updated.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The Amazon store identifier.",
+        "type": "string"
+      },
+      "merchandising": {
+        "description": "The merchandising configuration that determines promotion display on the retail website.",
+        "ref": "Merchandising"
+      },
+      "promotionId": {
+        "description": "The unique promotion identifier.",
+        "type": "string"
+      },
+      "promotionTitle": {
+        "description": "The name of the promotion for the selling partner.",
+        "type": "string"
+      },
+      "promotionType": {
+        "description": "The promotion type.",
+        "ref": "PromotionType"
+      },
+      "purchaseRequirements": {
+        "description": "Purchase requirements for `BASKET_BUILDING` promotions.",
+        "ref": "PurchaseRequirements"
+      },
+      "schedule": {
+        "description": "The promotion schedule configuration.",
+        "ref": "Schedule"
+      },
+      "selection": {
+        "description": "A selection that defines which items in the customer's order qualify for the promotion benefit.",
+        "ref": "Selection"
+      },
+      "trackingId": {
+        "description": "The tracking ID you can use to uniquely identify a promotion and track its performance.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "createdDate",
+      "lastUpdatedDate",
+      "marketplaceId",
+      "promotionId",
+      "promotionTitle",
+      "promotionType",
+      "schedule",
+      "selection",
+      "trackingId"
+    ],
+    "type": "object"
+  },
+  "PromotionSummary": {
+    "allOf": [
+      "PromotionRevisionAttributes"
+    ],
+    "description": "Summary information for a promotion in search results.",
+    "properties": {
+      "latestRevision": {
+        "description": "The latest revision data, when it diverges from the published revision.",
+        "ref": "LatestRevision"
+      },
+      "status": {
+        "description": "Current promotion status indicating the lifecycle state of the promotion.",
+        "enum": [
+          "CANCELLED",
+          "CANCELLING",
+          "EXPIRED",
+          "FAILED",
+          "PROCESSING",
+          "RUNNING",
+          "UPCOMING"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "status"
+    ],
+    "type": "object"
+  },
+  "PromotionType": {
+    "description": "The type of promotion, categorized by the discount rules and eligibility criteria.",
+    "enum": [
+      "BASKET_BUILDING",
+      "COUPON",
+      "DEAL",
+      "PRICE_DISCOUNT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PurchaseCondition": {
+    "description": "Minimum purchase requirements using quantity-based or amount-based conditions for basket building promotions.",
+    "properties": {
+      "amountThreshold": {
+        "description": "Amount-based purchase requirement.",
+        "ref": "AmountThreshold"
+      },
+      "quantityThreshold": {
+        "description": "Quantity-based purchase requirement.",
+        "ref": "QuantityThreshold"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PurchaseRequirements": {
+    "description": "Purchase requirements that customers must meet to qualify for a basket building promotion.",
+    "properties": {
+      "claimCode": {
+        "description": "An optional claim code customers must enter to access the promotion.",
+        "ref": "ClaimCode"
+      },
+      "condition": {
+        "description": "Minimum purchase requirement that specify either the quantity of items or the total spend amount that customers must meet to qualify.",
+        "ref": "PurchaseCondition"
+      },
+      "selection": {
+        "description": "Which items customers must purchase to qualify for the promotion.",
+        "ref": "Selection"
+      }
+    },
+    "required": [
+      "condition",
+      "selection"
+    ],
+    "type": "object"
+  },
+  "QuantityThreshold": {
+    "description": "Quantity-based purchase conditions for basket building promotions.",
+    "properties": {
+      "quantity": {
+        "description": "The number of items required to meet this purchase condition.",
+        "type": "integer"
+      },
+      "type": {
+        "description": "How the quantity requirement is evaluated.",
+        "enum": [
+          "AT_LEAST",
+          "FOR_EACH"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "quantity",
+      "type"
+    ],
+    "type": "object"
+  },
+  "Schedule": {
+    "description": "A promotion's start and end dates with optional event association.",
+    "properties": {
+      "endDate": {
+        "description": "The promotion's end date and time.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "eventId": {
+        "description": "An event identifier that associates the promotion with a specific event.",
+        "type": "string"
+      },
+      "startDate": {
+        "description": "The promotion's start date and time.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SearchPromotionsResponse": {
+    "description": "The response schema for the `searchPromotions` operation.",
+    "properties": {
+      "pagination": {
+        "description": "Pagination information for navigating results.",
+        "ref": "Pagination"
+      },
+      "promotions": {
+        "description": "A list of promotion summaries that matches the search criteria.",
+        "ref": "PromotionSummary",
+        "type": "array"
+      },
+      "totalResults": {
+        "description": "The total number of promotions matching the search criteria, across all pages.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "promotions",
+      "totalResults"
+    ],
+    "type": "object"
+  },
+  "Selection": {
+    "description": "Defines which products qualify for a benefit, allowing either specific items to be selected by ASIN or the entire catalog with optional exclusions.",
+    "properties": {
+      "revisionId": {
+        "description": "The revision identifier for the selection.",
+        "type": "integer"
+      },
+      "selectionDetails": {
+        "description": "Detailed selection information.",
+        "ref": "SelectionDetails"
+      },
+      "selectionId": {
+        "description": "The unique identifier for this selection configuration.",
+        "type": "string"
+      },
+      "type": {
+        "description": "Selection type.",
+        "enum": [
+          "CATALOG",
+          "ITEMS"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "type"
+    ],
+    "type": "object"
+  },
+  "SelectionDetails": {
+    "description": "Detailed selection information including items, rules, issues, and pagination.",
+    "properties": {
+      "issues": {
+        "description": "Item-level validation issues for items in this selection.",
+        "ref": "ItemIssue",
+        "type": "array"
+      },
+      "items": {
+        "description": "List of specific items to include.",
+        "ref": "Item",
+        "type": "array"
+      },
+      "pagination": {
+        "description": "Pagination metadata for navigating through pages of selection items.",
+        "ref": "Pagination"
+      },
+      "rules": {
+        "description": "Rule configuration for catalog-based selections.",
+        "ref": "SelectionRules"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SelectionRules": {
+    "description": "Rules for catalog-based selections.",
+    "properties": {
+      "excludedItems": {
+        "description": "Items to exclude from the catalog selection (maximum 100 items).",
+        "ref": "Item",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UpfrontFee": {
+    "description": "Upfront fee (or a flat fee) for each promotion submitted.",
+    "properties": {
+      "frequency": {
+        "ref": "FeeFrequency"
+      },
+      "rate": {
+        "ref": "Currency"
+      }
+    },
+    "required": [
+      "frequency",
+      "rate"
+    ],
+    "type": "object"
+  },
+  "VariableFee": {
+    "description": "Performance based fee, usually represented as a percentage of promotion sales with a cap amount.",
+    "properties": {
+      "feeCapAmount": {
+        "ref": "Currency"
+      },
+      "salesPercentage": {
+        "description": "Sales Percentage",
+        "type": "number"
+      }
+    },
+    "required": [
+      "salesPercentage"
+    ],
+    "type": "object"
+  }
+}

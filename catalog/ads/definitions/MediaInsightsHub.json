@@ -1,0 +1,738 @@
+{
+ "api": "MediaInsightsHub",
+ "file": "specs/dest/MediaInsightsHub_prod_3p.json",
+ "schemas": {
+  "AccessDeniedErrorCode": {
+   "enum": [
+    "ACCESS_DENIED"
+   ],
+   "type": "string"
+  },
+  "AccessDeniedExceptionResponseContent": {
+   "description": "AccessDeniedException 403 response.",
+   "properties": {
+    "code": {
+     "$ref": "AccessDeniedErrorCode"
+    },
+    "details": {
+     "description": "Error details.",
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "SubError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "Request Id.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "CreateHistoricalReachCurveRequestContent": {
+   "description": "Request to generate a historical reach curve.",
+   "properties": {
+    "endDate": {
+     "description": "The end date for the curve data. This is in the ISO 8601 format. For example 2023-01-31.",
+     "format": "date",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The start date for the curve data. This is in the ISO 8601 format. For example 2023-01-01.",
+     "format": "date",
+     "type": "string"
+    },
+    "targeting": {
+     "description": "A list of dimensions that build the targeting expression that is used for generating a reach curve.",
+     "items": {
+      "$ref": "TargetingDimension"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "endDate",
+    "startDate",
+    "targeting"
+   ],
+   "type": "object"
+  },
+  "CreateHistoricalReachCurveResponseContent": {
+   "description": "Success response for generating a historical reach curve.",
+   "properties": {
+    "message": {
+     "description": "A message regarding the response.",
+     "type": "string"
+    },
+    "reportId": {
+     "description": "The report ID.",
+     "type": "string"
+    },
+    "status": {
+     "description": "The status of the report. The status values are [`PENDING`, `PROCESSING`, `COMPLETED`, `FAILED`].",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DimensionType": {
+   "enum": [
+    "GROUP",
+    "MULTIPLE",
+    "SINGLE"
+   ],
+   "type": "string"
+  },
+  "ErrorType": {
+   "description": "Error Type.",
+   "enum": [
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "FrequencyThresholdReach": {
+   "properties": {
+    "frequencyThreshold": {
+     "type": "integer"
+    },
+    "reach": {
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "GetHistoricalReachCurveResponseContent": {
+   "description": "Success response for getting the generated historical reach curve.",
+   "properties": {
+    "dataPoints": {
+     "description": "List of historical reach curve data points.",
+     "items": {
+      "$ref": "HistoricalReachCurveDataPointV2"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "The token to retrieve the next set of data points. This will be `null` if there are no data points left to retrieve.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of data points.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "GetHistoricalReachCurveStatusResponseContent": {
+   "description": "Success response for getting the status of the generation of a historical reach curve.",
+   "properties": {
+    "message": {
+     "description": "A message regarding the response.",
+     "type": "string"
+    },
+    "reportId": {
+     "description": "The report ID.",
+     "type": "string"
+    },
+    "status": {
+     "description": "The status of the report. The status values are [`PENDING`, `PROCESSING`, `COMPLETED`, `FAILED`].",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "HistoricalReachCurveDataPoint": {
+   "description": "A data point in the Reach Curve for Historical data.",
+   "properties": {
+    "channel": {
+     "description": "Supply package for which the reach curve has been generated.",
+     "type": "string"
+    },
+    "demographic": {
+     "description": "The demographic segment applied to the reach curve.",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The end of the time window the reach curve is based on.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "geography": {
+     "$ref": "Marketplace"
+    },
+    "impressions": {
+     "description": "The number of ads that were delivered.",
+     "type": "integer"
+    },
+    "reach": {
+     "$ref": "ReachFrequency"
+    },
+    "reachType": {
+     "description": "The type of reach, for example INDIVIDUALS or HOUSEHOLDS.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The beginning of the time window the reach curve is based on.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "HistoricalReachCurveDataPointV2": {
+   "properties": {
+    "demographic": {
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The format of the date is YYYY-MM-DD.",
+     "format": "date",
+     "type": "string"
+    },
+    "frequencyThresholdReach": {
+     "items": {
+      "$ref": "FrequencyThresholdReach"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "geography": {
+     "$ref": "Marketplace"
+    },
+    "impressions": {
+     "type": "integer"
+    },
+    "reachType": {
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The format of the date is YYYY-MM-DD.",
+     "format": "date",
+     "type": "string"
+    },
+    "supplyPackage": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "HistoricalReachCurvesMetadata": {
+   "properties": {
+    "channels": {
+     "description": "List of channels that were used for showing the ads.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "demographics": {
+     "description": "List of demographics of the audience that are represented in the data.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "geography": {
+     "description": "Name of the locale/geography that the metadata belongs to.",
+     "type": "string"
+    },
+    "reachTypes": {
+     "description": "List of the different reach types available to request.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "InternalErrorErrorCode": {
+   "enum": [
+    "INTERNAL_ERROR"
+   ],
+   "type": "string"
+  },
+  "InternalServerExceptionResponseContent": {
+   "description": "InternalServerException 500 response.",
+   "properties": {
+    "code": {
+     "$ref": "InternalErrorErrorCode"
+    },
+    "details": {
+     "description": "Error details.",
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "SubError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "Request Id.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "InvalidArgumentErrorCode": {
+   "enum": [
+    "INVALID_ARGUMENT"
+   ],
+   "type": "string"
+  },
+  "ListHistoricalReachCurvesMetadataRequestContent": {
+   "properties": {
+    "geography": {
+     "description": "The locales/geographies that the metadata belongs to.",
+     "type": "string"
+    },
+    "month": {
+     "description": "The month that the metadata belongs to in the format MM/YYYY.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListHistoricalReachCurvesMetadataResponseContent": {
+   "description": "Historical Reach Curves Metadata - 200 Response.",
+   "properties": {
+    "metadata": {
+     "description": "List of Historical Reach Curves metadata separated by geography.",
+     "items": {
+      "$ref": "HistoricalReachCurvesMetadata"
+     },
+     "type": "array"
+    },
+    "month": {
+     "description": "The month that this data belongs to.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListHistoricalReachCurvesRequestContent": {
+   "properties": {
+    "maxResults": {
+     "default": "1000",
+     "description": "Number of records to include in the paginated response. Defaults to 1000.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "month": {
+     "description": "The month of data that will be returned. Defaults to the most recent month of data that is available for the given geography.",
+     "type": "string"
+    },
+    "nextToken": {
+     "description": "Token to retrieve the next set/page of data points.",
+     "type": "string"
+    },
+    "targeting": {
+     "$ref": "Targeting"
+    }
+   },
+   "required": [
+    "targeting"
+   ],
+   "type": "object"
+  },
+  "ListHistoricalReachCurvesResponseContent": {
+   "description": "Historical Reach Curves 200 response.",
+   "properties": {
+    "historicalReachCurves": {
+     "description": "List of data points for a curve that shows historical reach. The default list size is 1000 data points.",
+     "items": {
+      "$ref": "HistoricalReachCurveDataPoint"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "The token to retrieve the next set/page of data points.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "Total available data points for the requested resource.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "LogicalOperator": {
+   "enum": [
+    "AND",
+    "OR"
+   ],
+   "type": "string"
+  },
+  "Marketplace": {
+   "enum": [
+    "AE",
+    "AT",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "NotFoundErrorCode": {
+   "enum": [
+    "NOT_FOUND"
+   ],
+   "type": "string"
+  },
+  "ReachFrequency": {
+   "description": "The frequency of exposures to households or individuals.",
+   "properties": {
+    "fivePlus": {
+     "description": "Number of ads viewed at least five times.",
+     "type": "integer"
+    },
+    "fourPlus": {
+     "description": "Number of ads viewed at least four times.",
+     "type": "integer"
+    },
+    "onePlus": {
+     "description": "Number of ads viewed at least once.",
+     "type": "integer"
+    },
+    "sixPlus": {
+     "description": "Number of ads viewed at least six times.",
+     "type": "integer"
+    },
+    "threePlus": {
+     "description": "Number of ads viewed at least thrice.",
+     "type": "integer"
+    },
+    "twoPlus": {
+     "description": "Number of ads viewed at least twice.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ResourceNotFoundExceptionResponseContent": {
+   "description": "Resource Not Found. 404 Response.",
+   "properties": {
+    "code": {
+     "$ref": "NotFoundErrorCode"
+    },
+    "details": {
+     "description": "Error details.",
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "SubError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "Request Id.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "SchemaValidationExceptionResponseContent": {
+   "description": "SchemaValidationException 400 response.",
+   "properties": {
+    "code": {
+     "$ref": "InvalidArgumentErrorCode"
+    },
+    "details": {
+     "description": "Error details.",
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "SubError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "Request Id.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "SubError": {
+   "properties": {
+    "errorCode": {
+     "type": "integer"
+    },
+    "errorMessage": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "errorType": {
+     "$ref": "ErrorType"
+    }
+   },
+   "type": "object"
+  },
+  "Targeting": {
+   "properties": {
+    "channels": {
+     "description": "The mode that ads were delivered. For example \"STV\" and \"Prime_Video\".",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "demographics": {
+     "description": "The demographic segments of the users included in the reach curve.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "geography": {
+     "description": "The geography of the users included in the reach curve.",
+     "type": "string"
+    },
+    "reachType": {
+     "description": "The type of reach recorded for the data. Possible values are \"INDIVIDUALS\" and \"HOUSEHOLDS\".",
+     "type": "string"
+    }
+   },
+   "required": [
+    "geography"
+   ],
+   "type": "object"
+  },
+  "TargetingDimension": {
+   "properties": {
+    "dimensionGroups": {
+     "description": "A list of targeting dimensions that allows you to have nested targeting dimensions. Typically, you will only use this for the `audienceId` dimension.",
+     "items": {
+      "$ref": "TargetingDimension"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "dimensionName": {
+     "description": "The name of the dimension you are targeting. The available dimension names are: | Dimension Name | Allowed Dimension Types | |----------------|-------------------------| | `supplyPackage` | `SINGLE` | | `demographic` | …",
+     "type": "string"
+    },
+    "dimensionType": {
+     "$ref": "DimensionType"
+    },
+    "dimensionValue": {
+     "description": "The value of the dimension you are targeting.",
+     "type": "string"
+    },
+    "dimensionValues": {
+     "description": "A list of values of the dimension you are targeting. The max limit varies on the dimension name.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "interOperator": {
+     "$ref": "LogicalOperator"
+    },
+    "intraOperator": {
+     "$ref": "LogicalOperator"
+    },
+    "isNot": {
+     "description": "Whether to negate this dimension or not.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "ThrottledErrorCode": {
+   "enum": [
+    "THROTTLED"
+   ],
+   "type": "string"
+  },
+  "ThrottlingExceptionResponseContent": {
+   "description": "ThrottlingException 429 response.",
+   "properties": {
+    "code": {
+     "$ref": "ThrottledErrorCode"
+    },
+    "details": {
+     "description": "Error details.",
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "SubError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "Request Id.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedErrorCode": {
+   "enum": [
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "UnauthorizedExceptionResponseContent": {
+   "description": "UnauthorizedException 401 response.",
+   "properties": {
+    "code": {
+     "$ref": "UnauthorizedErrorCode"
+    },
+    "details": {
+     "description": "Error details.",
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "SubError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "Request Id.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "UnsupportedMediaTypeErrorCode": {
+   "enum": [
+    "UNSUPPORTED_MEDIA_TYPE"
+   ],
+   "type": "string"
+  },
+  "UnsupportedMediaTypeExceptionResponseContent": {
+   "description": "UnsupportedMediaTypeException 415 response.",
+   "properties": {
+    "code": {
+     "$ref": "UnsupportedMediaTypeErrorCode"
+    },
+    "details": {
+     "description": "Error details.",
+     "type": "string"
+    },
+    "errors": {
+     "items": {
+      "$ref": "SubError"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "message": {
+     "description": "Human readable error message.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "Request Id.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message",
+    "requestId"
+   ],
+   "type": "object"
+  }
+ }
+}

@@ -1,0 +1,260 @@
+{
+ "api": "AdGroupTargeting-Apps",
+ "file": "specs/dest/AdGroupTargeting-Apps_prod_3p.json",
+ "schemas": {
+  "DspAdGroupAppTargetsV1": {
+   "properties": {
+    "appId": {
+     "description": "The unique identifier for the app.<ul><li>If <code>appType=MOBILE</code>, the limit is 5,000. For mobile apps, we accept standard Ids from the Google Play Store and the Apple App Store.</li><li>If <code>appType=STV</cod…",
+     "type": "string"
+    },
+    "appType": {
+     "$ref": "DspAppTypes"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) apps. All apps within the same ad group must be either included or excluded. If <code>appType</code> is STV, must be set to to true.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "appId",
+    "appType",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "DspAppTypes": {
+   "description": "The type of app being targeted. Only one type can be used per ad group.<ul><li>MOBILE: Mobile apps.</li><li>STV: Streaming TV apps.</li></ul>",
+   "enum": [
+    "MOBILE",
+    "STV"
+   ],
+   "type": "string"
+  },
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateAdGroupAppTargetsRequestContentV1": {
+   "properties": {
+    "appTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspAdGroupAppTargetsV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "appTargets"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupAppTargetsRequestContentV1": {
+   "properties": {
+    "appTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspAdGroupAppTargetsV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "appTargets"
+   ],
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetAdGroupAppTargetsResponseContent": {
+   "properties": {
+    "appTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspAdGroupAppTargetsV1"
+     },
+     "maxItems": 5000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "appTargets"
+   ],
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

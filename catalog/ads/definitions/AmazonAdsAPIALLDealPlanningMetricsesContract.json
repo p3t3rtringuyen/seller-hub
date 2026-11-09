@@ -1,0 +1,482 @@
+{
+ "api": "AmazonAdsAPIALLDealPlanningMetricsesContract",
+ "file": "specs/dest/AmazonAdsAPIALLDealPlanningMetricsesContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | | --- | --- | | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `CNY` | Chinese Yuan | |…",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CNY",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "DealPlanningMetrics": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertisingDealId": {
+     "description": "Reference to the associated advertising deal.",
+     "type": "string"
+    },
+    "clickThroughRate": {
+     "description": "Rate of delivered ad impressions that users clicked on.",
+     "format": "double",
+     "type": "number"
+    },
+    "currency": {
+     "$ref": "CurrencyCode"
+    },
+    "dealPlanningMetricsId": {
+     "description": "A unique identifier for the planning metrics record.",
+     "type": "string"
+    },
+    "effectiveCPM": {
+     "description": "Effective CPM actually cleared for impressions.",
+     "format": "double",
+     "type": "number"
+    },
+    "measuredRate": {
+     "description": "Rate of impressions that were measurable for viewability.",
+     "format": "double",
+     "type": "number"
+    },
+    "videoCompletionRate": {
+     "description": "Rate of video ad views that were viewed to completion (video end).",
+     "format": "double",
+     "type": "number"
+    },
+    "viewRate": {
+     "description": "Rate of ad impressions that were measured as viewable.",
+     "format": "double",
+     "type": "number"
+    },
+    "viewableCPM": {
+     "description": "Average CPM actually cleared for impressions that were deemed in view.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "adProduct",
+    "advertisingDealId",
+    "dealPlanningMetricsId"
+   ],
+   "type": "object"
+  },
+  "DealPlanningMetricsAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+     "items": {
+      "$ref": "AdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DealPlanningMetricsAdvertisingDealIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DealPlanningMetricsClickThroughRateFilter": {
+   "properties": {
+    "max": {
+     "format": "double",
+     "type": "number"
+    },
+    "min": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DealPlanningMetricsCurrencyCodeFilter": {
+   "properties": {
+    "include": {
+     "description": "**Currency Enum:** | Currency | Description | | --- | --- | | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `CNY` | Chinese Yuan | | `EUR` |…",
+     "items": {
+      "$ref": "CurrencyCode"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DealPlanningMetricsEffectiveCPMFilter": {
+   "properties": {
+    "max": {
+     "format": "double",
+     "type": "number"
+    },
+    "min": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DealPlanningMetricsMeasuredRateFilter": {
+   "properties": {
+    "max": {
+     "format": "double",
+     "type": "number"
+    },
+    "min": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DealPlanningMetricsSortOption": {
+   "properties": {
+    "by": {
+     "$ref": "DealPlanningMetricsSortOptionsFields"
+    },
+    "direction": {
+     "$ref": "SortDirection"
+    }
+   },
+   "required": [
+    "by"
+   ],
+   "type": "object"
+  },
+  "DealPlanningMetricsSortOptionsFields": {
+   "description": "Specify which field to order by. | Field Name | Supported Ordering | | --- | --- | | clickThroughRate | ASCENDING,DESCENDING | | effectiveCPM | ASCENDING,DESCENDING | | measuredRate | ASCENDING,DESCENDING | | videoCompl…",
+   "enum": [
+    "clickThroughRate",
+    "effectiveCPM",
+    "measuredRate",
+    "videoCompletionRate",
+    "viewRate",
+    "viewableCPM"
+   ],
+   "type": "string"
+  },
+  "DealPlanningMetricsSuccessResponse": {
+   "properties": {
+    "dealPlanningMetricses": {
+     "items": {
+      "$ref": "DealPlanningMetrics"
+     },
+     "maxItems": 2000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DealPlanningMetricsVideoCompletionRateFilter": {
+   "properties": {
+    "max": {
+     "format": "double",
+     "type": "number"
+    },
+    "min": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DealPlanningMetricsViewRateFilter": {
+   "properties": {
+    "max": {
+     "format": "double",
+     "type": "number"
+    },
+    "min": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DealPlanningMetricsViewableCPMFilter": {
+   "properties": {
+    "max": {
+     "format": "double",
+     "type": "number"
+    },
+    "min": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QueryDealPlanningMetricsRequest": {
+   "properties": {
+    "adProductFilter": {
+     "$ref": "DealPlanningMetricsAdProductFilter"
+    },
+    "advertisingDealIdFilter": {
+     "$ref": "DealPlanningMetricsAdvertisingDealIdFilter"
+    },
+    "clickThroughRateFilter": {
+     "$ref": "DealPlanningMetricsClickThroughRateFilter"
+    },
+    "currencyFilter": {
+     "$ref": "DealPlanningMetricsCurrencyCodeFilter"
+    },
+    "effectiveCPMFilter": {
+     "$ref": "DealPlanningMetricsEffectiveCPMFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 2000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "measuredRateFilter": {
+     "$ref": "DealPlanningMetricsMeasuredRateFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "sort": {
+     "items": {
+      "$ref": "DealPlanningMetricsSortOption"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videoCompletionRateFilter": {
+     "$ref": "DealPlanningMetricsVideoCompletionRateFilter"
+    },
+    "viewRateFilter": {
+     "$ref": "DealPlanningMetricsViewRateFilter"
+    },
+    "viewableCPMFilter": {
+     "$ref": "DealPlanningMetricsViewableCPMFilter"
+    }
+   },
+   "required": [
+    "adProductFilter",
+    "advertisingDealIdFilter"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SortDirection": {
+   "description": "**SortDirection Enum:** | SortDirection | Description | | --- | --- | | `ASCENDING` | Sort in ascending order | | `DESCENDING` | Sort in descending order |",
+   "enum": [
+    "ASCENDING",
+    "DESCENDING"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

@@ -1,0 +1,492 @@
+{
+  "AttributeOption": {
+    "description": "The definition of the attribute option.",
+    "properties": {
+      "description": {
+        "description": "The description of the attribute value.",
+        "type": "string"
+      },
+      "value": {
+        "description": "The possible values for the attribute option.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CarrierDetailsContext": {
+    "description": "Additional information about a carrier.",
+    "properties": {
+      "address": {
+        "description": "The address of the carrier, as registered with state and federal tax authorities.",
+        "type": "string"
+      },
+      "contextType": {
+        "description": "The type of additional information.",
+        "type": "string"
+      },
+      "federalTaxId": {
+        "description": "The tax identification number of the carrier.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the carrier, as registered with state and federal tax authorities.",
+        "type": "string"
+      },
+      "regionCode": {
+        "description": "The code of the federal subdivision in which the carrier is registered.",
+        "type": "string"
+      },
+      "regionTaxId": {
+        "description": "The regional tax registration number of the carrier.",
+        "type": "string"
+      },
+      "vehicleLicensePlate": {
+        "description": "The identifier for the carrier vehicle, as printed on its registration plate.",
+        "type": "string"
+      },
+      "vehicleRegistrationRegionCode": {
+        "description": "The code of the federal subdivision in which the carrier vehicle is registered.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Error": {
+    "description": "The error response that is returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses that are returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "List of errors.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "Export": {
+    "description": "Detailed information about the export.",
+    "properties": {
+      "errorMessage": {
+        "description": "When the export generation fails, this attribute contains a description of the error.",
+        "type": "string"
+      },
+      "exportId": {
+        "description": "The export identifier.",
+        "type": "string"
+      },
+      "generateExportFinishedAt": {
+        "description": "The date and time when the export generation finished.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "generateExportStartedAt": {
+        "description": "The date and time when the export generation started.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "invoicesDocumentIds": {
+        "description": "The identifier for the export documents.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "status": {
+        "ref": "ExportStatus"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ExportInvoicesRequest": {
+    "description": "The information required to create the export request.",
+    "properties": {
+      "dateEnd": {
+        "description": "The latest invoice creation date for invoices that you want to include in the response.",
+        "format": "date",
+        "type": "string"
+      },
+      "dateStart": {
+        "description": "The earliest invoice creation date for invoices that you want to include in the response.",
+        "format": "date",
+        "type": "string"
+      },
+      "externalInvoiceId": {
+        "description": "The external ID of the invoices you want included in the response.",
+        "type": "string"
+      },
+      "fileFormat": {
+        "ref": "FileFormat"
+      },
+      "invoiceType": {
+        "description": "The marketplace-specific classification of the invoice type.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The ID of the marketplace from which you want the invoices.",
+        "type": "string"
+      },
+      "series": {
+        "description": "The series number of the invoices you want included in the response.",
+        "type": "string"
+      },
+      "statuses": {
+        "description": "A list of statuses that you can use to filter invoices.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "transactionIdentifier": {
+        "ref": "TransactionIdentifier"
+      },
+      "transactionType": {
+        "description": "The marketplace-specific classification of the transaction type for which the invoice was created.",
+        "type": "string"
+      },
+      "warehouseCode": {
+        "description": "The Warehouse code included in the invoice issued on behalf of the vendor.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "marketplaceId"
+    ],
+    "type": "object"
+  },
+  "ExportInvoicesResponse": {
+    "description": "Success.",
+    "properties": {
+      "exportId": {
+        "description": "The export identifier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ExportStatus": {
+    "description": "The current status of the request.",
+    "enum": [
+      "DONE",
+      "ERROR",
+      "PROCESSING",
+      "REQUESTED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "FileFormat": {
+    "description": "Supported invoice file extensions.",
+    "enum": [
+      "XML"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "GetInvoiceResponse": {
+    "description": "Success.",
+    "properties": {
+      "invoice": {
+        "ref": "Invoice"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetInvoicesAttributesResponse": {
+    "description": "Success.",
+    "properties": {
+      "invoicesAttributes": {
+        "ref": "InvoicesAttributes"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetInvoicesDocumentResponse": {
+    "description": "Success.",
+    "properties": {
+      "invoicesDocument": {
+        "ref": "InvoicesDocument"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetInvoicesExportResponse": {
+    "description": "Success.",
+    "properties": {
+      "export": {
+        "ref": "Export"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetInvoicesExportsResponse": {
+    "description": "Success.",
+    "properties": {
+      "exports": {
+        "description": "A list of exports.",
+        "ref": "Export",
+        "type": "array"
+      },
+      "nextToken": {
+        "description": "This token is returned when the number of results exceeds the specified `pageSize` value.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetInvoicesResponse": {
+    "description": "Success.",
+    "properties": {
+      "invoices": {
+        "description": "A list of invoices.",
+        "ref": "Invoice",
+        "type": "array"
+      },
+      "nextToken": {
+        "description": "This token is returned when the number of results exceeds the specified `pageSize` value.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GovernmentInvoiceCreationStatus": {
+    "description": "The current status of a government invoice creation request.",
+    "enum": [
+      "ERROR",
+      "PROCESSING",
+      "SUCCESS"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "GovernmentInvoiceRequest": {
+    "description": "Information required to create the government invoice.",
+    "properties": {
+      "contexts": {
+        "description": "Additional information for invoice creation.",
+        "ref": "CarrierDetailsContext",
+        "type": "array"
+      },
+      "inboundPlanId": {
+        "description": "The unique inbound plan identifier in which the shipment is contained and for which the invoice will be created.",
+        "type": "string"
+      },
+      "invoiceType": {
+        "description": "The marketplace-specific classification of the invoice type.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "The marketplace of the national authoritative source that will be on the government invoice creation request.",
+        "type": "string"
+      },
+      "shipmentId": {
+        "description": "The unique shipment identifier for which to get an invoice.",
+        "type": "string"
+      },
+      "transactionType": {
+        "description": "The marketplace-specific classification of the transaction type that originated the invoice.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "invoiceType",
+      "marketplaceId",
+      "shipmentId",
+      "transactionType"
+    ],
+    "type": "object"
+  },
+  "GovernmentInvoiceStatusResponse": {
+    "description": "Success.",
+    "properties": {
+      "invoiceErrors": {
+        "description": "The errors that occurred during invoice creation.",
+        "ref": "InvoiceError",
+        "type": "array"
+      },
+      "invoiceExternalDocumentId": {
+        "description": "The Government Invoice ID of a successfully authorized invoice.",
+        "type": "string"
+      },
+      "status": {
+        "ref": "GovernmentInvoiceCreationStatus"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GovtInvoiceDocumentResponse": {
+    "description": "Success.",
+    "properties": {
+      "invoiceDocument": {
+        "ref": "InvoiceDocument"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Invoice": {
+    "description": "Provides detailed information about an invoice.",
+    "properties": {
+      "date": {
+        "description": "The date and time the invoice is issued.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "errorCode": {
+        "description": "If the invoice is in an error state, this attribute displays the error code.",
+        "type": "string"
+      },
+      "externalInvoiceId": {
+        "description": "The invoice identifier that is used by an external party.",
+        "type": "string"
+      },
+      "govResponse": {
+        "description": "The response message from the government authority when there is an error during invoice issuance.",
+        "type": "string"
+      },
+      "id": {
+        "description": "The invoice identifier.",
+        "type": "string"
+      },
+      "invoiceType": {
+        "description": "The classification of the invoice type.",
+        "type": "string"
+      },
+      "series": {
+        "description": "Use this identifier in conjunction with `externalInvoiceId` to identify invoices from the same seller.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The invoice status classification.",
+        "type": "string"
+      },
+      "transactionIds": {
+        "description": "List with identifiers for the transactions associated to the invoice.",
+        "ref": "TransactionIdentifier",
+        "type": "array"
+      },
+      "transactionType": {
+        "description": "Classification of the transaction that originated this invoice.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InvoiceDocument": {
+    "description": "The `documentId` and an S3 pre-signed URL that you can use to download the specified document file.",
+    "properties": {
+      "invoiceDocumentUrl": {
+        "description": "A pre-signed URL that you can use to download the invoice document in its original format.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InvoiceError": {
+    "description": "An invoice creation error occurred.",
+    "properties": {
+      "description": {
+        "description": "A description of the error.",
+        "type": "string"
+      },
+      "errorCode": {
+        "description": "The code of the error.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InvoicesAttributes": {
+    "description": "An object that contains the invoice attributes definition.",
+    "properties": {
+      "invoiceStatusOptions": {
+        "description": "A list of all the options that are available for the invoice status attribute.",
+        "ref": "AttributeOption",
+        "type": "array"
+      },
+      "invoiceTypeOptions": {
+        "description": "A list of all the options that are available for the invoice type attribute.",
+        "ref": "AttributeOption",
+        "type": "array"
+      },
+      "transactionIdentifierNameOptions": {
+        "description": "A list of all the options that are available for the transaction identifier name attribute.",
+        "ref": "AttributeOption",
+        "type": "array"
+      },
+      "transactionTypeOptions": {
+        "description": "A list of all the options that are available for the transaction type attribute.",
+        "ref": "AttributeOption",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InvoicesDocument": {
+    "description": "An object that contains the `documentId` and an S3 pre-signed URL that you can use to download the specified file.",
+    "properties": {
+      "invoicesDocumentId": {
+        "description": "The identifier of the export document.",
+        "type": "string"
+      },
+      "invoicesDocumentUrl": {
+        "description": "A pre-signed URL that you can use to download the invoices document in zip format.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TransactionIdentifier": {
+    "description": "The identifier for a transaction.",
+    "properties": {
+      "id": {
+        "description": "The transaction identifier.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The transaction identifier name.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

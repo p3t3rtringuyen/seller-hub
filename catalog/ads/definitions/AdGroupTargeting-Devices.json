@@ -1,0 +1,350 @@
+{
+ "api": "AdGroupTargeting-Devices",
+ "file": "specs/dest/AdGroupTargeting-Devices_prod_3p.json",
+ "schemas": {
+  "DeviceTargetsV1": {
+   "properties": {
+    "deviceOrientation": {
+     "$ref": "DspDeviceOrientationV1"
+    },
+    "deviceType": {
+     "$ref": "DspDeviceV1"
+    },
+    "mobileDevice": {
+     "$ref": "DspMobileDeviceV1"
+    },
+    "mobileEnvironment": {
+     "$ref": "DspMobileEnvironmentV1"
+    },
+    "mobileOS": {
+     "$ref": "DspMobileOSV1"
+    }
+   },
+   "required": [
+    "deviceType"
+   ],
+   "type": "object"
+  },
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateAdGroupDeviceTargetsRequestContentV1": {
+   "description": "The create operation input.",
+   "properties": {
+    "deviceTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DeviceTargetsV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "deviceTargets"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupDeviceTargetsRequestContentV1": {
+   "description": "The delete operation input.",
+   "properties": {
+    "deviceTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DeviceTargetsV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "deviceTargets"
+   ],
+   "type": "object"
+  },
+  "DspDeviceOrientationV1": {
+   "description": "The mobile device orientation type. This field can only be used if mobileEnvironment is `APP`. Defaults and allowed values when mobileEnvironment is `APP` and inventoryType is:<ul><li>AMAZON_MOBILE_DISPLAY: n/a/</li><li…",
+   "enum": [
+    "PORTRAIT",
+    "LANDSCAPE"
+   ],
+   "type": "string"
+  },
+  "DspDeviceV1": {
+   "description": "Required for all inventory types. Defaults and allowed values when inventoryType is:<ul><li>AMAZON_MOBILE_DISPLAY: MOBILE</li><li>AAP_MOBILE_APP: MOBILE</li><li>STANDARD_DISPLAY: DESKTOP, MOBILE</li><li>VIDEO: DESKTOP, …",
+   "enum": [
+    "DESKTOP",
+    "MOBILE",
+    "CONNECTED_TV"
+   ],
+   "type": "string"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspFunctionalPatchDefaultAdGroupDeviceTargetsOutputPayload": {},
+  "DspFunctionalPatchDefaultAdGroupDeviceTargetsRequestContent": {
+   "properties": {
+    "create": {
+     "type": "boolean"
+    },
+    "finalize": {
+     "type": "boolean"
+    },
+    "flights": {
+     "type": "array"
+    },
+    "resourceId": {
+     "type": "string"
+    },
+    "validate": {
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DspFunctionalPatchDefaultAdGroupDeviceTargetsV2RequestContent": {
+   "properties": {
+    "create": {
+     "type": "boolean"
+    },
+    "finalize": {
+     "type": "boolean"
+    },
+    "flights": {
+     "type": "array"
+    },
+    "resourceId": {
+     "type": "string"
+    },
+    "validate": {
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DspFunctionalPatchDefaultAdGroupDeviceTargetsV2ResponseContent": {
+   "description": "Result",
+   "properties": {
+    "flights": {
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetAdGroupDeviceTargetsResponseContent": {
+   "properties": {
+    "deviceTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DeviceTargetsV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deviceTargets"
+   ],
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspMobileDeviceV1": {
+   "description": "The mobile device targeting type. This field can only be used if mobileEnvironment is `APP`. Defaults and allowed values when mobileEnvironment is `APP` and inventoryType is:<ul><li>AMAZON_MOBILE_DISPLAY: n/a</li><li>AA…",
+   "enum": [
+    "IPHONE",
+    "IPAD",
+    "ANDROID",
+    "KINDLE_FIRE",
+    "KINDLE_FIRE_HD"
+   ],
+   "type": "string"
+  },
+  "DspMobileEnvironmentV1": {
+   "description": "The mobile environment targeting type. This field can only be used if deviceType is `MOBILE`. Defaults and allowed values when deviceType is `MOBILE` and inventoryType is:<ul><li>AMAZON_MOBILE_DISPLAY: WEB</li><li>AAP_M…",
+   "enum": [
+    "WEB",
+    "APP"
+   ],
+   "type": "string"
+  },
+  "DspMobileOSV1": {
+   "description": "The mobile operating system targeting type. This field can only be used if mobileEnvironment is `WEB`. Defaults and allowed values when mobileEnvironment is `WEB` and inventoryType is:<ul><li>AMAZON_MOBILE_DISPLAY: IOS,…",
+   "enum": [
+    "IOS",
+    "ANDROID"
+   ],
+   "type": "string"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

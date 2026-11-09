@@ -1,0 +1,115 @@
+{
+  "CreateNotificationRequest": {
+    "description": "The request for the `createNotification` operation.",
+    "properties": {
+      "marketplaceId": {
+        "description": "An encrypted marketplace identifier for the posted notification.",
+        "type": "string"
+      },
+      "notificationParameters": {
+        "description": "The parameters specified in the template you used to onboard your application.",
+        "ref": "NotificationParameters"
+      },
+      "templateId": {
+        "description": "The unique identifier of the notification template you used to onboard your application.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "notificationParameters",
+      "templateId"
+    ],
+    "type": "object"
+  },
+  "CreateNotificationResponse": {
+    "description": "The response for the `createNotification` operation.",
+    "properties": {
+      "notificationId": {
+        "description": "The unique identifier assigned to each notification.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DeleteNotificationsRequest": {
+    "description": "The request for the `deleteNotifications` operation.",
+    "properties": {
+      "deletionReason": {
+        "description": "The unique identifier that maps each notification status to a reason code.",
+        "enum": [
+          "INCORRECT_CONTENT",
+          "INCORRECT_RECIPIENT"
+        ],
+        "type": "string"
+      },
+      "templateId": {
+        "description": "The unique identifier of the notification template you used to onboard your application.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "deletionReason",
+      "templateId"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "Error response returned when the request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "NotificationParameters": {
+    "description": "The dynamic parameters required by the notification templated specified by `templateId`.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "RecordActionFeedbackRequest": {
+    "description": "The request for the `recordActionFeedback` operation.",
+    "properties": {
+      "feedbackActionCode": {
+        "description": "The unique identifier for each notification status.",
+        "enum": [
+          "SELLER_ACTION_COMPLETED"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "feedbackActionCode"
+    ],
+    "type": "object"
+  }
+}

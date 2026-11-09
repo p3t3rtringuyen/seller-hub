@@ -1,0 +1,151 @@
+{
+ "api": "dsp-3-0-advertiser",
+ "file": "specs/dsp/3-0/advertiser.yaml",
+ "schemas": {
+  "DspAdvertiserV1": {
+   "description": "The DSP Advertiser object",
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser identifier.",
+     "type": "string"
+    },
+    "country": {
+     "$ref": "DspCountryV1"
+    },
+    "currency": {
+     "$ref": "DspSupportedCurrencyV1"
+    },
+    "isRegional": {
+     "description": "Set to `true` if account is associated with a Global Advertiser Account.",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "The advertiser name.",
+     "type": "string"
+    },
+    "timezone": {
+     "$ref": "DspTimezoneV1"
+    },
+    "url": {
+     "description": "The URL of the advertiser’s website.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspAdvertisersV1": {
+   "description": "List of advertisers along with total number of advertisers which satisfy the filtering criteria.",
+   "properties": {
+    "response": {
+     "description": "List of advertisers with complete information.",
+     "items": {
+      "$ref": "DspAdvertiserV1"
+     },
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "Total number of advertisers which satisfy the filtering criteria. This number is given to support pagination and tell the client if there are more advertisers to be fetched.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "DspCountryV1": {
+   "description": "The country code.",
+   "enum": [
+    "US",
+    "CA",
+    "MX",
+    "JP",
+    "AU",
+    "IN",
+    "UK",
+    "GB",
+    "DE",
+    "FR",
+    "IT",
+    "ES",
+    "AT",
+    "AE",
+    "SA",
+    "BR",
+    "NL",
+    "SE",
+    "SG",
+    "TR"
+   ],
+   "type": "string"
+  },
+  "DspErrorV1": {
+   "description": "Error response object.",
+   "properties": {
+    "errors": {
+     "description": "List of errors. Useful in case of validation errors",
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "type": "array"
+    },
+    "message": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "A value will be used to identify your request uniquely.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "description": "Error Object",
+   "properties": {
+    "errorType": {
+     "description": "Enumerated error type.",
+     "type": "string"
+    },
+    "field": {
+     "description": "Request body field which is cause of the error.",
+     "type": "string"
+    },
+    "message": {
+     "description": "Detailed error description",
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspSupportedCurrencyV1": {
+   "description": "The supported currencies.",
+   "enum": [
+    "USD",
+    "CAD",
+    "JPY",
+    "GBP",
+    "EUR",
+    "INR",
+    "MXN",
+    "AED",
+    "SAR",
+    "BRL",
+    "AUD",
+    "SEK",
+    "SGD",
+    "TRY"
+   ],
+   "type": "string"
+  },
+  "DspTimezoneV1": {
+   "description": "The advertiser timezone. - America/Anchorage - America/Caracas - America/Chicago - America/Denver - America/Halifax - America/Los_Angeles - America/New_York - America/Sao_Paulo - America/St_Johns - Asia/Almaty - Asia/Ba…",
+   "type": "string"
+  }
+ }
+}

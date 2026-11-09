@@ -1,0 +1,4149 @@
+{
+ "api": "AmazonAdsAPIALLBrandStorePagesContract",
+ "file": "specs/dest/AmazonAdsAPIALLBrandStorePagesContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BrandStorePage": {
+   "properties": {
+    "content": {
+     "$ref": "StorePageContent"
+    },
+    "editionId": {
+     "description": "Reference to the store edition",
+     "type": "string"
+    },
+    "pageId": {
+     "description": "Unique identifier for the store page",
+     "type": "string"
+    },
+    "pageType": {
+     "$ref": "StorePageType"
+    },
+    "storeEditionPublishId": {
+     "description": "Optional identifier for the published version of this page",
+     "type": "string"
+    },
+    "storeId": {
+     "description": "Identifier of the associated store",
+     "type": "string"
+    }
+   },
+   "required": [
+    "content",
+    "editionId",
+    "pageId",
+    "pageType",
+    "storeId"
+   ],
+   "type": "object"
+  },
+  "BrandStorePageBrandStoreEditionIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "BrandStorePageBrandStoreEditionPublishVersionIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "BrandStorePageBrandStoreIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "BrandStorePagePageIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "BrandStorePageSuccessResponse": {
+   "properties": {
+    "brandStorePages": {
+     "items": {
+      "$ref": "BrandStorePage"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BrandedRecipeDirection": {
+   "description": "Represents a single step in a recipe's directions",
+   "properties": {
+    "body": {
+     "description": "Detailed instruction text for the direction step",
+     "type": "string"
+    },
+    "title": {
+     "description": "Title or heading for the direction step",
+     "type": "string"
+    }
+   },
+   "required": [
+    "body",
+    "title"
+   ],
+   "type": "object"
+  },
+  "BrandedRecipeIngredient": {
+   "description": "Represents an ingredient in a branded recipe",
+   "properties": {
+    "asinOverrides": {
+     "description": "List of ASIN overrides for the ingredient",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brand": {
+     "description": "Brand name associated with the ingredient",
+     "type": "string"
+    },
+    "displayText": {
+     "description": "Formatted text for displaying the ingredient",
+     "type": "string"
+    },
+    "isAsinRestricted": {
+     "description": "Flag indicating if ASIN is restricted for this ingredient",
+     "type": "boolean"
+    },
+    "isBrandRestricted": {
+     "description": "Flag indicating if brand is restricted for this ingredient",
+     "type": "boolean"
+    },
+    "isExclusiveOverride": {
+     "description": "Flag indicating if this ingredient has exclusive override",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "Name of the ingredient",
+     "type": "string"
+    },
+    "quantityList": {
+     "description": "List of quantity measurements for the ingredient",
+     "items": {
+      "$ref": "BrandedRecipeQuantityItem"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "displayText",
+    "isAsinRestricted",
+    "isBrandRestricted",
+    "isExclusiveOverride",
+    "name"
+   ],
+   "type": "object"
+  },
+  "BrandedRecipeIngredientsMetadata": {
+   "description": "Contains metadata information for recipe ingredients",
+   "properties": {
+    "priorityAsins": {
+     "description": "List of priority ASINs for ingredients with detailed product information",
+     "items": {
+      "$ref": "PriorityAsin"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "quantity": {
+     "description": "Quantity amount for the ingredient",
+     "format": "double",
+     "type": "number"
+    },
+    "searchText": {
+     "description": "Search text for ingredient metadata",
+     "type": "string"
+    },
+    "translatedUnit": {
+     "description": "Translated unit of measurement",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BrandedRecipeMedia": {
+   "description": "Represents media content associated with a recipe",
+   "properties": {
+    "altText": {
+     "description": "Alternative text description of the media content",
+     "type": "string"
+    },
+    "assetLibraryId": {
+     "description": "Identifier for the asset.",
+     "type": "string"
+    },
+    "mediaUrl": {
+     "description": "URL of the media content",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BrandedRecipeQuantityItem": {
+   "description": "Represents a quantity measurement for a recipe ingredient",
+   "properties": {
+    "amount": {
+     "description": "Numerical amount of the ingredient",
+     "format": "double",
+     "type": "number"
+    },
+    "unit": {
+     "description": "Unit of measurement for the ingredient",
+     "type": "string"
+    }
+   },
+   "required": [
+    "amount",
+    "unit"
+   ],
+   "type": "object"
+  },
+  "BrandedRecipeWidget": {
+   "description": "Main widget structure for displaying a branded recipe",
+   "properties": {
+    "availableProductAsins": {
+     "description": "List of available product ASINs.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "desktopMedia": {
+     "$ref": "BrandedRecipeMedia"
+    },
+    "directions": {
+     "description": "List of preparation directions for the recipe",
+     "items": {
+      "$ref": "BrandedRecipeDirection"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "encodedIngredientComposition": {
+     "description": "Encoded string containing ingredient composition details",
+     "type": "string"
+    },
+    "ingredientMetadata": {
+     "description": "Metadata associated with recipe ingredients",
+     "items": {
+      "$ref": "BrandedRecipeIngredientsMetadata"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "ingredients": {
+     "description": "List of ingredients required for the recipe",
+     "items": {
+      "$ref": "BrandedRecipeIngredient"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "isInitialLoad": {
+     "description": "Flag indicating if recipe is set to initial load",
+     "type": "boolean"
+    },
+    "mobileMedia": {
+     "$ref": "BrandedRecipeMedia"
+    },
+    "preparationTime": {
+     "description": "Time required to prepare the recipe",
+     "type": "string"
+    },
+    "refTag": {
+     "description": "REF tracking tag for the branded recipe",
+     "type": "string"
+    },
+    "servingSize": {
+     "description": "Number of servings the recipe yields",
+     "format": "double",
+     "type": "number"
+    },
+    "title": {
+     "description": "Title of the recipe",
+     "type": "string"
+    }
+   },
+   "required": [
+    "preparationTime",
+    "servingSize"
+   ],
+   "type": "object"
+  },
+  "CTI": {
+   "properties": {
+    "category": {
+     "description": "Category identifier.",
+     "type": "string"
+    },
+    "item": {
+     "description": "Item identifier.",
+     "type": "string"
+    },
+    "type": {
+     "description": "Type identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "CommonTileProperties": {
+   "properties": {
+    "size": {
+     "$ref": "StoreTileSize"
+    },
+    "tag": {
+     "description": "The unique tag for the tile to help track on performance.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreTileType"
+    }
+   },
+   "required": [
+    "size",
+    "tag",
+    "type"
+   ],
+   "type": "object"
+  },
+  "CommonWidgetProperties": {
+   "properties": {
+    "sectionType": {
+     "$ref": "StoreWidgetSectionType"
+    },
+    "widgetTag": {
+     "description": "The unique tag for the widget to help track on performance.",
+     "type": "string"
+    },
+    "widgetType": {
+     "$ref": "StoreWidgetType"
+    }
+   },
+   "required": [
+    "sectionType",
+    "widgetTag",
+    "widgetType"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Coordinates": {
+   "properties": {
+    "x": {
+     "description": "X coordinate.",
+     "format": "double",
+     "type": "number"
+    },
+    "y": {
+     "description": "Y coordinate.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONFLICT",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "HorizontalPosition": {
+   "description": "**HorizontalPosition Enum:** | HorizontalPosition | Description | | --- | --- | | `LEFT` | Left position | | `CENTER` | Center position | | `RIGHT` | Right position |",
+   "enum": [
+    "CENTER",
+    "LEFT",
+    "RIGHT"
+   ],
+   "type": "string"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "PriorityAsin": {
+   "description": "Product information for a priority ASIN",
+   "properties": {
+    "addToCartActionParams": {
+     "description": "Parameters for add to cart action",
+     "type": "string"
+    },
+    "bottleDepositFee": {
+     "description": "Bottle deposit fee amount",
+     "type": "string"
+    },
+    "bottleDepositFeeString": {
+     "description": "Bottle deposit fee as string",
+     "type": "string"
+    },
+    "cartQuantity": {
+     "description": "Quantity of this item in the cart",
+     "format": "double",
+     "type": "number"
+    },
+    "catalogDisplayPricePerUnitOfMeasure": {
+     "description": "Price per unit of measure for display",
+     "type": "string"
+    },
+    "freshButton": {
+     "description": "Fresh button information",
+     "type": "string"
+    },
+    "isAlternateSearchResult": {
+     "description": "Flag indicating if this is an alternate search result",
+     "type": "boolean"
+    },
+    "isRequiredQuantityInCart": {
+     "description": "Flag indicating if a quantity is required in cart",
+     "type": "boolean"
+    },
+    "isSoldByCount": {
+     "description": "Flag indicating if the product is sold by count",
+     "type": "boolean"
+    },
+    "itemAvailability": {
+     "description": "Status of item availability",
+     "type": "string"
+    },
+    "offerId": {
+     "description": "Unique identifier for the offer",
+     "type": "string"
+    },
+    "offerName": {
+     "description": "Display name of the product offer",
+     "type": "string"
+    },
+    "offerUnit": {
+     "description": "Unit of the offer (e.g., Fl Oz, lb)",
+     "type": "string"
+    },
+    "productAsin": {
+     "description": "ASIN associated with this product",
+     "type": "string"
+    },
+    "productDetailsUrl": {
+     "description": "URL to the product details page",
+     "type": "string"
+    },
+    "productImageUrl": {
+     "description": "URL of the product image",
+     "type": "string"
+    },
+    "promotionDisplay": {
+     "description": "Display text for active promotion",
+     "type": "string"
+    },
+    "promotionId": {
+     "description": "Identifier for active promotion",
+     "type": "string"
+    },
+    "quantityInStock": {
+     "description": "Available quantity in stock",
+     "format": "double",
+     "type": "number"
+    },
+    "requiredQuantity": {
+     "description": "Required quantity for purchase",
+     "format": "double",
+     "type": "number"
+    },
+    "retailATCButton": {
+     "description": "Retail add-to-cart button information",
+     "type": "string"
+    },
+    "reviewStars": {
+     "$ref": "ReviewStars"
+    },
+    "searchTerm": {
+     "description": "Search term associated with this product",
+     "type": "string"
+    },
+    "subtotalParams": {
+     "description": "Subtotal parameters for pricing calculations",
+     "type": "string"
+    },
+    "vuomDisplayPrice": {
+     "description": "Display price for virtual unit of measure",
+     "type": "string"
+    }
+   },
+   "required": [
+    "addToCartActionParams",
+    "cartQuantity",
+    "isAlternateSearchResult",
+    "isRequiredQuantityInCart",
+    "isSoldByCount",
+    "itemAvailability",
+    "offerId",
+    "offerName",
+    "offerUnit",
+    "productAsin",
+    "productDetailsUrl",
+    "productImageUrl",
+    "requiredQuantity",
+    "subtotalParams",
+    "vuomDisplayPrice"
+   ],
+   "type": "object"
+  },
+  "QueryBrandStorePageRequest": {
+   "properties": {
+    "editionIdFilter": {
+     "$ref": "BrandStorePageBrandStoreEditionIdFilter"
+    },
+    "maxResults": {
+     "default": 50,
+     "format": "int32",
+     "maximum": 50,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "pageIdFilter": {
+     "$ref": "BrandStorePagePageIdFilter"
+    },
+    "storeEditionPublishIdFilter": {
+     "$ref": "BrandStorePageBrandStoreEditionPublishVersionIdFilter"
+    },
+    "storeIdFilter": {
+     "$ref": "BrandStorePageBrandStoreIdFilter"
+    }
+   },
+   "required": [
+    "editionIdFilter",
+    "pageIdFilter",
+    "storeIdFilter"
+   ],
+   "type": "object"
+  },
+  "ReviewStars": {
+   "description": "Review information for a product",
+   "properties": {
+    "hasHalfStar": {
+     "description": "Flag indicating if the product has a half star in the rating",
+     "type": "boolean"
+    },
+    "reviewCount": {
+     "description": "Number of reviews for the product",
+     "format": "int32",
+     "type": "integer"
+    },
+    "wholeStars": {
+     "description": "Number of whole stars in the rating",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "hasHalfStar",
+    "reviewCount",
+    "wholeStars"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "StoreASINSlide": {
+   "properties": {
+    "productAsin": {
+     "description": "The ASIN of the product.",
+     "type": "string"
+    },
+    "tag": {
+     "description": "Unique tag for the slide which will be ASIN.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreSlideType"
+    }
+   },
+   "required": [
+    "productAsin",
+    "tag",
+    "type"
+   ],
+   "type": "object"
+  },
+  "StoreAWLSTile": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonTileProperties"
+    },
+    "content": {
+     "$ref": "StoreAWLSTileContent"
+    },
+    "externalWidgetId": {
+     "description": "External widget identifier.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "externalWidgetId"
+   ],
+   "type": "object"
+  },
+  "StoreAWLSTileContent": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandedRecipeWidget": {
+       "$ref": "BrandedRecipeWidget"
+      }
+     },
+     "required": [
+      "brandedRecipeWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeProductSelectorWidget": {
+       "$ref": "StoreProductSelectorWidget"
+      }
+     },
+     "required": [
+      "storeProductSelectorWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeVideoRevealWidget": {
+       "$ref": "StoreVideoRevealWidget"
+      }
+     },
+     "required": [
+      "storeVideoRevealWidget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "StoreAWLSWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "tiles": {
+     "description": "The AWLS tile configuration. Exactly one tile is required.",
+     "items": {
+      "$ref": "StoreAWLSTile"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "widgetDependencies": {
+     "description": "List of widget dependencies.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "tiles"
+   ],
+   "type": "object"
+  },
+  "StoreBannerContent": {
+   "properties": {
+    "banners": {
+     "$ref": "StoreBanners"
+    },
+    "tag": {
+     "description": "Unique tag for the content.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreWidgetType"
+    }
+   },
+   "type": "object"
+  },
+  "StoreBannerWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "content": {
+     "$ref": "StoreBannerContent"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "content"
+   ],
+   "type": "object"
+  },
+  "StoreBanners": {
+   "properties": {
+    "blackLivesMatter": {
+     "description": "Flag to display Black Lives Matter banner",
+     "type": "boolean"
+    },
+    "stopAsianHate": {
+     "description": "Flag to display Stop Asian Hate banner",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "blackLivesMatter",
+    "stopAsianHate"
+   ],
+   "type": "object"
+  },
+  "StoreBleedImageType": {
+   "description": "**StoreBleedImageType Enum:** | StoreBleedImageType | Description | | --- | --- | | `NONE` | No image bleed | | `SIDE` | Side image bleed | | `CORNER` | Corner image bleed | | `ALL` | All sides image bleed |",
+   "enum": [
+    "ALL",
+    "CORNER",
+    "NONE",
+    "SIDE"
+   ],
+   "type": "string"
+  },
+  "StoreCallToActionData": {
+   "properties": {
+    "customUrl": {
+     "description": "Custom URL for the call to action.",
+     "type": "string"
+    },
+    "pageId": {
+     "description": "Page identifier.",
+     "type": "string"
+    },
+    "productAsin": {
+     "description": "ASIN for the call to action.",
+     "type": "string"
+    },
+    "text": {
+     "description": "Call to action text.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoreCallToActionProductData": {
+   "properties": {
+    "customUrl": {
+     "description": "Custom URL for the call to action.",
+     "type": "string"
+    },
+    "productAsin": {
+     "description": "Product ASIN for the call to action.",
+     "type": "string"
+    },
+    "text": {
+     "description": "Call to action text.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoreCallToActionType": {
+   "description": "**StoreCallToActionType Enum:** | StoreCallToActionType | Description | | --- | --- | | `LINK` | Link type call to action | | `BUTTON` | Button type call to action |",
+   "enum": [
+    "BUTTON",
+    "LINK"
+   ],
+   "type": "string"
+  },
+  "StoreCanvasData": {
+   "properties": {
+    "canvasHeight": {
+     "description": "Height in the canvas.",
+     "format": "double",
+     "type": "number"
+    },
+    "height": {
+     "description": "Height in the canvas.",
+     "format": "double",
+     "type": "number"
+    },
+    "left": {
+     "description": "Left position in the canvas.",
+     "format": "double",
+     "type": "number"
+    },
+    "naturalHeight": {
+     "description": "Natural height of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "naturalWidth": {
+     "description": "Natural width of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "top": {
+     "description": "Top position in the canvas.",
+     "format": "double",
+     "type": "number"
+    },
+    "width": {
+     "description": "Width in the canvas.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "StoreCarouselContent": {
+   "properties": {
+    "bulk": {
+     "description": "Whether this is a bulk configuration.",
+     "type": "boolean"
+    },
+    "callToActionData": {
+     "$ref": "StoreCallToActionData"
+    },
+    "includeOutOfStock": {
+     "description": "Whether to include out of stock items.",
+     "type": "boolean"
+    },
+    "keyword": {
+     "description": "Keyword for product filtering.",
+     "type": "string"
+    },
+    "productAsins": {
+     "description": "List of ASINs, maximum 500 unique items.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "search": {
+     "$ref": "StoreCarouselSearch"
+    },
+    "slides": {
+     "description": "List of ASIN slides.",
+     "items": {
+      "$ref": "StoreASINSlide"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "tag": {
+     "description": "Unique tag for the content to track performance.",
+     "type": "string"
+    },
+    "text": {
+     "description": "Description text.",
+     "type": "string"
+    },
+    "title": {
+     "description": "Title of the carousel.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreWidgetSectionType"
+    }
+   },
+   "required": [
+    "bulk",
+    "callToActionData",
+    "includeOutOfStock",
+    "keyword",
+    "tag",
+    "text",
+    "title",
+    "type"
+   ],
+   "type": "object"
+  },
+  "StoreCarouselSearch": {
+   "properties": {
+    "includeOutOfStock": {
+     "description": "Whether to include out of stock items in search.",
+     "type": "boolean"
+    },
+    "keyword": {
+     "description": "Search keyword.",
+     "type": "string"
+    },
+    "node": {
+     "description": "Node identifier for search.",
+     "type": "string"
+    },
+    "productAsins": {
+     "description": "List of ASINs for search filtering.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "includeOutOfStock",
+    "keyword",
+    "node"
+   ],
+   "type": "object"
+  },
+  "StoreColorPalette": {
+   "description": "**StoreColorPalette Enum:** | StoreColorPalette | Description | | --- | --- | | `DEFAULT` | Default color scheme | | `DEFAULT_INVERTED` | Inverted default color scheme | | `SOLID_WHITE` | Solid white color scheme | | `S…",
+   "enum": [
+    "DEFAULT",
+    "DEFAULT_INVERTED",
+    "SOLID_BLACK",
+    "SOLID_WHITE",
+    "TRANSLUCENT_BLACK",
+    "TRANSLUCENT_WHITE",
+    "TRANSPARENT_BLACK",
+    "TRANSPARENT_WHITE"
+   ],
+   "type": "string"
+  },
+  "StoreCropBoxData": {
+   "properties": {
+    "height": {
+     "description": "Height of the crop box.",
+     "format": "double",
+     "type": "number"
+    },
+    "left": {
+     "description": "Left position of the crop box.",
+     "format": "double",
+     "type": "number"
+    },
+    "top": {
+     "description": "Top position of the crop box.",
+     "format": "double",
+     "type": "number"
+    },
+    "width": {
+     "description": "Width of the crop box.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "StoreCroppedImage": {
+   "properties": {
+    "altText": {
+     "description": "Alternative text for the image.",
+     "type": "string"
+    },
+    "assetId": {
+     "description": "Asset identifier.",
+     "type": "string"
+    },
+    "canvasData": {
+     "$ref": "StoreCanvasData"
+    },
+    "cropBox": {
+     "$ref": "StoreCropBoxData"
+    },
+    "imageKey": {
+     "description": "Key identifier for the image.",
+     "type": "string"
+    },
+    "imageNaturalHeight": {
+     "description": "Natural height of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageNaturalWidth": {
+     "description": "Natural width of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageUrl": {
+     "description": "URL of the image.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoreCustomCodeContent": {
+   "properties": {
+    "autoDimension": {
+     "description": "Whether to use automatic dimensioning.",
+     "type": "boolean"
+    },
+    "availableProductAsins": {
+     "description": "List of available ASINs, maximum 500 unique items.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "cti": {
+     "$ref": "CTI"
+    },
+    "embedCode": {
+     "description": "Embedded code content.",
+     "type": "string"
+    },
+    "integrity": {
+     "description": "Integrity hash for security.",
+     "type": "string"
+    },
+    "widgetName": {
+     "description": "Name of the widget.",
+     "type": "string"
+    },
+    "widgetTag": {
+     "description": "Widget identifier.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoreCustomCodeTile": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonTileProperties"
+    },
+    "content": {
+     "$ref": "StoreCustomCodeContent"
+    }
+   },
+   "required": [
+    "commonProperties"
+   ],
+   "type": "object"
+  },
+  "StoreCustomCodeWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "tiles": {
+     "description": "The custom code tile configuration. Exactly one tile is required.",
+     "items": {
+      "$ref": "StoreCustomCodeTile"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "tiles"
+   ],
+   "type": "object"
+  },
+  "StoreDealsConfig": {
+   "properties": {
+    "node": {
+     "description": "Node identifier for deals.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoreDealsContent": {
+   "properties": {
+    "deals": {
+     "$ref": "StoreDealsConfig"
+    },
+    "dealsMode": {
+     "$ref": "StoreDealsMode"
+    },
+    "productAsins": {
+     "description": "List of ASINs, maximum 500 unique items.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "tag": {
+     "description": "Unique tag for the content to track performance.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreWidgetSectionType"
+    }
+   },
+   "type": "object"
+  },
+  "StoreDealsMode": {
+   "description": "**StoreDealsMode Enum:** | StoreDealsMode | Description | | --- | --- | | `BULK` | Bulk mode | | `AUTOMATIC` | Automatic mode |",
+   "enum": [
+    "AUTOMATIC",
+    "BULK"
+   ],
+   "type": "string"
+  },
+  "StoreDealsWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "content": {
+     "$ref": "StoreDealsContent"
+    }
+   },
+   "required": [
+    "commonProperties"
+   ],
+   "type": "object"
+  },
+  "StoreEmptyTile": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonTileProperties"
+    },
+    "content": {
+     "$ref": "StoreEmptyTileContent"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "content"
+   ],
+   "type": "object"
+  },
+  "StoreEmptyTileContent": {
+   "properties": {
+    "bondCustomerServiceLink": {
+     "description": "Whether to include a customer service link.",
+     "type": "boolean"
+    },
+    "callToAction": {
+     "description": "Call to action text.",
+     "type": "string"
+    },
+    "text": {
+     "description": "Text content (must be empty).",
+     "type": "string"
+    },
+    "textAlign": {
+     "$ref": "StoreTextAlignment"
+    },
+    "title": {
+     "description": "Title of the tile (must be empty).",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoreGalleryContent": {
+   "properties": {
+    "metadata": {
+     "description": "Metadata associated with the gallery.",
+     "items": {
+      "$ref": "StoreMetadataItem"
+     },
+     "maxItems": 15,
+     "minItems": 0,
+     "type": "array"
+    },
+    "slides": {
+     "description": "List of slides in the gallery.",
+     "items": {
+      "$ref": "StoreGallerySlide"
+     },
+     "maxItems": 15,
+     "minItems": 0,
+     "type": "array"
+    },
+    "tag": {
+     "description": "Unique tag for the content.",
+     "type": "string"
+    },
+    "text": {
+     "description": "Text content of the gallery.",
+     "type": "string"
+    },
+    "title": {
+     "description": "Title of the gallery.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreWidgetType"
+    }
+   },
+   "type": "object"
+  },
+  "StoreGallerySlide": {
+   "properties": {
+    "alt": {
+     "description": "Alternative text for the slide.",
+     "type": "string"
+    },
+    "assetId": {
+     "description": "Asset identifier for the slide.",
+     "type": "string"
+    },
+    "imageKey": {
+     "description": "Key identifier for the image.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreSlideType"
+    }
+   },
+   "type": "object"
+  },
+  "StoreGalleryWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "content": {
+     "$ref": "StoreGalleryContent"
+    }
+   },
+   "required": [
+    "commonProperties"
+   ],
+   "type": "object"
+  },
+  "StoreHeroContent": {
+   "properties": {
+    "assetId": {
+     "description": "Identifier for the asset.",
+     "type": "string"
+    },
+    "assetTags": {
+     "description": "Tags associated with the asset.",
+     "type": "string"
+    },
+    "canvasData": {
+     "$ref": "StoreCanvasData"
+    },
+    "description": {
+     "description": "Description of the hero image.",
+     "type": "string"
+    },
+    "imageHeight": {
+     "description": "Height of the hero image.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageKey": {
+     "description": "Key identifier for the image.",
+     "type": "string"
+    },
+    "imageOffsetLeft": {
+     "description": "Left offset of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageOffsetTop": {
+     "description": "Top offset of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageUrl": {
+     "description": "URL of the hero image.",
+     "type": "string"
+    },
+    "imageWidth": {
+     "description": "Width of the hero image.",
+     "format": "double",
+     "type": "number"
+    },
+    "mobileContent": {
+     "$ref": "StoreMobileContent"
+    },
+    "tag": {
+     "description": "Unique tag for the content.",
+     "type": "string"
+    },
+    "textOverlay": {
+     "description": "Text overlay displayed on the hero image.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "imageUrl"
+   ],
+   "type": "object"
+  },
+  "StoreHeroImageWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "content": {
+     "$ref": "StoreHeroContent"
+    }
+   },
+   "required": [
+    "commonProperties"
+   ],
+   "type": "object"
+  },
+  "StoreImageContent": {
+   "properties": {
+    "altText": {
+     "description": "Alternative text for the image.",
+     "type": "string"
+    },
+    "assetId": {
+     "description": "Asset identifier.",
+     "type": "string"
+    },
+    "assetTags": {
+     "description": "Tags associated with the asset.",
+     "type": "string"
+    },
+    "bleedImage": {
+     "$ref": "StoreBleedImageType"
+    },
+    "callToAction": {
+     "description": "Call to action text.",
+     "type": "string"
+    },
+    "canvasData": {
+     "$ref": "StoreCanvasData"
+    },
+    "cropBoxData": {
+     "$ref": "StoreCropBoxData"
+    },
+    "customUrl": {
+     "description": "Custom URL.",
+     "type": "string"
+    },
+    "hideTitle": {
+     "description": "Whether to hide the title.",
+     "type": "boolean"
+    },
+    "imageHeight": {
+     "description": "Height of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageKey": {
+     "description": "Key identifier for the image.",
+     "type": "string"
+    },
+    "imageOffsetLeft": {
+     "description": "Left offset for image positioning.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageOffsetTop": {
+     "description": "Top offset for image positioning.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageUrl": {
+     "description": "URL of the image.",
+     "type": "string"
+    },
+    "imageWidth": {
+     "description": "Width of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "isAiGen": {
+     "description": "Whether the image is AI-generated.",
+     "type": "boolean"
+    },
+    "layout": {
+     "$ref": "StoreImageLayout"
+    },
+    "pageId": {
+     "description": "Page identifier.",
+     "type": "string"
+    },
+    "productAsins": {
+     "description": "Single ASIN for the image.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "text": {
+     "description": "Text content.",
+     "type": "string"
+    },
+    "textAlign": {
+     "$ref": "StoreImageTextAlign"
+    },
+    "tileLayers": {
+     "description": "Layer configuration for the tile.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "title": {
+     "description": "Title of the image.",
+     "type": "string"
+    },
+    "verticalAlign": {
+     "$ref": "StoreVerticalAlign"
+    }
+   },
+   "type": "object"
+  },
+  "StoreImageLayout": {
+   "description": "**StoreImageLayout Enum:** | StoreImageLayout | Description | | --- | --- | | `COVER` | Cover layout | | `CONTAIN` | Contain layout | | `TEXT` | Text layout |",
+   "enum": [
+    "CONTAIN",
+    "COVER",
+    "TEXT"
+   ],
+   "type": "string"
+  },
+  "StoreImageShape": {
+   "description": "**StoreImageShape Enum:** | StoreImageShape | Description | | --- | --- | | `SQUARE` | Square shape |",
+   "enum": [
+    "SQUARE"
+   ],
+   "type": "string"
+  },
+  "StoreImageSlide": {
+   "properties": {
+    "assetId": {
+     "description": "Asset identifier.",
+     "type": "string"
+    },
+    "assetTags": {
+     "description": "Tags associated with the asset.",
+     "type": "string"
+    },
+    "canvasData": {
+     "$ref": "StoreCanvasData"
+    },
+    "imageHeight": {
+     "description": "Height of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageKey": {
+     "description": "Key identifier for the image.",
+     "type": "string"
+    },
+    "imageOffsetLeft": {
+     "description": "Left offset for image positioning.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageOffsetTop": {
+     "description": "Top offset for image positioning.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageUrl": {
+     "description": "URL of the image.",
+     "type": "string"
+    },
+    "imageWidth": {
+     "description": "Width of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "tag": {
+     "description": "Unique identifier for the slide.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreSlideType"
+    }
+   },
+   "type": "object"
+  },
+  "StoreImageTextAlign": {
+   "description": "**StoreImageTextAlign Enum:** | StoreImageTextAlign | Description | | --- | --- | | `LEFT` | Left text alignment | | `RIGHT` | Right text alignment |",
+   "enum": [
+    "LEFT",
+    "RIGHT"
+   ],
+   "type": "string"
+  },
+  "StoreImageTile": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonTileProperties"
+    },
+    "content": {
+     "$ref": "StoreImageContent"
+    },
+    "flexHeight": {
+     "description": "Whether the height is flexible.",
+     "type": "boolean"
+    },
+    "mobileContent": {
+     "$ref": "StoreMobileImageContent"
+    },
+    "uploadMobileImage": {
+     "description": "Whether to upload a mobile-specific image.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "commonProperties"
+   ],
+   "type": "object"
+  },
+  "StoreImageWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "tiles": {
+     "description": "The image tile configuration. Exactly one tile is required.",
+     "items": {
+      "$ref": "StoreImageTile"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "tiles"
+   ],
+   "type": "object"
+  },
+  "StoreImageWithTextContent": {
+   "properties": {
+    "altText": {
+     "description": "Alternative text for the image.",
+     "type": "string"
+    },
+    "assetId": {
+     "description": "Asset identifier.",
+     "type": "string"
+    },
+    "assetTags": {
+     "description": "Tags associated with the asset.",
+     "type": "string"
+    },
+    "bleedImage": {
+     "$ref": "StoreBleedImageType"
+    },
+    "callToAction": {
+     "description": "Call to action text.",
+     "type": "string"
+    },
+    "canvasData": {
+     "$ref": "StoreCanvasData"
+    },
+    "cropBoxData": {
+     "$ref": "StoreCropBoxData"
+    },
+    "customUrl": {
+     "description": "Custom URL.",
+     "type": "string"
+    },
+    "hideTitle": {
+     "description": "Whether to hide the title.",
+     "type": "boolean"
+    },
+    "imageHeight": {
+     "description": "Height of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageKey": {
+     "description": "Key identifier for the image.",
+     "type": "string"
+    },
+    "imageOffsetLeft": {
+     "description": "Left offset for image positioning.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageOffsetTop": {
+     "description": "Top offset for image positioning.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageUrl": {
+     "description": "URL of the image.",
+     "type": "string"
+    },
+    "imageWidth": {
+     "description": "Width of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "isAiGen": {
+     "description": "Whether the image is AI-generated.",
+     "type": "boolean"
+    },
+    "layout": {
+     "$ref": "StoreImageLayout"
+    },
+    "pageId": {
+     "description": "Page identifier.",
+     "type": "string"
+    },
+    "productAsins": {
+     "description": "Single ASIN for the image.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "renderTileLayers": {
+     "description": "Whether to render tile layers.",
+     "type": "boolean"
+    },
+    "shape": {
+     "$ref": "StoreImageShape"
+    },
+    "text": {
+     "description": "Text content.",
+     "type": "string"
+    },
+    "textAlign": {
+     "$ref": "StoreTextAlignment"
+    },
+    "textOption": {
+     "$ref": "StoreTextOption"
+    },
+    "tileLayers": {
+     "description": "Layer configuration for the tile.",
+     "items": {
+      "$ref": "StoreTileLayer"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "title": {
+     "description": "Title of the image.",
+     "type": "string"
+    },
+    "verticalAlign": {
+     "$ref": "StoreVerticalAlign"
+    }
+   },
+   "type": "object"
+  },
+  "StoreImageWithTextTile": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonTileProperties"
+    },
+    "content": {
+     "$ref": "StoreImageWithTextContent"
+    },
+    "flexHeight": {
+     "description": "Whether the height is flexible.",
+     "type": "boolean"
+    },
+    "mobileContent": {
+     "$ref": "StoreMobileImageWithTextContent"
+    },
+    "uploadMobileImage": {
+     "description": "Whether to upload a mobile-specific image.",
+     "type": "boolean"
+    },
+    "variation": {
+     "$ref": "StoreImageWithTextTileVariation"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "variation"
+   ],
+   "type": "object"
+  },
+  "StoreImageWithTextTileVariation": {
+   "description": "**StoreImageWithTextTileVariation Enum:** | StoreImageWithTextTileVariation | Description | | --- | --- | | `IMAGE_WITH_TEXT` | Image with text variation |",
+   "enum": [
+    "IMAGE_WITH_TEXT"
+   ],
+   "type": "string"
+  },
+  "StoreImageWithTextWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "tiles": {
+     "description": "The image with text tile configuration. Exactly one tile is required.",
+     "items": {
+      "$ref": "StoreImageWithTextTile"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "tiles"
+   ],
+   "type": "object"
+  },
+  "StoreLayoutType": {
+   "description": "**StoreLayoutType Enum:** | StoreLayoutType | Description | | --- | --- | | `DEFAULT` | Default layout configuration | | `SHOWCASE` | Showcase layout configuration for featured display |",
+   "enum": [
+    "DEFAULT",
+    "SHOWCASE"
+   ],
+   "type": "string"
+  },
+  "StoreLiveVideoContent": {
+   "properties": {
+    "channel": {
+     "description": "Channel of the video.",
+     "type": "string"
+    },
+    "tag": {
+     "description": "Unique tag for the content.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreWidgetType"
+    }
+   },
+   "required": [
+    "tag",
+    "type"
+   ],
+   "type": "object"
+  },
+  "StoreLiveVideoWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "content": {
+     "$ref": "StoreLiveVideoContent"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "content"
+   ],
+   "type": "object"
+  },
+  "StoreManuallyCuratedProductCarouselWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "content": {
+     "$ref": "StoreCarouselContent"
+    }
+   },
+   "required": [
+    "commonProperties"
+   ],
+   "type": "object"
+  },
+  "StoreMetadataItem": {
+   "properties": {
+    "alt": {
+     "description": "Alternative text.",
+     "type": "string"
+    },
+    "assetId": {
+     "description": "Asset identifier.",
+     "type": "string"
+    },
+    "filename": {
+     "description": "Name of the file.",
+     "type": "string"
+    },
+    "imageKey": {
+     "description": "Key identifier for the image.",
+     "type": "string"
+    },
+    "imageUrl": {
+     "description": "The imageUrl of the item.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreTileType"
+    },
+    "url": {
+     "description": "URL of the item.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoreMobileContent": {
+   "properties": {
+    "assetId": {
+     "description": "Asset identifier for mobile view.",
+     "type": "string"
+    },
+    "assetTags": {
+     "description": "Asset tags for mobile view.",
+     "type": "string"
+    },
+    "canvasData": {
+     "$ref": "StoreCanvasData"
+    },
+    "imageHeight": {
+     "description": "Height of the image for mobile view.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageKey": {
+     "description": "Image key for mobile view.",
+     "type": "string"
+    },
+    "imageOffsetLeft": {
+     "description": "Left offset of the image for mobile view.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageOffsetTop": {
+     "description": "Top offset of the image for mobile view.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageUrl": {
+     "description": "URL of the image for mobile view.",
+     "type": "string"
+    },
+    "imageWidth": {
+     "description": "Width of the image for mobile view.",
+     "format": "double",
+     "type": "number"
+    },
+    "version": {
+     "description": "Version identifier for mobile content",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoreMobileImageContent": {
+   "properties": {
+    "altText": {
+     "description": "Alternative text for the mobile image.",
+     "type": "string"
+    },
+    "assetId": {
+     "description": "Asset identifier for mobile.",
+     "type": "string"
+    },
+    "assetTags": {
+     "description": "Tags associated with the mobile asset.",
+     "type": "string"
+    },
+    "bleedImage": {
+     "$ref": "StoreBleedImageType"
+    },
+    "canvasData": {
+     "$ref": "StoreCanvasData"
+    },
+    "cropBoxData": {
+     "$ref": "StoreCropBoxData"
+    },
+    "hideTitle": {
+     "description": "Whether to hide the title on mobile.",
+     "type": "boolean"
+    },
+    "imageHeight": {
+     "description": "Height of the mobile image.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageKey": {
+     "description": "Key identifier for the mobile image.",
+     "type": "string"
+    },
+    "imageOffsetLeft": {
+     "description": "Left offset for mobile image positioning.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageOffsetTop": {
+     "description": "Top offset for mobile image positioning.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageUrl": {
+     "description": "URL of the mobile image.",
+     "type": "string"
+    },
+    "imageWidth": {
+     "description": "Width of the mobile image.",
+     "format": "double",
+     "type": "number"
+    },
+    "isAiGen": {
+     "description": "Whether the mobile image is AI-generated.",
+     "type": "boolean"
+    },
+    "layout": {
+     "$ref": "StoreImageLayout"
+    },
+    "tileLayers": {
+     "description": "Layer configuration for the mobile tile.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "title": {
+     "description": "Title for mobile display.",
+     "type": "string"
+    },
+    "verticalAlign": {
+     "$ref": "StoreVerticalAlign"
+    }
+   },
+   "type": "object"
+  },
+  "StoreMobileImageWithTextContent": {
+   "properties": {
+    "altText": {
+     "description": "Alternative text for the mobile image.",
+     "type": "string"
+    },
+    "assetId": {
+     "description": "Asset identifier for mobile.",
+     "type": "string"
+    },
+    "assetTags": {
+     "description": "Tags associated with the mobile asset.",
+     "type": "string"
+    },
+    "bleedImage": {
+     "$ref": "StoreBleedImageType"
+    },
+    "canvasData": {
+     "$ref": "StoreCanvasData"
+    },
+    "cropBoxData": {
+     "$ref": "StoreCropBoxData"
+    },
+    "hideTitle": {
+     "description": "Whether to hide the title on mobile.",
+     "type": "boolean"
+    },
+    "imageHeight": {
+     "description": "Height of the mobile image.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageKey": {
+     "description": "Key identifier for the mobile image.",
+     "type": "string"
+    },
+    "imageOffsetLeft": {
+     "description": "Left offset for mobile image positioning.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageOffsetTop": {
+     "description": "Top offset for mobile image positioning.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageUrl": {
+     "description": "URL of the mobile image.",
+     "type": "string"
+    },
+    "imageWidth": {
+     "description": "Width of the mobile image.",
+     "format": "double",
+     "type": "number"
+    },
+    "isAiGen": {
+     "description": "Whether the mobile image is AI-generated.",
+     "type": "boolean"
+    },
+    "layout": {
+     "$ref": "StoreImageLayout"
+    },
+    "renderTileLayers": {
+     "description": "Whether to render tile layers on mobile.",
+     "type": "boolean"
+    },
+    "shape": {
+     "$ref": "StoreImageShape"
+    },
+    "text": {
+     "description": "Text content for mobile.",
+     "type": "string"
+    },
+    "textAlign": {
+     "$ref": "StoreTextAlignment"
+    },
+    "textOption": {
+     "$ref": "StoreTextOption"
+    },
+    "tileLayers": {
+     "description": "Layer configuration for the mobile tile.",
+     "items": {
+      "$ref": "StoreTileLayer"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "title": {
+     "description": "Title for mobile display.",
+     "type": "string"
+    },
+    "verticalAlign": {
+     "$ref": "StoreVerticalAlign"
+    }
+   },
+   "type": "object"
+  },
+  "StorePageContent": {
+   "description": "Structure containing the content elements of a store page",
+   "properties": {
+    "description": {
+     "description": "Description of the page",
+     "type": "string"
+    },
+    "template": {
+     "$ref": "StorePageTemplate"
+    },
+    "title": {
+     "description": "For store page, title of the page; for SB landing page, this can be optional",
+     "type": "string"
+    },
+    "widgets": {
+     "description": "Collection of widgets displayed on the page",
+     "items": {
+      "$ref": "StorePageWidget"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "template"
+   ],
+   "type": "object"
+  },
+  "StorePageTemplate": {
+   "description": "**StorePageTemplate Enum:** | StorePageTemplate | Description | | --- | --- | | `PRODUCT_GRID` | Template displaying products in a grid layout | | `HIGHLIGHT` | Template for highlighting specific content | | `MARQUEE` |…",
+   "enum": [
+    "BLANK",
+    "HIGHLIGHT",
+    "MARQUEE",
+    "PRODUCT_COLLECTION",
+    "PRODUCT_GRID"
+   ],
+   "type": "string"
+  },
+  "StorePageType": {
+   "description": "**StorePageType Enum:** | StorePageType | Description | | --- | --- | | `BRAND_STORE_PAGE` | Standard brand store page that allows customization to show case the brand and product | | `LANDING_PAGE` | Landing page for s…",
+   "enum": [
+    "BRAND_STORE_PAGE",
+    "LANDING_PAGE"
+   ],
+   "type": "string"
+  },
+  "StorePageWidget": {
+   "description": "Union of all possible widget types that can be used on a store page",
+   "oneOf": [
+    {
+     "properties": {
+      "storeHeroImageWidget": {
+       "$ref": "StoreHeroImageWidget"
+      }
+     },
+     "required": [
+      "storeHeroImageWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeTileWidget": {
+       "$ref": "StoreTileWidget"
+      }
+     },
+     "required": [
+      "storeTileWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeImageWidget": {
+       "$ref": "StoreImageWidget"
+      }
+     },
+     "required": [
+      "storeImageWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeTextWidget": {
+       "$ref": "StoreTextWidget"
+      }
+     },
+     "required": [
+      "storeTextWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeImageWithTextWidget": {
+       "$ref": "StoreImageWithTextWidget"
+      }
+     },
+     "required": [
+      "storeImageWithTextWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeProductCollectionWidget": {
+       "$ref": "StoreProductCollectionWidget"
+      }
+     },
+     "required": [
+      "storeProductCollectionWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeProductGridWidget": {
+       "$ref": "StoreProductGridWidget"
+      }
+     },
+     "required": [
+      "storeProductGridWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeDealsWidget": {
+       "$ref": "StoreDealsWidget"
+      }
+     },
+     "required": [
+      "storeDealsWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeProductWidget": {
+       "$ref": "StoreProductWidget"
+      }
+     },
+     "required": [
+      "storeProductWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeShoppableImageWidget": {
+       "$ref": "StoreShoppableImageWidget"
+      }
+     },
+     "required": [
+      "storeShoppableImageWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeCustomCodeWidget": {
+       "$ref": "StoreCustomCodeWidget"
+      }
+     },
+     "required": [
+      "storeCustomCodeWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeVideoWidget": {
+       "$ref": "StoreVideoWidget"
+      }
+     },
+     "required": [
+      "storeVideoWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeGalleryWidget": {
+       "$ref": "StoreGalleryWidget"
+      }
+     },
+     "required": [
+      "storeGalleryWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeShopTheLookWidget": {
+       "$ref": "StoreShopTheLookWidget"
+      }
+     },
+     "required": [
+      "storeShopTheLookWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeManuallyCuratedProductCarouselWidget": {
+       "$ref": "StoreManuallyCuratedProductCarouselWidget"
+      }
+     },
+     "required": [
+      "storeManuallyCuratedProductCarouselWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeAWLSWidget": {
+       "$ref": "StoreAWLSWidget"
+      }
+     },
+     "required": [
+      "storeAWLSWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeBannerWidget": {
+       "$ref": "StoreBannerWidget"
+      }
+     },
+     "required": [
+      "storeBannerWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeProductCarouselWidget": {
+       "$ref": "StoreProductCarouselWidget"
+      }
+     },
+     "required": [
+      "storeProductCarouselWidget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeLiveVideoWidget": {
+       "$ref": "StoreLiveVideoWidget"
+      }
+     },
+     "required": [
+      "storeLiveVideoWidget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "StoreProductCarouselContent": {
+   "properties": {
+    "callToActionData": {
+     "$ref": "StoreCallToActionProductData"
+    },
+    "searchContent": {
+     "$ref": "StoreProductCarouselSearch"
+    },
+    "tag": {
+     "description": "Unique tag for the content.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreWidgetSectionType"
+    }
+   },
+   "required": [
+    "tag",
+    "type"
+   ],
+   "type": "object"
+  },
+  "StoreProductCarouselSearch": {
+   "properties": {
+    "node": {
+     "description": "Node identifier for search",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreProductCarouselSearchType"
+    }
+   },
+   "type": "object"
+  },
+  "StoreProductCarouselSearchType": {
+   "description": "**StoreProductCarouselSearchType Enum:** | StoreProductCarouselSearchType | Description | | --- | --- | | `RECOMMENDATION_FOR_YOU` | Personalized recommendations | | `BEST_SELLING` | Best selling items |",
+   "enum": [
+    "BEST_SELLING",
+    "RECOMMENDATION_FOR_YOU"
+   ],
+   "type": "string"
+  },
+  "StoreProductCarouselWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "content": {
+     "$ref": "StoreProductCarouselContent"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "content"
+   ],
+   "type": "object"
+  },
+  "StoreProductCollectionASINGrid": {
+   "properties": {
+    "bulk": {
+     "description": "Whether this is a bulk configuration.",
+     "type": "boolean"
+    },
+    "description": {
+     "description": "Description of the product grid.",
+     "type": "string"
+    },
+    "displayProductGridHeader": {
+     "description": "Whether to display the product grid header.",
+     "type": "boolean"
+    },
+    "includeOutOfStock": {
+     "description": "Whether to include out of stock products.",
+     "type": "boolean"
+    },
+    "isAutomatedProductGrid": {
+     "description": "Whether the product grid is automatically populated",
+     "type": "boolean"
+    },
+    "keyword": {
+     "description": "Keyword for product filtering.",
+     "type": "string"
+    },
+    "productAsins": {
+     "description": "List of ASINs, maximum 60 unique items.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 60,
+     "minItems": 0,
+     "type": "array"
+    },
+    "sort": {
+     "description": "Sort order for products.",
+     "type": "string"
+    },
+    "tag": {
+     "description": "Unique tag for the tile to track performance.",
+     "type": "string"
+    },
+    "title": {
+     "description": "Title of the product grid.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreWidgetSectionType"
+    },
+    "variation": {
+     "description": "Variation of the product grid.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "type"
+   ],
+   "type": "object"
+  },
+  "StoreProductCollectionContent": {
+   "properties": {
+    "collectionTags": {
+     "description": "Tags associated with the collection.",
+     "type": "string"
+    },
+    "productGridConversionTimestamp": {
+     "description": "Timestamp of product grid conversion.",
+     "format": "double",
+     "type": "number"
+    },
+    "tag": {
+     "description": "Unique tag for the content.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreWidgetType"
+    }
+   },
+   "type": "object"
+  },
+  "StoreProductCollectionImageTile": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonTileProperties"
+    },
+    "content": {
+     "$ref": "StoreImageWithTextContent"
+    },
+    "flexHeight": {
+     "description": "Whether the height is flexible.",
+     "type": "boolean"
+    },
+    "mobileContent": {
+     "$ref": "StoreMobileImageWithTextContent"
+    },
+    "uploadMobileImage": {
+     "description": "Whether to upload a mobile-specific image.",
+     "type": "boolean"
+    },
+    "variation": {
+     "$ref": "StoreImageWithTextTileVariation"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "variation"
+   ],
+   "type": "object"
+  },
+  "StoreProductCollectionTile": {
+   "oneOf": [
+    {
+     "properties": {
+      "storeProductCollectionImageTile": {
+       "$ref": "StoreProductCollectionImageTile"
+      }
+     },
+     "required": [
+      "storeProductCollectionImageTile"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeProductCollectionASINGrid": {
+       "$ref": "StoreProductCollectionASINGrid"
+      }
+     },
+     "required": [
+      "storeProductCollectionASINGrid"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "StoreProductCollectionWidget": {
+   "properties": {
+    "aiMetadata": {
+     "description": "Metadata about AI generated fields.",
+     "items": {
+      "$ref": "Tag"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "content": {
+     "$ref": "StoreProductCollectionContent"
+    },
+    "tiles": {
+     "description": "The tiles for the product collection. Exactly two tiles are required.",
+     "items": {
+      "$ref": "StoreProductCollectionTile"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "tiles"
+   ],
+   "type": "object"
+  },
+  "StoreProductGridContent": {
+   "properties": {
+    "bulk": {
+     "description": "Whether this is a bulk product grid.",
+     "type": "boolean"
+    },
+    "description": {
+     "description": "Description of the product grid.",
+     "type": "string"
+    },
+    "displayProductGridHeader": {
+     "description": "Whether to display the grid header.",
+     "type": "boolean"
+    },
+    "excludedProductAsins": {
+     "description": "List of product ASINs exclude when dynamic.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "includeOutOfStock": {
+     "description": "Whether to include out of stock products.",
+     "type": "boolean"
+    },
+    "isAutomatedProductGrid": {
+     "description": "Whether the product grid is automatically populated",
+     "type": "boolean"
+    },
+    "keyword": {
+     "description": "Keyword for product filtering.",
+     "type": "string"
+    },
+    "pinnedProductAsins": {
+     "description": "List of product ASINs include when dynamic.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 25,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productAsins": {
+     "description": "List of product ASINs.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productType": {
+     "description": "Type of products to display",
+     "type": "string"
+    },
+    "search": {
+     "$ref": "StoreProductGridSearch"
+    },
+    "showOnlyMarkdown": {
+     "description": "Whether to only show products on markdown.",
+     "type": "boolean"
+    },
+    "sort": {
+     "description": "Sort order for products.",
+     "type": "string"
+    },
+    "tag": {
+     "description": "Unique tag for the content.",
+     "type": "string"
+    },
+    "title": {
+     "description": "Title of the product grid.",
+     "type": "string"
+    },
+    "type": {
+     "description": "Type of the content.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoreProductGridSearch": {
+   "properties": {
+    "brandId": {
+     "description": "brand id to search.",
+     "type": "string"
+    },
+    "includeOutOfStock": {
+     "description": "Whether to include out of stock products in search.",
+     "type": "boolean"
+    },
+    "keyword": {
+     "description": "Search keyword.",
+     "type": "string"
+    },
+    "node": {
+     "description": "Node identifier for search.",
+     "type": "string"
+    },
+    "productAsins": {
+     "description": "List of product ASINs.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "sort": {
+     "description": "Sort order for search results.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoreProductGridWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "content": {
+     "$ref": "StoreProductGridContent"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "content"
+   ],
+   "type": "object"
+  },
+  "StoreProductSelectorAnswer": {
+   "description": "Represents a possible answer in the product selector questionnaire",
+   "properties": {
+    "image": {
+     "$ref": "StoreProductSelectorImage"
+    },
+    "nextStep": {
+     "description": "Reference to the next question or step in the selection flow",
+     "type": "string"
+    },
+    "productAsins": {
+     "description": "List of ASINs associated with this answer",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "tag": {
+     "description": "Unique identifier for the answer",
+     "type": "string"
+    },
+    "text": {
+     "description": "Display text for the answer option",
+     "type": "string"
+    }
+   },
+   "required": [
+    "nextStep",
+    "tag"
+   ],
+   "type": "object"
+  },
+  "StoreProductSelectorButtonColor": {
+   "description": "**StoreProductSelectorButtonColor Enum:** | StoreProductSelectorButtonColor | Description | | --- | --- | | `WHITE` | White button color | | `BLACK` | Black button color | | `TRANSPARENT` | Transparent button color |",
+   "enum": [
+    "BLACK",
+    "TRANSPARENT",
+    "WHITE"
+   ],
+   "type": "string"
+  },
+  "StoreProductSelectorDesignOptions": {
+   "description": "Visual styling options for the product selector widget",
+   "properties": {
+    "backgroundColor": {
+     "description": "Background color in hex or named color value",
+     "type": "string"
+    },
+    "backgroundShape": {
+     "description": "Shape of the background container",
+     "type": "string"
+    },
+    "buttonColor": {
+     "$ref": "StoreProductSelectorButtonColor"
+    },
+    "buttonShape": {
+     "description": "Shape style for buttons in the selector",
+     "type": "string"
+    },
+    "textAlignment": {
+     "description": "Alignment of text elements (left, center, right)",
+     "type": "string"
+    },
+    "textSize": {
+     "description": "Size of the text elements",
+     "type": "string"
+    },
+    "textStyle": {
+     "description": "Font family or style to be used",
+     "type": "string"
+    },
+    "textWeight": {
+     "description": "Font weight for text elements",
+     "type": "string"
+    }
+   },
+   "required": [
+    "backgroundColor",
+    "backgroundShape",
+    "buttonShape",
+    "textAlignment",
+    "textSize",
+    "textStyle",
+    "textWeight"
+   ],
+   "type": "object"
+  },
+  "StoreProductSelectorImage": {
+   "description": "Represents an image used in the product selector introduction",
+   "properties": {
+    "assetId": {
+     "description": "Asset ID of the image",
+     "type": "string"
+    },
+    "fileName": {
+     "description": "File name of the image",
+     "type": "string"
+    },
+    "imageUrl": {
+     "description": "URL of the image",
+     "type": "string"
+    },
+    "layout": {
+     "$ref": "StoreProductSelectorImageLayout"
+    }
+   },
+   "required": [
+    "assetId",
+    "imageUrl"
+   ],
+   "type": "object"
+  },
+  "StoreProductSelectorImageLayout": {
+   "description": "**StoreProductSelectorImageLayout Enum:** | StoreProductSelectorImageLayout | Description | | --- | --- | | `TOP` | Top image layout | | `LEFT` | Left image layout | | `RIGHT` | Right image layout | | `BOTTOM` | Bottom …",
+   "enum": [
+    "BOTTOM",
+    "LEFT",
+    "RIGHT",
+    "TOP"
+   ],
+   "type": "string"
+  },
+  "StoreProductSelectorImageOptions": {
+   "description": "Image options for the product selector introduction",
+   "properties": {
+    "image": {
+     "$ref": "StoreProductSelectorImage"
+    },
+    "layoutConfiguration": {
+     "$ref": "StoreProductSelectorLayoutConfiguration"
+    }
+   },
+   "required": [
+    "image",
+    "layoutConfiguration"
+   ],
+   "type": "object"
+  },
+  "StoreProductSelectorIntroduction": {
+   "description": "Introduction section for the product selector widget",
+   "properties": {
+    "buttonText": {
+     "description": "Text displayed on the introduction button",
+     "type": "string"
+    },
+    "description": {
+     "description": "Description text for the introduction section",
+     "type": "string"
+    },
+    "heading": {
+     "description": "Heading text for the introduction section",
+     "type": "string"
+    },
+    "headline": {
+     "description": "Headline text for the introduction section",
+     "type": "string"
+    },
+    "imageOptions": {
+     "$ref": "StoreProductSelectorImageOptions"
+    },
+    "isEnabled": {
+     "description": "Flag indicating whether the introduction is enabled",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "buttonText",
+    "description",
+    "heading",
+    "imageOptions",
+    "isEnabled"
+   ],
+   "type": "object"
+  },
+  "StoreProductSelectorLayoutConfiguration": {
+   "description": "Layout configuration for desktop and mobile views",
+   "properties": {
+    "desktopLayout": {
+     "$ref": "StoreProductSelectorImageLayout"
+    },
+    "mobileLayout": {
+     "$ref": "StoreProductSelectorImageLayout"
+    }
+   },
+   "required": [
+    "desktopLayout",
+    "mobileLayout"
+   ],
+   "type": "object"
+  },
+  "StoreProductSelectorQuestion": {
+   "description": "Represents a question in the product selector questionnaire",
+   "properties": {
+    "answerList": {
+     "description": "List of possible answers for this question",
+     "items": {
+      "$ref": "StoreProductSelectorAnswer"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "areImagesEnabled": {
+     "description": "Flag indicating whether images are enabled",
+     "type": "boolean"
+    },
+    "description": {
+     "description": "Additional descriptive text or context for the question",
+     "type": "string"
+    },
+    "hasImage": {
+     "description": "Flag indicating whether the question has an image",
+     "type": "boolean"
+    },
+    "tag": {
+     "description": "Unique identifier for the question",
+     "type": "string"
+    },
+    "text": {
+     "description": "Main question text displayed to the user",
+     "type": "string"
+    }
+   },
+   "required": [
+    "tag"
+   ],
+   "type": "object"
+  },
+  "StoreProductSelectorResults": {
+   "description": "Configuration for displaying product selector results",
+   "properties": {
+    "buttonText": {
+     "description": "Text to display on the call-to-action button",
+     "type": "string"
+    },
+    "description": {
+     "description": "Descriptive text explaining the results",
+     "type": "string"
+    },
+    "disclaimer": {
+     "description": "Legal or additional information text for the results",
+     "type": "string"
+    },
+    "headline": {
+     "description": "Main heading text for the results section",
+     "type": "string"
+    },
+    "storeUrl": {
+     "description": "URL to the store page for the selected products",
+     "type": "string"
+    }
+   },
+   "required": [
+    "disclaimer",
+    "headline"
+   ],
+   "type": "object"
+  },
+  "StoreProductSelectorWidget": {
+   "description": "Main widget structure for the product selector feature",
+   "properties": {
+    "designOptions": {
+     "$ref": "StoreProductSelectorDesignOptions"
+    },
+    "introduction": {
+     "$ref": "StoreProductSelectorIntroduction"
+    },
+    "productAsins": {
+     "description": "Master list of ASINs available in the selector",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "questionList": {
+     "description": "Ordered list of questions in the selector flow",
+     "items": {
+      "$ref": "StoreProductSelectorQuestion"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "results": {
+     "$ref": "StoreProductSelectorResults"
+    }
+   },
+   "required": [
+    "designOptions",
+    "results"
+   ],
+   "type": "object"
+  },
+  "StoreProductTile": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonTileProperties"
+    },
+    "content": {
+     "$ref": "StoreProductTileContent"
+    }
+   },
+   "required": [
+    "commonProperties"
+   ],
+   "type": "object"
+  },
+  "StoreProductTileContent": {
+   "properties": {
+    "bleedImage": {
+     "$ref": "StoreBleedImageType"
+    },
+    "displayOutOfStockASIN": {
+     "description": "Whether to display out of stock ASIN.",
+     "type": "boolean"
+    },
+    "layout": {
+     "$ref": "StoreLayoutType"
+    },
+    "productAsins": {
+     "description": "Single ASIN for the product.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "text": {
+     "description": "Description text for the product.",
+     "type": "string"
+    },
+    "textAlign": {
+     "$ref": "StoreTextAlignment"
+    },
+    "title": {
+     "description": "Title of the product.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoreProductWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "tiles": {
+     "description": "The product tile configuration. Exactly one tile is required.",
+     "items": {
+      "$ref": "StoreProductTile"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "tiles"
+   ],
+   "type": "object"
+  },
+  "StoreShopTheLookContent": {
+   "properties": {
+    "bulk": {
+     "description": "Whether this is a bulk configuration.",
+     "type": "boolean"
+    },
+    "callToActionData": {
+     "$ref": "StoreCallToActionData"
+    },
+    "includeOutOfStock": {
+     "description": "Whether to include out of stock items.",
+     "type": "boolean"
+    },
+    "keyword": {
+     "description": "Keyword for searching.",
+     "type": "string"
+    },
+    "productAsins": {
+     "description": "List of product ASINs, maximum 25 unique items.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 25,
+     "minItems": 0,
+     "type": "array"
+    },
+    "search": {
+     "$ref": "StoreShopTheLookSearch"
+    },
+    "slides": {
+     "description": "List of slides in the carousel.",
+     "items": {
+      "$ref": "StoreShopTheLookSlide"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "tag": {
+     "description": "Unique tag for the content.",
+     "type": "string"
+    },
+    "text": {
+     "description": "Text content.",
+     "type": "string"
+    },
+    "title": {
+     "description": "Title of the content.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreWidgetSectionType"
+    }
+   },
+   "type": "object"
+  },
+  "StoreShopTheLookSearch": {
+   "properties": {
+    "includeOutOfStock": {
+     "description": "Whether to include out of stock items in search.",
+     "type": "boolean"
+    },
+    "keyword": {
+     "description": "Search keyword.",
+     "type": "string"
+    },
+    "node": {
+     "description": "Node identifier for search.",
+     "type": "string"
+    },
+    "productAsins": {
+     "description": "Single ASIN for search filtering.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "StoreShopTheLookSlide": {
+   "oneOf": [
+    {
+     "properties": {
+      "storeImageSlide": {
+       "$ref": "StoreImageSlide"
+      }
+     },
+     "required": [
+      "storeImageSlide"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeASINSlide": {
+       "$ref": "StoreASINSlide"
+      }
+     },
+     "required": [
+      "storeASINSlide"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "StoreShopTheLookWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "content": {
+     "$ref": "StoreShopTheLookContent"
+    }
+   },
+   "required": [
+    "commonProperties"
+   ],
+   "type": "object"
+  },
+  "StoreShoppableImageContent": {
+   "properties": {
+    "croppedImage": {
+     "$ref": "StoreCroppedImage"
+    },
+    "points": {
+     "description": "Interactive points on the image.",
+     "items": {
+      "$ref": "StoreShoppablePoint"
+     },
+     "maxItems": 6,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productAsins": {
+     "description": "Single ASIN for the point.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "renderTileLayers": {
+     "description": "Whether to render tile layers.",
+     "type": "boolean"
+    },
+    "textOption": {
+     "$ref": "StoreShoppableTextOption"
+    },
+    "tileLayers": {
+     "description": "Layer configuration for the tile.",
+     "items": {
+      "$ref": "StoreTileLayer"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "StoreShoppableImageTile": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonTileProperties"
+    },
+    "content": {
+     "$ref": "StoreShoppableImageContent"
+    }
+   },
+   "required": [
+    "commonProperties"
+   ],
+   "type": "object"
+  },
+  "StoreShoppableImageWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "tiles": {
+     "description": "The shoppable image tile configuration. Exactly one tile is required.",
+     "items": {
+      "$ref": "StoreShoppableImageTile"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "tiles"
+   ],
+   "type": "object"
+  },
+  "StoreShoppablePoint": {
+   "properties": {
+    "coordinates": {
+     "$ref": "Coordinates"
+    },
+    "productAsins": {
+     "description": "Single ASIN for the point.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "tag": {
+     "description": "Unique tag for the point.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreTileType"
+    }
+   },
+   "required": [
+    "coordinates"
+   ],
+   "type": "object"
+  },
+  "StoreShoppableTextOption": {
+   "description": "**StoreShoppableTextOption Enum:** | StoreShoppableTextOption | Description | | --- | --- | | `TEXT_UNDER_INTERACTIVE_IMAGE` | Text under interactive image | | `NO_TEXT_UNDER_INTERACTIVE_IMAGE` | No text under interacti…",
+   "enum": [
+    "NO_TEXT_UNDER_INTERACTIVE_IMAGE",
+    "TEXT_OVER_IMAGE",
+    "TEXT_UNDER_INTERACTIVE_IMAGE"
+   ],
+   "type": "string"
+  },
+  "StoreSlideType": {
+   "description": "**StoreSlideType Enum:** | StoreSlideType | Description | | --- | --- | | `IMAGE` | Slide type for StoreGallerySlide, StoreImageSlide | | `ASIN` | Slide type for StoreASINSlide |",
+   "enum": [
+    "ASIN",
+    "IMAGE"
+   ],
+   "type": "string"
+  },
+  "StoreTextAlignment": {
+   "description": "**StoreTextAlignment Enum:** | StoreTextAlignment | Description | | --- | --- | | `LEFT` | Left alignment. Default value configured for StoreEmptyTile | | `CENTER` | Center alignment | | `RIGHT` | Right alignment | | `J…",
+   "enum": [
+    "CENTER",
+    "JUSTIFY",
+    "LEFT",
+    "RIGHT"
+   ],
+   "type": "string"
+  },
+  "StoreTextContent": {
+   "properties": {
+    "bold": {
+     "description": "Whether text should be bold.",
+     "type": "boolean"
+    },
+    "bondCustomerServiceLink": {
+     "description": "Whether to include customer service link.",
+     "type": "boolean"
+    },
+    "callToAction": {
+     "description": "Call to action text.",
+     "type": "string"
+    },
+    "customUrl": {
+     "description": "Custom URL for the content.",
+     "type": "string"
+    },
+    "pageId": {
+     "description": "Identifier for the page.",
+     "type": "string"
+    },
+    "productAsins": {
+     "description": "Single product ASIN for the content.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "text": {
+     "description": "Main text content.",
+     "type": "string"
+    },
+    "textAlign": {
+     "$ref": "StoreTextAlignment"
+    },
+    "title": {
+     "description": "Title of the content.",
+     "type": "string"
+    },
+    "uppercase": {
+     "description": "Whether text should be uppercase.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "bold",
+    "text",
+    "title",
+    "uppercase"
+   ],
+   "type": "object"
+  },
+  "StoreTextOption": {
+   "description": "**StoreTextOption Enum:** | StoreTextOption | Description | | --- | --- | | `TEXT_OVER_IMAGE` | Text overlaid on image | | `TEXT_NEXT_TO_IMAGE` | Text next to image |",
+   "enum": [
+    "TEXT_NEXT_TO_IMAGE",
+    "TEXT_OVER_IMAGE"
+   ],
+   "type": "string"
+  },
+  "StoreTextOptionType": {
+   "description": "**StoreTextOptionType Enum:** | StoreTextOptionType | Description | | --- | --- | | `NO_TEXT_OVER_VIDEO` | No text overlay on video | | `TEXT_OVER_VIDEO` | Text overlay on video |",
+   "enum": [
+    "NO_TEXT_OVER_VIDEO",
+    "TEXT_OVER_VIDEO"
+   ],
+   "type": "string"
+  },
+  "StoreTextTile": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonTileProperties"
+    },
+    "content": {
+     "$ref": "StoreTextContent"
+    }
+   },
+   "required": [
+    "commonProperties"
+   ],
+   "type": "object"
+  },
+  "StoreTextWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "tiles": {
+     "description": "Single text tile configuration.",
+     "items": {
+      "$ref": "StoreTextTile"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "tiles"
+   ],
+   "type": "object"
+  },
+  "StoreTile": {
+   "oneOf": [
+    {
+     "properties": {
+      "storeImageWithTextTile": {
+       "$ref": "StoreImageWithTextTile"
+      }
+     },
+     "required": [
+      "storeImageWithTextTile"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeImageTile": {
+       "$ref": "StoreImageTile"
+      }
+     },
+     "required": [
+      "storeImageTile"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeProductTile": {
+       "$ref": "StoreProductTile"
+      }
+     },
+     "required": [
+      "storeProductTile"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeShoppableImageTile": {
+       "$ref": "StoreShoppableImageTile"
+      }
+     },
+     "required": [
+      "storeShoppableImageTile"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeTextTile": {
+       "$ref": "StoreTextTile"
+      }
+     },
+     "required": [
+      "storeTextTile"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeVideoTile": {
+       "$ref": "StoreVideoTile"
+      }
+     },
+     "required": [
+      "storeVideoTile"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeEmptyTile": {
+       "$ref": "StoreEmptyTile"
+      }
+     },
+     "required": [
+      "storeEmptyTile"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "storeCustomCodeTile": {
+       "$ref": "StoreCustomCodeTile"
+      }
+     },
+     "required": [
+      "storeCustomCodeTile"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "StoreTileBorderSize": {
+   "description": "**StoreTileBorderSize Enum:** | StoreTileBorderSize | Description | | --- | --- | | `NONE` | No border | | `SMALL` | Small border size | | `MEDIUM` | Medium border size | | `LARGE` | Large border size |",
+   "enum": [
+    "LARGE",
+    "MEDIUM",
+    "NONE",
+    "SMALL"
+   ],
+   "type": "string"
+  },
+  "StoreTileLayer": {
+   "properties": {
+    "colorPalette": {
+     "$ref": "StoreColorPalette"
+    },
+    "content": {
+     "$ref": "StoreTileLayerContent"
+    },
+    "coverTile": {
+     "description": "Whether the layer covers the entire tile.",
+     "type": "boolean"
+    },
+    "margin": {
+     "$ref": "StoreTileBorderSize"
+    },
+    "opacity": {
+     "description": "Opacity level of the layer.",
+     "format": "double",
+     "type": "number"
+    },
+    "outOfBounds": {
+     "description": "Whether the layer is out of bounds.",
+     "type": "boolean"
+    },
+    "padding": {
+     "$ref": "StoreTileBorderSize"
+    },
+    "position": {
+     "$ref": "StoreTilePosition"
+    },
+    "tag": {
+     "description": "Unique tag for the tile layer to track performance.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "StoreTileType"
+    }
+   },
+   "type": "object"
+  },
+  "StoreTileLayerContent": {
+   "properties": {
+    "bodyText": {
+     "description": "Body text for the layer.",
+     "type": "string"
+    },
+    "bondCustomerServiceLink": {
+     "description": "Whether to include a customer service link.",
+     "type": "boolean"
+    },
+    "callToAction": {
+     "description": "Call to action text for the layer.",
+     "type": "string"
+    },
+    "callToActionType": {
+     "$ref": "StoreCallToActionType"
+    },
+    "customUrl": {
+     "description": "Custom URL for the layer.",
+     "type": "string"
+    },
+    "headerText": {
+     "description": "Header text for the layer.",
+     "type": "string"
+    },
+    "pageId": {
+     "description": "Page identifier for the layer.",
+     "type": "string"
+    },
+    "prefixText": {
+     "description": "Prefix text for the layer.",
+     "type": "string"
+    },
+    "productAsins": {
+     "description": "Single ASIN for the layer.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "tileTextAlignment": {
+     "$ref": "StoreTextAlignment"
+    },
+    "tileTextSize": {
+     "$ref": "StoreTileTextSize"
+    }
+   },
+   "type": "object"
+  },
+  "StoreTilePosition": {
+   "properties": {
+    "x": {
+     "$ref": "HorizontalPosition"
+    },
+    "y": {
+     "$ref": "VerticalPosition"
+    }
+   },
+   "type": "object"
+  },
+  "StoreTileSize": {
+   "description": "**StoreTileSize Enum:** | StoreTileSize | Description | | --- | --- | | `LARGE` | Large tile size, StoreAWLSTile only uses LARGE | | `MEDIUM` | Medium tile size | | `SMALL` | Small tile size | | `MINI` | Mini tile size |",
+   "enum": [
+    "LARGE",
+    "MEDIUM",
+    "MINI",
+    "SMALL"
+   ],
+   "type": "string"
+  },
+  "StoreTileTextSize": {
+   "description": "**StoreTileTextSize Enum:** | StoreTileTextSize | Description | | --- | --- | | `MINI` | Mini text size | | `SMALL` | Small text size | | `MEDIUM` | Medium text size | | `LARGE` | Large text size |",
+   "enum": [
+    "LARGE",
+    "MEDIUM",
+    "MINI",
+    "SMALL"
+   ],
+   "type": "string"
+  },
+  "StoreTileType": {
+   "description": "**StoreTileType Enum:** | StoreTileType | Description | | --- | --- | | `TEXT` | Tile type for StoreTextTile and tile layers | | `IMAGE` | Tile type for StoreImageTile, StoreImageWithTextTile, StoreMetadataItem type | |…",
+   "enum": [
+    "CUSTOM_CODE",
+    "EMPTY",
+    "EXTERNAL_WIDGET",
+    "IMAGE",
+    "INTERACTIVE_IMAGE",
+    "PRODUCT",
+    "TEXT",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "StoreTileWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "rowHeight": {
+     "description": "Height of the row in pixels.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "tiles": {
+     "description": "The tiles for the widget. Minimum 2 and maximum 8 tiles are allowed.",
+     "items": {
+      "$ref": "StoreTile"
+     },
+     "maxItems": 8,
+     "minItems": 2,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "tiles"
+   ],
+   "type": "object"
+  },
+  "StoreVerticalAlign": {
+   "description": "**StoreVerticalAlign Enum:** | StoreVerticalAlign | Description | | --- | --- | | `TOP` | Top alignment | | `MIDDLE` | Middle alignment | | `BOTTOM` | Bottom alignment |",
+   "enum": [
+    "BOTTOM",
+    "MIDDLE",
+    "TOP"
+   ],
+   "type": "string"
+  },
+  "StoreVideoContent": {
+   "properties": {
+    "assetId": {
+     "description": "Asset identifier.",
+     "type": "string"
+    },
+    "assetTags": {
+     "description": "Tags associated with the asset.",
+     "type": "string"
+    },
+    "autoPlay": {
+     "description": "Whether video should auto-play.",
+     "type": "boolean"
+    },
+    "callToAction": {
+     "description": "Call to action text.",
+     "type": "string"
+    },
+    "canvasData": {
+     "$ref": "StoreCanvasData"
+    },
+    "customUrl": {
+     "description": "Custom URL for the content.",
+     "type": "string"
+    },
+    "imageHeight": {
+     "description": "Height of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageKey": {
+     "description": "Key for the image asset.",
+     "type": "string"
+    },
+    "imageOffsetLeft": {
+     "description": "Left offset for image positioning.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageOffsetTop": {
+     "description": "Top offset for image positioning.",
+     "format": "double",
+     "type": "number"
+    },
+    "imageUrl": {
+     "description": "URL of the image.",
+     "type": "string"
+    },
+    "imageWidth": {
+     "description": "Width of the image.",
+     "format": "double",
+     "type": "number"
+    },
+    "mute": {
+     "description": "Whether video should be muted.",
+     "type": "boolean"
+    },
+    "pageId": {
+     "description": "Page identifier",
+     "type": "string"
+    },
+    "productAsins": {
+     "description": "List of product ASINs.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "renderTileLayers": {
+     "description": "Whether to render tile layers.",
+     "type": "boolean"
+    },
+    "resourceId": {
+     "description": "Resource identifier.",
+     "type": "string"
+    },
+    "text": {
+     "description": "Text content.",
+     "type": "string"
+    },
+    "textAlign": {
+     "description": "Text alignment.",
+     "type": "string"
+    },
+    "textOption": {
+     "$ref": "StoreTextOptionType"
+    },
+    "tileLayers": {
+     "description": "Configuration for tile layers.",
+     "items": {
+      "$ref": "StoreTileLayer"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "title": {
+     "description": "Title of the content.",
+     "type": "string"
+    },
+    "videoAssetId": {
+     "description": "Video asset identifier.",
+     "type": "string"
+    },
+    "videoAssetTags": {
+     "description": "Tags associated with the video asset.",
+     "type": "string"
+    },
+    "videoDescription": {
+     "description": "Description of the video.",
+     "type": "string"
+    },
+    "videoKey": {
+     "description": "Key for the video asset.",
+     "type": "string"
+    },
+    "videoName": {
+     "description": "Name of the video.",
+     "type": "string"
+    },
+    "videoSize": {
+     "description": "Size of the video in bytes.",
+     "format": "double",
+     "type": "number"
+    },
+    "videoUrl": {
+     "description": "URL of the video.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoreVideoRevealVRVideo": {
+   "description": "Configuration for a single video reveal video asset",
+   "properties": {
+    "assetId": {
+     "description": "Unique identifier for the video asset",
+     "type": "string"
+    },
+    "url": {
+     "description": "URL of the video content",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "url"
+   ],
+   "type": "object"
+  },
+  "StoreVideoRevealVideos": {
+   "description": "Collection of video assets for different device types",
+   "properties": {
+    "desktop": {
+     "$ref": "StoreVideoRevealVRVideo"
+    },
+    "mobile": {
+     "$ref": "StoreVideoRevealVRVideo"
+    }
+   },
+   "required": [
+    "desktop",
+    "mobile"
+   ],
+   "type": "object"
+  },
+  "StoreVideoRevealWidget": {
+   "description": "Main widget structure for the video reveal feature",
+   "properties": {
+    "backgroundColor": {
+     "description": "Background color (CSS property)",
+     "type": "string"
+    },
+    "csmTag": {
+     "description": "CSM tracking tag for the video reveal",
+     "type": "string"
+    },
+    "fadeoutDuration": {
+     "description": "Fadeout duration (in ms)",
+     "type": "string"
+    },
+    "objectFit": {
+     "description": "Object fit (CSS property)",
+     "type": "string"
+    },
+    "skipReveal": {
+     "description": "Skip reveal (to be used in development only)",
+     "type": "boolean"
+    },
+    "throttleLimit": {
+     "description": "Play video every X minutes",
+     "type": "string"
+    },
+    "videos": {
+     "$ref": "StoreVideoRevealVideos"
+    }
+   },
+   "required": [
+    "backgroundColor",
+    "csmTag",
+    "fadeoutDuration",
+    "objectFit",
+    "skipReveal",
+    "throttleLimit",
+    "videos"
+   ],
+   "type": "object"
+  },
+  "StoreVideoTile": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonTileProperties"
+    },
+    "content": {
+     "$ref": "StoreVideoContent"
+    }
+   },
+   "required": [
+    "commonProperties"
+   ],
+   "type": "object"
+  },
+  "StoreVideoWidget": {
+   "properties": {
+    "commonProperties": {
+     "$ref": "CommonWidgetProperties"
+    },
+    "tiles": {
+     "description": "The content configuration for the video widget.",
+     "items": {
+      "$ref": "StoreVideoTile"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "commonProperties",
+    "tiles"
+   ],
+   "type": "object"
+  },
+  "StoreWidgetSectionType": {
+   "description": "**StoreWidgetSectionType Enum:** | StoreWidgetSectionType | Description | | --- | --- | | `HERO` | Section type for StoreHeroImageWidget | | `EDITORIAL_ROW` | Widget type for StoreCustomCodeWidget, StoreImageWithTextWid…",
+   "enum": [
+    "BANNER",
+    "BEST_SELLING",
+    "DEALS_AND_COUPONS",
+    "EDITORIAL_ROW",
+    "GALLERY",
+    "HERO",
+    "LIVE_VIDEO",
+    "MANUALLY_CURATED_PRODUCT_CAROUSEL",
+    "PREMIUM_BEST_SELLING",
+    "PRODUCT_COLLECTION",
+    "PRODUCT_GRID",
+    "RECOMMENDED",
+    "SHOP_THE_LOOK_CAROUSEL"
+   ],
+   "type": "string"
+  },
+  "StoreWidgetType": {
+   "description": "**StoreWidgetType Enum:** | StoreWidgetType | Description | | --- | --- | | `HERO` | Widget type for StoreHeroImageWidget | | `EDITORIAL_ROW` | Widget type for StoreCustomCodeWidget, StoreImageWithTextWidget, StoreImage…",
+   "enum": [
+    "BANNER",
+    "EDITORIAL_ROW",
+    "GALLERY",
+    "HERO",
+    "LIVE_VIDEO",
+    "MULTI_MEDIA_CAROUSEL",
+    "PRODUCT_CAROUSEL",
+    "PRODUCT_COLLECTION",
+    "PRODUCT_GRID"
+   ],
+   "type": "string"
+  },
+  "Tag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "VerticalPosition": {
+   "description": "**VerticalPosition Enum:** | VerticalPosition | Description | | --- | --- | | `TOP` | Top position | | `MIDDLE` | Middle position | | `BOTTOM` | Bottom position |",
+   "enum": [
+    "BOTTOM",
+    "MIDDLE",
+    "TOP"
+   ],
+   "type": "string"
+  }
+ }
+}

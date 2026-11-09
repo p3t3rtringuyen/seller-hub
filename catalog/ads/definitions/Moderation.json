@@ -1,0 +1,562 @@
+{
+ "api": "Moderation",
+ "file": "specs/dest/Moderation_prod_3p.json",
+ "schemas": {
+  "ComponentModerationResults": {
+   "description": "The moderation results of the individual components in the ad. This is currently only available for the SPONSORED_PRODUCTS adProgramType.",
+   "properties": {
+    "imageComponents": {
+     "items": {
+      "$ref": "ImageComponentModerationResult"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "textComponents": {
+     "items": {
+      "$ref": "TextComponentModerationResult"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videoComponents": {
+     "items": {
+      "$ref": "VideoComponentModerationResult"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "Id": {
+   "description": "The unique identifier of the ad which can be obtained after the ad is created using create APIs.",
+   "type": "string"
+  },
+  "IdType": {
+   "description": "The unique identifiers type based on the adProgram of the ad.",
+   "enum": [
+    "AD_ID"
+   ],
+   "type": "string"
+  },
+  "ImageComponentModerationResult": {
+   "properties": {
+    "id": {
+     "description": "The ID of the image component.",
+     "type": "string"
+    },
+    "imageUrl": {
+     "description": "The URL of the image component.",
+     "type": "string"
+    },
+    "moderationStatus": {
+     "$ref": "ModerationStatus"
+    },
+    "policyViolations": {
+     "description": "A list of policy violations for an image component that has failed moderation. Note that this field is present in the response only when moderationStatus of the image component is set to REJECTED.",
+     "items": {
+      "$ref": "PolicyViolation"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ImageCrop": {
+   "properties": {
+    "height": {
+     "description": "Policy violated region's height in pixel.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "topLeftX": {
+     "description": "Policy violated region's top left X-axis pixel value.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "topLeftY": {
+     "description": "Policy violated region's top left Y-axis pixel value.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "width": {
+     "description": "Policy violated region's width in pixel.",
+     "format": "int64",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ModerationResult": {
+   "properties": {
+    "componentModerationResults": {
+     "$ref": "ComponentModerationResults"
+    },
+    "etaForModeration": {
+     "description": "Expected date and time by which moderation will be complete. The format is ISO 8601 in UTC time zone. Note that this field is present in the response only when moderationStatus is set to IN_PROGRESS.",
+     "type": "string"
+    },
+    "id": {
+     "$ref": "Id"
+    },
+    "idType": {
+     "$ref": "IdType"
+    },
+    "moderationStatus": {
+     "$ref": "ModerationStatus"
+    },
+    "policyViolations": {
+     "description": "A list of policy violations for a campaign that has failed moderation. Note that this field is present in the response only when moderationStatus is set to REJECTED.",
+     "items": {
+      "$ref": "PolicyViolation"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "versionId": {
+     "$ref": "VersionId"
+    }
+   },
+   "type": "object"
+  },
+  "ModerationResultsAccessDeniedError": {
+   "properties": {
+    "code": {
+     "description": "Access denied error code.",
+     "enum": [
+      "ACCESS_DENIED"
+     ],
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the error response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ModerationResultsAdProgramType": {
+   "description": "The program type of the ad.",
+   "enum": [
+    "SB_PRODUCT_COLLECTION",
+    "SB_STORE_SPOTLIGHT",
+    "SB_VIDEO",
+    "SPONSORED_DISPLAY",
+    "SPONSORED_PRODUCTS"
+   ],
+   "type": "string"
+  },
+  "ModerationResultsBadRequestError": {
+   "properties": {
+    "code": {
+     "description": "Bad request error code.",
+     "enum": [
+      "BAD_REQUEST"
+     ],
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the error response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ModerationResultsInternalServerError": {
+   "properties": {
+    "code": {
+     "description": "Internal error code.",
+     "enum": [
+      "INTERNAL_ERROR"
+     ],
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the error response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ModerationResultsNotAcceptableError": {
+   "properties": {
+    "code": {
+     "description": "Not acceptable error code.",
+     "enum": [
+      "NOT_ACCEPTABLE"
+     ],
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the error response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ModerationResultsNotFoundError": {
+   "properties": {
+    "code": {
+     "description": "Not found error code.",
+     "enum": [
+      "NOT_FOUND"
+     ],
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the error response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ModerationResultsRequest": {
+   "properties": {
+    "adProgramType": {
+     "$ref": "ModerationResultsAdProgramType"
+    },
+    "id": {
+     "$ref": "Id"
+    },
+    "idType": {
+     "$ref": "IdType"
+    },
+    "maxResults": {
+     "description": "Sets a limit on the number of results returned by an operation.",
+     "format": "int32",
+     "maximum": 10,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "moderationStatusFilter": {
+     "description": "Filter by specific moderation status.",
+     "items": {
+      "$ref": "ModerationStatus"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "$ref": "NextToken"
+    },
+    "versionIdFilter": {
+     "description": "Filter by specific version id of the ad. The API will return the ad's all versions moderation status if this field is empty.",
+     "items": {
+      "$ref": "VersionId"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adProgramType",
+    "id",
+    "idType",
+    "maxResults"
+   ],
+   "type": "object"
+  },
+  "ModerationResultsResponse": {
+   "properties": {
+    "moderationResults": {
+     "items": {
+      "$ref": "ModerationResult"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "nextToken": {
+     "$ref": "NextToken"
+    }
+   },
+   "type": "object"
+  },
+  "ModerationResultsThrottlingError": {
+   "properties": {
+    "code": {
+     "description": "Throttled error code.",
+     "enum": [
+      "THROTTLED"
+     ],
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the error response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ModerationStatus": {
+   "description": "The moderation status of the ad.",
+   "enum": [
+    "APPROVED",
+    "FAILED",
+    "IN_PROGRESS",
+    "REJECTED"
+   ],
+   "type": "string"
+  },
+  "NextToken": {
+   "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the `NextToken` field is empty, …",
+   "type": "string"
+  },
+  "PolicyViolation": {
+   "properties": {
+    "policyDescription": {
+     "description": "A human-readable description of the policy.",
+     "type": "string"
+    },
+    "policyLinkUrl": {
+     "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+     "type": "string"
+    },
+    "violatingAsinContents": {
+     "items": {
+      "$ref": "ViolatingAsinContent"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "violatingImageContents": {
+     "items": {
+      "$ref": "ViolatingImageContent"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "violatingTextContents": {
+     "items": {
+      "$ref": "ViolatingTextContent"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "violatingVideoContents": {
+     "items": {
+      "$ref": "ViolatingVideoContent"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "TextComponentModerationResult": {
+   "properties": {
+    "id": {
+     "description": "The ID of the text component.",
+     "type": "string"
+    },
+    "moderationStatus": {
+     "$ref": "ModerationStatus"
+    },
+    "policyViolations": {
+     "description": "A list of policy violations for a text component that has failed moderation. Note that this field is present in the response only when moderationStatus of the text component is set to REJECTED.",
+     "items": {
+      "$ref": "PolicyViolation"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "text": {
+     "description": "The text value of the text component.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TextPosition": {
+   "properties": {
+    "end": {
+     "description": "Zero-based index into the text in reviewedText where the text specified in violatingText ends.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "start": {
+     "description": "Zero-based index into the text in reviewedText where the text specified in violatingText starts.",
+     "format": "int64",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "VersionId": {
+   "description": "The version identifier that helps to keep track of multiple versions of a submitted ad. In case of Sponsored Brands this is the creative version id.",
+   "type": "string"
+  },
+  "VideoComponentModerationResult": {
+   "properties": {
+    "id": {
+     "description": "The ID of the video component.",
+     "type": "string"
+    },
+    "moderationStatus": {
+     "$ref": "ModerationStatus"
+    },
+    "policyViolations": {
+     "description": "A list of policy violations for a video component that has failed moderation. Note that this field is present in the response only when moderationStatus of the video component is set to REJECTED.",
+     "items": {
+      "$ref": "PolicyViolation"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videoUrl": {
+     "description": "The URL of the video component.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "VideoPosition": {
+   "properties": {
+    "end": {
+     "description": "End time of the video having the policy violation.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "start": {
+     "description": "Start time of the video having the policy violation.",
+     "format": "int64",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ViolatingAsinContent": {
+   "properties": {
+    "moderatedComponent": {
+     "description": "Moderation component which marked the policy violation.",
+     "type": "string"
+    },
+    "violatingAsinEvidences": {
+     "items": {
+      "$ref": "ViolatingAsinEvidence"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ViolatingAsinEvidence": {
+   "properties": {
+    "asin": {
+     "description": "ASIN which has the ad policy violation.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ViolatingImageContent": {
+   "properties": {
+    "moderatedComponent": {
+     "description": "Moderation component which marked the policy violation.",
+     "type": "string"
+    },
+    "reviewedImageUrl": {
+     "description": "URL of the image which has the ad policy violation.",
+     "type": "string"
+    },
+    "violatingImageEvidences": {
+     "items": {
+      "$ref": "ViolatingImageEvidence"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ViolatingImageEvidence": {
+   "properties": {
+    "violatingImageCrop": {
+     "$ref": "ImageCrop"
+    }
+   },
+   "type": "object"
+  },
+  "ViolatingTextContent": {
+   "description": "Information about the specific text that violates the specified policy in the campaign.",
+   "properties": {
+    "moderatedComponent": {
+     "description": "Moderation component which marked the policy violation.",
+     "type": "string"
+    },
+    "reviewedText": {
+     "description": "The actual text on which the moderation was done.",
+     "type": "string"
+    },
+    "violatingTextEvidences": {
+     "items": {
+      "$ref": "ViolatingTextEvidence"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ViolatingTextEvidence": {
+   "properties": {
+    "violatingText": {
+     "description": "The specific text determined to violate the specified policy in reviewedText.",
+     "type": "string"
+    },
+    "violatingTextPosition": {
+     "$ref": "TextPosition"
+    }
+   },
+   "type": "object"
+  },
+  "ViolatingVideoContent": {
+   "properties": {
+    "moderatedComponent": {
+     "description": "Moderation component which marked the policy violation.",
+     "type": "string"
+    },
+    "reviewedVideoUrl": {
+     "description": "URL of the video which has the ad policy violation.",
+     "type": "string"
+    },
+    "violatingVideoEvidences": {
+     "items": {
+      "$ref": "ViolatingVideoEvidence"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ViolatingVideoEvidence": {
+   "properties": {
+    "violatingVideoPosition": {
+     "$ref": "VideoPosition"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

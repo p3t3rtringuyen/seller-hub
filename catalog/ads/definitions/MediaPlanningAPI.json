@@ -1,0 +1,6675 @@
+{
+ "api": "MediaPlanningAPI",
+ "file": "specs/dest/MediaPlanningAPI_prod_3p.json",
+ "schemas": {
+  "ActivationStateV1": {
+   "description": "ADSP activation state for the media plan. `ELIGIBLE` - Plan is eligible but not activated yet. `NOT_ELIGIBLE` - Plan is not eligible for activation. `PROCESSING` - Activation in progress. `ACTIVATED` - Plan is activated…",
+   "enum": [
+    "ACTIVATED",
+    "CANCELLED",
+    "ELIGIBLE",
+    "FAILED",
+    "NOT_ELIGIBLE",
+    "PROCESSING",
+    "READY"
+   ],
+   "type": "string"
+  },
+  "AdProductV1": {
+   "description": "The ad product of the planning item.",
+   "enum": [
+    "AMAZON_DSP",
+    "SPONSORED_BRANDS",
+    "SPONSORED_DISPLAY",
+    "SPONSORED_PRODUCTS"
+   ],
+   "type": "string"
+  },
+  "AdTypeV1": {
+   "description": "The ad type of the planning item.",
+   "enum": [
+    "DISPLAY",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "AdvertisingLocaleV1": {
+   "description": "The advertising locale selection using the ISO language code.",
+   "enum": [
+    "ar-AE",
+    "de-DE",
+    "en-AU",
+    "en-CA",
+    "en-GB",
+    "en-IN",
+    "en-SG",
+    "en-US",
+    "es-CO",
+    "es-ES",
+    "es-MX",
+    "es-US",
+    "fr-CA",
+    "fr-FR",
+    "hi-IN",
+    "it-IT",
+    "ja-JP",
+    "ko-KR",
+    "nl-NL",
+    "pl-PL",
+    "pt-BR",
+    "sv-SE",
+    "ta-IN",
+    "th-TH",
+    "tr-TR",
+    "vi-VN",
+    "zh-CN",
+    "zh-TW"
+   ],
+   "type": "string"
+  },
+  "AgeDemographicInsightDetailsV1": {
+   "properties": {
+    "insights": {
+     "items": {
+      "$ref": "AgeDemographicInsightV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "insights"
+   ],
+   "type": "object"
+  },
+  "AgeDemographicInsightV1": {
+   "properties": {
+    "audienceId": {
+     "type": "string"
+    },
+    "metrics": {
+     "$ref": "MetricsV1"
+    },
+    "range": {
+     "$ref": "RangeV1"
+    }
+   },
+   "required": [
+    "audienceId",
+    "metrics",
+    "range"
+   ],
+   "type": "object"
+  },
+  "AudienceBehavioralInsightDetailsV1": {
+   "properties": {
+    "insights": {
+     "items": {
+      "$ref": "AudienceBehavioralInsightV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "insights"
+   ],
+   "type": "object"
+  },
+  "AudienceBehavioralInsightV1": {
+   "properties": {
+    "audienceCategory": {
+     "$ref": "AudienceCategoryV1"
+    },
+    "audienceId": {
+     "type": "string"
+    },
+    "metrics": {
+     "$ref": "MetricsV1"
+    }
+   },
+   "required": [
+    "audienceCategory",
+    "audienceId",
+    "metrics"
+   ],
+   "type": "object"
+  },
+  "AudienceCategoryV1": {
+   "enum": [
+    "INTEREST",
+    "IN_MARKET",
+    "LIFESTYLE",
+    "LIFE_EVENT"
+   ],
+   "type": "string"
+  },
+  "AudienceOpportunitiesStateDetailsErrorTypeV1": {
+   "description": "The type of error associated with an audience opportunity processing state.",
+   "enum": [
+    "AUDIENCE_TOO_LARGE",
+    "AUDIENCE_TOO_SMALL",
+    "INVALID_TARGET",
+    "NOT_AUTHORIZED_TARGET",
+    "UNEXPECTED_ERROR"
+   ],
+   "type": "string"
+  },
+  "AudienceOpportunitiesStateDetailsErrorV1": {
+   "description": "An error that contributed to the current audience opportunity processing state.",
+   "properties": {
+    "message": {
+     "description": "The error message.",
+     "type": "string"
+    },
+    "targetId": {
+     "description": "The target associated with the error.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "AudienceOpportunitiesStateDetailsErrorTypeV1"
+    }
+   },
+   "required": [
+    "message",
+    "type"
+   ],
+   "type": "object"
+  },
+  "AudienceOpportunitiesStateDetailsV1": {
+   "description": "The details associated with the audience opportunity processing state.",
+   "properties": {
+    "errors": {
+     "description": "The current processing state errors of the audience opportunity.",
+     "items": {
+      "$ref": "AudienceOpportunitiesStateDetailsErrorV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "errors"
+   ],
+   "type": "object"
+  },
+  "AudienceOpportunityCreateV1": {
+   "properties": {
+    "audienceOpportunityLevel": {
+     "$ref": "AudienceOpportunityLevelV1"
+    },
+    "audienceOpportunityType": {
+     "$ref": "AudienceOpportunityTypeV1"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceOpportunityLevel",
+    "audienceOpportunityType",
+    "mediaPlanVersionId"
+   ],
+   "type": "object"
+  },
+  "AudienceOpportunityDeleteV1": {
+   "properties": {
+    "audienceOpportunityId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceOpportunityId",
+    "mediaPlanVersionId"
+   ],
+   "type": "object"
+  },
+  "AudienceOpportunityLevelV1": {
+   "description": "The hierarchy level the audience opportunity is parented under. `MEDIA_PLAN` - The audience opportunity is parented under a media plan specified by the `mediaPlanId` `MARKETING_GOAL` - The audience opportunity is parent…",
+   "enum": [
+    "MARKETING_GOAL",
+    "MEDIA_PLAN"
+   ],
+   "type": "string"
+  },
+  "AudienceOpportunityTypeV1": {
+   "description": "The audience opportunity type. `AUDIENCE_BASELINE` - This audience opportunity type will use associated audience targets in order to provide insights and sizing. `LOCATION_BASELINE` - This audience opportunity type will…",
+   "enum": [
+    "AUDIENCE_BASELINE",
+    "LOCATION_BASELINE",
+    "MARKETING_GOAL"
+   ],
+   "type": "string"
+  },
+  "AudienceOpportunityUpdateV1": {
+   "properties": {
+    "audienceOpportunityId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "audienceOpportunityType": {
+     "$ref": "AudienceOpportunityTypeV1"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceOpportunityId",
+    "mediaPlanVersionId"
+   ],
+   "type": "object"
+  },
+  "AudienceOpportunityV1": {
+   "properties": {
+    "audienceOpportunityId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "audienceOpportunityLevel": {
+     "$ref": "AudienceOpportunityLevelV1"
+    },
+    "audienceOpportunityType": {
+     "$ref": "AudienceOpportunityTypeV1"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "AudienceOpportunitiesStateDetailsV1"
+    }
+   },
+   "required": [
+    "audienceOpportunityId",
+    "audienceOpportunityLevel",
+    "audienceOpportunityType",
+    "creationDateTime",
+    "mediaPlanId",
+    "state",
+    "stateDetails"
+   ],
+   "type": "object"
+  },
+  "AudienceSizePeriodV1": {
+   "description": "The lookback period for the audience size.",
+   "enum": [
+    "ANNUAL"
+   ],
+   "type": "string"
+  },
+  "AudienceSizeStateDetailsErrorTypeV1": {
+   "description": "The type of error associated with an audience size processing state.",
+   "enum": [
+    "AUDIENCE_TOO_LARGE",
+    "AUDIENCE_TOO_SMALL",
+    "INVALID_TARGET",
+    "NOT_AUTHORIZED_TARGET",
+    "UNEXPECTED_ERROR"
+   ],
+   "type": "string"
+  },
+  "AudienceSizeStateDetailsErrorV1": {
+   "description": "An error that contributed to the current audience size processing state.",
+   "properties": {
+    "message": {
+     "description": "The error message.",
+     "type": "string"
+    },
+    "targetId": {
+     "description": "The target associated with the error.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "AudienceSizeStateDetailsErrorTypeV1"
+    }
+   },
+   "required": [
+    "message",
+    "type"
+   ],
+   "type": "object"
+  },
+  "AudienceSizeStateDetailsV1": {
+   "description": "The details associated with the audience size processing state.",
+   "properties": {
+    "errors": {
+     "description": "The current processing state errors of the audience size.",
+     "items": {
+      "$ref": "AudienceSizeStateDetailsErrorV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "errors"
+   ],
+   "type": "object"
+  },
+  "AudienceSizeV1": {
+   "properties": {
+    "audienceOpportunityId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "audienceSizeId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "max": {
+     "description": "The upper bound of estimated unique customers who are in the audience.",
+     "type": "integer"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "min": {
+     "description": "The lower bound of estimated unique customers who are in the audience.",
+     "type": "integer"
+    },
+    "period": {
+     "$ref": "AudienceSizePeriodV1"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "AudienceSizeStateDetailsV1"
+    }
+   },
+   "required": [
+    "audienceOpportunityId",
+    "audienceSizeId",
+    "creationDateTime",
+    "mediaPlanId",
+    "period",
+    "state",
+    "stateDetails"
+   ],
+   "type": "object"
+  },
+  "AudienceTargetV1": {
+   "properties": {
+    "audienceId": {
+     "type": "string"
+    },
+    "groupId": {
+     "description": "Groups audiences that should be targeted together.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "audienceId",
+    "groupId"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BehavioralInsightDetailsV1": {
+   "oneOf": [
+    {
+     "properties": {
+      "primeVideoBehavioralInsightDetails": {
+       "$ref": "PrimeVideoBehavioralInsightDetailsV1"
+      }
+     },
+     "required": [
+      "primeVideoBehavioralInsightDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "audienceBehavioralInsightDetails": {
+       "$ref": "AudienceBehavioralInsightDetailsV1"
+      }
+     },
+     "required": [
+      "audienceBehavioralInsightDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productCategoryBehavioralInsightDetails": {
+       "$ref": "ProductCategoryBehavioralInsightDetailsV1"
+      }
+     },
+     "required": [
+      "productCategoryBehavioralInsightDetails"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "BehavioralInsightStateDetailsErrorTypeV1": {
+   "description": "The type of error associated with a behavioral insight processing state.",
+   "enum": [
+    "AUDIENCE_TOO_LARGE",
+    "AUDIENCE_TOO_SMALL",
+    "INVALID_TARGET",
+    "NOT_AUTHORIZED_TARGET",
+    "UNEXPECTED_ERROR"
+   ],
+   "type": "string"
+  },
+  "BehavioralInsightStateDetailsErrorV1": {
+   "description": "An error that contributed to the current behavioral insight processing state.",
+   "properties": {
+    "message": {
+     "description": "The error message.",
+     "type": "string"
+    },
+    "targetId": {
+     "description": "The target associated with the error.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "BehavioralInsightStateDetailsErrorTypeV1"
+    }
+   },
+   "required": [
+    "message",
+    "type"
+   ],
+   "type": "object"
+  },
+  "BehavioralInsightStateDetailsV1": {
+   "description": "The details associated with the behavioral insight processing state.",
+   "properties": {
+    "errors": {
+     "description": "The current processing state errors of the behavioral insight.",
+     "items": {
+      "$ref": "BehavioralInsightStateDetailsErrorV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "errors"
+   ],
+   "type": "object"
+  },
+  "BehavioralInsightTypeV1": {
+   "description": "The type of behavioral insight.",
+   "enum": [
+    "AUDIENCE",
+    "PRIME_VIDEO",
+    "PRODUCT_CATEGORY"
+   ],
+   "type": "string"
+  },
+  "BehavioralInsightV1": {
+   "properties": {
+    "audienceOpportunityId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "behavioralInsightDetails": {
+     "$ref": "BehavioralInsightDetailsV1"
+    },
+    "behavioralInsightId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "behavioralInsightType": {
+     "$ref": "BehavioralInsightTypeV1"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "BehavioralInsightStateDetailsV1"
+    }
+   },
+   "required": [
+    "audienceOpportunityId",
+    "behavioralInsightDetails",
+    "behavioralInsightId",
+    "behavioralInsightType",
+    "creationDateTime",
+    "mediaPlanId",
+    "state",
+    "stateDetails"
+   ],
+   "type": "object"
+  },
+  "BudgetAllocationCreateV1": {
+   "properties": {
+    "allocatedBudget": {
+     "description": "The budget allocated by user. Applicable for `MEDIA_PLAN`, `MARKETING_GOAL` and `PLANNING_ITEM` budget allocation levels.",
+     "type": "integer"
+    },
+    "budgetAllocationDetails": {
+     "$ref": "BudgetAllocationDetailsV1"
+    },
+    "budgetAllocationLevel": {
+     "$ref": "BudgetAllocationLevelV1"
+    },
+    "budgetAllocationType": {
+     "$ref": "BudgetAllocationTypeV1"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "planningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "budgetAllocationLevel",
+    "mediaPlanVersionId"
+   ],
+   "type": "object"
+  },
+  "BudgetAllocationDeleteV1": {
+   "properties": {
+    "budgetAllocationId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "budgetAllocationId",
+    "mediaPlanVersionId"
+   ],
+   "type": "object"
+  },
+  "BudgetAllocationDetailsV1": {
+   "oneOf": [
+    {
+     "properties": {
+      "optimizedBudgetAllocationDetails": {
+       "$ref": "OptimizedBudgetAllocationDetailsV1"
+      }
+     },
+     "required": [
+      "optimizedBudgetAllocationDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "seasonalBudgetAllocationDetails": {
+       "$ref": "SeasonalBudgetAllocationDetailsV1"
+      }
+     },
+     "required": [
+      "seasonalBudgetAllocationDetails"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "BudgetAllocationLevelV1": {
+   "description": "The hierarchy level the budget allocation is parented under. `MEDIA_PLAN` - The budget allocation is parented under a media plan specified by the `mediaPlanId` `MARKETING_GOAL` - The budget allocation is parented under …",
+   "enum": [
+    "MARKETING_GOAL",
+    "MEDIA_PLAN",
+    "PLANNING_ITEM"
+   ],
+   "type": "string"
+  },
+  "BudgetAllocationStateDetailsErrorTypeV1": {
+   "description": "The type of error associated with a budget allocation processing state.",
+   "enum": [
+    "ALLOCATED_BUDGET_TOO_LARGE_TO_OPTIMIZE",
+    "BUDGET_UNSUPPORTED_ACCOUNT",
+    "UNEXPECTED_ERROR"
+   ],
+   "type": "string"
+  },
+  "BudgetAllocationStateDetailsErrorV1": {
+   "description": "An error that contributed to the current budget allocation processing state.",
+   "properties": {
+    "message": {
+     "description": "The error message.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "BudgetAllocationStateDetailsErrorTypeV1"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetAllocationStateDetailsV1": {
+   "description": "The details associated with the budget allocation processing state.",
+   "properties": {
+    "errors": {
+     "description": "The current processing state errors of the budget allocation.",
+     "items": {
+      "$ref": "BudgetAllocationStateDetailsErrorV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetAllocationTypeV1": {
+   "description": "The type of budget allocation. `SEASONAL_BUDGET_BREAKDOWN` - The budget allocation recommendation over flight periods `OPTIMIZED_TOTAL_BUDGET` - The optimized budget allocation recommendation",
+   "enum": [
+    "OPTIMIZED_TOTAL_BUDGET",
+    "SEASONAL_BUDGET_BREAKDOWN"
+   ],
+   "type": "string"
+  },
+  "BudgetAllocationUpdateV1": {
+   "properties": {
+    "allocatedBudget": {
+     "description": "The budget allocated by user. Applicable for `MEDIA_PLAN`, `MARKETING_GOAL` and `PLANNING_ITEM` budget allocation levels.",
+     "type": "integer"
+    },
+    "budgetAllocationDetails": {
+     "$ref": "BudgetAllocationDetailsV1"
+    },
+    "budgetAllocationId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "budgetAllocationId",
+    "mediaPlanVersionId"
+   ],
+   "type": "object"
+  },
+  "BudgetAllocationV1": {
+   "properties": {
+    "allocatedBudget": {
+     "description": "The budget allocated by user. Applicable for `MEDIA_PLAN`, `MARKETING_GOAL` and `PLANNING_ITEM` budget allocation levels.",
+     "type": "integer"
+    },
+    "budgetAllocationDetails": {
+     "$ref": "BudgetAllocationDetailsV1"
+    },
+    "budgetAllocationId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "budgetAllocationLevel": {
+     "$ref": "BudgetAllocationLevelV1"
+    },
+    "budgetAllocationType": {
+     "$ref": "BudgetAllocationTypeV1"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "optimizedBudget": {
+     "description": "The budget optimized by Amazon. Applicable only for `PLANNING_ITEM` level.",
+     "type": "integer"
+    },
+    "planningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "BudgetAllocationStateDetailsV1"
+    }
+   },
+   "type": "object"
+  },
+  "BudgetMaximumStrategyV1": {
+   "description": "Strategy used to determine the maximum budget for a funnel-channel combination: * MAX_REACH: Maximum budget capped by the reach curve for this funnel-channel * TOLERANCE: Maximum budget capped by intentional tolerance u…",
+   "enum": [
+    "MAX_REACH",
+    "TOLERANCE"
+   ],
+   "type": "string"
+  },
+  "BudgetMinimumStrategyV1": {
+   "description": "Strategy used to determine the minimum budget for a funnel-channel combination: * STANDARD_HISTORIC: Minimum budget based on tight bound around historic spend * WIDE_RANGE: Minimum budget allowed to vary widely (e.g., C…",
+   "enum": [
+    "STANDARD_HISTORIC",
+    "WIDE_RANGE"
+   ],
+   "type": "string"
+  },
+  "ChildrenAgeDemographicInsightDetailsV1": {
+   "properties": {
+    "insights": {
+     "items": {
+      "$ref": "ChildrenAgeDemographicInsightV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "insights"
+   ],
+   "type": "object"
+  },
+  "ChildrenAgeDemographicInsightV1": {
+   "properties": {
+    "audienceId": {
+     "type": "string"
+    },
+    "metrics": {
+     "$ref": "MetricsV1"
+    },
+    "range": {
+     "$ref": "RangeV1"
+    }
+   },
+   "required": [
+    "audienceId",
+    "metrics",
+    "range"
+   ],
+   "type": "object"
+  },
+  "ChildrenCountDemographicInsightDetailsV1": {
+   "properties": {
+    "insights": {
+     "items": {
+      "$ref": "ChildrenCountDemographicInsightV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "insights"
+   ],
+   "type": "object"
+  },
+  "ChildrenCountDemographicInsightV1": {
+   "properties": {
+    "audienceId": {
+     "type": "string"
+    },
+    "metrics": {
+     "$ref": "MetricsV1"
+    },
+    "range": {
+     "$ref": "RangeV1"
+    }
+   },
+   "required": [
+    "audienceId",
+    "metrics",
+    "range"
+   ],
+   "type": "object"
+  },
+  "ClickForecastDataPointV1": {
+   "properties": {
+    "cpc": {
+     "format": "double",
+     "type": "number"
+    },
+    "ctr": {
+     "format": "double",
+     "type": "number"
+    },
+    "ecpm": {
+     "format": "double",
+     "type": "number"
+    },
+    "prediction": {
+     "format": "double",
+     "type": "number"
+    },
+    "spend": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "ClickForecastV1": {
+   "properties": {
+    "availableImpressions": {
+     "type": "integer"
+    },
+    "avgCpm": {
+     "format": "double",
+     "type": "number"
+    },
+    "cpc": {
+     "format": "double",
+     "type": "number"
+    },
+    "dataPoints": {
+     "items": {
+      "$ref": "ClickForecastDataPointV1"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "forecastId": {
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCapV1"
+    },
+    "matchingImpressions": {
+     "type": "integer"
+    },
+    "maxCpm": {
+     "format": "double",
+     "type": "number"
+    },
+    "maxOnTargetImpressions": {
+     "type": "integer"
+    },
+    "maxSpend": {
+     "format": "double",
+     "type": "number"
+    },
+    "maxTotalImpressions": {
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ConflictResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentGenreTargetV1": {
+   "properties": {
+    "contentGenre": {
+     "$ref": "ContentGenreTypeV1"
+    }
+   },
+   "required": [
+    "contentGenre"
+   ],
+   "type": "object"
+  },
+  "ContentGenreTypeV1": {
+   "enum": [
+    "ACTION",
+    "ADVENTURE",
+    "ANIMATION",
+    "BIOGRAPHY",
+    "COMEDY",
+    "CRIME",
+    "DOCUMENTARY",
+    "DRAMA",
+    "FAMILY",
+    "FANTASY",
+    "FILM_NOIR",
+    "GAME_SHOW",
+    "GENRE_NOT_AVAILABLE",
+    "HISTORY",
+    "HORROR",
+    "MUSICAL",
+    "MYSTERY",
+    "NEWS",
+    "REALITY_TV",
+    "ROMANCE",
+    "SCIENCE_FICTION",
+    "SHORT",
+    "SPORT",
+    "SUPER_HERO",
+    "TALK_SHOW",
+    "THRILLER",
+    "WAR",
+    "WESTERN"
+   ],
+   "type": "string"
+  },
+  "ContentRatingDetailsV1": {
+   "oneOf": [
+    {
+     "properties": {
+      "dspContentRatingTarget": {
+       "$ref": "DspContentRatingTargetV1"
+      }
+     },
+     "required": [
+      "dspContentRatingTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ContentRatingTargetV1": {
+   "properties": {
+    "contentRatingDetails": {
+     "$ref": "ContentRatingDetailsV1"
+    },
+    "contentRatingType": {
+     "$ref": "DspContentRatingTypeV1"
+    }
+   },
+   "required": [
+    "contentRatingDetails",
+    "contentRatingType"
+   ],
+   "type": "object"
+  },
+  "CountryCodeV1": {
+   "description": "The country associated with the media plan. The audience targeted by the media plan will be limited to supply for the provided country.",
+   "enum": [
+    "AE",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "SA",
+    "SE",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "CreateAudienceOpportunitiesV1RequestContent": {
+   "properties": {
+    "audienceOpportunities": {
+     "items": {
+      "$ref": "AudienceOpportunityCreateV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audienceOpportunities"
+   ],
+   "type": "object"
+  },
+  "CreateAudienceOpportunitiesV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedAudienceOpportunitiesSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "CreateBudgetAllocationsV1RequestContent": {
+   "properties": {
+    "budgetAllocations": {
+     "items": {
+      "$ref": "BudgetAllocationCreateV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateBudgetAllocationsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedBudgetAllocationSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateMarketingGoalsV1RequestContent": {
+   "properties": {
+    "marketingGoals": {
+     "items": {
+      "$ref": "MarketingGoalCreateV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "marketingGoals"
+   ],
+   "type": "object"
+  },
+  "CreateMarketingGoalsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedMarketingGoalSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "CreateMediaPlanExportsV1RequestContent": {
+   "properties": {
+    "mediaPlanExports": {
+     "items": {
+      "$ref": "MediaPlanExportCreateV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "mediaPlanExports"
+   ],
+   "type": "object"
+  },
+  "CreateMediaPlanExportsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedMediaPlanExportSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateMediaPlansV1RequestContent": {
+   "properties": {
+    "mediaPlans": {
+     "items": {
+      "$ref": "MediaPlanCreateV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "mediaPlans"
+   ],
+   "type": "object"
+  },
+  "CreateMediaPlansV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedMediaPlanSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "CreatePlanningItemsV1RequestContent": {
+   "properties": {
+    "planningItems": {
+     "items": {
+      "$ref": "PlanningItemCreateV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreatePlanningItemsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedPlanningItemSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateTargetsV1RequestContent": {
+   "properties": {
+    "targets": {
+     "items": {
+      "$ref": "TargetCreateV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "CreateTargetsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedTargetSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "CurrencyCodeV1": {
+   "description": "The currency which will be used throughout the media plan. All monetary values, such as budgets, are assumed to be in the media plan currency denomination.",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "SAR",
+    "SEK",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "DeleteAudienceOpportunitiesV1RequestContent": {
+   "properties": {
+    "audienceOpportunities": {
+     "items": {
+      "$ref": "AudienceOpportunityDeleteV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audienceOpportunities"
+   ],
+   "type": "object"
+  },
+  "DeleteAudienceOpportunitiesV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedAudienceOpportunitiesSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "DeleteBudgetAllocationsV1RequestContent": {
+   "properties": {
+    "budgetAllocations": {
+     "items": {
+      "$ref": "BudgetAllocationDeleteV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteBudgetAllocationsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedBudgetAllocationSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteMarketingGoalsV1RequestContent": {
+   "properties": {
+    "marketingGoals": {
+     "items": {
+      "$ref": "MarketingGoalDeleteV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "marketingGoals"
+   ],
+   "type": "object"
+  },
+  "DeleteMarketingGoalsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedMarketingGoalSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "DeleteMediaPlansV1RequestContent": {
+   "properties": {
+    "mediaPlans": {
+     "items": {
+      "$ref": "MediaPlanDeleteV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "mediaPlans"
+   ],
+   "type": "object"
+  },
+  "DeleteMediaPlansV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedMediaPlanSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "DeletePlanningItemsV1RequestContent": {
+   "properties": {
+    "planningItems": {
+     "items": {
+      "$ref": "PlanningItemDeleteV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DeletePlanningItemsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedPlanningItemSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteTargetsV1RequestContent": {
+   "properties": {
+    "targets": {
+     "items": {
+      "$ref": "TargetDeleteV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "DeleteTargetsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedTargetSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "DeliveryTypeV1": {
+   "description": "The delivery type of the planning item.",
+   "enum": [
+    "GUARANTEED",
+    "NONE",
+    "NON_GUARANTEED"
+   ],
+   "type": "string"
+  },
+  "DemographicInsightDetailsV1": {
+   "oneOf": [
+    {
+     "properties": {
+      "genderDemographicInsightDetails": {
+       "$ref": "GenderDemographicInsightDetailsV1"
+      }
+     },
+     "required": [
+      "genderDemographicInsightDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "incomeDemographicInsightDetails": {
+       "$ref": "IncomeDemographicInsightDetailsV1"
+      }
+     },
+     "required": [
+      "incomeDemographicInsightDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "educationDemographicInsightDetails": {
+       "$ref": "EducationDemographicInsightDetailsV1"
+      }
+     },
+     "required": [
+      "educationDemographicInsightDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "propertyOwnershipDemographicInsightDetails": {
+       "$ref": "PropertyOwnershipDemographicInsightDetailsV1"
+      }
+     },
+     "required": [
+      "propertyOwnershipDemographicInsightDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "ageDemographicInsightDetails": {
+       "$ref": "AgeDemographicInsightDetailsV1"
+      }
+     },
+     "required": [
+      "ageDemographicInsightDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "childrenCountDemographicInsightDetails": {
+       "$ref": "ChildrenCountDemographicInsightDetailsV1"
+      }
+     },
+     "required": [
+      "childrenCountDemographicInsightDetails"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "childrenAgeDemographicInsightDetails": {
+       "$ref": "ChildrenAgeDemographicInsightDetailsV1"
+      }
+     },
+     "required": [
+      "childrenAgeDemographicInsightDetails"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DemographicInsightStateDetailsErrorTypeV1": {
+   "description": "The type of error associated with a demographic insight processing state.",
+   "enum": [
+    "AUDIENCE_TOO_LARGE",
+    "AUDIENCE_TOO_SMALL",
+    "INVALID_TARGET",
+    "NOT_AUTHORIZED_TARGET",
+    "UNEXPECTED_ERROR"
+   ],
+   "type": "string"
+  },
+  "DemographicInsightStateDetailsErrorV1": {
+   "description": "An error that contributed to the current demographic insight processing state.",
+   "properties": {
+    "message": {
+     "description": "The error message.",
+     "type": "string"
+    },
+    "targetId": {
+     "description": "The target associated with the error.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "DemographicInsightStateDetailsErrorTypeV1"
+    }
+   },
+   "required": [
+    "message",
+    "type"
+   ],
+   "type": "object"
+  },
+  "DemographicInsightStateDetailsV1": {
+   "description": "The details associated with the demographic insight processing state.",
+   "properties": {
+    "errors": {
+     "description": "The current processing state errors of the demographic insight.",
+     "items": {
+      "$ref": "DemographicInsightStateDetailsErrorV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "errors"
+   ],
+   "type": "object"
+  },
+  "DemographicInsightTypeV1": {
+   "description": "The type of demographic insight.",
+   "enum": [
+    "AGE",
+    "CHILDREN_AGE",
+    "CHILDREN_COUNT",
+    "EDUCATION",
+    "GENDER",
+    "INCOME",
+    "PROPERTY_OWNERSHIP"
+   ],
+   "type": "string"
+  },
+  "DemographicInsightV1": {
+   "properties": {
+    "audienceOpportunityId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "demographicInsightDetails": {
+     "$ref": "DemographicInsightDetailsV1"
+    },
+    "demographicInsightId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "demographicInsightType": {
+     "$ref": "DemographicInsightTypeV1"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "DemographicInsightStateDetailsV1"
+    }
+   },
+   "required": [
+    "audienceOpportunityId",
+    "creationDateTime",
+    "demographicInsightDetails",
+    "demographicInsightId",
+    "demographicInsightType",
+    "mediaPlanId",
+    "state",
+    "stateDetails"
+   ],
+   "type": "object"
+  },
+  "DetailPageViewForecastDataPointV1": {
+   "properties": {
+    "cpdpv": {
+     "format": "double",
+     "type": "number"
+    },
+    "prediction": {
+     "format": "double",
+     "type": "number"
+    },
+    "spend": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DetailPageViewForecastV1": {
+   "properties": {
+    "availableImpressions": {
+     "type": "integer"
+    },
+    "avgCpm": {
+     "format": "double",
+     "type": "number"
+    },
+    "cpc": {
+     "format": "double",
+     "type": "number"
+    },
+    "dataPoints": {
+     "items": {
+      "$ref": "DetailPageViewForecastDataPointV1"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "forecastId": {
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCapV1"
+    },
+    "matchingImpressions": {
+     "type": "integer"
+    },
+    "maxCpm": {
+     "format": "double",
+     "type": "number"
+    },
+    "maxOnTargetImpressions": {
+     "type": "integer"
+    },
+    "maxSpend": {
+     "format": "double",
+     "type": "number"
+    },
+    "maxTotalImpressions": {
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "DeviceTargetV1": {
+   "properties": {
+    "deviceType": {
+     "$ref": "DeviceTypeV1"
+    },
+    "mobileEnvironment": {
+     "$ref": "MobileEnvironmentV1"
+    }
+   },
+   "required": [
+    "deviceType"
+   ],
+   "type": "object"
+  },
+  "DeviceTypeV1": {
+   "enum": [
+    "CONNECTED_TV",
+    "DESKTOP",
+    "MOBILE"
+   ],
+   "type": "string"
+  },
+  "DspContentRatingTargetV1": {
+   "properties": {
+    "dspContentRating": {
+     "$ref": "DspContentRatingV1"
+    }
+   },
+   "required": [
+    "dspContentRating"
+   ],
+   "type": "object"
+  },
+  "DspContentRatingTypeV1": {
+   "enum": [
+    "DSP_CONTENT_RATING"
+   ],
+   "type": "string"
+  },
+  "DspContentRatingV1": {
+   "enum": [
+    "RATING_NOT_AVAILABLE",
+    "SUITABLE_FOR_ADULTS",
+    "SUITABLE_FOR_ALL_AUDIENCES",
+    "SUITABLE_FOR_MATURE_AUDIENCES",
+    "SUITABLE_FOR_MOST_AUDIENCES_WITH_PARENTAL_GUIDANCE",
+    "SUITABLE_FOR_TEEN_AND_OLDER_AUDIENCES"
+   ],
+   "type": "string"
+  },
+  "EducationDemographicInsightDetailsV1": {
+   "properties": {
+    "insights": {
+     "items": {
+      "$ref": "EducationDemographicInsightV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "insights"
+   ],
+   "type": "object"
+  },
+  "EducationDemographicInsightV1": {
+   "properties": {
+    "audienceId": {
+     "type": "string"
+    },
+    "education": {
+     "$ref": "EducationV1"
+    },
+    "metrics": {
+     "$ref": "MetricsV1"
+    }
+   },
+   "required": [
+    "audienceId",
+    "education",
+    "metrics"
+   ],
+   "type": "object"
+  },
+  "EducationV1": {
+   "enum": [
+    "BACHELORS_DEGREE",
+    "GRADUATE_DEGREE",
+    "HIGH_SCHOOL",
+    "SOME_COLLEGE"
+   ],
+   "type": "string"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "| ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the necessary credentia…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONFLICT",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ExclusiveReachForecastV1": {
+   "properties": {
+    "exclusiveReachPercent": {
+     "description": "Exclusive reach percentage.",
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "exclusiveReachPercent"
+   ],
+   "type": "object"
+  },
+  "ExportMediaTypeV1": {
+   "description": "The file format for a media plan export.",
+   "enum": [
+    "CSV",
+    "EXCEL",
+    "JSON",
+    "POWERPOINT"
+   ],
+   "type": "string"
+  },
+  "ExportScopeV1": {
+   "description": "The scope of data to include in an export.",
+   "enum": [
+    "SEASONAL_BUDGET"
+   ],
+   "type": "string"
+  },
+  "FilterOperatorV1": {
+   "enum": [
+    "CONTAINS",
+    "EQUALS",
+    "IN",
+    "IS_AFTER",
+    "IS_BEFORE",
+    "NOT_CONTAIN",
+    "NOT_EQUAL",
+    "NOT_IN",
+    "SEARCH",
+    "STARTS_WITH"
+   ],
+   "type": "string"
+  },
+  "FilterV1": {
+   "description": "A filter to apply to a list operation.",
+   "properties": {
+    "field": {
+     "description": "The field to filter on.",
+     "type": "string"
+    },
+    "operator": {
+     "$ref": "FilterOperatorV1"
+    },
+    "values": {
+     "description": "The values to filter by.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "FlightConstraintTypeV1": {
+   "description": "The type of flight constraint.",
+   "enum": [
+    "CUSTOM",
+    "EQUAL",
+    "RECOMMENDED"
+   ],
+   "type": "string"
+  },
+  "FlightConstraintV1": {
+   "properties": {
+    "budgetPercentage": {
+     "format": "float",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "customPercentage": {
+     "format": "float",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "endDate": {
+     "description": "The end date for the planning period.",
+     "type": "string"
+    },
+    "equalDistributionPercentage": {
+     "format": "float",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "startDate": {
+     "description": "The start date for the planning period.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "budgetPercentage",
+    "endDate",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "FrequencyCapTimeUnitV1": {
+   "description": "The time unit for the frequency cap.",
+   "enum": [
+    "DAYS",
+    "MONTHS",
+    "WEEKS"
+   ],
+   "type": "string"
+  },
+  "FrequencyCapTypeV1": {
+   "description": "The type of advertising frequency cap.",
+   "enum": [
+    "CUSTOM",
+    "UNCAPPED"
+   ],
+   "type": "string"
+  },
+  "FrequencyCapV1": {
+   "description": "The limit of how many times ads appear to the same viewer.",
+   "properties": {
+    "maxImpressions": {
+     "description": "The maximum number of times an ad is displayed.",
+     "type": "integer"
+    },
+    "timeUnit": {
+     "$ref": "FrequencyCapTimeUnitV1"
+    },
+    "timeUnitCount": {
+     "description": "The count of time units.",
+     "type": "integer"
+    },
+    "type": {
+     "$ref": "FrequencyCapTypeV1"
+    }
+   },
+   "type": "object"
+  },
+  "GenderDemographicInsightDetailsV1": {
+   "properties": {
+    "insights": {
+     "items": {
+      "$ref": "GenderDemographicInsightV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "insights"
+   ],
+   "type": "object"
+  },
+  "GenderDemographicInsightV1": {
+   "properties": {
+    "audienceId": {
+     "type": "string"
+    },
+    "gender": {
+     "$ref": "GenderV1"
+    },
+    "metrics": {
+     "$ref": "MetricsV1"
+    }
+   },
+   "required": [
+    "audienceId",
+    "gender",
+    "metrics"
+   ],
+   "type": "object"
+  },
+  "GenderV1": {
+   "enum": [
+    "BOTH",
+    "FEMALE",
+    "MALE",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "GoalSettingV1": {
+   "description": "Contains goal-related settings.",
+   "properties": {
+    "goal": {
+     "$ref": "GoalV1"
+    },
+    "kpi": {
+     "$ref": "KpiV1"
+    },
+    "linearTvReachInputData": {
+     "$ref": "LinearTvReachInputDataV1"
+    },
+    "seasonalFlightConstraintInputData": {
+     "$ref": "SeasonalFlightConstraintInputDataV1"
+    }
+   },
+   "required": [
+    "goal",
+    "kpi"
+   ],
+   "type": "object"
+  },
+  "GoalV1": {
+   "description": "The goal determines which stage of the marketing funnel the marketing goal is targeting. `AWARENESS` - The marketing goal is targeting customers to raise awareness of the product(s). `CONSIDERATION` - The marketing goal…",
+   "enum": [
+    "AWARENESS",
+    "CONSIDERATION",
+    "CONVERSIONS",
+    "LOYALTY"
+   ],
+   "type": "string"
+  },
+  "IncomeDemographicInsightDetailsV1": {
+   "properties": {
+    "insights": {
+     "items": {
+      "$ref": "IncomeDemographicInsightV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "insights"
+   ],
+   "type": "object"
+  },
+  "IncomeDemographicInsightV1": {
+   "properties": {
+    "audienceId": {
+     "type": "string"
+    },
+    "metrics": {
+     "$ref": "MetricsV1"
+    },
+    "range": {
+     "$ref": "RangeV1"
+    }
+   },
+   "required": [
+    "audienceId",
+    "metrics",
+    "range"
+   ],
+   "type": "object"
+  },
+  "IncrementalReachMetricsV1": {
+   "properties": {
+    "deduplicatedReachPercent": {
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "linearTvOnlyReachPercent": {
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "overlapReachPercent": {
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "streamingTvExclusiveReachRate": {
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "streamingTvIncrementalReachRate": {
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "streamingTvOnlyReachPercent": {
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "IncrementalReachOverLinearTvForecastV1": {
+   "properties": {
+    "deduplicatedReachPercent": {
+     "description": "Total combined reach percentage across both channels.",
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "linearTvOnlyReachPercent": {
+     "description": "Linear TV only reach percentage.",
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "metricsByReachType": {
+     "$ref": "MetricsByReachTypeV1"
+    },
+    "overlapReachPercent": {
+     "description": "Audience overlap percentage between STV and LTV.",
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "planningItemIds": {
+     "description": "List of planning item IDs that the incremental reach calculation is based on.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "streamingTvExclusiveReachRate": {
+     "description": "The percentage of streaming TV reach that wasn't exposed to a linear TV campaign.",
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "streamingTvIncrementalReachRate": {
+     "description": "The percentage of unique households that were reached on streaming TV inventory compared to linear TV. Households that are included in linear TV reach aren't counted in streaming TV reach.",
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "streamingTvOnlyReachPercent": {
+     "description": "Streaming TV only reach percentage.",
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "deduplicatedReachPercent",
+    "linearTvOnlyReachPercent",
+    "overlapReachPercent",
+    "planningItemIds",
+    "streamingTvExclusiveReachRate",
+    "streamingTvIncrementalReachRate",
+    "streamingTvOnlyReachPercent"
+   ],
+   "type": "object"
+  },
+  "IndexedAudienceOpportunitiesSuccessV1": {
+   "properties": {
+    "audienceOpportunity": {
+     "$ref": "AudienceOpportunityV1"
+    },
+    "index": {
+     "type": "integer"
+    }
+   },
+   "required": [
+    "audienceOpportunity",
+    "index"
+   ],
+   "type": "object"
+  },
+  "IndexedBudgetAllocationSuccessV1": {
+   "properties": {
+    "budgetAllocation": {
+     "$ref": "BudgetAllocationV1"
+    },
+    "index": {
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "IndexedError": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "IndexedMarketingGoalSuccessV1": {
+   "properties": {
+    "index": {
+     "type": "integer"
+    },
+    "marketingGoal": {
+     "$ref": "MarketingGoalV1"
+    }
+   },
+   "required": [
+    "index",
+    "marketingGoal"
+   ],
+   "type": "object"
+  },
+  "IndexedMediaPlanExportSuccessV1": {
+   "properties": {
+    "index": {
+     "type": "integer"
+    },
+    "mediaPlanExport": {
+     "$ref": "MediaPlanExportV1"
+    }
+   },
+   "type": "object"
+  },
+  "IndexedMediaPlanSuccessV1": {
+   "properties": {
+    "index": {
+     "type": "integer"
+    },
+    "mediaPlan": {
+     "$ref": "MediaPlanV1"
+    }
+   },
+   "required": [
+    "index",
+    "mediaPlan"
+   ],
+   "type": "object"
+  },
+  "IndexedPlanningItemSuccessV1": {
+   "properties": {
+    "index": {
+     "type": "integer"
+    },
+    "planningItem": {
+     "$ref": "PlanningItemV1"
+    }
+   },
+   "type": "object"
+  },
+  "IndexedTargetSuccessV1": {
+   "properties": {
+    "index": {
+     "type": "integer"
+    },
+    "target": {
+     "$ref": "TargetV1"
+    }
+   },
+   "required": [
+    "index",
+    "target"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InventorySourceTargetV1": {
+   "properties": {
+    "inventorySourceId": {
+     "$ref": "MarketplaceStringValueV1"
+    },
+    "inventorySourceType": {
+     "$ref": "InventorySourceTypeV1"
+    }
+   },
+   "required": [
+    "inventorySourceId",
+    "inventorySourceType"
+   ],
+   "type": "object"
+  },
+  "InventorySourceTypeV1": {
+   "enum": [
+    "AMAZON",
+    "APD",
+    "PARENT_PUBLISHER",
+    "PUBLISHER",
+    "THIRD_PARTY_EXCHANGE"
+   ],
+   "type": "string"
+  },
+  "InventoryTypeV1": {
+   "description": "The inventory type of the planning item.",
+   "enum": [
+    "AUDIO",
+    "DISPLAY",
+    "ONLINE_VIDEO",
+    "STREAMING_TV"
+   ],
+   "type": "string"
+  },
+  "KeywordTargetMatchTypeV1": {
+   "enum": [
+    "BROAD",
+    "EXACT",
+    "PHRASE"
+   ],
+   "type": "string"
+  },
+  "KeywordTargetV1": {
+   "properties": {
+    "keyword": {
+     "description": "The keyword text to target.",
+     "type": "string"
+    },
+    "matchType": {
+     "$ref": "KeywordTargetMatchTypeV1"
+    }
+   },
+   "required": [
+    "keyword",
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "KpiV1": {
+   "description": "The KPI that the marketing goal is working to optimize. `REACH` - Optimize for the number of unique users exposed to the creative during its flight. `COST_PER_CLICK` - Optimize for the cost paid per click-through. `COST…",
+   "enum": [
+    "COST_PER_CLICK",
+    "COST_PER_DETAIL_PAGE_VIEW",
+    "COST_PER_VIDEO_COMPLETION",
+    "LONG_TERM_SALES",
+    "REACH",
+    "RETURN_ON_AD_SPEND"
+   ],
+   "type": "string"
+  },
+  "LinearTvDaypartDistributionV1": {
+   "properties": {
+    "linearTvDaypartId": {
+     "$ref": "LinearTvDaypartIdV1"
+    },
+    "ratio": {
+     "description": "Percentage ratio for this daypart. All ratios must sum to 100.0.",
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "linearTvDaypartId",
+    "ratio"
+   ],
+   "type": "object"
+  },
+  "LinearTvDaypartIdV1": {
+   "description": "Daypart identifiers for linear TV reach calculations.",
+   "enum": [
+    "BROADCAST_EF",
+    "BROADCAST_LF",
+    "BROADCAST_PRI",
+    "BROADCAST_WED",
+    "BROADCAST_WKD",
+    "BROADCAST_WKM",
+    "CABLE_EF",
+    "CABLE_LF",
+    "CABLE_PRI",
+    "CABLE_WED",
+    "CABLE_WKD",
+    "CABLE_WKM",
+    "SYNDICATION_ALL_DAY"
+   ],
+   "type": "string"
+  },
+  "LinearTvReachForecastV1": {
+   "properties": {
+    "estimatedLinearTvReachPercent": {
+     "description": "Estimated Linear TV reach percentage.",
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "estimatedLinearTvReachPercent"
+   ],
+   "type": "object"
+  },
+  "LinearTvReachInputDataV1": {
+   "properties": {
+    "linearTvDayparts": {
+     "description": "Distribution of GRPs across different linear TV dayparts.",
+     "items": {
+      "$ref": "LinearTvDaypartDistributionV1"
+     },
+     "maxItems": 13,
+     "minItems": 1,
+     "type": "array"
+    },
+    "linearTvGrp": {
+     "description": "Gross Rating Point for TV reach calculation.",
+     "maximum": 5000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "reachType": {
+     "$ref": "ReachTypeV1"
+    },
+    "userOverrideLinearTvReachPercent": {
+     "description": "User-provided override for estimated TV reach percentage.",
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "reachType"
+   ],
+   "type": "object"
+  },
+  "ListAudienceOpportunitiesV1RequestContent": {
+   "properties": {
+    "filters": {
+     "description": "Supported Filters - format: `<field>`: `<operator1>`, `<operator2>`, ... `mediaPlanId`: `EQUALS` `audienceOpportunityLevel`: `EQUALS`",
+     "items": {
+      "$ref": "FilterV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "description": "The maximum number of records to include in the paginated response.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListAudienceOpportunitiesV1ResponseContent": {
+   "properties": {
+    "audienceOpportunities": {
+     "items": {
+      "$ref": "AudienceOpportunityV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "A token that can be used in a subsequent call to get the next page of data in the collection, if more results are available.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of results which satisfy the filtering criteria.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "audienceOpportunities"
+   ],
+   "type": "object"
+  },
+  "ListAudienceSizesV1RequestContent": {
+   "properties": {
+    "filters": {
+     "description": "Supported Filters - format: `<field>`: `<operator1>`, `<operator2>`, ... `audienceOpportunityId`: `EQUALS` `marketingGoalId`: `EQUALS` `mediaPlanId`: `EQUALS`",
+     "items": {
+      "$ref": "FilterV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "description": "The maximum number of records to include in the paginated response.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListAudienceSizesV1ResponseContent": {
+   "properties": {
+    "audienceSizes": {
+     "items": {
+      "$ref": "AudienceSizeV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "A token that can be used in a subsequent call to get the next page of data in the collection, if more results are available.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of results which satisfy the filtering criteria.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "audienceSizes"
+   ],
+   "type": "object"
+  },
+  "ListBehavioralInsightsV1RequestContent": {
+   "properties": {
+    "filters": {
+     "description": "Supported Filters - format: `<field>`: `<operator1>`, `<operator2>`, ... `audienceOpportunityId`: `EQUALS` `marketingGoalId`: `EQUALS` `mediaPlanId`: `EQUALS` `behavioralInsightType`: `EQUALS`",
+     "items": {
+      "$ref": "FilterV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "description": "The maximum number of records to include in the paginated response.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListBehavioralInsightsV1ResponseContent": {
+   "properties": {
+    "behavioralInsights": {
+     "items": {
+      "$ref": "BehavioralInsightV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "A token that can be used in a subsequent call to get the next page of data in the collection, if more results are available.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of results which satisfy the filtering criteria.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "behavioralInsights"
+   ],
+   "type": "object"
+  },
+  "ListBudgetAllocationsV1RequestContent": {
+   "properties": {
+    "filters": {
+     "description": "Supported Filters - format: `<field>`: `<operator1>`, `<operator2>`, ... `planningItemId`: `EQUALS` `marketingGoalId`: `EQUALS` `mediaPlanId`: `EQUALS` `budgetAllocationLevel`: `EQUALS` `budgetAllocationType`: `EQUALS`",
+     "items": {
+      "$ref": "FilterV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "description": "The maximum number of records to include in the paginated response.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListBudgetAllocationsV1ResponseContent": {
+   "properties": {
+    "budgetAllocations": {
+     "items": {
+      "$ref": "BudgetAllocationV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "A token that can be used in a subsequent call to get the next page of data in the collection, if more results are available.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of results which satisfy the filtering criteria.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListDemographicInsightsV1RequestContent": {
+   "properties": {
+    "filters": {
+     "description": "Supported Filters - format: `<field>`: `<operator1>`, `<operator2>`, ... `audienceOpportunityId`: `EQUALS` `marketingGoalId`: `EQUALS` `mediaPlanId`: `EQUALS` `demographicInsightType`: `EQUALS`",
+     "items": {
+      "$ref": "FilterV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "description": "The maximum number of records to include in the paginated response.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListDemographicInsightsV1ResponseContent": {
+   "properties": {
+    "demographicInsights": {
+     "items": {
+      "$ref": "DemographicInsightV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "A token that can be used in a subsequent call to get the next page of data in the collection, if more results are available.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of results which satisfy the filtering criteria.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "demographicInsights"
+   ],
+   "type": "object"
+  },
+  "ListMarketingGoalsV1RequestContent": {
+   "properties": {
+    "filters": {
+     "description": "Supported Filters - format: `<field>`: `<operator1>`, `<operator2>`, ... `mediaPlanId`: `EQUALS` `goal`: `EQUALS`",
+     "items": {
+      "$ref": "FilterV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "description": "The maximum number of records to include in the paginated response.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListMarketingGoalsV1ResponseContent": {
+   "properties": {
+    "marketingGoals": {
+     "items": {
+      "$ref": "MarketingGoalV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "A token that can be used in a subsequent call to get the next page of data in the collection, if more results are available.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of results which satisfy the filtering criteria.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "marketingGoals"
+   ],
+   "type": "object"
+  },
+  "ListMediaPlansV1RequestContent": {
+   "properties": {
+    "filters": {
+     "description": "Supported Filters - format: `<field>`: `<operator1>`, `<operator2>`, ... `name`: `CONTAINS`, `EQUALS`, `STARTS_WITH`, `NOT_CONTAIN`, `NOT_EQUAL`, `SEARCH` `state`: `CONTAINS`, `EQUALS`, `STARTS_WITH`, `NOT_CONTAIN`, `NO…",
+     "items": {
+      "$ref": "FilterV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "description": "The maximum number of records to include in the paginated response.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListMediaPlansV1ResponseContent": {
+   "properties": {
+    "mediaPlans": {
+     "description": "The media plans which satisfy the filtering criteria and pagination control parameters.",
+     "items": {
+      "$ref": "MediaPlanV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "A token that can be used in a subsequent call to get the next page of data in the collection, if more results are available.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of results which satisfy the filtering criteria.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "mediaPlans"
+   ],
+   "type": "object"
+  },
+  "ListPerformanceForecastsV1RequestContent": {
+   "properties": {
+    "filters": {
+     "description": "Supported Filters - format: `<field>`: `<operator1>`, `<operator2>`, ... `planningItemId`: `EQUALS` `marketingGoalId`: `EQUALS` `mediaPlanId`: `EQUALS` `performanceForecastType`: `EQUALS`",
+     "items": {
+      "$ref": "FilterV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "description": "The maximum number of records to include in the paginated response.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListPerformanceForecastsV1ResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "A token that can be used in a subsequent call to get the next page of data in the collection, if more results are available.",
+     "type": "string"
+    },
+    "performanceForecasts": {
+     "items": {
+      "$ref": "PerformanceForecastV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of results which satisfy the filtering criteria.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListPlanningItemsV1RequestContent": {
+   "properties": {
+    "filters": {
+     "description": "Supported Filters - format: `<field>`: `<operator1>`, `<operator2>`, ... `marketingGoalId`: `EQUALS` `mediaPlanId`: `EQUALS` `planningItemType`: `EQUALS`",
+     "items": {
+      "$ref": "FilterV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "description": "The maximum number of records to include in the paginated response.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListPlanningItemsV1ResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "A token that can be used in a subsequent call to get the next page of data in the collection, if more results are available.",
+     "type": "string"
+    },
+    "planningItems": {
+     "items": {
+      "$ref": "PlanningItemV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of results which satisfy the filtering criteria.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListTargetsV1RequestContent": {
+   "properties": {
+    "filters": {
+     "description": "Supported Filters - format: `<field>`: `<operator1>`, `<operator2>`, ... `audienceOpportunityId`: `EQUALS` `planningItemId`: `EQUALS` `marketingGoalId`: `EQUALS` `mediaPlanId`: `EQUALS` `targetLevel`: `EQUALS` `targetTy…",
+     "items": {
+      "$ref": "FilterV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "description": "The maximum number of records to include in the paginated response.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListTargetsV1ResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "A token that can be used in a subsequent call to get the next page of data in the collection, if more results are available.",
+     "type": "string"
+    },
+    "targets": {
+     "items": {
+      "$ref": "TargetV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "description": "The total number of results which satisfy the filtering criteria.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "ListTrafficInsightsV1RequestContent": {
+   "properties": {
+    "filters": {
+     "description": "Supported Filters - format: `<field>`: `<operator1>`, `<operator2>`, ... `mediaPlanId`: `EQUALS` `trafficInsightType`: `EQUALS` `timeUnit`: `EQUALS`",
+     "items": {
+      "$ref": "FilterV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "maxResults": {
+     "description": "The maximum number of records to include in the paginated response.",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListTrafficInsightsV1ResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "A token that can be used in a subsequent call to get the next page of data in the collection, if more results are available.",
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of results which satisfy the filtering criteria.",
+     "type": "integer"
+    },
+    "trafficInsights": {
+     "items": {
+      "$ref": "TrafficInsightV1"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "LocationTargetV1": {
+   "properties": {
+    "geoLocation": {
+     "description": "The unique identifier for the location.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "geoLocation"
+   ],
+   "type": "object"
+  },
+  "LongTermSalesForecastDataPointV1": {
+   "properties": {
+    "prediction": {
+     "format": "double",
+     "type": "number"
+    },
+    "spend": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "LongTermSalesForecastV1": {
+   "properties": {
+    "availableImpressions": {
+     "type": "integer"
+    },
+    "avgCpm": {
+     "format": "double",
+     "type": "number"
+    },
+    "cpc": {
+     "format": "double",
+     "type": "number"
+    },
+    "dataPoints": {
+     "items": {
+      "$ref": "LongTermSalesForecastDataPointV1"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "forecastId": {
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCapV1"
+    },
+    "matchingImpressions": {
+     "type": "integer"
+    },
+    "maxCpm": {
+     "format": "double",
+     "type": "number"
+    },
+    "maxOnTargetImpressions": {
+     "type": "integer"
+    },
+    "maxSpend": {
+     "format": "double",
+     "type": "number"
+    },
+    "maxTotalImpressions": {
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "MarketingGoalCreateV1": {
+   "properties": {
+    "goalSetting": {
+     "$ref": "GoalSettingV1"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "processingOptions": {
+     "$ref": "MarketingGoalProcessingOptionsV1"
+    },
+    "untargeted": {
+     "description": "This determines whether marketing goal should have targets.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "goalSetting",
+    "mediaPlanId",
+    "mediaPlanVersionId"
+   ],
+   "type": "object"
+  },
+  "MarketingGoalDeleteV1": {
+   "properties": {
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "marketingGoalId",
+    "mediaPlanVersionId"
+   ],
+   "type": "object"
+  },
+  "MarketingGoalProcessingOptionsV1": {
+   "properties": {
+    "skipIncrementalReachOverLinearTv": {
+     "description": "Whether to skip incremental reach analysis for this marketing goal. Only applicable to AWARENESS goals.",
+     "type": "boolean"
+    },
+    "skipLinearTvReach": {
+     "description": "Whether to skip Linear TV reach for this marketing goal. Only applicable to AWARENESS goals.",
+     "type": "boolean"
+    },
+    "skipSeasonalBudgetsCompleteTv": {
+     "description": "Whether to skip seasonal budgets for this marketing goal. Only applicable to AWARENESS goals.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "skipIncrementalReachOverLinearTv",
+    "skipLinearTvReach"
+   ],
+   "type": "object"
+  },
+  "MarketingGoalStateDetailsErrorTypeV1": {
+   "description": "The type of error associated with a marketing goal processing state.",
+   "enum": [
+    "UNEXPECTED_ERROR"
+   ],
+   "type": "string"
+  },
+  "MarketingGoalStateDetailsErrorV1": {
+   "description": "An error that contributed to the current marketing goal processing state.",
+   "properties": {
+    "message": {
+     "description": "The error message.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "MarketingGoalStateDetailsErrorTypeV1"
+    }
+   },
+   "required": [
+    "message",
+    "type"
+   ],
+   "type": "object"
+  },
+  "MarketingGoalStateDetailsV1": {
+   "properties": {
+    "errors": {
+     "description": "The current state errors of the marketing goal.",
+     "items": {
+      "$ref": "MarketingGoalStateDetailsErrorV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "isIncrementalReachOverLinearTvComplete": {
+     "description": "Indicates if incremental reach calculation is complete. Only used when marketing goal is updated with Linear TV input data.",
+     "type": "boolean"
+    },
+    "isLinearTvReachComplete": {
+     "description": "Indicates if linear TV reach calculation is complete. Only used when marketing goal is updated with Linear TV input data.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "errors"
+   ],
+   "type": "object"
+  },
+  "MarketingGoalUpdateV1": {
+   "properties": {
+    "goalSetting": {
+     "$ref": "GoalSettingV1"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "processingOptions": {
+     "$ref": "MarketingGoalProcessingOptionsV1"
+    },
+    "untargeted": {
+     "description": "This determines whether marketing goal should have targets.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "goalSetting",
+    "marketingGoalId",
+    "mediaPlanVersionId"
+   ],
+   "type": "object"
+  },
+  "MarketingGoalV1": {
+   "properties": {
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "deduplicatedReach": {
+     "description": "The total audience size which can be reached by the marketing goal.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "goalSetting": {
+     "$ref": "GoalSettingV1"
+    },
+    "longTermSales": {
+     "description": "The rolled-up Long-Term Sales (LTS) value for the marketing goal: the sum of the LTS values of its enabled planning items.",
+     "type": "integer"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "processingOptions": {
+     "$ref": "MarketingGoalProcessingOptionsV1"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "MarketingGoalStateDetailsV1"
+    },
+    "untargeted": {
+     "description": "This determines whether marketing goal should have targets.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "creationDateTime",
+    "goalSetting",
+    "marketingGoalId",
+    "mediaPlanId",
+    "state",
+    "stateDetails"
+   ],
+   "type": "object"
+  },
+  "MarketplaceStringValueV1": {
+   "properties": {
+    "defaultValue": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "defaultValue"
+   ],
+   "type": "object"
+  },
+  "MediaPlanAutoCreationSettingsV1": {
+   "properties": {
+    "autoCreateSubResources": {
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "autoCreateSubResources"
+   ],
+   "type": "object"
+  },
+  "MediaPlanConflictBehaviorV1": {
+   "description": "How the service resolves the write when the destination media plan has changed since the client's basis for it. `REJECT` - The request fails with a conflict error if the destination media plan has concurrent edits; noth…",
+   "enum": [
+    "OVERWRITE",
+    "REJECT"
+   ],
+   "type": "string"
+  },
+  "MediaPlanCreateCopyMediaPlanV1": {
+   "properties": {
+    "autoCreationSettings": {
+     "$ref": "MediaPlanAutoCreationSettingsV1"
+    },
+    "copyFromMediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "isDraft": {
+     "description": "Indicates whether or not the media plan is a draft. Draft media plans are automatically deleted after a few days.",
+     "type": "boolean"
+    },
+    "versionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "autoCreationSettings",
+    "copyFromMediaPlanId",
+    "versionId"
+   ],
+   "type": "object"
+  },
+  "MediaPlanCreateCreateMediaPlanV1": {
+   "properties": {
+    "advertisedProductCategoryIds": {
+     "description": "We use categories to determine whether a campaign is eligible to run on a given set of inventory. These categories are used as metadata passed to ad exchanges. We recommend choosing a subcategory that best aligns with t…",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "agreementId": {
+     "description": "The identifier of the direct advertiser agreement linked to this media plan. Internal only, static after creation.",
+     "type": "string"
+    },
+    "brandIds": {
+     "description": "Brands associated with the media plan.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "countryCode": {
+     "$ref": "CountryCodeV1"
+    },
+    "crossBorderTag": {
+     "description": "TEMPORARY: The cross-border routing tag (CN2US, CN2EU5, CN2CA, or CN2JP) for an agreement builder plan, read from the deeplink query params and stored here as an interim solution. Long term this will be fetched on deman…",
+     "type": "string"
+    },
+    "dspAdvertiserId": {
+     "description": "The identifier of the Amazon DSP advertiser associated with the media plan.",
+     "type": "string"
+    },
+    "dspProspection": {
+     "type": "boolean"
+    },
+    "endDate": {
+     "description": "The end date for the planning period.",
+     "format": "date",
+     "type": "string"
+    },
+    "initialBudget": {
+     "type": "integer"
+    },
+    "isDraft": {
+     "description": "Indicates whether or not the media plan is a draft. Draft media plans are automatically deleted after a few days.",
+     "type": "boolean"
+    },
+    "name": {
+     "description": "The name of the media plan. This value is user-provided and only intended to help differentiate media plans.",
+     "type": "string"
+    },
+    "processingOptions": {
+     "$ref": "MediaPlanProcessingOptionsV1"
+    },
+    "productLocation": {
+     "$ref": "ProductLocationV1"
+    },
+    "spendingTier": {
+     "description": "TEMPORARY: The spending tier (Core, Elevated, or Advanced) for an agreement builder plan, read from the deeplink query params and stored here as an interim solution. Long term this will be fetched on demand from the Agr…",
+     "type": "string"
+    },
+    "sponsoredAdvertiserId": {
+     "description": "The identifier of the Sponsored advertiser account associated with the media plan.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The start date for the planning period.",
+     "format": "date",
+     "type": "string"
+    },
+    "template": {
+     "$ref": "MediaPlanTemplateV1"
+    },
+    "userLocationSignal": {
+     "$ref": "UserLocationSignalV1"
+    }
+   },
+   "required": [
+    "countryCode",
+    "endDate",
+    "name",
+    "productLocation",
+    "startDate",
+    "template"
+   ],
+   "type": "object"
+  },
+  "MediaPlanCreateDetailsV1": {
+   "oneOf": [
+    {
+     "properties": {
+      "createMediaPlan": {
+       "$ref": "MediaPlanCreateCreateMediaPlanV1"
+      }
+     },
+     "required": [
+      "createMediaPlan"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "copyMediaPlan": {
+       "$ref": "MediaPlanCreateCopyMediaPlanV1"
+      }
+     },
+     "required": [
+      "copyMediaPlan"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "MediaPlanCreateTypeV1": {
+   "enum": [
+    "COPY",
+    "CREATE"
+   ],
+   "type": "string"
+  },
+  "MediaPlanCreateV1": {
+   "properties": {
+    "mediaPlanCreateDetails": {
+     "$ref": "MediaPlanCreateDetailsV1"
+    },
+    "mediaPlanCreateType": {
+     "$ref": "MediaPlanCreateTypeV1"
+    }
+   },
+   "required": [
+    "mediaPlanCreateDetails",
+    "mediaPlanCreateType"
+   ],
+   "type": "object"
+  },
+  "MediaPlanDeleteV1": {
+   "properties": {
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "versionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "mediaPlanId"
+   ],
+   "type": "object"
+  },
+  "MediaPlanExportCreateV1": {
+   "properties": {
+    "advertisingLocale": {
+     "$ref": "AdvertisingLocaleV1"
+    },
+    "exportScope": {
+     "$ref": "ExportScopeV1"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "deprecated": true,
+     "description": "This shape is deprecated since 02/04/2026: Read operations no longer require version id. Latest version will be fetched automatically",
+     "type": "string"
+    },
+    "mediaType": {
+     "$ref": "ExportMediaTypeV1"
+    }
+   },
+   "required": [
+    "advertisingLocale",
+    "mediaPlanId",
+    "mediaType"
+   ],
+   "type": "object"
+  },
+  "MediaPlanExportV1": {
+   "properties": {
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fileUrl": {
+     "description": "The URL for the file, generated as an AWS S3 presigned URL.",
+     "type": "string"
+    },
+    "mediaPlanExportId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "mediaType": {
+     "$ref": "ExportMediaTypeV1"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    }
+   },
+   "type": "object"
+  },
+  "MediaPlanProcessingOptionsV1": {
+   "description": "Contains options for processing the media plan.",
+   "properties": {
+    "refreshReachCurves": {
+     "description": "Indicates whether or not to refresh the forecast data associated with the media plan and the resources contained within it.",
+     "type": "boolean"
+    },
+    "skipProcessingSystemBudgetAllocations": {
+     "description": "Indicates whether or not to skip processing system budget allocations.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "refreshReachCurves",
+    "skipProcessingSystemBudgetAllocations"
+   ],
+   "type": "object"
+  },
+  "MediaPlanStateDetailsErrorTypeV1": {
+   "description": "The type of error associated with a media plan processing state.",
+   "enum": [
+    "UNEXPECTED_ERROR"
+   ],
+   "type": "string"
+  },
+  "MediaPlanStateDetailsErrorV1": {
+   "description": "An error that contributed to the current media plan processing state.",
+   "properties": {
+    "message": {
+     "description": "The error message.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "MediaPlanStateDetailsErrorTypeV1"
+    }
+   },
+   "required": [
+    "message",
+    "type"
+   ],
+   "type": "object"
+  },
+  "MediaPlanStateDetailsV1": {
+   "description": "The details associated with the media plan processing state.",
+   "properties": {
+    "errors": {
+     "description": "The current processing state errors of the media plan.",
+     "items": {
+      "$ref": "MediaPlanStateDetailsErrorV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "errors"
+   ],
+   "type": "object"
+  },
+  "MediaPlanTemplateV1": {
+   "description": "The template field indicates whether the media plan covers all marketing goals, complete TV marketing, or is specific to just the awareness marketing goal.",
+   "enum": [
+    "ALL_MARKETING_GOALS",
+    "AWARENESS_ONLY",
+    "COMPLETE_TV"
+   ],
+   "type": "string"
+  },
+  "MediaPlanUpdateDetailsV1": {
+   "oneOf": [
+    {
+     "properties": {
+      "updateMediaPlan": {
+       "$ref": "MediaPlanUpdateUpdateMediaPlanV1"
+      }
+     },
+     "required": [
+      "updateMediaPlan"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "replaceMediaPlan": {
+       "$ref": "MediaPlanUpdateReplaceMediaPlanV1"
+      }
+     },
+     "required": [
+      "replaceMediaPlan"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "MediaPlanUpdateReplaceMediaPlanV1": {
+   "properties": {
+    "autoCreationSettings": {
+     "$ref": "MediaPlanAutoCreationSettingsV1"
+    },
+    "conflictBehavior": {
+     "$ref": "MediaPlanConflictBehaviorV1"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "replaceFromMediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "versionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "autoCreationSettings",
+    "mediaPlanId",
+    "replaceFromMediaPlanId",
+    "versionId"
+   ],
+   "type": "object"
+  },
+  "MediaPlanUpdateTypeV1": {
+   "enum": [
+    "REPLACE",
+    "UPDATE"
+   ],
+   "type": "string"
+  },
+  "MediaPlanUpdateUpdateMediaPlanV1": {
+   "properties": {
+    "advertisedProductCategoryIds": {
+     "description": "We use categories to determine whether a campaign is eligible to run on a given set of inventory. These categories are used as metadata passed to ad exchanges. We recommend choosing a subcategory that best aligns with t…",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brandIds": {
+     "description": "Brands associated with the media plan.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "dspAdvertiserId": {
+     "description": "The identifier of the Amazon DSP advertiser associated with the media plan.",
+     "type": "string"
+    },
+    "dspProspection": {
+     "type": "boolean"
+    },
+    "endDate": {
+     "description": "The end date for the planning period.",
+     "format": "date",
+     "type": "string"
+    },
+    "initialBudget": {
+     "type": "integer"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the media plan. This value is user-provided and only intended to help differentiate media plans.",
+     "type": "string"
+    },
+    "processingOptions": {
+     "$ref": "MediaPlanProcessingOptionsV1"
+    },
+    "productLocation": {
+     "$ref": "ProductLocationV1"
+    },
+    "sponsoredAdvertiserId": {
+     "description": "The identifier of the Sponsored advertiser account associated with the media plan.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The start date for the planning period.",
+     "format": "date",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "template": {
+     "$ref": "MediaPlanTemplateV1"
+    },
+    "userLocationSignal": {
+     "$ref": "UserLocationSignalV1"
+    },
+    "versionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "mediaPlanId",
+    "versionId"
+   ],
+   "type": "object"
+  },
+  "MediaPlanUpdateV1": {
+   "properties": {
+    "mediaPlanUpdateDetails": {
+     "$ref": "MediaPlanUpdateDetailsV1"
+    },
+    "mediaPlanUpdateType": {
+     "$ref": "MediaPlanUpdateTypeV1"
+    }
+   },
+   "required": [
+    "mediaPlanUpdateDetails",
+    "mediaPlanUpdateType"
+   ],
+   "type": "object"
+  },
+  "MediaPlanV1": {
+   "properties": {
+    "activationState": {
+     "$ref": "ActivationStateV1"
+    },
+    "advertisedProductCategoryIds": {
+     "description": "We use categories to determine whether a campaign is eligible to run on a given set of inventory. These categories are used as metadata passed to ad exchanges. We recommend choosing a subcategory that best aligns with t…",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "aggregateSovYoY": {
+     "description": "Plan-level aggregate Share of Voice year-over-year percentage. Same scaling as the per-variant values. Null when SoV has not yet been computed.",
+     "type": "integer"
+    },
+    "brandIds": {
+     "description": "Brands associated with the media plan.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "countryCode": {
+     "$ref": "CountryCodeV1"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCodeV1"
+    },
+    "dspAdvertiserId": {
+     "description": "The identifier of the Amazon DSP advertiser associated with the media plan.",
+     "type": "string"
+    },
+    "dspAdvertiserName": {
+     "description": "The name of the Amazon DSP advertiser associated with the media plan.",
+     "type": "string"
+    },
+    "dspProspection": {
+     "type": "boolean"
+    },
+    "endDate": {
+     "description": "The end date for the planning period.",
+     "format": "date",
+     "type": "string"
+    },
+    "initialBudget": {
+     "type": "integer"
+    },
+    "isDraft": {
+     "description": "Indicates whether or not the media plan is a draft. Draft media plans are automatically deleted after a few days.",
+     "type": "boolean"
+    },
+    "longTermSales": {
+     "description": "The rolled-up Long-Term Sales (LTS) value for the media plan: the sum of the LTS values of its marketing goals.",
+     "type": "integer"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the media plan. This value is user-provided and only intended to help differentiate media plans.",
+     "type": "string"
+    },
+    "processingOptions": {
+     "$ref": "MediaPlanProcessingOptionsV1"
+    },
+    "productLocation": {
+     "$ref": "ProductLocationV1"
+    },
+    "sourceMediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "sovYoYByAdProduct": {
+     "$ref": "SovAdProductYoYMapV1"
+    },
+    "sponsoredAdvertiserId": {
+     "description": "The identifier of the Sponsored advertiser account associated with the media plan.",
+     "type": "string"
+    },
+    "sponsoredAdvertiserName": {
+     "description": "The name of the Sponsored advertiser account associated with the media plan.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The start date for the planning period.",
+     "format": "date",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "MediaPlanStateDetailsV1"
+    },
+    "template": {
+     "$ref": "MediaPlanTemplateV1"
+    },
+    "userLocationSignal": {
+     "$ref": "UserLocationSignalV1"
+    },
+    "versionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertisedProductCategoryIds",
+    "countryCode",
+    "creationDateTime",
+    "currencyCode",
+    "endDate",
+    "isDraft",
+    "mediaPlanId",
+    "name",
+    "processingOptions",
+    "productLocation",
+    "startDate",
+    "state",
+    "stateDetails",
+    "template",
+    "userLocationSignal"
+   ],
+   "type": "object"
+  },
+  "MetricsByReachTypeV1": {
+   "additionalProperties": {
+    "$ref": "IncrementalReachMetricsV1"
+   },
+   "type": "object"
+  },
+  "MetricsV1": {
+   "description": "Metrics associated with audience insights.",
+   "properties": {
+    "affinity": {
+     "description": "The affinity score between audiences.",
+     "format": "double",
+     "type": "number"
+    },
+    "overlapPercentage": {
+     "description": "The overlap percentage between audiences.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "MobileEnvironmentV1": {
+   "enum": [
+    "APP",
+    "WEB"
+   ],
+   "type": "string"
+  },
+  "MultiFormatReachUpliftForecastV1": {
+   "properties": {
+    "upliftPercent": {
+     "description": "The de-duplicated reach uplift from adding all missing formats at the existing awareness budget.",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "upliftPercent"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "OptimizedBudgetAllocationDetailsV1": {
+   "properties": {
+    "allocatedBudget": {
+     "description": "The budget allocated by user. Applicable for `MEDIA_PLAN`, `MARKETING_GOAL` and `PLANNING_ITEM` budget allocation levels.",
+     "type": "integer"
+    },
+    "budgetMaximum": {
+     "format": "double",
+     "type": "number"
+    },
+    "budgetMaximumStrategy": {
+     "$ref": "BudgetMaximumStrategyV1"
+    },
+    "budgetMinimum": {
+     "format": "double",
+     "type": "number"
+    },
+    "budgetMinimumStrategy": {
+     "$ref": "BudgetMinimumStrategyV1"
+    },
+    "historicBudgetAllocation": {
+     "format": "double",
+     "type": "number"
+    },
+    "optimizedBudget": {
+     "description": "The budget optimized by Amazon. Applicable only for `PLANNING_ITEM` level.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "allocatedBudget"
+   ],
+   "type": "object"
+  },
+  "PerformanceForecastDetailsV1": {
+   "oneOf": [
+    {
+     "properties": {
+      "reachForecast": {
+       "$ref": "ReachForecastV1"
+      }
+     },
+     "required": [
+      "reachForecast"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "clickForecast": {
+       "$ref": "ClickForecastV1"
+      }
+     },
+     "required": [
+      "clickForecast"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoCompletionForecast": {
+       "$ref": "VideoCompletionForecastV1"
+      }
+     },
+     "required": [
+      "videoCompletionForecast"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "detailPageViewForecast": {
+       "$ref": "DetailPageViewForecastV1"
+      }
+     },
+     "required": [
+      "detailPageViewForecast"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "linearTvReachForecast": {
+       "$ref": "LinearTvReachForecastV1"
+      }
+     },
+     "required": [
+      "linearTvReachForecast"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "incrementalReachOverLinearTvForecast": {
+       "$ref": "IncrementalReachOverLinearTvForecastV1"
+      }
+     },
+     "required": [
+      "incrementalReachOverLinearTvForecast"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "exclusiveReachForecast": {
+       "$ref": "ExclusiveReachForecastV1"
+      }
+     },
+     "required": [
+      "exclusiveReachForecast"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "publisherIncrementalReachForecast": {
+       "$ref": "PublisherIncrementalReachForecastV1"
+      }
+     },
+     "required": [
+      "publisherIncrementalReachForecast"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "longTermSalesForecast": {
+       "$ref": "LongTermSalesForecastV1"
+      }
+     },
+     "required": [
+      "longTermSalesForecast"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "multiFormatReachUpliftForecast": {
+       "$ref": "MultiFormatReachUpliftForecastV1"
+      }
+     },
+     "required": [
+      "multiFormatReachUpliftForecast"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "PerformanceForecastLevelV1": {
+   "description": "The hierarchy level of the performance forecast.",
+   "enum": [
+    "MARKETING_GOAL",
+    "PLANNING_ITEM"
+   ],
+   "type": "string"
+  },
+  "PerformanceForecastStateDetailsErrorTypeV1": {
+   "description": "The type of error associated with a performance forecast processing state.",
+   "enum": [
+    "AUDIENCE_TOO_SMALL",
+    "MAX_CPC_IS_TOO_SMALL",
+    "TARGETING_TOO_NARROW",
+    "UNEXPECTED_ERROR"
+   ],
+   "type": "string"
+  },
+  "PerformanceForecastStateDetailsErrorV1": {
+   "description": "An error that contributed to the current performance forecast processing state.",
+   "properties": {
+    "message": {
+     "description": "The error message.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "PerformanceForecastStateDetailsErrorTypeV1"
+    }
+   },
+   "type": "object"
+  },
+  "PerformanceForecastStateDetailsV1": {
+   "description": "The details associated with the performance forecast processing state.",
+   "properties": {
+    "errors": {
+     "description": "The current processing state errors of the performance forecast.",
+     "items": {
+      "$ref": "PerformanceForecastStateDetailsErrorV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PerformanceForecastTypeV1": {
+   "description": "The type of performance forecast.",
+   "enum": [
+    "CLICK",
+    "DETAIL_PAGE_VIEW",
+    "EXCLUSIVE_REACH",
+    "INCREMENTAL_REACH_OVER_LINEAR_TV",
+    "LINEAR_TV_REACH",
+    "LONG_TERM_SALES",
+    "MULTI_FORMAT_REACH_UPLIFT",
+    "PUBLISHER_INCREMENTAL_REACH",
+    "REACH",
+    "VIDEO_COMPLETION"
+   ],
+   "type": "string"
+  },
+  "PerformanceForecastV1": {
+   "properties": {
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "performanceForecastDetails": {
+     "$ref": "PerformanceForecastDetailsV1"
+    },
+    "performanceForecastDetailsList": {
+     "items": {
+      "$ref": "PerformanceForecastDetailsV1"
+     },
+     "maxItems": 6,
+     "minItems": 1,
+     "type": "array"
+    },
+    "performanceForecastId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "performanceForecastLevel": {
+     "$ref": "PerformanceForecastLevelV1"
+    },
+    "performanceForecastType": {
+     "$ref": "PerformanceForecastTypeV1"
+    },
+    "planningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "PerformanceForecastStateDetailsV1"
+    },
+    "timeUnit": {
+     "$ref": "TimeUnitV1"
+    }
+   },
+   "type": "object"
+  },
+  "PerformanceMetricScopeV1": {
+   "description": "The scope of the performance metric.",
+   "enum": [
+    "ADVERTISER",
+    "CROSS_ADVERTISER",
+    "NONE",
+    "PRODUCT"
+   ],
+   "type": "string"
+  },
+  "PerformanceMetricTypeV1": {
+   "description": "The type of performance metric.",
+   "enum": [
+    "MEDIAN_CPC",
+    "MEDIAN_CTR",
+    "MEDIAN_DPVR",
+    "MEDIAN_ECPM",
+    "MEDIAN_ROAS",
+    "TOTAL_COST",
+    "TOTAL_ROAS",
+    "TOTAL_SALES",
+    "VIDEO_COMPLETION_RATE"
+   ],
+   "type": "string"
+  },
+  "PerformanceMetricV1": {
+   "description": "A forecasted performance metric for the planning item.",
+   "properties": {
+    "scope": {
+     "$ref": "PerformanceMetricScopeV1"
+    },
+    "type": {
+     "$ref": "PerformanceMetricTypeV1"
+    },
+    "value": {
+     "description": "The forecasted value of the performance metric.",
+     "format": "float",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "PlanningItemCreateV1": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProductV1"
+    },
+    "adType": {
+     "$ref": "AdTypeV1"
+    },
+    "enabled": {
+     "description": "This determines whether the planning item is enabled, or toggled to active.",
+     "type": "boolean"
+    },
+    "forecastSettings": {
+     "$ref": "PlanningItemForecastSettingsV1"
+    },
+    "hidden": {
+     "description": "This determines whether the planning item should be displayed.",
+     "type": "boolean"
+    },
+    "inventoryType": {
+     "$ref": "InventoryTypeV1"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "parentPlanningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "planningItemLevel": {
+     "$ref": "PlanningItemLevelV1"
+    },
+    "planningItemType": {
+     "$ref": "PlanningItemTypeV1"
+    }
+   },
+   "required": [
+    "marketingGoalId",
+    "mediaPlanVersionId",
+    "planningItemLevel",
+    "planningItemType"
+   ],
+   "type": "object"
+  },
+  "PlanningItemDeleteV1": {
+   "properties": {
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "planningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "mediaPlanVersionId",
+    "planningItemId"
+   ],
+   "type": "object"
+  },
+  "PlanningItemForecastSettingsV1": {
+   "description": "A collection of settings for forecasting the planning item.",
+   "properties": {
+    "averageCpm": {
+     "description": "The average CPM specified for the planning item. Only applicable when `deliveryType` is `NON_GUARANTEED`.",
+     "format": "float",
+     "type": "number"
+    },
+    "cpm": {
+     "description": "The CPM specified for the planning item. Only applicable when `deliveryType` is `GUARANTEED`.",
+     "format": "float",
+     "type": "number"
+    },
+    "deliveryType": {
+     "$ref": "DeliveryTypeV1"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCapV1"
+    },
+    "maxAverageCpm": {
+     "description": "The max average CPM specified for the planning item. Only applicable when `deliveryType` is `NON_GUARANTEED`.",
+     "format": "float",
+     "type": "number"
+    },
+    "maxCpc": {
+     "description": "The max CPC specified for the planning item. Only applicable when targeting Sponsored Products, Sponsored Brands or Sponsored Brands Video.",
+     "format": "float",
+     "type": "number"
+    },
+    "maxVCpm": {
+     "description": "The max viewable CPM specified for the planning item. Only applicable when targeting Sponsored Display.",
+     "format": "float",
+     "type": "number"
+    },
+    "selectedPerformanceForecastKpi": {
+     "$ref": "KpiV1"
+    },
+    "supplyPackage": {
+     "description": "Optionally defined array of supply.",
+     "items": {
+      "$ref": "SupplyV1"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "deliveryType",
+    "frequencyCap"
+   ],
+   "type": "object"
+  },
+  "PlanningItemLevelV1": {
+   "description": "The hierarchical level of the planning item.",
+   "enum": [
+    "MARKETING_GOAL",
+    "PLANNING_ITEM"
+   ],
+   "type": "string"
+  },
+  "PlanningItemStateDetailsErrorTypeV1": {
+   "description": "The type of error associated with a planning item processing state.",
+   "enum": [
+    "UNEXPECTED_ERROR"
+   ],
+   "type": "string"
+  },
+  "PlanningItemStateDetailsErrorV1": {
+   "description": "An error that contributed to the current planning item processing state.",
+   "properties": {
+    "message": {
+     "description": "The error message.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "PlanningItemStateDetailsErrorTypeV1"
+    }
+   },
+   "type": "object"
+  },
+  "PlanningItemStateDetailsV1": {
+   "description": "The details associated with the planning item processing state.",
+   "properties": {
+    "errors": {
+     "description": "The current processing state errors of the planning item.",
+     "items": {
+      "$ref": "PlanningItemStateDetailsErrorV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PlanningItemTypeV1": {
+   "description": "The type of the planning item.",
+   "enum": [
+    "DSP_AUDIO",
+    "DSP_DISPLAY",
+    "DSP_FIRE_TV_FIRE_TABLET_ALEXA_DISPLAY",
+    "DSP_OLV",
+    "DSP_PRIME_VIDEO",
+    "DSP_PRIME_VIDEO_WATCH_FOR_FREE",
+    "DSP_STREAMING_TV",
+    "DSP_TWITCH",
+    "DSP_TWITCH_DISPLAY",
+    "DSP_TWITCH_VIDEO",
+    "PARENT_PUBLISHER",
+    "PARENT_SUPPLY",
+    "PUBLISHER",
+    "SPONSORED_BRANDS",
+    "SPONSORED_BRANDS_VIDEO",
+    "SPONSORED_DISPLAY",
+    "SPONSORED_PRODUCTS",
+    "SUPPLY"
+   ],
+   "type": "string"
+  },
+  "PlanningItemUpdateV1": {
+   "properties": {
+    "enabled": {
+     "description": "This determines whether the planning item is enabled, or toggled to active.",
+     "type": "boolean"
+    },
+    "forecastSettings": {
+     "$ref": "PlanningItemForecastSettingsV1"
+    },
+    "hidden": {
+     "description": "This determines whether the planning item should be displayed.",
+     "type": "boolean"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "planningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "mediaPlanVersionId",
+    "planningItemId"
+   ],
+   "type": "object"
+  },
+  "PlanningItemV1": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProductV1"
+    },
+    "adType": {
+     "$ref": "AdTypeV1"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "deduplicatedReach": {
+     "description": "The total audience size which can be reached by the planning item.",
+     "type": "integer"
+    },
+    "enabled": {
+     "description": "This determines whether the planning item is enabled, or toggled to active.",
+     "type": "boolean"
+    },
+    "forecastSettings": {
+     "$ref": "PlanningItemForecastSettingsV1"
+    },
+    "hidden": {
+     "description": "This determines whether the planning item should be displayed.",
+     "type": "boolean"
+    },
+    "inventoryType": {
+     "$ref": "InventoryTypeV1"
+    },
+    "longTermSales": {
+     "type": "integer"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the planning item. This value is user-provided and only intended to help differentiate planning items.",
+     "type": "string"
+    },
+    "parentPlanningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "performanceMetrics": {
+     "items": {
+      "$ref": "PerformanceMetricV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "planningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "planningItemLevel": {
+     "$ref": "PlanningItemLevelV1"
+    },
+    "planningItemType": {
+     "$ref": "PlanningItemTypeV1"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "PlanningItemStateDetailsV1"
+    }
+   },
+   "type": "object"
+  },
+  "PrimeVideoBehavioralInsightDetailsV1": {
+   "properties": {
+    "insights": {
+     "items": {
+      "$ref": "PrimeVideoBehavioralInsightV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "insights"
+   ],
+   "type": "object"
+  },
+  "PrimeVideoBehavioralInsightV1": {
+   "properties": {
+    "metrics": {
+     "$ref": "MetricsV1"
+    },
+    "name": {
+     "type": "string"
+    },
+    "primeVideoInterest": {
+     "$ref": "PrimeVideoInterestV1"
+    }
+   },
+   "required": [
+    "metrics",
+    "name",
+    "primeVideoInterest"
+   ],
+   "type": "object"
+  },
+  "PrimeVideoInterestV1": {
+   "enum": [
+    "ACTORS",
+    "DIRECTORS",
+    "GENRES",
+    "MOVIES",
+    "SERIES"
+   ],
+   "type": "string"
+  },
+  "ProductCategoryBehavioralInsightDetailsV1": {
+   "properties": {
+    "insights": {
+     "items": {
+      "$ref": "ProductCategoryBehavioralInsightV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "insights"
+   ],
+   "type": "object"
+  },
+  "ProductCategoryBehavioralInsightV1": {
+   "properties": {
+    "metrics": {
+     "$ref": "MetricsV1"
+    },
+    "productCategoryId": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "metrics",
+    "productCategoryId"
+   ],
+   "type": "object"
+  },
+  "ProductCategoryTargetV1": {
+   "properties": {
+    "asinCategory": {
+     "description": "The product category to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "asinCategory"
+   ],
+   "type": "object"
+  },
+  "ProductLocationV1": {
+   "description": "The location of the products being advertised as part of the media plan.",
+   "enum": [
+    "NOT_SOLD_ON_AMAZON",
+    "SOLD_ON_AMAZON"
+   ],
+   "type": "string"
+  },
+  "ProductTargetMatchTypeV1": {
+   "enum": [
+    "PRODUCT_EXACT"
+   ],
+   "type": "string"
+  },
+  "ProductTargetV1": {
+   "properties": {
+    "asin": {
+     "description": "The product asin to target.",
+     "type": "string"
+    },
+    "matchType": {
+     "$ref": "ProductTargetMatchTypeV1"
+    }
+   },
+   "required": [
+    "asin",
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "PropertyOwnershipDemographicInsightDetailsV1": {
+   "properties": {
+    "insights": {
+     "items": {
+      "$ref": "PropertyOwnershipDemographicInsightV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "insights"
+   ],
+   "type": "object"
+  },
+  "PropertyOwnershipDemographicInsightV1": {
+   "properties": {
+    "audienceId": {
+     "type": "string"
+    },
+    "metrics": {
+     "$ref": "MetricsV1"
+    },
+    "propertyOwnership": {
+     "$ref": "PropertyOwnershipV1"
+    }
+   },
+   "required": [
+    "audienceId",
+    "metrics",
+    "propertyOwnership"
+   ],
+   "type": "object"
+  },
+  "PropertyOwnershipV1": {
+   "enum": [
+    "OWNING",
+    "RENTING"
+   ],
+   "type": "string"
+  },
+  "PublisherIncrementalReachForecastV1": {
+   "properties": {
+    "incrementalReach": {
+     "description": "The incremental de-duplicated users gained by adding this publisher to the plan in priority order.",
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "RangeV1": {
+   "properties": {
+    "max": {
+     "type": "integer"
+    },
+    "min": {
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ReachForecastDataPointV1": {
+   "description": "Represents a data point on the reach curve.",
+   "properties": {
+    "impressions": {
+     "description": "The number of on-target impressions.",
+     "type": "integer"
+    },
+    "internalSeasonalBudgetDeDupedReach": {
+     "type": "integer"
+    },
+    "reach": {
+     "description": "The forecasted on-target reach.",
+     "type": "integer"
+    },
+    "reachPercent": {
+     "description": "The forecasted on-target reach percentage.",
+     "format": "double",
+     "type": "number"
+    },
+    "spend": {
+     "description": "The forecasted spend in requested currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "ReachForecastV1": {
+   "properties": {
+    "availableImpressions": {
+     "type": "integer"
+    },
+    "avgCpm": {
+     "format": "double",
+     "type": "number"
+    },
+    "cpc": {
+     "format": "double",
+     "type": "number"
+    },
+    "dataPoints": {
+     "items": {
+      "$ref": "ReachForecastDataPointV1"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "endDate": {
+     "type": "string"
+    },
+    "forecastId": {
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCapV1"
+    },
+    "matchingImpressions": {
+     "type": "integer"
+    },
+    "maxCpm": {
+     "format": "double",
+     "type": "number"
+    },
+    "maxOnTargetImpressions": {
+     "type": "integer"
+    },
+    "maxSpend": {
+     "format": "double",
+     "type": "number"
+    },
+    "maxTotalImpressions": {
+     "type": "integer"
+    },
+    "startDate": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ReachTypeV1": {
+   "description": "Reach type for TV calculations.",
+   "enum": [
+    "HOUSEHOLD",
+    "INDIVIDUAL"
+   ],
+   "type": "string"
+  },
+  "ReadAudienceOpportunityV1ResponseContent": {
+   "properties": {
+    "audienceOpportunityId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "audienceOpportunityLevel": {
+     "$ref": "AudienceOpportunityLevelV1"
+    },
+    "audienceOpportunityType": {
+     "$ref": "AudienceOpportunityTypeV1"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "AudienceOpportunitiesStateDetailsV1"
+    }
+   },
+   "required": [
+    "audienceOpportunityId",
+    "audienceOpportunityLevel",
+    "audienceOpportunityType",
+    "creationDateTime",
+    "mediaPlanId",
+    "state",
+    "stateDetails"
+   ],
+   "type": "object"
+  },
+  "ReadAudienceSizeV1ResponseContent": {
+   "properties": {
+    "audienceOpportunityId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "audienceSizeId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "max": {
+     "description": "The upper bound of estimated unique customers who are in the audience.",
+     "type": "integer"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "min": {
+     "description": "The lower bound of estimated unique customers who are in the audience.",
+     "type": "integer"
+    },
+    "period": {
+     "$ref": "AudienceSizePeriodV1"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "AudienceSizeStateDetailsV1"
+    }
+   },
+   "required": [
+    "audienceOpportunityId",
+    "audienceSizeId",
+    "creationDateTime",
+    "mediaPlanId",
+    "period",
+    "state",
+    "stateDetails"
+   ],
+   "type": "object"
+  },
+  "ReadBehavioralInsightV1ResponseContent": {
+   "properties": {
+    "audienceOpportunityId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "behavioralInsightDetails": {
+     "$ref": "BehavioralInsightDetailsV1"
+    },
+    "behavioralInsightId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "behavioralInsightType": {
+     "$ref": "BehavioralInsightTypeV1"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "BehavioralInsightStateDetailsV1"
+    }
+   },
+   "required": [
+    "audienceOpportunityId",
+    "behavioralInsightDetails",
+    "behavioralInsightId",
+    "behavioralInsightType",
+    "creationDateTime",
+    "mediaPlanId",
+    "state",
+    "stateDetails"
+   ],
+   "type": "object"
+  },
+  "ReadBudgetAllocationV1ResponseContent": {
+   "properties": {
+    "allocatedBudget": {
+     "description": "The budget allocated by user. Applicable for `MEDIA_PLAN`, `MARKETING_GOAL` and `PLANNING_ITEM` budget allocation levels.",
+     "type": "integer"
+    },
+    "budgetAllocationDetails": {
+     "$ref": "BudgetAllocationDetailsV1"
+    },
+    "budgetAllocationId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "budgetAllocationLevel": {
+     "$ref": "BudgetAllocationLevelV1"
+    },
+    "budgetAllocationType": {
+     "$ref": "BudgetAllocationTypeV1"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "optimizedBudget": {
+     "description": "The budget optimized by Amazon. Applicable only for `PLANNING_ITEM` level.",
+     "type": "integer"
+    },
+    "planningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "BudgetAllocationStateDetailsV1"
+    }
+   },
+   "type": "object"
+  },
+  "ReadDemographicInsightV1ResponseContent": {
+   "properties": {
+    "audienceOpportunityId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "demographicInsightDetails": {
+     "$ref": "DemographicInsightDetailsV1"
+    },
+    "demographicInsightId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "demographicInsightType": {
+     "$ref": "DemographicInsightTypeV1"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "DemographicInsightStateDetailsV1"
+    }
+   },
+   "required": [
+    "audienceOpportunityId",
+    "creationDateTime",
+    "demographicInsightDetails",
+    "demographicInsightId",
+    "demographicInsightType",
+    "mediaPlanId",
+    "state",
+    "stateDetails"
+   ],
+   "type": "object"
+  },
+  "ReadMarketingGoalV1ResponseContent": {
+   "properties": {
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "deduplicatedReach": {
+     "description": "The total audience size which can be reached by the marketing goal.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "goalSetting": {
+     "$ref": "GoalSettingV1"
+    },
+    "longTermSales": {
+     "description": "The rolled-up Long-Term Sales (LTS) value for the marketing goal: the sum of the LTS values of its enabled planning items.",
+     "type": "integer"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "processingOptions": {
+     "$ref": "MarketingGoalProcessingOptionsV1"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "MarketingGoalStateDetailsV1"
+    },
+    "untargeted": {
+     "description": "This determines whether marketing goal should have targets.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "creationDateTime",
+    "goalSetting",
+    "marketingGoalId",
+    "mediaPlanId",
+    "state",
+    "stateDetails"
+   ],
+   "type": "object"
+  },
+  "ReadMediaPlanV1ResponseContent": {
+   "properties": {
+    "activationState": {
+     "$ref": "ActivationStateV1"
+    },
+    "advertisedProductCategoryIds": {
+     "description": "We use categories to determine whether a campaign is eligible to run on a given set of inventory. These categories are used as metadata passed to ad exchanges. We recommend choosing a subcategory that best aligns with t…",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "aggregateSovYoY": {
+     "description": "Plan-level aggregate Share of Voice year-over-year percentage. Same scaling as the per-variant values. Null when SoV has not yet been computed.",
+     "type": "integer"
+    },
+    "brandIds": {
+     "description": "Brands associated with the media plan.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "countryCode": {
+     "$ref": "CountryCodeV1"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "currencyCode": {
+     "$ref": "CurrencyCodeV1"
+    },
+    "dspAdvertiserId": {
+     "description": "The identifier of the Amazon DSP advertiser associated with the media plan.",
+     "type": "string"
+    },
+    "dspAdvertiserName": {
+     "description": "The name of the Amazon DSP advertiser associated with the media plan.",
+     "type": "string"
+    },
+    "dspProspection": {
+     "type": "boolean"
+    },
+    "endDate": {
+     "description": "The end date for the planning period.",
+     "format": "date",
+     "type": "string"
+    },
+    "initialBudget": {
+     "type": "integer"
+    },
+    "isDraft": {
+     "description": "Indicates whether or not the media plan is a draft. Draft media plans are automatically deleted after a few days.",
+     "type": "boolean"
+    },
+    "longTermSales": {
+     "description": "The rolled-up Long-Term Sales (LTS) value for the media plan: the sum of the LTS values of its marketing goals.",
+     "type": "integer"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the media plan. This value is user-provided and only intended to help differentiate media plans.",
+     "type": "string"
+    },
+    "processingOptions": {
+     "$ref": "MediaPlanProcessingOptionsV1"
+    },
+    "productLocation": {
+     "$ref": "ProductLocationV1"
+    },
+    "sourceMediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "sovYoYByAdProduct": {
+     "$ref": "SovAdProductYoYMapV1"
+    },
+    "sponsoredAdvertiserId": {
+     "description": "The identifier of the Sponsored advertiser account associated with the media plan.",
+     "type": "string"
+    },
+    "sponsoredAdvertiserName": {
+     "description": "The name of the Sponsored advertiser account associated with the media plan.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The start date for the planning period.",
+     "format": "date",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "MediaPlanStateDetailsV1"
+    },
+    "template": {
+     "$ref": "MediaPlanTemplateV1"
+    },
+    "userLocationSignal": {
+     "$ref": "UserLocationSignalV1"
+    },
+    "versionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertisedProductCategoryIds",
+    "countryCode",
+    "creationDateTime",
+    "currencyCode",
+    "endDate",
+    "isDraft",
+    "mediaPlanId",
+    "name",
+    "processingOptions",
+    "productLocation",
+    "startDate",
+    "state",
+    "stateDetails",
+    "template",
+    "userLocationSignal"
+   ],
+   "type": "object"
+  },
+  "ReadPerformanceForecastV1ResponseContent": {
+   "properties": {
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "performanceForecastDetails": {
+     "$ref": "PerformanceForecastDetailsV1"
+    },
+    "performanceForecastDetailsList": {
+     "items": {
+      "$ref": "PerformanceForecastDetailsV1"
+     },
+     "maxItems": 6,
+     "minItems": 1,
+     "type": "array"
+    },
+    "performanceForecastId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "performanceForecastLevel": {
+     "$ref": "PerformanceForecastLevelV1"
+    },
+    "performanceForecastType": {
+     "$ref": "PerformanceForecastTypeV1"
+    },
+    "planningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "PerformanceForecastStateDetailsV1"
+    },
+    "timeUnit": {
+     "$ref": "TimeUnitV1"
+    }
+   },
+   "type": "object"
+  },
+  "ReadPlanningItemV1ResponseContent": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProductV1"
+    },
+    "adType": {
+     "$ref": "AdTypeV1"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "deduplicatedReach": {
+     "description": "The total audience size which can be reached by the planning item.",
+     "type": "integer"
+    },
+    "enabled": {
+     "description": "This determines whether the planning item is enabled, or toggled to active.",
+     "type": "boolean"
+    },
+    "forecastSettings": {
+     "$ref": "PlanningItemForecastSettingsV1"
+    },
+    "hidden": {
+     "description": "This determines whether the planning item should be displayed.",
+     "type": "boolean"
+    },
+    "inventoryType": {
+     "$ref": "InventoryTypeV1"
+    },
+    "longTermSales": {
+     "type": "integer"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the planning item. This value is user-provided and only intended to help differentiate planning items.",
+     "type": "string"
+    },
+    "parentPlanningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "performanceMetrics": {
+     "items": {
+      "$ref": "PerformanceMetricV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "planningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "planningItemLevel": {
+     "$ref": "PlanningItemLevelV1"
+    },
+    "planningItemType": {
+     "$ref": "PlanningItemTypeV1"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "PlanningItemStateDetailsV1"
+    }
+   },
+   "type": "object"
+  },
+  "ReadTargetV1ResponseContent": {
+   "properties": {
+    "audienceOpportunityId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "bid": {
+     "$ref": "TargetBidV1"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "negative": {
+     "type": "boolean"
+    },
+    "planningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "targetDetails": {
+     "$ref": "TargetDetailsV1"
+    },
+    "targetId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "targetLevel": {
+     "$ref": "TargetLevelV1"
+    },
+    "targetType": {
+     "$ref": "TargetTypeV1"
+    }
+   },
+   "required": [
+    "creationDateTime",
+    "mediaPlanId",
+    "negative",
+    "targetDetails",
+    "targetId",
+    "targetLevel",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "ReadTrafficInsightV1ResponseContent": {
+   "properties": {
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "TrafficInsightStateDetailsV1"
+    },
+    "timeUnit": {
+     "$ref": "TimeUnitV1"
+    },
+    "trafficInsightDetails": {
+     "$ref": "TrafficInsightDetailsV1"
+    },
+    "trafficInsightId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "trafficInsightLevel": {
+     "$ref": "TrafficInsightLevelV1"
+    },
+    "trafficInsightTargetingType": {
+     "$ref": "TrafficInsghtTargetingTypeV1"
+    },
+    "trafficInsightType": {
+     "$ref": "TrafficInsightTypeV1"
+    }
+   },
+   "required": [
+    "creationDateTime",
+    "mediaPlanId",
+    "state",
+    "stateDetails",
+    "timeUnit",
+    "trafficInsightDetails",
+    "trafficInsightId",
+    "trafficInsightLevel",
+    "trafficInsightTargetingType",
+    "trafficInsightType"
+   ],
+   "type": "object"
+  },
+  "ResourceStateV1": {
+   "description": "The current state of the resource. `NEW` - The resource is created but not processed. `PENDING` - The resource is requested to be processed. `PROCESSING` - The resource or its sub-resources are currently processing. `SU…",
+   "enum": [
+    "DELETED",
+    "FAILED",
+    "NEW",
+    "PARTIAL_SUCCESS",
+    "PENDING",
+    "PROCESSING",
+    "SUCCESS",
+    "TIMED_OUT",
+    "UPDATED"
+   ],
+   "type": "string"
+  },
+  "SeasonalBudgetAllocationDetailsV1": {
+   "properties": {
+    "dataPoints": {
+     "items": {
+      "$ref": "SeasonalBudgetDataPointV1"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "seasonalBudgetTimeUnit": {
+     "$ref": "SeasonalBudgetTimeUnitV1"
+    }
+   },
+   "required": [
+    "dataPoints",
+    "seasonalBudgetTimeUnit"
+   ],
+   "type": "object"
+  },
+  "SeasonalBudgetDataPointV1": {
+   "properties": {
+    "appliedBudget": {
+     "type": "integer"
+    },
+    "budget": {
+     "type": "integer"
+    },
+    "dedupedReach": {
+     "type": "integer"
+    },
+    "endDate": {
+     "description": "The end date for the planning period.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The start date for the planning period.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "budget",
+    "endDate",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "SeasonalBudgetTimeUnitV1": {
+   "description": "This is the time unit used for specifying the granularity of the flight periods within the Seasonal Budget Allocation Breakdown.",
+   "enum": [
+    "MONTH",
+    "PLANNING_PERIOD",
+    "QUARTER"
+   ],
+   "type": "string"
+  },
+  "SeasonalFlightConstraintInputDataV1": {
+   "description": "Contains seasonal flight input data for the marketing goal.",
+   "properties": {
+    "flightConstraintType": {
+     "$ref": "FlightConstraintTypeV1"
+    },
+    "flightConstraints": {
+     "description": "List of seasonal flight constraints.",
+     "items": {
+      "$ref": "FlightConstraintV1"
+     },
+     "maxItems": 6,
+     "minItems": 1,
+     "type": "array"
+    },
+    "timeUnit": {
+     "$ref": "TimeUnitV1"
+    }
+   },
+   "required": [
+    "flightConstraints",
+    "timeUnit"
+   ],
+   "type": "object"
+  },
+  "ShopperTrafficForecastDataPointV1": {
+   "properties": {
+    "endDate": {
+     "type": "string"
+    },
+    "percent": {
+     "format": "float",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    },
+    "startDate": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "endDate",
+    "percent",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "ShopperTrafficForecastDetailsV1": {
+   "properties": {
+    "dataPoints": {
+     "items": {
+      "$ref": "ShopperTrafficForecastDataPointV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "dataPoints"
+   ],
+   "type": "object"
+  },
+  "SovAdProductYoYMapV1": {
+   "additionalProperties": {
+    "type": "integer"
+   },
+   "description": "Per-variant Share of Voice year-over-year percentages, keyed by ad-product variant name (SPONSORED_PRODUCTS, SPONSORED_BRANDS, SPONSORED_BRANDS_VIDEO). Raw integer percentages (e.g. 50 represents +50%).",
+   "type": "object"
+  },
+  "SupplyV1": {
+   "enum": [
+    "DSP_ALEXA_DISPLAY",
+    "DSP_FIRE_TABLET",
+    "DSP_FIRE_TV",
+    "DSP_PRIME_VIDEO",
+    "DSP_STREAMING_TV",
+    "DSP_TWITCH_VIDEO"
+   ],
+   "type": "string"
+  },
+  "TargetBidV1": {
+   "properties": {
+    "bid": {
+     "description": "The bid for the target.",
+     "format": "float",
+     "type": "number"
+    }
+   },
+   "required": [
+    "bid"
+   ],
+   "type": "object"
+  },
+  "TargetCreateV1": {
+   "properties": {
+    "audienceOpportunityId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "bid": {
+     "$ref": "TargetBidV1"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "negative": {
+     "type": "boolean"
+    },
+    "planningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "targetDetails": {
+     "$ref": "TargetDetailsV1"
+    },
+    "targetLevel": {
+     "$ref": "TargetLevelV1"
+    },
+    "targetType": {
+     "$ref": "TargetTypeV1"
+    }
+   },
+   "required": [
+    "mediaPlanId",
+    "mediaPlanVersionId",
+    "negative",
+    "targetDetails",
+    "targetLevel",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "TargetDeleteV1": {
+   "properties": {
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "targetId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "mediaPlanVersionId",
+    "targetId"
+   ],
+   "type": "object"
+  },
+  "TargetDetailsV1": {
+   "oneOf": [
+    {
+     "properties": {
+      "productTarget": {
+       "$ref": "ProductTargetV1"
+      }
+     },
+     "required": [
+      "productTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "audienceTarget": {
+       "$ref": "AudienceTargetV1"
+      }
+     },
+     "required": [
+      "audienceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productCategoryTarget": {
+       "$ref": "ProductCategoryTargetV1"
+      }
+     },
+     "required": [
+      "productCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentGenreTarget": {
+       "$ref": "ContentGenreTargetV1"
+      }
+     },
+     "required": [
+      "contentGenreTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentRatingTarget": {
+       "$ref": "ContentRatingTargetV1"
+      }
+     },
+     "required": [
+      "contentRatingTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "deviceTarget": {
+       "$ref": "DeviceTargetV1"
+      }
+     },
+     "required": [
+      "deviceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "locationTarget": {
+       "$ref": "LocationTargetV1"
+      }
+     },
+     "required": [
+      "locationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "keywordTarget": {
+       "$ref": "KeywordTargetV1"
+      }
+     },
+     "required": [
+      "keywordTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "themeTarget": {
+       "$ref": "ThemeTargetV1"
+      }
+     },
+     "required": [
+      "themeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "inventorySourceTarget": {
+       "$ref": "InventorySourceTargetV1"
+      }
+     },
+     "required": [
+      "inventorySourceTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "TargetLevelV1": {
+   "description": "The hierarchy level the target is parented under. `MEDIA_PLAN` - The target is parented under a media plan specified by the `mediaPlanId` `MARKETING_GOAL` - The target is parented under a marketing goal specified by the…",
+   "enum": [
+    "AUDIENCE_OPPORTUNITY",
+    "MARKETING_GOAL",
+    "MEDIA_PLAN",
+    "PLANNING_ITEM"
+   ],
+   "type": "string"
+  },
+  "TargetTypeV1": {
+   "enum": [
+    "AUDIENCE",
+    "CONTENT_GENRE",
+    "CONTENT_RATING",
+    "DEVICE",
+    "INVENTORY_SOURCE",
+    "KEYWORD",
+    "LOCATION",
+    "PRODUCT",
+    "PRODUCT_CATEGORY",
+    "THEME"
+   ],
+   "type": "string"
+  },
+  "TargetUpdateV1": {
+   "properties": {
+    "bid": {
+     "$ref": "TargetBidV1"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "negative": {
+     "type": "boolean"
+    },
+    "targetDetails": {
+     "$ref": "TargetDetailsV1"
+    },
+    "targetId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "mediaPlanVersionId",
+    "targetId"
+   ],
+   "type": "object"
+  },
+  "TargetV1": {
+   "properties": {
+    "audienceOpportunityId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "bid": {
+     "$ref": "TargetBidV1"
+    },
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketingGoalId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "negative": {
+     "type": "boolean"
+    },
+    "planningItemId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "targetDetails": {
+     "$ref": "TargetDetailsV1"
+    },
+    "targetId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "targetLevel": {
+     "$ref": "TargetLevelV1"
+    },
+    "targetType": {
+     "$ref": "TargetTypeV1"
+    }
+   },
+   "required": [
+    "creationDateTime",
+    "mediaPlanId",
+    "negative",
+    "targetDetails",
+    "targetId",
+    "targetLevel",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "ThemeTargetMatchTypeV1": {
+   "enum": [
+    "KEYWORDS_RELATED_TO_YOUR_BRAND",
+    "KEYWORDS_RELATED_TO_YOUR_LANDING_PAGES"
+   ],
+   "type": "string"
+  },
+  "ThemeTargetV1": {
+   "properties": {
+    "matchType": {
+     "$ref": "ThemeTargetMatchTypeV1"
+    }
+   },
+   "required": [
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "TimeUnitV1": {
+   "description": "The time unit for planning periods.",
+   "enum": [
+    "MONTH",
+    "PLANNING_PERIOD",
+    "QUARTER",
+    "WEEK"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TrafficInsghtTargetingTypeV1": {
+   "description": "The targeting type used for the traffic insight.",
+   "enum": [
+    "MARKETING_GOAL_AUDIENCE",
+    "RETAIL_PRODUCT_CATEGORIES"
+   ],
+   "type": "string"
+  },
+  "TrafficInsightDetailsV1": {
+   "oneOf": [
+    {
+     "properties": {
+      "shopperTrafficForecastDetails": {
+       "$ref": "ShopperTrafficForecastDetailsV1"
+      }
+     },
+     "required": [
+      "shopperTrafficForecastDetails"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "TrafficInsightLevelV1": {
+   "description": "The hierarchy level of the traffic insight.",
+   "enum": [
+    "MEDIA_PLAN"
+   ],
+   "type": "string"
+  },
+  "TrafficInsightStateDetailsErrorTypeV1": {
+   "description": "The type of error associated with a traffic insight processing state.",
+   "enum": [
+    "UNEXPECTED_ERROR"
+   ],
+   "type": "string"
+  },
+  "TrafficInsightStateDetailsErrorV1": {
+   "description": "An error that contributed to the current traffic insight processing state.",
+   "properties": {
+    "message": {
+     "description": "The error message.",
+     "type": "string"
+    },
+    "type": {
+     "$ref": "TrafficInsightStateDetailsErrorTypeV1"
+    }
+   },
+   "type": "object"
+  },
+  "TrafficInsightStateDetailsV1": {
+   "description": "The details associated with the traffic insight processing state.",
+   "properties": {
+    "errors": {
+     "description": "The current processing state errors of the traffic insight.",
+     "items": {
+      "$ref": "TrafficInsightStateDetailsErrorV1"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "TrafficInsightTypeV1": {
+   "description": "The type of traffic insight.",
+   "enum": [
+    "SHOPPER_TRAFFIC_FORECAST"
+   ],
+   "type": "string"
+  },
+  "TrafficInsightV1": {
+   "properties": {
+    "creationDateTime": {
+     "description": "The date and time in ISO 8601 format at which the resource was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "mediaPlanId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "mediaPlanVersionId": {
+     "description": "The version ID of the media plan the resource is related to.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "ResourceStateV1"
+    },
+    "stateDetails": {
+     "$ref": "TrafficInsightStateDetailsV1"
+    },
+    "timeUnit": {
+     "$ref": "TimeUnitV1"
+    },
+    "trafficInsightDetails": {
+     "$ref": "TrafficInsightDetailsV1"
+    },
+    "trafficInsightId": {
+     "description": "The ID of the resource.",
+     "type": "string"
+    },
+    "trafficInsightLevel": {
+     "$ref": "TrafficInsightLevelV1"
+    },
+    "trafficInsightTargetingType": {
+     "$ref": "TrafficInsghtTargetingTypeV1"
+    },
+    "trafficInsightType": {
+     "$ref": "TrafficInsightTypeV1"
+    }
+   },
+   "required": [
+    "creationDateTime",
+    "mediaPlanId",
+    "state",
+    "stateDetails",
+    "timeUnit",
+    "trafficInsightDetails",
+    "trafficInsightId",
+    "trafficInsightLevel",
+    "trafficInsightTargetingType",
+    "trafficInsightType"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateAudienceOpportunitiesV1RequestContent": {
+   "properties": {
+    "audienceOpportunities": {
+     "items": {
+      "$ref": "AudienceOpportunityUpdateV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audienceOpportunities"
+   ],
+   "type": "object"
+  },
+  "UpdateAudienceOpportunitiesV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedAudienceOpportunitiesSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "UpdateBudgetAllocationsV1RequestContent": {
+   "properties": {
+    "budgetAllocations": {
+     "items": {
+      "$ref": "BudgetAllocationUpdateV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateBudgetAllocationsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedBudgetAllocationSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateMarketingGoalsV1RequestContent": {
+   "properties": {
+    "marketingGoals": {
+     "items": {
+      "$ref": "MarketingGoalUpdateV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "marketingGoals"
+   ],
+   "type": "object"
+  },
+  "UpdateMarketingGoalsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedMarketingGoalSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "UpdateMediaPlansV1RequestContent": {
+   "properties": {
+    "mediaPlans": {
+     "items": {
+      "$ref": "MediaPlanUpdateV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "mediaPlans"
+   ],
+   "type": "object"
+  },
+  "UpdateMediaPlansV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedMediaPlanSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "UpdatePlanningItemsV1RequestContent": {
+   "properties": {
+    "planningItems": {
+     "items": {
+      "$ref": "PlanningItemUpdateV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdatePlanningItemsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedPlanningItemSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateTargetsV1RequestContent": {
+   "properties": {
+    "targets": {
+     "items": {
+      "$ref": "TargetUpdateV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "UpdateTargetsV1ResponseContent": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "IndexedError"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "IndexedTargetSuccessV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "error",
+    "success"
+   ],
+   "type": "object"
+  },
+  "UserLocationSignalV1": {
+   "description": "The type of signal used to determine a users location when geo location targeting is applied. `CURRENT` - Includes people who are currently in this location. `MULTIPLE_SIGNALS` - Multiple location signals are used, incl…",
+   "enum": [
+    "CURRENT",
+    "MULTIPLE_SIGNALS"
+   ],
+   "type": "string"
+  },
+  "VideoCompletionForecastDataPointV1": {
+   "properties": {
+    "cpvc": {
+     "format": "double",
+     "type": "number"
+    },
+    "prediction": {
+     "format": "double",
+     "type": "number"
+    },
+    "spend": {
+     "format": "double",
+     "type": "number"
+    },
+    "vcr": {
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "VideoCompletionForecastV1": {
+   "properties": {
+    "availableImpressions": {
+     "type": "integer"
+    },
+    "avgCpm": {
+     "format": "double",
+     "type": "number"
+    },
+    "cpc": {
+     "format": "double",
+     "type": "number"
+    },
+    "dataPoints": {
+     "items": {
+      "$ref": "VideoCompletionForecastDataPointV1"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "forecastId": {
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "FrequencyCapV1"
+    },
+    "matchingImpressions": {
+     "type": "integer"
+    },
+    "maxCpm": {
+     "format": "double",
+     "type": "number"
+    },
+    "maxOnTargetImpressions": {
+     "type": "integer"
+    },
+    "maxSpend": {
+     "format": "double",
+     "type": "number"
+    },
+    "maxTotalImpressions": {
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

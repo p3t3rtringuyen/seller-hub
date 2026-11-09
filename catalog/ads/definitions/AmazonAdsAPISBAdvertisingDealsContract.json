@@ -1,0 +1,631 @@
+{
+ "api": "AmazonAdsAPISBAdvertisingDealsContract",
+ "file": "specs/dest/AmazonAdsAPISBAdvertisingDealsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "| ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `CONTENT_TOO_LARGE` | The request is too large. Consider splitting it into multiple requests.…",
+   "enum": [
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDeal": {
+   "properties": {
+    "advertisingDealId": {
+     "description": "A unique identifier for a deal.",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The end date time for the deal.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the deal.",
+     "type": "string"
+    },
+    "price": {
+     "$ref": "SBAdvertisingDealPrice"
+    },
+    "replacingDealId": {
+     "description": "The ID of an advertising deal that this deal intends to replace.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date time for the deal.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SBAdvertisingDealState"
+    },
+    "status": {
+     "$ref": "SBAdvertisingDealStatus"
+    }
+   },
+   "required": [
+    "advertisingDealId",
+    "endDateTime",
+    "name",
+    "startDateTime",
+    "status"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDealAdvertisingDealIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDealCreate": {
+   "properties": {
+    "endDateTime": {
+     "description": "The end date time for the deal.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the deal.",
+     "type": "string"
+    },
+    "price": {
+     "$ref": "SBCreateAdvertisingDealPrice"
+    },
+    "replacingDealId": {
+     "description": "The ID of an advertising deal that this deal intends to replace.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date time for the deal.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SBAdvertisingDealState"
+    }
+   },
+   "required": [
+    "endDateTime",
+    "name",
+    "startDateTime"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDealMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "SBAdvertisingDealMultiStatusSuccess"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBAdvertisingDealMultiStatusSuccess": {
+   "properties": {
+    "advertisingDeal": {
+     "$ref": "SBAdvertisingDeal"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "advertisingDeal",
+    "index"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDealNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "SBAdvertisingDealNameFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDealNameFilterType": {
+   "description": "| AdvertisingDealNameFilterType | Description | |------|------| | `BROAD_MATCH` | Filter by broad match. | | `EXACT_MATCH` | Filter by exact match. |",
+   "enum": [
+    "BROAD_MATCH",
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "SBAdvertisingDealPrice": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "SBCurrencyCode"
+    },
+    "priceType": {
+     "$ref": "SBAdvertisingDealPriceType"
+    },
+    "value": {
+     "description": "The monetary amount of the price in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "priceType",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDealPriceType": {
+   "description": "| AdvertisingDealPriceType | Description | |------|------| | `FIXED_PRICE` | Sale price for a specific ad placement regardless of auction performance. |",
+   "enum": [
+    "FIXED_PRICE"
+   ],
+   "type": "string"
+  },
+  "SBAdvertisingDealState": {
+   "description": "| AdvertisingDealState | Description | |------|------| | `DRAFT` | | | `PROPOSED` | |",
+   "enum": [
+    "DRAFT",
+    "PROPOSED"
+   ],
+   "type": "string"
+  },
+  "SBAdvertisingDealStatus": {
+   "properties": {
+    "status": {
+     "$ref": "SBAdvertisingDealStatusEnum"
+    }
+   },
+   "required": [
+    "status"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisingDealStatusEnum": {
+   "description": "| AdvertisingDealStatusEnum | Description | |------|------| | `DRAFT` | The deal has not been submitted yet. | | `MODERATION_APPROVED` | The deal has passed moderation. | | `PROPOSED` | The deal has been submitted for m…",
+   "enum": [
+    "DRAFT",
+    "MODERATION_APPROVED",
+    "PROPOSED"
+   ],
+   "type": "string"
+  },
+  "SBAdvertisingDealSuccessResponse": {
+   "properties": {
+    "advertisingDeals": {
+     "items": {
+      "$ref": "SBAdvertisingDeal"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SBAdvertisingDealUpdate": {
+   "properties": {
+    "advertisingDealId": {
+     "description": "A unique identifier for a deal.",
+     "type": "string"
+    },
+    "endDateTime": {
+     "description": "The end date time for the deal.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the deal.",
+     "type": "string"
+    },
+    "price": {
+     "$ref": "SBUpdateAdvertisingDealPrice"
+    },
+    "replacingDealId": {
+     "description": "The ID of an advertising deal that this deal intends to replace.",
+     "nullable": true,
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date time for the deal.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SBAdvertisingDealState"
+    }
+   },
+   "required": [
+    "advertisingDealId"
+   ],
+   "type": "object"
+  },
+  "SBCreateAdvertisingDealPrice": {
+   "properties": {
+    "priceType": {
+     "$ref": "SBAdvertisingDealPriceType"
+    },
+    "value": {
+     "description": "The monetary amount of the price in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "priceType",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SBCreateAdvertisingDealRequest": {
+   "properties": {
+    "advertisingDeals": {
+     "items": {
+      "$ref": "SBAdvertisingDealCreate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBCurrencyCode": {
+   "description": "| CurrencyCode | Description | |------|------| | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `CHF` | Swiss Franc | | `CNY` | Chinese Yuan …",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CHF",
+    "CNY",
+    "DKK",
+    "EGP",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "MXP",
+    "NGN",
+    "NOK",
+    "NZD",
+    "PLN",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "SBDeleteAdvertisingDealRequest": {
+   "properties": {
+    "advertisingDealIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBQueryAdvertisingDealRequest": {
+   "properties": {
+    "advertisingDealIdFilter": {
+     "$ref": "SBAdvertisingDealAdvertisingDealIdFilter"
+    },
+    "maxResults": {
+     "default": 10,
+     "format": "int32",
+     "maximum": 50,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "SBAdvertisingDealNameFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateAdvertisingDealPrice": {
+   "properties": {
+    "priceType": {
+     "$ref": "SBAdvertisingDealPriceType"
+    },
+    "value": {
+     "description": "The monetary amount of the price in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateAdvertisingDealRequest": {
+   "properties": {
+    "advertisingDeals": {
+     "items": {
+      "$ref": "SBAdvertisingDealUpdate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

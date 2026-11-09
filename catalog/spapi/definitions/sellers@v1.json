@@ -1,0 +1,271 @@
+{
+  "Account": {
+    "description": "The response schema for the `getAccount` operation.",
+    "properties": {
+      "business": {
+        "ref": "Business"
+      },
+      "businessType": {
+        "description": "The type of business registered for the seller account.",
+        "enum": [
+          "CHARITY",
+          "CRAFTSMAN",
+          "INDIVIDUAL",
+          "NATURAL_PERSON_COMPANY",
+          "PRIVATE_LIMITED",
+          "PUBLIC_LISTED",
+          "SOLE_PROPRIETORSHIP",
+          "STATE_OWNED"
+        ],
+        "type": "string"
+      },
+      "marketplaceParticipationList": {
+        "ref": "MarketplaceParticipationList"
+      },
+      "primaryContact": {
+        "ref": "PrimaryContact"
+      },
+      "sellingPlan": {
+        "description": "The selling plan details.",
+        "enum": [
+          "INDIVIDUAL",
+          "PROFESSIONAL"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "businessType",
+      "marketplaceParticipationList",
+      "sellingPlan"
+    ],
+    "type": "object"
+  },
+  "Address": {
+    "description": "Represents an address",
+    "properties": {
+      "addressLine1": {
+        "description": "Street address information.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional street address information.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The country code in two-character ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "The postal code.",
+        "type": "string"
+      },
+      "stateOrProvinceCode": {
+        "description": "The state or province code.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "addressLine1",
+      "countryCode"
+    ],
+    "type": "object"
+  },
+  "Business": {
+    "description": "Information about the seller's business.",
+    "properties": {
+      "companyRegistrationNumber": {
+        "description": "The seller's company registration number, if applicable.",
+        "type": "string"
+      },
+      "companyTaxIdentificationNumber": {
+        "description": "The seller's company tax identification number, if applicable.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The registered business name.",
+        "type": "string"
+      },
+      "nonLatinName": {
+        "description": "The non-Latin script version of the registered business name, if applicable.",
+        "type": "string"
+      },
+      "registeredBusinessAddress": {
+        "description": "The registered business address.",
+        "ref": "Address"
+      }
+    },
+    "required": [
+      "name",
+      "registeredBusinessAddress"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help you understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition in a human-readable form.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "GetAccountResponse": {
+    "description": "The response schema for the `getAccount` operation.",
+    "properties": {
+      "errors": {
+        "description": "The errors encountered by the `getAccount` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "ref": "Account"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetMarketplaceParticipationsResponse": {
+    "description": "The response schema for the `getMarketplaceParticipations` operation.",
+    "properties": {
+      "errors": {
+        "description": "The errors encountered by the `getMarketplaceParticipations` operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the `getMarketplaceParticipations` operation.",
+        "ref": "MarketplaceParticipationList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Marketplace": {
+    "description": "Information about an Amazon marketplace where a seller can list items and customers can view and purchase items.",
+    "properties": {
+      "countryCode": {
+        "description": "The ISO 3166-1 alpha-2 format country code of the marketplace.",
+        "type": "string"
+      },
+      "defaultCurrencyCode": {
+        "description": "The ISO 4217 format currency code of the marketplace.",
+        "type": "string"
+      },
+      "defaultLanguageCode": {
+        "description": "The ISO 639-1 format language code of the marketplace.",
+        "type": "string"
+      },
+      "domainName": {
+        "description": "The domain name of the marketplace.",
+        "type": "string"
+      },
+      "id": {
+        "description": "The encrypted marketplace value.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The marketplace name.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "countryCode",
+      "defaultCurrencyCode",
+      "defaultLanguageCode",
+      "domainName",
+      "id",
+      "name"
+    ],
+    "type": "object"
+  },
+  "MarketplaceParticipation": {
+    "properties": {
+      "marketplace": {
+        "ref": "Marketplace"
+      },
+      "participation": {
+        "ref": "Participation"
+      },
+      "storeName": {
+        "description": "The name of the seller's store as displayed in the marketplace.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "marketplace",
+      "participation",
+      "storeName"
+    ],
+    "type": "object"
+  },
+  "MarketplaceParticipationList": {
+    "description": "List of marketplace participations.",
+    "properties": {},
+    "ref": "MarketplaceParticipation",
+    "required": [],
+    "type": "array"
+  },
+  "Participation": {
+    "description": "Information that is specific to a seller in a marketplace.",
+    "properties": {
+      "hasSuspendedListings": {
+        "description": "Specifies if the seller has suspended listings.",
+        "type": "boolean"
+      },
+      "isParticipating": {
+        "description": "If `true`, the seller participates in the marketplace.",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "hasSuspendedListings",
+      "isParticipating"
+    ],
+    "type": "object"
+  },
+  "PrimaryContact": {
+    "description": "Information about the seller's primary contact.",
+    "properties": {
+      "address": {
+        "description": "The primary contact's residential address.",
+        "ref": "Address"
+      },
+      "name": {
+        "description": "The full name of the seller's primary contact.",
+        "type": "string"
+      },
+      "nonLatinName": {
+        "description": "The non-Latin script version of the primary contact's name, if applicable.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "address",
+      "name"
+    ],
+    "type": "object"
+  }
+}

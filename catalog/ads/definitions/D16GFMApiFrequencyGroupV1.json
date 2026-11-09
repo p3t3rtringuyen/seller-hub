@@ -1,0 +1,390 @@
+{
+ "api": "D16GFMApiFrequencyGroupV1",
+ "file": "specs/dest/D16GFMApiFrequencyGroupV1_prod_3p.json",
+ "schemas": {
+  "AdvertiserIdFilter": {
+   "description": "Filter frequency groups by the list of advertiser ids.",
+   "properties": {
+    "include": {
+     "items": {
+      "description": "The advertiser identifier.",
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateFrequencyGroupRequestContentV1": {
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser identifier of the advertiser who is creating the frequency groups. Used to prevent illegal operations on a FrequencyGroup.",
+     "type": "string"
+    },
+    "entityId": {
+     "description": "The identifier of the entity who is creating the frequency groups. Used to prevent illegal operations on a FrequencyGroup.",
+     "type": "string"
+    },
+    "entityName": {
+     "description": "The name of the entity who owns the frequency group",
+     "type": "string"
+    },
+    "frequencyGroupName": {
+     "description": "The frequency group name.",
+     "type": "string"
+    },
+    "maxImpressions": {
+     "description": "The maximum number of times an ad is displayed.",
+     "type": "number"
+    },
+    "timeUnit": {
+     "$ref": "FrequencyGroupTimeUnitV1"
+    },
+    "timeUnitCount": {
+     "description": "The time unit count.",
+     "type": "number"
+    }
+   },
+   "required": [
+    "frequencyGroupName",
+    "maxImpressions",
+    "timeUnit",
+    "timeUnitCount"
+   ],
+   "type": "object"
+  },
+  "CreateFrequencyGroupResponseContentV1": {
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser identifier of the advertiser who is creating the frequency groups. Used to prevent illegal operations on a FrequencyGroup.",
+     "type": "string"
+    },
+    "entityId": {
+     "description": "The identifier of the entity who is creating the frequency groups. Used to prevent illegal operations on a FrequencyGroup.",
+     "type": "string"
+    },
+    "entityName": {
+     "description": "The name of the entity who owns the frequency group",
+     "type": "string"
+    },
+    "frequencyGroupId": {
+     "description": "The frequency group identifier. Immutable field.",
+     "type": "string"
+    },
+    "frequencyGroupName": {
+     "description": "The frequency group name.",
+     "type": "string"
+    },
+    "maxImpressions": {
+     "description": "The maximum number of times an ad is displayed.",
+     "type": "number"
+    },
+    "status": {
+     "$ref": "FrequencyGroupStatusV1"
+    },
+    "timeUnit": {
+     "$ref": "FrequencyGroupTimeUnitV1"
+    },
+    "timeUnitCount": {
+     "description": "The time unit count.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "CreateFrequencyGroupsV1": {
+   "properties": {
+    "frequencyGroups": {
+     "items": {
+      "$ref": "CreateFrequencyGroupRequestContentV1"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreatedFrequencyGroupsV1": {
+   "properties": {
+    "frequencyGroups": {
+     "items": {
+      "$ref": "CreateFrequencyGroupResponseContentV1"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "FrequencyGroupStatusV1": {
+   "description": "The frequency group status. Set to active on successful creation of the frequency group.",
+   "enum": [
+    "ACTIVE",
+    "INACTIVE"
+   ],
+   "type": "string"
+  },
+  "FrequencyGroupTimeUnitV1": {
+   "enum": [
+    "DAYS",
+    "HOURS",
+    "MINUTES",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "FrequencyGroups": {
+   "properties": {
+    "frequencyGroups": {
+     "items": {
+      "$ref": "GetFrequencyGroupRequestContentV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "totalResults": {
+     "description": "The total number of results returned by an operation.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "GetFrequencyGroupRequestContentV1": {
+   "properties": {
+    "advertiserId": {
+     "description": "The advertiser identifier of the advertiser who is creating the frequency groups. Used to prevent illegal operations on a FrequencyGroup.",
+     "type": "string"
+    },
+    "entityId": {
+     "description": "The identifier of the entity who is creating the frequency groups. Used to prevent illegal operations on a FrequencyGroup.",
+     "type": "string"
+    },
+    "entityName": {
+     "description": "The name of the entity who owns the frequency group",
+     "type": "string"
+    },
+    "frequencyGroupId": {
+     "description": "The frequency group identifier. Immutable field.",
+     "type": "string"
+    },
+    "frequencyGroupName": {
+     "description": "The frequency group name.",
+     "type": "string"
+    },
+    "maxImpressions": {
+     "description": "The maximum number of times an ad is displayed.",
+     "type": "number"
+    },
+    "status": {
+     "$ref": "FrequencyGroupStatusV1"
+    },
+    "timeUnit": {
+     "$ref": "FrequencyGroupTimeUnitV1"
+    },
+    "timeUnitCount": {
+     "description": "The time unit count.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "ListFrequencyGroupsRequestContentV1": {
+   "properties": {
+    "advertiserIdFilter": {
+     "$ref": "AdvertiserIdFilter"
+    },
+    "frequencyGroupIds": {
+     "description": "The frequency group identifiers.",
+     "items": {
+      "description": "The frequency group identifier.",
+      "maxLength": 200,
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "frequencyGroupNameFilter": {
+     "description": "Filters frequency groups by frequency group name.",
+     "maxLength": 200,
+     "type": "string"
+    },
+    "maxResults": {
+     "description": "Sets the maximum number of objects in the returned array. Use in conjunction with the `nextToken` parameter to control pagination. The range for maxResults is [1,200] with default as 20. For example, supplying maxResult…",
+     "maximum": 200,
+     "minimum": 1,
+     "type": "number"
+    },
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control the pagination of the returned array.",
+     "type": "string"
+    },
+    "statusFilter": {
+     "$ref": "FrequencyGroupStatusV1"
+    }
+   },
+   "type": "object"
+  },
+  "PatchFrequencyGroupRequestContentV1": {
+   "properties": {
+    "frequencyGroupName": {
+     "description": "The frequency group name.",
+     "type": "string"
+    },
+    "maxImpressions": {
+     "description": "The maximum number of times an ad is displayed.",
+     "type": "number"
+    },
+    "status": {
+     "$ref": "FrequencyGroupStatusV1"
+    },
+    "timeUnit": {
+     "$ref": "FrequencyGroupTimeUnitV1"
+    },
+    "timeUnitCount": {
+     "description": "The time unit count.",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

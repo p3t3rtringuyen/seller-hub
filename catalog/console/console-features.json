@@ -1,0 +1,351 @@
+[
+  {
+    "screen": "Campaign Builder - campaign type chooser",
+    "path": "/cb?country=US&entityId=…",
+    "purpose": "Entry point: pick country, then campaign type. Reached from 'Create campaign' in Campaign Manager (modal with 4 tiles + 'See all campaign types').",
+    "columns": [],
+    "filters": ["Country dropdown (default: United States)", "'View drafts' button"],
+    "actions": [
+      {"name": "Create campaign - Sponsored Products", "kind": "navigate", "writes": false},
+      {"name": "Create campaign - Sponsored Brands", "kind": "navigate", "writes": false},
+      {"name": "Create campaign - Display (grouped under 'DVA+')", "kind": "navigate", "writes": false},
+      {"name": "Create campaign - Streaming TV (grouped under 'DVA+')", "kind": "navigate", "writes": false},
+      {"name": "View drafts", "kind": "navigate", "writes": false}
+    ],
+    "forms": [
+      {"step": "Sponsored Products card, tab 'Amazon and beyond'", "fields": [{"name": "tab content", "type": "info", "options": "'Promote product listings' (2-slide carousel)", "default": "selected"}]},
+      {"step": "Sponsored Products card, tab 'Amazon Business'", "fields": [{"name": "tab content", "type": "info", "options": "'Reach business customers' (3-slide carousel)"}]},
+      {"step": "Sponsored Products card, tab 'Across retailers'", "fields": [{"name": "Choose retailer", "type": "dropdown", "options": "not recorded (list not opened; 'Create campaign' disabled until a retailer is chosen)", "default": "none"}]}
+    ],
+    "notes": "Mapping to the task's 'Campaign Builder tabs': 'Amazon and beyond', 'Amazon Business', 'Across retailers' are the three tabs of the Sponsored Products card only. Sponsored Brands, Display and Streaming TV have no tabs. 'See all campaign types' expands the modal into this page."
+  },
+  {
+    "screen": "Campaign Builder - Sponsored Products (single page)",
+    "path": "/cb/sp?entityId=…",
+    "purpose": "Create a Sponsored Products campaign + first ad group on one scrolling page, with a Forecast (Beta) side panel (Impressions/Clicks/Orders, Weekly) that needs budget, products, targets and a bid.",
+    "columns": [],
+    "filters": [],
+    "actions": [
+      {"name": "Save as Draft", "kind": "save", "writes": true},
+      {"name": "Launch campaign", "kind": "submit", "writes": true},
+      {"name": "Add products", "kind": "add", "writes": true},
+      {"name": "Add / Add all keywords, categories, products", "kind": "add", "writes": true},
+      {"name": "Apply all (suggested bid)", "kind": "apply", "writes": true},
+      {"name": "Exclude / Exclude all (negative products)", "kind": "add", "writes": true},
+      {"name": "Add keywords (negative)", "kind": "add", "writes": true},
+      {"name": "Apply to this campaign (Targeting with AI)", "kind": "apply", "writes": true},
+      {"name": "Remove all (added lists)", "kind": "remove", "writes": true},
+      {"name": "Go back to campaigns / Close", "kind": "navigate", "writes": false}
+    ],
+    "forms": [
+      {"step": "1 Ad group settings", "fields": [
+        {"name": "Ad group name", "type": "text", "default": "auto-generated"},
+        {"name": "Sites", "type": "radio", "options": "Amazon and beyond (Amazon retail + Amazon Business + select off-Amazon sites/apps) | Amazon Business (B2B only)", "default": "Amazon and beyond"}]},
+      {"step": "2 Products", "fields": [
+        {"name": "Product picker", "type": "tabs", "options": "Search (by product name or ASIN) | Enter list | Upload"},
+        {"name": "Selected products counter", "type": "info", "options": "'N products'; empty state: 'There are no available products ... Visit Seller Central or Vendor Central'"}]},
+      {"step": "3 Targeting - mode", "fields": [
+        {"name": "Targeting mode", "type": "radio", "options": "Automatic targeting | Manual targeting", "default": "Automatic targeting"}]},
+      {"step": "3a Automatic targeting", "fields": [
+        {"name": "Set default bid", "type": "currency", "options": "shows 'Suggested bid for regular days'"},
+        {"name": "Set bids by targeting group", "type": "expandable", "options": "per auto-targeting group bids (group names not read)"}]},
+      {"step": "3b Manual targeting - type", "fields": [
+        {"name": "Manual targeting type", "type": "radio", "options": "Keyword targeting | Product targeting", "default": "Keyword targeting"}]},
+      {"step": "3b-i Keyword targeting", "fields": [
+        {"name": "Source", "type": "tabs", "options": "Suggested | Enter list | Upload file"},
+        {"name": "Bid selection", "type": "dropdown", "options": "Suggested bid | (custom)", "default": "Suggested bid"},
+        {"name": "Match type filter", "type": "checkbox group", "options": "Broad | Phrase | Exact"},
+        {"name": "Sort by", "type": "dropdown", "options": "Orders | (others not read)"},
+        {"name": "Suggested table columns", "type": "table", "options": "Keyword | IS|IR | Match type | Sugg. bid (Regular days) | Add"},
+        {"name": "Added table columns", "type": "table", "options": "Keyword | IS|IR | Match type | Sugg. bid | Bid (with 'Apply all')"},
+        {"name": "Bid", "type": "currency", "validation": "'Enter a bid'; list-level error 'You have one or more errors in this list'; 'Some keywords are not eligible for targeting and will not show ads'"},
+        {"name": "Keyword group", "type": "grouping", "options": "'Keywords related to your product category'"}]},
+      {"step": "3b-ii Product targeting", "fields": [
+        {"name": "Source", "type": "tabs", "options": "Categories (Suggested | Search) | Individual Products"},
+        {"name": "Bid", "type": "dropdown+currency", "options": "Suggested bid | custom; 'Apply all'"},
+        {"name": "Added table columns", "type": "table", "options": "Categories & products | Sugg. bid | Bid"},
+        {"name": "Empty state", "type": "info", "options": "'No relevant categories available. Try searching for categories'"}]},
+      {"step": "3c Targeting with AI", "fields": [
+        {"name": "Targeting with AI", "type": "toggle-button", "options": "'Apply to this campaign'", "validation": "Requires at least 2 targets, a minimum $10 daily budget and a single-country campaign"}]},
+      {"step": "4 Negative keyword targeting (optional)", "fields": [
+        {"name": "Match type", "type": "radio", "options": "Negative exact | Negative phrase"},
+        {"name": "Keywords", "type": "textarea", "options": "'Enter keywords separated by new line' + 'Add keywords'"},
+        {"name": "Added table", "type": "table", "options": "Keyword | Match type; counter '0 added'; Remove all"}]},
+      {"step": "5 Negative product targeting (optional)", "fields": [
+        {"name": "Mode", "type": "tabs", "options": "Exclude brands | Exclude products (Search)"},
+        {"name": "Your brands", "type": "list", "options": "brand rows with Exclude / 'Exclude all'"},
+        {"name": "Added table", "type": "table", "options": "Brands & products; Remove all"}]},
+      {"step": "6 Sponsored Products video", "fields": [
+        {"name": "Review and add videos", "type": "table", "options": "Search | Product | Video | Actions; Results per page 50; auto-attach to ASIN at launch"},
+        {"name": "Auto-created videos", "type": "checkbox", "options": "'Allow Amazon to create videos for my ads using clips from existing creative assets' / 'Use automatically created videos in ads when available'", "default": "not read"}]},
+      {"step": "7 Campaign bidding strategy", "fields": [
+        {"name": "Bidding strategy", "type": "radio", "options": "Dynamic bids - up and down (raise up to 100% on all placements) | Dynamic bids - down only | Fixed bids"}]},
+      {"step": "8 Placements (optional)", "fields": [
+        {"name": "Top of search (first page)", "type": "percent", "validation": "not read; real-time mode in ads-web allows 0-900%"},
+        {"name": "Rest of search", "type": "percent"},
+        {"name": "Product pages", "type": "percent"},
+        {"name": "Amazon Business placement", "type": "percent", "options": "'Further increase bids across placements on Amazon Business'"},
+        {"name": "Worked example", "type": "info", "options": "'A $0.75 bid will start at $0.75 for top of search...'"}]},
+      {"step": "9 Audiences (Beta, optional)", "fields": [
+        {"name": "Search by audience name", "type": "search"},
+        {"name": "Bid adjustment", "type": "percent"},
+        {"name": "Amazon audiences", "type": "list + Add / Add all", "options": "High interest based on shopping history | Clicked or Added brand's product to cart | Purchased brand's product"},
+        {"name": "Selected audiences", "type": "list", "options": "Remove all"}]},
+      {"step": "10 Video bid adjustment (optional)", "fields": [
+        {"name": "Video bid adjustment", "type": "percent", "options": "'A $1.00 bid will start at $1.00 for video ads'"}]},
+      {"step": "11 Settings", "fields": [
+        {"name": "Campaign name", "type": "text"},
+        {"name": "Portfolio", "type": "dropdown", "options": "Choose a portfolio"},
+        {"name": "Start", "type": "date"},
+        {"name": "End", "type": "date", "default": "no end date"},
+        {"name": "Country", "type": "readonly", "default": "United States"},
+        {"name": "Daily budget", "type": "currency"},
+        {"name": "Launch campaign in N additional countries (Beta, 'global campaigns')", "type": "toggle", "options": "adds matching eligible products, optimizes keywords, bids, budgets per country"}]},
+      {"step": "12 Additional changes: Automated tasks using rules (Beta, optional)", "fields": [
+        {"name": "Rule template", "type": "card", "options": "'Change your bid on a schedule: Increase bids for high-traffic days' + 'See details'; dismissible banner"}]}
+    ],
+    "notes": "Validation messages other than those quoted were not reachable (Launch/Save were never clicked). Numeric min/max not shown on the page."
+  },
+  {
+    "screen": "Campaign Builder - Sponsored Brands (single page)",
+    "path": "/cb/sb?entityId=… (START_URL)",
+    "purpose": "Create a Sponsored Brands campaign + first ad group + ad on one page. Goal-driven.",
+    "columns": [],
+    "filters": [],
+    "actions": [
+      {"name": "Save as draft", "kind": "save", "writes": true},
+      {"name": "Submit for review", "kind": "submit", "writes": true},
+      {"name": "Change (logo)", "kind": "upload", "writes": true},
+      {"name": "Go back to campaigns / Close", "kind": "navigate", "writes": false}
+    ],
+    "forms": [
+      {"step": "Campaign - Goals", "fields": [
+        {"name": "Goal", "type": "radio cards", "options": "Drive page visits (metric: Clicks; cost type CPC) | Grow brand impression share (metric: top-of-search impression share; cost type VCPM) | Reserve share of voice (New; metric: top-of-search IS; cost type: Fixed price)", "default": "Drive page visits"}]},
+      {"step": "Campaign - Settings", "fields": [
+        {"name": "Campaign name", "type": "text", "default": "'Campaign - <timestamp>'"},
+        {"name": "Portfolio", "type": "dropdown", "default": "No Portfolio"},
+        {"name": "Start", "type": "date", "default": "today"},
+        {"name": "End", "type": "date", "default": "No end date"},
+        {"name": "Country", "type": "readonly", "default": "United States"},
+        {"name": "Budget", "type": "currency + period dropdown", "options": "Daily (period options not read)", "validation": "'enter amount in $' placeholder; limits not shown"}]},
+      {"step": "Campaign - Sites (not shown for Store spotlight/Video formats)", "fields": [
+        {"name": "Sites", "type": "radio", "options": "Amazon (retail + Amazon Business) | Amazon Business (exclusive)", "default": "Amazon"}]},
+      {"step": "Ad group", "fields": [
+        {"name": "Ad group name", "type": "text", "default": "'Ad group - <timestamp>'"},
+        {"name": "Ad format", "type": "radio cards", "options": "Collections | Store spotlight | Video", "default": "Collections"},
+        {"name": "Collection type (Collections only)", "type": "radio cards", "options": "Automatic (created from catalog, keyword targets and shopper queries) | Manual (choose related products)", "default": "Automatic"}]},
+      {"step": "Ad - Automatic collection", "fields": [
+        {"name": "Ad name", "type": "text"},
+        {"name": "Brand name", "type": "text", "validation": "'Review and correct issues' shown when empty"},
+        {"name": "Logo", "type": "image (optional)", "options": "Change dropdown"}]},
+      {"step": "Products - Automatic collection (New)", "fields": [
+        {"name": "Recommended product segments", "type": "info", "options": "Amazon recommends segments and keywords from catalog and auto-selects in-stock products after submit; empty state: 'No product segments available for this brand'"},
+        {"name": "Product exclusions", "type": "expandable (optional)", "options": "'How product exclusion works'"}]},
+      {"step": "Products - Manual collection", "fields": [
+        {"name": "Products", "type": "picker", "options": "'Choose related products to feature in your ad' (loaded asynchronously; list not read)"}]},
+      {"step": "Landing page - Store spotlight", "fields": [
+        {"name": "Store on Amazon", "type": "dropdown", "validation": "Store must have 4 or more pages, each with 1 or more unique products; empty state: 'No Stores in your account. Create a store ...'"}]},
+      {"step": "Landing page - Video", "fields": [
+        {"name": "Landing page type", "type": "radio", "options": "Store on Amazon (video and store byline link to the Store; products link to detail pages) | Product detail page"},
+        {"name": "Choose a Store / Choose a page", "type": "dropdowns"},
+        {"name": "Hint", "type": "info", "options": "Brand Store landing pages see an average 68% higher branded search rate than detail pages (Amazon figure)"}]},
+      {"step": "Campaign bid adjustments (Store spotlight and Video formats)", "fields": [
+        {"name": "Tabs", "type": "tabs", "options": "Placements | Audiences (Store spotlight shows both; Video shows audience only)"},
+        {"name": "Adjust Bids by Audience", "type": "radio", "options": "Increase bids for audiences built by Amazon | Don't increase bids for an audience"},
+        {"name": "Audience adjustment", "type": "percent", "default": "New-to-brand shoppers preselected at 100% ('1 adjustment applied'); worked example: '$1.00 will be $2.00 for this audience'"}]}
+    ],
+    "notes": "Video asset upload/creative steps and the per-goal field differences for 'Grow brand impression share' and 'Reserve share of voice' were NOT read: the goal radio click did not visibly change the form text. The account is a test account without Stores or product segments, so some pickers were empty."
+  },
+  {
+    "screen": "Campaign Builder - Display (single page, under 'DVA+')",
+    "path": "/cb/sd?entityId=…",
+    "purpose": "Create a Sponsored Display campaign with one ad group. Forecast (New, Beta) side panel.",
+    "columns": [],
+    "filters": [],
+    "actions": [
+      {"name": "Launch campaign", "kind": "submit", "writes": true},
+      {"name": "Add products", "kind": "add", "writes": true},
+      {"name": "Add / Remove all targets", "kind": "add", "writes": true},
+      {"name": "Go back to campaigns / Close", "kind": "navigate", "writes": false}
+    ],
+    "forms": [
+      {"step": "Create campaign - Settings", "fields": [
+        {"name": "Campaign name", "type": "text", "default": "'Campaign - <timestamp>'"},
+        {"name": "Portfolio", "type": "dropdown", "default": "No Portfolio"},
+        {"name": "Start", "type": "date", "default": "today"},
+        {"name": "End", "type": "date", "default": "No end date"},
+        {"name": "Country", "type": "readonly", "default": "United States"},
+        {"name": "Daily budget", "type": "currency", "default": "100.00", "validation": "hint: 'Most campaigns with a budget over $100.00 run throughout the day'"}]},
+      {"step": "Create an ad group - Settings", "fields": [
+        {"name": "Ad group name", "type": "text", "default": "auto-generated"},
+        {"name": "Ad format", "type": "radio cards", "options": "Image ('Promote your product with an optional image') | Video ('autoplaying video')"}]},
+      {"step": "Products to advertise", "fields": [
+        {"name": "Product picker", "type": "tabs", "options": "Search | Enter list | Upload"}]},
+      {"step": "Optimization strategy", "fields": [
+        {"name": "Strategy", "type": "radio cards", "options": "Reach (VCPM, viewable impressions) | Page visits (CPC) | Conversions (CPC)"},
+        {"name": "Cost control (Beta)", "type": "toggle + currency", "options": "'Keep success metric at or below a desired value'; 'Cost per click $'; takes up to 72 hours; hint: '$1.00 or higher may lead to more page visits'"}]},
+      {"step": "Targeting", "fields": [
+        {"name": "Strategy", "type": "info", "options": "'Audiences and contextual targeting, together'"},
+        {"name": "Filter tabs", "type": "tabs", "options": "All | Search | Contextual | Remarketing audiences | In-market audiences | Interest and lifestyle audiences"},
+        {"name": "Preset added targets", "type": "table", "options": "5 added by default: Contextual (similar to advertised products); Views remarketing (similar, 30 days); Views remarketing (advertised, 30 days); Purchases remarketing (related, 30 days); Purchases remarketing (advertised, 30 days); each with a Bid currency input"}]}
+    ],
+    "notes": "No Save-as-draft button at the top of this builder. Creative step not shown on the page before products are added."
+  },
+  {
+    "screen": "Campaign Builder - Streaming TV",
+    "path": "not opened",
+    "purpose": "Listed in the chooser: 'Engage customers ... across premium streaming services like Prime Video with no minimum spend requirements.'",
+    "columns": [], "filters": [], "actions": [],
+    "forms": [],
+    "notes": "NOT COVERED: outside the three required types (SP, SB, SD); not opened to limit exposure of the live account."
+  },
+  {
+    "screen": "Campaign Manager - campaigns list",
+    "path": "/campaign-manager/all-campaigns?entityId=…",
+    "purpose": "Main list. Tabs: All | Sponsored Products | Sponsored Brands | Display, Video & Audio. Level switcher on the title: Campaigns | Ad groups | Targets (Targets view supports Sponsored Products only). Right-hand Ads Agent AI chat panel (Beta) opens by default.",
+    "columns": [
+      {"name": "Active (switch)", "definition": "enable/pause toggle"},
+      {"name": "Campaign name (+ campaign id, kebab menu)", "definition": "link to detail"},
+      {"name": "Country", "definition": ""},
+      {"name": "Status", "definition": "Delivering: 'Ads in this campaign with a Delivering status are eligible for impressions.' (other statuses not read)"},
+      {"name": "Type", "definition": "campaign type + targeting (e.g. 'Sponsored Brands / Manual Targeting')"},
+      {"name": "Campaign start date / end date", "definition": "'No End Date' when empty"},
+      {"name": "Top-of-search bid adjustment", "definition": ""},
+      {"name": "Campaign budget amount", "definition": "e.g. '$ - daily'"},
+      {"name": "Clicks, CTR, CPC, Total cost, Top-of-search impression share", "definition": "default metric columns"},
+      {"name": "Optional columns (Customize columns, grouped Settings / Level of detail / Delivery / Costs and fees / Reach / Engagement / Amazon retail conversions)", "definition": "Retailer; Portfolio name; Campaign bid strategy; Cost type; Impressions; CPM; Viewable CTR (vCTR); Viewable CPM (vCPM); Viewable distribution; Viewable impressions; User reach; Household reach; Video quartiles (first, midpoint, third, complete views, unmutes); Detail page views (+ new to brand); Add to cart (+ NTB); Branded searches (+ NTB); Brand store page views (New, + NTB); Purchases; Sales; Advertising cost of sales; ROAS; Purchases / Sales (new to brand); Percent of purchases / sales new to brand; Long-term sales; Long-term ROAS"}
+    ],
+    "filters": [
+      "Search box (campaign name)",
+      "Filter by menu: Country, Active status (default 'All but archived'), Retailer, Portfolio name, Campaign budget amount, plus every metric column",
+      "Quick-filter chips: Campaigns with impressions and no clicks | Campaigns with top-of-search impressions | Out of budget campaigns",
+      "AI/natural 'Search with metrics or settings' bar",
+      "Date range: Today, Yesterday, Last 7 days, This week, Last week, Last 30 days, This month, Last month, Last 12 months, Quarter to date, Year to date, Lifetime, two-month calendar; 'Create report' link for granular data beyond the last 90 days; 'dates are based on the campaign's country'",
+      "View: Default | Compact (no saved views found)"
+    ],
+    "actions": [
+      {"name": "Create campaign", "kind": "navigate", "writes": false},
+      {"name": "Inline Active switch", "kind": "toggle", "writes": true},
+      {"name": "Row kebab: Add to filter", "kind": "filter", "writes": false},
+      {"name": "Row kebab: Edit settings", "kind": "edit", "writes": true},
+      {"name": "Row kebab: Copy", "kind": "copy", "writes": true},
+      {"name": "Bulk actions: Enable / Pause / Archive / Delete", "kind": "bulk", "writes": true},
+      {"name": "Bulk actions: View targets / View ad groups", "kind": "navigate", "writes": false},
+      {"name": "Bulk actions - Update: Start date / End date / Budget / Portfolio / Move to portfolio / Remove from portfolio / Create portfolio", "kind": "bulk", "writes": true},
+      {"name": "Bulk actions - Modules: Performance / Analytics / Logs", "kind": "bulk", "writes": false},
+      {"name": "Export: Download (current table data); Reporting: Create report", "kind": "export", "writes": false},
+      {"name": "Customize columns (Apply / Reset to default)", "kind": "preference", "writes": true}
+    ],
+    "forms": [],
+    "notes": "Summary strip above the table: Impressions, Clicks, Branded searches, Detail page views, Purchases (new to brand), Sales (SB tab; metrics differ per tab) with 'View details'. Performance chart with four selectable metrics (ROAS, Purchases, Sales, Impressions), 'Show all | View chart only | Hide all'. Only the Sponsored Brands tab was read (the test account only has SB campaigns); the All/SP/DVA tabs were not opened."
+  },
+  {
+    "screen": "Campaign Manager - Sponsored Brands campaign detail",
+    "path": "/campaign-manager/sb/campaigns/<id>/…?entityId=…",
+    "purpose": "Header strip: active switch, Status, Type, Country, Schedule, Budget, Goal, Cost type. Tabs: Ad groups | Bid adjustments | Budget rules | Settings | History.",
+    "columns": [
+      {"name": "Ad groups tab: Active, Ad group name, Status, Products, Total targets, Clicks, Detail page views, Total cost, Purchases, Sales, ROAS", "definition": "info tooltips on most headers (text not read)"},
+      {"name": "Bid adjustments > Placements: Placement name (Top of search, Rest of search), Bid adjustment (editable %), Impressions, Clicks, CTR, Total cost, CPC, Purchases, Sales, ROAS", "definition": "footnote: bid adjustment data is current, other placement data can lag up to 12 hours"},
+      {"name": "Bid adjustments > Audiences: Audience segment name, Bid adjustment, Impressions, Clicks, CTR, Total cost, CPC, Purchases, Sales, ACOS, ROAS, Actions", "definition": "footnote: numbers should not be added together because audiences overlap"},
+      {"name": "Budget rules: Active, Rules, Status, Type, Date range, Rule recurrence, Budget increase, Budget", "definition": "empty state: 'Add a rule to increase your daily budget for recommended events or performance metrics.'"},
+      {"name": "History: Change type, From, To, Date and time", "definition": "'Campaign history includes changes to your campaign settings in the past 90 days'; 'Changes can take up to 24 hours to update'"}
+    ],
+    "filters": ["Ad groups: 'Find an ad group' search, filter icon, bulk icon, View, Columns, date range, Export", "Bid adjustments: View, Columns, date range, Export", "History: Filter by, Show chart, Date range (default last 7 days)"],
+    "actions": [
+      {"name": "Create ad group", "kind": "create", "writes": true},
+      {"name": "Change audience (Bid adjustments > Audiences)", "kind": "edit", "writes": true},
+      {"name": "Add budget rule / Bulk actions (Budget rules)", "kind": "create", "writes": true},
+      {"name": "Archive this campaign (Settings)", "kind": "archive", "writes": true},
+      {"name": "Targeting with AI > Apply to this campaign (Settings)", "kind": "apply", "writes": true}
+    ],
+    "forms": [
+      {"step": "Settings tab", "fields": [
+        {"name": "Campaign name", "type": "text"},
+        {"name": "Campaign ID", "type": "readonly"},
+        {"name": "Portfolio", "type": "dropdown"},
+        {"name": "Type", "type": "readonly"},
+        {"name": "Active / Paused", "type": "switch"},
+        {"name": "Status", "type": "readonly"},
+        {"name": "Sites", "type": "readonly", "options": "Amazon"},
+        {"name": "Schedule: Start date, End date", "type": "dates"},
+        {"name": "Budget + period + 'Add budget rule'", "type": "currency"},
+        {"name": "Goal", "type": "readonly", "options": "e.g. Drive page visits"},
+        {"name": "Cost target", "type": "info", "options": "'Aim to keep average CPC near your target' - dynamic bidding explanation"},
+        {"name": "Cost type", "type": "readonly", "options": "CPC"},
+        {"name": "Targeting with AI (New, Beta)", "type": "button", "options": "'Apply to this campaign' + View details"}]}
+    ],
+    "notes": "Settings banner: 'Automated bidding is now a placement bid adjustment' linking to the new Bid adjustments page. Ads Agent chat panel is not part of the feature set to copy."
+  },
+  {
+    "screen": "Campaign Manager - Sponsored Brands ad group detail",
+    "path": "/cm/sb/campaigns/<id>/ad-groups/<id>/…?entityId=…",
+    "purpose": "Left tabs: Ads | Targeting | Negative targeting | Search terms | Ad group settings | History. Ads tab has sub-tabs 'Ad groups' and 'Prompts'.",
+    "columns": [
+      {"name": "Ads: Active, Ad name (Manage ad), Status (Suspended + Details), Landing page (View landing page), Clicks, Detail page views, Total cost, Purchases, Sales, ROAS", "definition": "chart with 4 metrics, 'Add metric', 'Hide chart'"},
+      {"name": "Targeting: Active, Categories & products, Target status (+Details), Suggested bid (range + Apply), Bid (editable), Viewable impressions, Detail page views, Total cost, Purchases, Sales, ROAS, Percent of purchases (new to brand)", "definition": "Date range default last 7 days; Columns; Export; Go to page / results per page 50"},
+      {"name": "Negative targeting: Brands & products", "definition": "empty state 'No data available'"},
+      {"name": "Search terms: Matched product, Product targets, Clicks, Total cost, Purchases, Sales, ROAS", "definition": "'Only search terms with clicks in the last 65 days are available'; search by matched ASIN"}
+    ],
+    "filters": ["Ads: Filter by, Bulk actions, Columns, Date range", "Targeting: 'Find a keyword', Filter by", "Negative targeting: 'Find a brand or product'", "Search terms: 'Find matched Asins', Filter by"],
+    "actions": [
+      {"name": "Create ad", "kind": "create", "writes": true},
+      {"name": "Ad: Manage ad", "kind": "navigate", "writes": true},
+      {"name": "Ad: Bulk actions", "kind": "bulk", "writes": true},
+      {"name": "Add product targets", "kind": "add", "writes": true},
+      {"name": "Targeting: Apply suggested bid, inline bid, inline Active switch", "kind": "edit", "writes": true},
+      {"name": "Add negative product targets", "kind": "add", "writes": true},
+      {"name": "Export / Export page", "kind": "export", "writes": false},
+      {"name": "Archive this ad group (Ad group settings)", "kind": "archive", "writes": true}
+    ],
+    "forms": [
+      {"step": "Ad group settings", "fields": [
+        {"name": "Ad group name", "type": "text"},
+        {"name": "Ad group ID", "type": "readonly"},
+        {"name": "Active / Paused", "type": "switch"},
+        {"name": "Status", "type": "readonly"}]}
+    ],
+    "notes": "SB ad groups only; SP/SD ad group detail not opened. History tab content not read. 'Prompts' sub-tab not opened."
+  },
+  {
+    "screen": "Campaign Manager - Ad groups level / Targets level",
+    "path": "/campaign-manager/targets?entityId=…",
+    "purpose": "Title dropdown switches the list between Campaigns, Ad groups, Targets.",
+    "columns": [],
+    "filters": ["Targets view: search; banner 'Data only includes Sponsored Products'"],
+    "actions": [],
+    "forms": [],
+    "notes": "Ad groups level not opened. Targets level only supports Sponsored Products."
+  },
+  {
+    "screen": "Campaign Manager - Portfolios area (side nav)",
+    "path": "/cm/portfolios?entityId=…",
+    "purpose": "Side nav groups: Portfolios | Campaigns | Drafts | Products | Targeting | Budgets | History | Bulk operations | Rules | Settings; country selector.",
+    "columns": [
+      {"name": "Portfolios list: Portfolios, Status, Campaign budget amount (inline), Budget start, Budget end, Total cost, Purchases, Sales, ROAS", "definition": "banners: unspent budget sharing for portfolios created after October 2024; vCPM metrics may be inaccurate for SB/SD vCPM"},
+      {"name": "Budgets: Active, Campaigns, Status, Type, Sales, ROAS, Avg. time in budget, Budget (inline), Recommended budget (+ 'Apply all'), Est. missed sales, Est. missed impressions, Est. missed clicks", "definition": "footnote: delayed up to 48 hours; covers Sponsored Products campaigns"},
+      {"name": "Rules: Enabled, Rule, Type (Budget rule / Bid rule, Schedule), Status, Description, Schedule", "definition": "paged 25 per page; total count shown"},
+      {"name": "Products: Products (image, ASIN, SKU, price, stock), Recommendations, Trends, Status, Sponsored Products eligibility, Sales, ROAS, Conversion, Impressions, Clicks", "definition": "'only includes single-country Sponsored Products and Sponsored Display campaigns'"},
+      {"name": "Bulk operations: Status, Action, File, Origin, Errors, Start, Contents, User", "definition": "'No Rows To Show' empty state"},
+      {"name": "Targeting: Status, Targeting type, Campaign, Campaign active status, Ad group, ROAS + chart (Impressions, Clicks, Orders, ACOS), Overview, Top performers", "definition": "date range default Aug 1, 2025 to now"}
+    ],
+    "filters": ["Portfolios: search, Filter by", "Rules: Find a rule, Filter by", "Budgets: Find a campaign, Filter by", "Products: search (ASIN), Filter by"],
+    "actions": [
+      {"name": "Create portfolio", "kind": "create", "writes": true},
+      {"name": "Add rule", "kind": "create", "writes": true},
+      {"name": "Rules / Budgets / Targeting: Bulk actions", "kind": "bulk", "writes": true},
+      {"name": "Products: Create campaign (dropdown) / Add to existing campaign", "kind": "create", "writes": true},
+      {"name": "Bulk operations: Upload campaigns, Download campaigns (template and instructions, release notes, documentation)", "kind": "bulk", "writes": true},
+      {"name": "Targeting: Bulk actions, Export", "kind": "export", "writes": true},
+      {"name": "Export (all list pages)", "kind": "export", "writes": false}
+    ],
+    "forms": [],
+    "notes": "Drafts, History and Settings pages in this area were not opened. Portfolio detail not opened."
+  },
+  {
+    "screen": "Left global navigation (one click away)",
+    "path": "n/a",
+    "purpose": "Items observed (not opened, one line each): Create campaign; Campaigns; Recommendations (optimization recommendations); Brand content: Brand profiles (New), Brand Stores, Creator connections; Creative tools: Creative assets, Creative Studio (Beta, AI), Translations; Insights & planning: Brand metrics (Beta), Brand impression share (Beta), Ads planner; Measurement & reporting: Amazon Attribution (Beta), Amazon Marketing Cloud, Reporting > Sponsored ads reports, Brand lift studies; Data & events: Data manager, Events; More advertising tools: Partner Directory, Amazon Ads Academy, All tools; Billing & payment: Billing (New), Verification Center. Header: notifications bell, help panel, account menu with preferences, 'Set X as your homepage'.",
+    "columns": [], "filters": [], "actions": [], "forms": [],
+    "notes": "Names only: contents not opened, so they are not described."
+  }
+]

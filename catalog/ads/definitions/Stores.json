@@ -1,0 +1,391 @@
+{
+ "api": "Stores",
+ "file": "specs/dest/Stores_prod_3p.json",
+ "schemas": {
+  "AsinEngagementDetail": {
+   "additionalProperties": {
+    "oneOf": [
+     {
+      "type": "string"
+     },
+     {
+      "type": "integer"
+     },
+     {
+      "type": "number"
+     }
+    ]
+   },
+   "description": "A key-value pair map which contains the dimension and metric information. The key is either dimension name or metric name, while the value is the corresponding dimension value or metric value.",
+   "type": "object"
+  },
+  "AsinEngagementDimension": {
+   "description": "User can use dimensions to aggregate the engagement metrics. Supported dimension types: * `ASIN` - Amazon Standard Identification Number. When *dimension* is omitted, user can retrieve select metrics aggregated at the s…",
+   "enum": [
+    "ASIN"
+   ],
+   "type": "string"
+  },
+  "AsinEngagementMetric": {
+   "description": "Store Metric Types: Metrics aggregated at the store level. To be used with *dimension* omitted, otherwise a 422 response is returned. * `TOTAL_VIEWS` - Total number of times customers viewed ASINs on the store’s pages. …",
+   "enum": [
+    "ADD_TO_CARTS",
+    "AVERAGE_IN_STOCK_PRICE",
+    "AVERAGE_SALE_PRICE",
+    "CLICKS",
+    "CLICK_RATE",
+    "CONVERSION_RATE",
+    "IN_STOCK_RATE",
+    "IN_STOCK_VIEWS",
+    "ORDERS",
+    "RENDERS",
+    "TOTAL_CLICKS",
+    "TOTAL_VIEWS",
+    "UNITS",
+    "VIEWS"
+   ],
+   "type": "string"
+  },
+  "GetAsinEngagementForStoreRequest": {
+   "properties": {
+    "dimension": {
+     "$ref": "AsinEngagementDimension"
+    },
+    "endDate": {
+     "description": "The end date (inclusive) in YYYY-MM-DD format for the time period from when to fetch the insights.",
+     "format": "date",
+     "type": "string"
+    },
+    "metrics": {
+     "description": "List of the engagement metrics to be fetched. At least one metric should be specified.",
+     "items": {
+      "$ref": "AsinEngagementMetric"
+     },
+     "maxItems": 12,
+     "minItems": 0,
+     "type": "array"
+    },
+    "orderBy": {
+     "$ref": "SortOrder"
+    },
+    "sortBy": {
+     "description": "Nullable metric to sort on. If a value is provided, it must also appear in the metrics list. If no value is provided, the result is not guaranteed to be sorted. This field is only valid when the dimension is ASIN."
+    },
+    "startDate": {
+     "description": "The start date (inclusive) in YYYY-MM-DD format for the time period from when to fetch the insights.",
+     "format": "date",
+     "type": "string"
+    }
+   },
+   "required": [
+    "endDate",
+    "metrics",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "GetAsinEngagementForStoreResponse": {
+   "properties": {
+    "dimension": {
+     "$ref": "AsinEngagementDimension"
+    },
+    "metricsDetails": {
+     "items": {
+      "$ref": "AsinEngagementDetail"
+     },
+     "maxItems": 1500,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "GetInsightsForStoreRequest": {
+   "properties": {
+    "dimension": {
+     "$ref": "InsightDimension"
+    },
+    "endDate": {
+     "description": "The end date (inclusive) in YYYY-MM-DD format for the time period from when to fetch the insights.",
+     "format": "date",
+     "type": "string"
+    },
+    "filter": {
+     "allOf": [
+      {
+       "$ref": "InsightFilter"
+      }
+     ]
+    },
+    "language": {
+     "description": "This parameter is only available for Insights Metrics request for Store Quality(SQS). The language parameter is to request RECOMMENDATIONS and CONTRIBUTORS metrics in the requested language. Currently, we support 35 lan…",
+     "type": "string"
+    },
+    "maxResult": {
+     "description": "The max number of result that will be returned in one response. The max allowed value will be 1500. If the parameter is not presented, it will be default to 1500.",
+     "maximum": 1500,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "metrics": {
+     "description": "List of the insight metrics to be fetched. Only one metric should be specified.",
+     "items": {
+      "$ref": "InsightMetric"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "paginationToken": {
+     "description": "The token that last request returned. It will be used to fetch next page of response.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The start date (inclusive) in YYYY-MM-DD format for the time period from when to fetch the insights. The earliest date will be 2018-09-01, if the input is earlier, it will be default to 2018-09-01",
+     "format": "date",
+     "type": "string"
+    }
+   },
+   "required": [
+    "dimension",
+    "endDate",
+    "metrics",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "GetInsightsForStoreResponse": {
+   "properties": {
+    "dimension": {
+     "$ref": "InsightDimension"
+    },
+    "filter": {
+     "$ref": "InsightFilter"
+    },
+    "metricsDetails": {
+     "items": {
+      "$ref": "InsightMetricsDetail"
+     },
+     "maxItems": 1500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "paginationToken": {
+     "description": "The token can be directly used to fetch next page of the result. The token can only been used when the token is been created less than 24 hours and the request input is same as last request",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "InsightDimension": {
+   "description": "User can use dimensions to aggregate the insight metrics. Supported dimension types: * `DATE` - For aggregation by date. * `PAGE` - For aggregation by page. * `SOURCE` - For aggregation by source. * `TAG` - For aggregat…",
+   "enum": [
+    "DATE",
+    "PAGE",
+    "SOURCE",
+    "STORE",
+    "TAG"
+   ],
+   "type": "string"
+  },
+  "InsightFilter": {
+   "description": "The filter to restrict the return data. Users can specifiy the pages/source/tags they feel interested in for the insights. The relationship between each field is 'AND'. E.g. The user can speficy {pageIds=[page1_id], sou…",
+   "properties": {
+    "pageIds": {
+     "description": "List of pages to be fetched for insight metrics. Users can first make request to the API with the same parameters but without the filter to retrieve all the available page ids.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "sources": {
+     "description": "List of sources to be fetched for insight metrics.",
+     "items": {
+      "$ref": "TrafficSource"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "tags": {
+     "description": "List of tags to be fetched for insight metrics. Users can first make request to the API with the same parameters but without the filter to retrieve all the available tag names.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "InsightMetric": {
+   "description": "Insight Metric Type: * `VIEWS` - Number of page views. Data is available on a rolling 12-month window that updates based on the current date. <br> \"VIEW\" metric can be aggregated by all InsightDimensions. * `ORDERS` - E…",
+   "enum": [
+    "ACTIONS_TAKEN_BY_PEERS",
+    "BOUNCE_RATE",
+    "COMPLETED_RECOMMENDATIONS",
+    "CONTRIBUTORS",
+    "DWELL",
+    "DWELL_TIME",
+    "NEW_TO_STORE",
+    "ORDERS",
+    "PEER_DWELL",
+    "PEER_SALES_LAST_60_DAYS",
+    "RECOMMENDATIONS",
+    "SALES",
+    "SALES_LAST_60_DAYS",
+    "SCORE_LEVEL",
+    "UNITS",
+    "VIDEO_10S_PLAYED",
+    "VIDEO_25P_PLAYED",
+    "VIDEO_50P_PLAYED",
+    "VIDEO_75P_PLAYED",
+    "VIDEO_COMPLETED",
+    "VIDEO_STARTED",
+    "VIEWS",
+    "VISITORS",
+    "VISITS"
+   ],
+   "type": "string"
+  },
+  "InsightMetricsDetail": {
+   "additionalProperties": {
+    "oneOf": [
+     {
+      "type": "string"
+     },
+     {
+      "type": "integer"
+     },
+     {
+      "type": "number"
+     },
+     {
+      "type": "boolean"
+     },
+     {
+      "description": "List of CONTRIBUTORS to the store quality in requested language. English is default language.",
+      "items": {
+       "type": "string"
+      },
+      "type": "array"
+     },
+     {
+      "description": "List of RECOMMENDATIONS to increase the store quality in requested language. English is default language.",
+      "items": {
+       "$ref": "StoreQualityRecommendation"
+      },
+      "type": "array"
+     },
+     {
+      "description": "List of COMPLETED_RECOMMENDATIONS which resulted in increase of the store quality. It can be provided in requested language. English is default language.",
+      "items": {
+       "$ref": "StoreQualityCompletedRecommendation"
+      },
+      "type": "array"
+     }
+    ]
+   },
+   "description": "A key-value pair map which contains the dimension and metric information. The key is either dimension name or metric name, while the value is the corresponding dimension value or metric value. Addition of boolean,Array …",
+   "type": "object"
+  },
+  "SortOrder": {
+   "description": "Describes whether a sort should be ascending (ASC) or descending (DESC).",
+   "enum": [
+    "ASC",
+    "DESC"
+   ],
+   "type": "string"
+  },
+  "StoreQualityCompletedRecommendation": {
+   "description": "The Object containing recommendations to improve store quality.",
+   "properties": {
+    "category": {
+     "description": "The category in which the store owners could see improvment by this recommendation.",
+     "type": "string"
+    },
+    "exampleLink": {
+     "description": "Link to the example store with a sample to showcase a recommended action.",
+     "type": "string"
+    },
+    "exampleText": {
+     "description": "The text to describe the example to showcase the recommended action.",
+     "type": "string"
+    },
+    "observedAverageDwellTimeIncrease": {
+     "description": "The percentage by which store quality could improve by this recommendation.",
+     "type": "string"
+    },
+    "recommendedAction": {
+     "description": "description of the recommendation.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoreQualityRecommendation": {
+   "description": "The Object containing recommendations to improve store quality.",
+   "properties": {
+    "category": {
+     "description": "The category in which the store owners could see improvment by this recommendation.",
+     "type": "string"
+    },
+    "ctaLink": {
+     "description": "Call to Action(CTA) link to take customer to the page where the changes can be made.",
+     "type": "string"
+    },
+    "ctaText": {
+     "description": "Text describing the Call to Action(CTA).",
+     "type": "string"
+    },
+    "exampleLink": {
+     "description": "Link to the example store with a sample to showcase a recommended action.",
+     "type": "string"
+    },
+    "exampleText": {
+     "description": "The text to describe the example to showcase the recommended action.",
+     "type": "string"
+    },
+    "observedAveragSalesIncrease": {
+     "description": "The percentage by which store's sales could improve by this recommendation.",
+     "type": "string"
+    },
+    "observedAverageDwellTimeIncrease": {
+     "description": "The percentage by which store quality could improve by this recommendation.",
+     "type": "string"
+    },
+    "recommendedAction": {
+     "description": "description of the recommendation.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "StoresAnalyticsAPIErrorResponse": {
+   "description": "The error response object for analytics API.",
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TrafficSource": {
+   "description": "Traffic Source Type: * `ADS` - Traffic from Sponsored Brands ads on Amazon. * `ORGANIC` - Traffic originating from your brand link on Amazon product detail pages. * `OTHER` - All other traffic sources not categorized.",
+   "enum": [
+    "ADS",
+    "ORGANIC",
+    "OTHER"
+   ],
+   "type": "string"
+  }
+ }
+}

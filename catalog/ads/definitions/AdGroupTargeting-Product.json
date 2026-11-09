@@ -1,0 +1,301 @@
+{
+ "api": "AdGroupTargeting-Product",
+ "file": "specs/dest/AdGroupTargeting-Product_prod_3p.json",
+ "schemas": {
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateAdGroupProductTargetV1": {
+   "properties": {
+    "asin": {
+     "description": "The product ASIN to target.",
+     "type": "string"
+    },
+    "matchType": {
+     "$ref": "DspMatchTypeV1"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) the given target.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "asin",
+    "matchType",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "DspCreateAdGroupProductTargetsRequestContentV1": {
+   "properties": {
+    "productTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspCreateAdGroupProductTargetV1"
+     },
+     "maxItems": 500,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "productTargets"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupProductTargetV1": {
+   "properties": {
+    "asin": {
+     "description": "The product ASIN to target.",
+     "type": "string"
+    },
+    "matchType": {
+     "$ref": "DspMatchTypeV1"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) the given target.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "asin",
+    "matchType",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupProductTargetsRequestContentV1": {
+   "properties": {
+    "productTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspDeleteAdGroupProductTargetV1"
+     },
+     "maxItems": 500,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "productTargets"
+   ],
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetAdGroupProductTargetV1": {
+   "properties": {
+    "asin": {
+     "description": "The product ASIN to target.",
+     "type": "string"
+    },
+    "matchType": {
+     "$ref": "DspMatchTypeV1"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) the given target.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "asin",
+    "matchType",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "DspGetAdGroupProductTargetsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    },
+    "productTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspGetAdGroupProductTargetV1"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "productTargets"
+   ],
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspMatchTypeV1": {
+   "description": "The product target match type.",
+   "enum": [
+    "PRODUCT_EXACT"
+   ],
+   "type": "string"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

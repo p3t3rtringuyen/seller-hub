@@ -1,0 +1,1509 @@
+{
+  "Address": {
+    "description": "Address of the party.",
+    "properties": {
+      "addressLine1": {
+        "description": "First line of the address.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional street address information, if required.",
+        "type": "string"
+      },
+      "addressLine3": {
+        "description": "Additional street address information, if required.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city where the person, business or institution is located.",
+        "type": "string"
+      },
+      "countryCode": {
+        "description": "The two digit country code in ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "county": {
+        "description": "The county where person, business or institution is located.",
+        "type": "string"
+      },
+      "district": {
+        "description": "The district where person, business or institution is located.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the person, business or institution at that address.",
+        "type": "string"
+      },
+      "phone": {
+        "description": "The phone number of the person, business or institution located at that address.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "The postal code of that address.",
+        "type": "string"
+      },
+      "stateOrRegion": {
+        "description": "The state or region where person, business or institution is located.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "addressLine1",
+      "countryCode",
+      "name"
+    ],
+    "type": "object"
+  },
+  "CarrierDetails": {
+    "description": "Indicates the carrier details and their contact informations",
+    "properties": {
+      "code": {
+        "description": "Code that identifies the carrier for the shipment.",
+        "type": "string"
+      },
+      "email": {
+        "description": "The field is used to represent the carrier Email id.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The field is used to represent the carrier used for performing the shipment.",
+        "type": "string"
+      },
+      "phone": {
+        "description": "The field is used to represent the Carrier contact number.",
+        "type": "string"
+      },
+      "shipmentReferenceNumber": {
+        "description": "The field is also known as PRO number is a unique number assigned by the carrier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Carton": {
+    "description": "Details of the carton/package being shipped.",
+    "properties": {
+      "cartonIdentifiers": {
+        "description": "A list of carton identifiers.",
+        "ref": "ContainerIdentification",
+        "type": "array"
+      },
+      "cartonSequenceNumber": {
+        "description": "Carton sequence number for the carton.",
+        "type": "string"
+      },
+      "dimensions": {
+        "ref": "Dimensions"
+      },
+      "items": {
+        "description": "A list of container item details.",
+        "ref": "ContainerItem",
+        "type": "array"
+      },
+      "trackingNumber": {
+        "description": "This is required to be provided for every carton in the small parcel shipments.",
+        "type": "string"
+      },
+      "weight": {
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "cartonSequenceNumber",
+      "items"
+    ],
+    "type": "object"
+  },
+  "CartonReferenceDetails": {
+    "description": "Carton reference details.",
+    "properties": {
+      "cartonCount": {
+        "description": "Pallet level carton count is mandatory for single item pallet and optional for mixed item pallet.",
+        "type": "integer"
+      },
+      "cartonReferenceNumbers": {
+        "description": "Array of reference numbers for the carton that are part of this pallet/shipment.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "cartonReferenceNumbers"
+    ],
+    "type": "object"
+  },
+  "CollectFreightPickupDetails": {
+    "description": "Transport Request pickup date from Vendor Warehouse by Buyer",
+    "properties": {
+      "carrierAssignmentDate": {
+        "description": "Date on which the carrier is being scheduled to pickup items from vendor warehouse by Byer used for WePay/Collect vendors.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "requestedPickUp": {
+        "description": "Date on which the items can be picked up from vendor warehouse by Buyer used for WePay/Collect vendors.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "scheduledPickUp": {
+        "description": "Date on which the items are scheduled to be picked from vendor warehouse by Buyer used for WePay/Collect vendors.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ContainerIdentification": {
+    "description": "A list of carton identifiers.",
+    "properties": {
+      "containerIdentificationNumber": {
+        "description": "Container identification number that adheres to the definition of the container identification type.",
+        "type": "string"
+      },
+      "containerIdentificationType": {
+        "description": "The container identification type.",
+        "enum": [
+          "AMZNCC",
+          "BPS",
+          "CID",
+          "GTIN",
+          "SSCC"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "containerIdentificationNumber",
+      "containerIdentificationType"
+    ],
+    "type": "object"
+  },
+  "ContainerItem": {
+    "description": "Carton/Pallet level details for the item.",
+    "properties": {
+      "itemDetails": {
+        "ref": "ItemDetails"
+      },
+      "itemReference": {
+        "description": "The reference number for the item.",
+        "type": "string"
+      },
+      "shippedQuantity": {
+        "description": "Total item quantity shipped in this carton/pallet.",
+        "ref": "ItemQuantity"
+      }
+    },
+    "required": [
+      "itemReference",
+      "shippedQuantity"
+    ],
+    "type": "object"
+  },
+  "ContainerSequenceNumbers": {
+    "description": "Container sequence numbers that are involved in this shipment.",
+    "properties": {
+      "containerSequenceNumber": {
+        "description": "A list of containers shipped",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Containers": {
+    "description": "A list of the items in this transportation and their associated inner container details.",
+    "properties": {
+      "block": {
+        "description": "Number of cartons per layer on the pallet.",
+        "type": "integer"
+      },
+      "containerIdentifiers": {
+        "description": "A list of carton identifiers.",
+        "ref": "ContainerIdentification",
+        "type": "array"
+      },
+      "containerSequenceNumber": {
+        "description": "An integer that must be submitted for multi-box shipments only, where one item may come in separate packages.",
+        "type": "string"
+      },
+      "containerType": {
+        "description": "The type of container.",
+        "enum": [
+          "carton",
+          "pallet"
+        ],
+        "type": "string"
+      },
+      "dimensions": {
+        "ref": "Dimensions"
+      },
+      "innerContainersDetails": {
+        "ref": "InnerContainersDetails"
+      },
+      "packedItems": {
+        "description": "A list of packed items.",
+        "ref": "PackedItems",
+        "type": "array"
+      },
+      "tier": {
+        "description": "Number of layers per pallet.",
+        "type": "integer"
+      },
+      "trackingNumber": {
+        "description": "The tracking number used for identifying the shipment.",
+        "type": "string"
+      },
+      "weight": {
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "containerIdentifiers",
+      "containerType"
+    ],
+    "type": "object"
+  },
+  "Decimal": {
+    "description": "A decimal number with no loss of precision.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Dimensions": {
+    "description": "Physical dimensional measurements of a container.",
+    "properties": {
+      "height": {
+        "description": "The height of the container.",
+        "ref": "Decimal"
+      },
+      "length": {
+        "description": "The length of the container.",
+        "ref": "Decimal"
+      },
+      "unitOfMeasure": {
+        "description": "The unit of measure for dimensions.",
+        "enum": [
+          "Ft",
+          "In",
+          "Meter",
+          "Yard"
+        ],
+        "type": "string"
+      },
+      "width": {
+        "description": "The width of the container.",
+        "ref": "Decimal"
+      }
+    },
+    "required": [
+      "height",
+      "length",
+      "unitOfMeasure",
+      "width"
+    ],
+    "type": "object"
+  },
+  "Duration": {
+    "description": "Duration after manufacturing date during which the product is valid for consumption.",
+    "properties": {
+      "durationUnit": {
+        "description": "Unit for duration.",
+        "enum": [
+          "Days",
+          "Months"
+        ],
+        "type": "string"
+      },
+      "durationValue": {
+        "description": "Value for the duration in terms of the durationUnit.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "durationUnit",
+      "durationValue"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "Expiry": {
+    "description": "Expiry refers to the collection of dates required for certain items.",
+    "properties": {
+      "expiryAfterDuration": {
+        "description": "Duration after manufacturing date during which the product is valid for consumption.",
+        "ref": "Duration"
+      },
+      "expiryDate": {
+        "description": "The date that determines the limit of consumption or use of a product.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "manufacturerDate": {
+        "description": "Production, packaging or assembly date determined by the manufacturer.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetShipmentDetailsResponse": {
+    "description": "The response schema for the GetShipmentDetails operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "ref": "ShipmentDetails"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetShipmentLabels": {
+    "description": "The response schema for the GetShipmentLabels operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "ref": "TransportationLabels"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ImportDetails": {
+    "description": "Provide these fields only if this shipment is a direct import.",
+    "properties": {
+      "billableWeight": {
+        "description": "Billable weight of the direct imports shipment.",
+        "ref": "Weight"
+      },
+      "estimatedShipByDate": {
+        "description": "Date on which the shipment is expected to be shipped.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "handlingInstructions": {
+        "description": "Identification of the instructions on how specified item/carton/pallet should be handled.",
+        "enum": [
+          "Food",
+          "Fragile",
+          "HandleWithCare",
+          "Oversized"
+        ],
+        "type": "string"
+      },
+      "importContainers": {
+        "description": "Types and numbers of container(s) for import purchase orders.",
+        "type": "string"
+      },
+      "methodOfPayment": {
+        "description": "This is used for import purchase orders only.",
+        "enum": [
+          "CollectOnDelivery",
+          "DefinedByBuyerAndSeller",
+          "FOBPortOfCall",
+          "PaidByBuyer",
+          "PaidBySeller",
+          "PrepaidBySeller"
+        ],
+        "type": "string"
+      },
+      "route": {
+        "description": "The route and stop details for this shipment.",
+        "ref": "Route"
+      },
+      "sealNumber": {
+        "description": "The container's seal number.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InnerContainersDetails": {
+    "description": "Details of the innerContainersDetails.",
+    "properties": {
+      "containerCount": {
+        "description": "Total containers as part of the shipment",
+        "type": "integer"
+      },
+      "containerSequenceNumbers": {
+        "description": "Container sequence numbers that are involved in this shipment.",
+        "ref": "ContainerSequenceNumbers",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Item": {
+    "description": "Details of the item being shipped.",
+    "properties": {
+      "amazonProductIdentifier": {
+        "description": "Buyer Standard Identification Number (ASIN) of an item.",
+        "type": "string"
+      },
+      "itemDetails": {
+        "ref": "ItemDetails"
+      },
+      "itemSequenceNumber": {
+        "description": "Item sequence number for the item.",
+        "type": "string"
+      },
+      "shippedQuantity": {
+        "description": "Total item quantity shipped in this shipment.",
+        "ref": "ItemQuantity"
+      },
+      "vendorProductIdentifier": {
+        "description": "The vendor selected product identification of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "itemSequenceNumber",
+      "shippedQuantity"
+    ],
+    "type": "object"
+  },
+  "ItemDetails": {
+    "description": "Item details for be provided for every item in shipment at either the item or carton or pallet level, whichever is appropriate.",
+    "properties": {
+      "countryOfOrigin": {
+        "description": "The two-character country code for the country where the product was manufactured or originates.",
+        "type": "string"
+      },
+      "expiry": {
+        "description": "Expiry refers to the collection of dates required for certain items.",
+        "ref": "Expiry"
+      },
+      "handlingCode": {
+        "description": "Identification of the instructions on how specified item/carton/pallet should be handled.",
+        "enum": [
+          "Food",
+          "Fragile",
+          "HandleWithCare",
+          "Oversized"
+        ],
+        "type": "string"
+      },
+      "lotNumber": {
+        "description": "The batch or lot number associates an item with information the manufacturer considers relevant for traceability of the trade item to which the Element String is applied.",
+        "type": "string"
+      },
+      "lotNumberSourceReference": {
+        "description": "The location identifier where the product receives a traceability lot number.",
+        "type": "string"
+      },
+      "lotNumberSourceType": {
+        "description": "The identifier type used for the lot number source.",
+        "enum": [
+          "FFRN",
+          "GLN",
+          "URL",
+          "USDA_E"
+        ],
+        "type": "string"
+      },
+      "maximumRetailPrice": {
+        "description": "Maximum retail price of the item being shipped.",
+        "ref": "Money"
+      },
+      "purchaseOrderNumber": {
+        "description": "The purchase order number for the shipment being confirmed.",
+        "type": "string"
+      },
+      "regulationReferences": {
+        "description": "Regulatory requirements and compliance information for the item.",
+        "ref": "RegulationReferences"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemQuantity": {
+    "description": "Details of item quantity.",
+    "properties": {
+      "amount": {
+        "description": "Amount of units shipped for a specific item at a shipment level.",
+        "type": "integer"
+      },
+      "totalWeight": {
+        "ref": "TotalWeight"
+      },
+      "unitOfMeasure": {
+        "description": "Unit of measure for the shipped quantity.",
+        "enum": [
+          "Cases",
+          "Eaches"
+        ],
+        "type": "string"
+      },
+      "unitSize": {
+        "description": "The case size, in the event that we ordered using cases.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "amount",
+      "unitOfMeasure"
+    ],
+    "type": "object"
+  },
+  "LabelData": {
+    "description": "Label details as part of the transport label response",
+    "properties": {
+      "carrierCode": {
+        "description": "Unique identification of the carrier.",
+        "type": "string"
+      },
+      "label": {
+        "description": "The base-64 encoded string that represents the shipment label.",
+        "type": "string"
+      },
+      "labelFormat": {
+        "description": "The format of the label.",
+        "enum": [
+          "PDF"
+        ],
+        "type": "string"
+      },
+      "labelSequenceNumber": {
+        "description": "A sequential number assigned to each label within a shipment.",
+        "type": "integer"
+      },
+      "trackingId": {
+        "description": "Tracking Id for the transportation.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Location": {
+    "description": "Location identifier.",
+    "properties": {
+      "countryCode": {
+        "description": "The two digit country code.",
+        "type": "string"
+      },
+      "locationCode": {
+        "description": "Location code.",
+        "type": "string"
+      },
+      "type": {
+        "description": "Type of location identification.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Money": {
+    "description": "An amount of money, including units in the form of currency.",
+    "properties": {
+      "amount": {
+        "ref": "Decimal"
+      },
+      "currencyCode": {
+        "description": "Three digit currency code in ISO 4217 format.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "amount",
+      "currencyCode"
+    ],
+    "type": "object"
+  },
+  "PackageItemDetails": {
+    "description": "Item details for be provided for every item in shipment at either the item or carton or pallet level, whichever is appropriate.",
+    "properties": {
+      "expiry": {
+        "description": "Either expiryDate or mfgDate and expiryAfterDuration are mandatory for perishable items.",
+        "ref": "Expiry"
+      },
+      "lotNumber": {
+        "description": "The batch or lot number associates an item with information the manufacturer considers relevant for traceability of the trade item to which the Element String is applied.",
+        "type": "string"
+      },
+      "purchaseOrderNumber": {
+        "description": "The purchase order number for the shipment being confirmed.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PackedItems": {
+    "description": "Details of the item being shipped.",
+    "properties": {
+      "buyerProductIdentifier": {
+        "description": "Buyer Standard Identification Number (ASIN) of an item.",
+        "type": "string"
+      },
+      "itemDetails": {
+        "ref": "PackageItemDetails"
+      },
+      "itemSequenceNumber": {
+        "description": "Item sequence number for the item.",
+        "type": "string"
+      },
+      "packedQuantity": {
+        "description": "Total item quantity shipped in this shipment.",
+        "ref": "ItemQuantity"
+      },
+      "vendorProductIdentifier": {
+        "description": "The vendor selected product identification of the item.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "The pagination elements required to retrieve the remaining data.",
+    "properties": {
+      "nextToken": {
+        "description": "A generated string used to pass information to your next request.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Pallet": {
+    "description": "Details of the Pallet/Tare being shipped.",
+    "properties": {
+      "block": {
+        "description": "Number of cartons per layer on the pallet.",
+        "type": "integer"
+      },
+      "cartonReferenceDetails": {
+        "description": "Carton reference details.",
+        "ref": "CartonReferenceDetails"
+      },
+      "dimensions": {
+        "ref": "Dimensions"
+      },
+      "items": {
+        "description": "A list of container item details.",
+        "ref": "ContainerItem",
+        "type": "array"
+      },
+      "palletIdentifiers": {
+        "description": "A list of pallet identifiers.",
+        "ref": "ContainerIdentification",
+        "type": "array"
+      },
+      "tier": {
+        "description": "Number of layers per pallet.",
+        "type": "integer"
+      },
+      "weight": {
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "palletIdentifiers"
+    ],
+    "type": "object"
+  },
+  "PartyIdentification": {
+    "description": "Name/Address and tax details of the party.",
+    "properties": {
+      "address": {
+        "description": "Identification of the party by address.",
+        "ref": "Address"
+      },
+      "partyId": {
+        "description": "Assigned identification for the party.",
+        "type": "string"
+      },
+      "taxRegistrationDetails": {
+        "description": "Tax registration details of the entity.",
+        "ref": "TaxRegistrationDetails",
+        "type": "array"
+      }
+    },
+    "required": [
+      "partyId"
+    ],
+    "type": "object"
+  },
+  "PurchaseOrderItems": {
+    "description": "Details of the item being shipped.",
+    "properties": {
+      "buyerProductIdentifier": {
+        "description": "Amazon Standard Identification Number (ASIN) for a SKU",
+        "type": "string"
+      },
+      "itemSequenceNumber": {
+        "description": "Item sequence number for the item.",
+        "type": "string"
+      },
+      "maximumRetailPrice": {
+        "ref": "Money"
+      },
+      "shippedQuantity": {
+        "description": "Total item quantity shipped in this shipment.",
+        "ref": "ItemQuantity"
+      },
+      "vendorProductIdentifier": {
+        "description": "The vendor selected product identification of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "itemSequenceNumber",
+      "shippedQuantity"
+    ],
+    "type": "object"
+  },
+  "PurchaseOrders": {
+    "description": "Transport Request pickup date",
+    "properties": {
+      "items": {
+        "description": "A list of the items that are associated to the PO in this transport and their associated details.",
+        "ref": "PurchaseOrderItems",
+        "type": "array"
+      },
+      "purchaseOrderDate": {
+        "description": "Purchase order numbers involved in this shipment, list all the PO that are involved as part of this shipment.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "purchaseOrderNumber": {
+        "description": "Purchase order numbers involved in this shipment, list all the PO that are involved as part of this shipment.",
+        "type": "string"
+      },
+      "shipWindow": {
+        "description": "Date range in which shipment is expected for these purchase orders.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RegulationReferences": {
+    "description": "Regulatory requirements and compliance information for the item, including reference numbers, verification codes, and exemption codes.",
+    "properties": {
+      "dueDiligenceExemptionCode": {
+        "description": "The exemption code for EUDR products exempt from due diligence requirements.",
+        "type": "string"
+      },
+      "dueDiligenceInformation": {
+        "description": "The EUDR Due Diligence information pre-loaded in Vendor Central.",
+        "type": "string"
+      },
+      "dueDiligenceReference": {
+        "description": "The reference number from the vendor's EUDR Due Diligence Statement (DDS) submitted to the EU Commission portal or provided to Amazon through ONIX feed.",
+        "type": "string"
+      },
+      "dueDiligenceVerification": {
+        "description": "The EUDR Due Diligence verification number provided by the EU Commission for the submitted DDS.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Route": {
+    "description": "This is used only for direct import shipment confirmations.",
+    "properties": {
+      "stops": {
+        "description": "The port or location involved in transporting the cargo, as specified in transportation contracts or operational plans.",
+        "ref": "Stop",
+        "type": "array"
+      }
+    },
+    "required": [
+      "stops"
+    ],
+    "type": "object"
+  },
+  "Shipment": {
+    "description": "A list of one or more shipments with respective details.",
+    "properties": {
+      "buyerReferenceNumber": {
+        "description": "The buyer Reference Number is a unique identifier generated by buyer for all Collect/WePay shipments when you submit a transportation request.",
+        "type": "string"
+      },
+      "collectFreightPickupDetails": {
+        "description": "Indicates the earliest pickup date for the transportation from vendor warehouse.",
+        "ref": "CollectFreightPickupDetails"
+      },
+      "containers": {
+        "description": "A list of the items in this transportation and their associated inner container details.",
+        "ref": "Containers",
+        "type": "array"
+      },
+      "currentShipmentStatus": {
+        "description": "Indicates the current shipment status.",
+        "enum": [
+          "CarrierAssigned",
+          "Created",
+          "Shipped",
+          "TransportationRequested"
+        ],
+        "type": "string"
+      },
+      "currentshipmentStatusDate": {
+        "description": "Date and time when the last status was updated.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "importDetails": {
+        "description": "Provide these fields only if this shipment is a direct import.",
+        "ref": "ImportDetails"
+      },
+      "packageLabelCreateDate": {
+        "description": "The date and time of the package label created for the shipment by buyer.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "purchaseOrders": {
+        "description": "Indicates the purchase orders involved for the transportation request.",
+        "ref": "PurchaseOrders",
+        "type": "array"
+      },
+      "sellingParty": {
+        "description": "Name/Address and tax details of the selling party.",
+        "ref": "PartyIdentification"
+      },
+      "shipFromParty": {
+        "description": "Name/Address and tax details of the ship from party.",
+        "ref": "PartyIdentification"
+      },
+      "shipToParty": {
+        "description": "Name/Address of the destination warehouse where the shipment is being shipped to.",
+        "ref": "PartyIdentification"
+      },
+      "shipmentConfirmDate": {
+        "description": "The date and time of the departure of the shipment from the vendor's location.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "shipmentCreateDate": {
+        "description": "The date and time of the shipment request created by vendor.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "shipmentFreightTerm": {
+        "description": "Specifies if payment is Collect (WePay) or Prepaid (TheyPay).",
+        "enum": [
+          "Collect",
+          "Prepaid"
+        ],
+        "type": "string"
+      },
+      "shipmentMeasurements": {
+        "description": "Indicates the shipment measurement details on how many cartons and pallets and the total transportation weight and volume as part of this request.",
+        "ref": "TransportShipmentMeasurements"
+      },
+      "shipmentStatusDetails": {
+        "description": "Indicates the list of current shipment status details and when the last update was received from carrier this is available on shipment Details response.",
+        "ref": "ShipmentStatusDetails",
+        "type": "array"
+      },
+      "transactionDate": {
+        "description": "Date on which the transportation request was submitted.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "transactionType": {
+        "description": "Indicates the type of transportation request (for example, `New` or `Cancel`).",
+        "enum": [
+          "Cancel",
+          "New"
+        ],
+        "type": "string"
+      },
+      "transportationDetails": {
+        "description": "Transportation details this a mandatory information which states delivery date, shipping date and carrier details.",
+        "ref": "TransportationDetails"
+      },
+      "vendorShipmentIdentifier": {
+        "description": "Unique Transportation ID created by Vendor (Should not be used over the last 365 days).",
+        "type": "string"
+      }
+    },
+    "required": [
+      "sellingParty",
+      "shipFromParty",
+      "shipToParty",
+      "transactionDate",
+      "transactionType",
+      "vendorShipmentIdentifier"
+    ],
+    "type": "object"
+  },
+  "ShipmentConfirmation": {
+    "description": "A list of one or more shipment confirmations.",
+    "properties": {
+      "amazonReferenceNumber": {
+        "description": "The Amazon Reference Number is a unique identifier generated by Amazon for all Collect/WePay shipments when you submit a routing request.",
+        "type": "string"
+      },
+      "cartons": {
+        "description": "A list of the cartons in this shipment.",
+        "ref": "Carton",
+        "type": "array"
+      },
+      "estimatedDeliveryDate": {
+        "description": "The date and time on which the shipment is estimated to reach buyer's warehouse.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "importDetails": {
+        "description": "Provide these fields only if this shipment is a direct import.",
+        "ref": "ImportDetails"
+      },
+      "pallets": {
+        "description": "A list of the pallets in this shipment.",
+        "ref": "Pallet",
+        "type": "array"
+      },
+      "sellingParty": {
+        "description": "Name/Address and tax details of the selling party.",
+        "ref": "PartyIdentification"
+      },
+      "shipFromParty": {
+        "description": "Name/Address and tax details of the ship from party.",
+        "ref": "PartyIdentification"
+      },
+      "shipToParty": {
+        "description": "Name/Address of the destination warehouse where the shipment is being shipped to.",
+        "ref": "PartyIdentification"
+      },
+      "shipmentConfirmationDate": {
+        "description": "Date on which the shipment confirmation was submitted.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "shipmentConfirmationType": {
+        "description": "Indicates if this shipment confirmation is the initial confirmation, or intended to replace an already posted shipment confirmation.",
+        "enum": [
+          "Original",
+          "Replace"
+        ],
+        "type": "string"
+      },
+      "shipmentIdentifier": {
+        "description": "Unique shipment ID (not used over the last 365 days).",
+        "type": "string"
+      },
+      "shipmentMeasurements": {
+        "ref": "ShipmentMeasurements"
+      },
+      "shipmentStructure": {
+        "description": "Shipment hierarchical structure.",
+        "enum": [
+          "LooseAssortmentCase",
+          "LooseStandardCase",
+          "MasterCase",
+          "MasterPallet",
+          "PalletOfItems",
+          "PalletizedAssortmentCase",
+          "PalletizedStandardCase"
+        ],
+        "type": "string"
+      },
+      "shipmentType": {
+        "description": "The type of shipment.",
+        "enum": [
+          "LessThanTruckLoad",
+          "SmallParcel",
+          "TruckLoad"
+        ],
+        "type": "string"
+      },
+      "shippedDate": {
+        "description": "The date and time of the departure of the shipment from the vendor's location.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "shippedItems": {
+        "description": "A list of the items in this shipment and their associated details.",
+        "ref": "Item",
+        "type": "array"
+      },
+      "transportationDetails": {
+        "description": "Transportation details for this shipment.",
+        "ref": "TransportationDetailsForShipmentConfirmation"
+      }
+    },
+    "required": [
+      "sellingParty",
+      "shipFromParty",
+      "shipToParty",
+      "shipmentConfirmationDate",
+      "shipmentConfirmationType",
+      "shipmentIdentifier",
+      "shippedItems"
+    ],
+    "type": "object"
+  },
+  "ShipmentDetails": {
+    "description": "The request schema for the GetShipmentDetails operation.",
+    "properties": {
+      "pagination": {
+        "ref": "Pagination"
+      },
+      "shipments": {
+        "description": "A list of one or more shipments with underlying details.",
+        "ref": "Shipment",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ShipmentInformation": {
+    "description": "Shipment Information details for Label request.",
+    "properties": {
+      "buyerReferenceNumber": {
+        "description": "The buyer reference number is a unique identifier generated by the buyer for all Collect and WePay shipments.",
+        "type": "string"
+      },
+      "masterTrackingId": {
+        "description": "Unique Id with which the shipment can be tracked for Small Parcels.",
+        "type": "string"
+      },
+      "shipFromParty": {
+        "description": "Name/Address of the destination warehouse where the shipment is being shipped to.",
+        "ref": "PartyIdentification"
+      },
+      "shipMode": {
+        "description": "Type of shipment whether it is Small Parcel",
+        "enum": [
+          "LTL",
+          "SmallParcel"
+        ],
+        "type": "string"
+      },
+      "shipToParty": {
+        "description": "The name and address of the destination warehouse where the shipment is being shipped.",
+        "ref": "PartyIdentification"
+      },
+      "totalLabelCount": {
+        "description": "Number of Labels that are created as part of this shipment.",
+        "type": "integer"
+      },
+      "vendorDetails": {
+        "description": "Vendor Details requesting for Shipment Label",
+        "ref": "VendorDetails"
+      },
+      "warehouseId": {
+        "description": "Vendor Warehouse ID from where the shipment is scheduled to be picked up by buyer / Carrier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ShipmentMeasurements": {
+    "description": "Shipment measurement details.",
+    "properties": {
+      "cartonCount": {
+        "description": "Number of cartons present in the shipment.",
+        "type": "integer"
+      },
+      "grossShipmentWeight": {
+        "description": "Gross weight of the shipment.",
+        "ref": "Weight"
+      },
+      "palletCount": {
+        "description": "Number of pallets present in the shipment.",
+        "type": "integer"
+      },
+      "shipmentVolume": {
+        "description": "Gross Volume of the shipment.",
+        "ref": "Volume"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ShipmentStatusDetails": {
+    "description": "Shipment Status details.",
+    "properties": {
+      "shipmentStatus": {
+        "description": "Current status of the shipment on whether it is picked up or scheduled.",
+        "enum": [
+          "CarrierAssigned",
+          "Created",
+          "Shipped",
+          "TransportationRequested"
+        ],
+        "type": "string"
+      },
+      "shipmentStatusDate": {
+        "description": "Date and time on last status update received for the shipment",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Stop": {
+    "description": "Contractual or operational port or point relevant to the movement of the cargo.",
+    "properties": {
+      "arrivalTime": {
+        "description": "Date and time of the arrival of the cargo.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "departureTime": {
+        "description": "Date and time of the departure of the cargo.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "functionCode": {
+        "description": "Provide the function code.",
+        "enum": [
+          "FreightPayableAt",
+          "PortOfDischarge",
+          "PortOfLoading"
+        ],
+        "type": "string"
+      },
+      "locationIdentification": {
+        "ref": "Location"
+      }
+    },
+    "required": [
+      "functionCode"
+    ],
+    "type": "object"
+  },
+  "SubmitShipmentConfirmationsRequest": {
+    "description": "The request schema for the SubmitShipmentConfirmations operation.",
+    "properties": {
+      "shipmentConfirmations": {
+        "description": "A list of one or more shipment confirmations.",
+        "ref": "ShipmentConfirmation",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SubmitShipmentConfirmationsResponse": {
+    "description": "The response schema for the SubmitShipmentConfirmations operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The response payload for the SubmitShipmentConfirmations operation.",
+        "ref": "TransactionReference"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SubmitShipments": {
+    "description": "The request schema for the SubmitShipments operation.",
+    "properties": {
+      "shipments": {
+        "description": "A list of one or more shipments with underlying details.",
+        "ref": "Shipment",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TaxRegistrationDetails": {
+    "description": "Tax registration details of the entity.",
+    "properties": {
+      "taxRegistrationNumber": {
+        "description": "Tax registration number for the entity.",
+        "type": "string"
+      },
+      "taxRegistrationType": {
+        "description": "Tax registration type for the entity.",
+        "enum": [
+          "GST",
+          "VAT"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "taxRegistrationNumber",
+      "taxRegistrationType"
+    ],
+    "type": "object"
+  },
+  "TotalWeight": {
+    "description": "The total weight of units that are sold by weight in a shipment.",
+    "properties": {
+      "amount": {
+        "ref": "Decimal"
+      },
+      "unitOfMeasure": {
+        "description": "The unit of measure for the weight of items that are ordered by cases and support pricing by weight.",
+        "enum": [
+          "GRAMS",
+          "KILOGRAMS",
+          "OUNCES",
+          "POUNDS"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "amount",
+      "unitOfMeasure"
+    ],
+    "type": "object"
+  },
+  "TransactionReference": {
+    "description": "The response payload for the SubmitShipmentConfirmations operation.",
+    "properties": {
+      "transactionId": {
+        "description": "GUID assigned by Buyer to identify this transaction.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TransportLabel": {
+    "description": "A list of one or more ShipmentLabels.",
+    "properties": {
+      "labelCreateDateTime": {
+        "description": "Date on which label is created.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "labelData": {
+        "description": "Indicates the label data,format and type associated .",
+        "ref": "LabelData",
+        "type": "array"
+      },
+      "shipmentInformation": {
+        "description": "Indicates the shipment Information details like warehouse and business reference details like ARN, Selling Party detail and Vendor Warehouse details",
+        "ref": "ShipmentInformation"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TransportShipmentMeasurements": {
+    "description": "Shipment measurement details.",
+    "properties": {
+      "shipmentVolume": {
+        "description": "Total Volume of the shipment.",
+        "ref": "Volume"
+      },
+      "shipmentWeight": {
+        "description": "Total Weight of the shipment.",
+        "ref": "Weight"
+      },
+      "totalCartonCount": {
+        "description": "Total number of cartons present in the shipment.",
+        "type": "integer"
+      },
+      "totalPalletNonStackable": {
+        "description": "Total number of Non Stackable Pallets present in the shipment.",
+        "type": "integer"
+      },
+      "totalPalletStackable": {
+        "description": "Total number of Stackable Pallets present in the shipment.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TransportationDetails": {
+    "description": "Transportation details for this shipment.",
+    "properties": {
+      "billOfLadingNumber": {
+        "description": "The Bill of Lading (BOL) number is a unique number assigned to each shipment of goods by the vendor or shipper during the creation of the Bill of Lading.",
+        "type": "string"
+      },
+      "carrierDetails": {
+        "description": "Indicates the carrier details and their contact informations",
+        "ref": "CarrierDetails"
+      },
+      "estimatedDeliveryDate": {
+        "description": "Estimated Date on which shipment will be delivered from Vendor to Buyer",
+        "format": "date-time",
+        "type": "string"
+      },
+      "shipMode": {
+        "description": "The type of shipment.",
+        "enum": [
+          "LessThanTruckLoad",
+          "SmallParcel",
+          "TruckLoad"
+        ],
+        "type": "string"
+      },
+      "shipmentDeliveryDate": {
+        "description": "Date on which shipment will be delivered from Vendor to Buyer",
+        "format": "date-time",
+        "type": "string"
+      },
+      "shippedDate": {
+        "description": "Date when shipment is performed by the Vendor to Buyer",
+        "format": "date-time",
+        "type": "string"
+      },
+      "transportationMode": {
+        "description": "The mode of transportation for this shipment.",
+        "enum": [
+          "Air",
+          "Ocean",
+          "Road"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TransportationDetailsForShipmentConfirmation": {
+    "description": "Transportation details for this shipment.",
+    "properties": {
+      "billOfLadingNumber": {
+        "description": "The Bill of Lading (BOL) number is a unique number assigned to each shipment of goods by the vendor or shipper during the creation of the Bill of Lading.",
+        "type": "string"
+      },
+      "carrierScac": {
+        "description": "Code that identifies the carrier for the shipment.",
+        "type": "string"
+      },
+      "carrierShipmentReferenceNumber": {
+        "description": "The field also known as PRO number is a unique number assigned by the carrier.",
+        "type": "string"
+      },
+      "transportationMode": {
+        "description": "The mode of transportation for this shipment.",
+        "enum": [
+          "Air",
+          "Ocean",
+          "Road"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TransportationLabels": {
+    "description": "The request schema for the GetShipmentLabels operation.",
+    "properties": {
+      "pagination": {
+        "ref": "Pagination"
+      },
+      "transportLabels": {
+        "description": "A list of one or more ShipmentLabels.",
+        "ref": "TransportLabel",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "VendorDetails": {
+    "description": "Vendor Details as part of Label response.",
+    "properties": {
+      "sellingParty": {
+        "description": "Name/Address and tax details of the selling party.",
+        "ref": "PartyIdentification"
+      },
+      "vendorShipmentIdentifier": {
+        "description": "Unique vendor shipment id which is not used in last 365 days",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Volume": {
+    "description": "The volume of the shipment.",
+    "properties": {
+      "unitOfMeasure": {
+        "description": "The unit of measurement.",
+        "enum": [
+          "CuFt",
+          "CuIn",
+          "CuM",
+          "CuY"
+        ],
+        "type": "string"
+      },
+      "value": {
+        "description": "The measurement value.",
+        "ref": "Decimal"
+      }
+    },
+    "required": [
+      "unitOfMeasure",
+      "value"
+    ],
+    "type": "object"
+  },
+  "Weight": {
+    "description": "The weight of the shipment.",
+    "properties": {
+      "unitOfMeasure": {
+        "description": "The unit of measurement.",
+        "enum": [
+          "G",
+          "Kg",
+          "Lb",
+          "Oz"
+        ],
+        "type": "string"
+      },
+      "value": {
+        "description": "The measurement value.",
+        "ref": "Decimal"
+      }
+    },
+    "required": [
+      "unitOfMeasure",
+      "value"
+    ],
+    "type": "object"
+  }
+}

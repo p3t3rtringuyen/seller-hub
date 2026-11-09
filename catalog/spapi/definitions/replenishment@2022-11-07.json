@@ -1,0 +1,1070 @@
+{
+  "AggregationFrequency": {
+    "description": "The time period used to group data in the response.",
+    "enum": [
+      "DAY",
+      "MONTH",
+      "QUARTER",
+      "WEEK",
+      "YEAR"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AutoEnrollmentPreference": {
+    "description": "The auto-enrollment preference indicates whether the offer is opted-in to or opted-out of Amazon's auto-enrollment feature.",
+    "enum": [
+      "OPTED_IN",
+      "OPTED_OUT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "DeliveriesCondition": {
+    "description": "An object which contains the delivery condition and the quantity of upcoming deliveries associated with that condition for an offer.",
+    "properties": {
+      "condition": {
+        "description": "The condition type of upcoming deliveries for the offer.",
+        "enum": [
+          "NEXT_30_DAYS_DELIVERIES_AT_LOW_INVENTORY_RISK",
+          "NEXT_30_DAYS_DELIVERIES_AT_LOW_INVENTORY_RISK_ONLY",
+          "NEXT_30_DAYS_DELIVERIES_PAUSED_NON_BUYABLE",
+          "NEXT_30_DAYS_DELIVERIES_PAUSED_PRICING",
+          "NO_ISSUES_FOR_NEXT_30_DAYS_DELIVERIES"
+        ],
+        "type": "string"
+      },
+      "next30DaysDeliveries": {
+        "description": "The number of upcoming deliveries in the next 30 days associated with this delivery condition.",
+        "format": "int64",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DiscountFunding": {
+    "description": "The discount funding on the offer.",
+    "properties": {
+      "percentage": {
+        "description": "Filters the results to only include offers with the percentage specified.",
+        "itemType": "number",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "EligibilityStatus": {
+    "description": "The current eligibility status of an offer.",
+    "enum": [
+      "ELIGIBLE",
+      "INELIGIBLE",
+      "REPLENISHMENT_ONLY_ORDERING",
+      "SUSPENDED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "EnrollmentMethod": {
+    "description": "The enrollment method used to enroll the offer into the program.",
+    "enum": [
+      "AUTOMATIC",
+      "MANUAL"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses returned when a request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "ForecastDeliveries": {
+    "description": "An object which contains the projected subscriber demand for the offer over different time horizons.",
+    "properties": {
+      "next15DaysDeliveries": {
+        "description": "The projected number of subscriber deliveries in the next 15 days.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "next30DaysDeliveries": {
+        "description": "The projected number of subscriber deliveries in the next 30 days.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "next60DaysDeliveries": {
+        "description": "The projected number of subscriber deliveries in the next 60 days.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "next90DaysDeliveries": {
+        "description": "The projected number of subscriber deliveries in the next 90 days.",
+        "format": "int64",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "FulfillmentChannelType": {
+    "description": "The fulfillment channel type of an offer.",
+    "enum": [
+      "AMAZON",
+      "MERCHANT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "GetSellingPartnerMetricsRequest": {
+    "description": "The request body for the `getSellingPartnerMetrics` operation.",
+    "properties": {
+      "aggregationFrequency": {
+        "ref": "AggregationFrequency"
+      },
+      "filters": {
+        "description": "Use these parameters to filter results.",
+        "ref": "GetSellingPartnerMetricsRequestFilters"
+      },
+      "marketplaceId": {
+        "description": "The marketplace identifier.",
+        "ref": "MarketplaceId"
+      },
+      "metrics": {
+        "description": "The list of metrics requested.",
+        "ref": "Metric",
+        "type": "array"
+      },
+      "programTypes": {
+        "description": "The list of replenishment program types for which to return metrics.",
+        "ref": "ProgramTypes"
+      },
+      "timeInterval": {
+        "description": "A time interval used to compute metrics.",
+        "ref": "TimeInterval"
+      },
+      "timePeriodType": {
+        "ref": "TimePeriodType"
+      }
+    },
+    "required": [
+      "marketplaceId",
+      "programTypes",
+      "timeInterval",
+      "timePeriodType"
+    ],
+    "type": "object"
+  },
+  "GetSellingPartnerMetricsRequestFilters": {
+    "description": "Use these parameters to filter results.",
+    "properties": {
+      "asins": {
+        "description": "A list of Amazon Standard Identification Numbers (ASINs) to filter by.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "brandNames": {
+        "description": "[Applicable only for US marketplace] A list of brand names to filter by.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "fulfillmentChannelTypes": {
+        "description": "[Applicable only for Sellers] The fulfillment channel types to filter by.",
+        "ref": "FulfillmentChannelType",
+        "type": "array"
+      },
+      "productGroups": {
+        "description": "[Applicable only for Vendors] A list of product group names to filter by.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "skus": {
+        "description": "[Applicable only for Sellers] A list of SKUs to filter by.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetSellingPartnerMetricsResponse": {
+    "description": "The response schema for the `getSellingPartnerMetrics` operation.",
+    "properties": {
+      "metrics": {
+        "description": "A list of metrics data for the selling partner.",
+        "ref": "GetSellingPartnerMetricsResponseMetric",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetSellingPartnerMetricsResponseMetric": {
+    "description": "An object which contains metric data for a selling partner.",
+    "properties": {
+      "activeSubscriptions": {
+        "description": "The number of active subscriptions present at the end of the period.",
+        "format": "int64",
+        "type": "number"
+      },
+      "couponsRevenuePenetration": {
+        "description": "The percentage of revenue from ASINs with coupons out of total revenue from all ASINs.",
+        "format": "double",
+        "type": "number"
+      },
+      "currencyCode": {
+        "description": "The currency code in ISO 4217 format.",
+        "type": "string"
+      },
+      "establishedSubscriberLifeTimeValueFromOTP": {
+        "description": "Revenue from one-time purchase orders placed by customers who have maintained an active subscription with your catalog for more than 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "establishedSubscriberLifeTimeValueFromSNS": {
+        "description": "Revenue from Subscribe & Save orders placed by customers who have maintained an active subscription with your catalog for more than 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "growingSubscriberLifeTimeValueFromOTP": {
+        "description": "Revenue from one-time purchase orders placed by customers who started their first subscription with your catalog within the past 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "growingSubscriberLifeTimeValueFromSNS": {
+        "description": "Revenue from Subscribe & Save orders placed by customers who started their first subscription with your catalog within the past 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "lostRevenueDueToOOS": {
+        "description": "The revenue that would have been generated had there not been out of stock.",
+        "format": "double",
+        "type": "number"
+      },
+      "lostSubscriberLifeTimeValueFromOTP": {
+        "description": "Revenue from one-time purchase orders placed by customers who previously had subscriptions but currently have none active in your catalog.",
+        "format": "double",
+        "type": "number"
+      },
+      "lostSubscriberLifeTimeValueFromSNS": {
+        "description": "Revenue from Subscribe & Save orders placed by customers who previously had subscriptions but currently have none active in your catalog.",
+        "format": "double",
+        "type": "number"
+      },
+      "nonSubscriberAverageReorders": {
+        "description": "The average reorders per non-subscriber of the program over a period of past 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "nonSubscriberAverageRevenue": {
+        "description": "The average revenue per non-subscriber of the program over a period of past 12 months for sellers and 6 months for vendors.",
+        "format": "double",
+        "type": "number"
+      },
+      "nonSubscriberLifeTimeValueFromOTP": {
+        "description": "Total revenue from customers who have made purchases from your catalog but have never subscribed to any products.",
+        "format": "double",
+        "type": "number"
+      },
+      "notDeliveredDueToOOS": {
+        "description": "The percentage of items that were not shipped out of the total shipped units over a period of time due to being out of stock.",
+        "format": "double",
+        "type": "number"
+      },
+      "revenueFromActiveSubscriptionsWithSingleDelivery": {
+        "description": "The subscription revenue generated from active subscriptions with one delivery over the past 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "revenueFromCancelledSubscriptionsAfterSingleDelivery": {
+        "description": "The subscription revenue generated from subscriptions which are cancelled after one delivery over the past 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "revenueFromSubscriptionsWithMultipleDeliveries": {
+        "description": "The subscription revenue generated from subscriptions with over two deliveries over the past 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "revenuePenetration": {
+        "description": "The percentage of total program revenue out of total product revenue over a period of time.",
+        "format": "double",
+        "type": "number"
+      },
+      "revenuePenetrationFor0PercentSellerFunding": {
+        "description": "The percentage of subscription revenue generated by offers with 0% seller-funded discount over the last 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "revenuePenetrationFor10PercentSellerFunding": {
+        "description": "[Applicable only for Sellers] The percentage of subscription revenue generated by offers with 10% seller-funded discount over the last 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "revenuePenetrationFor5PercentSellerFunding": {
+        "description": "[Applicable only for Sellers] The percentage of subscription revenue generated by offers with 5% seller-funded discount over the last 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "revenuePenetrationFor5PlusPercentSellerFunding": {
+        "description": "[Applicable only for vendors] The percentage of subscription revenue generated by offers with 5% or above seller-funded discount over the last 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "shareOfCouponSubscriptions": {
+        "description": "The percentage of new subscriptions from coupons.",
+        "format": "double",
+        "type": "number"
+      },
+      "shippedSubscriptionUnits": {
+        "description": "The number of units shipped to the subscribers over a period of time.",
+        "format": "int64",
+        "type": "number"
+      },
+      "signupConversionFor0PercentSellerFunding": {
+        "description": "Percentage of subscriptions from offers with 0% seller-funded discount out of the total number of new orders placed over the past 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "signupConversionFor10PercentSellerFunding": {
+        "description": "[Applicable only for Sellers] Percentage of subscriptions from offers with 10% seller-funded discount out of the total number of new orders placed over the past 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "signupConversionFor5PercentSellerFunding": {
+        "description": "[Applicable only for Sellers] Percentage of subscriptions from offers with 5% seller-funded discount out of the total number of new orders placed over the past 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "signupConversionFor5PlusPercentSellerFunding": {
+        "description": "[Applicable only for Vendors] Percentage of subscriptions from offers with 5% or above seller-funded discount out of the total number of new orders placed over the past 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "subscriberAverageReorders": {
+        "description": "The average reorders per subscriber of the program over a period of 12 months.",
+        "format": "double",
+        "type": "number"
+      },
+      "subscriberAverageRevenue": {
+        "description": "The average revenue per subscriber of the program over a period of past 12 months for sellers and 6 months for vendors.",
+        "format": "double",
+        "type": "number"
+      },
+      "subscriberRetentionFor30Days": {
+        "description": "The percentage of subscriptions retained after 30 days of subscription creation.",
+        "format": "double",
+        "type": "number"
+      },
+      "subscriberRetentionFor90Days": {
+        "description": "The percentage of subscriptions retained after 90 days of subscription creation.",
+        "format": "double",
+        "type": "number"
+      },
+      "timeInterval": {
+        "description": "A time interval used to compute metrics.",
+        "ref": "TimeInterval"
+      },
+      "totalSubscriptionsRevenue": {
+        "description": "The revenue generated from subscriptions over a period of time.",
+        "format": "double",
+        "type": "number"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListOfferMetricsRequest": {
+    "description": "The request body for the `listOfferMetrics` operation.",
+    "properties": {
+      "filters": {
+        "description": "Use these parameters to filter results.",
+        "ref": "ListOfferMetricsRequestFilters"
+      },
+      "pagination": {
+        "description": "Use these parameters to paginate through the response.",
+        "ref": "ListOfferMetricsRequestPagination"
+      },
+      "sort": {
+        "description": "Use these parameters to sort the response.",
+        "ref": "ListOfferMetricsRequestSort"
+      }
+    },
+    "required": [
+      "filters",
+      "pagination"
+    ],
+    "type": "object"
+  },
+  "ListOfferMetricsRequestFilters": {
+    "description": "Use these parameters to filter results.",
+    "properties": {
+      "aggregationFrequency": {
+        "ref": "AggregationFrequency"
+      },
+      "asins": {
+        "description": "A list of Amazon Standard Identification Numbers (ASINs) to filter by.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "brandNames": {
+        "description": "[Applicable only for US marketplace] A list of brand names to filter by.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "fulfillmentChannelTypes": {
+        "description": "[Applicable only for Sellers] The fulfillment channel types to filter by.",
+        "ref": "FulfillmentChannelType",
+        "type": "array"
+      },
+      "marketplaceId": {
+        "description": "The marketplace identifier.",
+        "ref": "MarketplaceId"
+      },
+      "productGroups": {
+        "description": "[Applicable only for Vendors] A list of product group names to filter by.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "programTypes": {
+        "ref": "ProgramTypes"
+      },
+      "skus": {
+        "description": "[Applicable only for Sellers] A list of SKUs to filter by.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "timeInterval": {
+        "description": "A time interval used to compute metrics.",
+        "ref": "TimeInterval"
+      },
+      "timePeriodType": {
+        "ref": "TimePeriodType"
+      }
+    },
+    "required": [
+      "marketplaceId",
+      "programTypes",
+      "timeInterval",
+      "timePeriodType"
+    ],
+    "type": "object"
+  },
+  "ListOfferMetricsRequestPagination": {
+    "description": "Use these parameters to paginate through the response.",
+    "properties": {
+      "limit": {
+        "description": "The maximum number of results to return in the response.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "offset": {
+        "description": "The offset from which to retrieve the number of results specified by the `limit` value.",
+        "format": "int64",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "limit",
+      "offset"
+    ],
+    "type": "object"
+  },
+  "ListOfferMetricsRequestSort": {
+    "description": "Use these parameters to sort the response.",
+    "properties": {
+      "key": {
+        "ref": "ListOfferMetricsSortKey"
+      },
+      "order": {
+        "description": "The sort order.",
+        "ref": "SortOrder"
+      }
+    },
+    "required": [
+      "key",
+      "order"
+    ],
+    "type": "object"
+  },
+  "ListOfferMetricsResponse": {
+    "description": "The response schema for the `listOfferMetrics` operation.",
+    "properties": {
+      "offers": {
+        "description": "A list of offers and associated metrics.",
+        "ref": "ListOfferMetricsResponseOffer",
+        "type": "array"
+      },
+      "pagination": {
+        "description": "Use these parameters to paginate through the response.",
+        "ref": "PaginationResponse"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListOfferMetricsResponseOffer": {
+    "description": "An object which contains offer metrics.",
+    "properties": {
+      "activeSubscriptions": {
+        "description": "The number of active subscriptions present at the end of the period.",
+        "format": "int64",
+        "type": "number"
+      },
+      "asin": {
+        "description": "The Amazon Standard Identification Number (ASIN).",
+        "type": "string"
+      },
+      "brandName": {
+        "description": "The brand name associated with the offer.",
+        "type": "string"
+      },
+      "couponsRevenuePenetration": {
+        "description": "The percentage of revenue from ASINs with coupons out of total revenue from all ASINs.",
+        "format": "double",
+        "type": "number"
+      },
+      "currencyCode": {
+        "description": "The currency code in ISO 4217 format.",
+        "type": "string"
+      },
+      "fulfillmentChannelType": {
+        "description": "The fulfillment channel type of an offer.",
+        "ref": "FulfillmentChannelType"
+      },
+      "lostRevenueDueToOOS": {
+        "description": "The revenue that would have been generated had there not been out of stock.",
+        "format": "double",
+        "type": "number"
+      },
+      "next30DayShippedSubscriptionUnits": {
+        "description": "The forecasted shipped subscription units for the next 30 days.",
+        "format": "int64",
+        "type": "number"
+      },
+      "next30DayTotalSubscriptionsRevenue": {
+        "description": "The forecasted total subscription revenue for the next 30 days.",
+        "format": "double",
+        "type": "number"
+      },
+      "next60DayShippedSubscriptionUnits": {
+        "description": "The forecasted shipped subscription units for the next 60 days.",
+        "format": "int64",
+        "type": "number"
+      },
+      "next60DayTotalSubscriptionsRevenue": {
+        "description": "The forecasted total subscription revenue for the next 60 days.",
+        "format": "double",
+        "type": "number"
+      },
+      "next90DayShippedSubscriptionUnits": {
+        "description": "The forecasted shipped subscription units for the next 90 days.",
+        "format": "int64",
+        "type": "number"
+      },
+      "next90DayTotalSubscriptionsRevenue": {
+        "description": "The forecasted total subscription revenue for the next 90 days.",
+        "format": "double",
+        "type": "number"
+      },
+      "notDeliveredDueToOOS": {
+        "description": "The percentage of items that were not shipped out of the total shipped units over a period of time due to being out of stock.",
+        "format": "double",
+        "type": "number"
+      },
+      "productGroup": {
+        "description": "The product group associated with the offer.",
+        "type": "string"
+      },
+      "revenuePenetration": {
+        "description": "The percentage of total program revenue out of total product revenue.",
+        "format": "double",
+        "type": "number"
+      },
+      "shareOfCouponSubscriptions": {
+        "description": "The percentage of new subscriptions from coupons.",
+        "format": "double",
+        "type": "number"
+      },
+      "shippedSubscriptionUnits": {
+        "description": "The number of units shipped to the subscribers over a period of time.",
+        "format": "int64",
+        "type": "number"
+      },
+      "sku": {
+        "description": "The SKU.",
+        "type": "string"
+      },
+      "timeInterval": {
+        "description": "A time interval used to compute metrics.",
+        "ref": "TimeInterval"
+      },
+      "totalSubscriptionsRevenue": {
+        "description": "The revenue generated from subscriptions over a period of time.",
+        "format": "double",
+        "type": "number"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListOfferMetricsSortKey": {
+    "description": "The attribute to use to sort the results.",
+    "enum": [
+      "ACTIVE_SUBSCRIPTIONS",
+      "NEXT_30DAYS_SHIPPED_SUBSCRIPTION_UNITS",
+      "NEXT_30DAYS_TOTAL_SUBSCRIPTIONS_REVENUE",
+      "NEXT_60DAYS_SHIPPED_SUBSCRIPTION_UNITS",
+      "NEXT_60DAYS_TOTAL_SUBSCRIPTIONS_REVENUE",
+      "NEXT_90DAYS_SHIPPED_SUBSCRIPTION_UNITS",
+      "NEXT_90DAYS_TOTAL_SUBSCRIPTIONS_REVENUE",
+      "SHIPPED_SUBSCRIPTION_UNITS",
+      "TOTAL_SUBSCRIPTIONS_REVENUE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ListOffersRequest": {
+    "description": "The request body for the `listOffers` operation.",
+    "properties": {
+      "filters": {
+        "description": "Use these parameters to filter results.",
+        "ref": "ListOffersRequestFilters"
+      },
+      "pagination": {
+        "description": "Use these parameters to paginate through the response.",
+        "ref": "ListOffersRequestPagination"
+      },
+      "sort": {
+        "description": "Use these parameters to sort the response.",
+        "ref": "ListOffersRequestSort"
+      }
+    },
+    "required": [
+      "filters",
+      "pagination"
+    ],
+    "type": "object"
+  },
+  "ListOffersRequestFilters": {
+    "description": "Use these parameters to filter results.",
+    "properties": {
+      "asins": {
+        "description": "A list of Amazon Standard Identification Numbers (ASINs).",
+        "itemType": "string",
+        "type": "array"
+      },
+      "deliveriesConditions": {
+        "description": "A list of delivery condition types to filter the results by.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "eligibilities": {
+        "description": "A list of eligibilities associated with an offer.",
+        "ref": "EligibilityStatus",
+        "type": "array"
+      },
+      "marketplaceId": {
+        "description": "The marketplace identifier.",
+        "ref": "MarketplaceId"
+      },
+      "preferences": {
+        "description": "Offer preferences to include in the result filter criteria.",
+        "ref": "Preference"
+      },
+      "programTypes": {
+        "ref": "ProgramTypes"
+      },
+      "promotions": {
+        "description": "Offer promotions to include in the result filter criteria.",
+        "ref": "Promotion"
+      },
+      "skus": {
+        "description": "A list of SKUs to filter.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "marketplaceId",
+      "programTypes"
+    ],
+    "type": "object"
+  },
+  "ListOffersRequestPagination": {
+    "description": "Use these parameters to paginate through the response.",
+    "properties": {
+      "limit": {
+        "description": "The maximum number of results to return in the response.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "offset": {
+        "description": "The offset from which to retrieve the number of results specified by the `limit` value.",
+        "format": "int64",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "limit",
+      "offset"
+    ],
+    "type": "object"
+  },
+  "ListOffersRequestSort": {
+    "description": "Use these parameters to sort the response.",
+    "properties": {
+      "key": {
+        "description": "The attribute to use to sort the results.",
+        "ref": "ListOffersSortKey"
+      },
+      "order": {
+        "description": "The sort order.",
+        "ref": "SortOrder"
+      }
+    },
+    "required": [
+      "key",
+      "order"
+    ],
+    "type": "object"
+  },
+  "ListOffersResponse": {
+    "description": "The response schema for the `listOffers` operation.",
+    "properties": {
+      "offers": {
+        "description": "A list of offers.",
+        "ref": "ListOffersResponseOffer",
+        "type": "array"
+      },
+      "pagination": {
+        "description": "Use these parameters to paginate through the response.",
+        "ref": "PaginationResponse"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListOffersResponseOffer": {
+    "description": "An object which contains details about an offer.",
+    "properties": {
+      "asin": {
+        "description": "The Amazon Standard Identification Number (ASIN).",
+        "type": "string"
+      },
+      "deliveriesConditions": {
+        "description": "A list of delivery conditions for the offer, indicating the health of upcoming deliveries.",
+        "ref": "DeliveriesCondition",
+        "type": "array"
+      },
+      "eligibility": {
+        "description": "The offer eligibility status.",
+        "ref": "EligibilityStatus"
+      },
+      "forecastDeliveries": {
+        "description": "The projected subscriber demand for the offer over different time horizons.",
+        "ref": "ForecastDeliveries"
+      },
+      "fulfillmentNetworkIDType": {
+        "description": "The fulfillment network identifier type for the offer, indicating how the offer is fulfilled.",
+        "type": "string"
+      },
+      "inventory": {
+        "description": "The available inventory count for the offer.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "marketplaceId": {
+        "description": "The marketplace identifier.",
+        "ref": "MarketplaceId"
+      },
+      "offerProgramConfiguration": {
+        "ref": "OfferProgramConfiguration"
+      },
+      "price": {
+        "description": "The current price of the offer.",
+        "format": "double",
+        "type": "number"
+      },
+      "priceCurrencyCode": {
+        "description": "The currency code in ISO 4217 format for the price.",
+        "type": "string"
+      },
+      "programType": {
+        "description": "The replenishment program for the offer.",
+        "ref": "ProgramType"
+      },
+      "sku": {
+        "description": "The SKU.",
+        "type": "string"
+      },
+      "stockRisk": {
+        "description": "The stock risk level of the offer, indicating the risk of the offer going out of stock.",
+        "type": "string"
+      },
+      "subscriptions": {
+        "description": "The number of active subscriptions for the offer.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "vendorCodes": {
+        "description": "A list of vendor codes associated with the offer.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ListOffersSortKey": {
+    "description": "The attribute to use to sort the results.",
+    "enum": [
+      "AMAZON_FUNDED_BASE_DISCOUNT_PERCENTAGE",
+      "AMAZON_FUNDED_TIERED_DISCOUNT_PERCENTAGE",
+      "ASIN",
+      "FULFILLMENT_NETWORK_ID_TYPE",
+      "INVENTORY",
+      "PRICE",
+      "SELLING_PARTNER_FUNDED_BASE_DISCOUNT_PERCENTAGE",
+      "SELLING_PARTNER_FUNDED_TIERED_DISCOUNT_PERCENTAGE",
+      "SUBSCRIPTION_COUNT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "MarketplaceId": {
+    "description": "The marketplace identifier.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Metric": {
+    "description": "The metric name and description.",
+    "enum": [
+      "ACTIVE_SUBSCRIPTIONS",
+      "COUPONS_REVENUE_PENETRATION",
+      "LOST_REVENUE_DUE_TO_OOS",
+      "NOT_DELIVERED_DUE_TO_OOS",
+      "REVENUE_BY_DELIVERIES",
+      "REVENUE_PENETRATION",
+      "REVENUE_PENETRATION_BY_SELLER_FUNDING",
+      "SHARE_OF_COUPON_SUBSCRIPTIONS",
+      "SHIPPED_SUBSCRIPTION_UNITS",
+      "SIGNUP_CONVERSION_BY_SELLER_FUNDING",
+      "SUBSCRIBER_LIFETIME_VALUE_BY_CUSTOMER_SEGMENT",
+      "SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REORDERS",
+      "SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REVENUE",
+      "SUBSCRIBER_RETENTION",
+      "TOTAL_SUBSCRIPTIONS_REVENUE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "OfferProgramConfiguration": {
+    "description": "The offer program configuration contains a set of program properties for an offer.",
+    "properties": {
+      "enrollmentMethod": {
+        "description": "Determines whether the offer was automatically or manually enrolled in the program.",
+        "ref": "EnrollmentMethod"
+      },
+      "preferences": {
+        "description": "An object which contains the preferences applied to the offer.",
+        "ref": "OfferProgramConfigurationPreferences"
+      },
+      "promotions": {
+        "description": "An object which contains the promotions applied to the offer.",
+        "ref": "OfferProgramConfigurationPromotions"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OfferProgramConfigurationPreferences": {
+    "description": "An object which contains the preferences applied to the offer.",
+    "properties": {
+      "autoEnrollment": {
+        "description": "The auto-enrollment preference indicates whether the offer is opted-in to or opted-out of Amazon's auto-enrollment feature.",
+        "ref": "AutoEnrollmentPreference"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OfferProgramConfigurationPromotions": {
+    "description": "An object which represents all promotions applied to an offer.",
+    "properties": {
+      "amazonFundedBaseDiscount": {
+        "description": "A base discount set by Amazon on the offer.",
+        "ref": "OfferProgramConfigurationPromotionsDiscountFunding"
+      },
+      "amazonFundedTieredDiscount": {
+        "description": "A tiered discount set by Amazon on the offer.",
+        "ref": "OfferProgramConfigurationPromotionsDiscountFunding"
+      },
+      "sellingPartnerFundedBaseDiscount": {
+        "description": "A base discount set by the selling partner on the offer.",
+        "ref": "OfferProgramConfigurationPromotionsDiscountFunding"
+      },
+      "sellingPartnerFundedTieredDiscount": {
+        "description": "A tiered discount set by the selling partner on the offer.",
+        "ref": "OfferProgramConfigurationPromotionsDiscountFunding"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "OfferProgramConfigurationPromotionsDiscountFunding": {
+    "description": "A promotional percentage discount applied to the offer.",
+    "properties": {
+      "percentage": {
+        "description": "The percentage discount on the offer.",
+        "format": "int64",
+        "type": "number"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PaginationResponse": {
+    "description": "Use these parameters to paginate through the response.",
+    "properties": {
+      "totalResults": {
+        "description": "Total number of results matching the given filter criteria.",
+        "format": "int64",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Preference": {
+    "description": "Offer preferences that you can include in the result filter criteria.",
+    "properties": {
+      "autoEnrollment": {
+        "description": "Filters the results to only include offers with the auto-enrollment preference specified.",
+        "ref": "AutoEnrollmentPreference",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ProgramType": {
+    "description": "The replenishment program type.",
+    "enum": [
+      "SUBSCRIBE_AND_SAVE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ProgramTypes": {
+    "description": "A list of replenishment program types.",
+    "properties": {},
+    "ref": "ProgramType",
+    "required": [],
+    "type": "array"
+  },
+  "Promotion": {
+    "description": "Offer promotions to include in the result filter criteria.",
+    "properties": {
+      "amazonFundedBaseDiscount": {
+        "description": "A base discount set by Amazon on the offer.",
+        "ref": "DiscountFunding"
+      },
+      "amazonFundedTieredDiscount": {
+        "description": "A tiered discount set by Amazon on the offer.",
+        "ref": "DiscountFunding"
+      },
+      "sellingPartnerFundedBaseDiscount": {
+        "description": "A base discount set by the selling partner on the offer.",
+        "ref": "DiscountFunding"
+      },
+      "sellingPartnerFundedTieredDiscount": {
+        "description": "A tiered discount set by the selling partner on the offer.",
+        "ref": "DiscountFunding"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SortOrder": {
+    "description": "The sort order.",
+    "enum": [
+      "ASC",
+      "DESC"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "TimeInterval": {
+    "description": "A date-time interval in ISO 8601 format used to compute metrics.",
+    "properties": {
+      "endDate": {
+        "description": "When this object is used as a request parameter, the specified `endDate` is adjusted based on the aggregation frequency.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "startDate": {
+        "description": "When this object is used as a request parameter, the specified `startDate` is adjusted based on the aggregation frequency.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "endDate",
+      "startDate"
+    ],
+    "type": "object"
+  },
+  "TimePeriodType": {
+    "description": "The time period type that determines whether the metrics requested are backward-looking (performance) or forward-looking (forecast).",
+    "enum": [
+      "FORECAST",
+      "PERFORMANCE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  }
+}

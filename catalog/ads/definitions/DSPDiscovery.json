@@ -1,0 +1,97 @@
+{
+ "api": "DSPDiscovery",
+ "file": "specs/dest/DSPDiscovery_prod_3p.json",
+ "schemas": {
+  "DspGeoLocationV1": {
+   "properties": {
+    "category": {
+     "description": "The geographic location category.",
+     "enum": [
+      "ARRONDISSEMENT",
+      "BEZIRK",
+      "CITY",
+      "COUNTRY",
+      "COUNTY",
+      "DEPARTMENT",
+      "DISTRICT",
+      "DMA",
+      "EMIRATE",
+      "KREIS",
+      "POSTAL_CODE",
+      "PREFECTURE",
+      "PROVINCE",
+      "RADIUS",
+      "REGION",
+      "SMART_LOCATION",
+      "STATE"
+     ],
+     "type": "string"
+    },
+    "id": {
+     "description": "The geographic location identifier.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The geographic location name.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspGeoLocationsV1": {
+   "description": "List of the geoLocations.",
+   "properties": {
+    "geoLocations": {
+     "items": {
+      "$ref": "DspGeoLocationV1"
+     },
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Token used in following requests for pagination.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Error": {
+   "description": "The error response object.",
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "SubError"
+     },
+     "maxItems": 10,
+     "type": "array"
+    },
+    "message": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "Request Id that uniquely identifies your request.",
+     "type": "string"
+    }
+   }
+  },
+  "SubError": {
+   "description": "The sub error object.",
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

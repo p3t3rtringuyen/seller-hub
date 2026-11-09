@@ -1,0 +1,331 @@
+{
+ "api": "MarketingMixModeling",
+ "file": "specs/dest/MarketingMixModeling_prod_3p.json",
+ "schemas": {
+  "BulkMmmBrandGroupOverridesOperationResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "properties": {
+       "error": {
+        "$ref": "MmmError"
+       },
+       "index": {
+        "description": "The index of the override in the array from the request body.",
+        "format": "int32",
+        "maximum": 99,
+        "minimum": 0,
+        "type": "integer"
+       }
+      },
+      "type": "object"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "properties": {
+       "index": {
+        "description": "The index of the override in the array from the request body.",
+        "format": "int32",
+        "maximum": 99,
+        "minimum": 0,
+        "type": "integer"
+       },
+       "override": {
+        "$ref": "MmmBrandGroupOverride"
+       }
+      },
+      "type": "object"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "MmmBrandGroup": {
+   "description": "The predefined brand or group of products being reported on.",
+   "properties": {
+    "advertiserName": {
+     "description": "Name of the advertiser associated with the brand group.",
+     "type": "string"
+    },
+    "brandGroupId": {
+     "description": "The unique identifier of the brand group.",
+     "type": "string"
+    },
+    "brandGroupName": {
+     "description": "The display name of the brand group.",
+     "type": "string"
+    },
+    "countryCode": {
+     "description": "The ISO 3166 country code of the marketplace associated with the brand group.",
+     "type": "string"
+    },
+    "permittedMetricsTypes": {
+     "description": "The permitted metrics types for reports of this brand group.",
+     "items": {
+      "enum": [
+       "MEDIA_AND_SALES",
+       "MEDIA_ONLY"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "MmmBrandGroupCampaign": {
+   "properties": {
+    "adProduct": {
+     "description": "The ad product associated with the campaign.",
+     "enum": [
+      "AMAZON_DSP",
+      "SPONSORED_BRANDS",
+      "SPONSORED_DISPLAY",
+      "SPONSORED_PRODUCTS",
+      "SPONSORED_TELEVISION"
+     ],
+     "type": "string"
+    },
+    "campaignId": {
+     "description": "The unique numerical ID associated with a campaign.",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The end date of the campaign.",
+     "format": "date",
+     "type": "string"
+    },
+    "firstTrafficDate": {
+     "description": "The date of the earliest traffic for the campaign.",
+     "format": "date",
+     "type": "string"
+    },
+    "lastTrafficDate": {
+     "description": "The date of the latest traffic for the campaign.",
+     "format": "date",
+     "type": "string"
+    },
+    "name": {
+     "description": "The advertiser-specified name of the campaign.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "The start date of the campaign.",
+     "format": "date",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "MmmBrandGroupOverride": {
+   "properties": {
+    "brandGroupId": {
+     "description": "The unique identifier of the brand group to override.",
+     "type": "string"
+    },
+    "identifierType": {
+     "description": "The type of identifier.",
+     "enum": [
+      "ASIN",
+      "CAMPAIGN_ID"
+     ],
+     "type": "string"
+    },
+    "identifierValue": {
+     "description": "The identifier value.",
+     "type": "string"
+    },
+    "overrideId": {
+     "description": "The unique identifier of the override.",
+     "type": "string"
+    },
+    "overrideType": {
+     "description": "The type of override.",
+     "enum": [
+      "EXCLUDE",
+      "INCLUDE"
+     ],
+     "type": "string"
+    },
+    "status": {
+     "description": "The override status. |Value|Description| |---|---| |PENDING_REVIEW|Override must be reviewed by Amazon. New reports for the brand group will not process until the review is completed.| |APPROVED|Override will be applied…",
+     "enum": [
+      "APPROVED",
+      "NOT_APPROVED",
+      "PENDING_REVIEW"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "MmmBrandGroupProduct": {
+   "properties": {
+    "asin": {
+     "description": "The Amazon Standard Identification Number (ASIN) of the product.",
+     "type": "string"
+    },
+    "firstOrderDate": {
+     "description": "The date of the earliest order of the product.",
+     "format": "date",
+     "type": "string"
+    },
+    "lastOrderDate": {
+     "description": "The date of the latest order of the product.",
+     "format": "date",
+     "type": "string"
+    },
+    "productCategory": {
+     "description": "The product category.",
+     "type": "string"
+    },
+    "productGroup": {
+     "description": "The product group.",
+     "type": "string"
+    },
+    "productSubcategory": {
+     "description": "The product subcategory.",
+     "type": "string"
+    },
+    "title": {
+     "description": "The product title.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "MmmError": {
+   "properties": {
+    "code": {
+     "description": "Error code.",
+     "type": "string"
+    },
+    "message": {
+     "description": "Human-readable error message.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "MmmReport": {
+   "properties": {
+    "configuration": {
+     "$ref": "MmmReportConfiguration"
+    },
+    "createdAt": {
+     "description": "The date and time when the report was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "description": {
+     "description": "A description of the report.",
+     "type": "string"
+    },
+    "dueDate": {
+     "description": "The due date of the report.",
+     "format": "date",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "Inclusive end of the reporting period.",
+     "format": "date",
+     "type": "string"
+    },
+    "failureCode": {
+     "description": "An error code indicating why the report failed. Present when the status is `FAILED`.",
+     "type": "string"
+    },
+    "failureMessage": {
+     "description": "A human-readable message providing more information about the failure. Present when the status is `FAILED`.",
+     "type": "string"
+    },
+    "reportId": {
+     "description": "The unique identifier of the report.",
+     "type": "string"
+    },
+    "reportName": {
+     "description": "The display name of the report.",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "Inclusive start of the reporting period.",
+     "format": "date",
+     "type": "string"
+    },
+    "status": {
+     "description": "The report generation status. |Value|Description| |---|---| |PENDING|Report is created and awaiting processing.| |PROCESSING|Report is processing.| |SUCCEEDED|Report is completed. Check `urls` for the output files.| |FA…",
+     "enum": [
+      "CANCELED",
+      "FAILED",
+      "PENDING",
+      "PROCESSING",
+      "SUCCEEDED"
+     ],
+     "type": "string"
+    },
+    "urls": {
+     "description": "The URLs for downloading output files. Present when the status is `SUCCEEDED`.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "urlsExpireAt": {
+     "description": "The expiration date of the download URLs. Present when the status is `SUCCEEDED`.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "MmmReportConfiguration": {
+   "properties": {
+    "brandGroupId": {
+     "description": "Identifies the brand group being reported on.",
+     "type": "string"
+    },
+    "geoDimension": {
+     "description": "Geographic granularity of the report. |Value|Description| |---|---| |COUNTRY|Aggregate metrics by country.| |POSTAL_CODE|Aggregate metrics by postal code, e.g. ZIP Code. Valid only in select countries.| |DMA|Aggregate m…",
+     "enum": [
+      "COUNTRY",
+      "DMA",
+      "POSTAL_CODE"
+     ],
+     "type": "string"
+    },
+    "metricsType": {
+     "description": "The type of metrics to include in the report. |Value|Description| |---|---| |MEDIA_ONLY|Core advertising metrics only.| |MEDIA_AND_SALES|Advertising and retail metrics.|",
+     "enum": [
+      "MEDIA_AND_SALES",
+      "MEDIA_ONLY"
+     ],
+     "type": "string"
+    },
+    "timeUnit": {
+     "description": "Time granularity of the report. |Value|Description| |---|---| |DAILY|Aggregate metrics with daily granularity.| |WEEKLY|Aggregate metrics with weekly granularity.|",
+     "enum": [
+      "DAILY",
+      "WEEKLY"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "brandGroupId",
+    "geoDimension",
+    "metricsType",
+    "timeUnit"
+   ],
+   "type": "object"
+  }
+ }
+}

@@ -1,0 +1,1770 @@
+{
+  "Address": {
+    "description": "The address.",
+    "properties": {
+      "addressLine1": {
+        "description": "The first line of the address.",
+        "type": "string"
+      },
+      "addressLine2": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "addressLine3": {
+        "description": "Additional address information, if required.",
+        "type": "string"
+      },
+      "addressType": {
+        "description": "The type of address.",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city where the person, business, or institution is located.",
+        "type": "string"
+      },
+      "copyEmails": {
+        "description": "The email cc addresses of the contact associated with the address.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "countryCode": {
+        "description": "The two digit country code.",
+        "type": "string"
+      },
+      "district": {
+        "description": "The district or state where the person, business, or institution is located.",
+        "type": "string"
+      },
+      "email": {
+        "description": "The email address of the contact associated with the address.",
+        "type": "string"
+      },
+      "geocodes": {
+        "description": "The geographic coordinates of the address.",
+        "ref": "Geocodes"
+      },
+      "municipality": {
+        "description": "The municipality where the person, business, or institution is located.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The name of the person, business or institution at that address.",
+        "type": "string"
+      },
+      "phoneNumber": {
+        "description": "The phone number of the person, business, or institution located at the address.",
+        "type": "string"
+      },
+      "postalCode": {
+        "description": "The postal code of the address.",
+        "type": "string"
+      },
+      "state": {
+        "description": "The state or region where the person, business, or institution is located.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "postalCode"
+    ],
+    "type": "object"
+  },
+  "Amount": {
+    "description": "An amount of money, including units in the form of currency.",
+    "properties": {
+      "currencyCode": {
+        "description": "Three digit currency code in ISO 4217 format.",
+        "type": "string"
+      },
+      "value": {
+        "description": "The amount of money.",
+        "ref": "Decimal"
+      }
+    },
+    "required": [
+      "currencyCode",
+      "value"
+    ],
+    "type": "object"
+  },
+  "Cancellation": {
+    "description": "A shipment item's cancellation details.",
+    "properties": {
+      "cancellationReason": {
+        "description": "The reason for the cancellation of the shipment.",
+        "type": "string"
+      },
+      "cancellationType": {
+        "description": "The type of cancellation of the item in the shipment.",
+        "enum": [
+          "MARKETPLACE_CANCELLED",
+          "SELLER_REJECTED",
+          "SYSTEM_CANCELLED"
+        ],
+        "type": "string"
+      },
+      "cancelledQuantity": {
+        "description": "The number of items of this particular item which have been cancelled.",
+        "type": "integer"
+      },
+      "cancelledTimestamp": {
+        "description": "The UNIX timestamp of when the line item was cancelled.",
+        "ref": "DateTime"
+      }
+    },
+    "required": [
+      "cancellationType",
+      "cancelledQuantity",
+      "cancelledTimestamp"
+    ],
+    "type": "object"
+  },
+  "Cancellations": {
+    "description": "A list of cancellations for the given line item.",
+    "properties": {},
+    "ref": "Cancellation",
+    "required": [],
+    "type": "array"
+  },
+  "Charge": {
+    "description": "A shipment's charge with relevant tax information.",
+    "properties": {
+      "baseCharge": {
+        "description": "The charge value before taxes.",
+        "ref": "ChargeBreakup"
+      },
+      "chargeType": {
+        "description": "The type of charge.",
+        "enum": [
+          "gift_wrap",
+          "other",
+          "product",
+          "shipping",
+          "total"
+        ],
+        "type": "string"
+      },
+      "taxBreakup": {
+        "description": "The tax charge details.",
+        "ref": "Tax",
+        "type": "array"
+      },
+      "totalCharge": {
+        "description": "The total charge, including the base charge and taxes.",
+        "ref": "ChargeBreakup"
+      },
+      "totalTax": {
+        "description": "The sum of all taxes.",
+        "ref": "Tax"
+      }
+    },
+    "required": [
+      "baseCharge",
+      "chargeType",
+      "totalCharge",
+      "totalTax"
+    ],
+    "type": "object"
+  },
+  "ChargeBreakup": {
+    "description": "The composition of the charge.",
+    "properties": {
+      "baseAmount": {
+        "description": "The base amount charged.",
+        "ref": "Amount"
+      },
+      "discountAmount": {
+        "description": "The offer or coupon amount.",
+        "ref": "Amount"
+      },
+      "netAmount": {
+        "description": "The total amount after discount.",
+        "ref": "Amount"
+      }
+    },
+    "required": [
+      "baseAmount",
+      "discountAmount",
+      "netAmount"
+    ],
+    "type": "object"
+  },
+  "Charges": {
+    "description": "The charges associated with the shipment.",
+    "properties": {},
+    "ref": "Charge",
+    "required": [],
+    "type": "array"
+  },
+  "ComplianceAttributes": {
+    "description": "All necessary compliance attributes specific to the line item.",
+    "properties": {
+      "countryOfOriginRequirement": {
+        "description": "Whether the country of origin must be provided for this line item.",
+        "ref": "RequirementLevel"
+      },
+      "hazmatLabelRequirement": {
+        "description": "Whether a hazardous material label must be applied on packages containing this line item.",
+        "ref": "RequirementLevel"
+      },
+      "hazmatLabelsRequirement": {
+        "description": "Whether hazardous material labels must be applied on packages containing this line item.",
+        "ref": "RequirementLevel"
+      },
+      "itemValueRequirement": {
+        "description": "Whether the item value must be provided for this line item.",
+        "ref": "RequirementLevel"
+      },
+      "serialNumberRequirement": {
+        "description": "Whether serial numbers must be provided for this line item.",
+        "ref": "RequirementLevel"
+      }
+    },
+    "required": [
+      "hazmatLabelsRequirement",
+      "serialNumberRequirement"
+    ],
+    "type": "object"
+  },
+  "CountryCode": {
+    "description": "A two-letter country code, as defined by the ISO-3166 alpha-2 standard.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CourierSupportedAttributes": {
+    "description": "The tracking details of the package if it is shipped by a third party courier.",
+    "properties": {
+      "carrierName": {
+        "description": "The name of the courier service used to ship the package",
+        "type": "string"
+      },
+      "trackingId": {
+        "description": "The tracking number of the package.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "carrierName",
+      "trackingId"
+    ],
+    "type": "object"
+  },
+  "CreateSandboxShipmentRequest": {
+    "description": "The request object for creating a sandbox shipment.",
+    "properties": {
+      "lineItemCount": {
+        "description": "The number of line items in the shipment.",
+        "enum": [
+          "MULTIPLE",
+          "SINGLE"
+        ],
+        "type": "string"
+      },
+      "locationId": {
+        "description": "The location identifier for the shipment.",
+        "type": "string"
+      },
+      "marketplaceChannel": {
+        "description": "The marketplace channel.",
+        "enum": [
+          "FBA",
+          "MFN"
+        ],
+        "type": "string"
+      },
+      "marketplaceId": {
+        "ref": "MarketplaceId"
+      },
+      "orderType": {
+        "description": "The order type attributes for the sandbox shipment.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "quantityCount": {
+        "description": "The quantity count per line item.",
+        "enum": [
+          "MULTIPLE",
+          "SINGLE"
+        ],
+        "type": "string"
+      },
+      "shippingType": {
+        "description": "The shipping type for the sandbox shipment.",
+        "enum": [
+          "MARKETPLACE",
+          "SELF",
+          "THIRD_PARTY_CARRIER"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "locationId",
+      "marketplaceChannel",
+      "marketplaceId",
+      "shippingType"
+    ],
+    "type": "object"
+  },
+  "CreateSandboxShipmentResponse": {
+    "description": "The response object for creating a sandbox shipment.",
+    "properties": {
+      "shipmentId": {
+        "description": "The identifier of the created sandbox shipment.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CustomAttribute": {
+    "description": "A custom attribute that is loosely typed, modeled through a key-value pair and its data type.",
+    "properties": {
+      "key": {
+        "description": "The attribute key.",
+        "type": "string"
+      },
+      "type": {
+        "ref": "CustomAttributeType"
+      },
+      "value": {
+        "description": "The attribute value.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "CustomAttributeType": {
+    "description": "The data type of the custom attribute value to aid with parsing during deserialization.",
+    "enum": [
+      "BOOLEAN",
+      "DOUBLE",
+      "INTEGER",
+      "JSON_STRING",
+      "STRING"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CustomChannelAttribute": {
+    "description": "Marketplace channel-specific attribute value.",
+    "itemType": "string",
+    "properties": {},
+    "required": [],
+    "type": "array"
+  },
+  "DateTime": {
+    "description": "A date and time in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format.",
+    "format": "date-time",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Decimal": {
+    "description": "A decimal number.",
+    "properties": {},
+    "required": [],
+    "type": "number"
+  },
+  "Dimension": {
+    "description": "A dimension of a package.",
+    "properties": {
+      "dimensionUnit": {
+        "description": "The unit of measurement of the dimension.",
+        "enum": [
+          "CM",
+          "IN",
+          "M"
+        ],
+        "type": "string"
+      },
+      "value": {
+        "description": "The numerical value of the dimension.",
+        "ref": "Decimal"
+      }
+    },
+    "required": [
+      "dimensionUnit",
+      "value"
+    ],
+    "type": "object"
+  },
+  "Distance": {
+    "description": "A distance measurement.",
+    "properties": {
+      "distanceUnit": {
+        "description": "The unit of measurement of the distance.",
+        "enum": [
+          "KM",
+          "MI"
+        ],
+        "type": "string"
+      },
+      "value": {
+        "description": "The numerical value of the distance.",
+        "ref": "Decimal"
+      }
+    },
+    "required": [
+      "distanceUnit",
+      "value"
+    ],
+    "type": "object"
+  },
+  "Document": {
+    "description": "A document, described by its file type and data.",
+    "properties": {
+      "content": {
+        "description": "Base 64 encoded file contents.",
+        "type": "string"
+      },
+      "format": {
+        "description": "The type of the file.",
+        "enum": [
+          "PDF",
+          "PLAIN_TEXT",
+          "PNG",
+          "ZPL"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DocumentV2": {
+    "description": "An [S3-Presigned URL](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html) you can use to retrieve file contents.",
+    "properties": {
+      "url": {
+        "description": "A presigned URL to fetch the ship label file using an HTTP GET request.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "url"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "An object containing a list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses returned when a request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "Geocodes": {
+    "description": "Geographic coordinates.",
+    "properties": {
+      "elevation": {
+        "description": "The elevation in meters.",
+        "ref": "Decimal"
+      },
+      "latitude": {
+        "description": "The latitude coordinate.",
+        "ref": "Decimal"
+      },
+      "longitude": {
+        "description": "The longitude coordinate.",
+        "ref": "Decimal"
+      }
+    },
+    "required": [
+      "latitude",
+      "longitude"
+    ],
+    "type": "object"
+  },
+  "GiftAttributes": {
+    "description": "Information about any gift wrapping that is needed for this line item.",
+    "properties": {
+      "giftMessage": {
+        "description": "The gift message that is to be printed on the wrapped gift.",
+        "ref": "Document"
+      },
+      "giftMessagePresence": {
+        "description": "When true, there is a gift message that must be printed on the wrapped gift.",
+        "ref": "PresenceStatus"
+      },
+      "giftWrapLabel": {
+        "description": "The label to be printed on the wrapped gift.",
+        "type": "string"
+      },
+      "giftWrapRequirement": {
+        "description": "When true, the line item must be gift wrapped.",
+        "ref": "RequirementLevel"
+      }
+    },
+    "required": [
+      "giftMessagePresence",
+      "giftWrapRequirement"
+    ],
+    "type": "object"
+  },
+  "HandoverLocation": {
+    "description": "The drop-off location details for package handover.",
+    "properties": {
+      "address": {
+        "description": "The address of the drop-off location.",
+        "ref": "Address"
+      },
+      "distance": {
+        "description": "The distance from the seller's location to the drop-off point.",
+        "ref": "Distance"
+      },
+      "mapUrl": {
+        "description": "URL to the map that shows the drop-off location.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InvoiceInfo": {
+    "description": "Information about the shipment's invoice.",
+    "properties": {
+      "creationDateTime": {
+        "description": "When the invoice was created.",
+        "ref": "DateTime"
+      },
+      "invoiceId": {
+        "description": "The unique ID of the invoice that corresponds to the shipment.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InvoiceRequirement": {
+    "description": "Whether the invoice document is required to be attached to the shipment and its corresponding status.",
+    "properties": {
+      "requirement": {
+        "description": "Whether the invoice document is required to be attached to the shipment.",
+        "enum": [
+          "NOT_REQUIRED",
+          "REQUIRED"
+        ],
+        "type": "string"
+      },
+      "status": {
+        "description": "The status of the of the invoice document that is attached to the shipment.",
+        "enum": [
+          "AVAILABLE",
+          "NOT_AVAILABLE",
+          "PENDING"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "InvoiceResponse": {
+    "description": "The response of the `generateInvoice` operation.",
+    "properties": {
+      "document": {
+        "description": "The invoice.",
+        "ref": "Document"
+      }
+    },
+    "required": [
+      "document"
+    ],
+    "type": "object"
+  },
+  "LineItem": {
+    "description": "Information about the line item being confirmed or rejected.",
+    "properties": {
+      "id": {
+        "description": "The identifier of the line item from the shipment that is being confirmed or rejected by the seller.",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "The quantity of the line item.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "id"
+    ],
+    "type": "object"
+  },
+  "LineItemWithReason": {
+    "description": "Information about the line item being confirmed or rejected and the reason for the rejection.",
+    "properties": {
+      "lineItem": {
+        "ref": "LineItem"
+      },
+      "reason": {
+        "description": "The reason for the rejection of the line item.",
+        "enum": [
+          "CUSTOMER_REQUESTED",
+          "OUT_OF_STOCK"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "lineItem"
+    ],
+    "type": "object"
+  },
+  "MarketplaceAttributes": {
+    "description": "The marketplace attributes associated with the location.",
+    "properties": {
+      "channelName": {
+        "description": "The channel name associated with the location.",
+        "type": "string"
+      },
+      "customAttributes": {
+        "description": "Marketplace channel-specific custom attributes for the order.",
+        "ref": "CustomChannelAttribute"
+      },
+      "marketplaceId": {
+        "description": "The marketplace ID associated with the location.",
+        "type": "string"
+      },
+      "merchantId": {
+        "description": "The ID of the merchant or seller to whom this order is created.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "channelName",
+      "marketplaceId"
+    ],
+    "type": "object"
+  },
+  "MarketplaceId": {
+    "description": "The identifier for the marketplace.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "OriginalLineItem": {
+    "description": "A line item from the original shipment that corresponds to this shipment.",
+    "properties": {
+      "charges": {
+        "description": "The charge details at the shipment level.",
+        "ref": "Charges"
+      },
+      "originalSku": {
+        "description": "The SKU ID for the original shipment.",
+        "type": "string"
+      },
+      "replacingSku": {
+        "description": "The SKU ID for this shipment",
+        "type": "string"
+      }
+    },
+    "required": [
+      "charges",
+      "originalSku",
+      "replacingSku"
+    ],
+    "type": "object"
+  },
+  "OriginalLineItems": {
+    "description": "The line items from the original shipment that corresponds to this shipment.",
+    "properties": {},
+    "ref": "OriginalLineItem",
+    "required": [],
+    "type": "array"
+  },
+  "Package": {
+    "description": "A package that is created to ship one or more of a shipment's line items.",
+    "properties": {
+      "dimensions": {
+        "description": "The dimensions of the package.",
+        "ref": "PackageDimensions"
+      },
+      "hazmatLabels": {
+        "description": "The optional list of HAZMAT labels applied to the package.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "id": {
+        "description": "The ID of the package whose information you want to update.",
+        "type": "string"
+      },
+      "packageHandlingRequirements": {
+        "description": "Whether the package requires standard handling or extra care.",
+        "enum": [
+          "FRAGILE",
+          "NORMAL"
+        ],
+        "type": "string"
+      },
+      "packageLineItems": {
+        "description": "The list of line items in a package.",
+        "ref": "PackageLineItems"
+      },
+      "status": {
+        "description": "The current status of the package.",
+        "enum": [
+          "CANCELLED",
+          "CREATED",
+          "DELIVERED",
+          "INVOICE_GENERATED",
+          "PICKUP_SLOT_RETRIEVED",
+          "SHIPLABEL_GENERATED",
+          "SHIPPED"
+        ],
+        "type": "string"
+      },
+      "trackingDetails": {
+        "description": "The carrier and tracking details of the package.",
+        "ref": "TrackingDetails"
+      },
+      "weight": {
+        "description": "The weight of the package.",
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "dimensions",
+      "id",
+      "packageLineItems",
+      "weight"
+    ],
+    "type": "object"
+  },
+  "PackageDeliveryStatus": {
+    "description": "The delivery status of the package.",
+    "properties": {
+      "reason": {
+        "description": "The reason for the sub-status.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The status of the package.",
+        "ref": "PackageStatus"
+      },
+      "subStatus": {
+        "description": "The sub-status of the package.",
+        "ref": "PackageSubStatus"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PackageDimensions": {
+    "description": "The dimensions of a package.",
+    "properties": {
+      "height": {
+        "description": "The height of the package.",
+        "ref": "Dimension"
+      },
+      "length": {
+        "description": "The length of the package.",
+        "ref": "Dimension"
+      },
+      "width": {
+        "description": "The width of the package.",
+        "ref": "Dimension"
+      }
+    },
+    "required": [
+      "height",
+      "length",
+      "width"
+    ],
+    "type": "object"
+  },
+  "PackageLineItem": {
+    "description": "A line item in a package.",
+    "properties": {
+      "countryOfOrigin": {
+        "description": "The country of origin provided by the seller, represented by a two-letter country code in ISO-3166 alpha-2 format.",
+        "ref": "CountryCode"
+      },
+      "itemValue": {
+        "description": "The value of the item being shipped, as provided by the seller.",
+        "ref": "Amount"
+      },
+      "packageLineItemId": {
+        "description": "The line item ID.",
+        "type": "string"
+      },
+      "pieces": {
+        "description": "The number of pieces of a multi-piece item that are in this package.",
+        "type": "integer"
+      },
+      "quantity": {
+        "description": "The number of items of a particular line item of a shipment that are packed into the package.",
+        "type": "integer"
+      },
+      "serialNumbers": {
+        "description": "The list of serial numbers of items in the package, if required to be provided.",
+        "ref": "SerialNumber",
+        "type": "array"
+      }
+    },
+    "required": [
+      "packageLineItemId",
+      "quantity"
+    ],
+    "type": "object"
+  },
+  "PackageLineItems": {
+    "description": "The list of line items in a package.",
+    "properties": {},
+    "ref": "PackageLineItem",
+    "required": [],
+    "type": "array"
+  },
+  "PackageShipLabel": {
+    "description": "A shipping label with a label document for a single package.",
+    "properties": {
+      "errorDetails": {
+        "ref": "Error"
+      },
+      "fileData": {
+        "ref": "DocumentV2"
+      },
+      "packageId": {
+        "description": "The package ID of the package.",
+        "type": "string"
+      },
+      "shipLabelMetadata": {
+        "ref": "ShipLabelMetadata"
+      },
+      "status": {
+        "description": "Whether label generation failed for the current package.",
+        "ref": "Status"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PackageShipLabelList": {
+    "description": "A list of label documents for each package specified in the request.",
+    "properties": {},
+    "ref": "PackageShipLabel",
+    "required": [],
+    "type": "array"
+  },
+  "PackageStatus": {
+    "description": "The status of a package.",
+    "enum": [
+      "DELIVERED",
+      "SHIPPED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PackageSubStatus": {
+    "description": "The sub-status of a package.",
+    "enum": [
+      "DELIVERED",
+      "NOT_DELIVERED",
+      "OUT_FOR_DELIVERY",
+      "UNDELIVERABLE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Packages": {
+    "description": "The request schema of the `createPackages` operation.",
+    "properties": {
+      "packages": {
+        "description": "A list of packages.",
+        "ref": "Package",
+        "type": "array"
+      }
+    },
+    "required": [
+      "packages"
+    ],
+    "type": "object"
+  },
+  "PackingSlipRequirement": {
+    "description": "Whether the packing slip is required to be attached to the shipment, and its corresponding status.",
+    "properties": {
+      "requirement": {
+        "description": "Whether the packing slip is required to be attached to the shipment.",
+        "enum": [
+          "NOT_REQUIRED",
+          "REQUIRED"
+        ],
+        "type": "string"
+      },
+      "status": {
+        "description": "The status of the packing slip that is attached to the shipment.",
+        "enum": [
+          "GENERATED",
+          "NOT_GENERATED"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "An object representing data required for pagination of results.",
+    "properties": {
+      "nextToken": {
+        "description": "A token that you use to retrieve the next page of results.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PartyIdentificationInfo": {
+    "description": "Party identification details for the shipment, applicable only to direct fulfillment shipments.",
+    "properties": {
+      "address": {
+        "description": "Address details of the party.",
+        "ref": "Address"
+      },
+      "partyId": {
+        "description": "Assigned identification for the party.",
+        "type": "string"
+      },
+      "partyType": {
+        "description": "Assigned identification for the party.",
+        "enum": [
+          "BILL_TO_PARTY",
+          "SELLING_PARTY",
+          "SHIP_FROM_PARTY",
+          "SHIP_TO_PARTY"
+        ],
+        "type": "string"
+      },
+      "taxInfo": {
+        "description": "Tax registration details of the entity.",
+        "ref": "TaxRegistrationInfo"
+      }
+    },
+    "required": [
+      "partyId",
+      "partyType"
+    ],
+    "type": "object"
+  },
+  "PartyIdentificationInfoList": {
+    "description": "All involved party identification and metadata for vendor, buyer, seller.",
+    "properties": {},
+    "ref": "PartyIdentificationInfo",
+    "required": [],
+    "type": "array"
+  },
+  "PieceType": {
+    "description": "Whether the item is a single piece or multiple pieces.",
+    "enum": [
+      "MULTIPLE",
+      "SINGLE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PresenceStatus": {
+    "description": "Whether the element is present or absent.",
+    "enum": [
+      "ABSENT",
+      "PRESENT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Priority": {
+    "description": "The priority of the order.",
+    "enum": [
+      "HIGH",
+      "LOW"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "RecommendedPackage": {
+    "description": "Recommendations for a package",
+    "properties": {
+      "dimensions": {
+        "ref": "PackageDimensions"
+      },
+      "lineItems": {
+        "ref": "RecommendedPackageLineItems"
+      },
+      "weight": {
+        "ref": "Weight"
+      }
+    },
+    "required": [
+      "dimensions",
+      "weight"
+    ],
+    "type": "object"
+  },
+  "RecommendedPackageLineItem": {
+    "description": "A line item to be contained in a recommended package.",
+    "properties": {
+      "lineItemId": {
+        "description": "An ID for a line item in an order.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "lineItemId"
+    ],
+    "type": "object"
+  },
+  "RecommendedPackageLineItems": {
+    "description": "A list of line items to be contained in a recommended package.",
+    "properties": {},
+    "ref": "RecommendedPackageLineItem",
+    "required": [],
+    "type": "array"
+  },
+  "RecommendedPackages": {
+    "description": "Recommendations for the packages in an order.",
+    "properties": {},
+    "ref": "RecommendedPackage",
+    "required": [],
+    "type": "array"
+  },
+  "ReplacedShipmentInfo": {
+    "description": "Details of the original shipment if `shipmentType` is either `REPLACEMENT` or `EXCHANGE`.",
+    "properties": {
+      "id": {
+        "description": "The original shipment's ID.",
+        "type": "string"
+      },
+      "locationId": {
+        "description": "The original shipment's location ID.",
+        "type": "string"
+      },
+      "marketplaceAttributes": {
+        "description": "marketplace attributes for the shipment",
+        "ref": "MarketplaceAttributes"
+      },
+      "originalLineItems": {
+        "description": "The line items from the original shipment that corresponds to this shipment.",
+        "ref": "OriginalLineItems"
+      }
+    },
+    "required": [
+      "id",
+      "locationId",
+      "marketplaceAttributes"
+    ],
+    "type": "object"
+  },
+  "RequirementLevel": {
+    "description": "The requirement level for this field.",
+    "enum": [
+      "DISALLOWED",
+      "REQUIRED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "SKU": {
+    "description": "The seller SKU of a product (catalog item).",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "SandboxShipmentUpdates": {
+    "description": "The update details for the sandbox shipment.",
+    "properties": {
+      "status": {
+        "description": "The target shipment status.",
+        "enum": [
+          "CANCELLED",
+          "DELIVERED",
+          "SHIPPED"
+        ],
+        "type": "string"
+      },
+      "subStatus": {
+        "description": "The target shipment sub-status.",
+        "enum": [
+          "OUT_FOR_DELIVERY"
+        ],
+        "type": "string"
+      },
+      "timestamp": {
+        "description": "The Expected Pickup Date (EPD) for the shipment.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SerialNumber": {
+    "description": "The serial number of the SKU in this line item.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ShipLabelMetadata": {
+    "description": "Metadata for a ship label document.",
+    "properties": {
+      "carrierName": {
+        "description": "The name of the carrier.",
+        "type": "string"
+      },
+      "handoverLocation": {
+        "description": "The drop-off location details.",
+        "ref": "HandoverLocation"
+      },
+      "pickupWindow": {
+        "description": "The time window during which the package was picked up.",
+        "ref": "TimeWindow"
+      },
+      "shippingOptionId": {
+        "description": "The selected slot for the ship label.",
+        "type": "string"
+      },
+      "timeSlot": {
+        "description": "A time window during which to hand over the package to Amazon Logistics.",
+        "ref": "TimeWindow"
+      },
+      "trackingId": {
+        "description": "The tracking number of the package.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "carrierName",
+      "trackingId"
+    ],
+    "type": "object"
+  },
+  "ShipLabelsInput": {
+    "description": "Tracking details for multiple packages.",
+    "properties": {
+      "courierSupportedAttributes": {
+        "ref": "CourierSupportedAttributes"
+      },
+      "packageIds": {
+        "description": "The subset of package IDs used to generate a label.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "packageIds"
+    ],
+    "type": "object"
+  },
+  "ShipLabelsResponse": {
+    "description": "The response to the `generateShipLabels` operation.",
+    "properties": {
+      "packageShipLabelList": {
+        "ref": "PackageShipLabelList"
+      }
+    },
+    "required": [
+      "packageShipLabelList"
+    ],
+    "type": "object"
+  },
+  "Shipment": {
+    "description": "Information about a shipment.",
+    "properties": {
+      "charges": {
+        "description": "The charges associated with the shipment.",
+        "ref": "Charges"
+      },
+      "creationDateTime": {
+        "description": "The date and time when the shipment was created.",
+        "ref": "DateTime"
+      },
+      "earliestPackDateTime": {
+        "description": "The time when the shipment becomes eligible for processing.",
+        "ref": "DateTime"
+      },
+      "id": {
+        "description": "The shipment's ID.",
+        "type": "string"
+      },
+      "invoiceInfo": {
+        "description": "Information about the shipment's invoice.",
+        "ref": "InvoiceInfo"
+      },
+      "lastUpdatedDateTime": {
+        "description": "The date and time when the shipment was last updated.",
+        "ref": "DateTime"
+      },
+      "lineItems": {
+        "description": "The line items in the shipment.",
+        "ref": "ShipmentLineItem",
+        "type": "array"
+      },
+      "locationId": {
+        "description": "The location identifier of the seller's location in the marketplace channel to which the shipment has been created for fulfillment.",
+        "type": "string"
+      },
+      "marketplaceAttributes": {
+        "description": "The marketplace attributes from which the shipment has been created for fulfillment.",
+        "ref": "MarketplaceAttributes"
+      },
+      "packages": {
+        "description": "The list of packages in the shipment.",
+        "ref": "Package",
+        "type": "array"
+      },
+      "partyInfoList": {
+        "description": "All involved party identification and metadata for vendor, buyer, seller.",
+        "ref": "PartyIdentificationInfoList"
+      },
+      "reason": {
+        "description": "The reason for the sub-status.",
+        "type": "string"
+      },
+      "shipmentInfo": {
+        "description": "High-level details of the shipment.",
+        "ref": "ShipmentInfo"
+      },
+      "shipmentRequirements": {
+        "description": "Whether a specific capabilities are enabled/required for the shipment.",
+        "ref": "ShipmentRequirements"
+      },
+      "shippingInfo": {
+        "description": "Shipping information for the packages in this shipment.",
+        "ref": "ShippingInfo"
+      },
+      "status": {
+        "description": "The current status of the shipment.",
+        "enum": [
+          "ACCEPTED",
+          "CANCELLED",
+          "CONFIRMED",
+          "CREATED",
+          "DELIVERED",
+          "INVOICE_GENERATED",
+          "PACKAGE_CREATED",
+          "PICKUP_SLOT_RETRIEVED",
+          "SHIPLABEL_GENERATED",
+          "SHIPPED"
+        ],
+        "type": "string"
+      },
+      "subStatus": {
+        "description": "The sub status of the shipment.",
+        "enum": [
+          "AT_DESTINATION_FC",
+          "AT_ORIGIN_FC",
+          "DAMAGED",
+          "DELIVERED",
+          "DROPPED_OFF",
+          "LABEL_CANCELED",
+          "LOST",
+          "NOT_DELIVERED",
+          "OUT_FOR_DELIVERY",
+          "PENDING_DROP_OFF",
+          "PENDING_PICKUP",
+          "PENDING_SCHEDULE",
+          "PICKED_UP",
+          "UNDELIVERABLE"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "charges",
+      "creationDateTime",
+      "id",
+      "lastUpdatedDateTime",
+      "lineItems",
+      "locationId",
+      "marketplaceAttributes",
+      "shipmentInfo",
+      "shipmentRequirements",
+      "shippingInfo",
+      "status"
+    ],
+    "type": "object"
+  },
+  "ShipmentAcknowledgementRequest": {
+    "description": "Information about the shipment and its line items, used to confirm or reject line items.",
+    "properties": {
+      "lineItems": {
+        "description": "Details about the line items from the shipment that are being rejected by the seller.",
+        "ref": "LineItemWithReason",
+        "type": "array"
+      },
+      "referenceId": {
+        "description": "A unique identifier for every shipment rejection.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "lineItems"
+    ],
+    "type": "object"
+  },
+  "ShipmentInfo": {
+    "description": "High-level details of the shipment.",
+    "properties": {
+      "buyerOrderId": {
+        "description": "The buyer's order ID.",
+        "type": "string"
+      },
+      "numberOfUnits": {
+        "description": "Total number of units in the shipment.",
+        "type": "integer"
+      },
+      "orderPlacedTimestamp": {
+        "description": "The epoch timestamp (in milliseconds) of when the order was placed, in UTC.",
+        "format": "int64",
+        "type": "number"
+      },
+      "orderStatesEligibleForRejection": {
+        "description": "A list of order statuses for which the marketplace allows order rejection (seller cancellation).",
+        "itemType": "string",
+        "type": "array"
+      },
+      "originalShipmentInfo": {
+        "description": "This field contains details of the original shipment if `shipmentType` is either `REPLACEMENT` or `EXCHANGE`.",
+        "ref": "ReplacedShipmentInfo"
+      },
+      "paymentMethod": {
+        "description": "The payment method for the shipment.",
+        "enum": [
+          "CASH_ON_DELIVERY",
+          "PREPAID"
+        ],
+        "type": "string"
+      },
+      "priority": {
+        "description": "The priority of the order.",
+        "ref": "Priority"
+      },
+      "processingSource": {
+        "description": "The source of the order operation.",
+        "enum": [
+          "EXTERNAL_PLATFORM",
+          "INTERNAL_PLATFORM"
+        ],
+        "type": "string"
+      },
+      "shipmentType": {
+        "description": "The type of shipment.",
+        "enum": [
+          "EXCHANGE",
+          "NEW",
+          "REPLACEMENT"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "buyerOrderId",
+      "numberOfUnits",
+      "priority",
+      "shipmentType"
+    ],
+    "type": "object"
+  },
+  "ShipmentLineItem": {
+    "description": "Information about a line item in a shipment.",
+    "properties": {
+      "cancellations": {
+        "description": "A list of cancellations for the given line item.",
+        "ref": "Cancellations"
+      },
+      "charges": {
+        "description": "The charges associated with the line item.",
+        "ref": "Charges"
+      },
+      "complianceAttributes": {
+        "description": "All necessary compliance attributes specific to the line item.",
+        "ref": "ComplianceAttributes"
+      },
+      "countryOfOrigin": {
+        "description": "The country of origin provided by the seller, represented by a two-letter country code in ISO-3166 alpha-2 format.",
+        "ref": "CountryCode"
+      },
+      "customAttributes": {
+        "description": "A list of custom passthrough attributes.",
+        "ref": "CustomAttribute",
+        "type": "array"
+      },
+      "giftAttributes": {
+        "description": "Information about any gift wrapping that is needed for this line item.",
+        "ref": "GiftAttributes"
+      },
+      "hazmatLabels": {
+        "description": "A list of HAZMAT label identifiers that must be applied to the packages for this line item.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "hsnCode": {
+        "description": "The HSN code of SKU in this line item.",
+        "type": "string"
+      },
+      "itemValue": {
+        "description": "The value of the item being shipped, as provided by the seller.",
+        "ref": "Amount"
+      },
+      "merchantSku": {
+        "description": "The seller's identifier for the SKU in this line item.",
+        "ref": "SKU"
+      },
+      "numberOfUnits": {
+        "description": "The number of items of the SKU in this line item.",
+        "type": "integer"
+      },
+      "pieceType": {
+        "description": "Whether the line item has multiple pieces.",
+        "ref": "PieceType"
+      },
+      "recommendedCountryOfOrigin": {
+        "description": "The country of origin recommended by the marketplace, represented as a two-letter country code following the ISO-3166 alpha-2 standard.",
+        "ref": "CountryCode"
+      },
+      "recommendedCurrencyCode": {
+        "description": "The three digit currency code of the currency recommended by the marketplace, in ISO 4217 format.",
+        "type": "string"
+      },
+      "serialNumbers": {
+        "description": "The serial numbers for each item in this line item.",
+        "ref": "SerialNumber",
+        "type": "array"
+      },
+      "shipmentLineItemId": {
+        "description": "An identifier for a shipment's line item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "charges",
+      "complianceAttributes",
+      "merchantSku",
+      "numberOfUnits",
+      "shipmentLineItemId"
+    ],
+    "type": "object"
+  },
+  "ShipmentRequirements": {
+    "description": "Whether specific capabilities are enabled or required for the shipment.",
+    "properties": {
+      "invoice": {
+        "description": "Whether the invoice must be attached to the shipment.",
+        "ref": "InvoiceRequirement"
+      },
+      "pSlip": {
+        "description": "Whether the packing slip must be attached to the shipment.",
+        "ref": "PackingSlipRequirement"
+      }
+    },
+    "required": [
+      "invoice",
+      "pSlip"
+    ],
+    "type": "object"
+  },
+  "ShipmentsResponse": {
+    "description": "The response of the `getShipments` operation.",
+    "properties": {
+      "pagination": {
+        "description": "How to manage multiple pages of data.",
+        "ref": "Pagination"
+      },
+      "shipments": {
+        "description": "A list of shipments.",
+        "ref": "Shipment",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ShippingInfo": {
+    "description": "Shipping information for the packages in a shipment.",
+    "properties": {
+      "expectedShippingDateTime": {
+        "description": "The date and time when Amazon expects the seller to ship the packages, in the shipment's local time zone.",
+        "ref": "DateTime"
+      },
+      "expectedShippingDateTimeInUTC": {
+        "description": "The date and time when Amazon expects the seller to ship the packages.",
+        "ref": "DateTime"
+      },
+      "recommendedPackages": {
+        "ref": "RecommendedPackages"
+      },
+      "recommendedShipMethod": {
+        "description": "The ship method recommended by the Amazon Fulfillment Network for the packages in this shipment.",
+        "type": "string"
+      },
+      "shipToAddress": {
+        "description": "The address to which the packages must be shipped.",
+        "ref": "Address"
+      },
+      "shippingType": {
+        "description": "The type of shipping that the seller uses to deliver a customer order.",
+        "enum": [
+          "Marketplace",
+          "Self"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "expectedShippingDateTimeInUTC"
+    ],
+    "type": "object"
+  },
+  "ShippingOptions": {
+    "description": "Shipping options for a single package.",
+    "properties": {
+      "carrierName": {
+        "description": "The carrier name for the offering.",
+        "type": "string"
+      },
+      "handoverLocation": {
+        "description": "The drop-off location details.",
+        "ref": "HandoverLocation"
+      },
+      "pickupWindow": {
+        "description": "The time window during which the package will be picked up.",
+        "ref": "TimeWindow"
+      },
+      "shipBy": {
+        "description": "The shipper type.",
+        "enum": [
+          "MARKETPLACE",
+          "OTHER",
+          "SELLER",
+          "THIRD_PARTY_CARRIER"
+        ],
+        "type": "string"
+      },
+      "shippingOptionId": {
+        "description": "An identifier for the shipping option.",
+        "type": "string"
+      },
+      "timeSlot": {
+        "description": "A time window to hand over the package to or from Amazon Logistics.",
+        "ref": "TimeWindow"
+      }
+    },
+    "required": [
+      "shipBy",
+      "shippingOptionId"
+    ],
+    "type": "object"
+  },
+  "ShippingOptionsResponse": {
+    "description": "The response to the `retrieveShippingOptions` operation.",
+    "properties": {
+      "recommendedShippingOption": {
+        "description": "The recommended shipping options that a marketplace channel provides to the seller.",
+        "ref": "ShippingOptions"
+      },
+      "shippingOptions": {
+        "description": "A list of shipping options.",
+        "ref": "ShippingOptions",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Status": {
+    "description": "The outcome of the operation.",
+    "enum": [
+      "FAILURE",
+      "SUCCESS"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Tax": {
+    "description": "Information about taxes.",
+    "properties": {
+      "charge": {
+        "description": "Details of individual tax charges.",
+        "ref": "ChargeBreakup"
+      },
+      "rate": {
+        "description": "The rate of the tax.",
+        "ref": "Decimal"
+      },
+      "type": {
+        "description": "The type of tax.",
+        "enum": [
+          "CESS",
+          "CGST",
+          "CST",
+          "IGST",
+          "OTHER",
+          "SGST",
+          "TOTAL",
+          "UTGST",
+          "VAT"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "charge"
+    ],
+    "type": "object"
+  },
+  "TaxRegistrationInfo": {
+    "description": "Tax registration details of the entity.",
+    "properties": {
+      "address": {
+        "description": "The address associated with the tax registration number.",
+        "ref": "Address"
+      },
+      "messages": {
+        "description": "Tax registration message that can be used for additional tax related details.",
+        "type": "string"
+      },
+      "number": {
+        "description": "The tax registration number for the party.",
+        "type": "string"
+      },
+      "type": {
+        "description": "Tax registration type for the entity",
+        "enum": [
+          "GST",
+          "VAT"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TimeWindow": {
+    "description": "Time duration used to specify the interval of an event, such as pick up and delivery.",
+    "properties": {
+      "endTime": {
+        "description": "The end time of the window.",
+        "format": "int64",
+        "type": "integer"
+      },
+      "handoverMethod": {
+        "description": "Whether the seller picks up from Amazon Logistics or drops off to Amazon Logistics.",
+        "enum": [
+          "DROPOFF",
+          "PICKUP"
+        ],
+        "type": "string"
+      },
+      "startTime": {
+        "description": "The start time of the window.",
+        "format": "int64",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "endTime",
+      "startTime"
+    ],
+    "type": "object"
+  },
+  "TrackingDetails": {
+    "description": "The carrier and tracking details of a package.",
+    "properties": {
+      "carrier": {
+        "description": "The carrier responsible for transporting this package to the customer.",
+        "type": "string"
+      },
+      "shippingService": {
+        "description": "The specific shipping method or service used for delivering this package.",
+        "type": "string"
+      },
+      "trackingId": {
+        "description": "The carrier-provided tracking number that customers can use to monitor the package's delivery progress.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "carrier"
+    ],
+    "type": "object"
+  },
+  "UpdateSandboxShipmentRequest": {
+    "description": "The request object for updating a sandbox shipment.",
+    "properties": {
+      "updateType": {
+        "description": "The type of update to apply to the shipment.",
+        "enum": [
+          "INVOICE_AVAILABILITY_CHANGE",
+          "SHIPMENT_STATUS_CHANGE",
+          "TRANSPORT_CAPACITY_CHANGE"
+        ],
+        "type": "string"
+      },
+      "updates": {
+        "ref": "SandboxShipmentUpdates"
+      }
+    },
+    "required": [
+      "updateType"
+    ],
+    "type": "object"
+  },
+  "Weight": {
+    "description": "The weight of a package.",
+    "properties": {
+      "value": {
+        "description": "The numerical value of the weight.",
+        "ref": "Decimal"
+      },
+      "weightUnit": {
+        "description": "The unit of measurement of the weight.",
+        "enum": [
+          "G",
+          "KG",
+          "LB",
+          "OZ"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "value",
+      "weightUnit"
+    ],
+    "type": "object"
+  }
+}

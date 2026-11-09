@@ -1,0 +1,949 @@
+{
+ "api": "AmazonAdsAPIALLInventoryGroupsContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLInventoryGroupsContract_prod_3p_BETA.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "AmazonOwnedAndOperated": {
+   "description": "Only deals from Amazon owned and operated supply sources are permitted. Open internet inventory is excluded.",
+   "properties": {
+    "enabled": {
+     "description": "Must be set to true to activate this supply filter. Setting enabled to false is invalid and will be rejected.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "enabled"
+   ],
+   "type": "object"
+  },
+  "AutomaticDealSelectionControls": {
+   "description": "Advertiser-configured preferences that constrain which deals the automated recommendation system can recommend. These preferences filter the candidate deal pool before recommendations are generated.",
+   "properties": {
+    "adGroupId": {
+     "description": "The ad group associated with these automatic deal selection controls.",
+     "type": "string"
+    },
+    "dealTypePreference": {
+     "$ref": "DealTypePreference"
+    },
+    "supplyAllowlist": {
+     "$ref": "SupplyAllowlist"
+    }
+   },
+   "required": [
+    "adGroupId"
+   ],
+   "type": "object"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateAmazonOwnedAndOperated": {
+   "description": "Only deals from Amazon owned and operated supply sources are permitted. Open internet inventory is excluded.",
+   "properties": {
+    "enabled": {
+     "description": "Must be set to true to activate this supply filter. Setting enabled to false is invalid and will be rejected.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "enabled"
+   ],
+   "type": "object"
+  },
+  "CreateAutomaticDealSelectionControls": {
+   "description": "Advertiser-configured preferences that constrain which deals the automated recommendation system can recommend. These preferences filter the candidate deal pool before recommendations are generated.",
+   "properties": {
+    "adGroupId": {
+     "description": "The ad group associated with these automatic deal selection controls.",
+     "type": "string"
+    },
+    "dealTypePreference": {
+     "$ref": "DealTypePreference"
+    },
+    "supplyAllowlist": {
+     "$ref": "CreateSupplyAllowlist"
+    }
+   },
+   "required": [
+    "adGroupId"
+   ],
+   "type": "object"
+  },
+  "CreateCurationSourceSettings": {
+   "description": "Configuration settings specific to a curation source type. Each variant contains settings applicable to a particular curation mode.",
+   "oneOf": [
+    {
+     "properties": {
+      "automaticDealSelectionControls": {
+       "$ref": "CreateAutomaticDealSelectionControls"
+      }
+     },
+     "required": [
+      "automaticDealSelectionControls"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateCustomSources": {
+   "description": "Only the specified supply sources are permitted.",
+   "properties": {
+    "supplySourceIds": {
+     "description": "Supply source identifiers permitted for deal recommendations.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "supplySourceIds"
+   ],
+   "type": "object"
+  },
+  "CreateInventoryGroupRequest": {
+   "properties": {
+    "inventoryGroups": {
+     "items": {
+      "$ref": "InventoryGroupCreate"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "inventoryGroups"
+   ],
+   "type": "object"
+  },
+  "CreateOpenInternet": {
+   "description": "Only deals from open internet supply sources are permitted. Amazon owned and operated inventory is excluded.",
+   "properties": {
+    "enabled": {
+     "description": "Must be set to true to activate this supply filter. Setting enabled to false is invalid and will be rejected.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "enabled"
+   ],
+   "type": "object"
+  },
+  "CreateSupplyAllowlist": {
+   "description": "Defines which supply sources are permitted for deal recommendations.",
+   "oneOf": [
+    {
+     "properties": {
+      "customSources": {
+       "$ref": "CreateCustomSources"
+      }
+     },
+     "required": [
+      "customSources"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonOwnedAndOperated": {
+       "$ref": "CreateAmazonOwnedAndOperated"
+      }
+     },
+     "required": [
+      "amazonOwnedAndOperated"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "openInternet": {
+       "$ref": "CreateOpenInternet"
+      }
+     },
+     "required": [
+      "openInternet"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CurationSourceSettings": {
+   "description": "Configuration settings specific to a curation source type. Each variant contains settings applicable to a particular curation mode.",
+   "oneOf": [
+    {
+     "properties": {
+      "automaticDealSelectionControls": {
+       "$ref": "AutomaticDealSelectionControls"
+      }
+     },
+     "required": [
+      "automaticDealSelectionControls"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CurationSourceType": {
+   "description": "The source system or method used to curate the inventory group. **CurationSourceType Enum:** | CurationSourceType | Description | |------|------| | `ADVERTISER_CURATED` | Inventory group was manually curated by the adve…",
+   "enum": [
+    "ADVERTISER_CURATED",
+    "AMAZON_CURATED",
+    "AMAZON_CURATED_AGENT"
+   ],
+   "type": "string"
+  },
+  "CustomSources": {
+   "description": "Only the specified supply sources are permitted.",
+   "properties": {
+    "supplySourceIds": {
+     "description": "Supply source identifiers permitted for deal recommendations.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "supplySourceIds"
+   ],
+   "type": "object"
+  },
+  "DealTypePreference": {
+   "description": "Preference for filtering deals by marketplace listing status. Filters on AdvertisingDealTerms.marketplaceDeal in the advertising_deal module. **DealTypePreference Enum:** | DealTypePreference | Description | |------|---…",
+   "enum": [
+    "ALL",
+    "EXCLUDE_PUBLICLY_AVAILABLE",
+    "PUBLICLY_AVAILABLE_ONLY"
+   ],
+   "type": "string"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `CONTENT_TOO_L…",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "BAD_REQUEST",
+    "CONTENT_TOO_LARGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_NOT_FOUND",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "RESOURCE_ID_NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InventoryGroup": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertisingDealIds": {
+     "description": "Collection of advertising deal ids included in this inventory group. Maximum 100 deals per group for public APIs. Private APIs may support up to 1000 deals.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creationDateTime": {
+     "description": "The date and time the inventory group was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "curationSourceSettings": {
+     "$ref": "CurationSourceSettings"
+    },
+    "curationSourceType": {
+     "$ref": "CurationSourceType"
+    },
+    "description": {
+     "description": "Optional description of the inventory group. Provides additional context about the deals included and intended use.",
+     "type": "string"
+    },
+    "inventoryGroupId": {
+     "description": "Unique identifier for the inventory group.",
+     "type": "string"
+    },
+    "inventoryType": {
+     "$ref": "InventoryType"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date and time the inventory group was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the inventory group.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "creationDateTime",
+    "inventoryGroupId",
+    "inventoryType",
+    "name"
+   ],
+   "type": "object"
+  },
+  "InventoryGroupCreate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "advertisingDealIds": {
+     "description": "Collection of advertising deal ids included in this inventory group. Maximum 100 deals per group for public APIs. Private APIs may support up to 1000 deals.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "curationSourceSettings": {
+     "$ref": "CreateCurationSourceSettings"
+    },
+    "curationSourceType": {
+     "$ref": "CurationSourceType"
+    },
+    "description": {
+     "description": "Optional description of the inventory group. Provides additional context about the deals included and intended use.",
+     "type": "string"
+    },
+    "inventoryType": {
+     "$ref": "InventoryType"
+    },
+    "name": {
+     "description": "The name of the inventory group.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "inventoryType",
+    "name"
+   ],
+   "type": "object"
+  },
+  "InventoryGroupCurationSourceTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**CurationSourceType Enum:** | CurationSourceType | Description | | --- | --- | | `AMAZON_CURATED_AGENT` | Inventory group was created through the Automatic Deal Selection System, which uses machine learning to identify…",
+     "items": {
+      "$ref": "CurationSourceType"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "InventoryGroupInventoryGroupIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "InventoryGroupInventoryTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**InventoryType Enum:** | InventoryType | Description | | --- | --- | | `DISPLAY` | | | `VIDEO` | | | `AUDIO` | Audio ads that serve on streaming audio inventory. |",
+     "items": {
+      "$ref": "InventoryType"
+     },
+     "maxItems": 6,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "InventoryGroupMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "InventoryGroupMultiStatusSuccess"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "InventoryGroupMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "inventoryGroup": {
+     "$ref": "InventoryGroup"
+    }
+   },
+   "required": [
+    "index",
+    "inventoryGroup"
+   ],
+   "type": "object"
+  },
+  "InventoryGroupNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "InventoryGroupNameFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "InventoryGroupNameFilterType": {
+   "description": "**InventoryGroupNameFilterType Enum:** | InventoryGroupNameFilterType | Description | | --- | --- | | `EXACT_MATCH` | Filter by exact match. |",
+   "enum": [
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "InventoryGroupSortOption": {
+   "properties": {
+    "by": {
+     "$ref": "InventoryGroupSortOptionsFields"
+    },
+    "direction": {
+     "$ref": "SortDirection"
+    }
+   },
+   "required": [
+    "by"
+   ],
+   "type": "object"
+  },
+  "InventoryGroupSortOptionsFields": {
+   "description": "Specify which field to order by. | Field Name | Supported Ordering | | --- | --- | | creationDateTime | ASCENDING,DESCENDING | | inventoryGroupId | ASCENDING,DESCENDING | | inventoryType | ASCENDING,DESCENDING | | name …",
+   "enum": [
+    "creationDateTime",
+    "inventoryGroupId",
+    "inventoryType",
+    "name"
+   ],
+   "type": "string"
+  },
+  "InventoryGroupSuccessResponse": {
+   "properties": {
+    "inventoryGroups": {
+     "items": {
+      "$ref": "InventoryGroup"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "totalResults": {
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "InventoryGroupUpdate": {
+   "properties": {
+    "advertisingDealIds": {
+     "description": "Collection of advertising deal ids included in this inventory group. Maximum 100 deals per group for public APIs. Private APIs may support up to 1000 deals.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "curationSourceSettings": {
+     "$ref": "UpdateCurationSourceSettings"
+    },
+    "description": {
+     "description": "Optional description of the inventory group. Provides additional context about the deals included and intended use.",
+     "type": "string"
+    },
+    "inventoryGroupId": {
+     "description": "Unique identifier for the inventory group.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the inventory group.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "inventoryGroupId"
+   ],
+   "type": "object"
+  },
+  "InventoryType": {
+   "description": "**InventoryType Enum:** | InventoryType | Description | |------|------| | `AUDIO` | Audio ads that serve on streaming audio inventory. | | `DISPLAY` | | | `VIDEO` | |",
+   "enum": [
+    "AUDIO",
+    "DISPLAY",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "OpenInternet": {
+   "description": "Only deals from open internet supply sources are permitted. Amazon owned and operated inventory is excluded.",
+   "properties": {
+    "enabled": {
+     "description": "Must be set to true to activate this supply filter. Setting enabled to false is invalid and will be rejected.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "enabled"
+   ],
+   "type": "object"
+  },
+  "QueryInventoryGroupRequest": {
+   "properties": {
+    "curationSourceTypeFilter": {
+     "$ref": "InventoryGroupCurationSourceTypeFilter"
+    },
+    "inventoryGroupIdFilter": {
+     "$ref": "InventoryGroupInventoryGroupIdFilter"
+    },
+    "inventoryTypeFilter": {
+     "$ref": "InventoryGroupInventoryTypeFilter"
+    },
+    "maxResults": {
+     "default": 50,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "InventoryGroupNameFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "sort": {
+     "items": {
+      "$ref": "InventoryGroupSortOption"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SortDirection": {
+   "description": "**SortDirection Enum:** | SortDirection | Description | | --- | --- | | `ASCENDING` | Sort in ascending order | | `DESCENDING` | Sort in descending order |",
+   "enum": [
+    "ASCENDING",
+    "DESCENDING"
+   ],
+   "type": "string"
+  },
+  "SupplyAllowlist": {
+   "description": "Defines which supply sources are permitted for deal recommendations.",
+   "oneOf": [
+    {
+     "properties": {
+      "amazonOwnedAndOperated": {
+       "$ref": "AmazonOwnedAndOperated"
+      }
+     },
+     "required": [
+      "amazonOwnedAndOperated"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "customSources": {
+       "$ref": "CustomSources"
+      }
+     },
+     "required": [
+      "customSources"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "openInternet": {
+       "$ref": "OpenInternet"
+      }
+     },
+     "required": [
+      "openInternet"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateAmazonOwnedAndOperated": {
+   "description": "Only deals from Amazon owned and operated supply sources are permitted. Open internet inventory is excluded.",
+   "properties": {
+    "enabled": {
+     "description": "Must be set to true to activate this supply filter. Setting enabled to false is invalid and will be rejected.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateAutomaticDealSelectionControls": {
+   "description": "Advertiser-configured preferences that constrain which deals the automated recommendation system can recommend. These preferences filter the candidate deal pool before recommendations are generated.",
+   "properties": {
+    "adGroupId": {
+     "description": "The ad group associated with these automatic deal selection controls.",
+     "type": "string"
+    },
+    "dealTypePreference": {
+     "$ref": "DealTypePreference"
+    },
+    "supplyAllowlist": {
+     "$ref": "UpdateSupplyAllowlist"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateCurationSourceSettings": {
+   "description": "Configuration settings specific to a curation source type. Each variant contains settings applicable to a particular curation mode.",
+   "oneOf": [
+    {
+     "nullable": true,
+     "properties": {
+      "automaticDealSelectionControls": {
+       "$ref": "UpdateAutomaticDealSelectionControls"
+      }
+     },
+     "required": [
+      "automaticDealSelectionControls"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "UpdateCustomSources": {
+   "description": "Only the specified supply sources are permitted.",
+   "properties": {
+    "supplySourceIds": {
+     "description": "Supply source identifiers permitted for deal recommendations.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateInventoryGroupRequest": {
+   "properties": {
+    "inventoryGroups": {
+     "items": {
+      "$ref": "InventoryGroupUpdate"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "inventoryGroups"
+   ],
+   "type": "object"
+  },
+  "UpdateOpenInternet": {
+   "description": "Only deals from open internet supply sources are permitted. Amazon owned and operated inventory is excluded.",
+   "properties": {
+    "enabled": {
+     "description": "Must be set to true to activate this supply filter. Setting enabled to false is invalid and will be rejected.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateSupplyAllowlist": {
+   "description": "Defines which supply sources are permitted for deal recommendations.",
+   "oneOf": [
+    {
+     "properties": {
+      "customSources": {
+       "$ref": "UpdateCustomSources"
+      }
+     },
+     "required": [
+      "customSources"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonOwnedAndOperated": {
+       "$ref": "UpdateAmazonOwnedAndOperated"
+      }
+     },
+     "required": [
+      "amazonOwnedAndOperated"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "openInternet": {
+       "$ref": "UpdateOpenInternet"
+      }
+     },
+     "required": [
+      "openInternet"
+     ],
+     "type": "object"
+    }
+   ]
+  }
+ }
+}

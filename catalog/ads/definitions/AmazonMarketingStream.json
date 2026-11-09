@@ -1,0 +1,404 @@
+{
+ "api": "AmazonMarketingStream",
+ "file": "specs/dest/AmazonMarketingStream_prod_3p.json",
+ "schemas": {
+  "AccessForbiddenErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateDspStreamSubscriptionRequestContent": {
+   "properties": {
+    "clientRequestToken": {
+     "description": "Unique value supplied by the caller used to track identical API requests. Should request be re-tried, the caller should supply the same value. We recommend using GUID.",
+     "maxLength": 36,
+     "type": "string"
+    },
+    "dataSetId": {
+     "description": "Identifier of data set, callers can be subscribed to. Please refer to https://advertising.amazon.com/API/docs/en-us/amazon-marketing-stream/data-guide for the list of all data sets.",
+     "type": "string"
+    },
+    "destination": {
+     "$ref": "Destination"
+    },
+    "destinationArn": {
+     "description": "AWS ARN of the destination endpoint associated with the subscription. Supported destination types: - SQS",
+     "maxLength": 2048,
+     "type": "string"
+    },
+    "notes": {
+     "description": "Additional details associated with the subscription",
+     "maxLength": 128,
+     "type": "string"
+    }
+   },
+   "required": [
+    "clientRequestToken",
+    "dataSetId"
+   ],
+   "type": "object"
+  },
+  "CreateDspStreamSubscriptionResponseContent": {
+   "properties": {
+    "clientRequestToken": {
+     "description": "Unique value supplied by the caller used to track identical API requests. Should request be re-tried, the caller should supply the same value. We recommend using GUID.",
+     "maxLength": 36,
+     "type": "string"
+    },
+    "subscriptionId": {
+     "description": "Unique subscription identifier",
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "required": [
+    "clientRequestToken",
+    "subscriptionId"
+   ],
+   "type": "object"
+  },
+  "CreateStreamSubscriptionRequestContent": {
+   "properties": {
+    "clientRequestToken": {
+     "description": "Unique value supplied by the caller used to track identical API requests. Should request be re-tried, the caller should supply the same value. We recommend using GUID.",
+     "maxLength": 36,
+     "type": "string"
+    },
+    "dataSetId": {
+     "description": "Identifier of data set, callers can be subscribed to. Please refer to https://advertising.amazon.com/API/docs/en-us/amazon-marketing-stream/data-guide for the list of all data sets.",
+     "type": "string"
+    },
+    "destination": {
+     "$ref": "Destination"
+    },
+    "destinationArn": {
+     "description": "AWS ARN of the destination endpoint associated with the subscription. Supported destination types: - SQS",
+     "maxLength": 2048,
+     "type": "string"
+    },
+    "notes": {
+     "description": "Additional details associated with the subscription",
+     "maxLength": 128,
+     "type": "string"
+    }
+   },
+   "required": [
+    "clientRequestToken",
+    "dataSetId"
+   ],
+   "type": "object"
+  },
+  "CreateStreamSubscriptionResponseContent": {
+   "properties": {
+    "clientRequestToken": {
+     "description": "Unique value supplied by the caller used to track identical API requests. Should request be re-tried, the caller should supply the same value. We recommend using GUID.",
+     "maxLength": 36,
+     "type": "string"
+    },
+    "subscriptionId": {
+     "description": "Unique subscription identifier",
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "required": [
+    "clientRequestToken",
+    "subscriptionId"
+   ],
+   "type": "object"
+  },
+  "Destination": {
+   "properties": {
+    "firehoseDestination": {
+     "$ref": "FirehoseDestination"
+    },
+    "sqsDestination": {
+     "$ref": "SqsDestination"
+    }
+   },
+   "type": "object"
+  },
+  "FirehoseDestination": {
+   "properties": {
+    "deliveryStreamArn": {
+     "maxLength": 255,
+     "type": "string"
+    },
+    "subscriberRoleArn": {
+     "maxLength": 255,
+     "type": "string"
+    },
+    "subscriptionRoleArn": {
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "required": [
+    "deliveryStreamArn",
+    "subscriberRoleArn",
+    "subscriptionRoleArn"
+   ],
+   "type": "object"
+  },
+  "GetDspStreamSubscriptionResponseContent": {
+   "properties": {
+    "subscription": {
+     "$ref": "StreamSubscription"
+    }
+   },
+   "required": [
+    "subscription"
+   ],
+   "type": "object"
+  },
+  "GetStreamSubscriptionResponseContent": {
+   "properties": {
+    "subscription": {
+     "$ref": "StreamSubscription"
+    }
+   },
+   "required": [
+    "subscription"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "message"
+   ],
+   "type": "object"
+  },
+  "InvalidRequestErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "message"
+   ],
+   "type": "object"
+  },
+  "ListDspStreamSubscriptionsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Token which can be used to get the next page of results, if more entries exist",
+     "type": "string"
+    },
+    "subscriptions": {
+     "items": {
+      "$ref": "StreamSubscription"
+     },
+     "maxItems": 5000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "subscriptions"
+   ],
+   "type": "object"
+  },
+  "ListStreamSubscriptionsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Token which can be used to get the next page of results, if more entries exist",
+     "type": "string"
+    },
+    "subscriptions": {
+     "items": {
+      "$ref": "StreamSubscription"
+     },
+     "maxItems": 5000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "subscriptions"
+   ],
+   "type": "object"
+  },
+  "OperationConflictErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "message"
+   ],
+   "type": "object"
+  },
+  "ResourceNotFoundErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "message"
+   ],
+   "type": "object"
+  },
+  "SqsDestination": {
+   "properties": {
+    "queueArn": {
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "required": [
+    "queueArn"
+   ],
+   "type": "object"
+  },
+  "StreamSubscription": {
+   "properties": {
+    "createdDate": {
+     "description": "ISO8601 Timestamp",
+     "format": "date-time",
+     "type": "string"
+    },
+    "dataSetId": {
+     "description": "Identifier of data set, callers can be subscribed to. Please refer to https://advertising.amazon.com/API/docs/en-us/amazon-marketing-stream/data-guide for the list of all data sets.",
+     "type": "string"
+    },
+    "destination": {
+     "$ref": "Destination"
+    },
+    "destinationArn": {
+     "description": "AWS ARN of the destination endpoint associated with the subscription. Supported destination types: - SQS",
+     "maxLength": 2048,
+     "type": "string"
+    },
+    "notes": {
+     "description": "Additional details associated with the subscription",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "status": {
+     "$ref": "SubscriptionEntityStatus"
+    },
+    "subscriptionId": {
+     "description": "Unique subscription identifier",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "updatedDate": {
+     "description": "ISO8601 Timestamp",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "createdDate",
+    "dataSetId",
+    "status",
+    "subscriptionId",
+    "updatedDate"
+   ],
+   "type": "object"
+  },
+  "SubscriptionEntityStatus": {
+   "description": "Current status of the entity. Possible values are PROVISIONING, PENDING_CONFIRMATION, ACTIVE, ARCHIVED, FAILED_CONFIRMATION, SUSPENDED, FAILED_PROVISIONING",
+   "enum": [
+    "ACTIVE",
+    "ARCHIVED",
+    "FAILED_CONFIRMATION",
+    "FAILED_PROVISIONING",
+    "PENDING_CONFIRMATION",
+    "PROVISIONING",
+    "SUSPENDED"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedAccessErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateDspStreamSubscriptionRequestContent": {
+   "properties": {
+    "notes": {
+     "description": "Additional details associated with the subscription",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "status": {
+     "$ref": "UpdateEntityStatus"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateEntityStatus": {
+   "description": "Update the status of the entity",
+   "enum": [
+    "ARCHIVED"
+   ],
+   "type": "string"
+  },
+  "UpdateStreamSubscriptionRequestContent": {
+   "properties": {
+    "notes": {
+     "description": "Additional details associated with the subscription",
+     "maxLength": 128,
+     "type": "string"
+    },
+    "status": {
+     "$ref": "UpdateEntityStatus"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

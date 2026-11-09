@@ -1,0 +1,2671 @@
+{
+  "AplusPaginatedResponse": {
+    "allOf": [
+      "AplusResponse"
+    ],
+    "description": "The base response data for paginated A+ Content operations.",
+    "properties": {
+      "nextPageToken": {
+        "ref": "PageToken"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "AplusResponse": {
+    "description": "The base response data for all A+ Content operations when a request is successful or partially successful.",
+    "properties": {
+      "warnings": {
+        "ref": "MessageSet"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Asin": {
+    "description": "The Amazon Standard Identification Number (ASIN).",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AsinBadge": {
+    "description": "A flag that provides additional information about an ASIN.",
+    "enum": [
+      "BRAND_NOT_ELIGIBLE",
+      "CATALOG_NOT_FOUND",
+      "CONTENT_NOT_PUBLISHED",
+      "CONTENT_PUBLISHED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AsinBadgeSet": {
+    "description": "The set of ASIN badges.",
+    "properties": {},
+    "ref": "AsinBadge",
+    "required": [],
+    "type": "array"
+  },
+  "AsinImage": {
+    "description": "A single ASIN product with its associated image.",
+    "properties": {
+      "productAsin": {
+        "ref": "TextComponent"
+      },
+      "productImage": {
+        "ref": "ImageComponent"
+      }
+    },
+    "required": [
+      "productAsin",
+      "productImage"
+    ],
+    "type": "object"
+  },
+  "AsinImages": {
+    "description": "Wrapper for a single ASIN image entry.",
+    "properties": {
+      "asinImage": {
+        "ref": "AsinImage"
+      }
+    },
+    "required": [
+      "asinImage"
+    ],
+    "type": "object"
+  },
+  "AsinMetadata": {
+    "description": "The A+ Content ASIN with additional metadata for content management.",
+    "properties": {
+      "asin": {
+        "ref": "Asin"
+      },
+      "badgeSet": {
+        "ref": "AsinBadgeSet"
+      },
+      "contentReferenceKeySet": {
+        "ref": "ContentReferenceKeySet"
+      },
+      "imageUrl": {
+        "description": "The default image for the ASIN in the Amazon catalog.",
+        "type": "string"
+      },
+      "parent": {
+        "ref": "Asin"
+      },
+      "title": {
+        "description": "The title for the ASIN in the Amazon catalog.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "asin"
+    ],
+    "type": "object"
+  },
+  "AsinMetadataSet": {
+    "description": "The set of ASIN metadata.",
+    "properties": {},
+    "ref": "AsinMetadata",
+    "required": [],
+    "type": "array"
+  },
+  "AsinSet": {
+    "description": "The set of ASINs.",
+    "properties": {},
+    "ref": "Asin",
+    "required": [],
+    "type": "array"
+  },
+  "AssociationType": {
+    "description": "The type of relationship between media assets.",
+    "enum": [
+      "VIDEO_PAIRING"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "BrandStoryAboutModule": {
+    "description": "A Brand Story card with text-focused content for telling your Brand's story, mission, or values.",
+    "properties": {
+      "logoImage": {
+        "ref": "ImageComponent"
+      },
+      "slogan": {
+        "ref": "ParagraphComponent"
+      },
+      "title": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "logoImage"
+    ],
+    "type": "object"
+  },
+  "BrandStoryFourAsinModule": {
+    "description": "A Brand Story card displaying up to four product ASINs with images, enabling cross-selling to other products in your catalog.",
+    "properties": {
+      "asinImages": {
+        "description": "Exactly 4 ASIN image entries.",
+        "ref": "AsinImages",
+        "type": "array"
+      },
+      "brandStoreId": {
+        "ref": "TextComponent"
+      },
+      "title": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "asinImages",
+      "title"
+    ],
+    "type": "object"
+  },
+  "BrandStoryImageWithLogoModule": {
+    "description": "The required background card for all Brand Story Content.",
+    "properties": {
+      "description": {
+        "ref": "ParagraphComponent"
+      },
+      "desktopImage": {
+        "ref": "ImageComponent"
+      },
+      "mobileImage": {
+        "ref": "ImageComponent"
+      },
+      "title": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "desktopImage",
+      "mobileImage"
+    ],
+    "type": "object"
+  },
+  "BrandStoryMediaAssetModule": {
+    "description": "A Brand Story card featuring a single image as the primary visual element.",
+    "properties": {
+      "description": {
+        "ref": "ParagraphComponent"
+      },
+      "image": {
+        "ref": "ImageComponent"
+      },
+      "title": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "image"
+    ],
+    "type": "object"
+  },
+  "BrandStoryQuestionsModule": {
+    "description": "A Brand Story card with question-and-answer pairs about your Brand.",
+    "properties": {
+      "questionAnswerPairs": {
+        "description": "Exactly 3 question-answer pairs.",
+        "ref": "QuestionAnswerPairs",
+        "type": "array"
+      }
+    },
+    "required": [
+      "questionAnswerPairs"
+    ],
+    "type": "object"
+  },
+  "ColorType": {
+    "description": "The relative color scheme of content.",
+    "enum": [
+      "DARK",
+      "LIGHT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ComparisonFields": {
+    "description": "A wrapper object for a single comparison field.",
+    "properties": {
+      "comparisonField": {
+        "ref": "PlainTextItem"
+      }
+    },
+    "required": [
+      "comparisonField"
+    ],
+    "type": "object"
+  },
+  "ComparisonMetrics": {
+    "description": "A wrapper object for a single comparison row.",
+    "properties": {
+      "comparisonRow": {
+        "ref": "ComparisonRow"
+      }
+    },
+    "required": [
+      "comparisonRow"
+    ],
+    "type": "object"
+  },
+  "ComparisonProduct": {
+    "description": "A product in the comparison table carousel modules.",
+    "properties": {
+      "desktopImage": {
+        "ref": "ImageComponent"
+      },
+      "mobileImage": {
+        "ref": "ImageComponent"
+      },
+      "position": {
+        "description": "The position of the product in comparison display.",
+        "type": "integer"
+      },
+      "productAsin": {
+        "ref": "TextComponent"
+      },
+      "productTitle": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ComparisonProducts": {
+    "description": "A wrapper object for a single comparison product.",
+    "properties": {
+      "comparisonProduct": {
+        "ref": "ComparisonProduct"
+      }
+    },
+    "required": [
+      "comparisonProduct"
+    ],
+    "type": "object"
+  },
+  "ComparisonRow": {
+    "description": "Comparison row for table-based comparison modules.",
+    "properties": {
+      "additionalInfo": {
+        "ref": "TextComponent"
+      },
+      "comparisonFields": {
+        "description": "Collection of comparison field values, one set per product.",
+        "ref": "ComparisonFields",
+        "type": "array"
+      },
+      "comparisonType": {
+        "ref": "TextComponent"
+      },
+      "metricName": {
+        "ref": "TextComponent"
+      },
+      "position": {
+        "description": "The position of the comparison row.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ContentBadge": {
+    "description": "A flag that provides additional information about an A+ Content document.",
+    "enum": [
+      "BULK",
+      "GENERATED",
+      "LAUNCHPAD",
+      "PREMIUM",
+      "STANDARD"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ContentBadgeSet": {
+    "description": "The set of content badges.",
+    "properties": {},
+    "ref": "ContentBadge",
+    "required": [],
+    "type": "array"
+  },
+  "ContentDocument": {
+    "description": "The A+ Content document.",
+    "properties": {
+      "contentModuleList": {
+        "ref": "ContentModuleList"
+      },
+      "contentSubType": {
+        "ref": "ContentSubType"
+      },
+      "contentType": {
+        "ref": "ContentType"
+      },
+      "locale": {
+        "ref": "LanguageTag"
+      },
+      "name": {
+        "description": "The A+ Content document name.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "contentModuleList",
+      "contentType",
+      "locale",
+      "name"
+    ],
+    "type": "object"
+  },
+  "ContentMetadata": {
+    "description": "The metadata of an A+ Content document.",
+    "properties": {
+      "badgeSet": {
+        "ref": "ContentBadgeSet"
+      },
+      "marketplaceId": {
+        "ref": "MarketplaceId"
+      },
+      "name": {
+        "description": "The A+ Content document name.",
+        "type": "string"
+      },
+      "status": {
+        "ref": "ContentStatus"
+      },
+      "updateTime": {
+        "description": "The approximate age of the A+ Content document and metadata.",
+        "format": "date-time",
+        "type": "string"
+      }
+    },
+    "required": [
+      "badgeSet",
+      "marketplaceId",
+      "name",
+      "status",
+      "updateTime"
+    ],
+    "type": "object"
+  },
+  "ContentMetadataRecord": {
+    "description": "The metadata for an A+ Content document, with additional information for content management.",
+    "properties": {
+      "contentMetadata": {
+        "ref": "ContentMetadata"
+      },
+      "contentReferenceKey": {
+        "ref": "ContentReferenceKey"
+      }
+    },
+    "required": [
+      "contentMetadata",
+      "contentReferenceKey"
+    ],
+    "type": "object"
+  },
+  "ContentMetadataRecordList": {
+    "description": "A list of A+ Content metadata records.",
+    "properties": {},
+    "ref": "ContentMetadataRecord",
+    "required": [],
+    "type": "array"
+  },
+  "ContentModule": {
+    "description": "An A+ Content module.",
+    "properties": {
+      "brandStoryAbout": {
+        "ref": "BrandStoryAboutModule"
+      },
+      "brandStoryFourAsin": {
+        "ref": "BrandStoryFourAsinModule"
+      },
+      "brandStoryImageWithLogo": {
+        "ref": "BrandStoryImageWithLogoModule"
+      },
+      "brandStoryMediaAsset": {
+        "ref": "BrandStoryMediaAssetModule"
+      },
+      "brandStoryQuestions": {
+        "ref": "BrandStoryQuestionsModule"
+      },
+      "contentModuleType": {
+        "ref": "ContentModuleType"
+      },
+      "premiumComparisonCarousel": {
+        "ref": "PremiumComparisonCarouselModule"
+      },
+      "premiumComparisonScroller": {
+        "ref": "PremiumComparisonScrollerModule"
+      },
+      "premiumDualImageText": {
+        "ref": "PremiumDualImageTextModule"
+      },
+      "premiumFaq": {
+        "ref": "PremiumFaqModule"
+      },
+      "premiumFourColumnImages": {
+        "ref": "PremiumFourColumnImagesModule"
+      },
+      "premiumFullBackgroundImage": {
+        "ref": "PremiumFullBackgroundImageModule"
+      },
+      "premiumFullBackgroundText": {
+        "ref": "PremiumFullBackgroundTextModule"
+      },
+      "premiumHeroVideo": {
+        "ref": "PremiumHeroVideoModule"
+      },
+      "premiumHotspotImage": {
+        "ref": "PremiumHotspotImageModule"
+      },
+      "premiumHotspotImageText": {
+        "ref": "PremiumHotspotImageTextModule"
+      },
+      "premiumImageCarousel": {
+        "ref": "PremiumImageCarouselModule"
+      },
+      "premiumImageText": {
+        "ref": "PremiumImageTextModule"
+      },
+      "premiumNavigationCarousel": {
+        "ref": "PremiumNavigationCarouselModule"
+      },
+      "premiumRegimenCarousel": {
+        "ref": "PremiumRegimenCarouselModule"
+      },
+      "premiumTechSpecs": {
+        "ref": "PremiumTechSpecsModule"
+      },
+      "premiumText": {
+        "ref": "PremiumTextModule"
+      },
+      "premiumThreeColumnComparison": {
+        "ref": "PremiumThreeColumnComparisonModule"
+      },
+      "premiumVideoImageCarousel": {
+        "ref": "PremiumVideoImageCarouselModule"
+      },
+      "premiumVideoText": {
+        "ref": "PremiumVideoTextModule"
+      },
+      "standardCompanyLogo": {
+        "ref": "StandardCompanyLogoModule"
+      },
+      "standardComparisonTable": {
+        "ref": "StandardComparisonTableModule"
+      },
+      "standardFourImageText": {
+        "ref": "StandardFourImageTextModule"
+      },
+      "standardFourImageTextQuadrant": {
+        "ref": "StandardFourImageTextQuadrantModule"
+      },
+      "standardHeaderImageText": {
+        "ref": "StandardHeaderImageTextModule"
+      },
+      "standardImageSidebar": {
+        "ref": "StandardImageSidebarModule"
+      },
+      "standardImageTextOverlay": {
+        "ref": "StandardImageTextOverlayModule"
+      },
+      "standardMultipleImageText": {
+        "ref": "StandardMultipleImageTextModule"
+      },
+      "standardProductDescription": {
+        "ref": "StandardProductDescriptionModule"
+      },
+      "standardSingleImageHighlights": {
+        "ref": "StandardSingleImageHighlightsModule"
+      },
+      "standardSingleImageSpecsDetail": {
+        "ref": "StandardSingleImageSpecsDetailModule"
+      },
+      "standardSingleSideImage": {
+        "ref": "StandardSingleSideImageModule"
+      },
+      "standardTechSpecs": {
+        "ref": "StandardTechSpecsModule"
+      },
+      "standardText": {
+        "ref": "StandardTextModule"
+      },
+      "standardThreeImageText": {
+        "ref": "StandardThreeImageTextModule"
+      }
+    },
+    "required": [
+      "contentModuleType"
+    ],
+    "type": "object"
+  },
+  "ContentModuleList": {
+    "description": "A list of A+ Content modules.",
+    "properties": {},
+    "ref": "ContentModule",
+    "required": [],
+    "type": "array"
+  },
+  "ContentModuleType": {
+    "description": "The type of A+ Content module.",
+    "enum": [
+      "BRAND_STORY_ABOUT",
+      "BRAND_STORY_FOUR_ASIN",
+      "BRAND_STORY_IMAGE_WITH_LOGO",
+      "BRAND_STORY_MEDIA_ASSET",
+      "BRAND_STORY_QUESTIONS",
+      "PREMIUM_COMPARISON_CAROUSEL",
+      "PREMIUM_COMPARISON_SCROLLER",
+      "PREMIUM_DUAL_IMAGE_TEXT",
+      "PREMIUM_FAQ",
+      "PREMIUM_FOUR_COLUMN_IMAGES",
+      "PREMIUM_FULL_BACKGROUND_IMAGE",
+      "PREMIUM_FULL_BACKGROUND_TEXT",
+      "PREMIUM_HERO_VIDEO",
+      "PREMIUM_HOTSPOT_IMAGE",
+      "PREMIUM_HOTSPOT_IMAGE_TEXT",
+      "PREMIUM_IMAGE_CAROUSEL",
+      "PREMIUM_IMAGE_TEXT",
+      "PREMIUM_NAVIGATION_CAROUSEL",
+      "PREMIUM_REGIMEN_CAROUSEL",
+      "PREMIUM_TECH_SPECS",
+      "PREMIUM_TEXT",
+      "PREMIUM_THREE_COLUMN_COMPARISON",
+      "PREMIUM_VIDEO_IMAGE_CAROUSEL",
+      "PREMIUM_VIDEO_TEXT",
+      "STANDARD_COMPANY_LOGO",
+      "STANDARD_COMPARISON_TABLE",
+      "STANDARD_FOUR_IMAGE_TEXT",
+      "STANDARD_FOUR_IMAGE_TEXT_QUADRANT",
+      "STANDARD_HEADER_IMAGE_TEXT",
+      "STANDARD_IMAGE_SIDEBAR",
+      "STANDARD_IMAGE_TEXT_OVERLAY",
+      "STANDARD_MULTIPLE_IMAGE_TEXT",
+      "STANDARD_PRODUCT_DESCRIPTION",
+      "STANDARD_SINGLE_IMAGE_HIGHLIGHTS",
+      "STANDARD_SINGLE_IMAGE_SPECS_DETAIL",
+      "STANDARD_SINGLE_SIDE_IMAGE",
+      "STANDARD_TECH_SPECS",
+      "STANDARD_TEXT",
+      "STANDARD_THREE_IMAGE_TEXT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ContentRecord": {
+    "description": "A content document with additional information for content management.",
+    "properties": {
+      "contentDocument": {
+        "ref": "ContentDocument"
+      },
+      "contentMetadata": {
+        "ref": "ContentMetadata"
+      },
+      "contentReferenceKey": {
+        "ref": "ContentReferenceKey"
+      }
+    },
+    "required": [
+      "contentReferenceKey"
+    ],
+    "type": "object"
+  },
+  "ContentReferenceKey": {
+    "description": "A unique reference key for the A+ Content document.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ContentReferenceKeySet": {
+    "description": "A set of content reference keys.",
+    "properties": {},
+    "ref": "ContentReferenceKey",
+    "required": [],
+    "type": "array"
+  },
+  "ContentStatus": {
+    "description": "The submission status of the content document.",
+    "enum": [
+      "APPROVED",
+      "DRAFT",
+      "REJECTED",
+      "SUBMITTED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ContentSubType": {
+    "description": "The A+ Content document subtype.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ContentType": {
+    "description": "The A+ Content document type.",
+    "enum": [
+      "BrandStory",
+      "EBC",
+      "EMC"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CreateMediaRequest": {
+    "description": "The request body for creating a media asset.",
+    "properties": {
+      "descriptions": {
+        "description": "Accessibility descriptions for video assets.",
+        "ref": "DescriptionList"
+      },
+      "mediaId": {
+        "description": "An existing media asset identifier for reuse.",
+        "type": "string"
+      },
+      "mediaType": {
+        "description": "The type of media asset to create.",
+        "ref": "MediaType"
+      },
+      "relatedMedia": {
+        "description": "Related media to associate during creation.",
+        "ref": "RelatedMediaInputList"
+      },
+      "title": {
+        "description": "An optional title for the media asset.",
+        "type": "string"
+      },
+      "uploadDestinationId": {
+        "description": "The S3 upload destination identifier from the `createUploadDestination` operation.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "mediaType"
+    ],
+    "type": "object"
+  },
+  "CreateMediaResponse": {
+    "allOf": [
+      "AplusResponse",
+      "Media"
+    ],
+    "description": "The response for the `createMedia` operation.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "Decorator": {
+    "description": "A decorator applied to a content string value in order to create rich text.",
+    "properties": {
+      "depth": {
+        "description": "The relative intensity or variation of this decorator.",
+        "type": "integer"
+      },
+      "length": {
+        "description": "The number of content characters to alter with this decorator.",
+        "type": "integer"
+      },
+      "offset": {
+        "description": "The starting character of this decorator within the content string.",
+        "type": "integer"
+      },
+      "type": {
+        "ref": "DecoratorType"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "DecoratorSet": {
+    "description": "A set of content decorators.",
+    "properties": {},
+    "ref": "Decorator",
+    "required": [],
+    "type": "array"
+  },
+  "DecoratorType": {
+    "description": "The type of rich text decorator.",
+    "enum": [
+      "LIST_ITEM",
+      "LIST_ORDERED",
+      "LIST_UNORDERED",
+      "STYLE_BOLD",
+      "STYLE_ITALIC",
+      "STYLE_LINEBREAK",
+      "STYLE_PARAGRAPH",
+      "STYLE_UNDERLINE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Description": {
+    "description": "An accessibility description for a specific locale.",
+    "properties": {
+      "locale": {
+        "description": "A locale identifier (for example, `en-US`, `de-DE`).",
+        "type": "string"
+      },
+      "value": {
+        "description": "The accessibility description text for the locale.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "locale",
+      "value"
+    ],
+    "type": "object"
+  },
+  "DescriptionList": {
+    "description": "A list of locale-keyed accessibility descriptions.",
+    "properties": {},
+    "ref": "Description",
+    "required": [],
+    "type": "array"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "The error response for when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses returned when a request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "Faq": {
+    "description": "A single frequently asked question with its corresponding answer.",
+    "properties": {
+      "answer": {
+        "ref": "ParagraphComponent"
+      },
+      "question": {
+        "ref": "ParagraphComponent"
+      }
+    },
+    "required": [
+      "answer",
+      "question"
+    ],
+    "type": "object"
+  },
+  "Faqs": {
+    "description": "A wrapper object for a single FAQ entry.",
+    "properties": {
+      "faq": {
+        "ref": "Faq"
+      }
+    },
+    "required": [
+      "faq"
+    ],
+    "type": "object"
+  },
+  "GetContentDocumentResponse": {
+    "allOf": [
+      "AplusResponse"
+    ],
+    "properties": {
+      "contentRecord": {
+        "ref": "ContentRecord"
+      }
+    },
+    "required": [
+      "contentRecord"
+    ],
+    "type": "object"
+  },
+  "GetMediaResponse": {
+    "allOf": [
+      "AplusResponse",
+      "Media"
+    ],
+    "description": "The response for the `getMedia` operation.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "ImageCarouselPanel": {
+    "description": "A single panel within the image carousel that features rich text elements, a direct link to a product ASIN, and an image.",
+    "properties": {
+      "asin": {
+        "ref": "TextComponent"
+      },
+      "buttonText": {
+        "ref": "TextComponent"
+      },
+      "description": {
+        "ref": "ParagraphComponent"
+      },
+      "desktopImage": {
+        "ref": "ImageComponent"
+      },
+      "mobileImage": {
+        "ref": "ImageComponent"
+      },
+      "position": {
+        "description": "The position of the panel within the carousel.",
+        "type": "integer"
+      },
+      "title": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "desktopImage",
+      "mobileImage",
+      "position"
+    ],
+    "type": "object"
+  },
+  "ImageCarouselPanels": {
+    "description": "A wrapper object for a single image carousel panel.",
+    "properties": {
+      "imagePanel": {
+        "ref": "ImageCarouselPanel"
+      }
+    },
+    "required": [
+      "imagePanel"
+    ],
+    "type": "object"
+  },
+  "ImageColumn": {
+    "description": "A single column within a multi-column premium image module, containing an image, an optional headline, and an optional description.",
+    "properties": {
+      "description": {
+        "ref": "ParagraphComponent"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "image": {
+        "ref": "ImageComponent"
+      },
+      "position": {
+        "description": "Location of the column within the module.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "image",
+      "position"
+    ],
+    "type": "object"
+  },
+  "ImageColumns": {
+    "description": "Wrapper for a repeated image column entry in a multi-column premium image module.",
+    "properties": {
+      "imageColumn": {
+        "ref": "ImageColumn"
+      }
+    },
+    "required": [
+      "imageColumn"
+    ],
+    "type": "object"
+  },
+  "ImageComponent": {
+    "description": "A reference to an image, hosted in the A+ Content media library.",
+    "properties": {
+      "altText": {
+        "description": "The alternative text for the image.",
+        "type": "string"
+      },
+      "imageCropSpecification": {
+        "ref": "ImageCropSpecification"
+      },
+      "uploadDestinationId": {
+        "description": "This identifier is provided by the Selling Partner API for Uploads.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "altText",
+      "imageCropSpecification",
+      "uploadDestinationId"
+    ],
+    "type": "object"
+  },
+  "ImageCropSpecification": {
+    "description": "The instructions for optionally cropping an image.",
+    "properties": {
+      "offset": {
+        "ref": "ImageOffsets"
+      },
+      "size": {
+        "ref": "ImageDimensions"
+      }
+    },
+    "required": [
+      "size"
+    ],
+    "type": "object"
+  },
+  "ImageDimensions": {
+    "description": "The dimensions extending from the top left corner of the cropped image, or the top left corner of the original image if there is no cropping.",
+    "properties": {
+      "height": {
+        "ref": "IntegerWithUnits"
+      },
+      "width": {
+        "ref": "IntegerWithUnits"
+      }
+    },
+    "required": [
+      "height",
+      "width"
+    ],
+    "type": "object"
+  },
+  "ImageHotSpot": {
+    "description": "A hotspot with mobile image, title, description, and coordinates.",
+    "properties": {
+      "description": {
+        "ref": "TextComponent"
+      },
+      "mobileImage": {
+        "ref": "ImageComponent"
+      },
+      "title": {
+        "ref": "TextComponent"
+      },
+      "xCoordinate": {
+        "ref": "TextComponent"
+      },
+      "yCoordinate": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "mobileImage",
+      "title",
+      "xCoordinate",
+      "yCoordinate"
+    ],
+    "type": "object"
+  },
+  "ImageHotSpots": {
+    "description": "A wrapper object for a single ImageHotSpot.",
+    "properties": {
+      "imageHotSpot": {
+        "ref": "ImageHotSpot"
+      }
+    },
+    "required": [
+      "imageHotSpot"
+    ],
+    "type": "object"
+  },
+  "ImageOffsets": {
+    "description": "The top left corner of the cropped image, specified in the original image's coordinate space.",
+    "properties": {
+      "x": {
+        "ref": "IntegerWithUnits"
+      },
+      "y": {
+        "ref": "IntegerWithUnits"
+      }
+    },
+    "required": [
+      "x",
+      "y"
+    ],
+    "type": "object"
+  },
+  "ImageTextHotSpot": {
+    "description": "A hotspot with mobile image, title, and coordinates.",
+    "properties": {
+      "mobileImage": {
+        "ref": "ImageComponent"
+      },
+      "title": {
+        "ref": "TextComponent"
+      },
+      "xCoordinate": {
+        "ref": "TextComponent"
+      },
+      "yCoordinate": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "mobileImage",
+      "title",
+      "xCoordinate",
+      "yCoordinate"
+    ],
+    "type": "object"
+  },
+  "ImageTextHotSpots": {
+    "description": "A wrapper object for a single ImageTextHotSpot.",
+    "properties": {
+      "imageTextHotSpot": {
+        "ref": "ImageTextHotSpot"
+      }
+    },
+    "required": [
+      "imageTextHotSpot"
+    ],
+    "type": "object"
+  },
+  "IntegerWithUnits": {
+    "description": "A whole number dimension and its unit of measurement.",
+    "properties": {
+      "units": {
+        "description": "The unit of measurement.",
+        "type": "string"
+      },
+      "value": {
+        "description": "The dimension value.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "units",
+      "value"
+    ],
+    "type": "object"
+  },
+  "Issue": {
+    "description": "An issue associated with a media asset or pairing.",
+    "properties": {
+      "categories": {
+        "description": "List of issue categories.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "code": {
+        "description": "An issue code that identifies the type of issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the issue.",
+        "type": "string"
+      },
+      "propertyNames": {
+        "description": "Names of the properties associated with the issue, if applicable.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "severity": {
+        "description": "The severity of the issue.",
+        "enum": [
+          "ERROR",
+          "INFO",
+          "WARNING"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "categories",
+      "code",
+      "message",
+      "severity"
+    ],
+    "type": "object"
+  },
+  "IssueList": {
+    "description": "A list of issues associated with a media asset or pairing.",
+    "properties": {},
+    "ref": "Issue",
+    "required": [],
+    "type": "array"
+  },
+  "LanguageTag": {
+    "description": "The IETF language tag.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ListContentDocumentAsinRelationsResponse": {
+    "allOf": [
+      "AplusPaginatedResponse"
+    ],
+    "properties": {
+      "asinMetadataSet": {
+        "ref": "AsinMetadataSet"
+      }
+    },
+    "required": [
+      "asinMetadataSet"
+    ],
+    "type": "object"
+  },
+  "MarketplaceId": {
+    "description": "The identifier for the Amazon store where the A+ Content is published.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Media": {
+    "allOf": [
+      "MediaInfo"
+    ],
+    "description": "A media entity with its related media associations.",
+    "properties": {
+      "relatedMedia": {
+        "description": "Related media associations, one level deep.",
+        "ref": "RelatedMediaList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "MediaInfo": {
+    "description": "The core media entity attributes without associations.",
+    "properties": {
+      "descriptions": {
+        "description": "Accessibility descriptions for the media asset.",
+        "ref": "DescriptionList"
+      },
+      "issues": {
+        "description": "Issues associated with the media asset.",
+        "ref": "IssueList"
+      },
+      "mediaId": {
+        "description": "The unique identifier for the media asset.",
+        "type": "string"
+      },
+      "mediaType": {
+        "description": "The type of media asset.",
+        "ref": "MediaType"
+      },
+      "mediaUrl": {
+        "description": "The CDN URL for downloading or viewing the media asset.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The composite status of the media asset.",
+        "ref": "MediaStatus",
+        "type": "array"
+      },
+      "title": {
+        "description": "The title for the media asset.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "mediaId",
+      "mediaType",
+      "status",
+      "title"
+    ],
+    "type": "object"
+  },
+  "MediaInput": {
+    "description": "Input for referencing a media asset during creation.",
+    "properties": {
+      "mediaId": {
+        "description": "An existing media asset identifier for reuse in a new association.",
+        "type": "string"
+      },
+      "mediaType": {
+        "description": "The type of media asset.",
+        "ref": "MediaType"
+      },
+      "title": {
+        "description": "An optional title for the media asset.",
+        "type": "string"
+      },
+      "uploadDestinationId": {
+        "description": "The S3 upload destination identifier from the `createUploadDestination` operation, for a newly uploaded asset.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "mediaType"
+    ],
+    "type": "object"
+  },
+  "MediaStatus": {
+    "description": "A status value for a media asset or pairing.",
+    "enum": [
+      "AVAILABLE",
+      "NOT_APPROVED",
+      "PENDING_AMAZON",
+      "PENDING_PROCESSING",
+      "PENDING_REVIEW",
+      "PENDING_SELLING_PARTNER",
+      "UNABLE_TO_PROCESS"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "MediaType": {
+    "description": "The type of media asset.",
+    "enum": [
+      "IMAGE",
+      "VIDEO"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "MessageSet": {
+    "description": "A set of messages to the user, such as warnings or comments.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "MetricValueItem": {
+    "description": "A wrapper to hold the metric name and metric value.",
+    "properties": {
+      "metricName": {
+        "ref": "TextComponent"
+      },
+      "metricValue": {
+        "ref": "ParagraphComponent"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "NavigationCarouselPanel": {
+    "description": "A single panel within the navigation carousel that features rich text elements and an image.",
+    "properties": {
+      "description": {
+        "ref": "ParagraphComponent"
+      },
+      "desktopImage": {
+        "ref": "ImageComponent"
+      },
+      "mobileImage": {
+        "ref": "ImageComponent"
+      },
+      "navText": {
+        "ref": "TextComponent"
+      },
+      "position": {
+        "description": "The position of this panel within the carousel.",
+        "type": "integer"
+      },
+      "subtitle": {
+        "ref": "TextComponent"
+      },
+      "title": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "desktopImage",
+      "mobileImage",
+      "navText",
+      "position"
+    ],
+    "type": "object"
+  },
+  "NavigationCarouselPanels": {
+    "description": "A wrapper object for a single navigation carousel panel.",
+    "properties": {
+      "navigationPanel": {
+        "ref": "NavigationCarouselPanel"
+      }
+    },
+    "required": [
+      "navigationPanel"
+    ],
+    "type": "object"
+  },
+  "PageToken": {
+    "description": "A page token that is returned when the results of the call exceed the page size.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "ParagraphComponent": {
+    "description": "A list of rich text content, usually presented in a text box.",
+    "properties": {
+      "textList": {
+        "ref": "TextComponent",
+        "type": "array"
+      }
+    },
+    "required": [
+      "textList"
+    ],
+    "type": "object"
+  },
+  "PlainTextItem": {
+    "description": "Plain positional text, used in collections of brief labels and descriptors.",
+    "properties": {
+      "position": {
+        "description": "The rank or index of this text item within the collection.",
+        "type": "integer"
+      },
+      "value": {
+        "description": "The actual plain text.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "position",
+      "value"
+    ],
+    "type": "object"
+  },
+  "PositionType": {
+    "description": "The relative positioning of content.",
+    "enum": [
+      "LEFT",
+      "RIGHT"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "PostContentDocumentApprovalSubmissionResponse": {
+    "allOf": [
+      "AplusResponse"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "PostContentDocumentAsinRelationsRequest": {
+    "properties": {
+      "asinSet": {
+        "ref": "AsinSet"
+      }
+    },
+    "required": [
+      "asinSet"
+    ],
+    "type": "object"
+  },
+  "PostContentDocumentAsinRelationsResponse": {
+    "allOf": [
+      "AplusResponse"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "PostContentDocumentRequest": {
+    "properties": {
+      "contentDocument": {
+        "ref": "ContentDocument"
+      }
+    },
+    "required": [
+      "contentDocument"
+    ],
+    "type": "object"
+  },
+  "PostContentDocumentResponse": {
+    "allOf": [
+      "AplusResponse"
+    ],
+    "properties": {
+      "contentReferenceKey": {
+        "ref": "ContentReferenceKey"
+      }
+    },
+    "required": [
+      "contentReferenceKey"
+    ],
+    "type": "object"
+  },
+  "PostContentDocumentSuspendSubmissionResponse": {
+    "allOf": [
+      "AplusResponse"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "PremiumComparisonCarouselModule": {
+    "description": "A comparison table with product images, headline per product, and feature rows with text.",
+    "properties": {
+      "comparisonMetrics": {
+        "description": "The collection of comparison metrics, which must contain between 3 and 7 metrics.",
+        "ref": "ComparisonMetrics",
+        "type": "array"
+      },
+      "comparisonProducts": {
+        "description": "The collection of comparison products, which must contain between 3 and 5 products.",
+        "ref": "ComparisonProducts",
+        "type": "array"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "comparisonMetrics",
+      "comparisonProducts",
+      "headline"
+    ],
+    "type": "object"
+  },
+  "PremiumComparisonScrollerModule": {
+    "description": "A scrollable comparison view with full-height product images, chart headline, and feature rows with text per product.",
+    "properties": {
+      "comparisonProducts": {
+        "description": "The collection of comparison products, which must contain between 3 and 7 products.",
+        "ref": "ComparisonProducts",
+        "type": "array"
+      },
+      "comparisonRows": {
+        "description": "The collection of comparison rows, which must contain between 5 and 12 rows.",
+        "ref": "ComparisonMetrics",
+        "type": "array"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "showATC": {
+        "description": "Whether to show Add to Cart buttons.",
+        "type": "boolean"
+      },
+      "showPrices": {
+        "description": "Whether to show product prices.",
+        "type": "boolean"
+      },
+      "showReviews": {
+        "description": "Whether to show product reviews.",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "comparisonProducts",
+      "comparisonRows",
+      "headline"
+    ],
+    "type": "object"
+  },
+  "PremiumDualImageTextModule": {
+    "description": "Two images displayed side by side with a single headline above.",
+    "properties": {
+      "columns": {
+        "description": "The collection of image columns, which must contain exactly 2 columns.",
+        "ref": "ImageColumns",
+        "type": "array"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "columns"
+    ],
+    "type": "object"
+  },
+  "PremiumFaqModule": {
+    "description": "A list of question-and-answer pairs with a configurable background color scheme of light or dark.",
+    "properties": {
+      "colorType": {
+        "ref": "ColorType"
+      },
+      "faqs": {
+        "description": "The collection of FAQ entries, which must contain between 2 and 5 FAQs.",
+        "ref": "Faqs",
+        "type": "array"
+      }
+    },
+    "required": [
+      "faqs"
+    ],
+    "type": "object"
+  },
+  "PremiumFourColumnImagesModule": {
+    "description": "Four images displayed in a row with a single headline above.",
+    "properties": {
+      "columns": {
+        "description": "The collection of image columns, which must contain between 3 and 4 columns.",
+        "ref": "ImageColumns",
+        "type": "array"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "columns"
+    ],
+    "type": "object"
+  },
+  "PremiumFullBackgroundImageModule": {
+    "description": "A full-width background image that spans the entire module width, with optional headline and body text below.",
+    "properties": {
+      "desktopImage": {
+        "ref": "ImageComponent"
+      },
+      "footer": {
+        "ref": "ParagraphComponent"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "mobileImage": {
+        "ref": "ImageComponent"
+      }
+    },
+    "required": [
+      "desktopImage",
+      "mobileImage"
+    ],
+    "type": "object"
+  },
+  "PremiumFullBackgroundTextModule": {
+    "description": "A full-width background image with a text overlay box containing subheadline, headline, and body text.",
+    "properties": {
+      "colorType": {
+        "ref": "ColorType"
+      },
+      "description": {
+        "ref": "ParagraphComponent"
+      },
+      "desktopImage": {
+        "ref": "ImageComponent"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "mobileImage": {
+        "ref": "ImageComponent"
+      },
+      "positionType": {
+        "ref": "PositionType"
+      },
+      "subheadline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "colorType",
+      "desktopImage",
+      "mobileImage",
+      "positionType"
+    ],
+    "type": "object"
+  },
+  "PremiumHeroVideoModule": {
+    "description": "A full-width video with optional headline and body text below.",
+    "properties": {
+      "footer": {
+        "ref": "ParagraphComponent"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "heroVideo": {
+        "ref": "VideoComponent"
+      }
+    },
+    "required": [
+      "heroVideo"
+    ],
+    "type": "object"
+  },
+  "PremiumHotspotImageModule": {
+    "description": "A full-width image with clickable hotspot markers that reveal headline and descriptive text for each point of interest.",
+    "properties": {
+      "desktopImage": {
+        "ref": "ImageComponent"
+      },
+      "hotSpots": {
+        "description": "The collection of hotspots, which must contain between 2 and 6 hotspots.",
+        "ref": "ImageHotSpots",
+        "type": "array"
+      }
+    },
+    "required": [
+      "desktopImage",
+      "hotSpots"
+    ],
+    "type": "object"
+  },
+  "PremiumHotspotImageTextModule": {
+    "description": "A full-width image with clickable hotspot markers, plus a module headline and body text above the image.",
+    "properties": {
+      "desktopImage": {
+        "ref": "ImageComponent"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "hotSpots": {
+        "description": "The collection of hotspots, which must contain between 2 and 6 hotspots.",
+        "ref": "ImageTextHotSpots",
+        "type": "array"
+      },
+      "mainDescription": {
+        "ref": "ParagraphComponent"
+      }
+    },
+    "required": [
+      "desktopImage",
+      "headline",
+      "hotSpots"
+    ],
+    "type": "object"
+  },
+  "PremiumImageCarouselModule": {
+    "description": "A carousel of full-width image panels, each with its own headline and body text.",
+    "properties": {
+      "carouselCards": {
+        "description": "The collection of image panels, which must contain between 2 and 6 panels.",
+        "ref": "ImageCarouselPanels",
+        "type": "array"
+      },
+      "footer": {
+        "ref": "ParagraphComponent"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "carouselCards"
+    ],
+    "type": "object"
+  },
+  "PremiumImageTextModule": {
+    "description": "A single image paired with text, positioned side by side.",
+    "properties": {
+      "bodyText": {
+        "ref": "ParagraphComponent"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "image": {
+        "ref": "ImageComponent"
+      },
+      "positionType": {
+        "ref": "PositionType"
+      },
+      "subheadline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "headline",
+      "image",
+      "positionType"
+    ],
+    "type": "object"
+  },
+  "PremiumNavigationCarouselModule": {
+    "description": "A carousel of full-width image panels with clickable navigation tabs.",
+    "properties": {
+      "carouselCards": {
+        "description": "The collection of navigation panels, which must contain between 2 and 5 panels.",
+        "ref": "NavigationCarouselPanels",
+        "type": "array"
+      }
+    },
+    "required": [
+      "carouselCards"
+    ],
+    "type": "object"
+  },
+  "PremiumRegimenCarouselModule": {
+    "description": "A carousel with a module headline, full-width image panels, and navigation tabs.",
+    "properties": {
+      "carouselCards": {
+        "description": "The collection of regimen panels, which must contain between 2 and 5 panels.",
+        "ref": "RegimenCarouselPanels",
+        "type": "array"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "carouselCards"
+    ],
+    "type": "object"
+  },
+  "PremiumTechSpecsModule": {
+    "description": "A structured list of specification-definition pairs with a headline, for presenting key technical details of your product.",
+    "properties": {
+      "columnCount": {
+        "description": "The number of columns to display in the technical specifications table, with options between 1 and 2 columns.",
+        "type": "integer"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "techSpecs": {
+        "description": "The collection of technical specifications, which must contain between 4 and 16 technical specifications.",
+        "ref": "TechSpecs",
+        "type": "array"
+      }
+    },
+    "required": [
+      "headline",
+      "techSpecs"
+    ],
+    "type": "object"
+  },
+  "PremiumTextModule": {
+    "description": "A text-only module with headline and body text, allowing greater character limits than other modules for explaining more details or instructions on your product.",
+    "properties": {
+      "description": {
+        "ref": "ParagraphComponent"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "description"
+    ],
+    "type": "object"
+  },
+  "PremiumThreeColumnComparisonModule": {
+    "description": "A comparison table displaying products side by side with features, tooltips, and detail rows.",
+    "properties": {
+      "comparisonProducts": {
+        "description": "The three products being compared.",
+        "ref": "ThreeColumnComparisonProduct",
+        "type": "array"
+      },
+      "comparisonRows": {
+        "description": "The rows of the comparison table.",
+        "ref": "ThreeColumnComparisonRow",
+        "type": "array"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "comparisonProducts",
+      "comparisonRows",
+      "headline"
+    ],
+    "type": "object"
+  },
+  "PremiumVideoImageCarouselModule": {
+    "description": "A carousel of panels, each containing a video or image with its own panel headline, subheadline, and body text.",
+    "properties": {
+      "carouselCards": {
+        "description": "The list of carousel panels, between 2 and 6 items.",
+        "ref": "VideoImageCarouselPanels",
+        "type": "array"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "carouselCards"
+    ],
+    "type": "object"
+  },
+  "PremiumVideoTextModule": {
+    "description": "A video paired with text containing subheadline, headline, and body text.",
+    "properties": {
+      "description": {
+        "ref": "ParagraphComponent"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "positionType": {
+        "ref": "PositionType"
+      },
+      "title": {
+        "ref": "TextComponent"
+      },
+      "video": {
+        "ref": "VideoComponent"
+      }
+    },
+    "required": [
+      "headline",
+      "positionType",
+      "video"
+    ],
+    "type": "object"
+  },
+  "PublishRecord": {
+    "description": "The full context for an A+ Content publishing event.",
+    "properties": {
+      "asin": {
+        "ref": "Asin"
+      },
+      "contentReferenceKey": {
+        "ref": "ContentReferenceKey"
+      },
+      "contentSubType": {
+        "ref": "ContentSubType"
+      },
+      "contentType": {
+        "ref": "ContentType"
+      },
+      "locale": {
+        "ref": "LanguageTag"
+      },
+      "marketplaceId": {
+        "ref": "MarketplaceId"
+      }
+    },
+    "required": [
+      "asin",
+      "contentReferenceKey",
+      "contentType",
+      "locale",
+      "marketplaceId"
+    ],
+    "type": "object"
+  },
+  "PublishRecordList": {
+    "description": "A list of A+ Content publishing records.",
+    "properties": {},
+    "ref": "PublishRecord",
+    "required": [],
+    "type": "array"
+  },
+  "QuestionAnswerPair": {
+    "description": "A single question and answer pair.",
+    "properties": {
+      "answer": {
+        "ref": "ParagraphComponent"
+      },
+      "question": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "answer",
+      "question"
+    ],
+    "type": "object"
+  },
+  "QuestionAnswerPairs": {
+    "description": "Wrapper for a single question-answer pair.",
+    "properties": {
+      "questionAnswerPair": {
+        "ref": "QuestionAnswerPair"
+      }
+    },
+    "required": [
+      "questionAnswerPair"
+    ],
+    "type": "object"
+  },
+  "RegimenCarouselPanel": {
+    "description": "A single panel within the regimen carousel that features rich text elements and an image.",
+    "properties": {
+      "description": {
+        "ref": "ParagraphComponent"
+      },
+      "desktopImage": {
+        "ref": "ImageComponent"
+      },
+      "mobileImage": {
+        "ref": "ImageComponent"
+      },
+      "navText": {
+        "ref": "TextComponent"
+      },
+      "position": {
+        "description": "The position of the panel within the carousel.",
+        "type": "integer"
+      },
+      "title": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "desktopImage",
+      "mobileImage",
+      "navText",
+      "position"
+    ],
+    "type": "object"
+  },
+  "RegimenCarouselPanels": {
+    "description": "A wrapper object for a single regimen carousel panel.",
+    "properties": {
+      "regimenPanel": {
+        "ref": "RegimenCarouselPanel"
+      }
+    },
+    "required": [
+      "regimenPanel"
+    ],
+    "type": "object"
+  },
+  "RelatedMedia": {
+    "description": "A relationship between media assets, representing a pairing with its own title, status, and lifecycle.",
+    "properties": {
+      "associationType": {
+        "description": "The type of relationship.",
+        "ref": "AssociationType"
+      },
+      "issues": {
+        "description": "Issues associated with this pairing.",
+        "ref": "IssueList"
+      },
+      "media": {
+        "description": "The associated media asset, without nested associations.",
+        "ref": "MediaInfo"
+      },
+      "status": {
+        "description": "The composite status of this pairing.",
+        "ref": "MediaStatus",
+        "type": "array"
+      },
+      "title": {
+        "description": "The title for this pairing.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "associationType",
+      "media",
+      "status",
+      "title"
+    ],
+    "type": "object"
+  },
+  "RelatedMediaInput": {
+    "description": "Input for creating a media association.",
+    "properties": {
+      "associationType": {
+        "description": "The type of relationship to create.",
+        "ref": "AssociationType"
+      },
+      "media": {
+        "description": "The media asset to associate.",
+        "ref": "MediaInput"
+      },
+      "title": {
+        "description": "The title for this pairing.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "associationType",
+      "media",
+      "title"
+    ],
+    "type": "object"
+  },
+  "RelatedMediaInputList": {
+    "description": "A list of related media inputs for creation.",
+    "properties": {},
+    "ref": "RelatedMediaInput",
+    "required": [],
+    "type": "array"
+  },
+  "RelatedMediaList": {
+    "description": "A list of related media associations.",
+    "properties": {},
+    "ref": "RelatedMedia",
+    "required": [],
+    "type": "array"
+  },
+  "SearchContentDocumentsResponse": {
+    "allOf": [
+      "AplusPaginatedResponse"
+    ],
+    "properties": {
+      "contentMetadataRecords": {
+        "description": "The content metadata records.",
+        "ref": "ContentMetadataRecordList"
+      }
+    },
+    "required": [
+      "contentMetadataRecords"
+    ],
+    "type": "object"
+  },
+  "SearchContentPublishRecordsResponse": {
+    "allOf": [
+      "AplusPaginatedResponse"
+    ],
+    "properties": {
+      "publishRecordList": {
+        "ref": "PublishRecordList"
+      }
+    },
+    "required": [
+      "publishRecordList"
+    ],
+    "type": "object"
+  },
+  "StandardCompanyLogoModule": {
+    "description": "The standard company logo image.",
+    "properties": {
+      "companyLogo": {
+        "ref": "ImageComponent"
+      }
+    },
+    "required": [
+      "companyLogo"
+    ],
+    "type": "object"
+  },
+  "StandardComparisonProductBlock": {
+    "description": "The A+ Content standard comparison product block.",
+    "properties": {
+      "asin": {
+        "ref": "Asin"
+      },
+      "highlight": {
+        "description": "Determines whether this block of content is visually highlighted.",
+        "type": "boolean"
+      },
+      "image": {
+        "ref": "ImageComponent"
+      },
+      "metrics": {
+        "description": "Comparison metrics for the product.",
+        "ref": "PlainTextItem",
+        "type": "array"
+      },
+      "position": {
+        "description": "The rank or index of this comparison product block within the module.",
+        "type": "integer"
+      },
+      "title": {
+        "description": "The comparison product title.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "position"
+    ],
+    "type": "object"
+  },
+  "StandardComparisonTableModule": {
+    "description": "The standard product comparison table.",
+    "properties": {
+      "metricRowLabels": {
+        "ref": "PlainTextItem",
+        "type": "array"
+      },
+      "productColumns": {
+        "ref": "StandardComparisonProductBlock",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StandardFourImageTextModule": {
+    "description": "Four standard images with text, presented across a single row.",
+    "properties": {
+      "block1": {
+        "ref": "StandardImageTextBlock"
+      },
+      "block2": {
+        "ref": "StandardImageTextBlock"
+      },
+      "block3": {
+        "ref": "StandardImageTextBlock"
+      },
+      "block4": {
+        "ref": "StandardImageTextBlock"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StandardFourImageTextQuadrantModule": {
+    "description": "Four standard images with text, presented on a grid of four quadrants.",
+    "properties": {
+      "block1": {
+        "ref": "StandardImageTextBlock"
+      },
+      "block2": {
+        "ref": "StandardImageTextBlock"
+      },
+      "block3": {
+        "ref": "StandardImageTextBlock"
+      },
+      "block4": {
+        "ref": "StandardImageTextBlock"
+      }
+    },
+    "required": [
+      "block1",
+      "block2",
+      "block3",
+      "block4"
+    ],
+    "type": "object"
+  },
+  "StandardHeaderImageTextModule": {
+    "description": "Standard headline text, an image, and body text.",
+    "properties": {
+      "block": {
+        "ref": "StandardImageTextBlock"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StandardHeaderTextListBlock": {
+    "description": "The A+ standard fixed-length list of text, with a related headline.",
+    "properties": {
+      "block": {
+        "ref": "StandardTextListBlock"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StandardImageCaptionBlock": {
+    "description": "The A+ Content standard image and caption block.",
+    "properties": {
+      "caption": {
+        "ref": "TextComponent"
+      },
+      "image": {
+        "ref": "ImageComponent"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StandardImageSidebarModule": {
+    "description": "Two images, two paragraphs, and two bulleted lists.",
+    "properties": {
+      "descriptionListBlock": {
+        "ref": "StandardTextListBlock"
+      },
+      "descriptionTextBlock": {
+        "ref": "StandardTextBlock"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "imageCaptionBlock": {
+        "ref": "StandardImageCaptionBlock"
+      },
+      "sidebarImageTextBlock": {
+        "ref": "StandardImageTextBlock"
+      },
+      "sidebarListBlock": {
+        "ref": "StandardTextListBlock"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StandardImageTextBlock": {
+    "description": "The A+ Content standard image and text box block.",
+    "properties": {
+      "body": {
+        "ref": "ParagraphComponent"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "image": {
+        "ref": "ImageComponent"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StandardImageTextCaptionBlock": {
+    "description": "The A+ Content standard image and text block, with a related caption.",
+    "properties": {
+      "block": {
+        "ref": "StandardImageTextBlock"
+      },
+      "caption": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StandardImageTextOverlayModule": {
+    "description": "A standard background image with a floating text box.",
+    "properties": {
+      "block": {
+        "ref": "StandardImageTextBlock"
+      },
+      "overlayColorType": {
+        "ref": "ColorType"
+      }
+    },
+    "required": [
+      "overlayColorType"
+    ],
+    "type": "object"
+  },
+  "StandardMultipleImageTextModule": {
+    "description": "Standard images with text, presented one at a time.",
+    "properties": {
+      "blocks": {
+        "ref": "StandardImageTextCaptionBlock",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StandardProductDescriptionModule": {
+    "description": "Standard product description text.",
+    "properties": {
+      "body": {
+        "ref": "ParagraphComponent"
+      }
+    },
+    "required": [
+      "body"
+    ],
+    "type": "object"
+  },
+  "StandardSingleImageHighlightsModule": {
+    "description": "A standard image with several paragraphs and a bulleted list.",
+    "properties": {
+      "bulletedListBlock": {
+        "ref": "StandardHeaderTextListBlock"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "image": {
+        "ref": "ImageComponent"
+      },
+      "textBlock1": {
+        "ref": "StandardTextBlock"
+      },
+      "textBlock2": {
+        "ref": "StandardTextBlock"
+      },
+      "textBlock3": {
+        "ref": "StandardTextBlock"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StandardSingleImageSpecsDetailModule": {
+    "description": "A standard image with paragraphs and a bulleted list, and extra space for technical details.",
+    "properties": {
+      "descriptionBlock1": {
+        "ref": "StandardTextBlock"
+      },
+      "descriptionBlock2": {
+        "ref": "StandardTextBlock"
+      },
+      "descriptionHeadline": {
+        "ref": "TextComponent"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "image": {
+        "ref": "ImageComponent"
+      },
+      "specificationHeadline": {
+        "ref": "TextComponent"
+      },
+      "specificationListBlock": {
+        "ref": "StandardHeaderTextListBlock"
+      },
+      "specificationTextBlock": {
+        "ref": "StandardTextBlock"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StandardSingleSideImageModule": {
+    "description": "A standard headline and body text with an image on the side.",
+    "properties": {
+      "block": {
+        "ref": "StandardImageTextBlock"
+      },
+      "imagePositionType": {
+        "ref": "PositionType"
+      }
+    },
+    "required": [
+      "imagePositionType"
+    ],
+    "type": "object"
+  },
+  "StandardTechSpecsModule": {
+    "description": "The standard table of technical feature names and definitions.",
+    "properties": {
+      "headline": {
+        "ref": "TextComponent"
+      },
+      "specificationList": {
+        "description": "The specification list.",
+        "ref": "StandardTextPairBlock",
+        "type": "array"
+      },
+      "tableCount": {
+        "description": "The number of tables to present.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "specificationList"
+    ],
+    "type": "object"
+  },
+  "StandardTextBlock": {
+    "description": "The A+ Content standard text box block, comprised of a paragraph with a headline.",
+    "properties": {
+      "body": {
+        "ref": "ParagraphComponent"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StandardTextListBlock": {
+    "description": "The A+ Content standard fixed length list of text, usually presented as bullet points.",
+    "properties": {
+      "textList": {
+        "ref": "TextItem",
+        "type": "array"
+      }
+    },
+    "required": [
+      "textList"
+    ],
+    "type": "object"
+  },
+  "StandardTextModule": {
+    "description": "A standard headline and body text.",
+    "properties": {
+      "body": {
+        "ref": "ParagraphComponent"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "body"
+    ],
+    "type": "object"
+  },
+  "StandardTextPairBlock": {
+    "description": "The A+ Content standard label and description block, comprised of a pair of text components.",
+    "properties": {
+      "description": {
+        "ref": "TextComponent"
+      },
+      "label": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "StandardThreeImageTextModule": {
+    "description": "Three standard images with text, presented across a single row.",
+    "properties": {
+      "block1": {
+        "ref": "StandardImageTextBlock"
+      },
+      "block2": {
+        "ref": "StandardImageTextBlock"
+      },
+      "block3": {
+        "ref": "StandardImageTextBlock"
+      },
+      "headline": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TechSpec": {
+    "description": "A single technical specification with a key-value pair.",
+    "properties": {
+      "specKey": {
+        "ref": "TextComponent"
+      },
+      "specValue": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "specKey",
+      "specValue"
+    ],
+    "type": "object"
+  },
+  "TechSpecs": {
+    "description": "A wrapper object for a single technical specification.",
+    "properties": {
+      "techSpec": {
+        "ref": "TechSpec"
+      }
+    },
+    "required": [
+      "techSpec"
+    ],
+    "type": "object"
+  },
+  "TextComponent": {
+    "description": "Rich text content.",
+    "properties": {
+      "decoratorSet": {
+        "ref": "DecoratorSet"
+      },
+      "value": {
+        "description": "The actual plain text.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "value"
+    ],
+    "type": "object"
+  },
+  "TextItem": {
+    "description": "Rich positional text, usually presented as a collection of bullet points.",
+    "properties": {
+      "position": {
+        "description": "The rank or index of this text item within the collection.",
+        "type": "integer"
+      },
+      "text": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [
+      "position",
+      "text"
+    ],
+    "type": "object"
+  },
+  "ThreeColumnComparisonProduct": {
+    "description": "A product in the three-column comparison table.",
+    "properties": {
+      "image": {
+        "ref": "ImageComponent"
+      },
+      "position": {
+        "description": "Location of the product within the comparison table.",
+        "type": "integer"
+      },
+      "productAsin": {
+        "ref": "TextComponent"
+      },
+      "productTitle": {
+        "ref": "TextComponent"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ThreeColumnComparisonRow": {
+    "description": "A comparison row with metric values for each product.",
+    "properties": {
+      "metricValues": {
+        "description": "The metric values for each of the three products in this row.",
+        "ref": "MetricValueItem",
+        "type": "array"
+      },
+      "position": {
+        "description": "Location of the row within the comparison table.",
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UpdateMediaRequest": {
+    "description": "The request body for updating media metadata.",
+    "properties": {
+      "descriptions": {
+        "description": "Updated accessibility descriptions.",
+        "ref": "DescriptionList"
+      },
+      "title": {
+        "description": "The updated title.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "UpdateMediaResponse": {
+    "allOf": [
+      "AplusResponse",
+      "Media"
+    ],
+    "description": "The response for the updateMedia operation.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "ValidateContentDocumentAsinRelationsResponse": {
+    "allOf": [
+      "AplusResponse",
+      "ErrorList"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "VideoComponent": {
+    "description": "A reference to a video asset hosted within A+, including metadata and a preview thumbnail image.",
+    "properties": {
+      "imageCropSpecification": {
+        "ref": "ImageCropSpecification"
+      },
+      "imageMediaId": {
+        "description": "This identifier is provided by the create media response, used to locate an uploaded image file.",
+        "type": "string"
+      },
+      "videoMediaId": {
+        "description": "This identifier is provided by the create media response, used to locate an uploaded video file.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "imageCropSpecification",
+      "imageMediaId",
+      "videoMediaId"
+    ],
+    "type": "object"
+  },
+  "VideoImageCarouselPanel": {
+    "description": "A single panel within the video/image carousel containing a video or image with optional text.",
+    "properties": {
+      "description": {
+        "ref": "ParagraphComponent"
+      },
+      "desktopImage": {
+        "ref": "ImageComponent"
+      },
+      "mobileImage": {
+        "ref": "ImageComponent"
+      },
+      "position": {
+        "description": "The position of the panel within the carousel.",
+        "type": "integer"
+      },
+      "positionType": {
+        "ref": "PositionType"
+      },
+      "subheadline": {
+        "ref": "TextComponent"
+      },
+      "title": {
+        "ref": "TextComponent"
+      },
+      "video": {
+        "ref": "VideoComponent"
+      }
+    },
+    "required": [
+      "position"
+    ],
+    "type": "object"
+  },
+  "VideoImageCarouselPanels": {
+    "description": "A wrapper object for a single video/image carousel panel.",
+    "properties": {
+      "videoCarouselPanel": {
+        "ref": "VideoImageCarouselPanel"
+      }
+    },
+    "required": [
+      "videoCarouselPanel"
+    ],
+    "type": "object"
+  }
+}

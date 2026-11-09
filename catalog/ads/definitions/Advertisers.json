@@ -1,0 +1,75 @@
+{
+ "api": "Advertisers",
+ "file": "specs/dest/Advertisers_prod_3p.json",
+ "schemas": {
+  "AccountBudgetFeatureFlagsError": {
+   "description": "The Error Response Object.",
+   "properties": {
+    "code": {
+     "description": "An enumerated code for machine use.",
+     "enum": [
+      "ENTRY_NOT_FOUND",
+      "INVALID_PARAMETER_VALUE",
+      "OK"
+     ],
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "FeatureFlags": {
+   "description": "Feature flags for account budget, which denotes that advertiser Opted In/Out from specific budget feature.",
+   "properties": {
+    "isOptedOutForAverageDailyBudgetIncrease": {
+     "description": "Denotes the opt in/out decision for AverageDailyBudgetIncrease feature. If the entity spends less than your daily budget, the unspent amount can be used to increase your daily budget to 100% (if opted in) or 25% (if opt…",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "GetAccountBudgetFeatureFlagsResponse": {
+   "description": "Response to get account budget feature flags information.",
+   "properties": {
+    "featureFlags": {
+     "$ref": "FeatureFlags"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateAccountBudgetFeatureFlagsRequest": {
+   "description": "Request to update account budget feature flags information.",
+   "properties": {
+    "featureFlags": {
+     "$ref": "FeatureFlags"
+    }
+   },
+   "required": [
+    "featureFlags"
+   ],
+   "type": "object"
+  },
+  "UpdateAccountBudgetFeatureFlagsResponse": {
+   "description": "Response for update account budget feature flags information.",
+   "properties": {
+    "code": {
+     "description": "An enumerated code for machine use.",
+     "enum": [
+      "ENTRY_NOT_FOUND",
+      "INVALID_PARAMETER_VALUE",
+      "OK"
+     ],
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

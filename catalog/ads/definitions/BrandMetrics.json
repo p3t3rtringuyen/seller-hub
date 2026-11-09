@@ -1,0 +1,333 @@
+{
+ "api": "BrandMetrics",
+ "file": "specs/dest/BrandMetrics_prod_3p.json",
+ "schemas": {
+  "brandMetricsError": {
+   "description": "The error response object.",
+   "properties": {
+    "code": {
+     "description": "http status code.",
+     "type": "string"
+    },
+    "details": {
+     "description": "high level human readable message.",
+     "type": "string"
+    },
+    "errors": {
+     "description": "A list of the errors encountered.",
+     "items": {
+      "properties": {
+       "errorCode": {
+        "description": "enum indicating the category of error. Example `INVALID_HEADER`.",
+        "type": "string"
+       },
+       "errorId": {
+        "description": "ID to indicate the granular error.",
+        "type": "integer"
+       },
+       "errorMessage": {
+        "description": "human readable error message for each error.",
+        "type": "string"
+       }
+      },
+      "type": "object"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "brandMetricsGenerateReportRequest": {
+   "description": "Request object to generate the Brand Metrics Report.",
+   "properties": {
+    "brandName": {
+     "description": "Optional. Brand Name. If no Brand Name is passed, then all data available for all brands belonging to the entity are retrieved.",
+     "type": "string"
+    },
+    "categoryPath": {
+     "description": "Optional. The hierarchical path that leads to a node starting with the root node. If no Category Node Name is passed, then all data available for all brands belonging to the entity are retrieved.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "categoryTreeName": {
+     "description": "Optional. The node at the top of a browse tree. It is the start node of a tree.",
+     "type": "string"
+    },
+    "format": {
+     "default": "JSON",
+     "description": "Format of the report.",
+     "enum": [
+      "CSV",
+      "JSON"
+     ],
+     "type": "string"
+    },
+    "lookBackPeriod": {
+     "default": "1W",
+     "description": "Currently supported values: \"1w\" (one week), \"1m\" (one month) and \"1cm\" (one calendar month). This defines the period of time used to determine the number of shoppers in the metrics computation.",
+     "enum": [
+      "1CM",
+      "1M",
+      "1W"
+     ],
+     "type": "string"
+    },
+    "metrics": {
+     "description": "Optional. Specify an array of string of metrics field names to include in the report. If no metric field names are specified, all metrics are returned.",
+     "items": {
+      "description": "**engagedShopperRateLowerBound** - Lower bound on the percentage of unique shoppers in a category that your brand has driven an engagement with or purchase from int the selected time frame divided by the total unique sh…",
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "reportEndDate": {
+     "description": "Optional. Retrieves metrics with metricsComputationDate between reportStartDate and reportEndDate (inclusive). The maximum allowed date range for report generation is 3 months. The date will be in the Coordinated Univer…",
+     "format": "date",
+     "type": "string"
+    },
+    "reportStartDate": {
+     "description": "Optional. Retrieves metrics with metricsComputationDate between reportStartDate and reportEndDate (inclusive). The maximum allowed date range for report generation is 3 months. The date will be in the Coordinated Univer…",
+     "format": "date",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "brandMetricsGenerateReportRequestV11": {
+   "description": "Request object to generate the Brand Metrics Report.",
+   "properties": {
+    "brandName": {
+     "description": "Optional. Brand Name. If no Brand Name is passed, then all data available for all brands belonging to the entity are retrieved.",
+     "type": "string"
+    },
+    "categoryPath": {
+     "description": "Optional. The hierarchical path that leads to a node starting with the root node. If no Category Node Name is passed, then all data available for all brands belonging to the entity are retrieved.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "categoryTreeName": {
+     "description": "Optional. The node at the top of a browse tree. It is the start node of a tree.",
+     "type": "string"
+    },
+    "format": {
+     "default": "JSON",
+     "description": "Format of the report.",
+     "enum": [
+      "CSV",
+      "JSON"
+     ],
+     "type": "string"
+    },
+    "lookBackPeriod": {
+     "default": "1w",
+     "description": "Currently supported values: \"1w\" (one week), \"1m\" (one month) and \"1cm\" (one calendar month). This defines the period of time used to determine the number of shoppers in the metrics computation.",
+     "enum": [
+      "1cm",
+      "1m",
+      "1w"
+     ],
+     "type": "string"
+    },
+    "metrics": {
+     "description": "Optional. Specify an array of string of metrics field names to include in the report. If no metric field names are specified, all metrics are returned.",
+     "items": {
+      "description": "**totalSnSCustomers** - The total number of customers who had one or more Subscribe & Save purchases on any brand ASIN in the chosen retail browse node/category in a given lookback period. **newToBrandSnSCustomersRate**…",
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "reportEndDate": {
+     "description": "Optional. Retrieves metrics with metricsComputationDate between reportStartDate and reportEndDate (inclusive). The maximum allowed date range for report generation is 3 months. The date will be in the Coordinated Univer…",
+     "format": "date",
+     "type": "string"
+    },
+    "reportStartDate": {
+     "description": "Optional. Retrieves metrics with metricsComputationDate between reportStartDate and reportEndDate (inclusive). The maximum allowed date range for report generation is 3 months. The date will be in the Coordinated Univer…",
+     "format": "date",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "brandMetricsGenerateReportResponse": {
+   "description": "Response object containing Brand Metrics Report metadata.",
+   "properties": {
+    "expiration": {
+     "description": "The expiration time of the URI in the location property in milliseconds. The expiration time is the interval between the time the response was generated and the time the URI expires.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "format": {
+     "default": "JSON",
+     "description": "Format of the report.",
+     "enum": [
+      "CSV",
+      "JSON"
+     ],
+     "type": "string"
+    },
+    "location": {
+     "description": "The URI address of the report.",
+     "type": "string"
+    },
+    "reportId": {
+     "description": "The identifier of the report.",
+     "type": "string"
+    },
+    "status": {
+     "description": "The build status of the report.",
+     "enum": [
+      "FAILED",
+      "IN_PROGRESS",
+      "SUCCESSFUL"
+     ],
+     "type": "string"
+    },
+    "statusDetails": {
+     "description": "A human-readable description of the current status.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "expiration",
+    "format",
+    "reportId",
+    "status",
+    "statusDetails"
+   ],
+   "type": "object"
+  },
+  "brandMetricsGenerateReportResponseV11": {
+   "description": "Response object containing Brand Metrics Report metadata.",
+   "properties": {
+    "expiration": {
+     "description": "The expiration time of the URI in the location property in milliseconds. The expiration time is the interval between the time the response was generated and the time the URI expires.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "format": {
+     "default": "JSON",
+     "description": "Format of the report.",
+     "enum": [
+      "CSV",
+      "JSON"
+     ],
+     "type": "string"
+    },
+    "location": {
+     "description": "The URI address of the report.",
+     "type": "string"
+    },
+    "reportId": {
+     "description": "The identifier of the report.",
+     "type": "string"
+    },
+    "status": {
+     "description": "The build status of the report.",
+     "enum": [
+      "FAILED",
+      "IN_PROGRESS",
+      "SUCCESSFUL"
+     ],
+     "type": "string"
+    },
+    "statusDetails": {
+     "description": "A human-readable description of the current status.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "expiration",
+    "format",
+    "reportId",
+    "status",
+    "statusDetails"
+   ],
+   "type": "object"
+  },
+  "brandMetricsGetReportByIdResponse": {
+   "description": "Response object containing Brand Metrics Report status metadata.",
+   "properties": {
+    "brandsInfo": {
+     "description": "List of first 200 brands for which the Brand Metrics report is generated. The report may contain more than 200 brands. This list is only populated with brands if the Brand Metrics are available for the brands that an ad…",
+     "items": {
+      "properties": {
+       "id": {
+        "description": "GCOR ID from Brand Registry.",
+        "type": "string"
+       },
+       "name": {
+        "description": "Brand Name.",
+        "type": "string"
+       }
+      },
+      "type": "object"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "expiration": {
+     "description": "The expiration time of the URI in the location property in milliseconds. The expiration time is the interval between the time the response was generated and the time the URI expires.",
+     "format": "int64",
+     "type": "integer"
+    },
+    "format": {
+     "default": "JSON",
+     "description": "Format of the report.",
+     "enum": [
+      "CSV",
+      "JSON"
+     ],
+     "type": "string"
+    },
+    "location": {
+     "description": "The URI address of the report. Only available if the report is generated successfully. The location is empty if the Brand Metrics are not available or if the report is not generated successfully.",
+     "type": "string"
+    },
+    "reportId": {
+     "description": "The identifier of the report.",
+     "type": "string"
+    },
+    "status": {
+     "description": "The build status of the report.",
+     "enum": [
+      "FAILED",
+      "IN_PROGRESS",
+      "SUCCESSFUL"
+     ],
+     "type": "string"
+    },
+    "statusDetails": {
+     "description": "A human-readable description of the current status.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "expiration",
+    "format",
+    "reportId",
+    "status",
+    "statusDetails"
+   ],
+   "type": "object"
+  }
+ }
+}

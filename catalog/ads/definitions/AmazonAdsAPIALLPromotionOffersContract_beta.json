@@ -1,0 +1,522 @@
+{
+ "api": "AmazonAdsAPIALLPromotionOffersContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLPromotionOffersContract_prod_3p_BETA.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `SPONSORED_PRODUCTS` | Sponsored Products ad product. | | `SPONSORED_BRANDS` | Sponsored Brands ad product. | | `SPONSORED_DISPLAY` | Sponsored Display ad …",
+   "enum": [
+    "SPONSORED_BRANDS",
+    "SPONSORED_DISPLAY",
+    "SPONSORED_PRODUCTS",
+    "SPONSORED_TELEVISION"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CampaignLaunchFulfilmentCriterion": {
+   "properties": {
+    "endDateTime": {
+     "description": "The deadline by which advertisers must create the corresponding campaign in order to qualify for the promotion offer.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The date from which advertisers must create the corresponding campaign in order to qualify for the promotion offer.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "CriterionStatus"
+    }
+   },
+   "required": [
+    "endDateTime",
+    "startDateTime",
+    "status"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CriterionStatus": {
+   "enum": [
+    "COMPLETED",
+    "IN_PROGRESS",
+    "NOT_STARTED"
+   ],
+   "type": "string"
+  },
+  "CurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | | --- | --- | | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `CLP` | Chilean Peso | |…",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CLP",
+    "COP",
+    "EGP",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "NGN",
+    "PLN",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "ACCOUNT_NOT_ELIGIBLE",
+    "BAD_REQUEST",
+    "EXPIRED_PROMOTION_CODE",
+    "INTERNAL_ERROR",
+    "INVALID_PROMOTION_CODE",
+    "MAXIMUM_REDEMPTIONS_REACHED",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "FulfilmentCriterion": {
+   "oneOf": [
+    {
+     "properties": {
+      "campaignLaunchFulfilmentCriterion": {
+       "$ref": "CampaignLaunchFulfilmentCriterion"
+      }
+     },
+     "required": [
+      "campaignLaunchFulfilmentCriterion"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "spendsFulfilmentCriterion": {
+       "$ref": "SpendsFulfilmentCriterion"
+      }
+     },
+     "required": [
+      "spendsFulfilmentCriterion"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Marketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "CL",
+    "CO",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NG",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "PromotionCampaign": {
+   "description": "Represents a promotional campaign that offers click credits to advertisers based on meeting specific spending thresholds within a defined timeframe. Supports both single-tier and multi-tier reward structures for differe…",
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "title": {
+     "description": "Title of the promotion campaign.",
+     "type": "string"
+    },
+    "tncUrl": {
+     "description": "The Url of the Terms and condition page for the promotion campaign.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adProduct",
+    "title",
+    "tncUrl"
+   ],
+   "type": "object"
+  },
+  "PromotionOffer": {
+   "properties": {
+    "accountId": {
+     "description": "The account id for which the promotion offer is created. Only supports global advertiser account id.",
+     "type": "string"
+    },
+    "description": {
+     "description": "Description of the promotion offer.",
+     "type": "string"
+    },
+    "fulfilmentCriteria": {
+     "description": "The fulfilment criteria of the promotion offer. Can include up to two criteria: a CampaignLaunchFulfilmentCriterion and a SpendsFulfilmentCriterion. For example, a promotion offer might require launching a Sponsored Pro…",
+     "items": {
+      "$ref": "FulfilmentCriterion"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "marketplace": {
+     "$ref": "Marketplace"
+    },
+    "promotionCampaign": {
+     "$ref": "PromotionCampaign"
+    },
+    "promotionOfferId": {
+     "description": "The unique identifier of the promotion offer.",
+     "type": "string"
+    },
+    "promotionRewardId": {
+     "description": "The promotion reward Id associated to the promotion offer.",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "PromotionOfferStatus"
+    }
+   },
+   "required": [
+    "accountId",
+    "description",
+    "fulfilmentCriteria",
+    "marketplace",
+    "promotionCampaign",
+    "promotionOfferId",
+    "status"
+   ],
+   "type": "object"
+  },
+  "PromotionOfferMarketplaceFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "Marketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "PromotionOfferPromotionOfferStatusFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "PromotionOfferStatus"
+     },
+     "maxItems": 4,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "PromotionOfferStatus": {
+   "enum": [
+    "AVAILABLE",
+    "IN_PROGRESS",
+    "MISSED",
+    "REWARDED"
+   ],
+   "type": "string"
+  },
+  "PromotionOfferSuccessResponse": {
+   "properties": {
+    "contentLanguage": {
+     "type": "string"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "promotionOffers": {
+     "items": {
+      "$ref": "PromotionOffer"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "contentLanguage"
+   ],
+   "type": "object"
+  },
+  "QueryPromotionOfferRequest": {
+   "properties": {
+    "marketplaceFilter": {
+     "$ref": "PromotionOfferMarketplaceFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "statusFilter": {
+     "$ref": "PromotionOfferPromotionOfferStatusFilter"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SpendsFulfilmentCriterion": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "endDateTime": {
+     "description": "The deadline by which the spend threshold must be met. This is only populated after the campaign is launched.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "spend": {
+     "description": "The current amount spent by the advertiser towards meeting the spend threshold. This is only populated after the campaign is launched.",
+     "format": "double",
+     "type": "number"
+    },
+    "startDateTime": {
+     "description": "The date from which advertiser spends start being tracked towards the threshold. This is only populated after the campaign is launched.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "status": {
+     "$ref": "CriterionStatus"
+    },
+    "tiers": {
+     "description": "Different spend threshold tiers with corresponding reward amounts associated to the same promotion offer.",
+     "items": {
+      "$ref": "SpendsTier"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "status",
+    "tiers"
+   ],
+   "type": "object"
+  },
+  "SpendsTier": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "CurrencyCode"
+    },
+    "description": {
+     "description": "The description of the spending tier.",
+     "type": "string"
+    },
+    "reward": {
+     "description": "The click credits amount to be rewarded when this tier's threshold is met.",
+     "format": "double",
+     "type": "number"
+    },
+    "threshold": {
+     "description": "The minimum spend amount required for this tier.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "description",
+    "reward",
+    "threshold"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

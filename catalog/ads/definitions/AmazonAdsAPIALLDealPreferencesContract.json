@@ -1,0 +1,411 @@
+{
+ "api": "AmazonAdsAPIALLDealPreferencesContract",
+ "file": "specs/dest/AmazonAdsAPIALLDealPreferencesContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateDealPreferenceRequest": {
+   "properties": {
+    "dealPreferences": {
+     "items": {
+      "$ref": "DealPreferenceCreate"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "dealPreferences"
+   ],
+   "type": "object"
+  },
+  "CreateDealPreferenceTarget": {
+   "description": "A targeting reference that identifies a specific supplier target item within a destination and publisher.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of targets. Targets sharing the same groupId are combined with OR logic. Different groupIds are combined with AND logic. If absent, the target is treated as its own implicit group (ANDed w…",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Indicates whether this target is negative (excluded). If not present, defaults to false (inclusive).",
+     "type": "boolean"
+    },
+    "supplierPublisherId": {
+     "description": "The publisher that owns the target item.",
+     "nullable": true,
+     "type": "string"
+    },
+    "supplierTargetDestinationId": {
+     "description": "The supplier destination for this target (e.g., AmazonMedia, AmazonSP, AdX).",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The specific target item to include or exclude.",
+     "type": "string"
+    },
+    "supplierTargetType": {
+     "$ref": "SupplierTargetType"
+    }
+   },
+   "required": [
+    "groupId",
+    "negative",
+    "supplierTargetDestinationId",
+    "supplierTargetItemId",
+    "supplierTargetType"
+   ],
+   "type": "object"
+  },
+  "DealPreference": {
+   "properties": {
+    "advertiserAccountId": {
+     "description": "The advertiser account that owns this deal preference.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date and time the deal preference was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "dealPreferenceId": {
+     "description": "Unique identifier for the deal preference.",
+     "type": "string"
+    },
+    "dealPreferenceTargets": {
+     "description": "The targeting settings inherited by deals created under this advertiser account. Targets with the same groupId are combined with OR logic; different groupIds are combined with AND logic. Targets with negative set to tru…",
+     "items": {
+      "$ref": "DealPreferenceTarget"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date and time the deal preference was last updated.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertiserAccountId",
+    "creationDateTime",
+    "dealPreferenceId",
+    "lastUpdatedDateTime"
+   ],
+   "type": "object"
+  },
+  "DealPreferenceCreate": {
+   "properties": {
+    "dealPreferenceTargets": {
+     "description": "The targeting settings inherited by deals created under this advertiser account. Targets with the same groupId are combined with OR logic; different groupIds are combined with AND logic. Targets with negative set to tru…",
+     "items": {
+      "$ref": "CreateDealPreferenceTarget"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DealPreferenceMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "DealPreferenceMultiStatusSuccess"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DealPreferenceMultiStatusSuccess": {
+   "properties": {
+    "dealPreference": {
+     "$ref": "DealPreference"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 19,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "dealPreference",
+    "index"
+   ],
+   "type": "object"
+  },
+  "DealPreferenceSuccessResponse": {
+   "properties": {
+    "dealPreferences": {
+     "items": {
+      "$ref": "DealPreference"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DealPreferenceTarget": {
+   "description": "A targeting reference that identifies a specific supplier target item within a destination and publisher.",
+   "properties": {
+    "groupId": {
+     "description": "The string identifying a group of targets. Targets sharing the same groupId are combined with OR logic. Different groupIds are combined with AND logic. If absent, the target is treated as its own implicit group (ANDed w…",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Indicates whether this target is negative (excluded). If not present, defaults to false (inclusive).",
+     "type": "boolean"
+    },
+    "supplierPublisherId": {
+     "description": "The publisher that owns the target item.",
+     "type": "string"
+    },
+    "supplierTargetDestinationId": {
+     "description": "The supplier destination for this target (e.g., AmazonMedia, AmazonSP, AdX).",
+     "type": "string"
+    },
+    "supplierTargetItemId": {
+     "description": "The specific target item to include or exclude.",
+     "type": "string"
+    },
+    "supplierTargetType": {
+     "$ref": "SupplierTargetType"
+    }
+   },
+   "required": [
+    "groupId",
+    "negative",
+    "supplierTargetDestinationId",
+    "supplierTargetItemId",
+    "supplierTargetType"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `BAD_REQUEST` | The request is not valid considering the documented schema. | | `FORBIDDEN` | The caller is not authorized to make the given request. | |…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 19,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SupplierTargetType": {
+   "enum": [
+    "CONTENT_CATEGORY"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

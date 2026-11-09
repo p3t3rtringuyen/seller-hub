@@ -1,0 +1,754 @@
+{
+  "Audience": {
+    "description": "Buyer segment or program this offer is applicable to.",
+    "properties": {
+      "displayName": {
+        "description": "Localized display name for the audience.",
+        "type": "string"
+      },
+      "value": {
+        "description": "Name of the audience an offer is applicable to.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Decimal": {
+    "description": "A decimal number with no loss of precision.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "FulfillmentAvailability": {
+    "description": "The listings item's fulfillment availability details.",
+    "properties": {
+      "fulfillmentChannelCode": {
+        "description": "Designates which fulfillment network is used.",
+        "type": "string"
+      },
+      "quantity": {
+        "description": "The item quantity that you're making available for sale.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "fulfillmentChannelCode"
+    ],
+    "type": "object"
+  },
+  "Issue": {
+    "description": "An issue with a listings item.",
+    "properties": {
+      "attributeNames": {
+        "description": "Names of the attributes that are associated with the issue, if applicable.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "categories": {
+        "description": "List of issue categories.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "code": {
+        "description": "An issue code that identifies the type of issue.",
+        "type": "string"
+      },
+      "enforcements": {
+        "description": "Information about enforcement actions by Amazon that affect the publishing or status of a listing, including any associated exemptions.",
+        "ref": "IssueEnforcements"
+      },
+      "marketplaceIds": {
+        "description": "List of Amazon store identifiers.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "message": {
+        "description": "A message that describes the issue.",
+        "type": "string"
+      },
+      "severity": {
+        "description": "The severity of the issue.",
+        "enum": [
+          "ERROR",
+          "INFO",
+          "WARNING"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "categories",
+      "code",
+      "message",
+      "severity"
+    ],
+    "type": "object"
+  },
+  "IssueEnforcementAction": {
+    "description": "An enforcement action that Amazon takes that affects the publishing or status of a listing.",
+    "properties": {
+      "action": {
+        "description": "The enforcement action name.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "action"
+    ],
+    "type": "object"
+  },
+  "IssueEnforcements": {
+    "description": "Provides information about the enforcement actions taken by Amazon that affect the publishing or status of a listing.",
+    "properties": {
+      "actions": {
+        "description": "List of enforcement actions taken by Amazon that affect the publishing or status of a listing.",
+        "ref": "IssueEnforcementAction",
+        "type": "array"
+      },
+      "exemption": {
+        "description": "The `exemption` field serves to convey the status of enforcement actions by Amazon.",
+        "ref": "IssueExemption"
+      }
+    },
+    "required": [
+      "actions",
+      "exemption"
+    ],
+    "type": "object"
+  },
+  "IssueExemption": {
+    "description": "The status of the listed enforcement actions.",
+    "properties": {
+      "expiryDate": {
+        "description": "The timestamp, in ISO 8601 format, when the temporary exemption expires and Amazon begins enforcing the listed actions.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "status": {
+        "description": "Indicates the current exemption status for the listed enforcement actions.",
+        "enum": [
+          "EXEMPT",
+          "EXEMPT_UNTIL_EXPIRY_DATE",
+          "NOT_EXEMPT"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "status"
+    ],
+    "type": "object"
+  },
+  "Item": {
+    "description": "A listings item.",
+    "properties": {
+      "attributes": {
+        "ref": "ItemAttributes"
+      },
+      "fulfillmentAvailability": {
+        "description": "The listings item's fulfillment availability.",
+        "ref": "FulfillmentAvailability",
+        "type": "array"
+      },
+      "issues": {
+        "ref": "ItemIssues"
+      },
+      "offers": {
+        "ref": "ItemOffers"
+      },
+      "procurement": {
+        "description": "The listings item's vendor procurement information.",
+        "ref": "ItemProcurement",
+        "type": "array"
+      },
+      "productTypes": {
+        "ref": "ItemProductTypes"
+      },
+      "relationships": {
+        "ref": "ItemRelationships"
+      },
+      "sku": {
+        "description": "A selling partner-provided identifier for an Amazon listing.",
+        "type": "string"
+      },
+      "summaries": {
+        "ref": "ItemSummaries"
+      }
+    },
+    "required": [
+      "sku"
+    ],
+    "type": "object"
+  },
+  "ItemAttributes": {
+    "description": "JSON object containing structured listings item attribute data keyed by attribute name.",
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "ItemIdentifiers": {
+    "description": "Identity attributes associated with the item in the Amazon catalog, such as the ASIN.",
+    "properties": {},
+    "ref": "ItemIdentifiersByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemIdentifiersByMarketplace": {
+    "description": "Identity attributes associated with the item in the Amazon catalog for the indicated Amazon store.",
+    "properties": {
+      "asin": {
+        "description": "The ASIN of the listings item.",
+        "type": "string"
+      },
+      "marketplaceId": {
+        "description": "Amazon store identifier.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "ItemImage": {
+    "description": "The listings item's image.",
+    "properties": {
+      "height": {
+        "description": "The image's height, in pixels.",
+        "type": "integer"
+      },
+      "link": {
+        "description": "The image's link or URL.",
+        "type": "string"
+      },
+      "width": {
+        "description": "The image's width, in pixels.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "height",
+      "link",
+      "width"
+    ],
+    "type": "object"
+  },
+  "ItemIssues": {
+    "description": "Issues associated with the listings item.",
+    "properties": {},
+    "ref": "Issue",
+    "required": [],
+    "type": "array"
+  },
+  "ItemOfferByMarketplace": {
+    "description": "Offer details for a listings item for the specified Amazon store.",
+    "properties": {
+      "audience": {
+        "description": "Buyer segment or program this offer is applicable to.",
+        "ref": "Audience"
+      },
+      "marketplaceId": {
+        "description": "Amazon store identifier.",
+        "type": "string"
+      },
+      "offerType": {
+        "description": "The listings item's offer type.",
+        "enum": [
+          "B2B",
+          "B2C"
+        ],
+        "type": "string"
+      },
+      "points": {
+        "ref": "Points"
+      },
+      "price": {
+        "description": "The purchase price of the listings item.",
+        "ref": "Money"
+      },
+      "quantityDiscountPlan": {
+        "description": "The quantity discount plan applicable to this offer.",
+        "ref": "QuantityDiscountPlan"
+      },
+      "replenishmentDiscount": {
+        "description": "The seller-funded discount configured on this offer for the Subscribe & Save program.",
+        "ref": "ReplenishmentDiscount"
+      }
+    },
+    "required": [
+      "marketplaceId",
+      "offerType",
+      "price"
+    ],
+    "type": "object"
+  },
+  "ItemOffers": {
+    "description": "The listings item's offer details.",
+    "properties": {},
+    "ref": "ItemOfferByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemProcurement": {
+    "description": "The listings item's vendor procurement information.",
+    "properties": {
+      "costPrice": {
+        "description": "The price (numeric value) that you want Amazon to pay you for this product.",
+        "ref": "Money"
+      }
+    },
+    "required": [
+      "costPrice"
+    ],
+    "type": "object"
+  },
+  "ItemProductTypeByMarketplace": {
+    "description": "Product types that are associated with the listing item for the specified Amazon store.",
+    "properties": {
+      "marketplaceId": {
+        "description": "Amazon store identifier.",
+        "type": "string"
+      },
+      "productType": {
+        "description": "The name of the product type that is submitted by the Selling Partner.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "marketplaceId",
+      "productType"
+    ],
+    "type": "object"
+  },
+  "ItemProductTypes": {
+    "description": "Product types for a listing item, by Amazon store.",
+    "properties": {},
+    "ref": "ItemProductTypeByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemRelationship": {
+    "description": "The relationship details for a listing item.",
+    "properties": {
+      "childSkus": {
+        "description": "Identifiers (SKUs) of the related items that are children of this listing item.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "parentSkus": {
+        "description": "Identifiers (SKUs) of the related items that are parents of this listing item.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "type": {
+        "description": "The type of relationship.",
+        "enum": [
+          "PACKAGE_HIERARCHY",
+          "VARIATION"
+        ],
+        "type": "string"
+      },
+      "variationTheme": {
+        "description": "For `VARIATION` relationships, the variation theme is the combination of listing item attributes that define the variation family.",
+        "ref": "ItemVariationTheme"
+      }
+    },
+    "required": [
+      "type"
+    ],
+    "type": "object"
+  },
+  "ItemRelationships": {
+    "description": "Relationships for a listing item, by Amazon store (for example, variations).",
+    "properties": {},
+    "ref": "ItemRelationshipsByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemRelationshipsByMarketplace": {
+    "description": "Relationship details for the listing item in the specified Amazon store.",
+    "properties": {
+      "marketplaceId": {
+        "description": "Amazon store identifier.",
+        "type": "string"
+      },
+      "relationships": {
+        "description": "Relationships for the listing item.",
+        "ref": "ItemRelationship",
+        "type": "array"
+      }
+    },
+    "required": [
+      "marketplaceId",
+      "relationships"
+    ],
+    "type": "object"
+  },
+  "ItemSearchResults": {
+    "description": "Selling partner listings items and search related metadata.",
+    "properties": {
+      "items": {
+        "description": "A list of listings items.",
+        "ref": "Item",
+        "type": "array"
+      },
+      "numberOfResults": {
+        "description": "The total number of selling partner listings items found for the search criteria (the response returns only results up to the page count limit per request regardless of the number found).",
+        "type": "integer"
+      },
+      "pagination": {
+        "description": "If available, the `nextToken` and/or `previousToken` values required to return paginated results.",
+        "ref": "Pagination"
+      }
+    },
+    "required": [
+      "items",
+      "numberOfResults"
+    ],
+    "type": "object"
+  },
+  "ItemSummaries": {
+    "description": "Summary details for a listings item.",
+    "properties": {},
+    "ref": "ItemSummaryByMarketplace",
+    "required": [],
+    "type": "array"
+  },
+  "ItemSummaryByMarketplace": {
+    "description": "Summary details for a listings item for an Amazon store.",
+    "properties": {
+      "asin": {
+        "description": "The ASIN of the listings item.",
+        "type": "string"
+      },
+      "conditionType": {
+        "description": "Identifies the condition of the listings item.",
+        "enum": [
+          "club_club",
+          "collectible_acceptable",
+          "collectible_good",
+          "collectible_like_new",
+          "collectible_very_good",
+          "new_new",
+          "new_oem",
+          "new_open_box",
+          "refurbished_refurbished",
+          "used_acceptable",
+          "used_good",
+          "used_like_new",
+          "used_very_good"
+        ],
+        "type": "string"
+      },
+      "createdDate": {
+        "description": "Date the listings item was created, in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "fnSku": {
+        "description": "Fulfillment network stock keeping unit is an identifier used by Amazon fulfillment centers to identify each unique item.",
+        "type": "string"
+      },
+      "itemName": {
+        "description": "Name, or title, associated with an Amazon catalog item.",
+        "type": "string"
+      },
+      "lastUpdatedDate": {
+        "description": "Date the listings item was last updated, in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "mainImage": {
+        "description": "The listings item's main image.",
+        "ref": "ItemImage"
+      },
+      "marketplaceId": {
+        "description": "An Amazon store identifier.",
+        "type": "string"
+      },
+      "productType": {
+        "description": "The listings item's Amazon product type.",
+        "type": "string"
+      },
+      "status": {
+        "description": "Statuses that apply to the listings item.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "createdDate",
+      "lastUpdatedDate",
+      "marketplaceId",
+      "productType",
+      "status"
+    ],
+    "type": "object"
+  },
+  "ItemVariationTheme": {
+    "description": "A variation theme that indicates the combination of listing item attributes that define the variation family.",
+    "properties": {
+      "attributes": {
+        "description": "The names of the listing item attributes that are associated with the variation theme.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "theme": {
+        "description": "The variation theme that indicates the combination of listing item attributes that define the variation family.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "attributes",
+      "theme"
+    ],
+    "type": "object"
+  },
+  "ListingsItemPatchRequest": {
+    "description": "The request body schema for the `patchListingsItem` operation.",
+    "properties": {
+      "patches": {
+        "description": "One or more JSON Patch operations to perform on the listings item.",
+        "ref": "PatchOperation",
+        "type": "array"
+      },
+      "productType": {
+        "description": "The Amazon product type of the listings item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "patches",
+      "productType"
+    ],
+    "type": "object"
+  },
+  "ListingsItemPutRequest": {
+    "description": "The request body schema for the `putListingsItem` operation.",
+    "properties": {
+      "attributes": {
+        "description": "JSON object containing structured listings item attribute data keyed by attribute name.",
+        "type": "object"
+      },
+      "productType": {
+        "description": "The listings item's Amazon product type.",
+        "type": "string"
+      },
+      "requirements": {
+        "description": "The name of the requirements set for the provided data.",
+        "enum": [
+          "LISTING",
+          "LISTING_OFFER_ONLY",
+          "LISTING_PRODUCT_ONLY"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "attributes",
+      "productType"
+    ],
+    "type": "object"
+  },
+  "ListingsItemSubmissionResponse": {
+    "description": "Response containing the results of a submission to the Selling Partner API for Listings Items.",
+    "properties": {
+      "identifiers": {
+        "description": "Identity attributes associated with the item in the Amazon catalog, such as the ASIN.",
+        "ref": "ItemIdentifiers"
+      },
+      "issues": {
+        "description": "Listings item issues related to the listings item submission.",
+        "ref": "Issue",
+        "type": "array"
+      },
+      "sku": {
+        "description": "A selling partner-provided identifier for an Amazon listing.",
+        "type": "string"
+      },
+      "status": {
+        "description": "The status of the listings item submission.",
+        "enum": [
+          "ACCEPTED",
+          "INVALID",
+          "VALID"
+        ],
+        "type": "string"
+      },
+      "submissionId": {
+        "description": "The unique identifier of the listings item submission.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "sku",
+      "status",
+      "submissionId"
+    ],
+    "type": "object"
+  },
+  "Money": {
+    "description": "The currency type and the amount.",
+    "properties": {
+      "amount": {
+        "description": "The currency amount.",
+        "ref": "Decimal"
+      },
+      "currencyCode": {
+        "description": "Three-digit currency code.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "amount",
+      "currencyCode"
+    ],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "When a response exceeds the `pageSize`, the response is divided into individual pages.",
+    "properties": {
+      "nextToken": {
+        "description": "A token that can be used to fetch the next page.",
+        "type": "string"
+      },
+      "previousToken": {
+        "description": "A token that can be used to fetch the previous page.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "PatchOperation": {
+    "description": "Individual JSON Patch operation for an HTTP PATCH request.",
+    "properties": {
+      "op": {
+        "description": "Type of JSON Patch operation.",
+        "enum": [
+          "add",
+          "delete",
+          "merge",
+          "replace"
+        ],
+        "type": "string"
+      },
+      "path": {
+        "description": "JSON Pointer path of the element to patch.",
+        "type": "string"
+      },
+      "value": {
+        "description": "JSON value to `add`, `replace`, `merge` or `delete`.",
+        "itemType": "object",
+        "type": "array"
+      }
+    },
+    "required": [
+      "op",
+      "path"
+    ],
+    "type": "object"
+  },
+  "Points": {
+    "description": "The number of Amazon Points offered with the purchase of an item, and their monetary value.",
+    "properties": {
+      "pointsNumber": {
+        "description": "The number of Amazon Points offered with the purchase of an item, and their monetary value.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "pointsNumber"
+    ],
+    "type": "object"
+  },
+  "QuantityDiscountLevel": {
+    "description": "A quantity discount level, defining the discount applied when the purchase quantity meets a given threshold.",
+    "properties": {
+      "lowerBound": {
+        "description": "The quantity threshold, which is the minimum purchase quantity necessary to receive the discount.",
+        "type": "integer"
+      },
+      "value": {
+        "description": "The quantity price for this quantity threshold.",
+        "ref": "Decimal"
+      }
+    },
+    "required": [
+      "lowerBound",
+      "value"
+    ],
+    "type": "object"
+  },
+  "QuantityDiscountPlan": {
+    "description": "The active quantity discount plan for an offer.",
+    "properties": {
+      "discountType": {
+        "description": "The quantity price type, indicating whether the quantity discount is a fixed price set in the local currency for each quantity threshold, or a percentage discount on the price.",
+        "enum": [
+          "FIXED",
+          "PERCENT"
+        ],
+        "type": "string"
+      },
+      "levels": {
+        "description": "The quantity discount levels that define the discount at each quantity threshold.",
+        "ref": "QuantityDiscountLevel",
+        "type": "array"
+      }
+    },
+    "required": [
+      "discountType",
+      "levels"
+    ],
+    "type": "object"
+  },
+  "ReplenishmentDiscount": {
+    "description": "A replenishment discount set by the selling partner on the offer for Subscribe & Save subscriptions.",
+    "properties": {
+      "discountPercentage": {
+        "description": "The seller-funded Subscribe & Save discount on the offer, as a percentage (0–100).",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "discountPercentage"
+    ],
+    "type": "object"
+  }
+}

@@ -1,0 +1,3974 @@
+{
+ "api": "AmazonAdsAPIDSPTargetsContract",
+ "file": "specs/dest/AmazonAdsAPIDSPTargetsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DSPAcrossGroupOperator": {
+   "description": "**AcrossGroupOperator Enum:** | AcrossGroupOperator | Description | |------|------| | `ALL` | Matches only if every single condition is true. AcrossGroupOperator is used among audiences between audience groups. This is …",
+   "enum": [
+    "ALL",
+    "ANY"
+   ],
+   "type": "string"
+  },
+  "DSPAdInitiationTarget": {
+   "description": "Target based on how the video ad will be started.",
+   "properties": {
+    "videoInitiationType": {
+     "$ref": "DSPVideoInitiationType"
+    }
+   },
+   "required": [
+    "videoInitiationType"
+   ],
+   "type": "object"
+  },
+  "DSPAdPlayerSize": {
+   "description": "**AdPlayerSize Enum:** | AdPlayerSize | Description | |------|------| | `LARGE` | Large video player. | | `MEDIUM` | Medium video player. | | `SMALL` | Small video player. | | `UNKNOWN` | Unknown player size. |",
+   "enum": [
+    "LARGE",
+    "MEDIUM",
+    "SMALL",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPAdPlayerSizeTarget": {
+   "description": "Target based on the size of the ad player.",
+   "properties": {
+    "adPlayerSize": {
+     "$ref": "DSPAdPlayerSize"
+    }
+   },
+   "required": [
+    "adPlayerSize"
+   ],
+   "type": "object"
+  },
+  "DSPAdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "DSPAdvertiserDomainList": {
+   "description": "Targets domains based on list inherited from the advertiser.",
+   "properties": {
+    "inheritFromAdvertiser": {
+     "description": "Set to TRUE to inherit domain list from advertiser.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "inheritFromAdvertiser"
+   ],
+   "type": "object"
+  },
+  "DSPAppTarget": {
+   "description": "Target based on user application.",
+   "properties": {
+    "appId": {
+     "description": "The app identifier being targeted.",
+     "type": "string"
+    },
+    "appType": {
+     "$ref": "DSPAppType"
+    }
+   },
+   "required": [
+    "appId",
+    "appType"
+   ],
+   "type": "object"
+  },
+  "DSPAppType": {
+   "description": "**AppType Enum:** | AppType | Description | |------|------| | `MOBILE` | Mobile application. | | `STREAMING_TV` | Streaming TV application. |",
+   "enum": [
+    "MOBILE",
+    "STREAMING_TV"
+   ],
+   "type": "string"
+  },
+  "DSPAudienceTarget": {
+   "description": "Target based on a specified audience ID.",
+   "properties": {
+    "acrossGroupOperator": {
+     "$ref": "DSPAcrossGroupOperator"
+    },
+    "audienceId": {
+     "$ref": "DSPMarketplaceStringValue"
+    },
+    "groupId": {
+     "description": "The string identifying a group of audiences. Only numbers formatted as strings are accepted (e.g. '1'). To add audiences to a new group, choose any string not currently being used on this ad group. To add audiences to a…",
+     "type": "string"
+    },
+    "inGroupOperator": {
+     "$ref": "DSPInGroupOperator"
+    }
+   },
+   "required": [
+    "audienceId"
+   ],
+   "type": "object"
+  },
+  "DSPAverageCompletionAndFullyViewableRateTargetingType": {
+   "description": "The type of average completion and fully viewable rate targeting.",
+   "enum": [
+    "ALLOW_ALL",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_10",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_20",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_25",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_30",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_35",
+    "AVG_COMPLETION_FULLY_VIEWABLE_GTE_40"
+   ],
+   "type": "string"
+  },
+  "DSPBrandExposureViewabilityTargetingType": {
+   "description": "The type of brand exposure viewability targeting.",
+   "enum": [
+    "ALLOW_ALL",
+    "BRAND_EXPOSURE_VIEWABILITY_GTE_10_SEC_AVG_DURATION",
+    "BRAND_EXPOSURE_VIEWABILITY_GTE_15_SEC_AVG_DURATION",
+    "BRAND_EXPOSURE_VIEWABILITY_GTE_5_SEC_AVG_DURATION"
+   ],
+   "type": "string"
+  },
+  "DSPBrandSafetyCategory": {
+   "description": "**BrandSafetyCategory Enum:** | BrandSafetyCategory | Description | |------|------| | `ACCIDENTS_DISASTERS_AND_TRAGEDIES` | Content related to sensitive tragedies, man-made or natural disasters and calamities, including…",
+   "enum": [
+    "ACCIDENTS_DISASTERS_AND_TRAGEDIES",
+    "ALCOHOL_AND_RELATED_PRODUCTS",
+    "BLOOD_GORE_VIOLENCE",
+    "CRIME",
+    "DRUG_REFERENCES_OR_USE",
+    "GAMBLING",
+    "HIGHLY_DEBATED_SOCIAL_ISSUES",
+    "POLITICS",
+    "PROFANITY",
+    "RELIGIOUS_CONTENT",
+    "SEXUAL_REFERENCES_AND_SUGGESTIVE",
+    "SHOCK_AND_HORROR",
+    "TOBACCO_AND_RELATED_PRODUCTS",
+    "UNRATED_MEDIA_CONTENT",
+    "WEAPONS"
+   ],
+   "type": "string"
+  },
+  "DSPBrandSafetyCategoryTarget": {
+   "description": "Target based on, if any, the classifications of unsuitable contexts that may pose a risk to a brand's reputation of content being viewed.",
+   "properties": {
+    "brandSafetyCategory": {
+     "$ref": "DSPBrandSafetyCategory"
+    }
+   },
+   "required": [
+    "brandSafetyCategory"
+   ],
+   "type": "object"
+  },
+  "DSPBrandSafetyTier": {
+   "description": "**BrandSafetyTier Enum:** | BrandSafetyTier | Description | |------|------| | `EXPANDED` | Tier that maximizes reach across all ad-eligible inventory. This tier is suitable for brands with a greater risk tolerance for a…",
+   "enum": [
+    "EXPANDED",
+    "RESTRICTIVE",
+    "STANDARD"
+   ],
+   "type": "string"
+  },
+  "DSPBrandSafetyTierTarget": {
+   "description": "Target based on the brand suitability risk levels of content being viewed.",
+   "properties": {
+    "brandSafetyTier": {
+     "$ref": "DSPBrandSafetyTier"
+    }
+   },
+   "required": [
+    "brandSafetyTier"
+   ],
+   "type": "object"
+  },
+  "DSPBrandSuitabilityRiskLevelType": {
+   "description": "The Double Verify brand suitability risk level.",
+   "enum": [
+    "ALLOW_ALL",
+    "HIGH",
+    "HIGH_MEDIUM",
+    "HIGH_MEDIUM_LOW"
+   ],
+   "type": "string"
+  },
+  "DSPContentCategoryTarget": {
+   "description": "Target based on the category of content being viewed.",
+   "properties": {
+    "contentCategoryId": {
+     "description": "The content category being targeted.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "contentCategoryId"
+   ],
+   "type": "object"
+  },
+  "DSPContentGenre": {
+   "description": "Content genre for targeting. Supported values depend on the ad group's inventoryType. Using a value not supported for the given inventoryType will result in an error. Supported values per inventoryType: - `ONLINE_VIDEO`…",
+   "enum": [
+    "ACTION",
+    "ADVENTURE",
+    "ALTERNATIVE_ROCK",
+    "ANIMATION",
+    "ARTS",
+    "BIOGRAPHY",
+    "BLUES",
+    "BUSINESS",
+    "CHILDRENS_MUSIC",
+    "CHRISTIAN_GOSPEL",
+    "CHRISTMAS_HOLIDAY",
+    "CLASSICAL",
+    "CLASSIC_ROCK",
+    "COLLEGE_RADIO",
+    "COMEDY",
+    "COUNTRY",
+    "CRIME",
+    "DANCE_DJ",
+    "DOCUMENTARY",
+    "DRAMA",
+    "EASY_LISTENING",
+    "EDUCATION",
+    "EUROPEAN_POP_FOLK",
+    "FAMILY",
+    "FANTASY",
+    "FICTION",
+    "FILM_NOIR",
+    "FOLK",
+    "FRENCH_VARIETY",
+    "GAME_SHOW",
+    "GENRE_NOT_AVAILABLE",
+    "GERMAN_ROCK_POP",
+    "GOVERNMENT",
+    "HARD_ROCK_METAL",
+    "HEALTH_AND_FITNESS",
+    "HISTORY",
+    "HORROR",
+    "INTERNATIONAL",
+    "JAPANESE",
+    "JAZZ",
+    "KIDS_AND_FAMILY",
+    "LATIN_MUSIC",
+    "LEISURE",
+    "MISCELLANEOUS",
+    "MUSIC",
+    "MUSICAL",
+    "MUSICALS_CABARET",
+    "MYSTERY",
+    "NEWS",
+    "NEW_AGE",
+    "OLDIES_ADULT_STANDARDS",
+    "POP",
+    "RAP_HIP_HOP",
+    "RB",
+    "REALITY_TV",
+    "REGGAE_ISLAND",
+    "RELIGION_AND_SPIRITUALITY",
+    "ROCK",
+    "ROMANCE",
+    "SCIENCE",
+    "SCIENCE_FICTION",
+    "SHORT",
+    "SOCIETY_AND_CULTURE",
+    "SOUNDTRACKS",
+    "SPORT",
+    "SUPER_HERO",
+    "TALK_SHOW",
+    "TECHNOLOGY",
+    "THRILLER",
+    "TRUE_CRIME",
+    "TV_AND_FILM",
+    "WAR",
+    "WESTERN"
+   ],
+   "type": "string"
+  },
+  "DSPContentGenreTarget": {
+   "description": "Target based on the genre of content being viewed.",
+   "properties": {
+    "contentGenre": {
+     "$ref": "DSPContentGenre"
+    }
+   },
+   "required": [
+    "contentGenre"
+   ],
+   "type": "object"
+  },
+  "DSPContentInstreamPosition": {
+   "description": "**ContentInstreamPosition Enum:** | ContentInstreamPosition | Description | |------|------| | `MID_ROLL` | Ad plays during the main video content. | | `POST_ROLL` | Ad plays after the main video content. | | `PRE_ROLL` …",
+   "enum": [
+    "MID_ROLL",
+    "POST_ROLL",
+    "PRE_ROLL",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPContentInstreamPositionTarget": {
+   "description": "Targets ads in the specified content instream position",
+   "properties": {
+    "instreamPosition": {
+     "$ref": "DSPContentInstreamPosition"
+    }
+   },
+   "required": [
+    "instreamPosition"
+   ],
+   "type": "object"
+  },
+  "DSPContentOutstreamPosition": {
+   "description": "**ContentOutstreamPosition Enum:** | ContentOutstreamPosition | Description | |------|------| | `ACCOMPANYING_CONTENT` | Ad plays alongside editorial content. | | `INTERSTITIAL` | Ad plays between content transitions. |…",
+   "enum": [
+    "ACCOMPANYING_CONTENT",
+    "INTERSTITIAL",
+    "STANDALONE",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPContentOutstreamPositionTarget": {
+   "description": "Targets ads in the specified content outstream position",
+   "properties": {
+    "outstreamPosition": {
+     "$ref": "DSPContentOutstreamPosition"
+    }
+   },
+   "required": [
+    "outstreamPosition"
+   ],
+   "type": "object"
+  },
+  "DSPContentRating": {
+   "oneOf": [
+    {
+     "properties": {
+      "dspContentRating": {
+       "$ref": "DSPDspContentRating"
+      }
+     },
+     "required": [
+      "dspContentRating"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "twitchContentRating": {
+       "$ref": "DSPTwitchContentRating"
+      }
+     },
+     "required": [
+      "twitchContentRating"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPContentRatingTarget": {
+   "description": "Target based on the rating of content being viewed.",
+   "properties": {
+    "contentRatingType": {
+     "$ref": "DSPContentRatingTypes"
+    },
+    "contentRatingTypeDetails": {
+     "$ref": "DSPContentRating"
+    }
+   },
+   "required": [
+    "contentRatingType",
+    "contentRatingTypeDetails"
+   ],
+   "type": "object"
+  },
+  "DSPContentRatingTypes": {
+   "description": "**ContentRatingTypes Enum:** | ContentRatingTypes | Description | |------|------| | `DSP_CONTENT_RATING` | Content rating based on DSP content classification. | | `TWITCH_CONTENT_RATING` | Content rating based on Twitch…",
+   "enum": [
+    "DSP_CONTENT_RATING",
+    "TWITCH_CONTENT_RATING"
+   ],
+   "type": "string"
+  },
+  "DSPCreateAdInitiationTarget": {
+   "description": "Target based on how the video ad will be started.",
+   "properties": {
+    "videoInitiationType": {
+     "$ref": "DSPVideoInitiationType"
+    }
+   },
+   "required": [
+    "videoInitiationType"
+   ],
+   "type": "object"
+  },
+  "DSPCreateAdPlayerSizeTarget": {
+   "description": "Target based on the size of the ad player.",
+   "properties": {
+    "adPlayerSize": {
+     "$ref": "DSPAdPlayerSize"
+    }
+   },
+   "required": [
+    "adPlayerSize"
+   ],
+   "type": "object"
+  },
+  "DSPCreateAdvertiserDomainList": {
+   "description": "Targets domains based on list inherited from the advertiser.",
+   "properties": {
+    "inheritFromAdvertiser": {
+     "description": "Set to TRUE to inherit domain list from advertiser.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "inheritFromAdvertiser"
+   ],
+   "type": "object"
+  },
+  "DSPCreateAppTarget": {
+   "description": "Target based on user application.",
+   "properties": {
+    "appId": {
+     "description": "The app identifier being targeted.",
+     "type": "string"
+    },
+    "appType": {
+     "$ref": "DSPAppType"
+    }
+   },
+   "required": [
+    "appId",
+    "appType"
+   ],
+   "type": "object"
+  },
+  "DSPCreateAudienceTarget": {
+   "description": "Target based on a specified audience ID.",
+   "properties": {
+    "acrossGroupOperator": {
+     "$ref": "DSPAcrossGroupOperator"
+    },
+    "audienceId": {
+     "$ref": "DSPCreateMarketplaceStringValue"
+    },
+    "groupId": {
+     "description": "The string identifying a group of audiences. Only numbers formatted as strings are accepted (e.g. '1'). To add audiences to a new group, choose any string not currently being used on this ad group. To add audiences to a…",
+     "type": "string"
+    },
+    "inGroupOperator": {
+     "$ref": "DSPInGroupOperator"
+    }
+   },
+   "required": [
+    "audienceId"
+   ],
+   "type": "object"
+  },
+  "DSPCreateBrandSafetyCategoryTarget": {
+   "description": "Target based on, if any, the classifications of unsuitable contexts that may pose a risk to a brand's reputation of content being viewed.",
+   "properties": {
+    "brandSafetyCategory": {
+     "$ref": "DSPBrandSafetyCategory"
+    }
+   },
+   "required": [
+    "brandSafetyCategory"
+   ],
+   "type": "object"
+  },
+  "DSPCreateBrandSafetyTierTarget": {
+   "description": "Target based on the brand suitability risk levels of content being viewed.",
+   "properties": {
+    "brandSafetyTier": {
+     "$ref": "DSPBrandSafetyTier"
+    }
+   },
+   "required": [
+    "brandSafetyTier"
+   ],
+   "type": "object"
+  },
+  "DSPCreateContentCategoryTarget": {
+   "description": "Target based on the category of content being viewed.",
+   "properties": {
+    "contentCategoryId": {
+     "description": "The content category being targeted.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "contentCategoryId"
+   ],
+   "type": "object"
+  },
+  "DSPCreateContentGenreTarget": {
+   "description": "Target based on the genre of content being viewed.",
+   "properties": {
+    "contentGenre": {
+     "$ref": "DSPContentGenre"
+    }
+   },
+   "required": [
+    "contentGenre"
+   ],
+   "type": "object"
+  },
+  "DSPCreateContentInstreamPositionTarget": {
+   "description": "Targets ads in the specified content instream position",
+   "properties": {
+    "instreamPosition": {
+     "$ref": "DSPContentInstreamPosition"
+    }
+   },
+   "required": [
+    "instreamPosition"
+   ],
+   "type": "object"
+  },
+  "DSPCreateContentOutstreamPositionTarget": {
+   "description": "Targets ads in the specified content outstream position",
+   "properties": {
+    "outstreamPosition": {
+     "$ref": "DSPContentOutstreamPosition"
+    }
+   },
+   "required": [
+    "outstreamPosition"
+   ],
+   "type": "object"
+  },
+  "DSPCreateContentRating": {
+   "oneOf": [
+    {
+     "properties": {
+      "dspContentRating": {
+       "$ref": "DSPCreateDspContentRating"
+      }
+     },
+     "required": [
+      "dspContentRating"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "twitchContentRating": {
+       "$ref": "DSPCreateTwitchContentRating"
+      }
+     },
+     "required": [
+      "twitchContentRating"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreateContentRatingTarget": {
+   "description": "Target based on the rating of content being viewed.",
+   "properties": {
+    "contentRatingType": {
+     "$ref": "DSPContentRatingTypes"
+    },
+    "contentRatingTypeDetails": {
+     "$ref": "DSPCreateContentRating"
+    }
+   },
+   "required": [
+    "contentRatingType",
+    "contentRatingTypeDetails"
+   ],
+   "type": "object"
+  },
+  "DSPCreateDVBrandSafetyContentCategoriesWithRiskMap": {
+   "description": "A map from content categories to risk level to exclude from targeting. Available keys are: [ADULT_CONTENT, ALCOHOL, CRIME, DEATH_INJURIES, DISASTER_AVIATION, DISASTER_MAN_MADE, DISASTER_NATURAL, DISASTER_TERRORIST_EVENT…",
+   "properties": {
+    "key": {
+     "description": "Available keys are: [ADULT_CONTENT, ALCOHOL, CRIME, DEATH_INJURIES, DISASTER_AVIATION, DISASTER_MAN_MADE, DISASTER_NATURAL, DISASTER_TERRORIST_EVENTS, DISASTER_VEHICLE, HATE_SPEECH, PROFANITY, SUBSTANCE_ABUSE, TOBACCO_E…",
+     "type": "string"
+    },
+    "value": {
+     "$ref": "DSPBrandSuitabilityRiskLevelType"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPCreateDayPartTarget": {
+   "description": "Target based on time of day.",
+   "properties": {
+    "dayOfWeek": {
+     "$ref": "DSPDayOfWeek"
+    },
+    "timeOfDay": {
+     "$ref": "DSPCreateTimeOfDay"
+    }
+   },
+   "required": [
+    "dayOfWeek",
+    "timeOfDay"
+   ],
+   "type": "object"
+  },
+  "DSPCreateDeviceTarget": {
+   "description": "Target based on user device.",
+   "properties": {
+    "deviceOrientation": {
+     "$ref": "DSPDeviceOrientation"
+    },
+    "deviceType": {
+     "$ref": "DSPDeviceType"
+    },
+    "mobileDevice": {
+     "$ref": "DSPMobileDevice"
+    },
+    "mobileEnvironment": {
+     "$ref": "DSPMobileEnvironment"
+    },
+    "mobileOs": {
+     "$ref": "DSPMobileOs"
+    }
+   },
+   "required": [
+    "deviceType"
+   ],
+   "type": "object"
+  },
+  "DSPCreateDomainFileTarget": {
+   "description": "Targets domains based on list provided via file upload.",
+   "properties": {
+    "domainFileKey": {
+     "description": "The S3 key of the uploaded file which can be obtained from the file upload policy endpoint. A max of 10 files may be associated to one ad group.",
+     "type": "string"
+    },
+    "domainFileName": {
+     "description": "The name of the file.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "domainFileKey",
+    "domainFileName"
+   ],
+   "type": "object"
+  },
+  "DSPCreateDomainListTarget": {
+   "description": "Targets domains based on an existing domain list.",
+   "properties": {
+    "domainListId": {
+     "description": "The ID of the domain list to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "domainListId"
+   ],
+   "type": "object"
+  },
+  "DSPCreateDomainNameTarget": {
+   "description": "Targets domains based on URL.",
+   "properties": {
+    "domainName": {
+     "description": "The URL of the domain to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "domainName"
+   ],
+   "type": "object"
+  },
+  "DSPCreateDomainTarget": {
+   "description": "Target based on a specified domain.",
+   "properties": {
+    "domainTargetDetails": {
+     "$ref": "DSPCreateDomainTargetDetails"
+    },
+    "domainTargetType": {
+     "$ref": "DSPDomainTargetTypes"
+    }
+   },
+   "required": [
+    "domainTargetDetails",
+    "domainTargetType"
+   ],
+   "type": "object"
+  },
+  "DSPCreateDomainTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "domainListTarget": {
+       "$ref": "DSPCreateDomainListTarget"
+      }
+     },
+     "required": [
+      "domainListTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "domainNameTarget": {
+       "$ref": "DSPCreateDomainNameTarget"
+      }
+     },
+     "required": [
+      "domainNameTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "domainFileTarget": {
+       "$ref": "DSPCreateDomainFileTarget"
+      }
+     },
+     "required": [
+      "domainFileTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "advertiserDomainList": {
+       "$ref": "DSPCreateAdvertiserDomainList"
+      }
+     },
+     "required": [
+      "advertiserDomainList"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreateDoubleVerifyAuthenticAttention": {
+   "properties": {
+    "universalAttention": {
+     "description": "One omni-channel segment that is informed by data from all DV campaigns to help avoid serving ads on generally poor performing apps and domains.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "universalAttention"
+   ],
+   "type": "object"
+  },
+  "DSPCreateDoubleVerifyAuthenticBrandSafety": {
+   "properties": {
+    "doubleVerifySegmentId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateDoubleVerifyBrandSafety": {
+   "properties": {
+    "appAgeRating": {
+     "description": "A list of app age ratings to be used for excluding apps. For example, TEENS_12_PLUS will only exclude apps with content rated for everyone ages 12 and over. UNKNOWN will exclude apps with content unrated or unknown to D…",
+     "items": {
+      "$ref": "DSPDVBrandSafetyAppAgeRatingType"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "appStarRating": {
+     "$ref": "DSPDVBrandSafetyAppStarRatingType"
+    },
+    "contentCategories": {
+     "description": "A list of content categories to exclude from targeting.",
+     "items": {
+      "$ref": "DSPDVBrandSafetyContentCategoryType"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "contentCategoriesWithRisk": {
+     "items": {
+      "$ref": "DSPCreateDVBrandSafetyContentCategoriesWithRiskMap"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "excludeAppsWithInsufficientRating": {
+     "description": "Set to true to exclude unofficial apps or apps with insufficient user ratings (<100 lifetime).",
+     "type": "boolean"
+    },
+    "unknownContent": {
+     "description": "Set to true to exclude unknown content.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateDoubleVerifyCustomContextualSegmentId": {
+   "properties": {
+    "doubleVerifySegmentId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateDoubleVerifyFraudInvalidTraffic": {
+   "properties": {
+    "blockAppAndSites": {
+     "description": "Set to true to block applications and sites with insufficient historical fraud and invalid traffic statistics. This will not be applicable if ALLOW_ALL is chosen.",
+     "type": "boolean"
+    },
+    "excludeAppsAndSites": {
+     "$ref": "DSPExcludeAppsAndSitesType"
+    },
+    "excludeImpressions": {
+     "description": "Set to true to exclude impressions delivered to devices identified to be fraudulent or invalid.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateDoubleVerifyStandardDisplayBrandSafety": {
+   "properties": {
+    "contentCategories": {
+     "description": "A list of content categories to exclude from targeting.",
+     "items": {
+      "$ref": "DSPDVBrandSafetyContentCategoryType"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "contentCategoriesWithRisk": {
+     "items": {
+      "$ref": "DSPCreateDVBrandSafetyContentCategoriesWithRiskMap"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "unknownContent": {
+     "description": "Set to true to exclude unknown content.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateDoubleVerifyViewability": {
+   "properties": {
+    "averageCompletionAndFullyViewableRateTargeting": {
+     "$ref": "DSPAverageCompletionAndFullyViewableRateTargetingType"
+    },
+    "brandExposureViewabilityTargeting": {
+     "$ref": "DSPBrandExposureViewabilityTargetingType"
+    },
+    "includeUnmeasurableImpressions": {
+     "description": "Set to true to include impressions where impressions can't be measured.",
+     "type": "boolean"
+    },
+    "mrcViewabilityTargeting": {
+     "$ref": "DSPMrcViewabilityTargetingType"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateDspContentRating": {
+   "properties": {
+    "dspContentRating": {
+     "$ref": "DSPDspContentRatingEnum"
+    }
+   },
+   "required": [
+    "dspContentRating"
+   ],
+   "type": "object"
+  },
+  "DSPCreateFoldPositionTarget": {
+   "description": "Targets ads in the specified fold position",
+   "properties": {
+    "foldPosition": {
+     "$ref": "DSPFoldPosition"
+    }
+   },
+   "required": [
+    "foldPosition"
+   ],
+   "type": "object"
+  },
+  "DSPCreateIntegralAdScienceBrandSafety": {
+   "properties": {
+    "excludeContent": {
+     "description": "Set to true to exclude content that Integral Ad Science is not able to rate.",
+     "type": "boolean"
+    },
+    "iasBrandSafetyAdult": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyAlcohol": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyGambling": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyHateSpeech": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyIllegalDownloads": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyIllegalDrugs": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyOffensiveLanguage": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyViolence": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateIntegralAdScienceContextualAvoidance": {
+   "properties": {
+    "avoidanceSegments": {
+     "description": "The unique identifier of the IAS contextual avoidance segment",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateIntegralAdScienceContextualTargeting": {
+   "properties": {
+    "topicalSegments": {
+     "description": "The unique identifier of the IAS contextual topical targeting segment",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "verticalSegments": {
+     "description": "The unique identifier of the IAS contextual vertical targeting segment",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateIntegralAdScienceFraudInvalidTraffic": {
+   "properties": {
+    "targetSetting": {
+     "$ref": "DSPIASFraudInvalidTrafficType"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateIntegralAdScienceQualitySync": {
+   "properties": {
+    "segmentId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateIntegralAdScienceViewability": {
+   "description": "The IAS viewability standard.",
+   "properties": {
+    "standard": {
+     "$ref": "DSPIASViewabilityStandardType"
+    },
+    "viewabilityTargeting": {
+     "$ref": "DSPViewabilityTierType"
+    }
+   },
+   "required": [
+    "standard"
+   ],
+   "type": "object"
+  },
+  "DSPCreateInventorySourceTarget": {
+   "description": "Target based on the source of the inventory.",
+   "properties": {
+    "inventorySourceId": {
+     "$ref": "DSPCreateMarketplaceStringValue"
+    },
+    "inventorySourceType": {
+     "$ref": "DSPInventorySourceType"
+    }
+   },
+   "required": [
+    "inventorySourceId",
+    "inventorySourceType"
+   ],
+   "type": "object"
+  },
+  "DSPCreateKeywordTarget": {
+   "description": "Targets a specific customer search term.",
+   "properties": {
+    "keyword": {
+     "description": "The customer search term or text to target. For valid characters and constraints, [see keyword character constraints](https://advertising.amazon.com/API/docs/en-us/reference/concepts/limits#keyword-character-constraints…",
+     "type": "string"
+    },
+    "matchType": {
+     "$ref": "DSPKeywordMatchType"
+    }
+   },
+   "required": [
+    "keyword",
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "DSPCreateLocationTarget": {
+   "description": "Target based on geographic location.",
+   "properties": {
+    "locationId": {
+     "description": "The ID of the geographic location to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "locationId"
+   ],
+   "type": "object"
+  },
+  "DSPCreateMarketplaceStringValue": {
+   "properties": {
+    "defaultValue": {
+     "description": "The default value. Either the default value or the marketplace settings should always be specified",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateNativeContentPositionTarget": {
+   "description": "Targets ads to a specific native content position",
+   "properties": {
+    "nativePosition": {
+     "$ref": "DSPNativeContentPosition"
+    }
+   },
+   "required": [
+    "nativePosition"
+   ],
+   "type": "object"
+  },
+  "DSPCreateNewsGuardBrandGuardMisinformationSafety": {
+   "properties": {
+    "avoidanceList": {
+     "description": "The unique identifiers of misinformation targets",
+     "items": {
+      "$ref": "DSPNewsGuardBrandGuardMisinformationSafetyType"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateNewsGuardBrandGuardTrustedNewsTargeting": {
+   "description": "Only applicable for Web supply.",
+   "properties": {
+    "targetingList": {
+     "description": "The unique identifiers of trusted news targets",
+     "items": {
+      "$ref": "DSPNewsGuardBrandGuardTrustedNewsTargetingType"
+     },
+     "maxItems": 15,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreatePixalateFraudInvalidTraffic": {
+   "properties": {
+    "excludeAppsAndDomains": {
+     "description": "Set to true to exclude traffic from Apps and Domains identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeIpAddressAndUserAgents": {
+     "description": "Set to true to exclude traffic from IPV4 and IPV6 addresses and user agents identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeOttAndMobileDevices": {
+     "description": "Set to true to exclude traffic from OTT and Mobile devices identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeRemovedAppsFromAppStores": {
+     "description": "Set to true to exlude traffic from Apps that have been removed from the google play and apple app stores in the last 6 months.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreatePlacementTypeTarget": {
+   "description": "Target based on the placement type.",
+   "properties": {
+    "placementType": {
+     "$ref": "DSPPlacementType"
+    }
+   },
+   "required": [
+    "placementType"
+   ],
+   "type": "object"
+  },
+  "DSPCreateProductCategoryRefinement": {
+   "properties": {
+    "productCategoryId": {
+     "description": "The product category ID to target.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateProductCategoryRefinementValue": {
+   "properties": {
+    "productCategoryRefinement": {
+     "$ref": "DSPCreateProductCategoryRefinement"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateProductCategoryTarget": {
+   "description": "Targets a specific customer search term.",
+   "properties": {
+    "matchType": {
+     "$ref": "DSPProductCategoryMatchType"
+    },
+    "productCategoryRefinement": {
+     "$ref": "DSPCreateProductCategoryRefinementValue"
+    }
+   },
+   "required": [
+    "productCategoryRefinement"
+   ],
+   "type": "object"
+  },
+  "DSPCreateProductTarget": {
+   "description": "Targets a specific product.",
+   "properties": {
+    "matchType": {
+     "$ref": "DSPProductMatchType"
+    },
+    "product": {
+     "$ref": "DSPCreateProductValue"
+    },
+    "productIdType": {
+     "$ref": "DSPProductIdType"
+    }
+   },
+   "required": [
+    "matchType",
+    "product",
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "DSPCreateProductValue": {
+   "properties": {
+    "productId": {
+     "description": "The product identifier. Either the product id or the marketplace settings should always be specified",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateSkippabilityTarget": {
+   "description": "Target based on inventory skippability. Applicable to Online Video (OLV) ad groups. Streaming TV (STV) ad groups are restricted to NON_SKIPPABLE only.",
+   "properties": {
+    "skippabilityType": {
+     "$ref": "DSPSkippabilityType"
+    }
+   },
+   "required": [
+    "skippabilityType"
+   ],
+   "type": "object"
+  },
+  "DSPCreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "DSPCreateTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "keywordTarget": {
+       "$ref": "DSPCreateKeywordTarget"
+      }
+     },
+     "required": [
+      "keywordTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productTarget": {
+       "$ref": "DSPCreateProductTarget"
+      }
+     },
+     "required": [
+      "productTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productCategoryTarget": {
+       "$ref": "DSPCreateProductCategoryTarget"
+      }
+     },
+     "required": [
+      "productCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "audienceTarget": {
+       "$ref": "DSPCreateAudienceTarget"
+      }
+     },
+     "required": [
+      "audienceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "locationTarget": {
+       "$ref": "DSPCreateLocationTarget"
+      }
+     },
+     "required": [
+      "locationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "domainTarget": {
+       "$ref": "DSPCreateDomainTarget"
+      }
+     },
+     "required": [
+      "domainTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "appTarget": {
+       "$ref": "DSPCreateAppTarget"
+      }
+     },
+     "required": [
+      "appTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "deviceTarget": {
+       "$ref": "DSPCreateDeviceTarget"
+      }
+     },
+     "required": [
+      "deviceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "dayPartTarget": {
+       "$ref": "DSPCreateDayPartTarget"
+      }
+     },
+     "required": [
+      "dayPartTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentCategoryTarget": {
+       "$ref": "DSPCreateContentCategoryTarget"
+      }
+     },
+     "required": [
+      "contentCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentGenreTarget": {
+       "$ref": "DSPCreateContentGenreTarget"
+      }
+     },
+     "required": [
+      "contentGenreTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentRatingTarget": {
+       "$ref": "DSPCreateContentRatingTarget"
+      }
+     },
+     "required": [
+      "contentRatingTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "brandSafetyTierTarget": {
+       "$ref": "DSPCreateBrandSafetyTierTarget"
+      }
+     },
+     "required": [
+      "brandSafetyTierTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "brandSafetyCategoryTarget": {
+       "$ref": "DSPCreateBrandSafetyCategoryTarget"
+      }
+     },
+     "required": [
+      "brandSafetyCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "inventorySourceTarget": {
+       "$ref": "DSPCreateInventorySourceTarget"
+      }
+     },
+     "required": [
+      "inventorySourceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "adInitiationTarget": {
+       "$ref": "DSPCreateAdInitiationTarget"
+      }
+     },
+     "required": [
+      "adInitiationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "adPlayerSizeTarget": {
+       "$ref": "DSPCreateAdPlayerSizeTarget"
+      }
+     },
+     "required": [
+      "adPlayerSizeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoAdFormatTarget": {
+       "$ref": "DSPCreateVideoAdFormatTarget"
+      }
+     },
+     "required": [
+      "videoAdFormatTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "thirdPartyTarget": {
+       "$ref": "DSPCreateThirdPartyTarget"
+      }
+     },
+     "required": [
+      "thirdPartyTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "themeTarget": {
+       "$ref": "DSPCreateThemeTarget"
+      }
+     },
+     "required": [
+      "themeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentInstreamPositionTarget": {
+       "$ref": "DSPCreateContentInstreamPositionTarget"
+      }
+     },
+     "required": [
+      "contentInstreamPositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentOutstreamPositionTarget": {
+       "$ref": "DSPCreateContentOutstreamPositionTarget"
+      }
+     },
+     "required": [
+      "contentOutstreamPositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoContentDurationTarget": {
+       "$ref": "DSPCreateVideoContentDurationTarget"
+      }
+     },
+     "required": [
+      "videoContentDurationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "foldPositionTarget": {
+       "$ref": "DSPCreateFoldPositionTarget"
+      }
+     },
+     "required": [
+      "foldPositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "nativeContentPositionTarget": {
+       "$ref": "DSPCreateNativeContentPositionTarget"
+      }
+     },
+     "required": [
+      "nativeContentPositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "placementTypeTarget": {
+       "$ref": "DSPCreatePlacementTypeTarget"
+      }
+     },
+     "required": [
+      "placementTypeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "skippabilityTarget": {
+       "$ref": "DSPCreateSkippabilityTarget"
+      }
+     },
+     "required": [
+      "skippabilityTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreateTargetRequest": {
+   "properties": {
+    "targets": {
+     "items": {
+      "$ref": "DSPTargetCreate"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "DSPCreateThemeTarget": {
+   "description": "Theme targets let advertisers select high-performing targets based on a common theme.",
+   "properties": {
+    "matchType": {
+     "$ref": "DSPThemeMatchType"
+    }
+   },
+   "required": [
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "DSPCreateThirdPartyTarget": {
+   "properties": {
+    "thirdPartyTargetDetails": {
+     "$ref": "DSPCreateThirdPartyTargetDetails"
+    },
+    "thirdPartyTargetType": {
+     "$ref": "DSPThirdPartyTargetType"
+    }
+   },
+   "required": [
+    "thirdPartyTargetDetails",
+    "thirdPartyTargetType"
+   ],
+   "type": "object"
+  },
+  "DSPCreateThirdPartyTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "doubleVerifyFraudInvalidTraffic": {
+       "$ref": "DSPCreateDoubleVerifyFraudInvalidTraffic"
+      }
+     },
+     "required": [
+      "doubleVerifyFraudInvalidTraffic"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyStandardDisplayBrandSafety": {
+       "$ref": "DSPCreateDoubleVerifyStandardDisplayBrandSafety"
+      }
+     },
+     "required": [
+      "doubleVerifyStandardDisplayBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyBrandSafety": {
+       "$ref": "DSPCreateDoubleVerifyBrandSafety"
+      }
+     },
+     "required": [
+      "doubleVerifyBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyViewability": {
+       "$ref": "DSPCreateDoubleVerifyViewability"
+      }
+     },
+     "required": [
+      "doubleVerifyViewability"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyAuthenticBrandSafety": {
+       "$ref": "DSPCreateDoubleVerifyAuthenticBrandSafety"
+      }
+     },
+     "required": [
+      "doubleVerifyAuthenticBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyCustomContextualSegmentId": {
+       "$ref": "DSPCreateDoubleVerifyCustomContextualSegmentId"
+      }
+     },
+     "required": [
+      "doubleVerifyCustomContextualSegmentId"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyAuthenticAttention": {
+       "$ref": "DSPCreateDoubleVerifyAuthenticAttention"
+      }
+     },
+     "required": [
+      "doubleVerifyAuthenticAttention"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceFraudInvalidTraffic": {
+       "$ref": "DSPCreateIntegralAdScienceFraudInvalidTraffic"
+      }
+     },
+     "required": [
+      "integralAdScienceFraudInvalidTraffic"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceBrandSafety": {
+       "$ref": "DSPCreateIntegralAdScienceBrandSafety"
+      }
+     },
+     "required": [
+      "integralAdScienceBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceViewability": {
+       "$ref": "DSPCreateIntegralAdScienceViewability"
+      }
+     },
+     "required": [
+      "integralAdScienceViewability"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceContextualTargeting": {
+       "$ref": "DSPCreateIntegralAdScienceContextualTargeting"
+      }
+     },
+     "required": [
+      "integralAdScienceContextualTargeting"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceContextualAvoidance": {
+       "$ref": "DSPCreateIntegralAdScienceContextualAvoidance"
+      }
+     },
+     "required": [
+      "integralAdScienceContextualAvoidance"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "pixalateFraudInvalidTraffic": {
+       "$ref": "DSPCreatePixalateFraudInvalidTraffic"
+      }
+     },
+     "required": [
+      "pixalateFraudInvalidTraffic"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceQualitySync": {
+       "$ref": "DSPCreateIntegralAdScienceQualitySync"
+      }
+     },
+     "required": [
+      "integralAdScienceQualitySync"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "newsGuardBrandGuardTrustedNewsTargeting": {
+       "$ref": "DSPCreateNewsGuardBrandGuardTrustedNewsTargeting"
+      }
+     },
+     "required": [
+      "newsGuardBrandGuardTrustedNewsTargeting"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "newsGuardBrandGuardMisinformationSafety": {
+       "$ref": "DSPCreateNewsGuardBrandGuardMisinformationSafety"
+      }
+     },
+     "required": [
+      "newsGuardBrandGuardMisinformationSafety"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreateTimeOfDay": {
+   "properties": {
+    "endTime": {
+     "description": "Selected end time",
+     "type": "string"
+    },
+    "startTime": {
+     "description": "Selected start time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "endTime",
+    "startTime"
+   ],
+   "type": "object"
+  },
+  "DSPCreateTwitchContentRating": {
+   "properties": {
+    "twitchContentRating": {
+     "$ref": "DSPTwitchContentRatingEnum"
+    }
+   },
+   "required": [
+    "twitchContentRating"
+   ],
+   "type": "object"
+  },
+  "DSPCreateVideoAdFormatTarget": {
+   "description": "Target based on the video ad format.",
+   "properties": {
+    "videoAdFormat": {
+     "$ref": "DSPVideoAdFormat"
+    }
+   },
+   "required": [
+    "videoAdFormat"
+   ],
+   "type": "object"
+  },
+  "DSPCreateVideoContentDurationTarget": {
+   "description": "Targets ads to a specific video content duration",
+   "properties": {
+    "duration": {
+     "$ref": "DSPVideoContentDuration"
+    }
+   },
+   "required": [
+    "duration"
+   ],
+   "type": "object"
+  },
+  "DSPDVBrandSafetyAppAgeRatingType": {
+   "enum": [
+    "ADULTS_ONLY_18_PLUS",
+    "EVERYONE_4_PLUS",
+    "MATURE_17_PLUS",
+    "TEENS_12_PLUS",
+    "TWEENS_9_PLUS",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPDVBrandSafetyAppStarRatingType": {
+   "description": "App star rating to be used for excluding apps.",
+   "enum": [
+    "ALLOW_ALL",
+    "APP_STAR_RATING_LT_1_POINT_5_STARS",
+    "APP_STAR_RATING_LT_2_POINT_5_STARS",
+    "APP_STAR_RATING_LT_2_STARS",
+    "APP_STAR_RATING_LT_3_POINT_5_STARS",
+    "APP_STAR_RATING_LT_3_STARS",
+    "APP_STAR_RATING_LT_4_POINT_5_STARS",
+    "APP_STAR_RATING_LT_4_STARS"
+   ],
+   "type": "string"
+  },
+  "DSPDVBrandSafetyContentCategoriesWithRiskMap": {
+   "description": "A map from content categories to risk level to exclude from targeting. Available keys are: [ADULT_CONTENT, ALCOHOL, CRIME, DEATH_INJURIES, DISASTER_AVIATION, DISASTER_MAN_MADE, DISASTER_NATURAL, DISASTER_TERRORIST_EVENT…",
+   "properties": {
+    "key": {
+     "description": "Available keys are: [ADULT_CONTENT, ALCOHOL, CRIME, DEATH_INJURIES, DISASTER_AVIATION, DISASTER_MAN_MADE, DISASTER_NATURAL, DISASTER_TERRORIST_EVENTS, DISASTER_VEHICLE, HATE_SPEECH, PROFANITY, SUBSTANCE_ABUSE, TOBACCO_E…",
+     "type": "string"
+    },
+    "value": {
+     "$ref": "DSPBrandSuitabilityRiskLevelType"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPDVBrandSafetyContentCategoryType": {
+   "enum": [
+    "AD_SERVER",
+    "CELEBRITY_GOSSIP",
+    "CULTS_SURVIVALISM",
+    "EXTREME_GRAPHIC",
+    "GAMBLING",
+    "INCENTIVIZED_MALWARE_CLUTTER",
+    "INFLAMMATORY_POLITICS_NEWS",
+    "NEGATIVE_NEWS_FINANCIAL",
+    "NEGATIVE_NEWS_PHARMACEUTICAL",
+    "NON_STANDARD_CONTENT_NON_ENGLISH",
+    "NON_STANDARD_CONTENT_PARKING_PAGE",
+    "OCCULT",
+    "PIRACY_COPYRIGHT_INFRINGEMENT",
+    "UNMODERATED_UGC_FORUMS_IMAGES_VIDEO"
+   ],
+   "type": "string"
+  },
+  "DSPDayOfWeek": {
+   "description": "**DayOfWeek Enum:** | DayOfWeek | Description | |------|------| | `FRIDAY` | Friday. | | `MONDAY` | Monday. | | `SATURDAY` | Saturday. | | `SUNDAY` | Sunday. | | `THURSDAY` | Thursday. | | `TUESDAY` | Tuesday. | | `WEDN…",
+   "enum": [
+    "FRIDAY",
+    "MONDAY",
+    "SATURDAY",
+    "SUNDAY",
+    "THURSDAY",
+    "TUESDAY",
+    "WEDNESDAY"
+   ],
+   "type": "string"
+  },
+  "DSPDayPartTarget": {
+   "description": "Target based on time of day.",
+   "properties": {
+    "dayOfWeek": {
+     "$ref": "DSPDayOfWeek"
+    },
+    "timeOfDay": {
+     "$ref": "DSPTimeOfDay"
+    }
+   },
+   "required": [
+    "dayOfWeek",
+    "timeOfDay"
+   ],
+   "type": "object"
+  },
+  "DSPDeleteTargetRequest": {
+   "properties": {
+    "targetIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targetIds"
+   ],
+   "type": "object"
+  },
+  "DSPDeliveryReason": {
+   "description": "**DeliveryReason Enum:** | DeliveryReason | Description | |------|------| | `AD_CREATIVES_NOT_RUNNING` | | | `AD_GROUPS_NOT_RUNNING` | | | `AD_GROUP_ARCHIVED` | | | `AD_GROUP_ENDED` | | | `AD_GROUP_INELIGIBLE_GOAL_KPI` …",
+   "enum": [
+    "AD_CREATIVES_NOT_RUNNING",
+    "AD_GROUPS_NOT_RUNNING",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_ENDED",
+    "AD_GROUP_INELIGIBLE_GOAL_KPI",
+    "AD_GROUP_MISSING_CONVERSION_TRACKING_SELECTIONS",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_START_DATE",
+    "AD_GROUP_POLICING_SUSPENDED",
+    "AD_GROUP_TOO_FEW_CONVERSION_TRACKING_SELECTIONS",
+    "AD_GROUP_TOO_MANY_CONVERSION_TRACKING_SELECTIONS",
+    "AD_NOT_APPROVED_FOR_ALL_AD_GROUPS",
+    "AD_NOT_ASSOCIATED_WITH_AD_GROUP",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_POLICING_SUSPENDED",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DSPDeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | |------|------| | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplac…",
+   "enum": [
+    "DELIVERING",
+    "LIMITED",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "DSPDeviceOrientation": {
+   "description": "**DeviceOrientation Enum:** | DeviceOrientation | Description | |------|------| | `LANDSCAPE` | Device held horizontally. | | `PORTRAIT` | Device held vertically. |",
+   "enum": [
+    "LANDSCAPE",
+    "PORTRAIT"
+   ],
+   "type": "string"
+  },
+  "DSPDeviceTarget": {
+   "description": "Target based on user device.",
+   "properties": {
+    "deviceOrientation": {
+     "$ref": "DSPDeviceOrientation"
+    },
+    "deviceType": {
+     "$ref": "DSPDeviceType"
+    },
+    "mobileDevice": {
+     "$ref": "DSPMobileDevice"
+    },
+    "mobileEnvironment": {
+     "$ref": "DSPMobileEnvironment"
+    },
+    "mobileOs": {
+     "$ref": "DSPMobileOs"
+    }
+   },
+   "required": [
+    "deviceType"
+   ],
+   "type": "object"
+  },
+  "DSPDeviceType": {
+   "description": "**DeviceType Enum:** | DeviceType | Description | |------|------| | `CONNECTED_DEVICE` | Connected TV, smart speakers. Used for audio AdGroup type. | | `CONNECTED_TV` | Connected TV devices. | | `DESKTOP` | Desktop comp…",
+   "enum": [
+    "CONNECTED_DEVICE",
+    "CONNECTED_TV",
+    "DESKTOP",
+    "MOBILE"
+   ],
+   "type": "string"
+  },
+  "DSPDomainFileTarget": {
+   "description": "Targets domains based on list provided via file upload.",
+   "properties": {
+    "domainFileId": {
+     "description": "The ID associated to the domain file to target. Read-only and created based on the inputted domainFileKey.",
+     "type": "string"
+    },
+    "domainFileKey": {
+     "description": "The S3 key of the uploaded file which can be obtained from the file upload policy endpoint. A max of 10 files may be associated to one ad group.",
+     "type": "string"
+    },
+    "domainFileName": {
+     "description": "The name of the file.",
+     "type": "string"
+    },
+    "domainFileUrl": {
+     "description": "The file containing the domains uploaded. It expires in one hour.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "domainFileKey",
+    "domainFileName"
+   ],
+   "type": "object"
+  },
+  "DSPDomainListTarget": {
+   "description": "Targets domains based on an existing domain list.",
+   "properties": {
+    "domainListId": {
+     "description": "The ID of the domain list to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "domainListId"
+   ],
+   "type": "object"
+  },
+  "DSPDomainNameTarget": {
+   "description": "Targets domains based on URL.",
+   "properties": {
+    "domainName": {
+     "description": "The URL of the domain to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "domainName"
+   ],
+   "type": "object"
+  },
+  "DSPDomainTarget": {
+   "description": "Target based on a specified domain.",
+   "properties": {
+    "domainTargetDetails": {
+     "$ref": "DSPDomainTargetDetails"
+    },
+    "domainTargetType": {
+     "$ref": "DSPDomainTargetTypes"
+    }
+   },
+   "required": [
+    "domainTargetDetails",
+    "domainTargetType"
+   ],
+   "type": "object"
+  },
+  "DSPDomainTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "advertiserDomainList": {
+       "$ref": "DSPAdvertiserDomainList"
+      }
+     },
+     "required": [
+      "advertiserDomainList"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "domainFileTarget": {
+       "$ref": "DSPDomainFileTarget"
+      }
+     },
+     "required": [
+      "domainFileTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "domainListTarget": {
+       "$ref": "DSPDomainListTarget"
+      }
+     },
+     "required": [
+      "domainListTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "domainNameTarget": {
+       "$ref": "DSPDomainNameTarget"
+      }
+     },
+     "required": [
+      "domainNameTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPDomainTargetTypes": {
+   "description": "**DomainTargetTypes Enum:** | DomainTargetTypes | Description | |------|------| | `ADVERTISER_DOMAIN_LIST` | Target domains inherited from the advertiser. | | `DOMAIN_FILE` | Target domains from an uploaded file. | | `D…",
+   "enum": [
+    "ADVERTISER_DOMAIN_LIST",
+    "DOMAIN_FILE",
+    "DOMAIN_LIST",
+    "DOMAIN_NAME"
+   ],
+   "type": "string"
+  },
+  "DSPDoubleVerifyAuthenticAttention": {
+   "properties": {
+    "universalAttention": {
+     "description": "One omni-channel segment that is informed by data from all DV campaigns to help avoid serving ads on generally poor performing apps and domains.",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "universalAttention"
+   ],
+   "type": "object"
+  },
+  "DSPDoubleVerifyAuthenticBrandSafety": {
+   "properties": {
+    "doubleVerifySegmentId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDoubleVerifyBrandSafety": {
+   "properties": {
+    "appAgeRating": {
+     "description": "A list of app age ratings to be used for excluding apps. For example, TEENS_12_PLUS will only exclude apps with content rated for everyone ages 12 and over. UNKNOWN will exclude apps with content unrated or unknown to D…",
+     "items": {
+      "$ref": "DSPDVBrandSafetyAppAgeRatingType"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "appStarRating": {
+     "$ref": "DSPDVBrandSafetyAppStarRatingType"
+    },
+    "contentCategories": {
+     "description": "A list of content categories to exclude from targeting.",
+     "items": {
+      "$ref": "DSPDVBrandSafetyContentCategoryType"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "contentCategoriesWithRisk": {
+     "items": {
+      "$ref": "DSPDVBrandSafetyContentCategoriesWithRiskMap"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "excludeAppsWithInsufficientRating": {
+     "description": "Set to true to exclude unofficial apps or apps with insufficient user ratings (<100 lifetime).",
+     "type": "boolean"
+    },
+    "unknownContent": {
+     "description": "Set to true to exclude unknown content.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDoubleVerifyCustomContextualSegmentId": {
+   "properties": {
+    "doubleVerifySegmentId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDoubleVerifyFraudInvalidTraffic": {
+   "properties": {
+    "blockAppAndSites": {
+     "description": "Set to true to block applications and sites with insufficient historical fraud and invalid traffic statistics. This will not be applicable if ALLOW_ALL is chosen.",
+     "type": "boolean"
+    },
+    "excludeAppsAndSites": {
+     "$ref": "DSPExcludeAppsAndSitesType"
+    },
+    "excludeImpressions": {
+     "description": "Set to true to exclude impressions delivered to devices identified to be fraudulent or invalid.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDoubleVerifyStandardDisplayBrandSafety": {
+   "properties": {
+    "contentCategories": {
+     "description": "A list of content categories to exclude from targeting.",
+     "items": {
+      "$ref": "DSPDVBrandSafetyContentCategoryType"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "contentCategoriesWithRisk": {
+     "items": {
+      "$ref": "DSPDVBrandSafetyContentCategoriesWithRiskMap"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "unknownContent": {
+     "description": "Set to true to exclude unknown content.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDoubleVerifyViewability": {
+   "properties": {
+    "averageCompletionAndFullyViewableRateTargeting": {
+     "$ref": "DSPAverageCompletionAndFullyViewableRateTargetingType"
+    },
+    "brandExposureViewabilityTargeting": {
+     "$ref": "DSPBrandExposureViewabilityTargetingType"
+    },
+    "includeUnmeasurableImpressions": {
+     "description": "Set to true to include impressions where impressions can't be measured.",
+     "type": "boolean"
+    },
+    "mrcViewabilityTargeting": {
+     "$ref": "DSPMrcViewabilityTargetingType"
+    }
+   },
+   "type": "object"
+  },
+  "DSPDspContentRating": {
+   "properties": {
+    "dspContentRating": {
+     "$ref": "DSPDspContentRatingEnum"
+    }
+   },
+   "required": [
+    "dspContentRating"
+   ],
+   "type": "object"
+  },
+  "DSPDspContentRatingEnum": {
+   "description": "**DspContentRatingEnum Enum:** | DspContentRatingEnum | Description | |------|------| | `RATING_NOT_AVAILABLE` | Content where rating isn't available from the publisher. | | `SUITABLE_FOR_ADULTS` | Ages 18+. Equivalent …",
+   "enum": [
+    "RATING_NOT_AVAILABLE",
+    "SUITABLE_FOR_ADULTS",
+    "SUITABLE_FOR_ALL_AUDIENCES",
+    "SUITABLE_FOR_MATURE_AUDIENCES",
+    "SUITABLE_FOR_MOST_AUDIENCES_WITH_PARENTAL_GUIDANCE",
+    "SUITABLE_FOR_TEEN_AND_OLDER_AUDIENCES"
+   ],
+   "type": "string"
+  },
+  "DSPExcludeAppsAndSitesType": {
+   "enum": [
+    "ALLOW_ALL",
+    "FRAUD_TRAFFIC_LEVEL_GTE_02",
+    "FRAUD_TRAFFIC_LEVEL_GTE_04",
+    "FRAUD_TRAFFIC_LEVEL_GTE_06",
+    "FRAUD_TRAFFIC_LEVEL_GTE_08",
+    "FRAUD_TRAFFIC_LEVEL_GTE_10",
+    "FRAUD_TRAFFIC_LEVEL_GTE_100",
+    "FRAUD_TRAFFIC_LEVEL_GTE_25",
+    "FRAUD_TRAFFIC_LEVEL_GTE_50"
+   ],
+   "type": "string"
+  },
+  "DSPFoldPosition": {
+   "description": "**FoldPosition Enum:** | FoldPosition | Description | |------|------| | `ABOVE_THE_FOLD` | Ad placement visible without scrolling. | | `BELOW_THE_FOLD` | Ad placement visible only after scrolling. | | `UNKNOWN` | Unknow…",
+   "enum": [
+    "ABOVE_THE_FOLD",
+    "BELOW_THE_FOLD",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPFoldPositionTarget": {
+   "description": "Targets ads in the specified fold position",
+   "properties": {
+    "foldPosition": {
+     "$ref": "DSPFoldPosition"
+    }
+   },
+   "required": [
+    "foldPosition"
+   ],
+   "type": "object"
+  },
+  "DSPIASBrandSafetyLevelType": {
+   "description": "The IAS brand safety risk level.",
+   "enum": [
+    "ALLOW_ALL",
+    "BRAND_SAFETY_EXCLUDE_HIGH_AND_MODERATE_RISK",
+    "BRAND_SAFETY_EXCLUDE_HIGH_RISK"
+   ],
+   "type": "string"
+  },
+  "DSPIASFraudInvalidTrafficType": {
+   "description": "The type of fraud invalid traffic.",
+   "enum": [
+    "ALLOW_ALL",
+    "FRAUD_INVALID_TRAFFIC_EXCLUDE_HIGH_MODERATE_RISK",
+    "FRAUD_INVALID_TRAFFIC_EXCLUDE_HIGH_RISK"
+   ],
+   "type": "string"
+  },
+  "DSPIASViewabilityStandardType": {
+   "description": "The viewability standard.",
+   "enum": [
+    "GROUPM",
+    "MRC",
+    "NONE",
+    "PUBLICIS"
+   ],
+   "type": "string"
+  },
+  "DSPInGroupOperator": {
+   "description": "**InGroupOperator Enum:** | InGroupOperator | Description | |------|------| | `ALL` | Matches only if every single condition is true. InGroupOperator is used among audiences within the same audience group. This is a rea…",
+   "enum": [
+    "ALL",
+    "ANY"
+   ],
+   "type": "string"
+  },
+  "DSPIntegralAdScienceBrandSafety": {
+   "properties": {
+    "excludeContent": {
+     "description": "Set to true to exclude content that Integral Ad Science is not able to rate.",
+     "type": "boolean"
+    },
+    "iasBrandSafetyAdult": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyAlcohol": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyGambling": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyHateSpeech": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyIllegalDownloads": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyIllegalDrugs": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyOffensiveLanguage": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    },
+    "iasBrandSafetyViolence": {
+     "$ref": "DSPIASBrandSafetyLevelType"
+    }
+   },
+   "type": "object"
+  },
+  "DSPIntegralAdScienceContextualAvoidance": {
+   "properties": {
+    "avoidanceSegments": {
+     "description": "The unique identifier of the IAS contextual avoidance segment",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPIntegralAdScienceContextualTargeting": {
+   "properties": {
+    "topicalSegments": {
+     "description": "The unique identifier of the IAS contextual topical targeting segment",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    },
+    "verticalSegments": {
+     "description": "The unique identifier of the IAS contextual vertical targeting segment",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 200,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPIntegralAdScienceFraudInvalidTraffic": {
+   "properties": {
+    "targetSetting": {
+     "$ref": "DSPIASFraudInvalidTrafficType"
+    }
+   },
+   "type": "object"
+  },
+  "DSPIntegralAdScienceQualitySync": {
+   "properties": {
+    "segmentId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPIntegralAdScienceViewability": {
+   "description": "The IAS viewability standard.",
+   "properties": {
+    "standard": {
+     "$ref": "DSPIASViewabilityStandardType"
+    },
+    "viewabilityTargeting": {
+     "$ref": "DSPViewabilityTierType"
+    }
+   },
+   "required": [
+    "standard"
+   ],
+   "type": "object"
+  },
+  "DSPInventorySourceTarget": {
+   "description": "Target based on the source of the inventory.",
+   "properties": {
+    "inventorySourceId": {
+     "$ref": "DSPMarketplaceStringValue"
+    },
+    "inventorySourceType": {
+     "$ref": "DSPInventorySourceType"
+    }
+   },
+   "required": [
+    "inventorySourceId",
+    "inventorySourceType"
+   ],
+   "type": "object"
+  },
+  "DSPInventorySourceType": {
+   "description": "**InventorySourceType Enum:** | InventorySourceType | Description | |------|------| | `AMAZON` | Amazon-owned inventory. | | `APD` | Amazon Publisher Direct inventory. | | `DEAL` | Deal-based inventory. | | `INVENTORY_G…",
+   "enum": [
+    "AMAZON",
+    "APD",
+    "DEAL",
+    "INVENTORY_GROUP",
+    "THIRD_PARTY_EXCHANGE"
+   ],
+   "type": "string"
+  },
+  "DSPKeywordMatchType": {
+   "description": "**KeywordMatchType Enum:** | KeywordMatchType | Description | |------|------| | `BROAD` | Broad match search terms. This expands matching on user intent beyond PHRASE. |",
+   "enum": [
+    "BROAD"
+   ],
+   "type": "string"
+  },
+  "DSPKeywordTarget": {
+   "description": "Targets a specific customer search term.",
+   "properties": {
+    "keyword": {
+     "description": "The customer search term or text to target. For valid characters and constraints, [see keyword character constraints](https://advertising.amazon.com/API/docs/en-us/reference/concepts/limits#keyword-character-constraints…",
+     "type": "string"
+    },
+    "matchType": {
+     "$ref": "DSPKeywordMatchType"
+    }
+   },
+   "required": [
+    "keyword",
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "DSPLocationTarget": {
+   "description": "Target based on geographic location.",
+   "properties": {
+    "locationId": {
+     "description": "The ID of the geographic location to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "locationId"
+   ],
+   "type": "object"
+  },
+  "DSPMarketplaceStringValue": {
+   "properties": {
+    "defaultValue": {
+     "description": "The default value. Either the default value or the marketplace settings should always be specified",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPMobileDevice": {
+   "description": "**MobileDevice Enum:** | MobileDevice | Description | |------|------| | `ANDROID` | Android device. | | `IPAD` | Apple iPad. | | `IPHONE` | Apple iPhone. | | `KINDLE_FIRE_HD` | Amazon Kindle Fire HD. | | `KINDLE_FIRE` |…",
+   "enum": [
+    "ANDROID",
+    "IPAD",
+    "IPHONE",
+    "KINDLE_FIRE",
+    "KINDLE_FIRE_HD"
+   ],
+   "type": "string"
+  },
+  "DSPMobileEnvironment": {
+   "description": "**MobileEnvironment Enum:** | MobileEnvironment | Description | |------|------| | `APP` | Mobile application. | | `WEB` | Mobile web browser. |",
+   "enum": [
+    "APP",
+    "WEB"
+   ],
+   "type": "string"
+  },
+  "DSPMobileOs": {
+   "description": "**MobileOs Enum:** | MobileOs | Description | |------|------| | `ANDROID` | Google Android operating system. | | `IOS` | Apple iOS operating system. |",
+   "enum": [
+    "ANDROID",
+    "IOS"
+   ],
+   "type": "string"
+  },
+  "DSPMrcViewabilityTargetingType": {
+   "description": "The type of MRC viewability targeting.",
+   "enum": [
+    "ALLOW_ALL",
+    "MRC_VIEWABILITY_GTE_30",
+    "MRC_VIEWABILITY_GTE_40",
+    "MRC_VIEWABILITY_GTE_50",
+    "MRC_VIEWABILITY_GTE_55",
+    "MRC_VIEWABILITY_GTE_60",
+    "MRC_VIEWABILITY_GTE_65",
+    "MRC_VIEWABILITY_GTE_70",
+    "MRC_VIEWABILITY_GTE_75",
+    "MRC_VIEWABILITY_GTE_80"
+   ],
+   "type": "string"
+  },
+  "DSPNativeContentPosition": {
+   "description": "**NativeContentPosition Enum:** | NativeContentPosition | Description | |------|------| | `IN_ARTICLE` | Positioned in the atomic unit of the content (e.g., in the article page or single image page). | | `IN_FEED` | Pos…",
+   "enum": [
+    "IN_ARTICLE",
+    "IN_FEED",
+    "PERIPHERAL",
+    "RECOMMENDATION",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPNativeContentPositionTarget": {
+   "description": "Targets ads to a specific native content position",
+   "properties": {
+    "nativePosition": {
+     "$ref": "DSPNativeContentPosition"
+    }
+   },
+   "required": [
+    "nativePosition"
+   ],
+   "type": "object"
+  },
+  "DSPNewsGuardBrandGuardMisinformationSafety": {
+   "properties": {
+    "avoidanceList": {
+     "description": "The unique identifiers of misinformation targets",
+     "items": {
+      "$ref": "DSPNewsGuardBrandGuardMisinformationSafetyType"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPNewsGuardBrandGuardMisinformationSafetyType": {
+   "enum": [
+    "AI_GENERATED_MFA",
+    "BASIC_EXCLUDE",
+    "CLIMATE_MISINFORMATION",
+    "COVID_MISINFORMATION",
+    "ELECTION_MISINFORMATION",
+    "HEALTH_MISINFORMATION",
+    "HIGH_EXCLUDE",
+    "ISRAEL_HAMAS_MISINFORMATION",
+    "MAX_EXCLUDE",
+    "MISINFORMATION_SITES",
+    "OPINIONATED_NEWS",
+    "QANON_MISINFORMATION",
+    "UKRAINE_MISINFORMATION",
+    "VACCINE_MISINFORMATION"
+   ],
+   "type": "string"
+  },
+  "DSPNewsGuardBrandGuardTrustedNewsTargeting": {
+   "description": "Only applicable for Web supply.",
+   "properties": {
+    "targetingList": {
+     "description": "The unique identifiers of trusted news targets",
+     "items": {
+      "$ref": "DSPNewsGuardBrandGuardTrustedNewsTargetingType"
+     },
+     "maxItems": 15,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPNewsGuardBrandGuardTrustedNewsTargetingType": {
+   "enum": [
+    "BASIC_INCLUDE",
+    "BUSINESS_INCLUDE",
+    "COMMUNITY_INCLUDE",
+    "HEALTH_INCLUDE",
+    "HIGH_INCLUDE",
+    "LIFESTYLE_INCLUDE",
+    "LOCAL_INCLUDE",
+    "MAX_INCLUDE",
+    "POLITICS_INCLUDE",
+    "TECH_INCLUDE"
+   ],
+   "type": "string"
+  },
+  "DSPPixalateFraudInvalidTraffic": {
+   "properties": {
+    "excludeAppsAndDomains": {
+     "description": "Set to true to exclude traffic from Apps and Domains identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeIpAddressAndUserAgents": {
+     "description": "Set to true to exclude traffic from IPV4 and IPV6 addresses and user agents identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeOttAndMobileDevices": {
+     "description": "Set to true to exclude traffic from OTT and Mobile devices identified to be fraudulent or invalid.",
+     "type": "boolean"
+    },
+    "excludeRemovedAppsFromAppStores": {
+     "description": "Set to true to exlude traffic from Apps that have been removed from the google play and apple app stores in the last 6 months.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "DSPPlacementType": {
+   "description": "**PlacementType Enum:** | PlacementType | Description | |------|------| | `REWARDED` | Rewarded video type where users receive rewards from the publisher for watching ads. |",
+   "enum": [
+    "REWARDED"
+   ],
+   "type": "string"
+  },
+  "DSPPlacementTypeTarget": {
+   "description": "Target based on the placement type.",
+   "properties": {
+    "placementType": {
+     "$ref": "DSPPlacementType"
+    }
+   },
+   "required": [
+    "placementType"
+   ],
+   "type": "object"
+  },
+  "DSPProductCategoryMatchType": {
+   "description": "**ProductCategoryMatchType Enum:** | ProductCategoryMatchType | Description | |------|------| | `MULTISIGNAL_BROAD` | This expands matching on user intent beyond BROAD by taking multiple behavioral and contextual signal…",
+   "enum": [
+    "MULTISIGNAL_BROAD"
+   ],
+   "type": "string"
+  },
+  "DSPProductCategoryRefinement": {
+   "properties": {
+    "productCategoryId": {
+     "description": "The product category ID to target.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPProductCategoryRefinementValue": {
+   "properties": {
+    "productCategoryRefinement": {
+     "$ref": "DSPProductCategoryRefinement"
+    }
+   },
+   "type": "object"
+  },
+  "DSPProductCategoryTarget": {
+   "description": "Targets a specific customer search term.",
+   "properties": {
+    "matchType": {
+     "$ref": "DSPProductCategoryMatchType"
+    },
+    "productCategoryRefinement": {
+     "$ref": "DSPProductCategoryRefinementValue"
+    }
+   },
+   "required": [
+    "productCategoryRefinement"
+   ],
+   "type": "object"
+  },
+  "DSPProductIdType": {
+   "description": "**ProductIdType Enum:** | ProductIdType | Description | |------|------| | `ASIN` | ASIN identifier type. |",
+   "enum": [
+    "ASIN"
+   ],
+   "type": "string"
+  },
+  "DSPProductMatchType": {
+   "description": "**ProductMatchType Enum:** | ProductMatchType | Description | |------|------| | `PRODUCT_COMPLEMENTS` | Products that are frequently purchased together with the specified product. | | `PRODUCT_EXACT` | Products exactly …",
+   "enum": [
+    "PRODUCT_COMPLEMENTS",
+    "PRODUCT_EXACT",
+    "PRODUCT_REMARKETING",
+    "PRODUCT_SIMILAR"
+   ],
+   "type": "string"
+  },
+  "DSPProductTarget": {
+   "description": "Targets a specific product.",
+   "properties": {
+    "matchType": {
+     "$ref": "DSPProductMatchType"
+    },
+    "product": {
+     "$ref": "DSPProductValue"
+    },
+    "productIdType": {
+     "$ref": "DSPProductIdType"
+    }
+   },
+   "required": [
+    "matchType",
+    "product",
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "DSPProductValue": {
+   "properties": {
+    "productId": {
+     "description": "The product identifier. Either the product id or the marketplace settings should always be specified",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPQueryTargetRequest": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "DSPTargetAdGroupIdFilter"
+    },
+    "adProductFilter": {
+     "$ref": "DSPTargetAdProductFilter"
+    },
+    "maxResults": {
+     "default": 5000,
+     "format": "int32",
+     "maximum": 5000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "DSPTargetStateFilter"
+    },
+    "targetTypeFilter": {
+     "$ref": "DSPTargetTargetTypeFilter"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "DSPSkippabilityTarget": {
+   "description": "Target based on inventory skippability. Applicable to Online Video (OLV) ad groups. Streaming TV (STV) ad groups are restricted to NON_SKIPPABLE only.",
+   "properties": {
+    "skippabilityType": {
+     "$ref": "DSPSkippabilityType"
+    }
+   },
+   "required": [
+    "skippabilityType"
+   ],
+   "type": "object"
+  },
+  "DSPSkippabilityType": {
+   "description": "**SkippabilityType Enum:** | SkippabilityType | Description | |------|------| | `NON_SKIPPABLE` | Target non-skippable video inventory (standard video ads). This is the only allowed value for STV ad groups. | | `SKIPPAB…",
+   "enum": [
+    "NON_SKIPPABLE",
+    "SKIPPABLE"
+   ],
+   "type": "string"
+  },
+  "DSPState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "DSPStatus": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "DSPDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "DSPDeliveryStatus"
+    }
+   },
+   "required": [
+    "deliveryStatus"
+   ],
+   "type": "object"
+  },
+  "DSPTarget": {
+   "properties": {
+    "adGroupId": {
+     "description": "A unique identifier for the ad group associated with the target. Only used for ad-group level targets.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "DSPAdProduct"
+    },
+    "creationDateTime": {
+     "description": "The date time the target was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time the target was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Indicates whether the target is negative or not.",
+     "type": "boolean"
+    },
+    "state": {
+     "$ref": "DSPState"
+    },
+    "status": {
+     "$ref": "DSPStatus"
+    },
+    "targetDetails": {
+     "$ref": "DSPTargetDetails"
+    },
+    "targetId": {
+     "description": "A unique identifier for the target.",
+     "type": "string"
+    },
+    "targetLevel": {
+     "$ref": "DSPTargetLevel"
+    },
+    "targetType": {
+     "$ref": "DSPTargetType"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "adProduct",
+    "creationDateTime",
+    "lastUpdatedDateTime",
+    "negative",
+    "state",
+    "targetDetails",
+    "targetId",
+    "targetLevel",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "DSPTargetAdGroupIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DSPTargetAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+     "items": {
+      "$ref": "DSPAdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DSPTargetCreate": {
+   "properties": {
+    "adGroupId": {
+     "description": "A unique identifier for the ad group associated with the target. Only used for ad-group level targets.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "DSPAdProduct"
+    },
+    "negative": {
+     "description": "Indicates whether the target is negative or not.",
+     "type": "boolean"
+    },
+    "state": {
+     "$ref": "DSPCreateState"
+    },
+    "targetDetails": {
+     "$ref": "DSPCreateTargetDetails"
+    },
+    "targetType": {
+     "$ref": "DSPTargetType"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "adProduct",
+    "negative",
+    "state",
+    "targetDetails",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "DSPTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "adInitiationTarget": {
+       "$ref": "DSPAdInitiationTarget"
+      }
+     },
+     "required": [
+      "adInitiationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "adPlayerSizeTarget": {
+       "$ref": "DSPAdPlayerSizeTarget"
+      }
+     },
+     "required": [
+      "adPlayerSizeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "appTarget": {
+       "$ref": "DSPAppTarget"
+      }
+     },
+     "required": [
+      "appTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "audienceTarget": {
+       "$ref": "DSPAudienceTarget"
+      }
+     },
+     "required": [
+      "audienceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "brandSafetyCategoryTarget": {
+       "$ref": "DSPBrandSafetyCategoryTarget"
+      }
+     },
+     "required": [
+      "brandSafetyCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "brandSafetyTierTarget": {
+       "$ref": "DSPBrandSafetyTierTarget"
+      }
+     },
+     "required": [
+      "brandSafetyTierTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentCategoryTarget": {
+       "$ref": "DSPContentCategoryTarget"
+      }
+     },
+     "required": [
+      "contentCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentGenreTarget": {
+       "$ref": "DSPContentGenreTarget"
+      }
+     },
+     "required": [
+      "contentGenreTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentInstreamPositionTarget": {
+       "$ref": "DSPContentInstreamPositionTarget"
+      }
+     },
+     "required": [
+      "contentInstreamPositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentOutstreamPositionTarget": {
+       "$ref": "DSPContentOutstreamPositionTarget"
+      }
+     },
+     "required": [
+      "contentOutstreamPositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "contentRatingTarget": {
+       "$ref": "DSPContentRatingTarget"
+      }
+     },
+     "required": [
+      "contentRatingTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "dayPartTarget": {
+       "$ref": "DSPDayPartTarget"
+      }
+     },
+     "required": [
+      "dayPartTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "deviceTarget": {
+       "$ref": "DSPDeviceTarget"
+      }
+     },
+     "required": [
+      "deviceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "domainTarget": {
+       "$ref": "DSPDomainTarget"
+      }
+     },
+     "required": [
+      "domainTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "foldPositionTarget": {
+       "$ref": "DSPFoldPositionTarget"
+      }
+     },
+     "required": [
+      "foldPositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "inventorySourceTarget": {
+       "$ref": "DSPInventorySourceTarget"
+      }
+     },
+     "required": [
+      "inventorySourceTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "keywordTarget": {
+       "$ref": "DSPKeywordTarget"
+      }
+     },
+     "required": [
+      "keywordTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "locationTarget": {
+       "$ref": "DSPLocationTarget"
+      }
+     },
+     "required": [
+      "locationTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "nativeContentPositionTarget": {
+       "$ref": "DSPNativeContentPositionTarget"
+      }
+     },
+     "required": [
+      "nativeContentPositionTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "placementTypeTarget": {
+       "$ref": "DSPPlacementTypeTarget"
+      }
+     },
+     "required": [
+      "placementTypeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productCategoryTarget": {
+       "$ref": "DSPProductCategoryTarget"
+      }
+     },
+     "required": [
+      "productCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productTarget": {
+       "$ref": "DSPProductTarget"
+      }
+     },
+     "required": [
+      "productTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "skippabilityTarget": {
+       "$ref": "DSPSkippabilityTarget"
+      }
+     },
+     "required": [
+      "skippabilityTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "themeTarget": {
+       "$ref": "DSPThemeTarget"
+      }
+     },
+     "required": [
+      "themeTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "thirdPartyTarget": {
+       "$ref": "DSPThirdPartyTarget"
+      }
+     },
+     "required": [
+      "thirdPartyTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoAdFormatTarget": {
+       "$ref": "DSPVideoAdFormatTarget"
+      }
+     },
+     "required": [
+      "videoAdFormatTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoContentDurationTarget": {
+       "$ref": "DSPVideoContentDurationTarget"
+      }
+     },
+     "required": [
+      "videoContentDurationTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPTargetLevel": {
+   "description": "**TargetLevel Enum:** | TargetLevel | Description | |------|------| | `AD_GROUP` | Target applied at the ad group level. |",
+   "enum": [
+    "AD_GROUP"
+   ],
+   "type": "string"
+  },
+  "DSPTargetMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "DSPTargetMultiStatusSuccess"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPTargetMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "target": {
+     "$ref": "DSPTarget"
+    }
+   },
+   "required": [
+    "index",
+    "target"
+   ],
+   "type": "object"
+  },
+  "DSPTargetStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `DRAFT` | The resource is in draft status and has not yet been proposed or enabled. | | `ENABLED` | The object is set active by user and eligible for delivery. | |…",
+     "items": {
+      "$ref": "DSPState"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DSPTargetSuccessResponse": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "targets": {
+     "items": {
+      "$ref": "DSPTarget"
+     },
+     "maxItems": 5000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPTargetTargetTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**TargetType Enum:** | TargetType | Description | | --- | --- | | `KEYWORD` | Target based on customer search terms. | | `PRODUCT` | Target based on a specific product. | | `PRODUCT_CATEGORY` | Target based on a product…",
+     "items": {
+      "$ref": "DSPTargetType"
+     },
+     "maxItems": 17,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DSPTargetType": {
+   "description": "**TargetType Enum:** | TargetType | Description | |------|------| | `AD_INITIATION` | Target based on how the video ad is initiated. | | `AD_PLAYER_SIZE` | Target based on video player size. | | `APP` | Target based on …",
+   "enum": [
+    "AD_INITIATION",
+    "AD_PLAYER_SIZE",
+    "APP",
+    "AUDIENCE",
+    "BRAND_SAFETY_CATEGORY",
+    "BRAND_SAFETY_TIER",
+    "CONTENT_CATEGORY",
+    "CONTENT_GENRE",
+    "CONTENT_INSTREAM_POSITION",
+    "CONTENT_OUTSTREAM_POSITION",
+    "CONTENT_RATING",
+    "DAYPART",
+    "DEVICE",
+    "DOMAIN",
+    "FOLD_POSITION",
+    "INVENTORY_SOURCE",
+    "KEYWORD",
+    "LOCATION",
+    "NATIVE_CONTENT_POSITION",
+    "PLACEMENT_TYPE",
+    "PRODUCT",
+    "PRODUCT_CATEGORY",
+    "SKIPPABILITY",
+    "THEME",
+    "THIRD_PARTY",
+    "VIDEO_AD_FORMAT",
+    "VIDEO_CONTENT_DURATION"
+   ],
+   "type": "string"
+  },
+  "DSPThemeMatchType": {
+   "description": "**ThemeMatchType Enum:** | ThemeMatchType | Description | |------|------| | `PRODUCTS_SIMILAR_TO_ADVERTISED_PRODUCTS` | Products similar to products advertised as part of the ad group. |",
+   "enum": [
+    "PRODUCTS_SIMILAR_TO_ADVERTISED_PRODUCTS"
+   ],
+   "type": "string"
+  },
+  "DSPThemeTarget": {
+   "description": "Theme targets let advertisers select high-performing targets based on a common theme.",
+   "properties": {
+    "matchType": {
+     "$ref": "DSPThemeMatchType"
+    }
+   },
+   "required": [
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "DSPThirdPartyTarget": {
+   "properties": {
+    "thirdPartyTargetDetails": {
+     "$ref": "DSPThirdPartyTargetDetails"
+    },
+    "thirdPartyTargetType": {
+     "$ref": "DSPThirdPartyTargetType"
+    }
+   },
+   "required": [
+    "thirdPartyTargetDetails",
+    "thirdPartyTargetType"
+   ],
+   "type": "object"
+  },
+  "DSPThirdPartyTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "doubleVerifyAuthenticAttention": {
+       "$ref": "DSPDoubleVerifyAuthenticAttention"
+      }
+     },
+     "required": [
+      "doubleVerifyAuthenticAttention"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyAuthenticBrandSafety": {
+       "$ref": "DSPDoubleVerifyAuthenticBrandSafety"
+      }
+     },
+     "required": [
+      "doubleVerifyAuthenticBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyBrandSafety": {
+       "$ref": "DSPDoubleVerifyBrandSafety"
+      }
+     },
+     "required": [
+      "doubleVerifyBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyCustomContextualSegmentId": {
+       "$ref": "DSPDoubleVerifyCustomContextualSegmentId"
+      }
+     },
+     "required": [
+      "doubleVerifyCustomContextualSegmentId"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyFraudInvalidTraffic": {
+       "$ref": "DSPDoubleVerifyFraudInvalidTraffic"
+      }
+     },
+     "required": [
+      "doubleVerifyFraudInvalidTraffic"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyStandardDisplayBrandSafety": {
+       "$ref": "DSPDoubleVerifyStandardDisplayBrandSafety"
+      }
+     },
+     "required": [
+      "doubleVerifyStandardDisplayBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "doubleVerifyViewability": {
+       "$ref": "DSPDoubleVerifyViewability"
+      }
+     },
+     "required": [
+      "doubleVerifyViewability"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceBrandSafety": {
+       "$ref": "DSPIntegralAdScienceBrandSafety"
+      }
+     },
+     "required": [
+      "integralAdScienceBrandSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceContextualAvoidance": {
+       "$ref": "DSPIntegralAdScienceContextualAvoidance"
+      }
+     },
+     "required": [
+      "integralAdScienceContextualAvoidance"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceContextualTargeting": {
+       "$ref": "DSPIntegralAdScienceContextualTargeting"
+      }
+     },
+     "required": [
+      "integralAdScienceContextualTargeting"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceFraudInvalidTraffic": {
+       "$ref": "DSPIntegralAdScienceFraudInvalidTraffic"
+      }
+     },
+     "required": [
+      "integralAdScienceFraudInvalidTraffic"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceQualitySync": {
+       "$ref": "DSPIntegralAdScienceQualitySync"
+      }
+     },
+     "required": [
+      "integralAdScienceQualitySync"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "integralAdScienceViewability": {
+       "$ref": "DSPIntegralAdScienceViewability"
+      }
+     },
+     "required": [
+      "integralAdScienceViewability"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "newsGuardBrandGuardMisinformationSafety": {
+       "$ref": "DSPNewsGuardBrandGuardMisinformationSafety"
+      }
+     },
+     "required": [
+      "newsGuardBrandGuardMisinformationSafety"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "newsGuardBrandGuardTrustedNewsTargeting": {
+       "$ref": "DSPNewsGuardBrandGuardTrustedNewsTargeting"
+      }
+     },
+     "required": [
+      "newsGuardBrandGuardTrustedNewsTargeting"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "pixalateFraudInvalidTraffic": {
+       "$ref": "DSPPixalateFraudInvalidTraffic"
+      }
+     },
+     "required": [
+      "pixalateFraudInvalidTraffic"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPThirdPartyTargetType": {
+   "description": "**ThirdPartyTargetType Enum:** | ThirdPartyTargetType | Description | |------|------| | `DOUBLE_VERIFY_AUTHENTIC_ATTENTION` | | | `DOUBLE_VERIFY_AUTHENTIC_BRAND_SAFETY` | | | `DOUBLE_VERIFY_BRAND_SAFETY` | | | `DOUBLE_V…",
+   "enum": [
+    "DOUBLE_VERIFY_AUTHENTIC_ATTENTION",
+    "DOUBLE_VERIFY_AUTHENTIC_BRAND_SAFETY",
+    "DOUBLE_VERIFY_BRAND_SAFETY",
+    "DOUBLE_VERIFY_CUSTOM_CONTEXTUAL_SEGMENT_ID",
+    "DOUBLE_VERIFY_FRAUD_INVALID_TRAFFIC",
+    "DOUBLE_VERIFY_STANDARD_DISPLAY_BRAND_SAFETY",
+    "DOUBLE_VERIFY_VIEWABILITY",
+    "INTEGRAL_AD_SCIENCE_BRAND_SAFETY",
+    "INTEGRAL_AD_SCIENCE_CONTEXTUAL_AVOIDANCE",
+    "INTEGRAL_AD_SCIENCE_CONTEXTUAL_TARGETING",
+    "INTEGRAL_AD_SCIENCE_FRAUD_INVALID_TRAFFIC",
+    "INTEGRAL_AD_SCIENCE_QUALITY_SYNC",
+    "INTEGRAL_AD_SCIENCE_VIEWABILITY",
+    "NEWS_GUARD_BRAND_GUARD_MISINFORMATION_SAFETY",
+    "NEWS_GUARD_BRAND_GUARD_TRUSTED_NEWS_TARGETING",
+    "PIXALATE_FRAUD_INVALID_TRAFFIC"
+   ],
+   "type": "string"
+  },
+  "DSPTimeOfDay": {
+   "properties": {
+    "endTime": {
+     "description": "Selected end time",
+     "type": "string"
+    },
+    "startTime": {
+     "description": "Selected start time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "endTime",
+    "startTime"
+   ],
+   "type": "object"
+  },
+  "DSPTwitchContentRating": {
+   "properties": {
+    "twitchContentRating": {
+     "$ref": "DSPTwitchContentRatingEnum"
+    }
+   },
+   "required": [
+    "twitchContentRating"
+   ],
+   "type": "object"
+  },
+  "DSPTwitchContentRatingEnum": {
+   "description": "**TwitchContentRatingEnum Enum:** | TwitchContentRatingEnum | Description | |------|------| | `TWITCH_MODERATE` | Twitch Content with moderate content exclusions based on content classification labels received from Twit…",
+   "enum": [
+    "TWITCH_MODERATE",
+    "TWITCH_RESTRICTIVE"
+   ],
+   "type": "string"
+  },
+  "DSPVideoAdFormat": {
+   "description": "**VideoAdFormat Enum:** | VideoAdFormat | Description | |------|------| | `FULL_EPISODE_PLAYER` | Video ad plays within a full episode player. | | `INSTREAM` | Video ad plays within streaming video content. | | `OUTSTRE…",
+   "enum": [
+    "FULL_EPISODE_PLAYER",
+    "INSTREAM",
+    "OUTSTREAM"
+   ],
+   "type": "string"
+  },
+  "DSPVideoAdFormatTarget": {
+   "description": "Target based on the video ad format.",
+   "properties": {
+    "videoAdFormat": {
+     "$ref": "DSPVideoAdFormat"
+    }
+   },
+   "required": [
+    "videoAdFormat"
+   ],
+   "type": "object"
+  },
+  "DSPVideoContentDuration": {
+   "description": "**VideoContentDuration Enum:** | VideoContentDuration | Description | |------|------| | `EXTENDED` | Video content duration of 60+ minutes | | `LONG` | Video content duration of 30 to 60 minutes | | `MEDIUM` | Video con…",
+   "enum": [
+    "EXTENDED",
+    "LONG",
+    "MEDIUM",
+    "SHORT",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "DSPVideoContentDurationTarget": {
+   "description": "Targets ads to a specific video content duration",
+   "properties": {
+    "duration": {
+     "$ref": "DSPVideoContentDuration"
+    }
+   },
+   "required": [
+    "duration"
+   ],
+   "type": "object"
+  },
+  "DSPVideoInitiationType": {
+   "description": "**VideoInitiationType Enum:** | VideoInitiationType | Description | |------|------| | `AUTOPLAY` | Video ad starts automatically without user action. | | `UNKNOWN` | Unknown video initiation type. | | `USER_INITIATED` |…",
+   "enum": [
+    "AUTOPLAY",
+    "UNKNOWN",
+    "USER_INITIATED"
+   ],
+   "type": "string"
+  },
+  "DSPViewabilityTierType": {
+   "description": "The type of viewability tier.",
+   "enum": [
+    "ALLOW_ALL",
+    "VIEWABILITY_TIER_GT_40",
+    "VIEWABILITY_TIER_GT_50",
+    "VIEWABILITY_TIER_GT_60",
+    "VIEWABILITY_TIER_GT_70",
+    "VIEWABILITY_TIER_LT_40"
+   ],
+   "type": "string"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "ASSET_NOT_READY",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

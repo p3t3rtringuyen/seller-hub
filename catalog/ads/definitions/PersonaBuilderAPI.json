@@ -1,0 +1,971 @@
+{
+ "api": "PersonaBuilderAPI",
+ "file": "specs/dest/PersonaBuilderAPI_prod_3p.json",
+ "schemas": {
+  "ActorInsight": {
+   "properties": {
+    "actor": {
+     "description": "The actor's name.",
+     "type": "string"
+    },
+    "insight": {
+     "$ref": "InsightMetric"
+    }
+   },
+   "required": [
+    "actor",
+    "insight"
+   ],
+   "type": "object"
+  },
+  "AudienceCategory": {
+   "description": "Categories of audiences that are supported.",
+   "enum": [
+    "ADVERTISER_AUDIENCES",
+    "COMBINED_AUDIENCES",
+    "CUSTOM_BUILT",
+    "DEMOGRAPHIC",
+    "INTEREST",
+    "IN_MARKET",
+    "IN_MARKET_MULTI_COUNTRY",
+    "LIFESTYLE",
+    "LIFE_EVENT",
+    "LOOKALIKE",
+    "THIRD_PARTY"
+   ],
+   "type": "string"
+  },
+  "AudienceInsight": {
+   "properties": {
+    "audienceDetailPageUrl": {
+     "description": "Link to the audience details page within the Amazon Advertising Console for the given audience.",
+     "type": "string"
+    },
+    "category": {
+     "description": "Category of the audience segment. Example: interests",
+     "type": "string"
+    },
+    "forecast": {
+     "$ref": "Forecast"
+    },
+    "id": {
+     "description": "Identifier for the target audience.",
+     "type": "string"
+    },
+    "insightMetrics": {
+     "$ref": "InsightMetric"
+    },
+    "name": {
+     "description": "Name of the target audience.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "category",
+    "forecast",
+    "id",
+    "insightMetrics",
+    "name"
+   ],
+   "type": "object"
+  },
+  "AudienceTargetingExpression": {
+   "properties": {
+    "audiences": {
+     "description": "Specify groups of audiences to include or exclude when targeting.<ul><li>Included groups are joined by an intersection. Users must be in all of the groups specified to be included.</li><li>Audiences within a group are j…",
+     "items": {
+      "$ref": "AudienceV1"
+     },
+     "maxItems": 5500,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audiences"
+   ],
+   "type": "object"
+  },
+  "AudienceV1": {
+   "properties": {
+    "audienceId": {
+     "description": "An audience identifier retrieved from the audiences/list resource.",
+     "type": "string"
+    },
+    "groupId": {
+     "description": "A customer-provided string used to create a group of audiences. This string is only used for this single request. Amazon does not store it.",
+     "type": "string"
+    },
+    "negative": {
+     "description": "Whether to include (false) or exclude (true) audiences when targeting. Only one state may be used per groupId",
+     "type": "boolean"
+    }
+   },
+   "required": [
+    "audienceId",
+    "groupId",
+    "negative"
+   ],
+   "type": "object"
+  },
+  "BandedSizeInsights": {
+   "properties": {
+    "max": {
+     "description": "Optional: The upper bound of estimated unique customers who are in the input audience set. If it is not present, this means there is no upper bound. For example, a value of {\"min\" : 100000000} alone means the estimated …",
+     "minimum": 0,
+     "type": "number"
+    },
+    "min": {
+     "description": "The lower bound of estimated unique customers who are in the input audience set.",
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "min"
+   ],
+   "type": "object"
+  },
+  "BandedSizeResponseContent": {
+   "properties": {
+    "estimatedSize": {
+     "$ref": "BandedSizeInsights"
+    },
+    "lastUpdatedAt": {
+     "description": "UTC timestamp in ISO 8601 format indicating when insight was last generated for the audience targeting expression.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "estimatedSize",
+    "lastUpdatedAt"
+   ],
+   "type": "object"
+  },
+  "BrowseNode": {
+   "properties": {
+    "browseNodeName": {
+     "description": "Name of the browse node in native language of the marketplace.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "browseNodeName"
+   ],
+   "type": "object"
+  },
+  "CountryCode": {
+   "enum": [
+    "AE",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "SA",
+    "SE",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "Currency": {
+   "description": "Currency which represents the income figures. This will be native to the input marketplace.",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "SAR",
+    "SEK",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "DateRangeInsight": {
+   "properties": {
+    "endDate": {
+     "description": "UTC timestamp in ISO 8601 format indicating the end date of the insight.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "startDate": {
+     "description": "UTC timestamp in ISO 8601 format indicating the start date of the insight.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "endDate",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "DemographicInsights": {
+   "properties": {
+    "age": {
+     "items": {
+      "$ref": "RangedDemographicInsight"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "childrenAge": {
+     "items": {
+      "$ref": "RangedDemographicInsight"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "childrenCount": {
+     "items": {
+      "$ref": "RangedDemographicInsight"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "education": {
+     "items": {
+      "$ref": "EducationInsight"
+     },
+     "maxItems": 4,
+     "minItems": 2,
+     "type": "array"
+    },
+    "gender": {
+     "items": {
+      "$ref": "GenderInsight"
+     },
+     "maxItems": 4,
+     "minItems": 2,
+     "type": "array"
+    },
+    "income": {
+     "items": {
+      "$ref": "IncomeDemographicInsight"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "propertyOwnership": {
+     "items": {
+      "$ref": "PropertyOwnershipInsight"
+     },
+     "maxItems": 2,
+     "minItems": 2,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DemographicsResponseContent": {
+   "properties": {
+    "demographics": {
+     "$ref": "DemographicInsights"
+    },
+    "lastUpdatedAt": {
+     "description": "UTC timestamp in ISO 8601 format indicating when insight was last generated for the input audience set.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "demographics",
+    "lastUpdatedAt"
+   ],
+   "type": "object"
+  },
+  "DirectorInsight": {
+   "properties": {
+    "director": {
+     "description": "The director's name.",
+     "type": "string"
+    },
+    "insight": {
+     "$ref": "InsightMetric"
+    }
+   },
+   "required": [
+    "director",
+    "insight"
+   ],
+   "type": "object"
+  },
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Education": {
+   "enum": [
+    "BACHELORS_DEGREE",
+    "BACHELOR_DEGREE_OR_MORE",
+    "GRADUATE_DEGREE",
+    "HIGH_SCHOOL",
+    "SOME_COLLEGE"
+   ],
+   "type": "string"
+  },
+  "EducationInsight": {
+   "properties": {
+    "attribute": {
+     "$ref": "Education"
+    },
+    "insightMetrics": {
+     "$ref": "InsightMetric"
+    },
+    "segmentId": {
+     "description": "Canonical ID of the segment the demographic insight attribute maps to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "attribute",
+    "insightMetrics",
+    "segmentId"
+   ],
+   "type": "object"
+  },
+  "Forecast": {
+   "properties": {
+    "dailyImpressions": {
+     "$ref": "ForecastBands"
+    },
+    "dailyReach": {
+     "$ref": "ForecastBands"
+    }
+   },
+   "required": [
+    "dailyImpressions",
+    "dailyReach"
+   ],
+   "type": "object"
+  },
+  "ForecastBands": {
+   "properties": {
+    "lowerBound": {
+     "description": "minimum number of devices reached/ minimum number of available impressions.",
+     "type": "number"
+    },
+    "upperBound": {
+     "description": "Optional: maximum number of devices reached/ maximum number of available impressions. If it is not present, this means there is no upper bound. For example, a value of {\"lowerbound\" : 100000000} alone means the estimate…",
+     "type": "number"
+    }
+   },
+   "required": [
+    "lowerBound"
+   ],
+   "type": "object"
+  },
+  "Gender": {
+   "enum": [
+    "BOTH",
+    "FEMALE",
+    "MALE",
+    "UNKNOWN"
+   ],
+   "type": "string"
+  },
+  "GenderInsight": {
+   "properties": {
+    "attribute": {
+     "$ref": "Gender"
+    },
+    "insightMetrics": {
+     "$ref": "InsightMetric"
+    },
+    "segmentId": {
+     "description": "Canonical ID of the segment the demographic insight attribute maps to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "attribute",
+    "insightMetrics"
+   ],
+   "type": "object"
+  },
+  "GenreInsight": {
+   "properties": {
+    "genre": {
+     "description": "A human readable genre name.",
+     "type": "string"
+    },
+    "insight": {
+     "$ref": "InsightMetric"
+    }
+   },
+   "required": [
+    "genre",
+    "insight"
+   ],
+   "type": "object"
+  },
+  "IncomeDemographicInsight": {
+   "properties": {
+    "currency": {
+     "$ref": "Currency"
+    },
+    "insightMetrics": {
+     "$ref": "InsightMetric"
+    },
+    "range": {
+     "$ref": "Range"
+    },
+    "segmentId": {
+     "description": "Canonical ID of the segment the demographic insight attribute maps to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "currency",
+    "insightMetrics",
+    "range",
+    "segmentId"
+   ],
+   "type": "object"
+  },
+  "InputExpression": {
+   "description": "The input expression should consist of audience targeting expression.",
+   "properties": {
+    "audienceTargetingExpression": {
+     "$ref": "AudienceTargetingExpression"
+    },
+    "countryCodes": {
+     "description": "Optional: Array of strings = 1 items The ISO Alpha-2 country codes to show insight for specified countries. This field must be specified if the advertiser does not have an associated country. Currently, it is only suppo…",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audienceTargetingExpression"
+   ],
+   "type": "object"
+  },
+  "InsightMetric": {
+   "properties": {
+    "affinity": {
+     "description": "Affinity is a measure of how likely customers in the input audience are to belong to this segment. An affinity of 5 indicates that customers in the input audience are 5 times as likely to belong to this segment than the…",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "overlapPercentage": {
+     "description": "Percentage of customers in the input audience who are part of this segment. For example, a value of 5 means 5% of customers in this segment share the input audience.",
+     "format": "double",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "required": [
+    "affinity",
+    "overlapPercentage"
+   ],
+   "type": "object"
+  },
+  "MovieInsight": {
+   "properties": {
+    "insight": {
+     "$ref": "InsightMetric"
+    },
+    "movie": {
+     "description": "A human readable movie name.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "insight",
+    "movie"
+   ],
+   "type": "object"
+  },
+  "OverlapAffinityFilter": {
+   "properties": {
+    "max": {
+     "description": "Optional: If specified, the affinities of all returned overlapping audiences will be at most (inclusive) the provided affinity.",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    },
+    "min": {
+     "description": "Optional: If specified, the affinities of all returned overlapping audiences will be at least (inclusive) the provided affinity.",
+     "format": "double",
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "PrimeVideoCategory": {
+   "description": "Prime video's supported categories.",
+   "enum": [
+    "ACTORS",
+    "DIRECTORS",
+    "GENRES",
+    "MOVIES",
+    "SERIES"
+   ],
+   "type": "string"
+  },
+  "PrimeVideoInputExpression": {
+   "description": "The input expression should consist of audience targeting expression.",
+   "properties": {
+    "audienceTargetingExpression": {
+     "$ref": "AudienceTargetingExpression"
+    },
+    "categoryFilter": {
+     "description": "Optional: A list of prime video categories to filter insights on. By default it will return all prime video category types in response.",
+     "items": {
+      "$ref": "PrimeVideoCategory"
+     },
+     "maxItems": 4,
+     "minItems": 1,
+     "type": "array"
+    },
+    "countryCodes": {
+     "description": "Optional: Array of strings = 1 items The ISO Alpha-2 country codes to show insight for specified countries. This field must be specified if the advertiser does not have an associated country. Currently, it is only suppo…",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audienceTargetingExpression"
+   ],
+   "type": "object"
+  },
+  "PrimeVideoInsight": {
+   "properties": {
+    "actors": {
+     "items": {
+      "$ref": "ActorInsight"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "dateRange": {
+     "$ref": "DateRangeInsight"
+    },
+    "directors": {
+     "items": {
+      "$ref": "DirectorInsight"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "genres": {
+     "items": {
+      "$ref": "GenreInsight"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "movies": {
+     "items": {
+      "$ref": "MovieInsight"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "series": {
+     "items": {
+      "$ref": "SeriesInsight"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PrimeVideoResponseContent": {
+   "properties": {
+    "lastUpdatedAt": {
+     "description": "UTC timestamp in ISO 8601 format indicating when insight was last generated for the input expression.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "primeVideoInsights": {
+     "$ref": "PrimeVideoInsight"
+    }
+   },
+   "required": [
+    "lastUpdatedAt",
+    "primeVideoInsights"
+   ],
+   "type": "object"
+  },
+  "PropertyOwnership": {
+   "enum": [
+    "OWNING",
+    "RENTING"
+   ],
+   "type": "string"
+  },
+  "PropertyOwnershipInsight": {
+   "properties": {
+    "attribute": {
+     "$ref": "PropertyOwnership"
+    },
+    "insightMetrics": {
+     "$ref": "InsightMetric"
+    },
+    "segmentId": {
+     "description": "Canonical ID of the segment the demographic insight attribute maps to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "attribute",
+    "insightMetrics",
+    "segmentId"
+   ],
+   "type": "object"
+  },
+  "Range": {
+   "properties": {
+    "max": {
+     "description": "Upper bound of the range (inclusive). Optional - if max does not exist then the range has no upper bound and is bound by the min range alone. Either one of max or min will always exist.",
+     "minimum": 0,
+     "type": "number"
+    },
+    "min": {
+     "description": "Lower bound of the range (inclusive). Optional - if min does not exist then the range has no lower bound and is bound by the max range alone. Either one of max or min will always exist.",
+     "minimum": 0,
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "RangedDemographicInsight": {
+   "properties": {
+    "insightMetrics": {
+     "$ref": "InsightMetric"
+    },
+    "range": {
+     "$ref": "Range"
+    },
+    "segmentId": {
+     "description": "Canonical ID of the segment the demographic insight attribute maps to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "insightMetrics",
+    "range",
+    "segmentId"
+   ],
+   "type": "object"
+  },
+  "SeriesInsight": {
+   "properties": {
+    "insight": {
+     "$ref": "InsightMetric"
+    },
+    "series": {
+     "description": "A human readable TV Series name.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "insight",
+    "series"
+   ],
+   "type": "object"
+  },
+  "TopCategoriesPurchasedResponseContent": {
+   "properties": {
+    "lastUpdatedAt": {
+     "description": "UTC timestamp in ISO 8601 format indicating when insight was last generated for the input audience set.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "nextToken": {
+     "description": "Optional: If present, there are more insights than initially returned. Use this token to call the operation again and have the additional insights returned. The token is valid for 8 hours from the initial request.",
+     "type": "string"
+    },
+    "retailCategories": {
+     "description": "Top retail categories purchased by customers in the input expression., ordered by the affinity score. Affinity represents a measure of how likely customers in the input expression are to make a purchase from the categor…",
+     "items": {
+      "$ref": "TopRetailCategoryInsight"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "lastUpdatedAt",
+    "retailCategories"
+   ],
+   "type": "object"
+  },
+  "TopOverlappingAudiencesInputExpression": {
+   "description": "The input expression should consist of audience targeting expression.",
+   "properties": {
+    "audienceTargetingExpression": {
+     "$ref": "AudienceTargetingExpression"
+    },
+    "categoryFilter": {
+     "description": "Optional: A list of audience categories to filter insights on. By default it will return all audience category types in response, ordered by affinity score.",
+     "items": {
+      "$ref": "AudienceCategory"
+     },
+     "maxItems": 9,
+     "minItems": 1,
+     "type": "array"
+    },
+    "countryCodes": {
+     "description": "Optional: Array of strings = 1 items The ISO Alpha-2 country codes to show insight for specified countries. This field must be specified if the advertiser does not have an associated country. Currently, it is only suppo…",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "overlapAffinityFilter": {
+     "$ref": "OverlapAffinityFilter"
+    }
+   },
+   "required": [
+    "audienceTargetingExpression"
+   ],
+   "type": "object"
+  },
+  "TopOverlappingAudiencesResponseContent": {
+   "properties": {
+    "audiences": {
+     "description": "Top audiences associated with customers in the input expression, ordered by the affinity score. Affinity is a measure of how likely customers in the input expression are to belong to a specific audience. An affinity of …",
+     "items": {
+      "$ref": "AudienceInsight"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "lastUpdatedAt": {
+     "description": "UTC timestamp in ISO 8601 format indicating when insight was last generated for the input audience set.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "nextToken": {
+     "description": "Optional: If present, there are more insights than initially returned. Use this token to call the operation again and have the additional insights returned. The token is valid for 8 hours from the initial request.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "audiences",
+    "lastUpdatedAt"
+   ],
+   "type": "object"
+  },
+  "TopRetailCategoryInsight": {
+   "properties": {
+    "id": {
+     "description": "Identifier of retail category.",
+     "type": "string"
+    },
+    "insightMetrics": {
+     "$ref": "InsightMetric"
+    },
+    "name": {
+     "description": "Name of retail category.",
+     "type": "string"
+    },
+    "path": {
+     "description": "The hierarchical path that leads to a category node, starting with the root node.",
+     "items": {
+      "$ref": "BrowseNode"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "id",
+    "insightMetrics",
+    "name",
+    "path"
+   ],
+   "type": "object"
+  }
+ }
+}

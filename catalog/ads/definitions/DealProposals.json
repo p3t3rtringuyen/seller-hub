@@ -1,0 +1,4579 @@
+{
+ "api": "DealProposals",
+ "file": "specs/dest/DealProposals_prod_3p.json",
+ "schemas": {
+  "AdXPublisherFields": {
+   "properties": {
+    "domains": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaAction": {
+   "enum": [
+    "BLOCK"
+   ],
+   "type": "string"
+  },
+  "AmazonMediaAutoTerminationPolicy": {
+   "description": "Auto-termination window for guaranteed deals. Reflects the latest supplier definition and can change over time. inactiveDays and pausedDays are independent; either may be null (that trigger's window is undefined) withou…",
+   "properties": {
+    "inactiveDays": {
+     "description": "Number of days a guaranteed deal may remain inactive after its scheduled start date before the supplier auto-terminates it. Null means the inactive-deal window is undefined for this product.",
+     "maximum": 30,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "pausedDays": {
+     "description": "Number of days a previously activated guaranteed deal may remain paused before the supplier auto-terminates it. Null means the paused-deal window is undefined for this product.",
+     "maximum": 30,
+     "minimum": 1,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaBookingConstraints": {
+   "properties": {
+    "bookingRangeConstraint": {
+     "$ref": "AmazonMediaBookingRangeConstraint"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaBookingRangeConstraint": {
+   "properties": {
+    "maxDateTime": {
+     "description": "Latest date that ths product can be bought as a deal",
+     "format": "date-time",
+     "type": "string"
+    },
+    "minDateTime": {
+     "description": "Earliest date that ths product can be bought as a deal",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaCreativeConstraints": {
+   "properties": {
+    "height": {
+     "description": "Allowed height of the creative in size units.",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "maxCreativeDurations": {
+     "description": "The list of maximum creative durations in seconds that may be selected when creating a deal from this publisher product.",
+     "items": {
+      "type": "integer"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "supportedMediaTypes": {
+     "description": "Allowed media types for this publisher product.",
+     "items": {
+      "$ref": "MediaType"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "width": {
+     "description": "Allowed width of the creative in size units.",
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaDealConstraints": {
+   "properties": {
+    "bookingConstraints": {
+     "$ref": "AmazonMediaBookingConstraints"
+    },
+    "flightConstraints": {
+     "$ref": "AmazonMediaFlightConstraints"
+    },
+    "frequencyConstraints": {
+     "$ref": "AmazonMediaFrequencyConstraintsV2"
+    },
+    "sovConstraints": {
+     "$ref": "AmazonMediaSOVConstraints"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaEventType": {
+   "enum": [
+    "IMPRESSION",
+    "VIEW"
+   ],
+   "type": "string"
+  },
+  "AmazonMediaFlightConstraints": {
+   "properties": {
+    "flightFixedConstraint": {
+     "$ref": "AmazonMediaFlightFixedConstraint"
+    },
+    "flightRangeConstraint": {
+     "$ref": "AmazonMediaFlightRangeConstraint"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaFlightFixedConstraint": {
+   "properties": {
+    "endDateTime": {
+     "description": "Latest date that deals created from this publisher product can execute",
+     "format": "date-time",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "Earliest date that deals created from this publisher product can execute",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaFlightRangeConstraint": {
+   "properties": {
+    "maxDateTime": {
+     "description": "Latest date that deals created from this publisher product can execute",
+     "format": "date-time",
+     "type": "string"
+    },
+    "maxHours": {
+     "description": "This is a deal construction constraints that defines the maximum number of hours a deal can run within the dates above",
+     "type": "integer"
+    },
+    "minDateTime": {
+     "description": "Earliest date that deals created from this publisher product can execute",
+     "format": "date-time",
+     "type": "string"
+    },
+    "minHours": {
+     "description": "This is a deal construction constraint that defines the min number of hours a deal must run within the dates above",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaFrequencyCap": {
+   "description": "Represents an identity based cap on Amazon media events in a given timeframe.",
+   "properties": {
+    "action": {
+     "$ref": "AmazonMediaAction"
+    },
+    "eventType": {
+     "$ref": "AmazonMediaEventType"
+    },
+    "intentType": {
+     "$ref": "AmazonMediaIntentType"
+    },
+    "maxElements": {
+     "description": "The maximum number of events per time period.",
+     "type": "integer"
+    },
+    "maxTimeUnits": {
+     "description": "The duration of the time period.",
+     "type": "integer"
+    },
+    "timeUnitType": {
+     "$ref": "AmazonMediaTimeUnitType"
+    }
+   },
+   "required": [
+    "action",
+    "eventType",
+    "intentType",
+    "maxElements",
+    "maxTimeUnits",
+    "timeUnitType"
+   ],
+   "type": "object"
+  },
+  "AmazonMediaFrequencyConstraintsV2": {
+   "properties": {
+    "frequencyFixedConstraint": {
+     "$ref": "AmazonMediaFrequencyFixedConstraint"
+    },
+    "frequencyRangeConstraint": {
+     "$ref": "AmazonMediaFrequencyRangeConstraint"
+    },
+    "supportsFrequencyIntent": {
+     "description": "Indicates whether deals on this publisher product may define frequency intents. When false, PubTech rejects any deal that sets a frequency cap",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaFrequencyFixedConstraint": {
+   "properties": {
+    "frequencyIntents": {
+     "description": "List of frequency intents that will be applied to all deals created from this publisher product",
+     "items": {
+      "$ref": "AmazonMediaFrequencyCap"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaFrequencyRangeConstraint": {
+   "properties": {
+    "maxCount": {
+     "description": "max number of frequency intents allowed on deals",
+     "type": "integer"
+    },
+    "minCount": {
+     "description": "min number of frequency intents allowed on deals",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaGeoProfile": {
+   "properties": {
+    "amazonPublisherId": {
+     "description": "The Amazon media publisher Id.",
+     "type": "string"
+    },
+    "country": {
+     "$ref": "ProposalCountryCode"
+    },
+    "currency": {
+     "$ref": "ProposalCurrencyCode"
+    },
+    "geoProfileId": {
+     "description": "The Amazon media geographic location profile id.",
+     "type": "string"
+    },
+    "timezone": {
+     "$ref": "ProposalTimeZone"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaGeoProfileOverrideConfig": {
+   "properties": {
+    "creativeConstraints": {
+     "$ref": "AmazonMediaCreativeConstraints"
+    },
+    "fixedTargeting": {
+     "$ref": "AmazonMediaTargeting"
+    },
+    "geoProfileId": {
+     "description": "The Amazon media geographic location profile id to which this override corresponds to.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaGetPublisherProductRateRequestBody": {
+   "properties": {
+    "advertiserId": {
+     "type": "string"
+    },
+    "endDate": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "geoProfileId": {
+     "description": "PubTech ID",
+     "type": "string"
+    },
+    "maxCreativeDuration": {
+     "description": "The max creative duration in seconds for a deal.",
+     "type": "integer"
+    },
+    "startDate": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "targeting": {
+     "$ref": "AmazonMediaTargetingV2"
+    }
+   },
+   "required": [
+    "geoProfileId",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "AmazonMediaIntentType": {
+   "enum": [
+    "CAPPING"
+   ],
+   "type": "string"
+  },
+  "AmazonMediaOfferingAttributes": {
+   "type": "object"
+  },
+  "AmazonMediaPolicyTerms": {
+   "description": "Supplier policies governing the behavior of a deal created from this product. Each member is independent: a null member means that policy is undefined for this product.",
+   "properties": {
+    "autoTerminationPolicy": {
+     "$ref": "AmazonMediaAutoTerminationPolicy"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaProductCategory": {
+   "description": "Represents product categorization of Amazon media events",
+   "properties": {
+    "productCategoryCanonicalId": {
+     "description": "The public canonical product category identifier",
+     "type": "string"
+    }
+   },
+   "required": [
+    "productCategoryCanonicalId"
+   ],
+   "type": "object"
+  },
+  "AmazonMediaProposedDealAttributes": {
+   "properties": {
+    "amazonMediaPublisherId": {
+     "description": "Amazon media's unique publisher id.",
+     "type": "string"
+    },
+    "amazonMediaPublisherProductId": {
+     "description": "Amazon media's unique publisher product id.",
+     "type": "string"
+    },
+    "brandName": {
+     "description": "The brand name associated with the deals buyer.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "AmazonMediaFrequencyCap"
+    },
+    "geoProfileId": {
+     "description": "Amazon media's unique id for the deal's geographic location",
+     "type": "string"
+    },
+    "maxCreativeDuration": {
+     "description": "The maximum creative duration in seconds for this deal.",
+     "type": "integer"
+    },
+    "productCategories": {
+     "description": "A list of ADSP product categories. Only required for PG deals.",
+     "items": {
+      "$ref": "AmazonMediaProductCategory"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "secondaryGoals": {
+     "description": "Secondary Goals to be added to a deal.",
+     "items": {
+      "$ref": "SecondaryGoal"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targeting": {
+     "$ref": "AmazonMediaTargeting"
+    }
+   },
+   "required": [
+    "amazonMediaPublisherId",
+    "amazonMediaPublisherProductId",
+    "geoProfileId"
+   ],
+   "type": "object"
+  },
+  "AmazonMediaPublisherFields": {
+   "type": "object"
+  },
+  "AmazonMediaPublisherProductFields": {
+   "properties": {
+    "amazonPublisherId": {
+     "description": "The Amazon media publisher id",
+     "type": "string"
+    },
+    "amazonPublisherName": {
+     "description": "The Amazon media publisher name",
+     "type": "string"
+    },
+    "applicablePublishers": {
+     "description": "A list of publisher Ids and their respective names that belong to this publisher product.",
+     "items": {
+      "$ref": "MultiPublisherProductApplicablePublisher"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "dealConstraints": {
+     "$ref": "AmazonMediaDealConstraints"
+    },
+    "description": {
+     "description": "The description of the publisher product.",
+     "type": "string"
+    },
+    "fixedTargeting": {
+     "$ref": "AmazonMediaTargeting"
+    },
+    "geoProfileOverrideConfigs": {
+     "description": "The overriding configs on a per geo profile basis in a publisher product.",
+     "items": {
+      "$ref": "AmazonMediaGeoProfileOverrideConfig"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "geoProfiles": {
+     "description": "The geographic location profile",
+     "items": {
+      "$ref": "AmazonMediaGeoProfile"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "height": {
+     "description": "Allowed height of the creative in size units.",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "maxCreativeDurations": {
+     "description": "The list of maximum creative durations in seconds that may be selected when creating a deal from this publisher product.",
+     "items": {
+      "type": "integer"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "policyTerms": {
+     "$ref": "AmazonMediaPolicyTerms"
+    },
+    "supportedMediaTypes": {
+     "description": "Allowed media types for this publisher product.",
+     "items": {
+      "$ref": "MediaType"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingConstraints": {
+     "$ref": "AmazonMediaTargetingConstraints"
+    },
+    "width": {
+     "description": "Allowed width of the creative in size units.",
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaPublisherProductsFilters": {
+   "properties": {
+    "amazonMediaPublisherId": {
+     "$ref": "StringFilter"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaPublisherSortField": {
+   "enum": [
+    "NAME",
+    "PUBLISHER_ID"
+   ],
+   "type": "string"
+  },
+  "AmazonMediaSOVConstraints": {
+   "properties": {
+    "sovFixedConstraint": {
+     "$ref": "AmazonMediaSOVFixedConstraint"
+    },
+    "sovRangeConstraint": {
+     "$ref": "AmazonMediaSOVRangeConstraint"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaSOVFixedConstraint": {
+   "properties": {
+    "percent": {
+     "description": "Fixed percentage of inventory elements (defined by the Deal Type) that percent-share guaranteed deal dervied from this product must purchase",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaSOVRangeConstraint": {
+   "properties": {
+    "maxPercent": {
+     "description": "max percentage of inventory elements (defined by the Deal Type) that percent-share guaranteed deal dervied from this product can purchase",
+     "format": "double",
+     "type": "number"
+    },
+    "minPercent": {
+     "description": "min percentage of inventory elements (defined by the Deal Type) that percent-share guaranteed deal dervied from this product must purchase",
+     "format": "double",
+     "type": "number"
+    },
+    "percentIncrement": {
+     "description": "Percentage increments that buyers can purchase for percent-share guaranteed deals",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaTargeting": {
+   "properties": {
+    "audienceTargeting": {
+     "$ref": "Targeting"
+    },
+    "contextualTargeting": {
+     "$ref": "Targeting"
+    },
+    "daypartTargeting": {
+     "$ref": "Targeting"
+    },
+    "deviceTargeting": {
+     "$ref": "Targeting"
+    },
+    "distributionChannelTargeting": {
+     "$ref": "Targeting"
+    },
+    "geoTargeting": {
+     "$ref": "Targeting"
+    },
+    "inventoryTargeting": {
+     "$ref": "Targeting"
+    },
+    "publisherTargeting": {
+     "$ref": "Targeting"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaTargetingConstraints": {
+   "description": "Amazon media targeting constraints.",
+   "properties": {
+    "audienceTargeting": {
+     "description": "The allow audience targeting options that CAN be used when creating a proposed deal from this publisher product.",
+     "items": {
+      "$ref": "AttributeConstraint"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "contextualTargeting": {
+     "description": "The allow contextual targeting options that CAN be used when creating a proposed deal from this publisher product.",
+     "items": {
+      "$ref": "AttributeConstraint"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "daypartTargeting": {
+     "description": "The allow daypart options that CAN be used when creating a proposed deal from this publisher product.",
+     "items": {
+      "$ref": "AttributeConstraint"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deviceTargeting": {
+     "description": "The allow device targeting options that CAN be used when creating a proposed deal from this publisher product.",
+     "items": {
+      "$ref": "AttributeConstraint"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "distributionChannelTargeting": {
+     "description": "The allow distribution channel targeting options that CAN be used when creating a proposed deal from this publisher product.",
+     "items": {
+      "$ref": "AttributeConstraint"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "geoTargeting": {
+     "description": "The allow geo targeting options that CAN be used when creating a proposed deal from this publisher product.",
+     "items": {
+      "$ref": "AttributeConstraint"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTargeting": {
+     "description": "The allow inventory targeting options that CAN be used when creating a proposed deal from this publisher product.",
+     "items": {
+      "$ref": "AttributeConstraint"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaTargetingV2": {
+   "properties": {
+    "audienceTargeting": {
+     "$ref": "Targeting"
+    },
+    "contextualTargeting": {
+     "$ref": "Targeting"
+    },
+    "daypartTargeting": {
+     "$ref": "Targeting"
+    },
+    "deviceTargeting": {
+     "$ref": "Targeting"
+    },
+    "distributionChannelTargeting": {
+     "$ref": "Targeting"
+    },
+    "geoTargeting": {
+     "$ref": "Targeting"
+    },
+    "inventoryTargeting": {
+     "$ref": "Targeting"
+    },
+    "publisherTargeting": {
+     "$ref": "Targeting"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonMediaTimeUnitType": {
+   "enum": [
+    "DAYS",
+    "HOURS",
+    "MINUTES"
+   ],
+   "type": "string"
+  },
+  "AmazonPublisherServiceFields": {
+   "properties": {
+    "constraints": {
+     "items": {
+      "$ref": "ConstraintOptionDetails"
+     },
+     "type": "array"
+    },
+    "countries": {
+     "items": {
+      "description": "ISO 3166-1 alpha-2 formated country codes",
+      "maxLength": 2,
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "dealTypes": {
+     "items": {
+      "$ref": "ProposedDealType"
+     },
+     "type": "array"
+    },
+    "description": {
+     "type": "string"
+    },
+    "goalTypes": {
+     "items": {
+      "$ref": "GoalTypeAps"
+     },
+     "type": "array"
+    },
+    "logos": {
+     "$ref": "PublisherLogos"
+    },
+    "mediaTypes": {
+     "items": {
+      "$ref": "MediaTypeDetailsAps"
+     },
+     "type": "array"
+    },
+    "supportedTargeting": {
+     "items": {
+      "$ref": "TargetingDetails"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonPublisherServiceOfferingAttributes": {
+   "properties": {
+    "goalType": {
+     "$ref": "GoalTypeAps"
+    },
+    "mediaType": {
+     "$ref": "MediaTypeDetailsAps"
+    }
+   },
+   "required": [
+    "goalType",
+    "mediaType"
+   ],
+   "type": "object"
+  },
+  "AmazonPublisherServiceProposalAttributes": {
+   "properties": {
+    "apsProposalId": {
+     "description": "The Id for the corresponding proposal on the APS. Does not get created until the proposal is submitted.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AmazonPublisherServiceProposedDealAttributes": {
+   "properties": {
+    "dealType": {
+     "$ref": "ProposedDealType"
+    },
+    "goal": {
+     "$ref": "GoalDetailsAps"
+    },
+    "media": {
+     "$ref": "MediaTypeDetailsAps"
+    },
+    "productId": {
+     "description": "Unique publisher product id.",
+     "type": "string"
+    },
+    "publisherId": {
+     "description": "Unique publisher id.",
+     "type": "string"
+    },
+    "targeting": {
+     "description": "APS-specific targeting configuration.",
+     "items": {
+      "$ref": "ApsTargeting"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "dealType",
+    "media",
+    "productId",
+    "publisherId"
+   ],
+   "type": "object"
+  },
+  "ApsTargetType": {
+   "enum": [
+    "CONTENT_RATING",
+    "COUNTRY",
+    "GENRE",
+    "PACKAGE",
+    "SEGMENT"
+   ],
+   "type": "string"
+  },
+  "ApsTargeting": {
+   "properties": {
+    "dimension": {
+     "$ref": "ApsTargetingDimension"
+    },
+    "include": {
+     "$ref": "ApsTargetingIncludeClause"
+    }
+   },
+   "type": "object"
+  },
+  "ApsTargetingDimension": {
+   "enum": [
+    "AUDIENCE",
+    "CONTENT",
+    "GEO"
+   ],
+   "type": "string"
+  },
+  "ApsTargetingIncludeClause": {
+   "properties": {
+    "mappings": {
+     "items": {
+      "$ref": "ApsTargetingValueMapping"
+     },
+     "type": "array"
+    },
+    "type": {
+     "$ref": "ApsTargetType"
+    },
+    "values": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ApsTargetingValueMapping": {
+   "properties": {
+    "name": {
+     "type": "string"
+    },
+    "value": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AttributeConstraint": {
+   "properties": {
+    "constraintOperator": {
+     "$ref": "ConstraintOperator"
+    },
+    "constraintPredicates": {
+     "items": {
+      "$ref": "ConstraintPredicate"
+     },
+     "type": "array"
+    },
+    "maxAttributes": {
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "AttributeValueId": {
+   "properties": {
+    "attributeValueId": {
+     "type": "string"
+    },
+    "attributeValueType": {
+     "$ref": "AttributeValueType"
+    }
+   },
+   "required": [
+    "attributeValueId"
+   ],
+   "type": "object"
+  },
+  "AttributeValueType": {
+   "enum": [
+    "PLACEMENT",
+    "PUBLISHER",
+    "SIGNALS_COLLECTION",
+    "SIGNALS_REGISTERED_LITERAL",
+    "SIGNALS_TAXONOMY_NODE",
+    "ST_APP",
+    "ST_AUDIENCE",
+    "ST_CONTENT_CATEGORY",
+    "ST_CONTENT_GENRE",
+    "ST_CONTENT_RATING",
+    "ST_DAYPART",
+    "ST_DEVICE_OPERATING_SYSTEM",
+    "ST_DEVICE_TYPE",
+    "ST_LOCATION_CITY_REALTIME",
+    "ST_LOCATION_CITY_USER_ADDRESS",
+    "ST_LOCATION_COUNTRY_REALTIME",
+    "ST_LOCATION_COUNTRY_USER_ADDRESS",
+    "ST_LOCATION_DESIGNATED_MARKET_AREA_REALTIME",
+    "ST_LOCATION_DESIGNATED_MARKET_AREA_USER_ADDRESS",
+    "ST_LOCATION_POSTAL_CODE_REALTIME",
+    "ST_LOCATION_POSTAL_CODE_USER_ADDRESS",
+    "ST_LOCATION_REGION_REALTIME",
+    "ST_LOCATION_REGION_USER_ADDRESS"
+   ],
+   "type": "string"
+  },
+  "BatchTransactionProposal": {
+   "properties": {
+    "advertiserId": {
+     "description": "The ADSP advertiserId for this proposal.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "country": {
+     "$ref": "ProposalCountryCode"
+    },
+    "externalProposalId": {
+     "description": "External proposal identifier from the source system.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The user provided proposal name.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposal.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "proposalId": {
+     "maxLength": 255,
+     "type": "string"
+    },
+    "proposalNotes": {
+     "description": "Structured notes for this proposal.",
+     "items": {
+      "$ref": "Note"
+     },
+     "type": "array"
+    },
+    "revision": {
+     "description": "The current revision for the transaction.",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "sourceId": {
+     "description": "The proposal source id for this proposal.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "sourceSpecificAttributes": {
+     "$ref": "ProposalSourceSpecificAttributes"
+    }
+   },
+   "type": "object"
+  },
+  "BatchTransactionProposedDealItem": {
+   "properties": {
+    "budgetMillis": {
+     "description": "The budget for this deal, in millicent units. Required if the deal's type is PROGRAMMATIC_GUARANTEED. Can only be updated if the deal is in DRAFT, REJECTED, or REJECTED_REVISED status.",
+     "type": "integer"
+    },
+    "currency": {
+     "$ref": "ProposalCurrencyCode"
+    },
+    "dealName": {
+     "description": "The name of the deal.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "dealStatus": {
+     "$ref": "ProposedDealStatus"
+    },
+    "dealType": {
+     "$ref": "ProposedDealType"
+    },
+    "description": {
+     "description": "The description of the deal.",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The delivery end date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "exchangeId": {
+     "description": "The exchange id against which the proposed deal is created.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "externalDealId": {
+     "description": "The SSP's deal id for this proposed deal. Does not get created until the deal is submitted.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposed deal.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "priceMillis": {
+     "description": "The price used for this deal, in millicent units.",
+     "type": "integer"
+    },
+    "priceType": {
+     "$ref": "PriceType"
+    },
+    "proposedDealId": {
+     "maxLength": 255,
+     "type": "string"
+    },
+    "revision": {
+     "description": "The current revision for the transaction.",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "sourceSpecificAttributes": {
+     "$ref": "UpdateProposedDealSourceSpecificAttributes"
+    },
+    "startDate": {
+     "description": "The delivery start date.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BuyerBatchTransactionAction": {
+   "description": "Defines the buyer's action on a proposal and its associated proposed deals. | BuyerAction | Description | Proposal Status | ProposedDeal Status | |-------------|-------------|-----------------|---------------------| | `…",
+   "enum": [
+    "APPROVE",
+    "CANCEL",
+    "COUNTER_DRAFT",
+    "DRAFT",
+    "SUBMIT"
+   ],
+   "type": "string"
+  },
+  "BuyerBatchTransactionItem": {
+   "properties": {
+    "action": {
+     "$ref": "BuyerBatchTransactionAction"
+    },
+    "proposal": {
+     "$ref": "BatchTransactionProposal"
+    },
+    "proposedDeals": {
+     "items": {
+      "$ref": "BatchTransactionProposedDealItem"
+     },
+     "maxItems": 150,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "action",
+    "proposal"
+   ],
+   "type": "object"
+  },
+  "BuyerBatchTransactionResponseContent": {
+   "properties": {
+    "legalTermsAndConditions": {
+     "description": "If populated, contains relevant legal messaging pertaining to the operation.",
+     "type": "string"
+    },
+    "results": {
+     "description": "BuyerBatchTransaction results.",
+     "items": {
+      "$ref": "BuyerBatchTransactionResultItem"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BuyerBatchTransactionResultItem": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "httpStatusCode": {
+     "type": "integer"
+    },
+    "index": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "proposal": {
+     "$ref": "Proposal"
+    },
+    "proposedDeals": {
+     "items": {
+      "$ref": "ProposedDeal"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "resultStatus": {
+     "$ref": "MutationResult"
+    }
+   },
+   "required": [
+    "resultStatus"
+   ],
+   "type": "object"
+  },
+  "BuyerBatchTransactions": {
+   "properties": {
+    "transactions": {
+     "items": {
+      "$ref": "BuyerBatchTransactionItem"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "BuyerSellerRole": {
+   "enum": [
+    "BUYER",
+    "SELLER"
+   ],
+   "type": "string"
+  },
+  "CalculateDealImpressionsRequestContent": {
+   "properties": {
+    "budgetMillis": {
+     "description": "The budget for the deal in millis.",
+     "type": "integer"
+    },
+    "priceMillis": {
+     "description": "The rate for the deal in millis.",
+     "type": "integer"
+    },
+    "proposedDealId": {
+     "description": "The proposed deal ID, if the impressions are being computed for a deal revision.",
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "required": [
+    "budgetMillis",
+    "priceMillis"
+   ],
+   "type": "object"
+  },
+  "CalculateDealImpressionsResponseContent": {
+   "properties": {
+    "deliveredImpressions": {
+     "description": "The number of impressions already delivered for this deal",
+     "type": "integer"
+    },
+    "targetedImpressions": {
+     "description": "The calculated total impressions including delivered impressions",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "targetedImpressions"
+   ],
+   "type": "object"
+  },
+  "ConstraintOperator": {
+   "enum": [
+    "EXCLUDE",
+    "INCLUDE"
+   ],
+   "type": "string"
+  },
+  "ConstraintOptionDetails": {
+   "properties": {
+    "name": {
+     "type": "string"
+    },
+    "type": {
+     "$ref": "ConstraintType"
+    },
+    "value": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "name",
+    "type",
+    "value"
+   ],
+   "type": "object"
+  },
+  "ConstraintPredicate": {
+   "properties": {
+    "attributeTargetingPredicate": {
+     "$ref": "TargetingPredicate"
+    },
+    "maxValues": {
+     "type": "integer"
+    },
+    "minValues": {
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ConstraintType": {
+   "enum": [
+    "MAXIMUM_BUDGET",
+    "MINIMUM_BUDGET",
+    "MINIMUM_CPM",
+    "PA_BASE_CPM",
+    "PG_BASE_CPM",
+    "UNACTIVATED_PG"
+   ],
+   "type": "string"
+  },
+  "CreateProposalResultItem": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "httpStatusCode": {
+     "type": "integer"
+    },
+    "index": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "proposal": {
+     "$ref": "Proposal"
+    },
+    "resultStatus": {
+     "$ref": "MutationResult"
+    }
+   },
+   "required": [
+    "resultStatus"
+   ],
+   "type": "object"
+  },
+  "CreateProposalsResponseContent": {
+   "properties": {
+    "legalTermsAndConditions": {
+     "description": "If populated, contains relevant legal messaging pertaining to the operation.",
+     "type": "string"
+    },
+    "results": {
+     "description": "Proposals creation results.",
+     "items": {
+      "$ref": "CreateProposalResultItem"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateProposedDealResultItem": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "httpStatusCode": {
+     "type": "integer"
+    },
+    "index": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "proposedDeal": {
+     "$ref": "ProposedDeal"
+    },
+    "resultStatus": {
+     "$ref": "MutationResult"
+    }
+   },
+   "required": [
+    "resultStatus"
+   ],
+   "type": "object"
+  },
+  "CreateProposedDealRevisionResultItem": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "httpStatusCode": {
+     "type": "integer"
+    },
+    "index": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "proposedDeal": {
+     "$ref": "ProposedDeal"
+    },
+    "resultStatus": {
+     "$ref": "MutationResult"
+    }
+   },
+   "required": [
+    "resultStatus"
+   ],
+   "type": "object"
+  },
+  "CreateProposedDealsResponseContent": {
+   "properties": {
+    "results": {
+     "description": "Proposals creation results.",
+     "items": {
+      "$ref": "CreateProposedDealResultItem"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateProposedDealsRevisionsResponseContent": {
+   "properties": {
+    "results": {
+     "description": "Proposed deal revisions creation results.",
+     "items": {
+      "$ref": "CreateProposedDealRevisionResultItem"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DateRange": {
+   "properties": {
+    "dateRangeEnd": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "dateRangeStart": {
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DateRangeFilter": {
+   "properties": {
+    "include": {
+     "$ref": "DateRange"
+    }
+   },
+   "type": "object"
+  },
+  "DeleteProposedDealRevisionResultItem": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "httpStatusCode": {
+     "type": "integer"
+    },
+    "index": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "proposedDeal": {
+     "$ref": "ProposedDeal"
+    },
+    "resultStatus": {
+     "$ref": "MutationResult"
+    }
+   },
+   "required": [
+    "resultStatus"
+   ],
+   "type": "object"
+  },
+  "DeleteProposedDealsRevisionsResponseContent": {
+   "properties": {
+    "results": {
+     "description": "Proposed deal revisions deletion results.",
+     "items": {
+      "$ref": "DeleteProposedDealRevisionResultItem"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetPublisherProductRateRequestBody": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonMedia": {
+       "$ref": "AmazonMediaGetPublisherProductRateRequestBody"
+      }
+     },
+     "required": [
+      "amazonMedia"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "GetPublisherProductRateResponseContent": {
+   "properties": {
+    "currency": {
+     "description": "ISO 4217 3-digit currency code.",
+     "maxLength": 3,
+     "type": "string"
+    },
+    "itemizedPrice": {
+     "description": "Itemized breakdown of the price components.",
+     "items": {
+      "$ref": "PriceComponent"
+     },
+     "type": "array"
+    },
+    "priceMillis": {
+     "description": "Price of a proposed deal in millicent units.",
+     "type": "number"
+    },
+    "priceType": {
+     "$ref": "PriceType"
+    }
+   },
+   "type": "object"
+  },
+  "GoalDetailsAps": {
+   "properties": {
+    "target": {
+     "type": "integer"
+    },
+    "type": {
+     "$ref": "GoalTypeAps"
+    },
+    "unit": {
+     "$ref": "GoalTargetUnit"
+    }
+   },
+   "type": "object"
+  },
+  "GoalTargetUnit": {
+   "description": "Specifies the unit of a goal target. | GoalTargetUnit | Description | |----------------|-------------| | `MILLICENT` | The goal target is in millicents. | | `PERCENTAGE` | The goal target is a percentage. |",
+   "enum": [
+    "MILLICENT",
+    "PERCENTAGE"
+   ],
+   "type": "string"
+  },
+  "GoalType": {
+   "description": "Specifies the type of channel partnership goal for Twitch creator collaborations. | GoalType | Description | |----------|-------------| |`CHANNELTAKEOVER` | Premium partnership option featuring comprehensive channel pre…",
+   "enum": [
+    "CHANNELTAKEOVER",
+    "CHANNELTAKEOVERLITE"
+   ],
+   "type": "string"
+  },
+  "GoalTypeAps": {
+   "description": "GoalTypeAps is an enum representing the goal types that are supported in AmazonPublisherService. | Type | Description | |------|-------------| | `OTR` | On-target reach, the absolute number of people in your target audi…",
+   "enum": [
+    "CTR",
+    "OTR",
+    "VCR",
+    "VTR"
+   ],
+   "type": "string"
+  },
+  "ListAmazonMediaSignalsCollectionsRequestContent": {
+   "properties": {
+    "activationStatusFilter": {
+     "$ref": "SignalCollectionActivationStatusFilter"
+    },
+    "countryFilter": {
+     "$ref": "StringFilter"
+    },
+    "maxResults": {
+     "maximum": 500,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "search": {
+     "$ref": "ListSignalsCollectionsSearchFilter"
+    },
+    "signalCollectionIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "signalCollectionNameFilter": {
+     "$ref": "StringFilter"
+    },
+    "targetingTypeFilter": {
+     "$ref": "TargetingTypeFilter"
+    }
+   },
+   "type": "object"
+  },
+  "ListAmazonMediaSignalsCollectionsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "signalCollections": {
+     "description": "Proposed Deals.",
+     "items": {
+      "$ref": "SignalCollection"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListProposalSourcesRequestContent": {
+   "properties": {
+    "maxResults": {
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "StringFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "proposalSourceIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "sortField": {
+     "$ref": "ProposalSourceSortField"
+    },
+    "sortOrder": {
+     "$ref": "SortOrder"
+    }
+   },
+   "required": [
+    "sortField",
+    "sortOrder"
+   ],
+   "type": "object"
+  },
+  "ListProposalSourcesResponseContent": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "proposalSources": {
+     "description": "Proposals.",
+     "items": {
+      "$ref": "ProposalSource"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListProposalsRequestContent": {
+   "properties": {
+    "advertiserIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "buyerSeatIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "countryFilter": {
+     "$ref": "StringFilter"
+    },
+    "endDateFilter": {
+     "$ref": "DateRangeFilter"
+    },
+    "externalProposalIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "maxResults": {
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "StringFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "proposalIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "searchFilter": {
+     "$ref": "ListProposalsSearchFilter"
+    },
+    "sortField": {
+     "$ref": "ProposalsSortField"
+    },
+    "sortOrder": {
+     "$ref": "SortOrder"
+    },
+    "sourceIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "startDateFilter": {
+     "$ref": "DateRangeFilter"
+    },
+    "statusFilter": {
+     "$ref": "ProposalStatusFilter"
+    }
+   },
+   "required": [
+    "sortField",
+    "sortOrder"
+   ],
+   "type": "object"
+  },
+  "ListProposalsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "proposals": {
+     "description": "Proposals.",
+     "items": {
+      "$ref": "Proposal"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListProposalsSearchFilter": {
+   "properties": {
+    "fields": {
+     "items": {
+      "$ref": "ProposalSearchField"
+     },
+     "type": "array"
+    },
+    "search": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListProposedDealsRequestContent": {
+   "properties": {
+    "budgetMillisFilter": {
+     "$ref": "NumberRangeFilter"
+    },
+    "dealIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "dealNameFilter": {
+     "$ref": "StringFilter"
+    },
+    "dealStatusFilter": {
+     "$ref": "ProposedDealStatusFilter"
+    },
+    "dealTypeFilter": {
+     "$ref": "StringFilter"
+    },
+    "endDateFilter": {
+     "$ref": "DateRangeFilter"
+    },
+    "externalDealIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "maxResults": {
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "priceMillisFilter": {
+     "$ref": "NumberRangeFilter"
+    },
+    "proposalIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "proposedDealIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "searchFilter": {
+     "$ref": "ListProposedDealsSearchFilter"
+    },
+    "sortField": {
+     "$ref": "ProposedDealsSortField"
+    },
+    "sortOrder": {
+     "$ref": "SortOrder"
+    },
+    "sourceIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "startDateFilter": {
+     "$ref": "DateRangeFilter"
+    },
+    "targetedImpressionsFilter": {
+     "$ref": "NumberRangeFilter"
+    }
+   },
+   "required": [
+    "sortField",
+    "sortOrder"
+   ],
+   "type": "object"
+  },
+  "ListProposedDealsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "proposedDeals": {
+     "description": "Proposed Deals.",
+     "items": {
+      "$ref": "ProposedDeal"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListProposedDealsSearchFilter": {
+   "properties": {
+    "fields": {
+     "items": {
+      "$ref": "ProposedDealSearchField"
+     },
+     "type": "array"
+    },
+    "search": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListPublisherOfferingsRequestContent": {
+   "properties": {
+    "maxResults": {
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "maxResults"
+   ],
+   "type": "object"
+  },
+  "ListPublisherOfferingsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "publisherOfferings": {
+     "description": "Publisher offering list",
+     "items": {
+      "$ref": "PublisherOffering"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListPublisherProductsRequestContent": {
+   "properties": {
+    "bookableEndDateFilter": {
+     "$ref": "DateRangeFilter"
+    },
+    "bookableStartDateFilter": {
+     "$ref": "DateRangeFilter"
+    },
+    "countryFilter": {
+     "$ref": "StringFilter"
+    },
+    "creativeDurationFilter": {
+     "$ref": "NumberRangeFilter"
+    },
+    "dealTypeFilter": {
+     "$ref": "ProposedDealTypeFilter"
+    },
+    "deliveryEndDateFilter": {
+     "$ref": "DateRangeFilter"
+    },
+    "deliveryStartDateFilter": {
+     "$ref": "DateRangeFilter"
+    },
+    "maxResults": {
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "mediaTypeFilter": {
+     "$ref": "MediaTypeFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "publisherProductIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "searchFilter": {
+     "$ref": "ListPublisherProductsSearchFilter"
+    },
+    "sortField": {
+     "$ref": "PublisherProductsSortField"
+    },
+    "sortOrder": {
+     "$ref": "SortOrder"
+    },
+    "sourceSpecificFilters": {
+     "$ref": "PublisherProductFilterSourceSpecificFilters"
+    },
+    "statusFilter": {
+     "$ref": "PublisherProductStatusFilter"
+    }
+   },
+   "required": [
+    "sortField",
+    "sortOrder"
+   ],
+   "type": "object"
+  },
+  "ListPublisherProductsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "publisherProducts": {
+     "description": "Proposed Deals.",
+     "items": {
+      "$ref": "PublisherProduct"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListPublisherProductsSearchFilter": {
+   "properties": {
+    "fields": {
+     "items": {
+      "$ref": "PublisherProductSearchField"
+     },
+     "type": "array"
+    },
+    "search": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ListPublishersRequestContent": {
+   "properties": {
+    "amazonPublisherIdFilter": {
+     "$ref": "StringFilter"
+    },
+    "isTest": {
+     "description": "Include test publishers if true.",
+     "type": "boolean"
+    },
+    "maxResults": {
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "StringFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "sortField": {
+     "$ref": "AmazonMediaPublisherSortField"
+    },
+    "sortOrder": {
+     "$ref": "SortOrder"
+    }
+   },
+   "required": [
+    "maxResults",
+    "sortField",
+    "sortOrder"
+   ],
+   "type": "object"
+  },
+  "ListPublishersResponseContent": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "publishers": {
+     "description": "Publisher list.",
+     "items": {
+      "$ref": "Publisher"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "ListSignalsCollectionsSearchFilter": {
+   "description": "Search terms that can be applied to the collection. This is an OR type filter.",
+   "properties": {
+    "fields": {
+     "items": {
+      "$ref": "SignalsCollectionsSearchField"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "search": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "MediaOptionApsEnum": {
+   "description": "MediaTypeAps is an enum representing the media types that are supported in AmazonPublisherCloud. | Type | Description | |-------------|-------------| | `OLV` | Online Video, digital video advertisements displayed on var…",
+   "enum": [
+    "DISPLAY",
+    "OLV",
+    "STV"
+   ],
+   "type": "string"
+  },
+  "MediaType": {
+   "description": "Specifies the type of advertising media format. | MediaType | Description | |-----------|-------------| |`DISPLAY` | Static display advertisements that are defined by width and height dimensions. These ads do not includ…",
+   "enum": [
+    "AUDIO",
+    "DISPLAY",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "MediaTypeDetailsAps": {
+   "properties": {
+    "options": {
+     "items": {
+      "$ref": "MediaTypeOptionAps"
+     },
+     "type": "array"
+    },
+    "type": {
+     "$ref": "MediaType"
+    }
+   },
+   "type": "object"
+  },
+  "MediaTypeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "MediaType"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "MediaTypeOptionAps": {
+   "properties": {
+    "sizes": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "type": {
+     "$ref": "MediaOptionApsEnum"
+    }
+   },
+   "type": "object"
+  },
+  "MultiPublisherProductApplicablePublisher": {
+   "properties": {
+    "amazonPublisherId": {
+     "description": "The Amazon media publisher id.",
+     "type": "string"
+    },
+    "amazonPublisherName": {
+     "description": "The Amazon media publisher id",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "MutationResult": {
+   "description": "SUCCESS means the mutation operation completed. PENDING means the operation hasn't finished. ERROR means the mutation operation failed.",
+   "enum": [
+    "ERROR",
+    "PENDING",
+    "SUCCESS"
+   ],
+   "type": "string"
+  },
+  "Note": {
+   "properties": {
+    "createTime": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "creatorRole": {
+     "$ref": "BuyerSellerRole"
+    },
+    "note": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "NumberRange": {
+   "properties": {
+    "max": {
+     "type": "number"
+    },
+    "min": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "NumberRangeFilter": {
+   "properties": {
+    "include": {
+     "$ref": "NumberRange"
+    }
+   },
+   "type": "object"
+  },
+  "OfferingSourceSpecificAttributes": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonMedia": {
+       "$ref": "AmazonMediaOfferingAttributes"
+      }
+     },
+     "required": [
+      "amazonMedia"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherCloud": {
+       "$ref": "AmazonPublisherServiceOfferingAttributes"
+      }
+     },
+     "required": [
+      "amazonPublisherCloud"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherDirect": {
+       "$ref": "AmazonPublisherServiceOfferingAttributes"
+      }
+     },
+     "required": [
+      "amazonPublisherDirect"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "PriceComponent": {
+   "properties": {
+    "priceComponentType": {
+     "$ref": "PriceComponentType"
+    },
+    "priceMillis": {
+     "description": "Price value for this component in millicent units.",
+     "type": "number"
+    }
+   },
+   "required": [
+    "priceComponentType",
+    "priceMillis"
+   ],
+   "type": "object"
+  },
+  "PriceComponentType": {
+   "enum": [
+    "SELLER_PRICE",
+    "THIRD_PARTY_DATA_TARGETING_FEE"
+   ],
+   "type": "string"
+  },
+  "PriceType": {
+   "description": "Specifies the pricing model for channel partnership deals. | PriceType | Description | |-----------|-------------| |`FIXED_CPM` | Fixed cost per thousand impressions. Buyer pays this exact CPM for every impression won. …",
+   "enum": [
+    "FIXED_CPM",
+    "FIXED_PRICE",
+    "FLAT_FEE",
+    "FLOOR_RATE"
+   ],
+   "type": "string"
+  },
+  "Proposal": {
+   "description": "A deal proposal is a collection of proposed deals configured from a proposal source's publisher products. A proposal may only have 15 associated proposed deals.",
+   "properties": {
+    "advertiserId": {
+     "description": "The ADSP advertiserId for this proposal.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "advertiserName": {
+     "description": "The ADSP name of the proposal",
+     "type": "string"
+    },
+    "buyerSeatId": {
+     "type": "string"
+    },
+    "country": {
+     "$ref": "ProposalCountryCode"
+    },
+    "createdBy": {
+     "type": "string"
+    },
+    "createdOn": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "endDate": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "externalProposalId": {
+     "description": "External proposal identifier from the source system.",
+     "type": "string"
+    },
+    "lastActionBy": {
+     "$ref": "BuyerSellerRole"
+    },
+    "name": {
+     "description": "The user provided proposal name.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposal.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "proposalId": {
+     "maxLength": 255,
+     "type": "string"
+    },
+    "proposalStatus": {
+     "$ref": "ProposalStatus"
+    },
+    "revision": {
+     "description": "The revision number of the proposal.",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "sourceId": {
+     "description": "The proposal source id for this proposal.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "sourceSpecificAttributes": {
+     "$ref": "ProposalSourceSpecificAttributes"
+    },
+    "startDate": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "updatedBy": {
+     "type": "string"
+    },
+    "updatedOn": {
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "advertiserId",
+    "country",
+    "name",
+    "proposalId",
+    "sourceId"
+   ],
+   "type": "object"
+  },
+  "ProposalCountryCode": {
+   "enum": [
+    "AE",
+    "AR",
+    "AT",
+    "AU",
+    "BE",
+    "BG",
+    "BH",
+    "BR",
+    "CA",
+    "CH",
+    "CL",
+    "CO",
+    "CR",
+    "CY",
+    "CZ",
+    "DE",
+    "DK",
+    "DO",
+    "DZ",
+    "EC",
+    "EE",
+    "EG",
+    "ES",
+    "FI",
+    "FR",
+    "GB",
+    "GR",
+    "GT",
+    "HK",
+    "HN",
+    "HR",
+    "HU",
+    "ID",
+    "IE",
+    "IL",
+    "IN",
+    "IT",
+    "JM",
+    "JP",
+    "KW",
+    "LT",
+    "LU",
+    "LV",
+    "MA",
+    "MX",
+    "MY",
+    "NL",
+    "NO",
+    "NZ",
+    "PA",
+    "PE",
+    "PH",
+    "PK",
+    "PL",
+    "PR",
+    "PT",
+    "PY",
+    "QA",
+    "RO",
+    "SA",
+    "SE",
+    "SG",
+    "SK",
+    "SV",
+    "TH",
+    "TN",
+    "TR",
+    "TW",
+    "US",
+    "UY",
+    "VN",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "ProposalCurrencyCode": {
+   "description": "Supported Currency ISO-4217 codes.",
+   "enum": [
+    "AED",
+    "AFN",
+    "ALL",
+    "AMD",
+    "ANG",
+    "ARS",
+    "AUD",
+    "AWG",
+    "AZN",
+    "BAM",
+    "BDT",
+    "BGN",
+    "BHD",
+    "BND",
+    "BOB",
+    "BRL",
+    "BTN",
+    "BWP",
+    "BYN",
+    "BZD",
+    "CAD",
+    "CHF",
+    "CLP",
+    "CNY",
+    "COP",
+    "CRC",
+    "CSD",
+    "CVE",
+    "CZK",
+    "DEM",
+    "DKK",
+    "DOP",
+    "DZD",
+    "EEK",
+    "EGP",
+    "EUR",
+    "FJD",
+    "FRF",
+    "GBP",
+    "GEL",
+    "GHS",
+    "HKD",
+    "HNL",
+    "HRK",
+    "HUF",
+    "IDR",
+    "ILS",
+    "INR",
+    "IQD",
+    "ISK",
+    "JMD",
+    "JOD",
+    "JPY",
+    "KES",
+    "KGS",
+    "KRW",
+    "KWD",
+    "KYD",
+    "KZT",
+    "LAK",
+    "LBP",
+    "LKR",
+    "LTL",
+    "MAD",
+    "MDL",
+    "MKD",
+    "MMK",
+    "MOP",
+    "MTL",
+    "MUR",
+    "MVR",
+    "MXN",
+    "MYR",
+    "NAD",
+    "NGN",
+    "NIO",
+    "NOK",
+    "NPR",
+    "NZD",
+    "OMR",
+    "PAB",
+    "PEN",
+    "PHP",
+    "PKR",
+    "PLN",
+    "PYG",
+    "QAR",
+    "ROL",
+    "RON",
+    "RSD",
+    "RUB",
+    "SAR",
+    "SCR",
+    "SEK",
+    "SGD",
+    "SIT",
+    "SKK",
+    "SVC",
+    "THB",
+    "TND",
+    "TRL",
+    "TRY",
+    "TTD",
+    "TWD",
+    "TZS",
+    "UAH",
+    "UGX",
+    "USD",
+    "UYU",
+    "UZS",
+    "VEB",
+    "VEF",
+    "VES",
+    "VND",
+    "WST",
+    "XCD",
+    "XOF",
+    "XPF",
+    "YER",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "ProposalSearchField": {
+   "enum": [
+    "NAME",
+    "PROPOSAL_ID"
+   ],
+   "type": "string"
+  },
+  "ProposalSource": {
+   "description": "Supply Side Platforms(SSP)'s that are supported by the deals proposal apis.",
+   "properties": {
+    "sourceId": {
+     "description": "The proposal source id.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "sourceName": {
+     "description": "The name for the proposal source.",
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ProposalSourceSortField": {
+   "enum": [
+    "NAME",
+    "SOURCE_ID"
+   ],
+   "type": "string"
+  },
+  "ProposalSourceSpecificAttributes": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonPublisherCloud": {
+       "$ref": "AmazonPublisherServiceProposalAttributes"
+      }
+     },
+     "required": [
+      "amazonPublisherCloud"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherDirect": {
+       "$ref": "AmazonPublisherServiceProposalAttributes"
+      }
+     },
+     "required": [
+      "amazonPublisherDirect"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ProposalStatus": {
+   "enum": [
+    "CANCELLED",
+    "COUNTER_DRAFT",
+    "DRAFT",
+    "PENDING",
+    "REJECTED",
+    "REVIEWED",
+    "REVIEWED_PARTIAL",
+    "SELLER_REVIEWED"
+   ],
+   "type": "string"
+  },
+  "ProposalStatusFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "ProposalStatus"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ProposalStatusUpdate": {
+   "properties": {
+    "action": {
+     "$ref": "StatusTransitionAction"
+    }
+   },
+   "type": "object"
+  },
+  "ProposalTimeZone": {
+   "description": "TZ Database canonical time zone.",
+   "enum": [
+    "Africa/Abidjan",
+    "Africa/Accra",
+    "Africa/Addis_Ababa",
+    "Africa/Algiers",
+    "Africa/Asmara",
+    "Africa/Bamako",
+    "Africa/Bangui",
+    "Africa/Banjul",
+    "Africa/Bissau",
+    "Africa/Blantyre",
+    "Africa/Brazzaville",
+    "Africa/Bujumbura",
+    "Africa/Cairo",
+    "Africa/Casablanca",
+    "Africa/Ceuta",
+    "Africa/Conakry",
+    "Africa/Dakar",
+    "Africa/Dar_es_Salaam",
+    "Africa/Djibouti",
+    "Africa/Douala",
+    "Africa/El_Aaiun",
+    "Africa/Freetown",
+    "Africa/Gaborone",
+    "Africa/Harare",
+    "Africa/Johannesburg",
+    "Africa/Juba",
+    "Africa/Kampala",
+    "Africa/Khartoum",
+    "Africa/Kigali",
+    "Africa/Kinshasa",
+    "Africa/Lagos",
+    "Africa/Libreville",
+    "Africa/Lome",
+    "Africa/Luanda",
+    "Africa/Lubumbashi",
+    "Africa/Lusaka",
+    "Africa/Malabo",
+    "Africa/Maputo",
+    "Africa/Maseru",
+    "Africa/Mbabane",
+    "Africa/Mogadishu",
+    "Africa/Monrovia",
+    "Africa/Nairobi",
+    "Africa/Ndjamena",
+    "Africa/Niamey",
+    "Africa/Nouakchott",
+    "Africa/Ouagadougou",
+    "Africa/Porto-Novo",
+    "Africa/Sao_Tome",
+    "Africa/Tripoli",
+    "Africa/Tunis",
+    "Africa/Windhoek",
+    "America/Adak",
+    "America/Anchorage",
+    "America/Anguilla",
+    "America/Antigua",
+    "America/Araguaina",
+    "America/Argentina/Buenos_Aires",
+    "America/Argentina/Catamarca",
+    "America/Argentina/Cordoba",
+    "America/Argentina/Jujuy",
+    "America/Argentina/La_Rioja",
+    "America/Argentina/Mendoza",
+    "America/Argentina/Rio_Gallegos",
+    "America/Argentina/Salta",
+    "America/Argentina/San_Juan",
+    "America/Argentina/San_Luis",
+    "America/Argentina/Tucuman",
+    "America/Argentina/Ushuaia",
+    "America/Aruba",
+    "America/Asuncion",
+    "America/Atikokan",
+    "America/Bahia",
+    "America/Bahia_Banderas",
+    "America/Barbados",
+    "America/Belem",
+    "America/Belize",
+    "America/Blanc-Sablon",
+    "America/Boa_Vista",
+    "America/Bogota",
+    "America/Boise",
+    "America/Cambridge_Bay",
+    "America/Campo_Grande",
+    "America/Cancun",
+    "America/Caracas",
+    "America/Cayenne",
+    "America/Cayman",
+    "America/Chicago",
+    "America/Chihuahua",
+    "America/Costa_Rica",
+    "America/Creston",
+    "America/Cuiaba",
+    "America/Curacao",
+    "America/Danmarkshavn",
+    "America/Dawson",
+    "America/Dawson_Creek",
+    "America/Denver",
+    "America/Detroit",
+    "America/Dominica",
+    "America/Edmonton",
+    "America/Eirunepe",
+    "America/El_Salvador",
+    "America/Fort_Nelson",
+    "America/Fortaleza",
+    "America/Glace_Bay",
+    "America/Goose_Bay",
+    "America/Grand_Turk",
+    "America/Grenada",
+    "America/Guadeloupe",
+    "America/Guatemala",
+    "America/Guayaquil",
+    "America/Guyana",
+    "America/Halifax",
+    "America/Havana",
+    "America/Hermosillo",
+    "America/Indiana/Indianapolis",
+    "America/Indiana/Knox",
+    "America/Indiana/Marengo",
+    "America/Indiana/Petersburg",
+    "America/Indiana/Tell_City",
+    "America/Indiana/Vevay",
+    "America/Indiana/Vincennes",
+    "America/Indiana/Winamac",
+    "America/Inuvik",
+    "America/Iqaluit",
+    "America/Jamaica",
+    "America/Juneau",
+    "America/Kentucky/Louisville",
+    "America/Kentucky/Monticello",
+    "America/Kralendijk",
+    "America/La_Paz",
+    "America/Lima",
+    "America/Los_Angeles",
+    "America/Lower_Princes",
+    "America/Maceio",
+    "America/Managua",
+    "America/Manaus",
+    "America/Marigot",
+    "America/Martinique",
+    "America/Matamoros",
+    "America/Mazatlan",
+    "America/Menominee",
+    "America/Merida",
+    "America/Metlakatla",
+    "America/Mexico_City",
+    "America/Miquelon",
+    "America/Moncton",
+    "America/Monterrey",
+    "America/Montevideo",
+    "America/Montserrat",
+    "America/Nassau",
+    "America/New_York",
+    "America/Nipigon",
+    "America/Nome",
+    "America/Noronha",
+    "America/North_Dakota/Beulah",
+    "America/North_Dakota/Center",
+    "America/North_Dakota/New_Salem",
+    "America/Nuuk",
+    "America/Ojinaga",
+    "America/Panama",
+    "America/Pangnirtung",
+    "America/Paramaribo",
+    "America/Phoenix",
+    "America/Port-au-Prince",
+    "America/Port_of_Spain",
+    "America/Porto_Velho",
+    "America/Puerto_Rico",
+    "America/Punta_Arenas",
+    "America/Rainy_River",
+    "America/Rankin_Inlet",
+    "America/Recife",
+    "America/Regina",
+    "America/Resolute",
+    "America/Rio_Branco",
+    "America/Santarem",
+    "America/Santiago",
+    "America/Santo_Domingo",
+    "America/Sao_Paulo",
+    "America/Scoresbysund",
+    "America/Sitka",
+    "America/St_Barthelemy",
+    "America/St_Johns",
+    "America/St_Kitts",
+    "America/St_Lucia",
+    "America/St_Thomas",
+    "America/St_Vincent",
+    "America/Swift_Current",
+    "America/Tegucigalpa",
+    "America/Thule",
+    "America/Thunder_Bay",
+    "America/Tijuana",
+    "America/Toronto",
+    "America/Tortola",
+    "America/Vancouver",
+    "America/Whitehorse",
+    "America/Winnipeg",
+    "America/Yakutat",
+    "America/Yellowknife",
+    "Antarctica/Casey",
+    "Antarctica/Davis",
+    "Antarctica/DumontDUrville",
+    "Antarctica/Macquarie",
+    "Antarctica/Mawson",
+    "Antarctica/McMurdo",
+    "Antarctica/Palmer",
+    "Antarctica/Rothera",
+    "Antarctica/Syowa",
+    "Antarctica/Troll",
+    "Antarctica/Vostok",
+    "Arctic/Longyearbyen",
+    "Asia/Aden",
+    "Asia/Almaty",
+    "Asia/Amman",
+    "Asia/Anadyr",
+    "Asia/Aqtau",
+    "Asia/Aqtobe",
+    "Asia/Ashgabat",
+    "Asia/Atyrau",
+    "Asia/Baghdad",
+    "Asia/Bahrain",
+    "Asia/Baku",
+    "Asia/Bangkok",
+    "Asia/Barnaul",
+    "Asia/Beirut",
+    "Asia/Bishkek",
+    "Asia/Brunei",
+    "Asia/Chita",
+    "Asia/Choibalsan",
+    "Asia/Colombo",
+    "Asia/Damascus",
+    "Asia/Dhaka",
+    "Asia/Dili",
+    "Asia/Dubai",
+    "Asia/Dushanbe",
+    "Asia/Famagusta",
+    "Asia/Gaza",
+    "Asia/Hebron",
+    "Asia/Ho_Chi_Minh",
+    "Asia/Hong_Kong",
+    "Asia/Hovd",
+    "Asia/Irkutsk",
+    "Asia/Istanbul",
+    "Asia/Jakarta",
+    "Asia/Jayapura",
+    "Asia/Jerusalem",
+    "Asia/Kabul",
+    "Asia/Kamchatka",
+    "Asia/Karachi",
+    "Asia/Kathmandu",
+    "Asia/Khandyga",
+    "Asia/Kolkata",
+    "Asia/Krasnoyarsk",
+    "Asia/Kuala_Lumpur",
+    "Asia/Kuching",
+    "Asia/Kuwait",
+    "Asia/Macau",
+    "Asia/Magadan",
+    "Asia/Makassar",
+    "Asia/Manila",
+    "Asia/Muscat",
+    "Asia/Nicosia",
+    "Asia/Novokuznetsk",
+    "Asia/Novosibirsk",
+    "Asia/Omsk",
+    "Asia/Oral",
+    "Asia/Phnom_Penh",
+    "Asia/Pontianak",
+    "Asia/Pyongyang",
+    "Asia/Qatar",
+    "Asia/Qostanay",
+    "Asia/Qyzylorda",
+    "Asia/Riyadh",
+    "Asia/Sakhalin",
+    "Asia/Samarkand",
+    "Asia/Seoul",
+    "Asia/Shanghai",
+    "Asia/Singapore",
+    "Asia/Srednekolymsk",
+    "Asia/Taipei",
+    "Asia/Tashkent",
+    "Asia/Tbilisi",
+    "Asia/Tehran",
+    "Asia/Thimphu",
+    "Asia/Tokyo",
+    "Asia/Tomsk",
+    "Asia/Ulaanbaatar",
+    "Asia/Urumqi",
+    "Asia/Ust-Nera",
+    "Asia/Vientiane",
+    "Asia/Vladivostok",
+    "Asia/Yakutsk",
+    "Asia/Yangon",
+    "Asia/Yekaterinburg",
+    "Asia/Yerevan",
+    "Atlantic/Azores",
+    "Atlantic/Bermuda",
+    "Atlantic/Canary",
+    "Atlantic/Cape_Verde",
+    "Atlantic/Faroe",
+    "Atlantic/Madeira",
+    "Atlantic/Reykjavik",
+    "Atlantic/South_Georgia",
+    "Atlantic/St_Helena",
+    "Atlantic/Stanley",
+    "Australia/Adelaide",
+    "Australia/Brisbane",
+    "Australia/Broken_Hill",
+    "Australia/Darwin",
+    "Australia/Eucla",
+    "Australia/Hobart",
+    "Australia/Lindeman",
+    "Australia/Lord_Howe",
+    "Australia/Melbourne",
+    "Australia/Perth",
+    "Australia/Sydney",
+    "Etc/GMT",
+    "Etc/GMT+0",
+    "Etc/GMT+1",
+    "Etc/GMT+10",
+    "Etc/GMT+11",
+    "Etc/GMT+12",
+    "Etc/GMT+2",
+    "Etc/GMT+3",
+    "Etc/GMT+4",
+    "Etc/GMT+5",
+    "Etc/GMT+6",
+    "Etc/GMT+7",
+    "Etc/GMT+8",
+    "Etc/GMT+9",
+    "Etc/GMT-0",
+    "Etc/GMT-1",
+    "Etc/GMT-10",
+    "Etc/GMT-11",
+    "Etc/GMT-12",
+    "Etc/GMT-13",
+    "Etc/GMT-14",
+    "Etc/GMT-2",
+    "Etc/GMT-3",
+    "Etc/GMT-4",
+    "Etc/GMT-5",
+    "Etc/GMT-6",
+    "Etc/GMT-7",
+    "Etc/GMT-8",
+    "Etc/GMT-9",
+    "Etc/GMT0",
+    "Etc/UTC",
+    "Europe/Amsterdam",
+    "Europe/Andorra",
+    "Europe/Astrakhan",
+    "Europe/Athens",
+    "Europe/Belgrade",
+    "Europe/Berlin",
+    "Europe/Bratislava",
+    "Europe/Brussels",
+    "Europe/Bucharest",
+    "Europe/Budapest",
+    "Europe/Busingen",
+    "Europe/Chisinau",
+    "Europe/Copenhagen",
+    "Europe/Dublin",
+    "Europe/Gibraltar",
+    "Europe/Guernsey",
+    "Europe/Helsinki",
+    "Europe/Isle_of_Man",
+    "Europe/Istanbul",
+    "Europe/Jersey",
+    "Europe/Kaliningrad",
+    "Europe/Kiev",
+    "Europe/Kirov",
+    "Europe/Lisbon",
+    "Europe/Ljubljana",
+    "Europe/London",
+    "Europe/Luxembourg",
+    "Europe/Madrid",
+    "Europe/Malta",
+    "Europe/Mariehamn",
+    "Europe/Minsk",
+    "Europe/Monaco",
+    "Europe/Moscow",
+    "Europe/Nicosia",
+    "Europe/Oslo",
+    "Europe/Paris",
+    "Europe/Podgorica",
+    "Europe/Prague",
+    "Europe/Riga",
+    "Europe/Rome",
+    "Europe/Samara",
+    "Europe/San_Marino",
+    "Europe/Sarajevo",
+    "Europe/Saratov",
+    "Europe/Simferopol",
+    "Europe/Skopje",
+    "Europe/Sofia",
+    "Europe/Stockholm",
+    "Europe/Tallinn",
+    "Europe/Tirane",
+    "Europe/Ulyanovsk",
+    "Europe/Uzhgorod",
+    "Europe/Vaduz",
+    "Europe/Vatican",
+    "Europe/Vienna",
+    "Europe/Vilnius",
+    "Europe/Volgograd",
+    "Europe/Warsaw",
+    "Europe/Zagreb",
+    "Europe/Zaporozhye",
+    "Europe/Zurich",
+    "Factory",
+    "GMT",
+    "Indian/Antananarivo",
+    "Indian/Chagos",
+    "Indian/Christmas",
+    "Indian/Cocos",
+    "Indian/Comoro",
+    "Indian/Kerguelen",
+    "Indian/Mahe",
+    "Indian/Maldives",
+    "Indian/Mauritius",
+    "Indian/Mayotte",
+    "Indian/Reunion",
+    "Pacific/Apia",
+    "Pacific/Auckland",
+    "Pacific/Bougainville",
+    "Pacific/Chatham",
+    "Pacific/Chuuk",
+    "Pacific/Easter",
+    "Pacific/Efate",
+    "Pacific/Enderbury",
+    "Pacific/Fakaofo",
+    "Pacific/Fiji",
+    "Pacific/Funafuti",
+    "Pacific/Galapagos",
+    "Pacific/Gambier",
+    "Pacific/Guadalcanal",
+    "Pacific/Guam",
+    "Pacific/Honolulu",
+    "Pacific/Kiritimati",
+    "Pacific/Kosrae",
+    "Pacific/Kwajalein",
+    "Pacific/Majuro",
+    "Pacific/Marquesas",
+    "Pacific/Midway",
+    "Pacific/Nauru",
+    "Pacific/Niue",
+    "Pacific/Norfolk",
+    "Pacific/Noumea",
+    "Pacific/Pago_Pago",
+    "Pacific/Palau",
+    "Pacific/Pitcairn",
+    "Pacific/Pohnpei",
+    "Pacific/Port_Moresby",
+    "Pacific/Rarotonga",
+    "Pacific/Saipan",
+    "Pacific/Tahiti",
+    "Pacific/Tarawa",
+    "Pacific/Tongatapu",
+    "Pacific/Wake",
+    "Pacific/Wallis",
+    "UTC"
+   ],
+   "type": "string"
+  },
+  "ProposalToCreate": {
+   "properties": {
+    "advertiserId": {
+     "description": "The ADSP advertiserId for this proposal.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "country": {
+     "$ref": "ProposalCountryCode"
+    },
+    "externalProposalId": {
+     "description": "External proposal identifier from the source system.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The user provided proposal name.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposal.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "sourceId": {
+     "description": "The proposal source id for this proposal.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "sourceSpecificAttributes": {
+     "$ref": "ProposalSourceSpecificAttributes"
+    }
+   },
+   "required": [
+    "advertiserId",
+    "country",
+    "name",
+    "sourceId"
+   ],
+   "type": "object"
+  },
+  "ProposalToUpdate": {
+   "properties": {
+    "name": {
+     "description": "The user provided proposal name.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposal.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "proposalId": {
+     "maxLength": 255,
+     "type": "string"
+    }
+   },
+   "required": [
+    "proposalId"
+   ],
+   "type": "object"
+  },
+  "ProposalsSortField": {
+   "enum": [
+    "ADVERTISER_ID",
+    "ADVERTISER_NAME",
+    "BUYER_SEAT_ID",
+    "COUNTRY",
+    "END_DATE",
+    "NAME",
+    "PROPOSAL_ID",
+    "SOURCE_ID",
+    "START_DATE",
+    "STATUS",
+    "UPDATED_ON"
+   ],
+   "type": "string"
+  },
+  "ProposalsToCreate": {
+   "properties": {
+    "proposals": {
+     "items": {
+      "$ref": "ProposalToCreate"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ProposalsToUpdate": {
+   "properties": {
+    "proposals": {
+     "items": {
+      "$ref": "ProposalToUpdate"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ProposedDeal": {
+   "properties": {
+    "budgetMillis": {
+     "description": "The budget for this deal, in millicent units. Required if the deal's type is PROGRAMMATIC_GUARANTEED.",
+     "type": "integer"
+    },
+    "buyerSeatId": {
+     "description": "The buyer seat id for this deal.",
+     "type": "string"
+    },
+    "country": {
+     "$ref": "ProposalCountryCode"
+    },
+    "createdBy": {
+     "type": "string"
+    },
+    "createdOn": {
+     "format": "date-time",
+     "type": "string"
+    },
+    "currency": {
+     "$ref": "ProposalCurrencyCode"
+    },
+    "dealId": {
+     "description": "The ADSP deal id for this proposed deal. Does not get created until the deal is submitted.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "dealName": {
+     "description": "The name of the deal.",
+     "maxLength": 120,
+     "type": "string"
+    },
+    "dealStatus": {
+     "$ref": "ProposedDealStatus"
+    },
+    "dealType": {
+     "$ref": "ProposedDealType"
+    },
+    "description": {
+     "description": "The description of the deal.",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The delivery end date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "externalDealId": {
+     "description": "The SSP's deal id for this proposed deal. Does not get created until the deal is submitted.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "isBuyerApproved": {
+     "description": "Whether the buyer has approved the proposed deal.",
+     "type": "boolean"
+    },
+    "isSellerApproved": {
+     "description": "Whether the seller has approved the proposed deal.",
+     "type": "boolean"
+    },
+    "notes": {
+     "description": "User provided notes for this proposed deal.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "priceMillis": {
+     "description": "The price used for this deal, in millicent units.",
+     "type": "integer"
+    },
+    "priceType": {
+     "$ref": "PriceType"
+    },
+    "proposalId": {
+     "description": "This proposed deal's associated proposal unique id. Only 15 proposed deals may be associated with a proposal.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "proposalRevision": {
+     "description": "The proposal revision corresponding to this proposed deal revision.",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "proposedDealId": {
+     "maxLength": 255,
+     "type": "string"
+    },
+    "revision": {
+     "description": "The revision number of the proposed deal.",
+     "minimum": 0,
+     "type": "integer"
+    },
+    "sourceId": {
+     "description": "The proposal source id for this deal.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "sourceSpecificAttributes": {
+     "$ref": "ProposedDealSourceSpecificAttributes"
+    },
+    "startDate": {
+     "description": "The delivery start date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "submissionFailure": {
+     "$ref": "SubmissionFailure"
+    },
+    "targetedImpressions": {
+     "description": "The targeted impressions for this deal.",
+     "type": "integer"
+    },
+    "updatedBy": {
+     "type": "string"
+    },
+    "updatedOn": {
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "buyerSeatId",
+    "country",
+    "currency",
+    "dealId",
+    "dealName",
+    "dealStatus",
+    "dealType",
+    "endDate",
+    "externalDealId",
+    "priceMillis",
+    "priceType",
+    "proposalId",
+    "proposedDealId",
+    "sourceId",
+    "sourceSpecificAttributes",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "ProposedDealRevisionAmazonMediaAttributes": {
+   "description": "The Amazon Media attributes a buyer may change on a revision. This is the same set that may be changed on a draft deal, so it reuses UpdateAmazonMediaProposedDealAttributesFields rather than declaring a narrower copy th…",
+   "properties": {
+    "brandName": {
+     "description": "The brand name associated with the deals buyer.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "AmazonMediaFrequencyCap"
+    },
+    "maxCreativeDuration": {
+     "description": "The maximum creative duration in seconds for this deal.",
+     "type": "integer"
+    },
+    "productCategories": {
+     "description": "A list of ADSP product categories. Only required for PG deals.",
+     "items": {
+      "$ref": "AmazonMediaProductCategory"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "secondaryGoals": {
+     "description": "Secondary Goals to be added to a deal.",
+     "items": {
+      "$ref": "SecondaryGoal"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targeting": {
+     "$ref": "AmazonMediaTargeting"
+    }
+   },
+   "type": "object"
+  },
+  "ProposedDealRevisionSourceSpecificAttributes": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonMedia": {
+       "$ref": "ProposedDealRevisionAmazonMediaAttributes"
+      }
+     },
+     "required": [
+      "amazonMedia"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ProposedDealRevisionToCreate": {
+   "properties": {
+    "budgetMillis": {
+     "description": "The budget for this deal, in millicent units. Required if the deal's type is PROGRAMMATIC_GUARANTEED.",
+     "type": "integer"
+    },
+    "dealName": {
+     "description": "The name of the deal.",
+     "maxLength": 120,
+     "type": "string"
+    },
+    "description": {
+     "description": "The description of the deal.",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The delivery end date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposed deal.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "priceMillis": {
+     "description": "The price used for this deal, in millicent units.",
+     "type": "integer"
+    },
+    "proposedDealId": {
+     "maxLength": 255,
+     "type": "string"
+    },
+    "sourceSpecificAttributes": {
+     "$ref": "ProposedDealRevisionSourceSpecificAttributes"
+    },
+    "startDate": {
+     "description": "The delivery start date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "targetedImpressions": {
+     "description": "The targeted impressions for this deal.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "proposedDealId"
+   ],
+   "type": "object"
+  },
+  "ProposedDealRevisionToUpdate": {
+   "properties": {
+    "budgetMillis": {
+     "description": "The budget for this deal, in millicent units. Required if the deal's type is PROGRAMMATIC_GUARANTEED.",
+     "type": "integer"
+    },
+    "dealName": {
+     "description": "The name of the deal.",
+     "maxLength": 120,
+     "type": "string"
+    },
+    "description": {
+     "description": "The description of the deal.",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The delivery end date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposed deal.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "priceMillis": {
+     "description": "The price used for this deal, in millicent units.",
+     "type": "integer"
+    },
+    "proposedDealId": {
+     "maxLength": 255,
+     "type": "string"
+    },
+    "sourceSpecificAttributes": {
+     "$ref": "ProposedDealRevisionSourceSpecificAttributes"
+    },
+    "startDate": {
+     "description": "The delivery start date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "targetedImpressions": {
+     "description": "The targeted impressions for this deal.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "proposedDealId"
+   ],
+   "type": "object"
+  },
+  "ProposedDealSearchField": {
+   "enum": [
+    "NAME",
+    "PROPOSED_DEAL_ID"
+   ],
+   "type": "string"
+  },
+  "ProposedDealSourceSpecificAttributes": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonMedia": {
+       "$ref": "AmazonMediaProposedDealAttributes"
+      }
+     },
+     "required": [
+      "amazonMedia"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherCloud": {
+       "$ref": "AmazonPublisherServiceProposedDealAttributes"
+      }
+     },
+     "required": [
+      "amazonPublisherCloud"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherDirect": {
+       "$ref": "AmazonPublisherServiceProposedDealAttributes"
+      }
+     },
+     "required": [
+      "amazonPublisherDirect"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "ProposedDealStatus": {
+   "description": "APPROVED means the deal has been submitted and approved by the proposal source and added to the ADSP for use. APPROVED_CURRENT means the deal is the current approved version after a revision was approved. APPROVED_PENDI…",
+   "enum": [
+    "APPROVED",
+    "APPROVED_CURRENT",
+    "APPROVED_PENDING_REGISTRATION",
+    "CANCELLED",
+    "COUNTER_DRAFT",
+    "DRAFT",
+    "DRAFT_REVISION",
+    "ERROR",
+    "PENDING",
+    "REJECTED",
+    "REJECTED_REVISED",
+    "REVISED",
+    "REVISION_APPROVED_PENDING_REGISTRATION",
+    "SELLER_RESPONDED",
+    "SUBMITTED",
+    "SUBMITTED_REVISION",
+    "SUBMITTED_TERMINATE",
+    "TERMINATED",
+    "TERMINATED_PENDING_REGISTRATION"
+   ],
+   "type": "string"
+  },
+  "ProposedDealStatusFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "ProposedDealStatus"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ProposedDealToCreate": {
+   "properties": {
+    "budgetMillis": {
+     "description": "The budget for this deal, in millicent units. Required if the deal's type is PROGRAMMATIC_GUARANTEED.",
+     "type": "integer"
+    },
+    "dealName": {
+     "description": "The name of the deal.",
+     "maxLength": 120,
+     "type": "string"
+    },
+    "description": {
+     "description": "The description of the deal.",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The delivery end date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposed deal.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "priceMillis": {
+     "description": "The price used for this deal, in millicent units.",
+     "type": "integer"
+    },
+    "proposalId": {
+     "description": "This proposed deal's associated proposal unique id. Only 15 proposed deals may be associated with a proposal.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "sourceSpecificAttributes": {
+     "$ref": "ProposedDealSourceSpecificAttributes"
+    },
+    "startDate": {
+     "description": "The delivery start date.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "dealName",
+    "endDate",
+    "priceMillis",
+    "proposalId",
+    "sourceSpecificAttributes",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "ProposedDealToUpdate": {
+   "properties": {
+    "budgetMillis": {
+     "description": "The budget for this deal, in millicent units. Required if the deal's type is PROGRAMMATIC_GUARANTEED. Can only be updated if the deal is in DRAFT, REJECTED, or REJECTED_REVISED status.",
+     "type": "integer"
+    },
+    "dealName": {
+     "description": "The name of the deal.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "description": {
+     "description": "The description of the deal.",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The delivery end date.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "notes": {
+     "description": "User provided notes for this proposed deal.",
+     "maxLength": 1000,
+     "type": "string"
+    },
+    "priceMillis": {
+     "description": "The price used for this deal, in millicent units.",
+     "type": "integer"
+    },
+    "proposedDealId": {
+     "maxLength": 255,
+     "type": "string"
+    },
+    "sourceSpecificAttributes": {
+     "$ref": "UpdateProposedDealSourceSpecificAttributes"
+    },
+    "startDate": {
+     "description": "The delivery start date.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "proposedDealId"
+   ],
+   "type": "object"
+  },
+  "ProposedDealType": {
+   "description": "Specifies the type of programmatic advertising deal. | DealType | Description | |----------|-------------| |`PREFERRED_DEAL` | A pre-negotiated, non-guaranteed deal type where publishers provide access to specific inven…",
+   "enum": [
+    "PREFERRED_DEAL",
+    "PRIVATE_AUCTION",
+    "PROGRAMMATIC_GUARANTEED",
+    "PROGRAMMATIC_GUARANTEED_SHARE_OF_VOICE"
+   ],
+   "type": "string"
+  },
+  "ProposedDealTypeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "ProposedDealType"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ProposedDealsRevisionsToCreate": {
+   "properties": {
+    "proposedDealsRevisions": {
+     "items": {
+      "$ref": "ProposedDealRevisionToCreate"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ProposedDealsRevisionsToDelete": {
+   "properties": {
+    "proposedDealsRevisions": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ProposedDealsRevisionsToUpdate": {
+   "properties": {
+    "proposedDealsRevisions": {
+     "items": {
+      "$ref": "ProposedDealRevisionToUpdate"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ProposedDealsSortField": {
+   "enum": [
+    "BUDGET_MILLIS",
+    "CURRENCY",
+    "DEAL_ID",
+    "DEAL_NAME",
+    "DEAL_TYPE",
+    "END_DATE",
+    "EXTERNAL_DEAL_ID",
+    "PRICE_MILLIS",
+    "PRICE_TYPE",
+    "PROPOSAL_ID",
+    "PROPOSED_DEAL_ID",
+    "SOURCE_ID",
+    "START_DATE",
+    "STATUS",
+    "TARGETED_IMPRESSIONS"
+   ],
+   "type": "string"
+  },
+  "ProposedDealsToCreate": {
+   "properties": {
+    "proposedDeals": {
+     "items": {
+      "$ref": "ProposedDealToCreate"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ProposedDealsToUpdate": {
+   "properties": {
+    "proposedDeals": {
+     "items": {
+      "$ref": "ProposedDealToUpdate"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "ProposedDealsToUpdateStatus": {
+   "properties": {
+    "action": {
+     "$ref": "StatusTransitionAction"
+    },
+    "proposedDealIds": {
+     "items": {
+      "maxLength": 255,
+      "type": "string"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    },
+    "terminationReason": {
+     "$ref": "TerminationReason"
+    }
+   },
+   "type": "object"
+  },
+  "Publisher": {
+   "properties": {
+    "name": {
+     "type": "string"
+    },
+    "publisherId": {
+     "type": "string"
+    },
+    "sourceSpecificAttributes": {
+     "$ref": "PublisherSourceSpecificAttributes"
+    }
+   },
+   "required": [
+    "sourceSpecificAttributes"
+   ],
+   "type": "object"
+  },
+  "PublisherLogo": {
+   "properties": {
+    "size": {
+     "type": "string"
+    },
+    "type": {
+     "type": "string"
+    },
+    "url": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PublisherLogos": {
+   "properties": {
+    "primary": {
+     "$ref": "PublisherLogo"
+    },
+    "secondary": {
+     "$ref": "PublisherLogo"
+    }
+   },
+   "type": "object"
+  },
+  "PublisherOffering": {
+   "properties": {
+    "country": {
+     "description": "The ISO 3166-1 alpha-2 formated country code of this offering.",
+     "maxLength": 2,
+     "type": "string"
+    },
+    "dealType": {
+     "$ref": "ProposedDealType"
+    },
+    "id": {
+     "description": "The id of this offering.",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of this offering.",
+     "type": "string"
+    },
+    "sourceSpecificAttributes": {
+     "$ref": "OfferingSourceSpecificAttributes"
+    }
+   },
+   "required": [
+    "id",
+    "name"
+   ],
+   "type": "object"
+  },
+  "PublisherProduct": {
+   "properties": {
+    "bookableEndDate": {
+     "description": "The last date that user can book a deal with this publisher product.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "bookableStartDate": {
+     "description": "The earliest date that user can book a deal with this publisher product.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "dealType": {
+     "$ref": "ProposedDealType"
+    },
+    "deliveryEndDate": {
+     "description": "The last date that the deal can have it's dates.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "deliveryStartDate": {
+     "description": "The earliest date that the deal can have it's dates.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The publisher product name.",
+     "type": "string"
+    },
+    "priceType": {
+     "$ref": "PriceType"
+    },
+    "publisherProductId": {
+     "description": "The publisher product unique identifier.",
+     "type": "string"
+    },
+    "sourceSpecificAttributes": {
+     "$ref": "PublisherProductSourceSpecificAttributes"
+    }
+   },
+   "required": [
+    "bookableStartDate",
+    "dealType",
+    "deliveryStartDate",
+    "name",
+    "publisherProductId",
+    "sourceSpecificAttributes"
+   ],
+   "type": "object"
+  },
+  "PublisherProductFilterSourceSpecificFilters": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonMedia": {
+       "$ref": "AmazonMediaPublisherProductsFilters"
+      }
+     },
+     "required": [
+      "amazonMedia"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "PublisherProductSearchField": {
+   "enum": [
+    "NAME",
+    "PUBLISHER_PRODUCT_ID"
+   ],
+   "type": "string"
+  },
+  "PublisherProductSourceSpecificAttributes": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonMedia": {
+       "$ref": "AmazonMediaPublisherProductFields"
+      }
+     },
+     "required": [
+      "amazonMedia"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "PublisherProductStatus": {
+   "description": "Specifies the current status of a publisher product. | Status | Description | |--------|-------------| |`ACTIVE` | Publisher product is available and can be used for deal creation. | |`INACTIVE` | Publisher product is u…",
+   "enum": [
+    "ACTIVE",
+    "INACTIVE"
+   ],
+   "type": "string"
+  },
+  "PublisherProductStatusFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "PublisherProductStatus"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "PublisherProductsSortField": {
+   "enum": [
+    "BOOKABLE_END_DATE",
+    "BOOKABLE_START_DATE",
+    "DELIVERY_END_DATE",
+    "DELIVERY_START_DATE",
+    "NAME",
+    "PUBLISHER_PRODUCT_ID"
+   ],
+   "type": "string"
+  },
+  "PublisherSourceSpecificAttributes": {
+   "properties": {
+    "adX": {
+     "$ref": "AdXPublisherFields"
+    },
+    "amazonMedia": {
+     "$ref": "AmazonMediaPublisherFields"
+    },
+    "amazonPublisherCloud": {
+     "$ref": "AmazonPublisherServiceFields"
+    },
+    "amazonPublisherDirect": {
+     "$ref": "AmazonPublisherServiceFields"
+    }
+   },
+   "type": "object"
+  },
+  "SecondaryGoal": {
+   "properties": {
+    "goalType": {
+     "$ref": "GoalType"
+    },
+    "units": {
+     "type": "integer"
+    }
+   },
+   "required": [
+    "goalType"
+   ],
+   "type": "object"
+  },
+  "SignalCollection": {
+   "properties": {
+    "activationStatus": {
+     "$ref": "SignalCollectionActivationStatus"
+    },
+    "amazonMediaPublisherId": {
+     "type": "string"
+    },
+    "availableAllCountries": {
+     "type": "boolean"
+    },
+    "availableCountries": {
+     "items": {
+      "description": "ISO 3166-1 alpha-2 formated country codes",
+      "maxLength": 2,
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "description": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "signalCollectionId": {
+     "type": "string"
+    },
+    "targetingRestriction": {
+     "$ref": "TargetingRestriction"
+    },
+    "targetingType": {
+     "$ref": "TargetingType"
+    }
+   },
+   "type": "object"
+  },
+  "SignalCollectionActivationStatus": {
+   "enum": [
+    "ACTIVE",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SignalCollectionActivationStatusFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "SignalCollectionActivationStatus"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SignalsCollectionsSearchField": {
+   "enum": [
+    "NAME",
+    "SIGNAL_COLLECTION_ID"
+   ],
+   "type": "string"
+  },
+  "SortOrder": {
+   "enum": [
+    "ASCENDING",
+    "DESCENDING"
+   ],
+   "type": "string"
+  },
+  "StatusTransitionAction": {
+   "enum": [
+    "CANCEL",
+    "SUBMIT",
+    "SUBMIT_REVISION",
+    "TERMINATE"
+   ],
+   "type": "string"
+  },
+  "StringFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SubmissionFailure": {
+   "properties": {
+    "failures": {
+     "items": {
+      "$ref": "SubmissionFailureField"
+     },
+     "type": "array"
+    },
+    "traceId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SubmissionFailureField": {
+   "properties": {
+    "code": {
+     "$ref": "SubmissionFailureFieldCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SubmissionFailureFieldCode": {
+   "enum": [
+    "BAD_REQUEST",
+    "INSUFFICIENT_INVENTORY",
+    "INVALID_ACTION",
+    "INVALID_VALUE",
+    "MISSING_VALUE",
+    "OUT_OF_RANGE",
+    "UNKNOWN",
+    "VALUE_TOO_LARGE",
+    "VALUE_TOO_SMALL"
+   ],
+   "type": "string"
+  },
+  "Targeting": {
+   "properties": {
+    "either": {
+     "description": "Optional field for specifying multiple targeting conditions where any can match",
+     "items": {
+      "$ref": "TargetingEither"
+     },
+     "type": "array"
+    },
+    "mustMatch": {
+     "$ref": "TargetingMustMatch"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingDetails": {
+   "properties": {
+    "id": {
+     "type": "string"
+    },
+    "type": {
+     "$ref": "TargetingType"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingEither": {
+   "properties": {
+    "mustMatch": {
+     "$ref": "TargetingMustMatch"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingMustMatch": {
+   "properties": {
+    "allOf": {
+     "items": {
+      "$ref": "TargetingPredicate"
+     },
+     "type": "array"
+    },
+    "anyOf": {
+     "items": {
+      "$ref": "TargetingPredicate"
+     },
+     "type": "array"
+    },
+    "noneOf": {
+     "items": {
+      "$ref": "TargetingPredicate"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingPredicate": {
+   "properties": {
+    "attributeId": {
+     "type": "string"
+    },
+    "hasAllIds": {
+     "items": {
+      "$ref": "AttributeValueId"
+     },
+     "type": "array"
+    },
+    "is": {
+     "type": "string"
+    },
+    "isAnyId": {
+     "items": {
+      "$ref": "AttributeValueId"
+     },
+     "type": "array"
+    },
+    "isId": {
+     "$ref": "AttributeValueId"
+    },
+    "isPresent": {
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingRestriction": {
+   "properties": {
+    "isExcludable": {
+     "type": "boolean"
+    },
+    "isIncludable": {
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "TargetingType": {
+   "enum": [
+    "AUDIENCE",
+    "CONTEXTUAL",
+    "DEVICE",
+    "GEO",
+    "INVENTORY"
+   ],
+   "type": "string"
+  },
+  "TargetingTypeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "TargetingType"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "TerminationReason": {
+   "enum": [
+    "CREATED_ACCIDENTALLY",
+    "CREATED_FOR_TESTING",
+    "DUPLICATE",
+    "NEGOTIATIONS_TERMINATED",
+    "NOT_DELIVERING",
+    "PROLONGED_PAUSE",
+    "UNDERDELIVERING"
+   ],
+   "type": "string"
+  },
+  "UpdateAmazonMediaProposedDealAttributes": {
+   "properties": {
+    "brandName": {
+     "description": "The brand name associated with the deals buyer.",
+     "maxLength": 255,
+     "type": "string"
+    },
+    "frequencyCap": {
+     "$ref": "AmazonMediaFrequencyCap"
+    },
+    "maxCreativeDuration": {
+     "description": "The maximum creative duration in seconds for this deal.",
+     "type": "integer"
+    },
+    "productCategories": {
+     "description": "A list of ADSP product categories. Only required for PG deals.",
+     "items": {
+      "$ref": "AmazonMediaProductCategory"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "secondaryGoals": {
+     "description": "Secondary Goals to be added to a deal.",
+     "items": {
+      "$ref": "SecondaryGoal"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targeting": {
+     "$ref": "AmazonMediaTargeting"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateProposalResultItem": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "httpStatusCode": {
+     "type": "integer"
+    },
+    "index": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "proposal": {
+     "$ref": "Proposal"
+    },
+    "resultStatus": {
+     "$ref": "MutationResult"
+    }
+   },
+   "required": [
+    "resultStatus"
+   ],
+   "type": "object"
+  },
+  "UpdateProposalStatusResponseContent": {
+   "properties": {
+    "proposalId": {
+     "maxLength": 255,
+     "type": "string"
+    },
+    "proposedDeals": {
+     "items": {
+      "$ref": "UpdateProposedDealsStatusesResultItem"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    },
+    "resultStatus": {
+     "$ref": "MutationResult"
+    }
+   },
+   "required": [
+    "resultStatus"
+   ],
+   "type": "object"
+  },
+  "UpdateProposalsResponseContent": {
+   "properties": {
+    "results": {
+     "description": "Proposals update results.",
+     "items": {
+      "$ref": "UpdateProposalResultItem"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateProposedDealResultItem": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "httpStatusCode": {
+     "type": "integer"
+    },
+    "index": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "proposedDeal": {
+     "$ref": "ProposedDeal"
+    },
+    "resultStatus": {
+     "$ref": "MutationResult"
+    }
+   },
+   "required": [
+    "resultStatus"
+   ],
+   "type": "object"
+  },
+  "UpdateProposedDealRevisionResultItem": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "httpStatusCode": {
+     "type": "integer"
+    },
+    "index": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "proposedDeal": {
+     "$ref": "ProposedDeal"
+    },
+    "resultStatus": {
+     "$ref": "MutationResult"
+    }
+   },
+   "required": [
+    "resultStatus"
+   ],
+   "type": "object"
+  },
+  "UpdateProposedDealSourceSpecificAttributes": {
+   "oneOf": [
+    {
+     "properties": {
+      "amazonMedia": {
+       "$ref": "UpdateAmazonMediaProposedDealAttributes"
+      }
+     },
+     "required": [
+      "amazonMedia"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherCloud": {
+       "$ref": "AmazonPublisherServiceProposedDealAttributes"
+      }
+     },
+     "required": [
+      "amazonPublisherCloud"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "amazonPublisherDirect": {
+       "$ref": "AmazonPublisherServiceProposedDealAttributes"
+      }
+     },
+     "required": [
+      "amazonPublisherDirect"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "UpdateProposedDealsResponseContent": {
+   "properties": {
+    "results": {
+     "description": "Proposals creation results.",
+     "items": {
+      "$ref": "UpdateProposedDealResultItem"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateProposedDealsRevisionsResponseContent": {
+   "properties": {
+    "results": {
+     "description": "Proposed deal revisions update results.",
+     "items": {
+      "$ref": "UpdateProposedDealRevisionResultItem"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateProposedDealsStatusesResponseContent": {
+   "properties": {
+    "results": {
+     "items": {
+      "$ref": "UpdateProposedDealsStatusesResultItem"
+     },
+     "maxItems": 15,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateProposedDealsStatusesResultItem": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "httpStatusCode": {
+     "type": "integer"
+    },
+    "index": {
+     "minimum": 0,
+     "type": "integer"
+    },
+    "proposedDealId": {
+     "maxLength": 255,
+     "type": "string"
+    },
+    "resultStatus": {
+     "$ref": "MutationResult"
+    }
+   },
+   "required": [
+    "resultStatus"
+   ],
+   "type": "object"
+  }
+ }
+}

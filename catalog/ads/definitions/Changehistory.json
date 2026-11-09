@@ -1,0 +1,252 @@
+{
+ "api": "Changehistory",
+ "file": "specs/dest/Changehistory_prod_3p.json",
+ "schemas": {
+  "HistoryError": {
+   "description": "The error response object.",
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "HistoryEventType": {
+   "properties": {
+    "eventTypeIds": {
+     "description": "max of 10 event types. IDs here belong to the EventType. For example, if requesting CAMPAGIN as the eventType, these are campaignIds.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "filters": {
+     "description": "| Filter | Entity Types | ||-| | BUDGET_AMOUNT | CAMPAIGN | | IN_BUDGET | CAMPAIGN | | STATUS | CAMPAIGN, AD_GROUP, AD, KEYWORD, PRODUCT_TARGET, NEGATIVE_KEYWORD | | END_DATE | CAMPAIGN | | START_DATE | CAMPAIGN | | PLA…",
+     "items": {
+      "enum": [
+       "BID_AMOUNT",
+       "BUDGET_AMOUNT",
+       "END_DATE",
+       "IN_BUDGET",
+       "NAME",
+       "PLACEMENT_GROUP",
+       "SMART_BIDDING_STRATEGY",
+       "START_DATE",
+       "STATUS"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "parents": {
+     "description": "maximum of 10 parents",
+     "items": {
+      "properties": {
+       "adGroupId": {
+        "type": "string"
+       },
+       "campaignId": {
+        "type": "string"
+       },
+       "useProfileIdAdvertiser": {
+        "description": "If true, retrieves events which belong to the associated advertiser",
+        "type": "boolean"
+       }
+      },
+      "type": "object"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "HistoryEventTypes": {
+   "description": "Event types that can be queried. **Note:** THEME event type requires API version 1.1 or higher (Accept: application/vnd.historyresponse.v1.1+json)",
+   "properties": {
+    "AD": {
+     "$ref": "HistoryEventType"
+    },
+    "AD_GROUP": {
+     "$ref": "HistoryEventType"
+    },
+    "CAMPAIGN": {
+     "$ref": "HistoryEventType"
+    },
+    "KEYWORD": {
+     "$ref": "HistoryEventType"
+    },
+    "NEGATIVE_KEYWORD": {
+     "$ref": "HistoryEventType"
+    },
+    "PRODUCT_TARGETING": {
+     "$ref": "HistoryEventType"
+    },
+    "THEME": {
+     "allOf": [
+      {
+       "$ref": "HistoryEventType"
+      },
+      {
+       "description": "**Requires API version 1.1+:** Use Accept header 'application/vnd.historyresponse.v1.1+json'"
+      }
+     ]
+    }
+   },
+   "type": "object"
+  },
+  "HistoryResponseEvents": {
+   "items": {
+    "properties": {
+     "changeType": {
+      "description": "ChangeTypes for EntityTypes | EntityType | Valid Change Types | ||--| |CAMPAIGN | STATUS, IN_BUDGET, PORTFOLIO, BUDGET_AMOUNT, NAME, START_DATE, END_DATE, SMART_BIDDING_STRATEGY, PLACEMENT_GROUP, CREATED, IS_PREMIUM_BID…",
+      "enum": [
+       "BID_AMOUNT",
+       "BUDGET_AMOUNT",
+       "DEFAULT_BID_AMOUNT",
+       "END_DATE",
+       "IN_BUDGET",
+       "NAME",
+       "PLACEMENT_GROUP",
+       "PORTFOLIO",
+       "SMART_BIDDING_STRATEGY",
+       "START_DATE",
+       "STATUS"
+      ],
+      "type": "string"
+     },
+     "entityId": {
+      "type": "string"
+     },
+     "entityType": {
+      "enum": [
+       "AD",
+       "AD_GROUP",
+       "CAMPAIGN",
+       "KEYWORD",
+       "NEGATIVE_KEYWORD",
+       "PRODUCT_TARGETING",
+       "THEME"
+      ],
+      "type": "string"
+     },
+     "metadata": {
+      "properties": {
+       "adGroupId": {
+        "type": "string"
+       },
+       "campaignBudgetType": {
+        "description": "Field only for campaigns",
+        "enum": [
+         "DAILY",
+         "LIFETIME_BUDGET"
+        ],
+        "type": "string"
+       },
+       "campaignId": {
+        "type": "string"
+       },
+       "keyword": {
+        "description": "Field only for keywords or negative keywords. The keyword or phrase this matches.",
+        "type": "string"
+       },
+       "keywordType": {
+        "description": "Field only for keywords",
+        "enum": [
+         "KEYWORD_BROAD",
+         "KEYWORD_EXACT",
+         "KEYWORD_PHRASE"
+        ],
+        "type": "string"
+       },
+       "negativeTargetingType": {
+        "description": "Field only for negative targeting.",
+        "enum": [
+         "NEGATIVE_KEYWORD_BROAD",
+         "NEGATIVE_KEYWORD_EXACT",
+         "NEGATIVE_KEYWORD_PHRASE"
+        ],
+        "type": "string"
+       },
+       "placementGroupPosition": {
+        "description": "Field only for campaign placement group change types",
+        "enum": [
+         "DETAIL_PAGE",
+         "TOP_OF_SEARCH"
+        ],
+        "type": "string"
+       },
+       "predefinedTarget": {
+        "enum": [
+         "CLOSE-MATCH",
+         "COMPLEMENTS",
+         "LOOSE-MATCH",
+         "SUBSTITUTES"
+        ],
+        "type": "string"
+       },
+       "productTargetingType": {
+        "description": "Field only for Product Targeting",
+        "enum": [
+         "EXPRESSION",
+         "PREDEFINED"
+        ],
+        "type": "string"
+       },
+       "targetingExpression": {
+        "description": "Field only for Product Targeting where type = EXPRESSION. Some examples: category=\"Car Seat Canopies & Covers\" brand=\"Munchkin\" price<14.9 rating>4.6 asin=\"B000NPPATS\" category=\"Women's Handbag Accessories\"",
+        "type": "string"
+       },
+       "targetingType": {
+        "description": "Field only for THEME event type",
+        "type": "string"
+       },
+       "theme": {
+        "description": "Field only for THEME event type. The theme targeting value.",
+        "type": "string"
+       }
+      },
+      "type": "object"
+     },
+     "newValue": {
+      "description": "| EntityType | Change Type | Values | ||-|--| | CAMPAIGN | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED| | CAMPAIGN | IN_BUDGET | true or false| | CAMPAIGN | PORTFOLIO | portfolioId| | CAMPAIGN | BUDGET_AMOUNT | amount i…",
+      "type": "string"
+     },
+     "previousValue": {
+      "description": "| EntityType | Change Type | Values | ||-|--| | CAMPAIGN | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED| | CAMPAIGN | IN_BUDGET | true or false| | CAMPAIGN | PORTFOLIO | portfolioId| | CAMPAIGN | BUDGET_AMOUNT | amount i…",
+      "type": "string"
+     },
+     "timestamp": {
+      "description": "unix time",
+      "type": "integer"
+     }
+    },
+    "type": "object"
+   },
+   "type": "array"
+  },
+  "HistorySortParameter": {
+   "properties": {
+    "direction": {
+     "default": "DESC",
+     "enum": [
+      "ASC",
+      "DESC"
+     ],
+     "type": "string"
+    },
+    "key": {
+     "enum": [
+      "DATE"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

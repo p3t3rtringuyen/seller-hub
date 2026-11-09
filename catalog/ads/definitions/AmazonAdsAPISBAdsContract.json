@@ -1,0 +1,2528 @@
+{
+ "api": "AmazonAdsAPISBAdsContract",
+ "file": "specs/dest/AmazonAdsAPISBAdsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FEATURE_NOT_AVAILABLE",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SBAd": {
+   "properties": {
+    "activeCreative": {
+     "$ref": "SBCreative"
+    },
+    "adGroupId": {
+     "description": "The ad group associated with the ad.",
+     "type": "string"
+    },
+    "adId": {
+     "description": "The identifier of the ad.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "SBAdProduct"
+    },
+    "adType": {
+     "$ref": "SBAdType"
+    },
+    "campaignId": {
+     "description": "The campaign associated with the ad. It's a read-only field.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date time that the ad was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "creative": {
+     "$ref": "SBCreative"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time that the ad was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceScope": {
+     "$ref": "SBMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad is applicable. For Sponsored Ads, the marketplaces included should either be same as or subset of parent ad group. For ADSP, this represe…",
+     "items": {
+      "$ref": "SBMarketplace"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SBState"
+    },
+    "status": {
+     "$ref": "SBStatus"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad",
+     "items": {
+      "$ref": "SBTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "adId",
+    "adProduct",
+    "adType",
+    "campaignId",
+    "creationDateTime",
+    "creative",
+    "lastUpdatedDateTime",
+    "marketplaceScope",
+    "marketplaces",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "SBAdAdGroupIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdAdIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `SPONSORED_BRANDS` | Sponsored Brands ad product. |",
+     "items": {
+      "$ref": "SBAdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdCampaignIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdCreate": {
+   "properties": {
+    "adGroupId": {
+     "description": "The ad group associated with the ad.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "SBAdProduct"
+    },
+    "adType": {
+     "$ref": "SBAdType"
+    },
+    "creative": {
+     "$ref": "SBCreateCreative"
+    },
+    "name": {
+     "description": "The name of the ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SBCreateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad",
+     "items": {
+      "$ref": "SBCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "adProduct",
+    "adType",
+    "creative",
+    "name",
+    "state"
+   ],
+   "type": "object"
+  },
+  "SBAdMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "SBAdMultiStatusSuccess"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBAdMultiStatusSuccess": {
+   "properties": {
+    "ad": {
+     "$ref": "SBAd"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "ad",
+    "index"
+   ],
+   "type": "object"
+  },
+  "SBAdNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "SBAdNameFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "SBAdNameFilterType": {
+   "description": "**AdNameFilterType Enum:** | AdNameFilterType | Description | | --- | --- | | `EXACT_MATCH` | Filter by exact match. | | `BROAD_MATCH` | Filter by broad match. |",
+   "enum": [
+    "BROAD_MATCH",
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "SBAdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `SPONSORED_BRANDS` | Sponsored Brands ad product. |",
+   "enum": [
+    "SPONSORED_BRANDS"
+   ],
+   "type": "string"
+  },
+  "SBAdStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `ENABLED` | The object is set active by user and eligible for delivery. | | `PAUSED` | The object is stopped by user and not eligible for delivery. | | `ARCHIVED` …",
+     "items": {
+      "$ref": "SBState"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SBAdSuccessResponse": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "SBAd"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SBAdType": {
+   "description": "**AdType Enum:** | AdType | Description | |------|------| | `COMPONENT` | A creative that can features a collection of videos, images, and products. |",
+   "enum": [
+    "COMPONENT"
+   ],
+   "type": "string"
+  },
+  "SBAdUpdate": {
+   "properties": {
+    "adId": {
+     "description": "The identifier of the ad.",
+     "type": "string"
+    },
+    "creative": {
+     "$ref": "SBUpdateCreative"
+    },
+    "name": {
+     "description": "The name of the ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "SBUpdateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad",
+     "items": {
+      "$ref": "SBCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adId"
+   ],
+   "type": "object"
+  },
+  "SBAdvertisedProducts": {
+   "properties": {
+    "productId": {
+     "description": "The identifier of the advertised product.",
+     "type": "string"
+    },
+    "productIdType": {
+     "$ref": "SBProductIdType"
+    }
+   },
+   "required": [
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "SBAutoCollectionSettings": {
+   "description": "Settings for automatically generated collections.",
+   "properties": {
+    "productExclusions": {
+     "description": "Products to exclude from auto collection.",
+     "items": {
+      "$ref": "SBAdvertisedProducts"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "sharedSettings": {
+     "$ref": "SBSharedCollectionSettings"
+    }
+   },
+   "required": [
+    "sharedSettings"
+   ],
+   "type": "object"
+  },
+  "SBBrandGalleryCardCreativeElement": {
+   "properties": {
+    "customImage": {
+     "$ref": "SBImage"
+    },
+    "headline": {
+     "description": "The headline used for the card.",
+     "type": "string"
+    },
+    "landingPage": {
+     "$ref": "SBStoreSpotlightLandingPage"
+    }
+   },
+   "required": [
+    "customImage",
+    "headline",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "SBBrandGalleryCreativePropertiesToOptimize": {
+   "description": "**BrandGalleryCreativePropertiesToOptimize Enum:** | BrandGalleryCreativePropertiesToOptimize | Description | |------|------| | `HEADLINE` | The headline in the creative. |",
+   "enum": [
+    "HEADLINE"
+   ],
+   "type": "string"
+  },
+  "SBBrandGallerySettings": {
+   "description": "An ad creative that showcases a brand and its categories and collections.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "SBImage"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "cards": {
+     "description": "The sub-elements of the creative. Each card highlights a different category associated to a brand.",
+     "items": {
+      "$ref": "SBBrandGalleryCardCreativeElement"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "SBBrandGalleryCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The custom images featured in the ad.",
+     "items": {
+      "$ref": "SBImage"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "SBStoreSpotlightLandingPage"
+    },
+    "moderationStatus": {
+     "$ref": "SBCreativeStatus"
+    },
+    "untranslatedHeadlines": {
+     "description": "The headline entered by the advertiser.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "brandLogos",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "SBCardCreativeElement": {
+   "properties": {
+    "headline": {
+     "description": "The headline used for the card.",
+     "type": "string"
+    },
+    "landingPage": {
+     "$ref": "SBStoreSpotlightLandingPage"
+    },
+    "products": {
+     "$ref": "SBAdvertisedProducts"
+    }
+   },
+   "required": [
+    "headline",
+    "landingPage",
+    "products"
+   ],
+   "type": "object"
+  },
+  "SBCollectionLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "SBCollectionLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL associated to the landing page.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "SBCollectionLandingPageType": {
+   "description": "**CollectionLandingPageType Enum:** | CollectionLandingPageType | Description | |------|------| | `ASIN_LIST` | A list of products based on the products promoted in the ad creative. | | `STORE` | A brand Store landing p…",
+   "enum": [
+    "ASIN_LIST",
+    "STORE"
+   ],
+   "type": "string"
+  },
+  "SBComponentCreative": {
+   "properties": {
+    "autoCollectionSettings": {
+     "$ref": "SBAutoCollectionSettings"
+    },
+    "brandGallerySettings": {
+     "$ref": "SBBrandGallerySettings"
+    },
+    "manualCollectionSettings": {
+     "$ref": "SBManualCollectionSettings"
+    },
+    "productCollectionSettings": {
+     "$ref": "SBProductCollectionSettings"
+    },
+    "productVideoSettings": {
+     "$ref": "SBProductVideoSettings"
+    },
+    "storeSpotlightSettings": {
+     "$ref": "SBStoreSpotlightSettings"
+    }
+   },
+   "type": "object"
+  },
+  "SBCreateAdRequest": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "SBAdCreate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "ads"
+   ],
+   "type": "object"
+  },
+  "SBCreateAdvertisedProducts": {
+   "properties": {
+    "productId": {
+     "description": "The identifier of the advertised product.",
+     "type": "string"
+    },
+    "productIdType": {
+     "$ref": "SBProductIdType"
+    }
+   },
+   "required": [
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "SBCreateAutoCollectionSettings": {
+   "description": "Settings for automatically generated collections.",
+   "properties": {
+    "productExclusions": {
+     "description": "Products to exclude from auto collection.",
+     "items": {
+      "$ref": "SBCreateAdvertisedProducts"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "sharedSettings": {
+     "$ref": "SBCreateSharedCollectionSettings"
+    }
+   },
+   "required": [
+    "sharedSettings"
+   ],
+   "type": "object"
+  },
+  "SBCreateBrandGalleryCardCreativeElement": {
+   "properties": {
+    "customImage": {
+     "$ref": "SBCreateImage"
+    },
+    "headline": {
+     "description": "The headline used for the card.",
+     "type": "string"
+    },
+    "landingPage": {
+     "$ref": "SBCreateStoreSpotlightLandingPage"
+    }
+   },
+   "required": [
+    "customImage",
+    "headline",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "SBCreateBrandGallerySettings": {
+   "description": "An ad creative that showcases a brand and its categories and collections.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "SBCreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "cards": {
+     "description": "The sub-elements of the creative. Each card highlights a different category associated to a brand.",
+     "items": {
+      "$ref": "SBCreateBrandGalleryCardCreativeElement"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "SBBrandGalleryCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The custom images featured in the ad.",
+     "items": {
+      "$ref": "SBCreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "SBCreateStoreSpotlightLandingPage"
+    }
+   },
+   "required": [
+    "brand",
+    "brandLogos",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "SBCreateCardCreativeElement": {
+   "properties": {
+    "headline": {
+     "description": "The headline used for the card.",
+     "type": "string"
+    },
+    "landingPage": {
+     "$ref": "SBCreateStoreSpotlightLandingPage"
+    },
+    "products": {
+     "$ref": "SBCreateAdvertisedProducts"
+    }
+   },
+   "required": [
+    "headline",
+    "landingPage",
+    "products"
+   ],
+   "type": "object"
+  },
+  "SBCreateCollectionLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "SBCollectionLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL associated to the landing page.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "SBCreateComponentCreative": {
+   "properties": {
+    "autoCollectionSettings": {
+     "$ref": "SBCreateAutoCollectionSettings"
+    },
+    "brandGallerySettings": {
+     "$ref": "SBCreateBrandGallerySettings"
+    },
+    "manualCollectionSettings": {
+     "$ref": "SBCreateManualCollectionSettings"
+    },
+    "productCollectionSettings": {
+     "$ref": "SBCreateProductCollectionSettings"
+    },
+    "productVideoSettings": {
+     "$ref": "SBCreateProductVideoSettings"
+    },
+    "storeSpotlightSettings": {
+     "$ref": "SBCreateStoreSpotlightSettings"
+    }
+   },
+   "type": "object"
+  },
+  "SBCreateCreative": {
+   "oneOf": [
+    {
+     "properties": {
+      "componentCreative": {
+       "$ref": "SBCreateComponentCreative"
+      }
+     },
+     "required": [
+      "componentCreative"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBCreateFormatProperties": {
+   "properties": {
+    "height": {
+     "description": "The height (in pixels) of the cropped image.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "left": {
+     "description": "The number of pixels from the left of the image where the crop should begin.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "top": {
+     "description": "The number of pixels from the top of the image where the crop should begin.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width (in pixels) of the cropped image.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "SBCreateImage": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the image asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the image asset.",
+     "type": "string"
+    },
+    "formatProperties": {
+     "description": "The cropping and positioning properties associated with the asset.",
+     "items": {
+      "$ref": "SBCreateFormatProperties"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "SBCreateLandingPageAsins": {
+   "properties": {
+    "asins": {
+     "description": "For landing page of type ASIN_LIST, the list of ASINs used to create the landing page.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "asins"
+   ],
+   "type": "object"
+  },
+  "SBCreateManualCollectionSettings": {
+   "description": "Settings for manually curated collections.",
+   "properties": {
+    "landingPage": {
+     "$ref": "SBCreateCollectionLandingPage"
+    },
+    "productInclusions": {
+     "description": "The products featured in the ad. Required for manual collections.",
+     "items": {
+      "$ref": "SBCreateAdvertisedProducts"
+     },
+     "maxItems": 10,
+     "minItems": 3,
+     "type": "array"
+    },
+    "sharedSettings": {
+     "$ref": "SBCreateSharedCollectionSettings"
+    },
+    "title": {
+     "description": "Optional title for the collection. If not provided, title will be auto-generated.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPage",
+    "productInclusions",
+    "sharedSettings"
+   ],
+   "type": "object"
+  },
+  "SBCreateProductCollectionLandingPage": {
+   "properties": {
+    "landingPageAsins": {
+     "$ref": "SBCreateLandingPageAsins"
+    },
+    "landingPageType": {
+     "$ref": "SBProductCollectionLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL associated to the landing page. Read only if landingPageType is ASIN_LIST",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "SBCreateProductCollectionSettings": {
+   "description": "An ad creative that contains multiple products and a custom image.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "SBCreateImage"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "SBProductCollectionCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The set of custom images featured in the ad.",
+     "items": {
+      "$ref": "SBCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "SBCreateProductCollectionLandingPage"
+    },
+    "products": {
+     "description": "The products featured in the ad.",
+     "items": {
+      "$ref": "SBCreateAdvertisedProducts"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "brandLogos",
+    "customImages",
+    "headlines",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "SBCreateProductVideoSettings": {
+   "description": "An ad with a creative that includes a video.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "SBCreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "SBCreateVideoLandingPage"
+    },
+    "products": {
+     "description": "The products featured in the video ad.",
+     "items": {
+      "$ref": "SBCreateAdvertisedProducts"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videos": {
+     "description": "The video assets used in the ad.",
+     "items": {
+      "$ref": "SBCreateVideo"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "videos"
+   ],
+   "type": "object"
+  },
+  "SBCreateSharedCollectionSettings": {
+   "description": "Settings shared by all collection types.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "$ref": "SBCreateImage"
+    }
+   },
+   "required": [
+    "brand"
+   ],
+   "type": "object"
+  },
+  "SBCreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SBCreateStoreSpotlightLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "SBStoreSpotlightLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType",
+    "landingPageUrl"
+   ],
+   "type": "object"
+  },
+  "SBCreateStoreSpotlightSettings": {
+   "description": "An ad creative that contains ASINs within a brand Store.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "SBCreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "cards": {
+     "description": "The sub-elements of the creative. Each card highlights a different ASIN associated to a brand Store.",
+     "items": {
+      "$ref": "SBCreateCardCreativeElement"
+     },
+     "maxItems": 3,
+     "minItems": 3,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "SBStoreSpotlightCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "SBCreateStoreSpotlightLandingPage"
+    }
+   },
+   "required": [
+    "brand",
+    "brandLogos",
+    "cards",
+    "headlines",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "SBCreateTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SBCreateVideo": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the video asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the video asset.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "SBCreateVideoLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "SBVideoLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "SBCreative": {
+   "oneOf": [
+    {
+     "properties": {
+      "componentCreative": {
+       "$ref": "SBComponentCreative"
+      }
+     },
+     "required": [
+      "componentCreative"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBCreativeStatus": {
+   "properties": {
+    "moderationStatus": {
+     "$ref": "SBModerationStatus"
+    }
+   },
+   "required": [
+    "moderationStatus"
+   ],
+   "type": "object"
+  },
+  "SBDeleteAdRequest": {
+   "properties": {
+    "adIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adIds"
+   ],
+   "type": "object"
+  },
+  "SBDeliveryReason": {
+   "description": "**DeliveryReason Enum:** | DeliveryReason | Description | |------|------| | `ADVERTISER_ARCHIVED` | | | `ADVERTISER_INELIGIBLE` | | | `ADVERTISER_OUT_OF_BUDGET` | Indicates that an advertiser is out of budget for Sponso…",
+   "enum": [
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_INELIGIBLE",
+    "ADVERTISER_OUT_OF_BUDGET",
+    "ADVERTISER_OUT_OF_POSTPAY_CREDIT_LIMIT",
+    "ADVERTISER_OUT_OF_POSTPAY_MONTHLY_BUDGET",
+    "ADVERTISER_OUT_OF_PREPAY_BALANCE",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_POLICING_PENDING_REVIEW",
+    "ADVERTISER_POLICING_SUSPENDED",
+    "AD_ARCHIVED",
+    "AD_CREATION_FAILED",
+    "AD_CREATION_IN_PROGRESS",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_INCOMPLETE",
+    "AD_GROUP_LOW_BID",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_REVIEW",
+    "AD_GROUP_POLICING_PENDING_REVIEW",
+    "AD_GROUP_REJECTED",
+    "AD_INELIGIBLE",
+    "AD_MISSING_DECORATION",
+    "AD_MISSING_IMAGE",
+    "AD_NOT_DELIVERING",
+    "AD_PAUSED",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "BRAND_INELIGIBLE",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_REVIEW",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_REJECTED",
+    "CREATIVE_MISSING_ASSET",
+    "CREATIVE_PENDING_REVIEW",
+    "CREATIVE_REJECTED",
+    "LANDING_PAGE_INELIGIBLE",
+    "LANDING_PAGE_NOT_AVAILABLE",
+    "OTHER",
+    "PORTFOLIO_ARCHIVED",
+    "PORTFOLIO_END_DATE_REACHED",
+    "PORTFOLIO_OUT_OF_BUDGET",
+    "PORTFOLIO_PAUSED",
+    "PORTFOLIO_PENDING_START_DATE",
+    "STATUS_UNAVAILABLE",
+    "TARGET_ARCHIVED",
+    "TARGET_BLOCKED",
+    "TARGET_PAUSED",
+    "TARGET_POLICING_SUSPENDED"
+   ],
+   "type": "string"
+  },
+  "SBDeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | |------|------| | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplac…",
+   "enum": [
+    "DELIVERING",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "SBFormatProperties": {
+   "properties": {
+    "height": {
+     "description": "The height (in pixels) of the cropped image.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "left": {
+     "description": "The number of pixels from the left of the image where the crop should begin.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "top": {
+     "description": "The number of pixels from the top of the image where the crop should begin.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width (in pixels) of the cropped image.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "SBImage": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the image asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the image asset.",
+     "type": "string"
+    },
+    "formatProperties": {
+     "description": "The cropping and positioning properties associated with the asset.",
+     "items": {
+      "$ref": "SBFormatProperties"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "SBLandingPageAsins": {
+   "properties": {
+    "asins": {
+     "description": "For landing page of type ASIN_LIST, the list of ASINs used to create the landing page.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "asins"
+   ],
+   "type": "object"
+  },
+  "SBManualCollectionSettings": {
+   "description": "Settings for manually curated collections.",
+   "properties": {
+    "landingPage": {
+     "$ref": "SBCollectionLandingPage"
+    },
+    "productInclusions": {
+     "description": "The products featured in the ad. Required for manual collections.",
+     "items": {
+      "$ref": "SBAdvertisedProducts"
+     },
+     "maxItems": 10,
+     "minItems": 3,
+     "type": "array"
+    },
+    "sharedSettings": {
+     "$ref": "SBSharedCollectionSettings"
+    },
+    "title": {
+     "description": "Optional title for the collection. If not provided, title will be auto-generated.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPage",
+    "productInclusions",
+    "sharedSettings"
+   ],
+   "type": "object"
+  },
+  "SBMarketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "SBMarketplaceScope": {
+   "enum": [
+    "SINGLE_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "SBModerationStatus": {
+   "description": "**ModerationStatus Enum:** | ModerationStatus | Description | |------|------| | `APPROVED_WITH_EXCEPTIONS` | The creative passed basic moderation but was found to be invalid for some supplies. The creative is serving on…",
+   "enum": [
+    "APPROVED_WITH_EXCEPTIONS",
+    "PENDING_TRANSLATION",
+    "PUBLISHED",
+    "REJECTED_BY_MODERATION",
+    "SUBMITTED_FOR_MODERATION"
+   ],
+   "type": "string"
+  },
+  "SBProductCollectionCreativePropertiesToOptimize": {
+   "description": "**ProductCollectionCreativePropertiesToOptimize Enum:** | ProductCollectionCreativePropertiesToOptimize | Description | |------|------| | `HEADLINE` | The headline in the creative. |",
+   "enum": [
+    "HEADLINE"
+   ],
+   "type": "string"
+  },
+  "SBProductCollectionLandingPage": {
+   "properties": {
+    "landingPageAsins": {
+     "$ref": "SBLandingPageAsins"
+    },
+    "landingPageType": {
+     "$ref": "SBProductCollectionLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL associated to the landing page. Read only if landingPageType is ASIN_LIST",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "SBProductCollectionLandingPageType": {
+   "description": "**ProductCollectionLandingPageType Enum:** | ProductCollectionLandingPageType | Description | |------|------| | `ASIN_LIST` | A list of products based on the products promoted in the ad creative. | | `CUSTOM_URL` | A cu…",
+   "enum": [
+    "ASIN_LIST",
+    "CUSTOM_URL",
+    "STORE"
+   ],
+   "type": "string"
+  },
+  "SBProductCollectionSettings": {
+   "description": "An ad creative that contains multiple products and a custom image.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "SBImage"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "SBProductCollectionCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The set of custom images featured in the ad.",
+     "items": {
+      "$ref": "SBImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "SBProductCollectionLandingPage"
+    },
+    "moderationStatus": {
+     "$ref": "SBCreativeStatus"
+    },
+    "products": {
+     "description": "The products featured in the ad.",
+     "items": {
+      "$ref": "SBAdvertisedProducts"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "untranslatedHeadlines": {
+     "description": "The headlines entered by the advertiser.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "brandLogos",
+    "customImages",
+    "headlines",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "SBProductIdType": {
+   "description": "**ProductIdType Enum:** | ProductIdType | Description | |------|------| | `ASIN` | ASIN identifier type. |",
+   "enum": [
+    "ASIN"
+   ],
+   "type": "string"
+  },
+  "SBProductVideoSettings": {
+   "description": "An ad with a creative that includes a video.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "SBImage"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "SBVideoLandingPage"
+    },
+    "moderationStatus": {
+     "$ref": "SBCreativeStatus"
+    },
+    "products": {
+     "description": "The products featured in the video ad.",
+     "items": {
+      "$ref": "SBAdvertisedProducts"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "untranslatedHeadlines": {
+     "description": "The headline entered by the advertiser.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "untranslatedVideos": {
+     "description": "The original video assets submitted as part of the creative.",
+     "items": {
+      "$ref": "SBVideo"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "videos": {
+     "description": "The video assets used in the ad.",
+     "items": {
+      "$ref": "SBVideo"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "untranslatedVideos",
+    "videos"
+   ],
+   "type": "object"
+  },
+  "SBQueryAdRequest": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "SBAdAdGroupIdFilter"
+    },
+    "adIdFilter": {
+     "$ref": "SBAdAdIdFilter"
+    },
+    "adProductFilter": {
+     "$ref": "SBAdAdProductFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "SBAdCampaignIdFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "SBAdNameFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "SBAdStateFilter"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "SBSharedCollectionSettings": {
+   "description": "Settings shared by all collection types.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "$ref": "SBImage"
+    },
+    "moderationStatus": {
+     "$ref": "SBCreativeStatus"
+    }
+   },
+   "required": [
+    "brand"
+   ],
+   "type": "object"
+  },
+  "SBState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SBStatus": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "SBDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "SBDeliveryStatus"
+    }
+   },
+   "required": [
+    "deliveryStatus"
+   ],
+   "type": "object"
+  },
+  "SBStoreSpotlightCreativePropertiesToOptimize": {
+   "description": "**StoreSpotlightCreativePropertiesToOptimize Enum:** | StoreSpotlightCreativePropertiesToOptimize | Description | |------|------| | `HEADLINE` | The headline in the creative. |",
+   "enum": [
+    "HEADLINE"
+   ],
+   "type": "string"
+  },
+  "SBStoreSpotlightLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "SBStoreSpotlightLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType",
+    "landingPageUrl"
+   ],
+   "type": "object"
+  },
+  "SBStoreSpotlightLandingPageType": {
+   "description": "**StoreSpotlightLandingPageType Enum:** | StoreSpotlightLandingPageType | Description | |------|------| | `STORE` | A brand Store landing page. |",
+   "enum": [
+    "STORE"
+   ],
+   "type": "string"
+  },
+  "SBStoreSpotlightSettings": {
+   "description": "An ad creative that contains ASINs within a brand Store.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "SBImage"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "cards": {
+     "description": "The sub-elements of the creative. Each card highlights a different ASIN associated to a brand Store.",
+     "items": {
+      "$ref": "SBCardCreativeElement"
+     },
+     "maxItems": 3,
+     "minItems": 3,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "SBStoreSpotlightCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "SBStoreSpotlightLandingPage"
+    },
+    "moderationStatus": {
+     "$ref": "SBCreativeStatus"
+    },
+    "untranslatedHeadlines": {
+     "description": "The headline entered by the advertiser.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "brandLogos",
+    "cards",
+    "headlines",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "SBTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SBUpdateAdRequest": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "SBAdUpdate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "ads"
+   ],
+   "type": "object"
+  },
+  "SBUpdateAutoCollectionSettings": {
+   "description": "Settings for automatically generated collections.",
+   "properties": {
+    "productExclusions": {
+     "description": "Products to exclude from auto collection.",
+     "items": {
+      "$ref": "SBCreateAdvertisedProducts"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "sharedSettings": {
+     "$ref": "SBUpdateSharedCollectionSettings"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateBrandGallerySettings": {
+   "description": "An ad creative that showcases a brand and its categories and collections.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "SBCreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "cards": {
+     "description": "The sub-elements of the creative. Each card highlights a different category associated to a brand.",
+     "items": {
+      "$ref": "SBCreateBrandGalleryCardCreativeElement"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "SBBrandGalleryCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The custom images featured in the ad.",
+     "items": {
+      "$ref": "SBCreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "SBUpdateStoreSpotlightLandingPage"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateCollectionLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "SBCollectionLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL associated to the landing page.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateComponentCreative": {
+   "properties": {
+    "autoCollectionSettings": {
+     "$ref": "SBUpdateAutoCollectionSettings"
+    },
+    "brandGallerySettings": {
+     "$ref": "SBUpdateBrandGallerySettings"
+    },
+    "manualCollectionSettings": {
+     "$ref": "SBUpdateManualCollectionSettings"
+    },
+    "productCollectionSettings": {
+     "$ref": "SBUpdateProductCollectionSettings"
+    },
+    "productVideoSettings": {
+     "$ref": "SBUpdateProductVideoSettings"
+    },
+    "storeSpotlightSettings": {
+     "$ref": "SBUpdateStoreSpotlightSettings"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateCreative": {
+   "oneOf": [
+    {
+     "properties": {
+      "componentCreative": {
+       "$ref": "SBUpdateComponentCreative"
+      }
+     },
+     "required": [
+      "componentCreative"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SBUpdateImage": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the image asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the image asset.",
+     "type": "string"
+    },
+    "formatProperties": {
+     "description": "The cropping and positioning properties associated with the asset.",
+     "items": {
+      "$ref": "SBCreateFormatProperties"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateLandingPageAsins": {
+   "properties": {
+    "asins": {
+     "description": "For landing page of type ASIN_LIST, the list of ASINs used to create the landing page.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateManualCollectionSettings": {
+   "description": "Settings for manually curated collections.",
+   "properties": {
+    "landingPage": {
+     "$ref": "SBUpdateCollectionLandingPage"
+    },
+    "productInclusions": {
+     "description": "The products featured in the ad. Required for manual collections.",
+     "items": {
+      "$ref": "SBCreateAdvertisedProducts"
+     },
+     "maxItems": 10,
+     "minItems": 3,
+     "type": "array"
+    },
+    "sharedSettings": {
+     "$ref": "SBUpdateSharedCollectionSettings"
+    },
+    "title": {
+     "description": "Optional title for the collection. If not provided, title will be auto-generated.",
+     "nullable": true,
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateProductCollectionLandingPage": {
+   "properties": {
+    "landingPageAsins": {
+     "$ref": "SBUpdateLandingPageAsins"
+    },
+    "landingPageType": {
+     "$ref": "SBProductCollectionLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL associated to the landing page. Read only if landingPageType is ASIN_LIST",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateProductCollectionSettings": {
+   "description": "An ad creative that contains multiple products and a custom image.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "SBCreateImage"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "SBProductCollectionCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The set of custom images featured in the ad.",
+     "items": {
+      "$ref": "SBCreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "SBUpdateProductCollectionLandingPage"
+    },
+    "products": {
+     "description": "The products featured in the ad.",
+     "items": {
+      "$ref": "SBCreateAdvertisedProducts"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateProductVideoSettings": {
+   "description": "An ad with a creative that includes a video.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "SBCreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "SBUpdateVideoLandingPage"
+    },
+    "products": {
+     "description": "The products featured in the video ad.",
+     "items": {
+      "$ref": "SBCreateAdvertisedProducts"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videos": {
+     "description": "The video assets used in the ad.",
+     "items": {
+      "$ref": "SBCreateVideo"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateSharedCollectionSettings": {
+   "description": "Settings shared by all collection types.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "$ref": "SBUpdateImage"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SBUpdateStoreSpotlightLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "SBStoreSpotlightLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateStoreSpotlightSettings": {
+   "description": "An ad creative that contains ASINs within a brand Store.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "SBCreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "cards": {
+     "description": "The sub-elements of the creative. Each card highlights a different ASIN associated to a brand Store.",
+     "items": {
+      "$ref": "SBCreateCardCreativeElement"
+     },
+     "maxItems": 3,
+     "minItems": 3,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "SBStoreSpotlightCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "SBUpdateStoreSpotlightLandingPage"
+    }
+   },
+   "type": "object"
+  },
+  "SBUpdateVideoLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "SBVideoLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "SBVideo": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the video asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the video asset.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "SBVideoLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "SBVideoLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "SBVideoLandingPageType": {
+   "description": "**VideoLandingPageType Enum:** | VideoLandingPageType | Description | |------|------| | `DETAIL_PAGE` | A product detail page. | | `STORE` | A brand Store landing page. |",
+   "enum": [
+    "DETAIL_PAGE",
+    "STORE"
+   ],
+   "type": "string"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

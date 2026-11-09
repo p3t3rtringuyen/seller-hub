@@ -1,0 +1,6489 @@
+{
+ "api": "AmazonAdsAPIALLAdsContract",
+ "file": "specs/dest/AmazonAdsAPIALLAdsContract_prod_3p.json",
+ "schemas": {
+  "Ad": {
+   "properties": {
+    "activeCreative": {
+     "$ref": "Creative"
+    },
+    "adGroupId": {
+     "description": "The ad group associated with the ad.",
+     "type": "string"
+    },
+    "adId": {
+     "description": "The identifier of the ad.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "adType": {
+     "$ref": "AdType"
+    },
+    "campaignId": {
+     "description": "The campaign associated with the ad. It's a read-only field.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date time that the ad was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "creative": {
+     "$ref": "Creative"
+    },
+    "globalAdId": {
+     "description": "The global ad identifier that manages this marketplace ad.",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time that the ad was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global ad that enables overriding certain attributes at individual marketplace level. For example, if a global ad is ENABLED but needs to be PAUSED in DE marketplace, yo…",
+     "items": {
+      "$ref": "MarketplaceAdConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaceScope": {
+     "$ref": "MarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad is applicable. For Sponsored Ads, the marketplaces included should either be same as or subset of parent ad group. For ADSP, this represe…",
+     "items": {
+      "$ref": "Marketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad.",
+     "type": "string"
+    },
+    "retailerScope": {
+     "$ref": "RetailerScope"
+    },
+    "state": {
+     "$ref": "State"
+    },
+    "status": {
+     "$ref": "Status"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad",
+     "items": {
+      "$ref": "Tag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adId",
+    "adProduct",
+    "adType",
+    "creationDateTime",
+    "creative",
+    "lastUpdatedDateTime",
+    "marketplaceScope",
+    "state"
+   ],
+   "type": "object"
+  },
+  "AdAdGroupIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdAdIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `SPONSORED_PRODUCTS` | Sponsored Products ad product. | | `SPONSORED_BRANDS` | Sponsored Brands ad product. | | `SPONSORED_DISPLAY` | Sponsored Display ad …",
+     "items": {
+      "$ref": "AdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdCampaignIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdChoicesPosition": {
+   "enum": [
+    "BOTTOM_LEFT",
+    "BOTTOM_RIGHT",
+    "TOP_LEFT",
+    "TOP_RIGHT"
+   ],
+   "type": "string"
+  },
+  "AdCreate": {
+   "properties": {
+    "adGroupId": {
+     "description": "The ad group associated with the ad.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "adType": {
+     "$ref": "AdType"
+    },
+    "creative": {
+     "$ref": "CreateCreative"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global ad that enables overriding certain attributes at individual marketplace level. For example, if a global ad is ENABLED but needs to be PAUSED in DE marketplace, yo…",
+     "items": {
+      "$ref": "CreateMarketplaceAdConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaceScope": {
+     "$ref": "MarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad is applicable. For Sponsored Ads, the marketplaces included should either be same as or subset of parent ad group. For ADSP, this represe…",
+     "items": {
+      "$ref": "Marketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "CreateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad",
+     "items": {
+      "$ref": "CreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adProduct",
+    "adType",
+    "creative",
+    "state"
+   ],
+   "type": "object"
+  },
+  "AdMarketplaceScopeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "MarketplaceScope"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdMultiStatusResponseWithPartialErrors": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "partialSuccess": {
+     "items": {
+      "$ref": "AdPartialIndex"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "AdMultiStatusSuccess"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "AdMultiStatusSuccess": {
+   "properties": {
+    "ad": {
+     "$ref": "Ad"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "ad",
+    "index"
+   ],
+   "type": "object"
+  },
+  "AdNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "AdNameFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "AdNameFilterType": {
+   "description": "**AdNameFilterType Enum:** | AdNameFilterType | Description | | --- | --- | | `EXACT_MATCH` | Filter by exact match. | | `BROAD_MATCH` | Filter by broad match. |",
+   "enum": [
+    "BROAD_MATCH",
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "AdPartialIndex": {
+   "properties": {
+    "ad": {
+     "$ref": "Ad"
+    },
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "ad",
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. | | `SPONSORED_BRANDS` | Sponsored Brands ad product. | | `SPONSORED_DISPLAY` | Sponsored Display …",
+   "enum": [
+    "AMAZON_DSP",
+    "SPONSORED_BRANDS",
+    "SPONSORED_DISPLAY",
+    "SPONSORED_PRODUCTS",
+    "SPONSORED_TELEVISION"
+   ],
+   "type": "string"
+  },
+  "AdRetailerScopeFilter": {
+   "properties": {
+    "include": {
+     "description": "**RetailerScope Enum:** | RetailerScope | Description | | --- | --- | | `AMAZON` | Ads served on Amazon-owned retail properties. | | `OTHER_RETAILERS` | Ads served on external retailer partner properties. |",
+     "items": {
+      "$ref": "RetailerScope"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `DRAFT` | The resource is in draft status and has not yet been proposed or enabled. | | `ENABLED` | The object is set active by user and eligible for delivery. | |…",
+     "items": {
+      "$ref": "State"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "AdSuccessResponse": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "Ad"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "AdType": {
+   "description": "**AdType Enum:** | AdType | Description | |------|------| | `AUDIO` | A creative that features one or more audio assets. | | `COMPONENT` | A creative that can features a collection of videos, images, and products. | | `…",
+   "enum": [
+    "AUDIO",
+    "COMPONENT",
+    "DISPLAY",
+    "PRODUCT_AD",
+    "THIRD_PARTY",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "AdUpdate": {
+   "properties": {
+    "adId": {
+     "description": "The identifier of the ad.",
+     "type": "string"
+    },
+    "creative": {
+     "$ref": "UpdateCreative"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global ad that enables overriding certain attributes at individual marketplace level. For example, if a global ad is ENABLED but needs to be PAUSED in DE marketplace, yo…",
+     "items": {
+      "$ref": "CreateMarketplaceAdConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaceScope": {
+     "$ref": "MarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of country codes representing amazon marketplaces in which the global ad is applicable. For Sponsored Ads, the marketplaces included should either be same as or subset of parent ad group. For ADSP, this represe…",
+     "items": {
+      "$ref": "Marketplace"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad.",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "UpdateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad",
+     "items": {
+      "$ref": "CreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adId"
+   ],
+   "type": "object"
+  },
+  "AddToCartVideoCallToActionSettings": {
+   "properties": {
+    "position": {
+     "$ref": "VideoCallToActionPosition"
+    }
+   },
+   "required": [
+    "position"
+   ],
+   "type": "object"
+  },
+  "AdvertisedProductMarketplaceSetting": {
+   "properties": {
+    "globalStoreSetting": {
+     "$ref": "GlobalStoreSettings"
+    },
+    "marketplace": {
+     "$ref": "Marketplace"
+    },
+    "productId": {
+     "description": "The identifier of the product advertised.",
+     "type": "string"
+    },
+    "resolvedProductId": {
+     "description": "The identifier of product associated with the advertised product. It's a read-only field.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "marketplace",
+    "productId"
+   ],
+   "type": "object"
+  },
+  "AdvertisedProducts": {
+   "properties": {
+    "globalStoreSetting": {
+     "$ref": "GlobalStoreSettings"
+    },
+    "marketplaceSettings": {
+     "description": "List of advertised product selectively applied at the given marketplace level",
+     "items": {
+      "$ref": "AdvertisedProductMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productId": {
+     "description": "The identifier of the advertised product.",
+     "type": "string"
+    },
+    "productIdType": {
+     "$ref": "ProductIdType"
+    },
+    "resolvedProductId": {
+     "description": "The identifier of product associated with the advertised product. It's a read-only field.",
+     "type": "string"
+    },
+    "resolvedProductIdType": {
+     "$ref": "ProductIdType"
+    },
+    "retailerId": {
+     "description": "Identifier for retailer associated with this advertised product. This is a read-only field. Only applicable for OTHER_RETAILERS retailer scope.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "AssetBasedCreativeCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "assetBasedCreativeCallToActionSettings": {
+       "$ref": "AssetBasedCreativeCallToActionSettings"
+      }
+     },
+     "required": [
+      "assetBasedCreativeCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "AssetBasedCreativeCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "callToActionType": {
+     "description": "Type of CallToAction for AssetBasedCreative.",
+     "items": {
+      "$ref": "AssetBasedCreativeCallToActionType"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "AssetBasedCreativeCallToActionType": {
+   "enum": [
+    "BOOK_NOW",
+    "BUY_NOW",
+    "DISCOVER_MORE",
+    "DOWNLOAD_NOW",
+    "EXPLORE_NOW",
+    "GET_APP",
+    "GET_QUOTE",
+    "LEARN_MORE",
+    "PRE_ORDER_NOW",
+    "SEE_DETAILS",
+    "SHOP_NOW",
+    "SIGN_UP_NOW",
+    "SUBSCRIBE_NOW"
+   ],
+   "type": "string"
+  },
+  "AssetBasedCreativeSettings": {
+   "properties": {
+    "additionalHtml": {
+     "description": "Additional HTML to include with the render response for display inventory targets.",
+     "type": "string"
+    },
+    "backgrounds": {
+     "description": "The background which is displayed on the ad.",
+     "items": {
+      "$ref": "Background"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "bodyText": {
+     "description": "The body text to use for the Asset Based Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brand": {
+     "description": "The brand of the product(s) being advertised.",
+     "type": "string"
+    },
+    "callToActions": {
+     "$ref": "AssetBasedCreativeCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "Size"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customVideos": {
+     "$ref": "Video"
+    },
+    "disclaimers": {
+     "description": "The disclaimers to use for the Asset Based Creative experience.",
+     "type": "string"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "hasTermsAndConditions": {
+     "description": "Indicates that the ad promotes a free product or service and has qualifying terms and conditions applicable to the customer. LandingPageURL must link out to a page detailing terms and conditions or contain a link to tho…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the Asset Based Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "images": {
+     "description": "The image(s) to use.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "ComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "ComponentLandingPage"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "logos": {
+     "description": "The logos to use for the Asset Based Creative experience.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "moderationStatus": {
+     "$ref": "CreativeStatus"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "CreativeOptimizationGoalKpi"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "ResponsiveSizingBehavior"
+    },
+    "squareImages": {
+     "description": "The square image(s) to use.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "tallImages": {
+     "description": "The tall image(s) to use.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "untranslatedHeadlines": {
+     "description": "The headline entered by the advertiser.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "wideImages": {
+     "description": "The wide image(s) to use.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "headlines"
+   ],
+   "type": "object"
+  },
+  "Audio": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the audio asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the audio asset.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "AudioCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "clickToUrlAudioCallToActionSettings": {
+       "$ref": "ClickToUrlAudioCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlAudioCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "AudioCreative": {
+   "description": "| AudioCreative | Description | |------|------| | `standardAudioSettings` | The standard audio experience settings. See the Audio Spec for more info: https://advertising.amazon.com/en-us/resources/ad-specs/audio-ads?ref…",
+   "oneOf": [
+    {
+     "properties": {
+      "standardAudioSettings": {
+       "$ref": "StandardAudioExperienceSettings"
+      }
+     },
+     "required": [
+      "standardAudioSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "AutoCollectionSettings": {
+   "description": "Settings for automatically generated collections.",
+   "properties": {
+    "productExclusions": {
+     "description": "Products to exclude from auto collection.",
+     "items": {
+      "$ref": "AdvertisedProducts"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "sharedSettings": {
+     "$ref": "SharedCollectionSettings"
+    }
+   },
+   "required": [
+    "sharedSettings"
+   ],
+   "type": "object"
+  },
+  "Background": {
+   "properties": {
+    "color": {
+     "description": "The color hex code of the background.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BrandGalleryCardCreativeElement": {
+   "properties": {
+    "customImage": {
+     "$ref": "Image"
+    },
+    "headline": {
+     "description": "The headline used for the card.",
+     "type": "string"
+    },
+    "landingPage": {
+     "$ref": "StoreSpotlightLandingPage"
+    }
+   },
+   "required": [
+    "customImage",
+    "headline",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "BrandGalleryCreativePropertiesToOptimize": {
+   "description": "**BrandGalleryCreativePropertiesToOptimize Enum:** | BrandGalleryCreativePropertiesToOptimize | Description | |------|------| | `HEADLINE` | The headline in the creative. |",
+   "enum": [
+    "HEADLINE"
+   ],
+   "type": "string"
+  },
+  "BrandGallerySettings": {
+   "description": "An ad creative that showcases a brand and its categories and collections.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "cards": {
+     "description": "The sub-elements of the creative. Each card highlights a different category associated to a brand.",
+     "items": {
+      "$ref": "BrandGalleryCardCreativeElement"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "BrandGalleryCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The custom images featured in the ad.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "StoreSpotlightLandingPage"
+    },
+    "moderationStatus": {
+     "$ref": "CreativeStatus"
+    },
+    "untranslatedHeadlines": {
+     "description": "The headline entered by the advertiser.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "brandLogos",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "BrandStoreCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandStoreCallToActionSettings": {
+       "$ref": "BrandStoreCallToActionSettings"
+      }
+     },
+     "required": [
+      "brandStoreCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "BrandStoreCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "callToActionType": {
+     "description": "Type of CallToAction for BrandStore.",
+     "items": {
+      "$ref": "BrandStoreCallToActionType"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "BrandStoreCallToActionType": {
+   "enum": [
+    "BUY_NOW",
+    "DISCOVER_MORE",
+    "LEARN_MORE",
+    "SEE_DETAILS",
+    "SHOP_NOW"
+   ],
+   "type": "string"
+  },
+  "BrandStoreSettings": {
+   "properties": {
+    "additionalHtml": {
+     "description": "Additional HTML to include with the render response for display inventory targets.",
+     "type": "string"
+    },
+    "bodyText": {
+     "description": "The body text to use for the Brand Store Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brand": {
+     "description": "The brand of the product(s) being advertised.",
+     "type": "string"
+    },
+    "callToActions": {
+     "$ref": "BrandStoreCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "Size"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "disclaimers": {
+     "description": "The disclaimers to use for the Brand Store Creative experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the Brand Store Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "ComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "logos": {
+     "$ref": "Image"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "CreativeOptimizationGoalKpi"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "ResponsiveSizingBehavior"
+    },
+    "squareImages": {
+     "description": "The square image(s) to use.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "tallImages": {
+     "description": "The tall image(s) to use.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "wideImages": {
+     "description": "The wide image(s) to use.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "callToActions",
+    "headlines",
+    "inventoryTypes",
+    "language",
+    "optimizationGoalKpi",
+    "responsiveSizingBehavior",
+    "squareImages",
+    "tallImages",
+    "wideImages"
+   ],
+   "type": "object"
+  },
+  "CardCreativeElement": {
+   "properties": {
+    "headline": {
+     "description": "The headline used for the card.",
+     "type": "string"
+    },
+    "landingPage": {
+     "$ref": "StoreSpotlightLandingPage"
+    },
+    "products": {
+     "$ref": "AdvertisedProducts"
+    }
+   },
+   "required": [
+    "headline",
+    "landingPage",
+    "products"
+   ],
+   "type": "object"
+  },
+  "ClickToAppDisplayCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The app that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deepLinkingBehavior",
+    "url"
+   ],
+   "type": "object"
+  },
+  "ClickToUrlAudioCallToActionSettings": {
+   "properties": {
+    "url": {
+     "description": "The url to redirect the user via the audio CallToAction.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "ClickToUrlDisplayCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deepLinkingBehavior",
+    "url"
+   ],
+   "type": "object"
+  },
+  "ClickToUrlVideoCallToActionSettings": {
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The url to redirect the user via the video CallToAction.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deepLinkingBehavior",
+    "url"
+   ],
+   "type": "object"
+  },
+  "CollectionLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "CollectionLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL associated to the landing page.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "CollectionLandingPageType": {
+   "description": "**CollectionLandingPageType Enum:** | CollectionLandingPageType | Description | |------|------| | `ASIN_LIST` | A list of products based on the products promoted in the ad creative. | | `STORE` | A brand Store landing p…",
+   "enum": [
+    "ASIN_LIST",
+    "STORE"
+   ],
+   "type": "string"
+  },
+  "ComponentCreative": {
+   "properties": {
+    "assetBasedCreativeSettings": {
+     "$ref": "AssetBasedCreativeSettings"
+    },
+    "autoCollectionSettings": {
+     "$ref": "AutoCollectionSettings"
+    },
+    "brandGallerySettings": {
+     "$ref": "BrandGallerySettings"
+    },
+    "brandStoreSettings": {
+     "$ref": "BrandStoreSettings"
+    },
+    "manualCollectionSettings": {
+     "$ref": "ManualCollectionSettings"
+    },
+    "productCollectionSettings": {
+     "$ref": "ProductCollectionSettings"
+    },
+    "productVideoSettings": {
+     "$ref": "ProductVideoSettings"
+    },
+    "responsiveEcommerceSettings": {
+     "$ref": "ResponsiveEcommerceSettings"
+    },
+    "storeSpotlightSettings": {
+     "$ref": "StoreSpotlightSettings"
+    }
+   },
+   "type": "object"
+  },
+  "ComponentInventoryType": {
+   "enum": [
+    "DISPLAY",
+    "NATIVE"
+   ],
+   "type": "string"
+  },
+  "ComponentLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "ComponentLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType",
+    "landingPageUrl"
+   ],
+   "type": "object"
+  },
+  "ComponentLandingPageType": {
+   "description": "**ComponentLandingPageType Enum:** | ComponentLandingPageType | Description | |------|------| | `OFF_AMAZON_LINK` | An off-Amazon landing page. |",
+   "enum": [
+    "OFF_AMAZON_LINK"
+   ],
+   "type": "string"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateAdRequest": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "AdCreate"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "ads"
+   ],
+   "type": "object"
+  },
+  "CreateAddToCartVideoCallToActionSettings": {
+   "properties": {
+    "position": {
+     "$ref": "VideoCallToActionPosition"
+    }
+   },
+   "required": [
+    "position"
+   ],
+   "type": "object"
+  },
+  "CreateAdvertisedProductMarketplaceSetting": {
+   "properties": {
+    "globalStoreSetting": {
+     "$ref": "CreateGlobalStoreSettings"
+    },
+    "marketplace": {
+     "$ref": "Marketplace"
+    },
+    "productId": {
+     "description": "The identifier of the product advertised.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "marketplace",
+    "productId"
+   ],
+   "type": "object"
+  },
+  "CreateAdvertisedProducts": {
+   "properties": {
+    "globalStoreSetting": {
+     "$ref": "CreateGlobalStoreSettings"
+    },
+    "marketplaceSettings": {
+     "description": "List of advertised product selectively applied at the given marketplace level",
+     "items": {
+      "$ref": "CreateAdvertisedProductMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productId": {
+     "description": "The identifier of the advertised product.",
+     "type": "string"
+    },
+    "productIdType": {
+     "$ref": "ProductIdType"
+    }
+   },
+   "required": [
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "CreateAssetBasedCreativeCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "assetBasedCreativeCallToActionSettings": {
+       "$ref": "CreateAssetBasedCreativeCallToActionSettings"
+      }
+     },
+     "required": [
+      "assetBasedCreativeCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateAssetBasedCreativeCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "callToActionType": {
+     "description": "Type of CallToAction for AssetBasedCreative.",
+     "items": {
+      "$ref": "AssetBasedCreativeCallToActionType"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "CreateAssetBasedCreativeSettings": {
+   "properties": {
+    "additionalHtml": {
+     "description": "Additional HTML to include with the render response for display inventory targets.",
+     "type": "string"
+    },
+    "bodyText": {
+     "description": "The body text to use for the Asset Based Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brand": {
+     "description": "The brand of the product(s) being advertised.",
+     "type": "string"
+    },
+    "callToActions": {
+     "$ref": "CreateAssetBasedCreativeCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "CreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customVideos": {
+     "$ref": "CreateVideo"
+    },
+    "disclaimers": {
+     "description": "The disclaimers to use for the Asset Based Creative experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the Asset Based Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "ComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "CreateComponentLandingPage"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "logos": {
+     "description": "The logos to use for the Asset Based Creative experience.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "CreativeOptimizationGoalKpi"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "ResponsiveSizingBehavior"
+    },
+    "squareImages": {
+     "description": "The square image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "tallImages": {
+     "description": "The tall image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "wideImages": {
+     "description": "The wide image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "headlines"
+   ],
+   "type": "object"
+  },
+  "CreateAudio": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the audio asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the audio asset.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "CreateAudioCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "clickToUrlAudioCallToActionSettings": {
+       "$ref": "CreateClickToUrlAudioCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlAudioCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateAudioCreative": {
+   "description": "| CreateAudioCreative | Description | | --- | --- | | `standardAudioSettings` | The standard audio experience settings. See the Audio Spec for more info: https://advertising.amazon.com/en-us/resources/ad-specs/audio-ads…",
+   "oneOf": [
+    {
+     "properties": {
+      "standardAudioSettings": {
+       "$ref": "CreateStandardAudioExperienceSettings"
+      }
+     },
+     "required": [
+      "standardAudioSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateAutoCollectionSettings": {
+   "description": "Settings for automatically generated collections.",
+   "properties": {
+    "productExclusions": {
+     "description": "Products to exclude from auto collection.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "sharedSettings": {
+     "$ref": "CreateSharedCollectionSettings"
+    }
+   },
+   "required": [
+    "sharedSettings"
+   ],
+   "type": "object"
+  },
+  "CreateBrandGalleryCardCreativeElement": {
+   "properties": {
+    "customImage": {
+     "$ref": "CreateImage"
+    },
+    "headline": {
+     "description": "The headline used for the card.",
+     "type": "string"
+    },
+    "landingPage": {
+     "$ref": "CreateStoreSpotlightLandingPage"
+    }
+   },
+   "required": [
+    "customImage",
+    "headline",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "CreateBrandGallerySettings": {
+   "description": "An ad creative that showcases a brand and its categories and collections.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "cards": {
+     "description": "The sub-elements of the creative. Each card highlights a different category associated to a brand.",
+     "items": {
+      "$ref": "CreateBrandGalleryCardCreativeElement"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "BrandGalleryCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The custom images featured in the ad.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "CreateStoreSpotlightLandingPage"
+    }
+   },
+   "required": [
+    "brand",
+    "brandLogos",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "CreateBrandStoreCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandStoreCallToActionSettings": {
+       "$ref": "CreateBrandStoreCallToActionSettings"
+      }
+     },
+     "required": [
+      "brandStoreCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateBrandStoreCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "callToActionType": {
+     "description": "Type of CallToAction for BrandStore.",
+     "items": {
+      "$ref": "BrandStoreCallToActionType"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "CreateBrandStoreSettings": {
+   "properties": {
+    "additionalHtml": {
+     "description": "Additional HTML to include with the render response for display inventory targets.",
+     "type": "string"
+    },
+    "bodyText": {
+     "description": "The body text to use for the Brand Store Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brand": {
+     "description": "The brand of the product(s) being advertised.",
+     "type": "string"
+    },
+    "callToActions": {
+     "$ref": "CreateBrandStoreCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "CreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "disclaimers": {
+     "description": "The disclaimers to use for the Brand Store Creative experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the Brand Store Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "ComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "logos": {
+     "$ref": "CreateImage"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "CreativeOptimizationGoalKpi"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "ResponsiveSizingBehavior"
+    },
+    "squareImages": {
+     "description": "The square image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "tallImages": {
+     "description": "The tall image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "wideImages": {
+     "description": "The wide image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "callToActions",
+    "headlines",
+    "inventoryTypes",
+    "language",
+    "optimizationGoalKpi",
+    "responsiveSizingBehavior",
+    "squareImages",
+    "tallImages",
+    "wideImages"
+   ],
+   "type": "object"
+  },
+  "CreateCardCreativeElement": {
+   "properties": {
+    "headline": {
+     "description": "The headline used for the card.",
+     "type": "string"
+    },
+    "landingPage": {
+     "$ref": "CreateStoreSpotlightLandingPage"
+    },
+    "products": {
+     "$ref": "CreateAdvertisedProducts"
+    }
+   },
+   "required": [
+    "headline",
+    "landingPage",
+    "products"
+   ],
+   "type": "object"
+  },
+  "CreateClickToAppDisplayCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The app that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deepLinkingBehavior",
+    "url"
+   ],
+   "type": "object"
+  },
+  "CreateClickToUrlAudioCallToActionSettings": {
+   "properties": {
+    "url": {
+     "description": "The url to redirect the user via the audio CallToAction.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "CreateClickToUrlDisplayCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deepLinkingBehavior",
+    "url"
+   ],
+   "type": "object"
+  },
+  "CreateClickToUrlVideoCallToActionSettings": {
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The url to redirect the user via the video CallToAction.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "deepLinkingBehavior",
+    "url"
+   ],
+   "type": "object"
+  },
+  "CreateCollectionLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "CollectionLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL associated to the landing page.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "CreateComponentCreative": {
+   "properties": {
+    "assetBasedCreativeSettings": {
+     "$ref": "CreateAssetBasedCreativeSettings"
+    },
+    "autoCollectionSettings": {
+     "$ref": "CreateAutoCollectionSettings"
+    },
+    "brandGallerySettings": {
+     "$ref": "CreateBrandGallerySettings"
+    },
+    "brandStoreSettings": {
+     "$ref": "CreateBrandStoreSettings"
+    },
+    "manualCollectionSettings": {
+     "$ref": "CreateManualCollectionSettings"
+    },
+    "productCollectionSettings": {
+     "$ref": "CreateProductCollectionSettings"
+    },
+    "productVideoSettings": {
+     "$ref": "CreateProductVideoSettings"
+    },
+    "responsiveEcommerceSettings": {
+     "$ref": "CreateResponsiveEcommerceSettings"
+    },
+    "storeSpotlightSettings": {
+     "$ref": "CreateStoreSpotlightSettings"
+    }
+   },
+   "type": "object"
+  },
+  "CreateComponentLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "ComponentLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType",
+    "landingPageUrl"
+   ],
+   "type": "object"
+  },
+  "CreateCreative": {
+   "oneOf": [
+    {
+     "properties": {
+      "audioCreative": {
+       "$ref": "CreateAudioCreative"
+      }
+     },
+     "required": [
+      "audioCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "displayCreative": {
+       "$ref": "CreateDisplayCreative"
+      }
+     },
+     "required": [
+      "displayCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "thirdPartyCreative": {
+       "$ref": "CreateThirdPartyCreative"
+      }
+     },
+     "required": [
+      "thirdPartyCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoCreative": {
+       "$ref": "CreateVideoCreative"
+      }
+     },
+     "required": [
+      "videoCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "componentCreative": {
+       "$ref": "CreateComponentCreative"
+      }
+     },
+     "required": [
+      "componentCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productCreative": {
+       "$ref": "CreateProductCreative"
+      }
+     },
+     "required": [
+      "productCreative"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateCreativeTrackingUrl": {
+   "properties": {
+    "url": {
+     "description": "A url to be triggered for tracking events.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "CreateDisplayCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "clickToUrlDisplayCallToActionSettings": {
+       "$ref": "CreateClickToUrlDisplayCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlDisplayCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "clickToAppDisplayCallToActionSettings": {
+       "$ref": "CreateClickToAppDisplayCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToAppDisplayCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateDisplayCreative": {
+   "properties": {
+    "standardDisplaySettings": {
+     "$ref": "CreateStandardDisplaySettings"
+    }
+   },
+   "type": "object"
+  },
+  "CreateFormatProperties": {
+   "properties": {
+    "applyBorder": {
+     "description": "Apply a boarder to the image to fit rules for some supplies.",
+     "type": "boolean"
+    },
+    "height": {
+     "description": "The height (in pixels) of the cropped image.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "left": {
+     "description": "The number of pixels from the left of the image where the crop should begin.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "top": {
+     "description": "The number of pixels from the top of the image where the crop should begin.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width (in pixels) of the cropped image.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "CreateGlobalStoreSettings": {
+   "properties": {
+    "catalogSourceMarketplace": {
+     "$ref": "Marketplace"
+    }
+   },
+   "type": "object"
+  },
+  "CreateImage": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the image asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the image asset.",
+     "type": "string"
+    },
+    "formatProperties": {
+     "description": "The cropping and positioning properties associated with the asset.",
+     "items": {
+      "$ref": "CreateFormatProperties"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "CreateLandingPageAsins": {
+   "properties": {
+    "asins": {
+     "description": "For landing page of type ASIN_LIST, the list of ASINs used to create the landing page.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "asins"
+   ],
+   "type": "object"
+  },
+  "CreateLearnMoreVideoCallToActionSettings": {
+   "properties": {
+    "position": {
+     "$ref": "VideoCallToActionPosition"
+    },
+    "url": {
+     "description": "The url to drive users to learn more via the video CallToAction.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "position",
+    "url"
+   ],
+   "type": "object"
+  },
+  "CreateManualCollectionSettings": {
+   "description": "Settings for manually curated collections.",
+   "properties": {
+    "landingPage": {
+     "$ref": "CreateCollectionLandingPage"
+    },
+    "productInclusions": {
+     "description": "The products featured in the ad. Required for manual collections.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 10,
+     "minItems": 3,
+     "type": "array"
+    },
+    "sharedSettings": {
+     "$ref": "CreateSharedCollectionSettings"
+    },
+    "title": {
+     "description": "Optional title for the collection. If not provided, title will be auto-generated.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPage",
+    "productInclusions",
+    "sharedSettings"
+   ],
+   "type": "object"
+  },
+  "CreateMarketplaceAdConfigurations": {
+   "properties": {
+    "marketplace": {
+     "$ref": "Marketplace"
+    },
+    "overrides": {
+     "$ref": "CreateMarketplaceAdFieldOverrides"
+    }
+   },
+   "required": [
+    "marketplace",
+    "overrides"
+   ],
+   "type": "object"
+  },
+  "CreateMarketplaceAdFieldOverrides": {
+   "properties": {
+    "state": {
+     "$ref": "State"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad",
+     "items": {
+      "$ref": "CreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "CreateOnlineVideoSettings": {
+   "properties": {
+    "callToActions": {
+     "description": "The call to actions for this video.",
+     "items": {
+      "$ref": "CreateVideoCallToAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "products": {
+     "$ref": "CreateAdvertisedProducts"
+    },
+    "videos": {
+     "$ref": "CreateVideo"
+    }
+   },
+   "required": [
+    "language",
+    "videos"
+   ],
+   "type": "object"
+  },
+  "CreateProductCollectionLandingPage": {
+   "properties": {
+    "landingPageAsins": {
+     "$ref": "CreateLandingPageAsins"
+    },
+    "landingPageType": {
+     "$ref": "ProductCollectionLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL associated to the landing page. Read only if landingPageType is ASIN_LIST",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "CreateProductCollectionSettings": {
+   "description": "An ad creative that contains multiple products and a custom image.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "ProductCollectionCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The set of custom images featured in the ad.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "CreateProductCollectionLandingPage"
+    },
+    "products": {
+     "description": "The products featured in the ad.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "brandLogos",
+    "customImages",
+    "headlines",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "CreateProductCreative": {
+   "properties": {
+    "productCreativeSettings": {
+     "$ref": "CreateProductCreativeSettings"
+    }
+   },
+   "required": [
+    "productCreativeSettings"
+   ],
+   "type": "object"
+  },
+  "CreateProductCreativeSettings": {
+   "description": "An ad with a creative built based on the product being advertised.",
+   "properties": {
+    "advertisedProduct": {
+     "$ref": "CreateAdvertisedProducts"
+    },
+    "headline": {
+     "description": "The headline/custom text associated with the ad creative.",
+     "type": "string"
+    },
+    "spotlightVideos": {
+     "$ref": "CreateSpotlightVideoSettings"
+    }
+   },
+   "required": [
+    "advertisedProduct"
+   ],
+   "type": "object"
+  },
+  "CreateProductVideoSettings": {
+   "description": "An ad with a creative that includes a video.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "CreateVideoLandingPage"
+    },
+    "products": {
+     "description": "The products featured in the video ad.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videos": {
+     "description": "The video assets used in the ad.",
+     "items": {
+      "$ref": "CreateVideo"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "videos"
+   ],
+   "type": "object"
+  },
+  "CreateResponsiveEcommerceLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "ResponsiveEcommerceLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType",
+    "landingPageUrl"
+   ],
+   "type": "object"
+  },
+  "CreateResponsiveEcommerceSettings": {
+   "properties": {
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "ResponsiveEcommerceCreativePropertiesToOptimize"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "CreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "disclaimers": {
+     "description": "The disclaimer to use for the Responsive eCommerce experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline to use for the Responsive eCommerce experience.",
+     "type": "string"
+    },
+    "images": {
+     "description": "The image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "ComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "CreateResponsiveEcommerceLandingPage"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "logos": {
+     "$ref": "CreateImage"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "CreativeOptimizationGoalKpi"
+    },
+    "products": {
+     "description": "The products advertised for the Responsive eCommerce experience.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "recAdVariations": {
+     "description": "The rendering variations selected for the Responsive eCommerce experience.",
+     "items": {
+      "$ref": "ResponsiveEcommerceAdVariations"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "ResponsiveSizingBehavior"
+    },
+    "supportedThirdPartySellers": {
+     "$ref": "SupportedThirdPartySellers"
+    }
+   },
+   "type": "object"
+  },
+  "CreateSharedCollectionSettings": {
+   "description": "Settings shared by all collection types.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "$ref": "CreateImage"
+    }
+   },
+   "required": [
+    "brand"
+   ],
+   "type": "object"
+  },
+  "CreateSize": {
+   "properties": {
+    "height": {
+     "description": "The height of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "height",
+    "width"
+   ],
+   "type": "object"
+  },
+  "CreateSpotlightVideoSettings": {
+   "description": "An ad with a creative built with spotlight videos.",
+   "properties": {
+    "optimizeText": {
+     "description": "If the advertiser wants text they provided to be optimized by Amazon or not.",
+     "type": "boolean"
+    },
+    "videos": {
+     "description": "The video asset(s) to use for the Sponsored Product experience.",
+     "items": {
+      "$ref": "CreateVideo"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "optimizeText",
+    "videos"
+   ],
+   "type": "object"
+  },
+  "CreateStandardAudioExperienceSettings": {
+   "properties": {
+    "audio": {
+     "$ref": "CreateAudio"
+    },
+    "callToActions": {
+     "$ref": "CreateAudioCallToAction"
+    },
+    "companionImages": {
+     "$ref": "CreateImage"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the standard audio experience. Headlines must be a maximum of 20 characters.",
+     "type": "string"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded. Urls cannot exceed 2048 characters.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "products": {
+     "description": "The product(s) being advertised.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audio",
+    "companionImages",
+    "headlines",
+    "language"
+   ],
+   "type": "object"
+  },
+  "CreateStandardDisplaySettings": {
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "AdChoicesPosition"
+    },
+    "callToAction": {
+     "$ref": "CreateDisplayCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The list of placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "CreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The custom images to use for the standard display experience.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    }
+   },
+   "required": [
+    "adChoicesPosition",
+    "creativeSizes",
+    "customImages",
+    "language"
+   ],
+   "type": "object"
+  },
+  "CreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "CreateStoreSpotlightLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "StoreSpotlightLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType",
+    "landingPageUrl"
+   ],
+   "type": "object"
+  },
+  "CreateStoreSpotlightSettings": {
+   "description": "An ad creative that contains ASINs within a brand Store.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "cards": {
+     "description": "The sub-elements of the creative. Each card highlights a different ASIN associated to a brand Store.",
+     "items": {
+      "$ref": "CreateCardCreativeElement"
+     },
+     "maxItems": 3,
+     "minItems": 3,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "StoreSpotlightCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "CreateStoreSpotlightLandingPage"
+    }
+   },
+   "required": [
+    "brand",
+    "brandLogos",
+    "cards",
+    "headlines",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "CreateStreamingTvSettings": {
+   "properties": {
+    "callToActions": {
+     "description": "The call to actions for this video.",
+     "items": {
+      "$ref": "CreateVideoCallToAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "CreateVideoLandingPage"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "products": {
+     "description": "The product advertised on this video creative.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videos": {
+     "$ref": "CreateVideo"
+    }
+   },
+   "required": [
+    "videos"
+   ],
+   "type": "object"
+  },
+  "CreateTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "CreateThirdPartyCreative": {
+   "properties": {
+    "thirdPartyDisplaySettings": {
+     "$ref": "CreateThirdPartyDisplaySettings"
+    },
+    "thirdPartyVideoSettings": {
+     "$ref": "CreateThirdPartyVideoSettings"
+    }
+   },
+   "type": "object"
+  },
+  "CreateThirdPartyDisplaySettings": {
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "AdChoicesPosition"
+    },
+    "additionalHtml": {
+     "description": "Additional html to be included along with the creative when rendered.",
+     "type": "string"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The list of placement sizes this creative should serve on. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "items": {
+      "$ref": "CreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "publisherHostedCreativeSource": {
+     "$ref": "PublisherHostedCreativeSource"
+    },
+    "thirdPartyTagHostingSource": {
+     "description": "The html tag to use to fetch this creative from the 3p ad server. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adChoicesPosition",
+    "language"
+   ],
+   "type": "object"
+  },
+  "CreateThirdPartyVideoSettings": {
+   "properties": {
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "publisherHostedCreativeSource": {
+     "$ref": "PublisherHostedCreativeSource"
+    },
+    "vastUrl": {
+     "description": "The url to use to fetch the VAST XML for this video creative. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "language"
+   ],
+   "type": "object"
+  },
+  "CreateVideo": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the video asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the video asset.",
+     "type": "string"
+    },
+    "description": {
+     "description": "The description of the video content.",
+     "type": "string"
+    },
+    "headline": {
+     "description": "The headline/custom text associated with the video.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "CreateVideoCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "addToCartVideoCallToActionSettings": {
+       "$ref": "CreateAddToCartVideoCallToActionSettings"
+      }
+     },
+     "required": [
+      "addToCartVideoCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "clickToUrlVideoCallToActionSettings": {
+       "$ref": "CreateClickToUrlVideoCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlVideoCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "learnMoreVideoCallToActionSettings": {
+       "$ref": "CreateLearnMoreVideoCallToActionSettings"
+      }
+     },
+     "required": [
+      "learnMoreVideoCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreateVideoCreative": {
+   "properties": {
+    "onlineVideoSettings": {
+     "$ref": "CreateOnlineVideoSettings"
+    },
+    "streamingTvSettings": {
+     "$ref": "CreateStreamingTvSettings"
+    }
+   },
+   "type": "object"
+  },
+  "CreateVideoLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "VideoLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "Creative": {
+   "oneOf": [
+    {
+     "properties": {
+      "audioCreative": {
+       "$ref": "AudioCreative"
+      }
+     },
+     "required": [
+      "audioCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "componentCreative": {
+       "$ref": "ComponentCreative"
+      }
+     },
+     "required": [
+      "componentCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "displayCreative": {
+       "$ref": "DisplayCreative"
+      }
+     },
+     "required": [
+      "displayCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productCreative": {
+       "$ref": "ProductCreative"
+      }
+     },
+     "required": [
+      "productCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "thirdPartyCreative": {
+       "$ref": "ThirdPartyCreative"
+      }
+     },
+     "required": [
+      "thirdPartyCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoCreative": {
+       "$ref": "VideoCreative"
+      }
+     },
+     "required": [
+      "videoCreative"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "CreativeOptimizationGoalKpi": {
+   "enum": [
+    "CLICK_THROUGH_RATE",
+    "DETAIL_PAGE_VIEW_RATE",
+    "PURCHASE_RATE"
+   ],
+   "type": "string"
+  },
+  "CreativeStatus": {
+   "properties": {
+    "moderationStatus": {
+     "$ref": "ModerationStatus"
+    }
+   },
+   "required": [
+    "moderationStatus"
+   ],
+   "type": "object"
+  },
+  "CreativeTrackingUrl": {
+   "properties": {
+    "url": {
+     "description": "A url to be triggered for tracking events.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "type": "object"
+  },
+  "DeepLinkingBehavior": {
+   "enum": [
+    "DISABLED",
+    "ENABLED"
+   ],
+   "type": "string"
+  },
+  "DeleteAdRequest": {
+   "properties": {
+    "adIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adIds"
+   ],
+   "type": "object"
+  },
+  "DeliveryReason": {
+   "description": "**DeliveryReason Enum:** | DeliveryReason | Description | |------|------| | `ADVERTISER_ARCHIVED` | | | `ADVERTISER_INELIGIBLE` | | | `ADVERTISER_OUT_OF_BUDGET` | Indicates that an advertiser is out of budget for Sponso…",
+   "enum": [
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_INELIGIBLE",
+    "ADVERTISER_OUT_OF_BUDGET",
+    "ADVERTISER_OUT_OF_POSTPAY_CREDIT_LIMIT",
+    "ADVERTISER_OUT_OF_POSTPAY_MONTHLY_BUDGET",
+    "ADVERTISER_OUT_OF_PREPAY_BALANCE",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_POLICING_PENDING_REVIEW",
+    "ADVERTISER_POLICING_SUSPENDED",
+    "AD_ARCHIVED",
+    "AD_CREATION_FAILED",
+    "AD_CREATION_IN_PROGRESS",
+    "AD_CREATIVES_NOT_RUNNING",
+    "AD_EXTENSION_ARCHIVED",
+    "AD_EXTENSION_PAUSED",
+    "AD_EXTENSION_POLICING_PENDING_REVIEW",
+    "AD_EXTENSION_POLICING_SUSPENDED",
+    "AD_GROUPS_NOT_RUNNING",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_ENDED",
+    "AD_GROUP_INCOMPLETE",
+    "AD_GROUP_INELIGIBLE_GOAL_KPI",
+    "AD_GROUP_LOW_BID",
+    "AD_GROUP_MISSING_CONVERSION_TRACKING_SELECTIONS",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_REVIEW",
+    "AD_GROUP_PENDING_START_DATE",
+    "AD_GROUP_POLICING_PENDING_REVIEW",
+    "AD_GROUP_POLICING_SUSPENDED",
+    "AD_GROUP_REJECTED",
+    "AD_GROUP_TOO_FEW_CONVERSION_TRACKING_SELECTIONS",
+    "AD_GROUP_TOO_MANY_CONVERSION_TRACKING_SELECTIONS",
+    "AD_INELIGIBLE",
+    "AD_MISSING_DECORATION",
+    "AD_MISSING_IMAGE",
+    "AD_NOT_APPROVED_FOR_ALL_AD_GROUPS",
+    "AD_NOT_ASSOCIATED_WITH_AD_GROUP",
+    "AD_NOT_DELIVERING",
+    "AD_PAUSED",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "BRAND_INELIGIBLE",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_REVIEW",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_POLICING_SUSPENDED",
+    "CAMPAIGN_REJECTED",
+    "CREATIVE_MISSING_ASSET",
+    "CREATIVE_PENDING_REVIEW",
+    "CREATIVE_REJECTED",
+    "LANDING_PAGE_INELIGIBLE",
+    "LANDING_PAGE_NOT_AVAILABLE",
+    "MODERATION_ADULT_NOVELTY_POLICY_VIOLATION",
+    "MODERATION_ADULT_PRODUCT_POLICY_VIOLATION",
+    "MODERATION_ADULT_SOFTLINES_POLICY_VIOLATION",
+    "MODERATION_CLAIM_WEIGHTLOSS_POLICY_VIOLATION",
+    "MODERATION_CONTENT_NUDITY_POLICY_VIOLATION",
+    "MODERATION_CONTENT_PROVOCATIVE_POLICY_VIOLATION",
+    "MODERATION_CONTENT_SMOKING_POLICY_VIOLATION",
+    "MODERATION_CRITICAL_EVENTS_POLICY_VIOLATION",
+    "MODERATION_ERROR_404",
+    "MODERATION_GRAPHICAL_SEXUAL_IMAGES_POLICY_VIOLATION",
+    "MODERATION_HFSS_PRODUCT_POLICY_VIOLATION",
+    "MODERATION_LANGUAGE_OFFENSIVE_POLICY_VIOLATION",
+    "MODERATION_NOT_COMPLIANT_TO_AD_POLICY",
+    "MODERATION_SMOKING_RELATED_POLICY_VIOLATION",
+    "NOT_BUYABLE",
+    "NOT_IN_BUYBOX",
+    "NOT_IN_POLICY",
+    "NO_INVENTORY",
+    "NO_PURCHASABLE_OFFER",
+    "OTHER",
+    "OUT_OF_REWARD_BUDGET",
+    "OUT_OF_STOCK",
+    "PIR_RULE_EXCLUDED",
+    "PORTFOLIO_ARCHIVED",
+    "PORTFOLIO_END_DATE_REACHED",
+    "PORTFOLIO_OUT_OF_BUDGET",
+    "PORTFOLIO_PAUSED",
+    "PORTFOLIO_PENDING_START_DATE",
+    "SECURITY_SCAN_PENDING_REVIEW",
+    "SECURITY_SCAN_REJECTED",
+    "SPEND_LIMIT_EXCEEDED",
+    "STATUS_UNAVAILABLE",
+    "TARGET_ARCHIVED",
+    "TARGET_BLOCKED",
+    "TARGET_PAUSED",
+    "TARGET_POLICING_SUSPENDED"
+   ],
+   "type": "string"
+  },
+  "DeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | |------|------| | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplac…",
+   "enum": [
+    "DELIVERING",
+    "LIMITED",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "DisplayCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "clickToAppDisplayCallToActionSettings": {
+       "$ref": "ClickToAppDisplayCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToAppDisplayCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "clickToUrlDisplayCallToActionSettings": {
+       "$ref": "ClickToUrlDisplayCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlDisplayCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DisplayCreative": {
+   "properties": {
+    "standardDisplaySettings": {
+     "$ref": "StandardDisplaySettings"
+    }
+   },
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "ASSET_NOT_READY",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FEATURE_NOT_AVAILABLE",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "GLOBAL_ATTRIBUTE_UPDATE_RESTRICTED_PORTFOLIO",
+    "GLOBAL_ATTRIBUTE_UPDATE_RESTRICTED_STATE",
+    "GLOBAL_CAMPAIGN_SINGLE_ADGROUP_LIMIT",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "FormatProperties": {
+   "properties": {
+    "applyBorder": {
+     "description": "Apply a boarder to the image to fit rules for some supplies.",
+     "type": "boolean"
+    },
+    "height": {
+     "description": "The height (in pixels) of the cropped image.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "left": {
+     "description": "The number of pixels from the left of the image where the crop should begin.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "top": {
+     "description": "The number of pixels from the top of the image where the crop should begin.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width (in pixels) of the cropped image.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GlobalStoreSettings": {
+   "properties": {
+    "catalogSourceMarketplace": {
+     "$ref": "Marketplace"
+    }
+   },
+   "type": "object"
+  },
+  "Image": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the image asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the image asset.",
+     "type": "string"
+    },
+    "formatProperties": {
+     "description": "The cropping and positioning properties associated with the asset.",
+     "items": {
+      "$ref": "FormatProperties"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "LandingPageAsins": {
+   "properties": {
+    "asins": {
+     "description": "For landing page of type ASIN_LIST, the list of ASINs used to create the landing page.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "asins"
+   ],
+   "type": "object"
+  },
+  "LanguageLocale": {
+   "description": "A combination of ISO-639 standard for language code and ISO-3166 for country code. **LanguageLocale Enum:** | LanguageLocale | Description | |------|------| | `aa_ET` | Afar (Ethiopia). | | `ab_GE` | Abkhazian (Georgia)…",
+   "enum": [
+    "aa_ET",
+    "ab_GE",
+    "ae_INT",
+    "af_ZA",
+    "ak_GH",
+    "am_ET",
+    "an_ES",
+    "ar_AE",
+    "as_IN",
+    "av_RU",
+    "ay_BO",
+    "az_AZ",
+    "ba_RU",
+    "be_BY",
+    "bg_BG",
+    "bh_IN",
+    "bi_VU",
+    "bm_ML",
+    "bn_BD",
+    "bo_CN",
+    "br_FR",
+    "bs_BA",
+    "ca_ES",
+    "ce_RU",
+    "ch_GU",
+    "co_FR",
+    "cr_CA",
+    "cs_CZ",
+    "cu_INT",
+    "cv_RU",
+    "cy_GB",
+    "da_DK",
+    "de_DE",
+    "dv_MV",
+    "dz_BT",
+    "ee_GH",
+    "el_GR",
+    "en_US",
+    "eo_INT",
+    "es_ES",
+    "et_EE",
+    "eu_ES",
+    "fa_IR",
+    "ff_SN",
+    "fi_FI",
+    "fj_FJ",
+    "fo_FO",
+    "fr_FR",
+    "fy_NL",
+    "ga_IE",
+    "gd_GB",
+    "gl_ES",
+    "gn_PY",
+    "gu_IN",
+    "gv_IM",
+    "ha_NG",
+    "he_IL",
+    "hi_IN",
+    "ho_PG",
+    "hr_HR",
+    "ht_HT",
+    "hu_HU",
+    "hy_AM",
+    "hz_NA",
+    "ia_INT",
+    "id_ID",
+    "ie_INT",
+    "ig_NG",
+    "ii_CN",
+    "ik_US",
+    "io_INT",
+    "is_IS",
+    "it_IT",
+    "iu_CA",
+    "iw_IL",
+    "ja_JP",
+    "ji_IL",
+    "jv_ID",
+    "ka_GE",
+    "kg_CD",
+    "ki_KE",
+    "kj_NA",
+    "kk_KZ",
+    "kl_GL",
+    "km_KH",
+    "kn_IN",
+    "ko_KR",
+    "kr_NG",
+    "ks_IN",
+    "ku_TR",
+    "kv_RU",
+    "kw_GB",
+    "ky_KG",
+    "la_VA",
+    "lb_LU",
+    "lg_UG",
+    "li_NL",
+    "ln_CD",
+    "lo_LA",
+    "lt_LT",
+    "lu_CD",
+    "lv_LV",
+    "mg_MG",
+    "mh_MH",
+    "mi_NZ",
+    "mk_MK",
+    "ml_IN",
+    "mn_MN",
+    "mo_MD",
+    "mr_IN",
+    "ms_MY",
+    "mt_MT",
+    "my_MM",
+    "na_NR",
+    "nb_NO",
+    "nd_ZW",
+    "ne_NP",
+    "ng_NA",
+    "nl_NL",
+    "nn_NO",
+    "no_NO",
+    "nr_ZA",
+    "nv_US",
+    "ny_MW",
+    "oc_FR",
+    "oj_CA",
+    "om_ET",
+    "or_IN",
+    "os_RU",
+    "pa_IN",
+    "pi_IN",
+    "pl_PL",
+    "ps_AF",
+    "pt_PT",
+    "qu_PE",
+    "rm_CH",
+    "rn_BI",
+    "ro_RO",
+    "ru_RU",
+    "rw_RW",
+    "sa_IN",
+    "sc_IT",
+    "sd_PK",
+    "se_NO",
+    "sg_CF",
+    "si_LK",
+    "sk_SK",
+    "sl_SI",
+    "sm_WS",
+    "sn_ZW",
+    "so_SO",
+    "sq_AL",
+    "sr_RS",
+    "ss_SZ",
+    "st_LS",
+    "su_ID",
+    "sv_SE",
+    "sw_TZ",
+    "ta_IN",
+    "te_IN",
+    "tg_TJ",
+    "th_TH",
+    "ti_ET",
+    "tk_TM",
+    "tl_PH",
+    "tn_BW",
+    "to_TO",
+    "tr_TR",
+    "ts_ZA",
+    "tt_RU",
+    "tw_GH",
+    "ty_PF",
+    "ug_CN",
+    "uk_UA",
+    "ur_PK",
+    "uz_UZ",
+    "ve_ZA",
+    "vi_VN",
+    "vo_INT",
+    "wa_BE",
+    "wo_SN",
+    "xh_ZA",
+    "yi_IL",
+    "yo_NG",
+    "za_CN",
+    "zh_CN",
+    "zu_ZA"
+   ],
+   "type": "string"
+  },
+  "LearnMoreVideoCallToActionSettings": {
+   "properties": {
+    "position": {
+     "$ref": "VideoCallToActionPosition"
+    },
+    "url": {
+     "description": "The url to drive users to learn more via the video CallToAction.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "position",
+    "url"
+   ],
+   "type": "object"
+  },
+  "ManualCollectionSettings": {
+   "description": "Settings for manually curated collections.",
+   "properties": {
+    "landingPage": {
+     "$ref": "CollectionLandingPage"
+    },
+    "productInclusions": {
+     "description": "The products featured in the ad. Required for manual collections.",
+     "items": {
+      "$ref": "AdvertisedProducts"
+     },
+     "maxItems": 10,
+     "minItems": 3,
+     "type": "array"
+    },
+    "sharedSettings": {
+     "$ref": "SharedCollectionSettings"
+    },
+    "title": {
+     "description": "Optional title for the collection. If not provided, title will be auto-generated.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPage",
+    "productInclusions",
+    "sharedSettings"
+   ],
+   "type": "object"
+  },
+  "Marketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US",
+    "ZA"
+   ],
+   "type": "string"
+  },
+  "MarketplaceAdConfigurations": {
+   "properties": {
+    "adId": {
+     "description": "Represents marketplace ad id (Ex: adId-US) associated to global ad (Ex: adId-Global)",
+     "type": "string"
+    },
+    "marketplace": {
+     "$ref": "Marketplace"
+    },
+    "overrides": {
+     "$ref": "MarketplaceAdFieldOverrides"
+    }
+   },
+   "required": [
+    "adId",
+    "marketplace",
+    "overrides"
+   ],
+   "type": "object"
+  },
+  "MarketplaceAdFieldOverrides": {
+   "properties": {
+    "state": {
+     "$ref": "State"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad",
+     "items": {
+      "$ref": "Tag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "MarketplaceScope": {
+   "enum": [
+    "GLOBAL",
+    "SINGLE_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ModerationStatus": {
+   "description": "**ModerationStatus Enum:** | ModerationStatus | Description | |------|------| | `APPROVED_WITH_EXCEPTIONS` | The creative passed basic moderation but was found to be invalid for some supplies. The creative is serving on…",
+   "enum": [
+    "APPROVED_WITH_EXCEPTIONS",
+    "PENDING_TRANSLATION",
+    "PUBLISHED",
+    "REJECTED_BY_MODERATION",
+    "SUBMITTED_FOR_MODERATION"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "OnlineVideoSettings": {
+   "properties": {
+    "callToActions": {
+     "description": "The call to actions for this video.",
+     "items": {
+      "$ref": "VideoCallToAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "products": {
+     "$ref": "AdvertisedProducts"
+    },
+    "videos": {
+     "$ref": "Video"
+    }
+   },
+   "required": [
+    "language",
+    "videos"
+   ],
+   "type": "object"
+  },
+  "ProductCollectionCreativePropertiesToOptimize": {
+   "description": "**ProductCollectionCreativePropertiesToOptimize Enum:** | ProductCollectionCreativePropertiesToOptimize | Description | |------|------| | `HEADLINE` | The headline in the creative. |",
+   "enum": [
+    "HEADLINE"
+   ],
+   "type": "string"
+  },
+  "ProductCollectionLandingPage": {
+   "properties": {
+    "landingPageAsins": {
+     "$ref": "LandingPageAsins"
+    },
+    "landingPageType": {
+     "$ref": "ProductCollectionLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL associated to the landing page. Read only if landingPageType is ASIN_LIST",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "ProductCollectionLandingPageType": {
+   "description": "**ProductCollectionLandingPageType Enum:** | ProductCollectionLandingPageType | Description | |------|------| | `ASIN_LIST` | A list of products based on the products promoted in the ad creative. | | `CUSTOM_URL` | A cu…",
+   "enum": [
+    "ASIN_LIST",
+    "CUSTOM_URL",
+    "STORE"
+   ],
+   "type": "string"
+  },
+  "ProductCollectionSettings": {
+   "description": "An ad creative that contains multiple products and a custom image.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "ProductCollectionCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The set of custom images featured in the ad.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "ProductCollectionLandingPage"
+    },
+    "moderationStatus": {
+     "$ref": "CreativeStatus"
+    },
+    "products": {
+     "description": "The products featured in the ad.",
+     "items": {
+      "$ref": "AdvertisedProducts"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "untranslatedHeadlines": {
+     "description": "The headlines entered by the advertiser.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "brandLogos",
+    "customImages",
+    "headlines",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "ProductCreative": {
+   "properties": {
+    "productCreativeSettings": {
+     "$ref": "ProductCreativeSettings"
+    }
+   },
+   "required": [
+    "productCreativeSettings"
+   ],
+   "type": "object"
+  },
+  "ProductCreativeSettings": {
+   "description": "An ad with a creative built based on the product being advertised.",
+   "properties": {
+    "advertisedProduct": {
+     "$ref": "AdvertisedProducts"
+    },
+    "headline": {
+     "description": "The headline/custom text associated with the ad creative.",
+     "type": "string"
+    },
+    "spotlightVideos": {
+     "$ref": "SpotlightVideoSettings"
+    }
+   },
+   "required": [
+    "advertisedProduct"
+   ],
+   "type": "object"
+  },
+  "ProductIdType": {
+   "description": "**ProductIdType Enum:** | ProductIdType | Description | |------|------| | `ASIN` | ASIN identifier type. | | `RETAILER_OFFER` | Retailer offer identifier type. Used for Retail Ad Service products. | | `SKU` | SKU identi…",
+   "enum": [
+    "ASIN",
+    "RETAILER_OFFER",
+    "SKU"
+   ],
+   "type": "string"
+  },
+  "ProductVideoSettings": {
+   "description": "An ad with a creative that includes a video.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "VideoLandingPage"
+    },
+    "moderationStatus": {
+     "$ref": "CreativeStatus"
+    },
+    "products": {
+     "description": "The products featured in the video ad.",
+     "items": {
+      "$ref": "AdvertisedProducts"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "untranslatedHeadlines": {
+     "description": "The headline entered by the advertiser.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "untranslatedVideos": {
+     "description": "The original video assets submitted as part of the creative.",
+     "items": {
+      "$ref": "Video"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "videos": {
+     "description": "The video assets used in the ad.",
+     "items": {
+      "$ref": "Video"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "untranslatedVideos",
+    "videos"
+   ],
+   "type": "object"
+  },
+  "PublisherHostedCreativeSource": {
+   "description": "The publisher ad server source for publisher hosted creative placeholder creatives. **PublisherHostedCreativeSource Enum:** | PublisherHostedCreativeSource | Description | |------|------| | `GOOGLE_AD_MANAGER` | Google …",
+   "enum": [
+    "GOOGLE_AD_MANAGER"
+   ],
+   "type": "string"
+  },
+  "QueryAdRequest": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "AdAdGroupIdFilter"
+    },
+    "adIdFilter": {
+     "$ref": "AdAdIdFilter"
+    },
+    "adProductFilter": {
+     "$ref": "AdAdProductFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "AdCampaignIdFilter"
+    },
+    "marketplaceScopeFilter": {
+     "$ref": "AdMarketplaceScopeFilter"
+    },
+    "maxResults": {
+     "format": "int32",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "AdNameFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "retailerScopeFilter": {
+     "$ref": "AdRetailerScopeFilter"
+    },
+    "stateFilter": {
+     "$ref": "AdStateFilter"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "ResponsiveEcommerceAdVariations": {
+   "enum": [
+    "ADD_TO_CART",
+    "COUPON",
+    "CUSTOMER_REVIEWS",
+    "SHOP_NOW"
+   ],
+   "type": "string"
+  },
+  "ResponsiveEcommerceCreativePropertiesToOptimize": {
+   "description": "**ResponsiveEcommerceCreativePropertiesToOptimize Enum:** | ResponsiveEcommerceCreativePropertiesToOptimize | Description | |------|------| | `HEADLINE` | The headline in the creative. |",
+   "enum": [
+    "HEADLINE"
+   ],
+   "type": "string"
+  },
+  "ResponsiveEcommerceLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "ResponsiveEcommerceLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType",
+    "landingPageUrl"
+   ],
+   "type": "object"
+  },
+  "ResponsiveEcommerceLandingPageType": {
+   "description": "**ResponsiveEcommerceLandingPageType Enum:** | ResponsiveEcommerceLandingPageType | Description | |------|------| | `MOMENT` | A moment landing page. | | `STORE` | A brand Store landing page. |",
+   "enum": [
+    "MOMENT",
+    "STORE"
+   ],
+   "type": "string"
+  },
+  "ResponsiveEcommerceSettings": {
+   "properties": {
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "ResponsiveEcommerceCreativePropertiesToOptimize"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "Size"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "disclaimers": {
+     "description": "The disclaimer to use for the Responsive eCommerce experience.",
+     "type": "string"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline to use for the Responsive eCommerce experience.",
+     "type": "string"
+    },
+    "images": {
+     "description": "The image(s) to use.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "ComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "ResponsiveEcommerceLandingPage"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "logos": {
+     "$ref": "Image"
+    },
+    "moderationStatus": {
+     "$ref": "CreativeStatus"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "CreativeOptimizationGoalKpi"
+    },
+    "products": {
+     "description": "The products advertised for the Responsive eCommerce experience.",
+     "items": {
+      "$ref": "AdvertisedProducts"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "recAdVariations": {
+     "description": "The rendering variations selected for the Responsive eCommerce experience.",
+     "items": {
+      "$ref": "ResponsiveEcommerceAdVariations"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "ResponsiveSizingBehavior"
+    },
+    "supportedThirdPartySellers": {
+     "$ref": "SupportedThirdPartySellers"
+    },
+    "untranslatedHeadlines": {
+     "description": "The headline entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ResponsiveSizingBehavior": {
+   "enum": [
+    "DISABLED",
+    "ENABLED"
+   ],
+   "type": "string"
+  },
+  "RetailerScope": {
+   "description": "**RetailerScope Enum:** | RetailerScope | Description | |------|------| | `AMAZON` | Ads served on Amazon-owned retail properties. | | `OTHER_RETAILERS` | Ads served on external retailer partner properties. |",
+   "enum": [
+    "AMAZON",
+    "OTHER_RETAILERS"
+   ],
+   "type": "string"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SharedCollectionSettings": {
+   "description": "Settings shared by all collection types.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "$ref": "Image"
+    },
+    "moderationStatus": {
+     "$ref": "CreativeStatus"
+    }
+   },
+   "required": [
+    "brand"
+   ],
+   "type": "object"
+  },
+  "Size": {
+   "properties": {
+    "height": {
+     "description": "The height of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    },
+    "width": {
+     "description": "The width of the creative placement.",
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "height",
+    "width"
+   ],
+   "type": "object"
+  },
+  "SpotlightVideoSettings": {
+   "description": "An ad with a creative built with spotlight videos.",
+   "properties": {
+    "optimizeText": {
+     "description": "If the advertiser wants text they provided to be optimized by Amazon or not.",
+     "type": "boolean"
+    },
+    "videos": {
+     "description": "The video asset(s) to use for the Sponsored Product experience.",
+     "items": {
+      "$ref": "Video"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "optimizeText",
+    "videos"
+   ],
+   "type": "object"
+  },
+  "StandardAudioExperienceSettings": {
+   "properties": {
+    "audio": {
+     "$ref": "Audio"
+    },
+    "callToActions": {
+     "$ref": "AudioCallToAction"
+    },
+    "companionImages": {
+     "$ref": "Image"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the standard audio experience. Headlines must be a maximum of 20 characters.",
+     "type": "string"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded. Urls cannot exceed 2048 characters.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "products": {
+     "description": "The product(s) being advertised.",
+     "items": {
+      "$ref": "AdvertisedProducts"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "audio",
+    "companionImages",
+    "headlines",
+    "language"
+   ],
+   "type": "object"
+  },
+  "StandardDisplaySettings": {
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "AdChoicesPosition"
+    },
+    "callToAction": {
+     "$ref": "DisplayCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The list of placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "Size"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The custom images to use for the standard display experience.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    }
+   },
+   "required": [
+    "adChoicesPosition",
+    "creativeSizes",
+    "customImages",
+    "language"
+   ],
+   "type": "object"
+  },
+  "State": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "Status": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "DeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "DeliveryStatus"
+    },
+    "marketplaceSettings": {
+     "description": "The list of marketplace level delivery status and reasons of global resources, for all the marketplaces the global resource is applicable in.",
+     "items": {
+      "$ref": "StatusMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "deliveryStatus"
+   ],
+   "type": "object"
+  },
+  "StatusMarketplaceSetting": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "DeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "DeliveryStatus"
+    },
+    "marketplace": {
+     "$ref": "Marketplace"
+    }
+   },
+   "required": [
+    "deliveryStatus",
+    "marketplace"
+   ],
+   "type": "object"
+  },
+  "StoreSpotlightCreativePropertiesToOptimize": {
+   "description": "**StoreSpotlightCreativePropertiesToOptimize Enum:** | StoreSpotlightCreativePropertiesToOptimize | Description | |------|------| | `HEADLINE` | The headline in the creative. |",
+   "enum": [
+    "HEADLINE"
+   ],
+   "type": "string"
+  },
+  "StoreSpotlightLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "StoreSpotlightLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType",
+    "landingPageUrl"
+   ],
+   "type": "object"
+  },
+  "StoreSpotlightLandingPageType": {
+   "description": "**StoreSpotlightLandingPageType Enum:** | StoreSpotlightLandingPageType | Description | |------|------| | `STORE` | A brand Store landing page. |",
+   "enum": [
+    "STORE"
+   ],
+   "type": "string"
+  },
+  "StoreSpotlightSettings": {
+   "description": "An ad creative that contains ASINs within a brand Store.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "Image"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "cards": {
+     "description": "The sub-elements of the creative. Each card highlights a different ASIN associated to a brand Store.",
+     "items": {
+      "$ref": "CardCreativeElement"
+     },
+     "maxItems": 3,
+     "minItems": 3,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "StoreSpotlightCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "StoreSpotlightLandingPage"
+    },
+    "moderationStatus": {
+     "$ref": "CreativeStatus"
+    },
+    "untranslatedHeadlines": {
+     "description": "The headline entered by the advertiser.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "brand",
+    "brandLogos",
+    "cards",
+    "headlines",
+    "landingPage"
+   ],
+   "type": "object"
+  },
+  "StreamingTvSettings": {
+   "properties": {
+    "callToActions": {
+     "description": "The call to actions for this video.",
+     "items": {
+      "$ref": "VideoCallToAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "VideoLandingPage"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "moderationStatus": {
+     "$ref": "CreativeStatus"
+    },
+    "products": {
+     "description": "The product advertised on this video creative.",
+     "items": {
+      "$ref": "AdvertisedProducts"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videos": {
+     "$ref": "Video"
+    }
+   },
+   "required": [
+    "videos"
+   ],
+   "type": "object"
+  },
+  "SupportedThirdPartySellers": {
+   "enum": [
+    "ALL",
+    "NONE"
+   ],
+   "type": "string"
+  },
+  "Tag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "ThirdPartyCreative": {
+   "properties": {
+    "thirdPartyDisplaySettings": {
+     "$ref": "ThirdPartyDisplaySettings"
+    },
+    "thirdPartyVideoSettings": {
+     "$ref": "ThirdPartyVideoSettings"
+    }
+   },
+   "type": "object"
+  },
+  "ThirdPartyDisplaySettings": {
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "AdChoicesPosition"
+    },
+    "additionalHtml": {
+     "description": "Additional html to be included along with the creative when rendered.",
+     "type": "string"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The list of placement sizes this creative should serve on. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "items": {
+      "$ref": "Size"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "publisherHostedCreativeSource": {
+     "$ref": "PublisherHostedCreativeSource"
+    },
+    "thirdPartyTagHostingSource": {
+     "description": "The html tag to use to fetch this creative from the 3p ad server. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "adChoicesPosition",
+    "language"
+   ],
+   "type": "object"
+  },
+  "ThirdPartyVideoSettings": {
+   "properties": {
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "publisherHostedCreativeSource": {
+     "$ref": "PublisherHostedCreativeSource"
+    },
+    "vastUrl": {
+     "description": "The url to use to fetch the VAST XML for this video creative. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "type": "string"
+    }
+   },
+   "required": [
+    "language"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UpdateAdRequest": {
+   "properties": {
+    "ads": {
+     "items": {
+      "$ref": "AdUpdate"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "ads"
+   ],
+   "type": "object"
+  },
+  "UpdateAdvertisedProducts": {
+   "properties": {
+    "globalStoreSetting": {
+     "$ref": "UpdateGlobalStoreSettings"
+    },
+    "marketplaceSettings": {
+     "description": "List of advertised product selectively applied at the given marketplace level",
+     "items": {
+      "$ref": "CreateAdvertisedProductMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "productId": {
+     "description": "The identifier of the advertised product.",
+     "type": "string"
+    },
+    "productIdType": {
+     "$ref": "ProductIdType"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateAssetBasedCreativeCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "assetBasedCreativeCallToActionSettings": {
+       "$ref": "UpdateAssetBasedCreativeCallToActionSettings"
+      }
+     },
+     "required": [
+      "assetBasedCreativeCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "UpdateAssetBasedCreativeCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "callToActionType": {
+     "description": "Type of CallToAction for AssetBasedCreative.",
+     "items": {
+      "$ref": "AssetBasedCreativeCallToActionType"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateAssetBasedCreativeSettings": {
+   "properties": {
+    "additionalHtml": {
+     "description": "Additional HTML to include with the render response for display inventory targets.",
+     "type": "string"
+    },
+    "bodyText": {
+     "description": "The body text to use for the Asset Based Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brand": {
+     "description": "The brand of the product(s) being advertised.",
+     "type": "string"
+    },
+    "callToActions": {
+     "$ref": "UpdateAssetBasedCreativeCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "CreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customVideos": {
+     "$ref": "UpdateVideo"
+    },
+    "disclaimers": {
+     "description": "The disclaimers to use for the Asset Based Creative experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the Asset Based Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "ComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "logos": {
+     "description": "The logos to use for the Asset Based Creative experience.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "CreativeOptimizationGoalKpi"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "ResponsiveSizingBehavior"
+    },
+    "squareImages": {
+     "description": "The square image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "tallImages": {
+     "description": "The tall image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "wideImages": {
+     "description": "The wide image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateAudio": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the audio asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the audio asset.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateAudioCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "clickToUrlAudioCallToActionSettings": {
+       "$ref": "UpdateClickToUrlAudioCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlAudioCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "UpdateAudioCreative": {
+   "description": "| UpdateAudioCreative | Description | | --- | --- | | `standardAudioSettings` | The standard audio experience settings. See the Audio Spec for more info: https://advertising.amazon.com/en-us/resources/ad-specs/audio-ads…",
+   "oneOf": [
+    {
+     "properties": {
+      "standardAudioSettings": {
+       "$ref": "UpdateStandardAudioExperienceSettings"
+      }
+     },
+     "required": [
+      "standardAudioSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "UpdateAutoCollectionSettings": {
+   "description": "Settings for automatically generated collections.",
+   "properties": {
+    "productExclusions": {
+     "description": "Products to exclude from auto collection.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "sharedSettings": {
+     "$ref": "UpdateSharedCollectionSettings"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateBrandGallerySettings": {
+   "description": "An ad creative that showcases a brand and its categories and collections.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "cards": {
+     "description": "The sub-elements of the creative. Each card highlights a different category associated to a brand.",
+     "items": {
+      "$ref": "CreateBrandGalleryCardCreativeElement"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "BrandGalleryCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The custom images featured in the ad.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "UpdateStoreSpotlightLandingPage"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateBrandStoreCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "brandStoreCallToActionSettings": {
+       "$ref": "UpdateBrandStoreCallToActionSettings"
+      }
+     },
+     "required": [
+      "brandStoreCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "UpdateBrandStoreCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "callToActionType": {
+     "description": "Type of CallToAction for BrandStore.",
+     "items": {
+      "$ref": "BrandStoreCallToActionType"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateBrandStoreSettings": {
+   "properties": {
+    "additionalHtml": {
+     "description": "Additional HTML to include with the render response for display inventory targets.",
+     "type": "string"
+    },
+    "bodyText": {
+     "description": "The body text to use for the Brand Store Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "brand": {
+     "description": "The brand of the product(s) being advertised.",
+     "type": "string"
+    },
+    "callToActions": {
+     "$ref": "UpdateBrandStoreCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "CreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "disclaimers": {
+     "description": "The disclaimers to use for the Brand Store Creative experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the Brand Store Creative experience.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "ComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "logos": {
+     "$ref": "UpdateImage"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "CreativeOptimizationGoalKpi"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "ResponsiveSizingBehavior"
+    },
+    "squareImages": {
+     "description": "The square image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "tallImages": {
+     "description": "The tall image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "wideImages": {
+     "description": "The wide image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateClickToAppDisplayCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The app that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateClickToUrlAudioCallToActionSettings": {
+   "properties": {
+    "url": {
+     "description": "The url to redirect the user via the audio CallToAction.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateClickToUrlDisplayCallToActionSettings": {
+   "description": "A CTA that directs a customer to a provided url.",
+   "properties": {
+    "deepLinkingBehavior": {
+     "$ref": "DeepLinkingBehavior"
+    },
+    "url": {
+     "description": "The application url that customers are directed to.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateCollectionLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "CollectionLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL associated to the landing page.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateComponentCreative": {
+   "properties": {
+    "assetBasedCreativeSettings": {
+     "$ref": "UpdateAssetBasedCreativeSettings"
+    },
+    "autoCollectionSettings": {
+     "$ref": "UpdateAutoCollectionSettings"
+    },
+    "brandGallerySettings": {
+     "$ref": "UpdateBrandGallerySettings"
+    },
+    "brandStoreSettings": {
+     "$ref": "UpdateBrandStoreSettings"
+    },
+    "manualCollectionSettings": {
+     "$ref": "UpdateManualCollectionSettings"
+    },
+    "productCollectionSettings": {
+     "$ref": "UpdateProductCollectionSettings"
+    },
+    "productVideoSettings": {
+     "$ref": "UpdateProductVideoSettings"
+    },
+    "responsiveEcommerceSettings": {
+     "$ref": "UpdateResponsiveEcommerceSettings"
+    },
+    "storeSpotlightSettings": {
+     "$ref": "UpdateStoreSpotlightSettings"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateCreative": {
+   "oneOf": [
+    {
+     "properties": {
+      "audioCreative": {
+       "$ref": "UpdateAudioCreative"
+      }
+     },
+     "required": [
+      "audioCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "displayCreative": {
+       "$ref": "UpdateDisplayCreative"
+      }
+     },
+     "required": [
+      "displayCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "thirdPartyCreative": {
+       "$ref": "UpdateThirdPartyCreative"
+      }
+     },
+     "required": [
+      "thirdPartyCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "videoCreative": {
+       "$ref": "UpdateVideoCreative"
+      }
+     },
+     "required": [
+      "videoCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "componentCreative": {
+       "$ref": "UpdateComponentCreative"
+      }
+     },
+     "required": [
+      "componentCreative"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productCreative": {
+       "$ref": "UpdateProductCreative"
+      }
+     },
+     "required": [
+      "productCreative"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "UpdateDisplayCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "clickToUrlDisplayCallToActionSettings": {
+       "$ref": "UpdateClickToUrlDisplayCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlDisplayCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "clickToAppDisplayCallToActionSettings": {
+       "$ref": "UpdateClickToAppDisplayCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToAppDisplayCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "UpdateDisplayCreative": {
+   "properties": {
+    "standardDisplaySettings": {
+     "$ref": "UpdateStandardDisplaySettings"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateGlobalStoreSettings": {
+   "properties": {
+    "catalogSourceMarketplace": {
+     "$ref": "Marketplace"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateImage": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the image asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the image asset.",
+     "type": "string"
+    },
+    "formatProperties": {
+     "description": "The cropping and positioning properties associated with the asset.",
+     "items": {
+      "$ref": "CreateFormatProperties"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateLandingPageAsins": {
+   "properties": {
+    "asins": {
+     "description": "For landing page of type ASIN_LIST, the list of ASINs used to create the landing page.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateManualCollectionSettings": {
+   "description": "Settings for manually curated collections.",
+   "properties": {
+    "landingPage": {
+     "$ref": "UpdateCollectionLandingPage"
+    },
+    "productInclusions": {
+     "description": "The products featured in the ad. Required for manual collections.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 10,
+     "minItems": 3,
+     "type": "array"
+    },
+    "sharedSettings": {
+     "$ref": "UpdateSharedCollectionSettings"
+    },
+    "title": {
+     "description": "Optional title for the collection. If not provided, title will be auto-generated.",
+     "nullable": true,
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateOnlineVideoSettings": {
+   "properties": {
+    "callToActions": {
+     "description": "The call to actions for this video.",
+     "items": {
+      "$ref": "CreateVideoCallToAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "products": {
+     "$ref": "UpdateAdvertisedProducts"
+    },
+    "videos": {
+     "$ref": "UpdateVideo"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateProductCollectionLandingPage": {
+   "properties": {
+    "landingPageAsins": {
+     "$ref": "UpdateLandingPageAsins"
+    },
+    "landingPageType": {
+     "$ref": "ProductCollectionLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL associated to the landing page. Read only if landingPageType is ASIN_LIST",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateProductCollectionSettings": {
+   "description": "An ad creative that contains multiple products and a custom image.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "ProductCollectionCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The set of custom images featured in the ad.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "UpdateProductCollectionLandingPage"
+    },
+    "products": {
+     "description": "The products featured in the ad.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateProductCreative": {
+   "properties": {
+    "productCreativeSettings": {
+     "$ref": "UpdateProductCreativeSettings"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateProductCreativeSettings": {
+   "description": "An ad with a creative built based on the product being advertised.",
+   "properties": {
+    "advertisedProduct": {
+     "$ref": "UpdateAdvertisedProducts"
+    },
+    "spotlightVideos": {
+     "$ref": "UpdateSpotlightVideoSettings"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateProductVideoSettings": {
+   "description": "An ad with a creative that includes a video.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "UpdateVideoLandingPage"
+    },
+    "products": {
+     "description": "The products featured in the video ad.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videos": {
+     "description": "The video assets used in the ad.",
+     "items": {
+      "$ref": "CreateVideo"
+     },
+     "maxItems": 2,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateResponsiveEcommerceSettings": {
+   "properties": {
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "ResponsiveEcommerceCreativePropertiesToOptimize"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "CreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "disclaimers": {
+     "description": "The disclaimer to use for the Responsive eCommerce experience.",
+     "type": "string"
+    },
+    "headlines": {
+     "description": "The headline to use for the Responsive eCommerce experience.",
+     "type": "string"
+    },
+    "images": {
+     "description": "The image(s) to use.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryTypes": {
+     "description": "The inventory types this creative should serve on.",
+     "items": {
+      "$ref": "ComponentInventoryType"
+     },
+     "maxItems": 2,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "logos": {
+     "$ref": "UpdateImage"
+    },
+    "optimizationGoalKpi": {
+     "$ref": "CreativeOptimizationGoalKpi"
+    },
+    "products": {
+     "description": "The products advertised for the Responsive eCommerce experience.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "recAdVariations": {
+     "description": "The rendering variations selected for the Responsive eCommerce experience.",
+     "items": {
+      "$ref": "ResponsiveEcommerceAdVariations"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "responsiveSizingBehavior": {
+     "$ref": "ResponsiveSizingBehavior"
+    },
+    "supportedThirdPartySellers": {
+     "$ref": "SupportedThirdPartySellers"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateSharedCollectionSettings": {
+   "description": "Settings shared by all collection types.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "$ref": "UpdateImage"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateSpotlightVideoSettings": {
+   "description": "An ad with a creative built with spotlight videos.",
+   "properties": {
+    "optimizeText": {
+     "description": "If the advertiser wants text they provided to be optimized by Amazon or not.",
+     "type": "boolean"
+    },
+    "videos": {
+     "description": "The video asset(s) to use for the Sponsored Product experience.",
+     "items": {
+      "$ref": "CreateVideo"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateStandardAudioExperienceSettings": {
+   "properties": {
+    "audio": {
+     "$ref": "UpdateAudio"
+    },
+    "callToActions": {
+     "$ref": "UpdateAudioCallToAction"
+    },
+    "companionImages": {
+     "$ref": "UpdateImage"
+    },
+    "headlines": {
+     "description": "The headline(s) to use for the standard audio experience. Headlines must be a maximum of 20 characters.",
+     "type": "string"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded. Urls cannot exceed 2048 characters.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "products": {
+     "description": "The product(s) being advertised.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateStandardDisplaySettings": {
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "AdChoicesPosition"
+    },
+    "callToAction": {
+     "$ref": "UpdateDisplayCallToAction"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The list of placement sizes this creative should serve on.",
+     "items": {
+      "$ref": "CreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "customImages": {
+     "description": "The custom images to use for the standard display experience.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "UpdateStoreSpotlightLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "StoreSpotlightLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateStoreSpotlightSettings": {
+   "description": "An ad creative that contains ASINs within a brand Store.",
+   "properties": {
+    "brand": {
+     "description": "The name of the brand being advertised.",
+     "type": "string"
+    },
+    "brandLogos": {
+     "description": "The brand logo image assets to be used in the ad.",
+     "items": {
+      "$ref": "CreateImage"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "cards": {
+     "description": "The sub-elements of the creative. Each card highlights a different ASIN associated to a brand Store.",
+     "items": {
+      "$ref": "CreateCardCreativeElement"
+     },
+     "maxItems": 3,
+     "minItems": 3,
+     "type": "array"
+    },
+    "creativePropertiesToOptimize": {
+     "description": "The CreativeProperty Amazon will enhance or generate based on various factors like audience, placement etc.",
+     "items": {
+      "$ref": "StoreSpotlightCreativePropertiesToOptimize"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "enableCreativeAutoTranslation": {
+     "description": "If set to true and the headline and/or video are not in the marketplace's default language, Amazon will attempt to translate them to the marketplace's default language. If Amazon is unable to translate them, the ad will…",
+     "type": "boolean"
+    },
+    "headlines": {
+     "description": "The headline submitted as part of the ad creative. During your campaign, Amazon will optimize amongst the headlines you provide to match customer intent.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "landingPage": {
+     "$ref": "UpdateStoreSpotlightLandingPage"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateStreamingTvSettings": {
+   "properties": {
+    "callToActions": {
+     "description": "The call to actions for this video.",
+     "items": {
+      "$ref": "CreateVideoCallToAction"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "products": {
+     "description": "The product advertised on this video creative.",
+     "items": {
+      "$ref": "CreateAdvertisedProducts"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "videos": {
+     "$ref": "UpdateVideo"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateThirdPartyCreative": {
+   "properties": {
+    "thirdPartyDisplaySettings": {
+     "$ref": "UpdateThirdPartyDisplaySettings"
+    },
+    "thirdPartyVideoSettings": {
+     "$ref": "UpdateThirdPartyVideoSettings"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateThirdPartyDisplaySettings": {
+   "properties": {
+    "adChoicesPosition": {
+     "$ref": "AdChoicesPosition"
+    },
+    "additionalHtml": {
+     "description": "Additional html to be included along with the creative when rendered.",
+     "type": "string"
+    },
+    "clickTrackingUrls": {
+     "description": "The third party urls to trigger when an click is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeSizes": {
+     "description": "The list of placement sizes this creative should serve on. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "items": {
+      "$ref": "CreateSize"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "publisherHostedCreativeSource": {
+     "$ref": "PublisherHostedCreativeSource"
+    },
+    "thirdPartyTagHostingSource": {
+     "description": "The html tag to use to fetch this creative from the 3p ad server. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateThirdPartyVideoSettings": {
+   "properties": {
+    "impressionTrackingUrls": {
+     "description": "The third party urls to trigger when an impression is recorded.",
+     "items": {
+      "$ref": "CreateCreativeTrackingUrl"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "language": {
+     "$ref": "LanguageLocale"
+    },
+    "publisherHostedCreativeSource": {
+     "$ref": "PublisherHostedCreativeSource"
+    },
+    "vastUrl": {
+     "description": "The url to use to fetch the VAST XML for this video creative. Required for non publisher hosted creatives (when publisherHostedCreativeSource is not set).",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateVideo": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the video asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the video asset.",
+     "type": "string"
+    },
+    "description": {
+     "description": "The description of the video content.",
+     "type": "string"
+    },
+    "headline": {
+     "description": "The headline/custom text associated with the video.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateVideoCreative": {
+   "properties": {
+    "onlineVideoSettings": {
+     "$ref": "UpdateOnlineVideoSettings"
+    },
+    "streamingTvSettings": {
+     "$ref": "UpdateStreamingTvSettings"
+    }
+   },
+   "type": "object"
+  },
+  "UpdateVideoLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "VideoLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Video": {
+   "properties": {
+    "assetId": {
+     "description": "The asset library ID associated with the video asset.",
+     "type": "string"
+    },
+    "assetVersion": {
+     "description": "The asset library version associated with the video asset.",
+     "type": "string"
+    },
+    "description": {
+     "description": "The description of the video content.",
+     "type": "string"
+    },
+    "headline": {
+     "description": "The headline/custom text associated with the video.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "assetId",
+    "assetVersion"
+   ],
+   "type": "object"
+  },
+  "VideoCallToAction": {
+   "oneOf": [
+    {
+     "properties": {
+      "addToCartVideoCallToActionSettings": {
+       "$ref": "AddToCartVideoCallToActionSettings"
+      }
+     },
+     "required": [
+      "addToCartVideoCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "clickToUrlVideoCallToActionSettings": {
+       "$ref": "ClickToUrlVideoCallToActionSettings"
+      }
+     },
+     "required": [
+      "clickToUrlVideoCallToActionSettings"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "learnMoreVideoCallToActionSettings": {
+       "$ref": "LearnMoreVideoCallToActionSettings"
+      }
+     },
+     "required": [
+      "learnMoreVideoCallToActionSettings"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "VideoCallToActionPosition": {
+   "enum": [
+    "LEFT",
+    "MINIMAL",
+    "RIGHT"
+   ],
+   "type": "string"
+  },
+  "VideoCreative": {
+   "properties": {
+    "onlineVideoSettings": {
+     "$ref": "OnlineVideoSettings"
+    },
+    "streamingTvSettings": {
+     "$ref": "StreamingTvSettings"
+    }
+   },
+   "type": "object"
+  },
+  "VideoLandingPage": {
+   "properties": {
+    "landingPageType": {
+     "$ref": "VideoLandingPageType"
+    },
+    "landingPageUrl": {
+     "description": "The URL of landing page where the ad directs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "landingPageType"
+   ],
+   "type": "object"
+  },
+  "VideoLandingPageType": {
+   "description": "**VideoLandingPageType Enum:** | VideoLandingPageType | Description | |------|------| | `DETAIL_PAGE` | A product detail page. | | `MOMENT` | A moment landing page. | | `OFF_AMAZON_LINK` | An off-Amazon landing page. | …",
+   "enum": [
+    "DETAIL_PAGE",
+    "MOMENT",
+    "OFF_AMAZON_LINK",
+    "STORE"
+   ],
+   "type": "string"
+  }
+ }
+}

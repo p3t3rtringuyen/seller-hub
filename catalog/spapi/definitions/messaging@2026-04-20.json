@@ -1,0 +1,263 @@
+{
+  "AutomationConfiguration": {
+    "description": "Represents a seller's automation configuration for automated buyer-seller messaging.",
+    "properties": {
+      "automationDisplayName": {
+        "description": "The seller-provided display name for the automation configuration.",
+        "type": "string"
+      },
+      "automationId": {
+        "description": "The unique identifier of the automation configuration.",
+        "type": "string"
+      },
+      "automationStatus": {
+        "ref": "AutomationStatus"
+      },
+      "automationSubType": {
+        "ref": "AutomationSubType"
+      },
+      "automationType": {
+        "ref": "AutomationType"
+      },
+      "createdDateTime": {
+        "description": "The date and time when the automation configuration was created, in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "currentAutomationVersion": {
+        "description": "The version number of the automation configuration that is currently serving buyer messages.",
+        "type": "integer"
+      },
+      "lastUpdatedDateTime": {
+        "description": "The date and time when the automation configuration was last updated, in ISO 8601 format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "latestAutomationVersion": {
+        "description": "The most recent version number of the automation configuration.",
+        "type": "integer"
+      },
+      "marketplaceAutomations": {
+        "description": "A list of store-specific automation entries.",
+        "ref": "MarketplaceAutomation",
+        "type": "array"
+      }
+    },
+    "required": [
+      "automationDisplayName",
+      "automationId",
+      "automationStatus",
+      "automationType"
+    ],
+    "type": "object"
+  },
+  "AutomationDetails": {
+    "description": "The details of the automated action.",
+    "properties": {
+      "autoResponseAttachmentUrl": {
+        "description": "A URL to an attachment included with the auto-response message.",
+        "type": "string"
+      },
+      "autoResponseText": {
+        "description": "The auto-response message text sent to the buyer.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "autoResponseText"
+    ],
+    "type": "object"
+  },
+  "AutomationStatus": {
+    "description": "The current status of the automation configuration.",
+    "enum": [
+      "ACTIVE",
+      "DEACTIVATED"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AutomationSubType": {
+    "description": "The sub-type of automation configuration.",
+    "enum": [
+      "AUTO_RESPONSE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "AutomationType": {
+    "description": "The primary category of the automation configuration.",
+    "enum": [
+      "AUTO_RESPONSE"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "CreateAutomationConfigRequest": {
+    "description": "The request body for creating a new automation configuration.",
+    "properties": {
+      "automationDisplayName": {
+        "description": "A display name for the automation configuration.",
+        "type": "string"
+      },
+      "automationSubType": {
+        "ref": "AutomationSubType"
+      },
+      "automationType": {
+        "ref": "AutomationType"
+      },
+      "marketplaceAutomations": {
+        "description": "A list of store-specific automation entries.",
+        "ref": "MarketplaceAutomation",
+        "type": "array"
+      }
+    },
+    "required": [
+      "automationDisplayName",
+      "automationType",
+      "marketplaceAutomations"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of error responses returned when a request is unsuccessful.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "ListAutomationConfigsResponse": {
+    "description": "The response for the `listAutomationConfigurations` operation.",
+    "properties": {
+      "automationConfigurations": {
+        "description": "A list of automation configurations.",
+        "ref": "AutomationConfiguration",
+        "type": "array"
+      },
+      "pagination": {
+        "ref": "Pagination"
+      }
+    },
+    "required": [
+      "automationConfigurations"
+    ],
+    "type": "object"
+  },
+  "MarketplaceAutomation": {
+    "description": "The store-specific entry within an automation configuration.",
+    "properties": {
+      "automationDetails": {
+        "ref": "AutomationDetails"
+      },
+      "marketplaceId": {
+        "description": "The [Amazon store identifier](https://developer-docs.amazon/sp-api/docs/marketplace-ids).",
+        "type": "string"
+      },
+      "triggerConditions": {
+        "ref": "TriggerConditions"
+      }
+    },
+    "required": [
+      "automationDetails",
+      "marketplaceId",
+      "triggerConditions"
+    ],
+    "type": "object"
+  },
+  "Pagination": {
+    "description": "Contains a token for retrieving the next page of results.",
+    "properties": {
+      "nextToken": {
+        "description": "A token to fetch the next page of results.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TriggerConditions": {
+    "description": "The conditions that determine when an automation configuration activates for a given store.",
+    "properties": {
+      "asinList": {
+        "description": "The ASINs this automation configuration applies to.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "buyerContactTopics": {
+        "description": "The buyer contact topics that trigger this automation configuration.",
+        "itemType": "string",
+        "type": "array"
+      },
+      "buyerContactType": {
+        "description": "The buyer contact type that triggers this automation configuration.",
+        "enum": [
+          "ANY",
+          "POST_ORDER",
+          "PRE_ORDER"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "asinList",
+      "buyerContactTopics",
+      "buyerContactType"
+    ],
+    "type": "object"
+  },
+  "UpdateAutomationConfigRequest": {
+    "description": "The request body for updating an existing automation configuration.",
+    "properties": {
+      "automationDisplayName": {
+        "description": "An updated display name for the automation configuration.",
+        "type": "string"
+      },
+      "automationStatus": {
+        "ref": "AutomationStatus"
+      },
+      "marketplaceAutomations": {
+        "description": "The complete list of store-specific automation entries for the configuration.",
+        "ref": "MarketplaceAutomation",
+        "type": "array"
+      }
+    },
+    "required": [
+      "automationDisplayName",
+      "automationStatus",
+      "marketplaceAutomations"
+    ],
+    "type": "object"
+  }
+}

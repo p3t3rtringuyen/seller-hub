@@ -1,0 +1,146 @@
+{
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "InventoryUpdate": {
+    "description": "Inventory details required to update some or all items for the requested warehouse.",
+    "properties": {
+      "isFullUpdate": {
+        "description": "When true, this request contains a full feed.",
+        "type": "boolean"
+      },
+      "items": {
+        "description": "A list of inventory items with updated details, including quantity available.",
+        "ref": "ItemDetails",
+        "type": "array"
+      },
+      "sellingParty": {
+        "description": "ID of the selling party or vendor.",
+        "ref": "PartyIdentification"
+      }
+    },
+    "required": [
+      "isFullUpdate",
+      "items",
+      "sellingParty"
+    ],
+    "type": "object"
+  },
+  "ItemDetails": {
+    "description": "Updated inventory details for an item.",
+    "properties": {
+      "availableQuantity": {
+        "description": "Total item quantity available in the warehouse.",
+        "ref": "ItemQuantity"
+      },
+      "buyerProductIdentifier": {
+        "description": "The buyer selected product identification of the item.",
+        "type": "string"
+      },
+      "isObsolete": {
+        "description": "When true, the item is permanently unavailable.",
+        "type": "boolean"
+      },
+      "vendorProductIdentifier": {
+        "description": "The vendor selected product identification of the item.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "availableQuantity"
+    ],
+    "type": "object"
+  },
+  "ItemQuantity": {
+    "description": "Details of item quantity.",
+    "properties": {
+      "amount": {
+        "description": "Quantity of units available for a specific item.",
+        "type": "integer"
+      },
+      "unitOfMeasure": {
+        "description": "Unit of measure for the available quantity.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "unitOfMeasure"
+    ],
+    "type": "object"
+  },
+  "PartyIdentification": {
+    "description": "Name, address and tax details of a party.",
+    "properties": {
+      "partyId": {
+        "description": "Assigned identification for the party.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "partyId"
+    ],
+    "type": "object"
+  },
+  "SubmitInventoryUpdateRequest": {
+    "description": "The request body for the submitInventoryUpdate operation.",
+    "properties": {
+      "inventory": {
+        "description": "Inventory details required to update some or all items for the requested warehouse.",
+        "ref": "InventoryUpdate"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "SubmitInventoryUpdateResponse": {
+    "description": "The response schema for the submitInventoryUpdate operation.",
+    "properties": {
+      "errors": {
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The response payload for the submitInventoryUpdate operation.",
+        "ref": "TransactionReference"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "TransactionReference": {
+    "description": "Response containing the transaction ID.",
+    "properties": {
+      "transactionId": {
+        "description": "GUID to identify this transaction.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

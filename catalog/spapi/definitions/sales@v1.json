@@ -1,0 +1,115 @@
+{
+  "Decimal": {
+    "description": "A decimal number with no loss of precision.",
+    "properties": {},
+    "required": [],
+    "type": "string"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occured.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition in a human-readable form.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {},
+    "ref": "Error",
+    "required": [],
+    "type": "array"
+  },
+  "GetOrderMetricsResponse": {
+    "description": "The response schema for the getOrderMetrics operation.",
+    "properties": {
+      "errors": {
+        "description": "Encountered errors for the getOrderMetrics operation.",
+        "ref": "ErrorList"
+      },
+      "payload": {
+        "description": "The payload for the getOrderMetrics operation.",
+        "ref": "OrderMetricsList"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "Money": {
+    "description": "The currency type and the amount.",
+    "properties": {
+      "amount": {
+        "description": "The currency amount.",
+        "ref": "Decimal"
+      },
+      "currencyCode": {
+        "description": "Three-digit currency code.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "amount",
+      "currencyCode"
+    ],
+    "type": "object"
+  },
+  "OrderMetricsInterval": {
+    "description": "Contains order metrics.",
+    "properties": {
+      "averageUnitPrice": {
+        "description": "The average price for an item based on the specified filters.",
+        "ref": "Money"
+      },
+      "interval": {
+        "description": "The interval of time based on requested granularity (ex.",
+        "type": "string"
+      },
+      "orderCount": {
+        "description": "The number of orders based on the specified filters.",
+        "type": "integer"
+      },
+      "orderItemCount": {
+        "description": "The number of order items based on the specified filters.",
+        "type": "integer"
+      },
+      "totalSales": {
+        "description": "The total ordered product sales for all orders based on the specified filters.",
+        "ref": "Money"
+      },
+      "unitCount": {
+        "description": "The number of units in orders based on the specified filters.",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "averageUnitPrice",
+      "interval",
+      "orderCount",
+      "orderItemCount",
+      "totalSales",
+      "unitCount"
+    ],
+    "type": "object"
+  },
+  "OrderMetricsList": {
+    "description": "A set of order metrics, each scoped to a particular time interval.",
+    "properties": {},
+    "ref": "OrderMetricsInterval",
+    "required": [],
+    "type": "array"
+  }
+}

@@ -1,0 +1,1752 @@
+{
+ "api": "AmazonAdsAPIDSPAdGroupsContract",
+ "file": "specs/dest/AmazonAdsAPIDSPAdGroupsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DSPAdGroup": {
+   "properties": {
+    "adGroupId": {
+     "description": "The unique identifier of the ad group.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "DSPAdProduct"
+    },
+    "advertisedProductCategoryIds": {
+     "description": "The array of identifiers of advertised product categories associated with the ad group. For VIDEO ad group type only one parent product category or multiple sub-categories from one parent product category are allowed.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 1,
+     "type": "array"
+    },
+    "bid": {
+     "$ref": "DSPAdGroupBid"
+    },
+    "budgets": {
+     "description": "An object containing budget details for the ad group.",
+     "items": {
+      "$ref": "DSPBudget"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "campaignId": {
+     "description": "The unique identifier of the campaign the ad group belongs to.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date time that the ad group was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "creativeRotationType": {
+     "$ref": "DSPCreativeRotationType"
+    },
+    "endDateTime": {
+     "description": "The end date time for the ad group.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fees": {
+     "description": "The fees associated with the ad group.",
+     "items": {
+      "$ref": "DSPFee"
+     },
+     "maxItems": 7,
+     "minItems": 0,
+     "type": "array"
+    },
+    "frequencies": {
+     "description": "An object containing frequency details for the ad group.",
+     "items": {
+      "$ref": "DSPFrequency"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryType": {
+     "$ref": "DSPInventoryType"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time that the ad group was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "DSPOptimization"
+    },
+    "pacing": {
+     "$ref": "DSPPacing"
+    },
+    "purchaseOrderNumber": {
+     "description": "The purchase order number associated with the ad group.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date time for the ad group.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DSPState"
+    },
+    "status": {
+     "$ref": "DSPStatus"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad group",
+     "items": {
+      "$ref": "DSPTag"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingSettings": {
+     "$ref": "DSPTargetingSettings"
+    }
+   },
+   "required": [
+    "adGroupId",
+    "adProduct",
+    "advertisedProductCategoryIds",
+    "bid",
+    "campaignId",
+    "creationDateTime",
+    "creativeRotationType",
+    "endDateTime",
+    "inventoryType",
+    "lastUpdatedDateTime",
+    "name",
+    "optimization",
+    "pacing",
+    "startDateTime",
+    "state",
+    "targetingSettings"
+   ],
+   "type": "object"
+  },
+  "DSPAdGroupAdGroupIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DSPAdGroupAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+     "items": {
+      "$ref": "DSPAdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DSPAdGroupBid": {
+   "properties": {
+    "baseBid": {
+     "description": "The lower bound bid used for the ads in the ad group. This field is optional for ad groups that use automated bid optimization; when omitted, the system manages bidding on your behalf. It remains required when automated…",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "$ref": "DSPCurrencyCode"
+    },
+    "maxAverageBid": {
+     "description": "The max average bid that will be targeted on the ad group across all of the bids (a single bid could be lower or higher that this number).",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currencyCode"
+   ],
+   "type": "object"
+  },
+  "DSPAdGroupBudgetSettings": {
+   "properties": {
+    "budgetAllocation": {
+     "$ref": "DSPBudgetAllocation"
+    },
+    "dailyMinSpendValue": {
+     "description": "Denotes the daily minimum spend on the ad group in local currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DSPAdGroupCampaignIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DSPAdGroupCreate": {
+   "properties": {
+    "adProduct": {
+     "$ref": "DSPAdProduct"
+    },
+    "advertisedProductCategoryIds": {
+     "description": "The array of identifiers of advertised product categories associated with the ad group. For VIDEO ad group type only one parent product category or multiple sub-categories from one parent product category are allowed.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 1,
+     "type": "array"
+    },
+    "bid": {
+     "$ref": "DSPCreateAdGroupBid"
+    },
+    "budgets": {
+     "description": "An object containing budget details for the ad group.",
+     "items": {
+      "$ref": "DSPCreateBudget"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "campaignId": {
+     "description": "The unique identifier of the campaign the ad group belongs to.",
+     "type": "string"
+    },
+    "creativeRotationType": {
+     "$ref": "DSPCreativeRotationType"
+    },
+    "endDateTime": {
+     "description": "The end date time for the ad group.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fees": {
+     "description": "The fees associated with the ad group.",
+     "items": {
+      "$ref": "DSPCreateFee"
+     },
+     "maxItems": 7,
+     "minItems": 0,
+     "type": "array"
+    },
+    "frequencies": {
+     "description": "An object containing frequency details for the ad group.",
+     "items": {
+      "$ref": "DSPCreateFrequency"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "inventoryType": {
+     "$ref": "DSPInventoryType"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "DSPCreateOptimization"
+    },
+    "pacing": {
+     "$ref": "DSPCreatePacing"
+    },
+    "purchaseOrderNumber": {
+     "description": "The purchase order number associated with the ad group.",
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date time for the ad group.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DSPCreateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad group",
+     "items": {
+      "$ref": "DSPCreateTag"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingSettings": {
+     "$ref": "DSPCreateTargetingSettings"
+    }
+   },
+   "required": [
+    "adProduct",
+    "advertisedProductCategoryIds",
+    "bid",
+    "campaignId",
+    "creativeRotationType",
+    "endDateTime",
+    "inventoryType",
+    "name",
+    "optimization",
+    "pacing",
+    "startDateTime",
+    "state",
+    "targetingSettings"
+   ],
+   "type": "object"
+  },
+  "DSPAdGroupInventoryTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**InventoryType Enum:** | InventoryType | Description | | --- | --- | | `STANDARD_DISPLAY` | | | `AMAZON_MOBILE_DISPLAY` | | | `AAP_MOBILE_APP` | | | `DISPLAY` | | | `VIDEO` | | | `STREAMING_TV` | | | `ONLINE_VIDEO` | |…",
+     "items": {
+      "$ref": "DSPInventoryType"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DSPAdGroupMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "DSPAdGroupMultiStatusSuccess"
+     },
+     "maxItems": 20,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DSPAdGroupMultiStatusSuccess": {
+   "properties": {
+    "adGroup": {
+     "$ref": "DSPAdGroup"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 19,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "adGroup",
+    "index"
+   ],
+   "type": "object"
+  },
+  "DSPAdGroupStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `DRAFT` | The resource is in draft status and has not yet been proposed or enabled. | | `ENABLED` | The object is set active by user and eligible for delivery. | |…",
+     "items": {
+      "$ref": "DSPState"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "DSPAdGroupSuccessResponse": {
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "DSPAdGroup"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DSPAdGroupUpdate": {
+   "properties": {
+    "adGroupId": {
+     "description": "The unique identifier of the ad group.",
+     "type": "string"
+    },
+    "advertisedProductCategoryIds": {
+     "description": "The array of identifiers of advertised product categories associated with the ad group. For VIDEO ad group type only one parent product category or multiple sub-categories from one parent product category are allowed.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 500,
+     "minItems": 1,
+     "type": "array"
+    },
+    "bid": {
+     "$ref": "DSPUpdateAdGroupBid"
+    },
+    "budgets": {
+     "description": "An object containing budget details for the ad group.",
+     "items": {
+      "$ref": "DSPCreateBudget"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "creativeRotationType": {
+     "$ref": "DSPCreativeRotationType"
+    },
+    "endDateTime": {
+     "description": "The end date time for the ad group.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "fees": {
+     "description": "The fees associated with the ad group.",
+     "items": {
+      "$ref": "DSPCreateFee"
+     },
+     "maxItems": 7,
+     "minItems": 0,
+     "type": "array"
+    },
+    "frequencies": {
+     "description": "An object containing frequency details for the ad group.",
+     "items": {
+      "$ref": "DSPCreateFrequency"
+     },
+     "maxItems": 3,
+     "minItems": 0,
+     "type": "array"
+    },
+    "name": {
+     "description": "The name of the ad group.",
+     "type": "string"
+    },
+    "optimization": {
+     "$ref": "DSPUpdateOptimization"
+    },
+    "pacing": {
+     "$ref": "DSPUpdatePacing"
+    },
+    "purchaseOrderNumber": {
+     "description": "The purchase order number associated with the ad group.",
+     "nullable": true,
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The start date time for the ad group.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "state": {
+     "$ref": "DSPUpdateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the ad group",
+     "items": {
+      "$ref": "DSPCreateTag"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetingSettings": {
+     "$ref": "DSPUpdateTargetingSettings"
+    }
+   },
+   "required": [
+    "adGroupId"
+   ],
+   "type": "object"
+  },
+  "DSPAdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "DSPAmazonViewability": {
+   "properties": {
+    "includeUnmeasurableImpressions": {
+     "description": "Must be false if viewabilityTier is set to ALL_TIERS. You can set to true to include impressions that can not be measured when a viewabilityTier other than ALL_TIERS is selected. We recommend setting to false if high vi…",
+     "type": "boolean"
+    },
+    "viewabilityTier": {
+     "$ref": "DSPViewabilityTier"
+    }
+   },
+   "required": [
+    "includeUnmeasurableImpressions",
+    "viewabilityTier"
+   ],
+   "type": "object"
+  },
+  "DSPAutomatedTargetingTactic": {
+   "description": "**AutomatedTargetingTactic Enum:** | AutomatedTargetingTactic | Description | |------|------| | `AWARENESS` | Ad Group tactic (Complete TV) that indicates that this line item drives awareness to your selected audience o…",
+   "enum": [
+    "AWARENESS",
+    "CUSTOMER_ACQUISITION",
+    "MAXIMIZE_PERFORMANCE",
+    "PROSPECTING",
+    "REMARKETING",
+    "RETENTION",
+    "SEARCH"
+   ],
+   "type": "string"
+  },
+  "DSPBidStrategy": {
+   "description": "**BidStrategy Enum:** | BidStrategy | Description | |------|------| | `PRIORITIZE_KPI_TARGET` | Optimizes bidding to achieve the KPI target specified. | | `SPEND_BUDGET_IN_FULL` | Prioritize spending full budget, while …",
+   "enum": [
+    "PRIORITIZE_KPI_TARGET",
+    "SPEND_BUDGET_IN_FULL",
+    "USE_CAMPAIGN_STRATEGY"
+   ],
+   "type": "string"
+  },
+  "DSPBudget": {
+   "properties": {
+    "budgetType": {
+     "$ref": "DSPBudgetType"
+    },
+    "budgetValue": {
+     "$ref": "DSPBudgetValue"
+    },
+    "recurrenceTimePeriod": {
+     "$ref": "DSPRecurrence"
+    }
+   },
+   "required": [
+    "budgetType",
+    "budgetValue",
+    "recurrenceTimePeriod"
+   ],
+   "type": "object"
+  },
+  "DSPBudgetAllocation": {
+   "description": "**BudgetAllocation Enum:** | BudgetAllocation | Description | |------|------| | `AUTO` | Automatically allocate budget to better performing ad groups based on the selected goal KPI. | | `MANUAL` | Manually allocate budg…",
+   "enum": [
+    "AUTO",
+    "MANUAL"
+   ],
+   "type": "string"
+  },
+  "DSPBudgetType": {
+   "enum": [
+    "MONETARY"
+   ],
+   "type": "string"
+  },
+  "DSPBudgetValue": {
+   "oneOf": [
+    {
+     "properties": {
+      "monetaryBudgetValue": {
+       "$ref": "DSPMonetaryBudgetValue"
+      }
+     },
+     "required": [
+      "monetaryBudgetValue"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreateAdGroupBid": {
+   "properties": {
+    "baseBid": {
+     "description": "The lower bound bid used for the ads in the ad group. This field is optional for ad groups that use automated bid optimization; when omitted, the system manages bidding on your behalf. It remains required when automated…",
+     "format": "double",
+     "type": "number"
+    },
+    "maxAverageBid": {
+     "description": "The max average bid that will be targeted on the ad group across all of the bids (a single bid could be lower or higher that this number).",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateAdGroupBudgetSettings": {
+   "properties": {
+    "budgetAllocation": {
+     "$ref": "DSPBudgetAllocation"
+    },
+    "dailyMinSpendValue": {
+     "description": "Denotes the daily minimum spend on the ad group in local currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateAdGroupRequest": {
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "DSPAdGroupCreate"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "DSPCreateAmazonViewability": {
+   "properties": {
+    "includeUnmeasurableImpressions": {
+     "description": "Must be false if viewabilityTier is set to ALL_TIERS. You can set to true to include impressions that can not be measured when a viewabilityTier other than ALL_TIERS is selected. We recommend setting to false if high vi…",
+     "type": "boolean"
+    },
+    "viewabilityTier": {
+     "$ref": "DSPViewabilityTier"
+    }
+   },
+   "required": [
+    "includeUnmeasurableImpressions",
+    "viewabilityTier"
+   ],
+   "type": "object"
+  },
+  "DSPCreateBudget": {
+   "properties": {
+    "budgetType": {
+     "$ref": "DSPBudgetType"
+    },
+    "budgetValue": {
+     "$ref": "DSPCreateBudgetValue"
+    },
+    "recurrenceTimePeriod": {
+     "$ref": "DSPRecurrence"
+    }
+   },
+   "required": [
+    "budgetType",
+    "budgetValue",
+    "recurrenceTimePeriod"
+   ],
+   "type": "object"
+  },
+  "DSPCreateBudgetValue": {
+   "oneOf": [
+    {
+     "properties": {
+      "monetaryBudgetValue": {
+       "$ref": "DSPCreateMonetaryBudgetValue"
+      }
+     },
+     "required": [
+      "monetaryBudgetValue"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "DSPCreateFee": {
+   "properties": {
+    "addToBudgetSpentAmount": {
+     "description": "Applies only to THIRD_PARTY_APPLIED_FEE. When set to true, third-party applied fees are are added on top of the total ad group budget spent amount in reports.",
+     "type": "boolean"
+    },
+    "feeType": {
+     "$ref": "DSPFeeType"
+    },
+    "feeValue": {
+     "description": "The fee amount expressed as the feeValueType. AMAZON_AUDIENCE_FEE AND THIRD_PARTY_AUDIENCE_FEE is in the currency of the marketplace. All other CPM based fees are in the currency of the advertiser. For percentages, 100 …",
+     "format": "double",
+     "type": "number"
+    },
+    "thirdPartyProvider": {
+     "$ref": "DSPFeesThirdPartyProvider"
+    }
+   },
+   "required": [
+    "addToBudgetSpentAmount",
+    "feeType",
+    "feeValue",
+    "thirdPartyProvider"
+   ],
+   "type": "object"
+  },
+  "DSPCreateFrequency": {
+   "properties": {
+    "eventMaxCount": {
+     "description": "The maximum number of times an EventType is served per user. For ADSP ad group, maximum supported value is 500.",
+     "format": "int32",
+     "maximum": 99000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "frequencyTargetingSetting": {
+     "$ref": "DSPFrequencyTargetingSetting"
+    },
+    "timeCount": {
+     "description": "The value associated with the time and unit of time for this frequency cap.",
+     "format": "int32",
+     "maximum": 60,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "timeUnit": {
+     "$ref": "DSPTimeUnit"
+    }
+   },
+   "required": [
+    "eventMaxCount",
+    "frequencyTargetingSetting",
+    "timeCount",
+    "timeUnit"
+   ],
+   "type": "object"
+  },
+  "DSPCreateMonetaryBudget": {
+   "properties": {
+    "value": {
+     "description": "The monetary amount of the budget cap in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPCreateMonetaryBudgetValue": {
+   "properties": {
+    "monetaryBudget": {
+     "$ref": "DSPCreateMonetaryBudget"
+    }
+   },
+   "type": "object"
+  },
+  "DSPCreateOptimization": {
+   "properties": {
+    "bidStrategy": {
+     "$ref": "DSPBidStrategy"
+    },
+    "budgetSettings": {
+     "$ref": "DSPCreateAdGroupBudgetSettings"
+    }
+   },
+   "required": [
+    "bidStrategy"
+   ],
+   "type": "object"
+  },
+  "DSPCreatePacing": {
+   "properties": {
+    "deliveryProfile": {
+     "$ref": "DSPDeliveryProfile"
+    }
+   },
+   "required": [
+    "deliveryProfile"
+   ],
+   "type": "object"
+  },
+  "DSPCreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "DSPCreateTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPCreateTargetingSettings": {
+   "properties": {
+    "amazonViewability": {
+     "$ref": "DSPCreateAmazonViewability"
+    },
+    "automatedTargetingTactic": {
+     "$ref": "DSPAutomatedTargetingTactic"
+    },
+    "defaultAudienceTargetingMatchType": {
+     "$ref": "DSPDefaultAudienceTargetingMatchType"
+    },
+    "enableLanguageTargeting": {
+     "description": "If set to true, creatives will only target supply where the content language matches the creative language.",
+     "type": "boolean"
+    },
+    "tacticsConvertersExclusionType": {
+     "$ref": "DSPTacticsConvertersExclusionType"
+    },
+    "targetedPGDealId": {
+     "description": "The deal Id (advertisingDealId in Ads API v1, deal.id in v0) to be targeted by the Ad Group being created. If you are creating an ad group targeting a programmatic guaranteed deal, the deal is provided at time of ad gro…",
+     "type": "string"
+    },
+    "timeZoneType": {
+     "$ref": "DSPTimeZoneType"
+    },
+    "userLocationSignal": {
+     "$ref": "DSPUserLocationSignal"
+    },
+    "videoCompletionTier": {
+     "$ref": "DSPVideoCompletionTier"
+    }
+   },
+   "required": [
+    "amazonViewability",
+    "timeZoneType",
+    "userLocationSignal"
+   ],
+   "type": "object"
+  },
+  "DSPCreativeRotationType": {
+   "description": "**CreativeRotationType Enum:** | CreativeRotationType | Description | |------|------| | `RANDOM` | Creatives are rotated randomly with equal weight. | | `WEIGHTED` | Creatives are rotated based on assigned weights. |",
+   "enum": [
+    "RANDOM",
+    "WEIGHTED"
+   ],
+   "type": "string"
+  },
+  "DSPCurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | |------|------| | `AED` | United Arab Emirates Dirham | | `ARS` | Argentine Peso | | `AUD` | Australian Dollar | | `BGN` | Bulgarian Lev | | `BHD` | Bahraini Dinar |…",
+   "enum": [
+    "AED",
+    "ARS",
+    "AUD",
+    "BGN",
+    "BHD",
+    "BOB",
+    "BRL",
+    "CAD",
+    "CHF",
+    "CLP",
+    "CNY",
+    "COP",
+    "CRC",
+    "CZK",
+    "DKK",
+    "DOP",
+    "DZD",
+    "EGP",
+    "EUR",
+    "GBP",
+    "GTQ",
+    "HKD",
+    "HNL",
+    "HRK",
+    "HUF",
+    "IDR",
+    "ILS",
+    "INR",
+    "JMD",
+    "JPY",
+    "KRW",
+    "KWD",
+    "MAD",
+    "MXN",
+    "MYR",
+    "NOK",
+    "PAB",
+    "PEN",
+    "PHP",
+    "PKR",
+    "PLN",
+    "PYG",
+    "QAR",
+    "RON",
+    "RSD",
+    "RUB",
+    "SAR",
+    "SEK",
+    "SGD",
+    "THB",
+    "TND",
+    "TRY",
+    "TWD",
+    "UAH",
+    "USD",
+    "UYU",
+    "VND",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "DSPDefaultAudienceTargetingMatchType": {
+   "description": "Match type for audience targeting inclusion groups, if any. You can enhance your ad group’s reach to consumers with similar shopping, streaming, and browsing behaviors or interests as your selected audiences across all …",
+   "enum": [
+    "EXACT",
+    "SIMILAR"
+   ],
+   "type": "string"
+  },
+  "DSPDeliveryProfile": {
+   "description": "**DeliveryProfile Enum:** | DeliveryProfile | Description | |------|------| | `ASAP` | Makes your entire budget available to spend immediately. This is ideal for ad groups with limited inventory or when there's no requi…",
+   "enum": [
+    "ASAP",
+    "EVEN",
+    "PACE_AHEAD"
+   ],
+   "type": "string"
+  },
+  "DSPDeliveryReason": {
+   "description": "**DeliveryReason Enum:** | DeliveryReason | Description | |------|------| | `AD_CREATIVES_NOT_RUNNING` | | | `AD_GROUPS_NOT_RUNNING` | | | `AD_GROUP_ARCHIVED` | | | `AD_GROUP_ENDED` | | | `AD_GROUP_INELIGIBLE_GOAL_KPI` …",
+   "enum": [
+    "AD_CREATIVES_NOT_RUNNING",
+    "AD_GROUPS_NOT_RUNNING",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_ENDED",
+    "AD_GROUP_INELIGIBLE_GOAL_KPI",
+    "AD_GROUP_MISSING_CONVERSION_TRACKING_SELECTIONS",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_START_DATE",
+    "AD_GROUP_POLICING_SUSPENDED",
+    "AD_GROUP_TOO_FEW_CONVERSION_TRACKING_SELECTIONS",
+    "AD_GROUP_TOO_MANY_CONVERSION_TRACKING_SELECTIONS",
+    "AD_NOT_APPROVED_FOR_ALL_AD_GROUPS",
+    "AD_NOT_ASSOCIATED_WITH_AD_GROUP",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_POLICING_SUSPENDED",
+    "OTHER"
+   ],
+   "type": "string"
+  },
+  "DSPDeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | |------|------| | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplac…",
+   "enum": [
+    "DELIVERING",
+    "LIMITED",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "DSPFee": {
+   "properties": {
+    "addToBudgetSpentAmount": {
+     "description": "Applies only to THIRD_PARTY_APPLIED_FEE. When set to true, third-party applied fees are are added on top of the total ad group budget spent amount in reports.",
+     "type": "boolean"
+    },
+    "currencyCode": {
+     "$ref": "DSPCurrencyCode"
+    },
+    "feeType": {
+     "$ref": "DSPFeeType"
+    },
+    "feeValue": {
+     "description": "The fee amount expressed as the feeValueType. AMAZON_AUDIENCE_FEE AND THIRD_PARTY_AUDIENCE_FEE is in the currency of the marketplace. All other CPM based fees are in the currency of the advertiser. For percentages, 100 …",
+     "format": "double",
+     "type": "number"
+    },
+    "feeValueType": {
+     "$ref": "DSPFeeValueType"
+    },
+    "thirdPartyProvider": {
+     "$ref": "DSPFeesThirdPartyProvider"
+    }
+   },
+   "required": [
+    "addToBudgetSpentAmount",
+    "feeType",
+    "feeValue",
+    "feeValueType",
+    "thirdPartyProvider"
+   ],
+   "type": "object"
+  },
+  "DSPFeeType": {
+   "description": "**FeeType Enum:** | FeeType | Description | |------|------| | `AMAZON_AUDIENCE` | CPM fee for using Amazon audiences. | | `AMAZON_DSP` | A service fee for using Amazon DSP and subtracted from the budget. This fee is app…",
+   "enum": [
+    "AMAZON_AUDIENCE",
+    "AMAZON_DSP",
+    "MANAGED_SERVICE_FEE",
+    "OMNICHANNEL_METRICS",
+    "THIRD_PARTY_APPLIED",
+    "THIRD_PARTY_AUDIENCE",
+    "THIRD_PARTY_TARGETING"
+   ],
+   "type": "string"
+  },
+  "DSPFeeValueType": {
+   "description": "**FeeValueType Enum:** | FeeValueType | Description | |------|------| | `FIXED_CPM` | Charged based on a fixed CPM. The currency depends on the feeType. | | `PERCENTAGE_OF_BUDGET` | Subtracted from the campaign budget a…",
+   "enum": [
+    "FIXED_CPM",
+    "PERCENTAGE_OF_BUDGET",
+    "PERCENTAGE_OF_SUPPLY_COST"
+   ],
+   "type": "string"
+  },
+  "DSPFeesThirdPartyProvider": {
+   "enum": [
+    "COM_SCORE",
+    "CPM_1",
+    "CPM_2",
+    "CPM_3",
+    "DOUBLE_CLICK_CAMPAIGN_MANAGER",
+    "DOUBLE_VERIFY",
+    "INTEGRAL_AD_SCIENCE"
+   ],
+   "type": "string"
+  },
+  "DSPFrequency": {
+   "properties": {
+    "eventMaxCount": {
+     "description": "The maximum number of times an EventType is served per user. For ADSP ad group, maximum supported value is 500.",
+     "format": "int32",
+     "maximum": 99000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "frequencyTargetingSetting": {
+     "$ref": "DSPFrequencyTargetingSetting"
+    },
+    "timeCount": {
+     "description": "The value associated with the time and unit of time for this frequency cap.",
+     "format": "int32",
+     "maximum": 60,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "timeUnit": {
+     "$ref": "DSPTimeUnit"
+    }
+   },
+   "required": [
+    "eventMaxCount",
+    "frequencyTargetingSetting",
+    "timeCount",
+    "timeUnit"
+   ],
+   "type": "object"
+  },
+  "DSPFrequencyTargetingSetting": {
+   "description": "**FrequencyTargetingSetting Enum:** | FrequencyTargetingSetting | Description | |------|------| | `HOUSEHOLD` | Control frequency an ad will be selected across people within the same household. | | `USER` | Control freq…",
+   "enum": [
+    "HOUSEHOLD",
+    "USER"
+   ],
+   "type": "string"
+  },
+  "DSPInventoryType": {
+   "description": "**InventoryType Enum:** | InventoryType | Description | |------|------| | `AAP_MOBILE_APP` | | | `AMAZON_MOBILE_DISPLAY` | | | `AUDIO_AMAZON_DEAL` | | | `AUDIO` | Audio ads that serve on streaming audio inventory. | | `…",
+   "enum": [
+    "AAP_MOBILE_APP",
+    "AMAZON_MOBILE_DISPLAY",
+    "AUDIO",
+    "AUDIO_AMAZON_DEAL",
+    "DISPLAY",
+    "LIVE_EVENTS",
+    "ONLINE_VIDEO",
+    "PODCAST",
+    "STANDARD_DISPLAY",
+    "STREAMING_TV",
+    "STREAMING_TV_AMAZON_DEAL",
+    "VIDEO"
+   ],
+   "type": "string"
+  },
+  "DSPMonetaryBudget": {
+   "properties": {
+    "currencyCode": {
+     "$ref": "DSPCurrencyCode"
+    },
+    "value": {
+     "description": "The monetary amount of the budget cap in the given currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPMonetaryBudgetValue": {
+   "properties": {
+    "monetaryBudget": {
+     "$ref": "DSPMonetaryBudget"
+    }
+   },
+   "type": "object"
+  },
+  "DSPOptimization": {
+   "properties": {
+    "bidStrategy": {
+     "$ref": "DSPBidStrategy"
+    },
+    "budgetSettings": {
+     "$ref": "DSPAdGroupBudgetSettings"
+    }
+   },
+   "required": [
+    "bidStrategy"
+   ],
+   "type": "object"
+  },
+  "DSPPacing": {
+   "properties": {
+    "deliveryProfile": {
+     "$ref": "DSPDeliveryProfile"
+    }
+   },
+   "required": [
+    "deliveryProfile"
+   ],
+   "type": "object"
+  },
+  "DSPQueryAdGroupRequest": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "DSPAdGroupAdGroupIdFilter"
+    },
+    "adProductFilter": {
+     "$ref": "DSPAdGroupAdProductFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "DSPAdGroupCampaignIdFilter"
+    },
+    "inventoryTypeFilter": {
+     "$ref": "DSPAdGroupInventoryTypeFilter"
+    },
+    "maxResults": {
+     "default": 100,
+     "format": "int32",
+     "maximum": 100,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "stateFilter": {
+     "$ref": "DSPAdGroupStateFilter"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "DSPRecurrence": {
+   "enum": [
+    "DAILY",
+    "LIFETIME",
+    "MONTHLY"
+   ],
+   "type": "string"
+  },
+  "DSPSiteLanguage": {
+   "description": "**SiteLanguage Enum:** | SiteLanguage | Description | |------|------| | `AR` | Arabic. | | `BN` | Bengali. | | `CS` | Czech. | | `DA` | Danish. | | `DE` | German. | | `EN` | English. | | `ES` | Spanish. | | `FI` | Finni…",
+   "enum": [
+    "AR",
+    "BN",
+    "CS",
+    "DA",
+    "DE",
+    "EN",
+    "ES",
+    "FI",
+    "FR",
+    "GU",
+    "HI",
+    "IT",
+    "JA",
+    "KN",
+    "ML",
+    "MR",
+    "NL",
+    "NO",
+    "OTHER",
+    "PA",
+    "PL",
+    "PT",
+    "SV",
+    "TA",
+    "TE",
+    "TR",
+    "ZH"
+   ],
+   "type": "string"
+  },
+  "DSPState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "DSPStatus": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "DSPDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "DSPDeliveryStatus"
+    }
+   },
+   "required": [
+    "deliveryStatus"
+   ],
+   "type": "object"
+  },
+  "DSPTacticsConvertersExclusionType": {
+   "description": "**TacticsConvertersExclusionType Enum:** | TacticsConvertersExclusionType | Description | |------|------| | `NO_EXCLUSION` | Do not exclude any converters from targeting. | | `RECENT_CONVERTERS` | Exclude recent convert…",
+   "enum": [
+    "NO_EXCLUSION",
+    "RECENT_CONVERTERS"
+   ],
+   "type": "string"
+  },
+  "DSPTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "DSPTargetingSettings": {
+   "properties": {
+    "amazonViewability": {
+     "$ref": "DSPAmazonViewability"
+    },
+    "automatedTargetingTactic": {
+     "$ref": "DSPAutomatedTargetingTactic"
+    },
+    "defaultAudienceTargetingMatchType": {
+     "$ref": "DSPDefaultAudienceTargetingMatchType"
+    },
+    "enableLanguageTargeting": {
+     "description": "If set to true, creatives will only target supply where the content language matches the creative language.",
+     "type": "boolean"
+    },
+    "siteLanguage": {
+     "$ref": "DSPSiteLanguage"
+    },
+    "tacticsConvertersExclusionType": {
+     "$ref": "DSPTacticsConvertersExclusionType"
+    },
+    "targetedPGDealId": {
+     "description": "The deal Id (advertisingDealId in Ads API v1, deal.id in v0) to be targeted by the Ad Group being created. If you are creating an ad group targeting a programmatic guaranteed deal, the deal is provided at time of ad gro…",
+     "type": "string"
+    },
+    "timeZoneType": {
+     "$ref": "DSPTimeZoneType"
+    },
+    "userLocationSignal": {
+     "$ref": "DSPUserLocationSignal"
+    },
+    "videoCompletionTier": {
+     "$ref": "DSPVideoCompletionTier"
+    }
+   },
+   "required": [
+    "amazonViewability",
+    "timeZoneType",
+    "userLocationSignal"
+   ],
+   "type": "object"
+  },
+  "DSPTimeUnit": {
+   "enum": [
+    "DAYS",
+    "HOURS",
+    "MINUTES"
+   ],
+   "type": "string"
+  },
+  "DSPTimeZoneType": {
+   "description": "**TimeZoneType Enum:** | TimeZoneType | Description | |------|------| | `ADVERTISER_REGION` | Use the advertiser's regional time zone for daypart targeting. | | `VIEWER` | Use the viewer's local time zone for daypart ta…",
+   "enum": [
+    "ADVERTISER_REGION",
+    "VIEWER"
+   ],
+   "type": "string"
+  },
+  "DSPUpdateAdGroupBid": {
+   "properties": {
+    "baseBid": {
+     "description": "The lower bound bid used for the ads in the ad group. This field is optional for ad groups that use automated bid optimization; when omitted, the system manages bidding on your behalf. It remains required when automated…",
+     "format": "double",
+     "type": "number"
+    },
+    "maxAverageBid": {
+     "description": "The max average bid that will be targeted on the ad group across all of the bids (a single bid could be lower or higher that this number).",
+     "format": "double",
+     "nullable": true,
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateAdGroupBudgetSettings": {
+   "properties": {
+    "budgetAllocation": {
+     "$ref": "DSPBudgetAllocation"
+    },
+    "dailyMinSpendValue": {
+     "description": "Denotes the daily minimum spend on the ad group in local currency.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateAdGroupRequest": {
+   "properties": {
+    "adGroups": {
+     "items": {
+      "$ref": "DSPAdGroupUpdate"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "adGroups"
+   ],
+   "type": "object"
+  },
+  "DSPUpdateAmazonViewability": {
+   "properties": {
+    "includeUnmeasurableImpressions": {
+     "description": "Must be false if viewabilityTier is set to ALL_TIERS. You can set to true to include impressions that can not be measured when a viewabilityTier other than ALL_TIERS is selected. We recommend setting to false if high vi…",
+     "type": "boolean"
+    },
+    "viewabilityTier": {
+     "$ref": "DSPViewabilityTier"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateOptimization": {
+   "properties": {
+    "bidStrategy": {
+     "$ref": "DSPBidStrategy"
+    },
+    "budgetSettings": {
+     "$ref": "DSPUpdateAdGroupBudgetSettings"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdatePacing": {
+   "properties": {
+    "deliveryProfile": {
+     "$ref": "DSPDeliveryProfile"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "DRAFT",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "DSPUpdateTargetingSettings": {
+   "properties": {
+    "amazonViewability": {
+     "$ref": "DSPUpdateAmazonViewability"
+    },
+    "defaultAudienceTargetingMatchType": {
+     "$ref": "DSPDefaultAudienceTargetingMatchType"
+    },
+    "enableLanguageTargeting": {
+     "description": "If set to true, creatives will only target supply where the content language matches the creative language.",
+     "type": "boolean"
+    },
+    "tacticsConvertersExclusionType": {
+     "$ref": "DSPTacticsConvertersExclusionType"
+    },
+    "targetedPGDealId": {
+     "description": "The deal Id (advertisingDealId in Ads API v1, deal.id in v0) to be targeted by the Ad Group being created. If you are creating an ad group targeting a programmatic guaranteed deal, the deal is provided at time of ad gro…",
+     "type": "string"
+    },
+    "timeZoneType": {
+     "$ref": "DSPTimeZoneType"
+    },
+    "userLocationSignal": {
+     "$ref": "DSPUserLocationSignal"
+    },
+    "videoCompletionTier": {
+     "$ref": "DSPVideoCompletionTier"
+    }
+   },
+   "type": "object"
+  },
+  "DSPUserLocationSignal": {
+   "description": "**UserLocationSignal Enum:** | UserLocationSignal | Description | |------|------| | `CURRENT` | Target users based on their current geographic location. | | `MULTIPLE_SIGNALS` | Target users based on multiple location s…",
+   "enum": [
+    "CURRENT",
+    "MULTIPLE_SIGNALS"
+   ],
+   "type": "string"
+  },
+  "DSPVideoCompletionTier": {
+   "description": "**VideoCompletionTier Enum:** | VideoCompletionTier | Description | |------|------| | `ALL_TIERS` | Target all video completion tiers. | | `GREATER_THAN_10_PERCENT` | Target videos with greater than 10% predicted comple…",
+   "enum": [
+    "ALL_TIERS",
+    "GREATER_THAN_10_PERCENT",
+    "GREATER_THAN_20_PERCENT",
+    "GREATER_THAN_30_PERCENT",
+    "GREATER_THAN_40_PERCENT",
+    "GREATER_THAN_50_PERCENT",
+    "GREATER_THAN_60_PERCENT",
+    "GREATER_THAN_70_PERCENT",
+    "GREATER_THAN_80_PERCENT",
+    "GREATER_THAN_90_PERCENT"
+   ],
+   "type": "string"
+  },
+  "DSPViewabilityTier": {
+   "description": "**ViewabilityTier Enum:** | ViewabilityTier | Description | |------|------| | `ALL_TIERS` | Target all viewability tiers with no filtering. | | `GREATER_THAN_40_PERCENT` | Target impressions with greater than 40% predic…",
+   "enum": [
+    "ALL_TIERS",
+    "GREATER_THAN_40_PERCENT",
+    "GREATER_THAN_50_PERCENT",
+    "GREATER_THAN_60_PERCENT",
+    "GREATER_THAN_70_PERCENT",
+    "LESS_THAN_40_PERCENT"
+   ],
+   "type": "string"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "ASSET_NOT_READY",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

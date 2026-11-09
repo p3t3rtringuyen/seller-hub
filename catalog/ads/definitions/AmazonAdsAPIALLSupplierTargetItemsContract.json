@@ -1,0 +1,526 @@
+{
+ "api": "AmazonAdsAPIALLSupplierTargetItemsContract",
+ "file": "specs/dest/AmazonAdsAPIALLSupplierTargetItemsContract_prod_3p.json",
+ "schemas": {
+  "AdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+   "enum": [
+    "AMAZON_DSP"
+   ],
+   "type": "string"
+  },
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CountryCode": {
+   "enum": [
+    "AD",
+    "AE",
+    "AF",
+    "AG",
+    "AI",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IT",
+    "JP",
+    "KR",
+    "MX",
+    "US"
+   ],
+   "type": "string"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "QuerySupplierTargetItemRequest": {
+   "properties": {
+    "adProductFilter": {
+     "$ref": "SupplierTargetItemAdProductFilter"
+    },
+    "categoryFilter": {
+     "$ref": "SupplierTargetItemCategoryFilter"
+    },
+    "countriesFilter": {
+     "$ref": "SupplierTargetItemCountryCodeFilter"
+    },
+    "idFilter": {
+     "$ref": "SupplierTargetItemIdFilter"
+    },
+    "maxResults": {
+     "default": 20,
+     "format": "int32",
+     "maximum": 500,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nameFilter": {
+     "$ref": "SupplierTargetItemNameFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "sort": {
+     "items": {
+      "$ref": "SupplierTargetItemSortOption"
+     },
+     "maxItems": 1,
+     "minItems": 0,
+     "type": "array"
+    },
+    "supplierAdProductIdFilter": {
+     "$ref": "SupplierTargetItemSupplierAdProductIdFilter"
+    },
+    "supplierProposalDestinationIdFilter": {
+     "$ref": "SupplierTargetItemSupplierProposalDestinationIdFilter"
+    },
+    "supplierTargetTypeFilter": {
+     "$ref": "SupplierTargetItemSupplierTargetTypeFilter"
+    }
+   },
+   "required": [
+    "adProductFilter",
+    "supplierAdProductIdFilter",
+    "supplierTargetTypeFilter"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SortDirection": {
+   "description": "**SortDirection Enum:** | SortDirection | Description | | --- | --- | | `ASCENDING` | Sort in ascending order | | `DESCENDING` | Sort in descending order |",
+   "enum": [
+    "ASCENDING",
+    "DESCENDING"
+   ],
+   "type": "string"
+  },
+  "SupplierTargetItem": {
+   "properties": {
+    "adProduct": {
+     "$ref": "AdProduct"
+    },
+    "category": {
+     "description": "Categories for this targeting item.",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "countries": {
+     "description": "Countries where this targeting item is available.",
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 49,
+     "minItems": 0,
+     "type": "array"
+    },
+    "description": {
+     "description": "Description of the targeting item.",
+     "type": "string"
+    },
+    "id": {
+     "description": "Unique identifier for the targeting item.",
+     "type": "string"
+    },
+    "name": {
+     "description": "Name of the targeting item.",
+     "type": "string"
+    },
+    "supplierAdProductId": {
+     "description": "The supplier ad product associated with this targeting item.",
+     "type": "string"
+    },
+    "supplierProposalDestinationId": {
+     "description": "Supplier proposal destination identifier.",
+     "type": "string"
+    },
+    "supplierTargetType": {
+     "$ref": "SupplierTargetType"
+    }
+   },
+   "required": [
+    "id",
+    "name",
+    "supplierTargetType"
+   ],
+   "type": "object"
+  },
+  "SupplierTargetItemAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `AMAZON_DSP` | Amazon Demand-Side Platform ad product. |",
+     "items": {
+      "$ref": "AdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierTargetItemCategoryFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierTargetItemCountryCodeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "CountryCode"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierTargetItemIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 50,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierTargetItemNameFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "SupplierTargetItemNameFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "SupplierTargetItemNameFilterType": {
+   "description": "**SupplierTargetItemNameFilterType Enum:** | SupplierTargetItemNameFilterType | Description | | --- | --- | | `BROAD_MATCH` | Filter by broad match. |",
+   "enum": [
+    "BROAD_MATCH"
+   ],
+   "type": "string"
+  },
+  "SupplierTargetItemSortOption": {
+   "properties": {
+    "by": {
+     "$ref": "SupplierTargetItemSortOptionsFields"
+    },
+    "direction": {
+     "$ref": "SortDirection"
+    }
+   },
+   "required": [
+    "by"
+   ],
+   "type": "object"
+  },
+  "SupplierTargetItemSortOptionsFields": {
+   "description": "Specify which field to order by. | Field Name | Supported Ordering | | --- | --- | | name | ASCENDING,DESCENDING |",
+   "enum": [
+    "name"
+   ],
+   "type": "string"
+  },
+  "SupplierTargetItemSuccessResponse": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "supplierTargetItems": {
+     "items": {
+      "$ref": "SupplierTargetItem"
+     },
+     "maxItems": 500,
+     "minItems": 0,
+     "type": "array"
+    },
+    "totalResults": {
+     "format": "int32",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "SupplierTargetItemSupplierAdProductIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierTargetItemSupplierProposalDestinationIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierTargetItemSupplierTargetTypeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "SupplierTargetType"
+     },
+     "maxItems": 12,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SupplierTargetType": {
+   "enum": [
+    "APP",
+    "AUDIENCE",
+    "AUDIENCE_AGE",
+    "AUDIENCE_EDUCATION",
+    "AUDIENCE_GENDER",
+    "AUDIENCE_HOMEOWNERSHIP",
+    "AUDIENCE_HOUSEHOLD_COMPOSITION",
+    "AUDIENCE_HOUSEHOLD_INCOME",
+    "AUDIENCE_INTERESTS",
+    "AUDIENCE_IN_MARKET",
+    "AUDIENCE_MARITAL_STATUS",
+    "AUDIENCE_MOOD",
+    "AUDIENCE_SOCIOECONOMIC_GROUP",
+    "CONTENT_CATEGORY",
+    "CONTENT_GENRE",
+    "CONTENT_RATING",
+    "CONTENT_SENSITIVE_CATEGORY",
+    "DAYPART",
+    "DAYPART_DAY",
+    "DAYPART_TIME",
+    "DEVICE_OPERATING_SYSTEM",
+    "DEVICE_TYPE",
+    "LOCATION_CITY",
+    "LOCATION_COUNTRY",
+    "LOCATION_DESIGNATED_MARKET_AREA",
+    "LOCATION_METRO",
+    "LOCATION_POSTAL_CODE",
+    "LOCATION_REGION",
+    "POSITION_VIDEO"
+   ],
+   "type": "string"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

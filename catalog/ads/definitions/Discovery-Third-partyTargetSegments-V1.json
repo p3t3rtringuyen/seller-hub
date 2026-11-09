@@ -1,0 +1,229 @@
+{
+ "api": "Discovery-Third-partyTargetSegments-V1",
+ "file": "specs/dest/Discovery-Third-partyTargetSegments-V1_prod_3p.json",
+ "schemas": {
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspListThirdPartyTargetSegmentsRequestContent": {
+   "properties": {
+    "maxResults": {
+     "description": "Sets the maximum number of results in the returned array. Use in conjunction with the nextToken parameter to control pagination. For example, supplying maxResults=20 with a previously returned token will fetch up to the…",
+     "maximum": 1000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    },
+    "thirdPartyTargetTypeFilter": {
+     "description": "Third-party target type filter.",
+     "items": {
+      "$ref": "ThirdPartyTargetTypes"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "thirdPartyTargetTypeFilter"
+   ],
+   "type": "object"
+  },
+  "DspListThirdPartyTargetSegmentsResponseContent": {
+   "properties": {
+    "nextToken": {
+     "description": "Token from a previous request. Use in conjunction with the ``maxResults`` parameter to control pagination of the returned array.",
+     "type": "string"
+    },
+    "thirdPartyTargetSegments": {
+     "description": "List of segments associated to given thirdPartyTargetType",
+     "items": {
+      "$ref": "DspThirdPartyTargetSegmentsInfo"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "required": [
+    "thirdPartyTargetSegments"
+   ],
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspThirdPartyTargetSegmentsInfo": {
+   "properties": {
+    "segmentDescription": {
+     "description": "The segment description.",
+     "type": "string"
+    },
+    "segmentId": {
+     "description": "The segment identifier.",
+     "type": "string"
+    },
+    "segmentName": {
+     "description": "The segment name.",
+     "type": "string"
+    },
+    "thirdPartyTargetType": {
+     "$ref": "ThirdPartyTargetTypes"
+    }
+   },
+   "required": [
+    "thirdPartyTargetType"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ThirdPartyTargetTypes": {
+   "enum": [
+    "DOUBLE_VERIFY_CUSTOM_CONTEXTUAL"
+   ],
+   "type": "string"
+  }
+ }
+}

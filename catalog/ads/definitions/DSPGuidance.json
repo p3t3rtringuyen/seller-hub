@@ -1,0 +1,1089 @@
+{
+ "api": "DSPGuidance",
+ "file": "specs/dest/DSPGuidance_prod_3p.json",
+ "schemas": {
+  "adGroupId": {
+   "description": "An identifier for an ad group.",
+   "maxLength": 19,
+   "type": "string"
+  },
+  "advertiserId": {
+   "description": "An identifier for an advertiser.",
+   "maxLength": 19,
+   "type": "string"
+  },
+  "budgetRecoverableVisualisation": {
+   "description": "Visualisation showing the amount of at-risk budget that can be recovered through recommendations.",
+   "properties": {
+    "atRisk": {
+     "description": "Amount of budget projected to be unspent by end of flight.",
+     "format": "double",
+     "type": "number"
+    },
+    "atRiskLabel": {
+     "description": "Translated label for the at-risk amount (e.g. \"At Risk\").",
+     "type": "string"
+    },
+    "currency": {
+     "description": "Currency code of the budget values, e.g. USD.",
+     "type": "string"
+    },
+    "recoverable": {
+     "description": "Amount of at-risk budget that can be recovered with recommendations.",
+     "format": "double",
+     "type": "number"
+    },
+    "recoverableLabel": {
+     "description": "Translated label for the recoverable amount (e.g. \"Recoverable\").",
+     "type": "string"
+    },
+    "recoverablePercentLabel": {
+     "description": "Translated label for the recovery percentage (e.g. \"92% recoverable\").",
+     "type": "string"
+    },
+    "visualisationType": {
+     "enum": [
+      "BUDGET_RECOVERABLE"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "atRisk",
+    "currency",
+    "recoverable",
+    "visualisationType"
+   ],
+   "type": "object"
+  },
+  "campaignId": {
+   "description": "An identifier for a campaign.",
+   "maxLength": 19,
+   "type": "string"
+  },
+  "canonicalId": {
+   "description": "An identifier for DSP advertising objects such as line item, order or advertiser Id.",
+   "maxLength": 19,
+   "type": "string"
+  },
+  "category": {
+   "description": "Category for the recommendation. Used for type-based grouping in the guidance panel: * `AUDIENCES` - Recommendations to add recommended audiences * `BIDDING` - Deprecated * `BUDGET` - Deprecated * `DEALS` - Recommendati…",
+   "enum": [
+    "AUDIENCES",
+    "BIDDING",
+    "BUDGET",
+    "DEALS",
+    "DELIVERY",
+    "FREQUENCY_CAP",
+    "INVENTORY_SOURCES",
+    "MAX_BID",
+    "MISSING_CREATIVE",
+    "OTHER",
+    "PERFORMANCE",
+    "REPAIR",
+    "RETAIL",
+    "SIMILAR_AUDIENCES",
+    "TARGETING",
+    "VIEWABILITY"
+   ],
+   "type": "string"
+  },
+  "dateTime": {
+   "description": "A string representation of this instant formatted as ISO-8601.",
+   "type": "string"
+  },
+  "dateTimeInstant": {
+   "description": "A string representation of this instant formatted as ISO-8601 cast to an Instant datatype.",
+   "format": "date-time",
+   "type": "string"
+  },
+  "dspObject": {
+   "description": "The DSP object to which the recommendation is related.",
+   "properties": {
+    "id": {
+     "$ref": "canonicalId"
+    },
+    "name": {
+     "description": "Name of the DSP object that is set by user during initialisation step.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "entityId": {
+   "description": "An identifier for an entity.",
+   "type": "string"
+  },
+  "execution": {
+   "description": "The execution done by QuickActions on the recommendation.",
+   "properties": {
+    "actionId": {
+     "$ref": "canonicalId"
+    },
+    "creationDate": {
+     "$ref": "dateTime"
+    },
+    "executionId": {
+     "$ref": "canonicalId"
+    },
+    "executionStatus": {
+     "description": "Status of the execution.",
+     "enum": [
+      "COMPLETED",
+      "CREATED",
+      "EXPECTED_FAILURE",
+      "FAILED",
+      "IN_PROGRESS"
+     ],
+     "type": "string"
+    },
+    "lastUpdateDate": {
+     "$ref": "dateTime"
+    },
+    "message": {
+     "description": "Generic message to be used for errors or omissions.",
+     "type": "string"
+    },
+    "messageType": {
+     "description": "Type of message to be used for errors or omissions, which will be mapped to localised strings at the client side.",
+     "enum": [
+      "COMPLETED",
+      "FAILED_GENERIC_MESSAGE",
+      "IN_PROGRESS",
+      "MOVE_BUDGET_WORLD_STATE_CHANGED_EXCEPTION",
+      "PREVIEW",
+      "WORLD_STATE_CHANGED_EXCEPTION"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "explainabilityEvidencePackDescriptor": {
+   "description": "Evidence pack containing SHAP-based explainability data for under-delivery guidance.",
+   "properties": {
+    "descriptorType": {
+     "enum": [
+      "EXPLAINABILITY_EVIDENCE_PACK"
+     ],
+     "type": "string"
+    },
+    "shapValues": {
+     "description": "SHAP feature contributions explaining the under-delivery prediction.",
+     "items": {
+      "$ref": "shapValue"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "underDeliveryEvidencePack": {
+     "$ref": "underDeliveryEvidencePack"
+    }
+   },
+   "required": [
+    "descriptorType",
+    "shapValues",
+    "underDeliveryEvidencePack"
+   ],
+   "type": "object"
+  },
+  "guidance": {
+   "description": "An object describing dynamically created guidance derived by the rule-based aggregation of individual recommendations.",
+   "properties": {
+    "callToAction": {
+     "$ref": "guidanceCallToAction"
+    },
+    "cardTitle": {
+     "description": "Title text for the guidance card.",
+     "type": "string"
+    },
+    "description": {
+     "description": "Description text of the guidance.",
+     "type": "string"
+    },
+    "descriptors": {
+     "description": "Structured metadata associated with this guidance. Discriminated by descriptorType. May be empty or absent for guidance without structured metadata.",
+     "items": {
+      "oneOf": [
+       {
+        "$ref": "explainabilityEvidencePackDescriptor"
+       }
+      ]
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "explainabilityStatus": {
+     "description": "Indicates whether explainability can be requested for this guidance. - SUPPORTED: explainability can be generated by calling GenerateGuidanceExplainability - NOT_SUPPORTED: this guidance type does not support explainabi…",
+     "enum": [
+      "NOT_SUPPORTED",
+      "SUPPORTED"
+     ],
+     "type": "string"
+    },
+    "explanation": {
+     "description": "Explanation text of the guidance.",
+     "type": "string"
+    },
+    "generatedDate": {
+     "$ref": "dateTimeInstant"
+    },
+    "groupRecommendationsBy": {
+     "description": "Group recommendations according to this target in the UI",
+     "enum": [
+      "MARKETPLACE_ID",
+      "RECOMMENDATION_TYPE",
+      "RODEO_ADVERTISER",
+      "RODEO_CREATIVE",
+      "RODEO_ENTITY",
+      "RODEO_LINEITEM",
+      "RODEO_ORDER"
+     ],
+     "type": "string"
+    },
+    "guidanceId": {
+     "description": "A unique identifier for guidance object.",
+     "type": "string"
+    },
+    "guidanceName": {
+     "$ref": "guidanceName"
+    },
+    "guidanceType": {
+     "$ref": "guidanceType"
+    },
+    "lastUpdatedDate": {
+     "$ref": "dateTimeInstant"
+    },
+    "marketplaceId": {
+     "$ref": "marketplaceId"
+    },
+    "parentGuidanceId": {
+     "description": "Identifier of a higher level guidance object.",
+     "type": "string"
+    },
+    "prioritisationScore": {
+     "deprecated": true,
+     "description": "Deprecated and no longer populated. This was an internal ranking score that is not meaningful to API consumers. It is retained in the schema as optional only for backwards compatibility and will be removed in a future r…",
+     "format": "double",
+     "type": "number"
+    },
+    "recommendations": {
+     "description": "List of dynamically aggregated recommendations used to generate this guidance.",
+     "items": {
+      "$ref": "recommendation"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "tags": {
+     "description": "List of structured tags objects annotating the guidance.",
+     "items": {
+      "$ref": "guidanceTag"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targets": {
+     "description": "Objects targeted by this guidance depending on the aggregation level, including `ENTITY`, `ADVERTISER` and `ORDER`.",
+     "items": {
+      "oneOf": [
+       {
+        "$ref": "guidanceMarketplaceTarget"
+       },
+       {
+        "$ref": "guidanceEntityTarget"
+       },
+       {
+        "$ref": "guidanceAdvertiserTarget"
+       },
+       {
+        "$ref": "guidanceOrderTarget"
+       },
+       {
+        "$ref": "guidanceOrderFlightTarget"
+       },
+       {
+        "$ref": "guidanceLineItemTarget"
+       }
+      ]
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "title": {
+     "description": "Title text of the guidance.",
+     "type": "string"
+    },
+    "totalRecommendationCount": {
+     "description": "Total count of recommendations used to generate this guidance.",
+     "type": "integer"
+    },
+    "visualisation": {
+     "description": "Optional visual data to render alongside the guidance card.",
+     "oneOf": [
+      {
+       "$ref": "budgetRecoverableVisualisation"
+      }
+     ]
+    }
+   },
+   "required": [
+    "description",
+    "generatedDate",
+    "guidanceName",
+    "guidanceType",
+    "lastUpdatedDate",
+    "marketplaceId",
+    "targets",
+    "title",
+    "totalRecommendationCount"
+   ],
+   "type": "object"
+  },
+  "guidanceAdvertiserTarget": {
+   "allOf": [
+    {
+     "$ref": "guidanceTarget"
+    },
+    {
+     "properties": {
+      "advertiserId": {
+       "$ref": "canonicalId"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "description": "An advertiser targeted by guidance."
+  },
+  "guidanceCallToAction": {
+   "properties": {
+    "label": {
+     "description": "Button or link label for call-to-action.",
+     "type": "string"
+    },
+    "link": {
+     "description": "Optional link for call-to-action.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "guidanceEntityTarget": {
+   "allOf": [
+    {
+     "$ref": "guidanceTarget"
+    },
+    {
+     "properties": {
+      "entityId": {
+       "$ref": "entityId"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "description": "An entity targeted by guidance."
+  },
+  "guidanceLineItemTarget": {
+   "allOf": [
+    {
+     "$ref": "guidanceTarget"
+    },
+    {
+     "properties": {
+      "lineItemId": {
+       "$ref": "canonicalId"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "description": "A line item targeted by guidance."
+  },
+  "guidanceMarketplaceTarget": {
+   "allOf": [
+    {
+     "$ref": "guidanceTarget"
+    },
+    {
+     "properties": {
+      "marketplaceId": {
+       "$ref": "marketplaceId"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "description": "A marketplace targeted by guidance."
+  },
+  "guidanceName": {
+   "description": "Identifier for a piece of guidance.",
+   "enum": [
+    "AGGREGATED_PRE_FLIGHT_DEALS_GUIDANCE",
+    "AGGREGATED_PRE_FLIGHT_OPTIMIZATIONS_GUIDANCE",
+    "AGGREGATED_UNDERPACING_ORDER_GUIDANCE",
+    "AMAZON_RECOMMENDED_DEALS_GUIDANCE",
+    "AMAZON_RECOMMENDED_TACTICS_GUIDANCE",
+    "AQUABOT_CREATIVE_INACTIVE_GUIDANCE",
+    "AQUABOT_DOMAIN_EXCLUSION_GUIDANCE",
+    "AQUABOT_NO_CREATIVES_GUIDANCE",
+    "BID_ADJUSTMENTS_NOT_RUNNING_GUIDANCE",
+    "CARD_ISSUES_GUIDANCE",
+    "CARD_PRE_FLIGHT_GUIDANCE",
+    "CARD_UNDERPACING_GUIDANCE",
+    "CREATIVE_ISSUES_ORDER_GUIDANCE",
+    "CREATIVE_REJECTED_ORDER_GUIDANCE",
+    "INTERNAL_DEFECT_GUIDANCE",
+    "LINE_ITEM_DEFAULT_GUIDANCE",
+    "NO_SPEND_ORDER_GUIDANCE",
+    "NO_TRAFFIC_DEAL_GUIDANCE",
+    "OUT_OF_STOCK_GUIDANCE",
+    "OVERDELIVERING_ORDER_GUIDANCE",
+    "PERFORMANCE_AT_RISK_GUIDANCE",
+    "PG_DEALS_ALL_DEALS_INACTIVE_GUIDANCE",
+    "PG_DEALS_CREATIVE_INACTIVE",
+    "PG_DEALS_CREATIVE_MISSING_AMZN_APPROVAL",
+    "PG_DEALS_CREATIVE_MISSING_SSP_APPROVAL",
+    "PG_DEALS_CREATIVE_NOT_PRESENT",
+    "PG_DEALS_DEAL_TARGETED_BY_MULTIPLE_LINE_ITEMS",
+    "PG_DEALS_DEAL_TERMINATION_RISK_ESCALATION",
+    "PG_DEALS_DEAL_TERMINATION_RISK_WARNING",
+    "PG_DEALS_DEAL_TERMS_UPDATED",
+    "PG_DEALS_DEAL_ZERO_DELIVERY",
+    "PG_DEALS_LINE_ITEM_BUDGET_LESS_THAN_DEAL_BUDGET",
+    "PG_DEALS_LINE_ITEM_CREATIVE_MISSING_AMZN_APPROVAL",
+    "PG_DEALS_LINE_ITEM_DEACTIVATED",
+    "PG_DEALS_LINE_ITEM_ENDS_BEFORE_DEAL",
+    "PG_DEALS_LINE_ITEM_INACTIVE",
+    "PG_DEALS_LINE_ITEM_NOT_PRESENT",
+    "PG_DEALS_LINE_ITEM_STARTS_AFTER_DEAL",
+    "PG_DEALS_ORDER_DEACTIVATED",
+    "PG_DEALS_ORDER_INACTIVE",
+    "PG_DEALS_REVIEW_DEAL_TERMS",
+    "PRE_FLIGHT_LINE_ITEM_GUIDANCE_V2",
+    "PRE_FLIGHT_OPTIMIZATIONS_LINE_ITEM_GUIDANCE",
+    "PRE_FLIGHT_OPTIMIZATIONS_ORDER_GUIDANCE",
+    "PRE_FLIGHT_ORDER_GUIDANCE_V2",
+    "UNDERPACING_LINE_ITEM_GUIDANCE",
+    "UNDERPACING_ORDER_GUIDANCE",
+    "ZERO_KPI_GUIDANCE"
+   ],
+   "type": "string"
+  },
+  "guidanceOrderFlightTarget": {
+   "allOf": [
+    {
+     "$ref": "guidanceTarget"
+    },
+    {
+     "properties": {
+      "orderFlightId": {
+       "$ref": "canonicalId"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "description": "An order flight targeted by guidance."
+  },
+  "guidanceOrderTarget": {
+   "allOf": [
+    {
+     "$ref": "guidanceTarget"
+    },
+    {
+     "properties": {
+      "orderId": {
+       "$ref": "canonicalId"
+      }
+     },
+     "type": "object"
+    }
+   ],
+   "description": "An order targeted by guidance."
+  },
+  "guidanceTag": {
+   "description": "A structured type used to store additional metadata.",
+   "type": "object"
+  },
+  "guidanceTarget": {
+   "description": "An object targeted by guidance.",
+   "properties": {
+    "name": {
+     "description": "Optional display name of the guidance target.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "guidanceType": {
+   "description": "Guidance type for the recommendation whether it is an Alert or Opportunity: * `ALERT` - Guidance type for recommendations which are Alerts * `OPPORTUNITY` - Guidance type for recommendations which are Opportunities",
+   "enum": [
+    "ALERT",
+    "OPPORTUNITY"
+   ],
+   "type": "string"
+  },
+  "language": {
+   "default": "en-US",
+   "description": "Indicates a language and locale. If omitted, defaults to en-US.",
+   "enum": [
+    "ar-AE",
+    "de-DE",
+    "en-AE",
+    "en-AU",
+    "en-CA",
+    "en-GB",
+    "en-IN",
+    "en-SG",
+    "en-US",
+    "es-CO",
+    "es-ES",
+    "es-MX",
+    "fr-CA",
+    "fr-FR",
+    "hi-IN",
+    "it-IT",
+    "ja-JP",
+    "ko-KR",
+    "nl-NL",
+    "pl-PL",
+    "pt-BR",
+    "sv-SE",
+    "ta-IN",
+    "th-TH",
+    "tr-TR",
+    "vi-VN",
+    "zh-CN",
+    "zh-TW"
+   ],
+   "type": "string"
+  },
+  "listAdGroupGuidanceV1Request": {
+   "allOf": [
+    {
+     "$ref": "listGuidanceV1RequestBase"
+    },
+    {
+     "properties": {
+      "adGroupIds": {
+       "description": "A list of ad group IDs.",
+       "items": {
+        "$ref": "adGroupId"
+       },
+       "maxItems": 50,
+       "minItems": 1,
+       "type": "array"
+      }
+     },
+     "required": [
+      "adGroupIds"
+     ],
+     "type": "object"
+    }
+   ],
+   "description": "Request body for ListAdGroupGuidanceV1 call."
+  },
+  "listAdvertiserGuidanceV1Request": {
+   "allOf": [
+    {
+     "$ref": "listGuidanceV1RequestBase"
+    },
+    {
+     "properties": {
+      "advertiserIds": {
+       "description": "A list of advertiser IDs.",
+       "items": {
+        "$ref": "advertiserId"
+       },
+       "maxItems": 50,
+       "minItems": 1,
+       "type": "array"
+      }
+     },
+     "required": [
+      "advertiserIds"
+     ],
+     "type": "object"
+    }
+   ],
+   "description": "Request body for ListAdvertiserGuidanceV1 call."
+  },
+  "listCampaignGuidanceV1Request": {
+   "allOf": [
+    {
+     "$ref": "listGuidanceV1RequestBase"
+    },
+    {
+     "properties": {
+      "campaignIds": {
+       "description": "A list of campaign IDs.",
+       "items": {
+        "$ref": "campaignId"
+       },
+       "maxItems": 50,
+       "minItems": 1,
+       "type": "array"
+      }
+     },
+     "required": [
+      "campaignIds"
+     ],
+     "type": "object"
+    }
+   ],
+   "description": "Request body for ListCampaignGuidanceV1 call."
+  },
+  "listGuidanceRequestFilters": {
+   "description": "Optional filters to apply to generated guidance.",
+   "properties": {
+    "guidanceNames": {
+     "description": "Limit guidance to the specified guidance names. If unset, defaults to returning all guidance.",
+     "items": {
+      "$ref": "guidanceName"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "includeRecommendations": {
+     "default": "true",
+     "description": "Specify if individual recommendations should be included in the guidance response. Useful to reduce response payload size. Does not affect `totalRecommendationCount`.",
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "listGuidanceResponseSuccess": {
+   "properties": {
+    "guidance": {
+     "description": "An array of objects describing dynamically created guidance derived by the rule-based aggregation of individual recommendations.",
+     "items": {
+      "$ref": "guidance"
+     },
+     "maxItems": 100,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "Array index referencing the target object in the request array.",
+     "type": "integer"
+    },
+    "totalGuidanceCount": {
+     "description": "Total count of guidance available for this target.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "listGuidanceV1RequestBase": {
+   "properties": {
+    "filters": {
+     "$ref": "listGuidanceRequestFilters"
+    },
+    "nextToken": {
+     "$ref": "nextToken"
+    }
+   },
+   "type": "object"
+  },
+  "listGuidanceV1Response": {
+   "properties": {
+    "error": {
+     "description": "Error response containing error code and description associated with the target object, referenced by array index.",
+     "items": {
+      "$ref": "listGuidanceV1ResponseError"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "$ref": "nextToken"
+    },
+    "success": {
+     "description": "Success response containing guidance associated with the target object, referenced by array index.",
+     "items": {
+      "$ref": "listGuidanceResponseSuccess"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "listGuidanceV1ResponseError": {
+   "properties": {
+    "code": {
+     "description": "Enum representing error code.",
+     "enum": [
+      "FAILED_GENERATION",
+      "INVALID_TARGET_TYPE"
+     ],
+     "type": "string"
+    },
+    "description": {
+     "description": "Textual description of the error.",
+     "type": "string"
+    },
+    "index": {
+     "description": "Array index referencing the target object in the request array.",
+     "type": "integer"
+    }
+   },
+   "type": "object"
+  },
+  "marketplaceId": {
+   "description": "The identifier of the marketplace to which the recommendation is associated with.",
+   "type": "string"
+  },
+  "nextToken": {
+   "description": "Opaque pagination token returned in the query response to be provided in subsequent calls to retrieve paginated recommendations.",
+   "type": "string"
+  },
+  "quickAction": {
+   "description": "An object describing the action associated with this recommendation.",
+   "properties": {
+    "actionId": {
+     "$ref": "canonicalId"
+    },
+    "actionType": {
+     "description": "String identifying the type of suggested action.",
+     "enum": [
+      "AssociateCreatives",
+      "AudienceExpansion",
+      "AudienceRemoval",
+      "AudienceReplacement",
+      "AudienceTargetingMatchTypeUpdate",
+      "BaseBidUpdate",
+      "CampaignFrequencyCapUpdate",
+      "FrequencyCapUpdate",
+      "HibouEnrollment",
+      "MaxBidUpdate",
+      "MoveBudget",
+      "MoveBudgetBeta",
+      "OrderBaseBidUpdate",
+      "OrderMaxBidUpdate",
+      "OrderViewabilityUpdate",
+      "TacticsEnrolment",
+      "TargetsUpdate",
+      "ViewabilityUpdate"
+     ],
+     "type": "string"
+    },
+    "currentValue": {
+     "description": "Current setting value that triggered the recommendation.",
+     "type": "string"
+    },
+    "description": {
+     "description": "Description for the recommendation action.",
+     "type": "string"
+    },
+    "recommendedValue": {
+     "description": "Recommended setting value to be applied by the Quick Action.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "actionId",
+    "actionType",
+    "description"
+   ],
+   "type": "object"
+  },
+  "quickactionsData": {
+   "description": "The automated QuickAction object associated with the recommendation.",
+   "properties": {
+    "currentActions": {
+     "description": "Current active recommended actions.",
+     "items": {
+      "$ref": "quickAction"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    },
+    "executionHistory": {
+     "description": "The history of existing QuickAction executions on this recommendation.",
+     "items": {
+      "$ref": "execution"
+     },
+     "maxItems": 5,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "recommendation": {
+   "description": "An object describing the DSP recommendation generated to improve the campaign performance for display advertising.",
+   "properties": {
+    "advertiser": {
+     "$ref": "dspObject"
+    },
+    "category": {
+     "$ref": "category"
+    },
+    "deferredUntil": {
+     "$ref": "dateTime"
+    },
+    "description": {
+     "$ref": "recommendationText"
+    },
+    "entityId": {
+     "$ref": "entityId"
+    },
+    "expectedChanges": {
+     "description": "Expected changes are represented as a json array of arrays and are interpreted to be in a Disjunctive normal form (DNF).",
+     "type": "string"
+    },
+    "explanation": {
+     "$ref": "recommendationText"
+    },
+    "guidanceType": {
+     "$ref": "guidanceType"
+    },
+    "lastUpdateDate": {
+     "$ref": "dateTime"
+    },
+    "lineItem": {
+     "$ref": "dspObject"
+    },
+    "marketplaceId": {
+     "$ref": "marketplaceId"
+    },
+    "order": {
+     "$ref": "dspObject"
+    },
+    "quickactionsData": {
+     "$ref": "quickactionsData"
+    },
+    "recommendationId": {
+     "$ref": "recommendationId"
+    },
+    "recommendationType": {
+     "type": "string"
+    },
+    "table": {
+     "description": "List of columns to display",
+     "items": {
+      "$ref": "tableColumn"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targets": {
+     "description": "Nested list of lists used to group related objects targeted by this recommendation.",
+     "items": {
+      "items": {
+       "$ref": "target"
+      },
+      "maxItems": 50,
+      "minItems": 0,
+      "type": "array"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "title": {
+     "$ref": "recommendationText"
+    },
+    "type": {
+     "$ref": "type"
+    },
+    "userStatus": {
+     "$ref": "userStatus"
+    }
+   },
+   "type": "object"
+  },
+  "recommendationId": {
+   "description": "A unique identifier for recommendation.",
+   "maxLength": 500,
+   "type": "string"
+  },
+  "recommendationText": {
+   "description": "Description text for the recommendation.",
+   "type": "string"
+  },
+  "recommendationsError": {
+   "description": "Error returned from the server.",
+   "properties": {
+    "errorMessage": {
+     "description": "Detailed information about the error that occurred.",
+     "type": "string"
+    },
+    "requestId": {
+     "description": "A unique value generated by the server to identify the request.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorMessage",
+    "requestId"
+   ],
+   "type": "object"
+  },
+  "shapValue": {
+   "description": "A single SHAP feature contribution to the under-delivery prediction.",
+   "properties": {
+    "featureName": {
+     "description": "Name of the feature contributing to the prediction.",
+     "type": "string"
+    },
+    "impactDirection": {
+     "description": "Direction of this feature's influence on the predicted outcome.",
+     "enum": [
+      "NEGATIVE",
+      "POSITIVE"
+     ],
+     "type": "string"
+    },
+    "magnitude": {
+     "description": "Magnitude of the feature's contribution. Sign indicates direction.",
+     "format": "double",
+     "type": "number"
+    },
+    "numberOfLineItemsImpacted": {
+     "description": "Number of line items affected by this feature.",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "featureName",
+    "impactDirection",
+    "magnitude"
+   ],
+   "type": "object"
+  },
+  "tableColumn": {
+   "description": "A single column to be rendered in the front-end.",
+   "properties": {
+    "header": {
+     "description": "Column header",
+     "type": "string"
+    },
+    "width": {
+     "description": "Column width ratio expressed as whole integer - does not necessarily add up to 100. Ratio must be positive. E.g. four columns with widths [20, 15, 50, 15] to be rendered as [20/100, 15/100, 50/100, 15/100] width respect…",
+     "minimum": 1,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "header",
+    "width"
+   ],
+   "type": "object"
+  },
+  "target": {
+   "description": "An object targeted by a recommendation, e.g a Rodeo order.",
+   "properties": {
+    "displayName": {
+     "description": "Optional target display name, e.g. the Rodeo order name.",
+     "type": "string"
+    },
+    "id": {
+     "description": "Target identifier, e.g. Rodeo orderCfid.",
+     "type": "string"
+    },
+    "type": {
+     "description": "Type of the target, e.g. RODEO_ORDER.",
+     "enum": [
+      "AMH_PARENT_VENDOR",
+      "AMH_SELLER_MCID",
+      "AMH_VENDOR_CLAIM_ID",
+      "AMH_VENDOR_CODE",
+      "ASIN_ID",
+      "AXIOM_ADGROUP_EXTERNAL_ID",
+      "AXIOM_ADGROUP_INTERNAL_ID",
+      "AXIOM_CAMPAIGN_EXTERNAL_ID",
+      "AXIOM_CAMPAIGN_INERNAL_ID",
+      "AXIOM_CAMPAIGN_INTERNAL_ID",
+      "AXIOM_KEYWORD_EXTERNAL_ID",
+      "AXIOM_KEYWORD_INTERNAL_ID",
+      "BRAND_ADVERTISER",
+      "BRAND_AID",
+      "COUNTRY_CODE",
+      "CUSTOM_BRAND",
+      "DSM_LINE_ITEM",
+      "ENTITY_ID",
+      "GROUP_ID",
+      "MARKETPLACE_ID",
+      "OMS_PROPOSAL",
+      "OPPORTUNITY_ID",
+      "REALM_ID",
+      "RODEO_ADVERTISER",
+      "RODEO_CREATIVE",
+      "RODEO_DEAL",
+      "RODEO_DRAFT_CAMPAIGN_OBJECT",
+      "RODEO_ENTITY",
+      "RODEO_LINEITEM",
+      "RODEO_LINEITEM_OBJECT",
+      "RODEO_ORDER",
+      "RODEO_ORDER_FLIGHT",
+      "RODEO_PROPOSAL",
+      "SALESFORCE_ACCOUNT_ID",
+      "SALESFORCE_OPPORTUNITY",
+      "SELLER_CENTRAL_ID",
+      "SESSION_ID",
+      "SPOT_ID",
+      "VAM_BRAND"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "type": {
+   "description": "Describes the purpose for the recommendation, for example DEPRECATED_AUDIENCE_REMOVAL",
+   "type": "string"
+  },
+  "underDeliveryEvidencePack": {
+   "description": "Summary statistics about the under-delivery prediction.",
+   "properties": {
+    "description": {
+     "description": "Human-readable description of the under-delivery recommendation.",
+     "type": "string"
+    },
+    "flightBudgetAtRisk": {
+     "description": "The amount of budget projected to be unspent by end of flight.",
+     "format": "double",
+     "type": "number"
+    },
+    "flightRealBudget": {
+     "description": "The real budget for the flight in impressions or local currency.",
+     "format": "double",
+     "type": "number"
+    },
+    "projectedDeliveryGapProportion": {
+     "description": "The gap between target and projected delivery as a proportion.",
+     "format": "double",
+     "type": "number"
+    },
+    "projectedDeliveryRate": {
+     "description": "The projected delivery rate as a proportion (0.0 to 1.0).",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "userStatus": {
+   "description": "Status for the recommendation set by user.",
+   "enum": [
+    "DEFERRED",
+    "DISMISSED"
+   ],
+   "type": "string"
+  }
+ }
+}

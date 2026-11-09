@@ -1,0 +1,260 @@
+{
+ "api": "D16GDspApiDeals",
+ "file": "specs/dest/D16GDspApiDeals_prod_3p.json",
+ "schemas": {
+  "CreateDealResponseContent": {
+   "properties": {
+    "dealId": {
+     "description": "Amazon assigned ID unique to each Deal.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Currency": {
+   "description": "Supported Currency ISO-4217 codes.",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CNY",
+    "DKK",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "NOK",
+    "NZD",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD"
+   ],
+   "type": "string"
+  },
+  "Deal": {
+   "properties": {
+    "budgetMillis": {
+     "description": "Numeric value for the agreed guaranteed budget for PROGRAMMATIC_GUARANTEED deal type, expressed in thousandths of hundreths of the currency base unit.",
+     "type": "number"
+    },
+    "currency": {
+     "$ref": "Currency"
+    },
+    "dealName": {
+     "description": "The name of the deal.",
+     "maxLength": 256,
+     "type": "string"
+    },
+    "dealType": {
+     "$ref": "ThirdPartyDealType"
+    },
+    "endDateTime": {
+     "description": "The deal end date. Format is ISO-8601 and UTC timezone.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "exchangeId": {
+     "description": "ID of the Exchange where the deal is registered.",
+     "type": "string"
+    },
+    "externalDealId": {
+     "description": "The external 'Deal ID' provided by the SSP/publisher to the DSP, and advertisers will reference this ID in their correspondence with the SSP/publisher.",
+     "maxLength": 150,
+     "type": "string"
+    },
+    "priceMillis": {
+     "description": "Numeric value for the price, expressed in thousandths of hundreths of the currency base unit.",
+     "type": "number"
+    },
+    "priceType": {
+     "$ref": "PriceType"
+    },
+    "publisher": {
+     "description": "The name of the publisher providing the deal.",
+     "maxLength": 150,
+     "type": "string"
+    },
+    "startDateTime": {
+     "description": "The deal start date. Format is ISO-8601 and UTC timezone.",
+     "format": "date-time",
+     "type": "string"
+    }
+   },
+   "required": [
+    "dealName",
+    "dealType",
+    "exchangeId",
+    "externalDealId",
+    "priceType",
+    "startDateTime"
+   ],
+   "type": "object"
+  },
+  "DspBadRequestExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspInternalServerExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspNotFoundExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubError": {
+   "properties": {
+    "errorCode": {
+     "type": "string"
+    },
+    "errorId": {
+     "type": "string"
+    },
+    "errorMessage": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorCode",
+    "errorMessage"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubError"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "PriceType": {
+   "enum": [
+    "FIXED_CPM",
+    "FLOOR_RATE"
+   ],
+   "type": "string"
+  },
+  "ThirdPartyDealType": {
+   "description": "The type of deal used defines the structure of the agreement between the seller and the buyer, and informs the buyer on subsequent actions and settings that may be allowed on the deal. Other settings, such as delivery g…",
+   "enum": [
+    "PREFERRED",
+    "PRIVATE_AUCTION",
+    "PROGRAMMATIC_GUARANTEED"
+   ],
+   "type": "string"
+  }
+ }
+}

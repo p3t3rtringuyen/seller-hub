@@ -1,0 +1,291 @@
+{
+  "BigDecimal": {
+    "description": "Fields with a schema type of `BigDecimal` are a signed decimal number (for example `currencyAmount`).",
+    "properties": {},
+    "required": [],
+    "type": "number"
+  },
+  "Breakdown": {
+    "description": "A sub-component of a monetary amount.",
+    "properties": {
+      "breakdownAmount": {
+        "description": "The monetary amount of the sub-component.",
+        "ref": "Currency"
+      },
+      "breakdownType": {
+        "description": "The type of sub-component.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "breakdownAmount",
+      "breakdownType"
+    ],
+    "type": "object"
+  },
+  "Currency": {
+    "description": "A currency amount with the associated currency code.",
+    "properties": {
+      "currencyAmount": {
+        "description": "The monetary value.",
+        "ref": "BigDecimal"
+      },
+      "currencyCode": {
+        "description": "The three-digit currency code in ISO 4217 format.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "currencyAmount",
+      "currencyCode"
+    ],
+    "type": "object"
+  },
+  "Error": {
+    "description": "Error response returned when the request is unsuccessful.",
+    "properties": {
+      "code": {
+        "description": "An error code that identifies the type of error that occurred.",
+        "type": "string"
+      },
+      "details": {
+        "description": "Additional details that can help the caller understand or fix the issue.",
+        "type": "string"
+      },
+      "message": {
+        "description": "A message that describes the error condition.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "message"
+    ],
+    "type": "object"
+  },
+  "ErrorList": {
+    "description": "A list of error responses returned when a request is unsuccessful.",
+    "properties": {
+      "errors": {
+        "description": "A list of errors.",
+        "ref": "Error",
+        "type": "array"
+      }
+    },
+    "required": [
+      "errors"
+    ],
+    "type": "object"
+  },
+  "GetRemittanceResponse": {
+    "description": "The response for the `getRemittance` operation.",
+    "properties": {
+      "nextTokenForLineItems": {
+        "description": "A token to fetch the next page of line item results.",
+        "type": "string"
+      },
+      "remittanceHeader": {
+        "description": "The remittance header information.",
+        "ref": "RemittanceHeader"
+      },
+      "remittanceItems": {
+        "description": "A list of remittance line items.",
+        "ref": "RemittanceItem",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "GetRemittancesResponse": {
+    "description": "The response for the `getRemittanceHeaders` operation.",
+    "properties": {
+      "nextToken": {
+        "description": "A token to fetch the next page of results.",
+        "type": "string"
+      },
+      "numOfRecords": {
+        "description": "The total number of records across all pages.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "remittances": {
+        "description": "A list of remittance summaries.",
+        "ref": "RemittanceHeader",
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RelatedIdentifier": {
+    "description": "A related business identifier for the transaction.",
+    "properties": {
+      "relatedIdentifierName": {
+        "description": "An enumerated set of related business identifier names.",
+        "enum": [
+          "PAYEE_CODE",
+          "VENDOR_CODE"
+        ],
+        "type": "string"
+      },
+      "relatedIdentifierValue": {
+        "description": "The corresponding values for `relatedIdentifierName`.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "relatedIdentifierName",
+      "relatedIdentifierValue"
+    ],
+    "type": "object"
+  },
+  "RelatedItemIdentifier": {
+    "description": "A related business identifier for a remittance line item.",
+    "properties": {
+      "relatedIdentifierName": {
+        "description": "An enumerated set of related business identifier names for a line item.",
+        "enum": [
+          "VENDOR_CODE"
+        ],
+        "type": "string"
+      },
+      "relatedIdentifierValue": {
+        "description": "The corresponding values for `relatedIdentifierName`.",
+        "itemType": "string",
+        "type": "array"
+      }
+    },
+    "required": [
+      "relatedIdentifierName",
+      "relatedIdentifierValue"
+    ],
+    "type": "object"
+  },
+  "RemittanceHeader": {
+    "description": "Summary information for a remittance payment.",
+    "properties": {
+      "countryCode": {
+        "description": "The country code associated with the remittance in ISO 3166-1 alpha-2 format.",
+        "type": "string"
+      },
+      "exchangeRate": {
+        "description": "The exchange rate applied to the payment.",
+        "ref": "BigDecimal"
+      },
+      "lineItemCount": {
+        "description": "The number of line items in the remittance.",
+        "format": "int32",
+        "type": "integer"
+      },
+      "paymentAmount": {
+        "description": "The payment amount.",
+        "ref": "Currency"
+      },
+      "paymentAmountInInvoiceCurrency": {
+        "description": "The payment amount in the invoice currency.",
+        "ref": "Currency"
+      },
+      "paymentDate": {
+        "description": "The date of the payment in ISO 8601 date-time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "paymentMethod": {
+        "description": "The method used for the payment.",
+        "type": "string"
+      },
+      "paymentNumber": {
+        "description": "The external payment reference number associated with the remittance.",
+        "type": "string"
+      },
+      "relatedIdentifiers": {
+        "description": "A list of related business identifiers for the remittance.",
+        "ref": "RelatedIdentifier",
+        "type": "array"
+      },
+      "remittanceStatus": {
+        "description": "The status of the remittance.",
+        "ref": "RemittanceStatus"
+      },
+      "uniquePaymentId": {
+        "description": "The unique internal identifier for the payment record in the remittance system.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "paymentAmount",
+      "paymentDate",
+      "remittanceStatus",
+      "uniquePaymentId"
+    ],
+    "type": "object"
+  },
+  "RemittanceItem": {
+    "description": "Detailed line item information for a remittance.",
+    "properties": {
+      "description": {
+        "description": "A description of the line item.",
+        "type": "string"
+      },
+      "invoiceIssueDate": {
+        "description": "The invoice issue date in ISO 8601 date-time format.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "invoiceNumber": {
+        "description": "The invoice number.",
+        "type": "string"
+      },
+      "invoiceType": {
+        "description": "The type of invoice.",
+        "type": "string"
+      },
+      "netAmountPaid": {
+        "description": "The net amount paid for the line item.",
+        "ref": "Currency"
+      },
+      "netAmountPaidBreakdown": {
+        "description": "The breakdown of `netAmountPaid` into sub-components.",
+        "ref": "Breakdown",
+        "type": "array"
+      },
+      "paymentTerms": {
+        "description": "The payment terms.",
+        "type": "string"
+      },
+      "relatedItemIdentifiers": {
+        "description": "A list of related business identifiers for the line item.",
+        "ref": "RelatedItemIdentifier",
+        "type": "array"
+      },
+      "totalAmount": {
+        "description": "The total amount for the line item.",
+        "ref": "Currency"
+      },
+      "totalAmountBreakdown": {
+        "description": "The breakdown of `totalAmount` into sub-components.",
+        "ref": "Breakdown",
+        "type": "array"
+      },
+      "withholdingAmount": {
+        "description": "The amount withheld on the line item.",
+        "ref": "Currency"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "RemittanceStatus": {
+    "description": "The status of a remittance.",
+    "enum": [
+      "FAILED",
+      "IN_PROGRESS",
+      "SUCCESSFUL"
+    ],
+    "properties": {},
+    "required": [],
+    "type": "string"
+  }
+}

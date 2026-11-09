@@ -1,0 +1,144 @@
+{
+ "api": "AdvertisingTestAccount",
+ "file": "specs/dest/AdvertisingTestAccount_prod_3p.json",
+ "schemas": {
+  "CreateAccountRequest": {
+   "properties": {
+    "accountMetaData": {
+     "properties": {
+      "vendorCode": {
+       "description": "Vendor code that needs to be associated with the vendor account.",
+       "type": "string"
+      }
+     }
+    },
+    "accountType": {
+     "description": "Type of test account.",
+     "enum": [
+      "AUTHOR",
+      "VENDOR"
+     ],
+     "type": "string"
+    },
+    "countryCode": {
+     "description": "Country code of the test account.",
+     "enum": [
+      "AE",
+      "AU",
+      "BE",
+      "BR",
+      "CA",
+      "DE",
+      "EG",
+      "ES",
+      "FR",
+      "IT",
+      "JP",
+      "MX",
+      "NL",
+      "PL",
+      "SA",
+      "SE",
+      "SG",
+      "TR",
+      "UK",
+      "US"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "accountType",
+    "countryCode"
+   ],
+   "type": "object"
+  },
+  "CreateAccountResponse": {
+   "properties": {
+    "requestId": {
+     "description": "request id.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "GetAccountInformationResponse": {
+   "items": {
+    "properties": {
+     "accountType": {
+      "description": "Type of test account.",
+      "enum": [
+       "AUTHOR",
+       "VENDOR"
+      ],
+      "type": "string"
+     },
+     "asins": {
+      "description": "List of ASIN belonging to Author account.",
+      "items": {
+       "type": "string"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+     },
+     "countryCode": {
+      "description": "Country code of a test account.",
+      "enum": [
+       "AE",
+       "AU",
+       "BE",
+       "BR",
+       "CA",
+       "DE",
+       "EG",
+       "ES",
+       "FR",
+       "IT",
+       "JP",
+       "MX",
+       "NL",
+       "PL",
+       "SA",
+       "SE",
+       "SG",
+       "TR",
+       "UK",
+       "US"
+      ],
+      "type": "string"
+     },
+     "id": {
+      "description": "Identifier for the account.",
+      "type": "string"
+     },
+     "status": {
+      "description": "Status of test account creation request.",
+      "enum": [
+       "COMPLETED",
+       "FAILED",
+       "IN_PROGRESS"
+      ],
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "type": "array"
+  },
+  "error": {
+   "description": "Error response object.",
+   "properties": {
+    "code": {
+     "description": "The HTTP status code of the response.",
+     "type": "string"
+    },
+    "details": {
+     "description": "A human-readable description of the response.",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

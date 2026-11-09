@@ -1,0 +1,347 @@
+{
+ "api": "AdGroupTargeting-Auto",
+ "file": "specs/dest/AdGroupTargeting-Auto_prod_3p.json",
+ "schemas": {
+  "DspAutoError": {
+   "properties": {
+    "errors": {
+     "description": "A list of validation errors.",
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "index": {
+     "description": "The index of the object in the array from the request body.",
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "DspAutoSuccess": {
+   "properties": {
+    "index": {
+     "description": "The index of the object in the array from the request body.",
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "index"
+   ],
+   "type": "object"
+  },
+  "DspBadRequestExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspConflictExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspCreateAdGroupAutoTargetV1": {
+   "properties": {
+    "matchType": {
+     "$ref": "DspMatchTypeV1"
+    }
+   },
+   "required": [
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "DspCreateAdGroupAutoTargetsRequestContentV1": {
+   "properties": {
+    "autoTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspCreateAdGroupAutoTargetV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "autoTargets"
+   ],
+   "type": "object"
+  },
+  "DspCreateAdGroupAutoTargetsResponseContentV1": {
+   "description": "The create operation response.",
+   "properties": {
+    "error": {
+     "description": "The list of unsuccessful targeting objects",
+     "items": {
+      "$ref": "DspAutoError"
+     },
+     "type": "array"
+    },
+    "success": {
+     "description": "The list of successful targeting objects.",
+     "items": {
+      "$ref": "DspAutoSuccess"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspDeleteAdGroupAutoTargetV1": {
+   "properties": {
+    "matchType": {
+     "$ref": "DspMatchTypeV1"
+    }
+   },
+   "required": [
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupAutoTargetsRequestContentV1": {
+   "properties": {
+    "autoTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspDeleteAdGroupAutoTargetV1"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "autoTargets"
+   ],
+   "type": "object"
+  },
+  "DspDeleteAdGroupAutoTargetsResponseContentV1": {
+   "description": "The delete operation response.",
+   "properties": {
+    "error": {
+     "description": "The list of unsuccessful targeting objects",
+     "items": {
+      "$ref": "DspAutoError"
+     },
+     "type": "array"
+    },
+    "success": {
+     "description": "The list of successful targeting objects.",
+     "items": {
+      "$ref": "DspAutoSuccess"
+     },
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "DspForbiddenExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspGetAdGroupAutoTargetV1": {
+   "properties": {
+    "matchType": {
+     "$ref": "DspMatchTypeV1"
+    }
+   },
+   "required": [
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "DspGetAdGroupAutoTargetsResponseContent": {
+   "properties": {
+    "autoTargets": {
+     "description": "A list of targets.",
+     "items": {
+      "$ref": "DspGetAdGroupAutoTargetV1"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "nextToken": {
+     "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the nextToken field is empty, th…",
+     "type": "string"
+    }
+   },
+   "required": [
+    "autoTargets"
+   ],
+   "type": "object"
+  },
+  "DspInternalServerExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspMatchTypeV1": {
+   "description": "The auto target match type.",
+   "enum": [
+    "ASIN_RELATED"
+   ],
+   "type": "string"
+  },
+  "DspNotFoundExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspSubErrorV1": {
+   "properties": {
+    "errorType": {
+     "type": "string"
+    },
+    "fieldName": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "errorType",
+    "message"
+   ],
+   "type": "object"
+  },
+  "DspTooManyRequestsExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnauthorizedExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "DspUnsupportedMediaTypeExceptionV1ResponseContent": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "DspSubErrorV1"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "message": {
+     "type": "string"
+    },
+    "requestId": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ }
+}

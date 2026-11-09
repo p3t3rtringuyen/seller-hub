@@ -1,0 +1,1908 @@
+{
+ "api": "AmazonAdsAPISPGLOBALTargetsContract",
+ "file": "specs/dest/AmazonAdsAPISPGLOBALTargetsContract_prod_3p.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "marketplace": {
+     "$ref": "ErrorMarketplace"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | |------|------| | `ACTION_NOT_SUPPORTED` | The request is not supported. | | `ACTIVE_RESOURCE_LIMIT_EXCEEDED` | Too many live resources. Remove resources and try again. | …",
+   "enum": [
+    "ACTION_NOT_SUPPORTED",
+    "ACTIVE_RESOURCE_LIMIT_EXCEEDED",
+    "ARCHIVED_PARENT_CANNOT_CREATE",
+    "ARCHIVED_PARENT_CANNOT_EDIT",
+    "ARCHIVED_RESOURCE_CANNOT_EDIT",
+    "AUTOCREATED_ENTITY_CANNOT_EDIT",
+    "BAD_REQUEST",
+    "CONFLICT",
+    "CONTENT_TOO_LARGE",
+    "DATE_CANNOT_BE_IN_PAST",
+    "DATE_CANNOT_BE_NULL",
+    "DATE_TOO_SOON",
+    "DUPLICATE_FIELD_VALUE_FOUND",
+    "DUPLICATE_RESOURCE_ID_FOUND",
+    "DURATION_TOO_SHORT",
+    "FEATURE_DISCONTINUED",
+    "FIELD_SIZE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_SIZE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_SIZE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_CANNOT_EDIT",
+    "FIELD_VALUE_CONTAINS_BLOCKLISTED_WORDS",
+    "FIELD_VALUE_CONTAINS_INVALID_CHARACTERS",
+    "FIELD_VALUE_IS_ABOVE_MAXIMUM_LIMIT",
+    "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+    "FIELD_VALUE_IS_EMPTY",
+    "FIELD_VALUE_IS_INVALID",
+    "FIELD_VALUE_IS_NULL",
+    "FIELD_VALUE_IS_OUT_OF_RANGE",
+    "FIELD_VALUE_MISMATCH",
+    "FIELD_VALUE_MUST_BE_EMPTY_OR_NULL",
+    "FIELD_VALUE_NOT_FOUND",
+    "FIELD_VALUE_NOT_UNIQUE",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "PAYMENT_ISSUE",
+    "PRODUCT_INELIGIBLE",
+    "RESOURCE_DOES_NOT_BELONG_TO_PARENT",
+    "RESOURCE_ID_NOT_FOUND",
+    "RESOURCE_IS_EMPTY",
+    "RESOURCE_IS_IN_TERMINAL_STATE",
+    "RESOURCE_IS_NULL",
+    "TOO_MANY_REQUESTS",
+    "TOTAL_RESOURCE_LIMIT_EXCEEDED",
+    "UNAUTHORIZED",
+    "UNSUPPORTED_MARKETPLACE"
+   ],
+   "type": "string"
+  },
+  "ErrorMarketplace": {
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 4999,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "SPGlobalAdProduct": {
+   "description": "**AdProduct Enum:** | AdProduct | Description | |------|------| | `SPONSORED_PRODUCTS` | Sponsored Products ad product. |",
+   "enum": [
+    "SPONSORED_PRODUCTS"
+   ],
+   "type": "string"
+  },
+  "SPGlobalCreateKeywordTarget": {
+   "description": "Targets a specific customer search term.",
+   "properties": {
+    "keyword": {
+     "description": "The customer search term or text to target. For valid characters and constraints, [see keyword character constraints](https://advertising.amazon.com/API/docs/en-us/reference/concepts/limits#keyword-character-constraints…",
+     "type": "string"
+    },
+    "matchType": {
+     "$ref": "SPGlobalKeywordMatchType"
+    },
+    "nativeLanguageKeyword": {
+     "description": "The unlocalized keyword text in the preferred locale of the advertiser.",
+     "type": "string"
+    },
+    "nativeLanguageLocale": {
+     "$ref": "SPGlobalLanguageLocale"
+    }
+   },
+   "required": [
+    "keyword",
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateMarketplaceTargetConfigurations": {
+   "properties": {
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    },
+    "overrides": {
+     "$ref": "SPGlobalCreateMarketplaceTargetFieldOverrides"
+    }
+   },
+   "required": [
+    "marketplace",
+    "overrides"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateMarketplaceTargetFieldOverrides": {
+   "properties": {
+    "state": {
+     "$ref": "SPGlobalState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the target",
+     "items": {
+      "$ref": "SPGlobalCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetDetails": {
+     "$ref": "SPGlobalCreateOverridableTargets"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCreateOverridableTargets": {
+   "oneOf": [
+    {
+     "properties": {
+      "keywordTarget": {
+       "$ref": "SPGlobalCreateKeywordTarget"
+      }
+     },
+     "required": [
+      "keywordTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "themeTarget": {
+       "$ref": "SPGlobalCreateThemeTarget"
+      }
+     },
+     "required": [
+      "themeTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SPGlobalCreateProductCategoryRefinement": {
+   "properties": {
+    "productAgeRangeId": {
+     "description": "The age range ID to target.",
+     "type": "string"
+    },
+    "productBrandId": {
+     "description": "The brand ID to target.",
+     "type": "string"
+    },
+    "productCategoryId": {
+     "description": "The product category ID to target.",
+     "type": "string"
+    },
+    "productPriceGreaterThan": {
+     "description": "Refinement to target products with a price greater than the value within the product category.",
+     "format": "double",
+     "type": "number"
+    },
+    "productPriceLessThan": {
+     "description": "Refinement to target products with a price less than the value within the product category.",
+     "format": "double",
+     "type": "number"
+    },
+    "productPrimeShippingEligible": {
+     "description": "Target based on if a product is Prime-shipping eligible.",
+     "type": "boolean"
+    },
+    "productRatingGreaterThan": {
+     "description": "Refinement to target products with a rating greater than the value within the product category.",
+     "format": "double",
+     "type": "number"
+    },
+    "productRatingLessThan": {
+     "description": "Refinement to target products with a rating less than the value within the product category.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCreateProductCategoryRefinementMarketplaceSetting": {
+   "properties": {
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    },
+    "productCategoryRefinement": {
+     "$ref": "SPGlobalCreateProductCategoryRefinement"
+    }
+   },
+   "required": [
+    "marketplace",
+    "productCategoryRefinement"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateProductCategoryRefinementValue": {
+   "properties": {
+    "marketplaceSettings": {
+     "description": "Marketplace specific product category refinements. Either the value or the marketplaceSettings should always be specified",
+     "items": {
+      "$ref": "SPGlobalCreateProductCategoryRefinementMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "marketplaceSettings"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateProductCategoryTarget": {
+   "description": "Targets a specific customer search term.",
+   "properties": {
+    "productCategoryRefinement": {
+     "$ref": "SPGlobalCreateProductCategoryRefinementValue"
+    },
+    "productGenreRefinement": {
+     "$ref": "SPGlobalCreateProductGenreRefinement"
+    }
+   },
+   "required": [
+    "productCategoryRefinement"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateProductGenreRefinement": {
+   "properties": {
+    "productGenreId": {
+     "description": "The product genre ID to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "productGenreId"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateProductMarketplaceSetting": {
+   "properties": {
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    },
+    "productId": {
+     "description": "The product id applicable at the specified marketplace.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "marketplace",
+    "productId"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateProductTarget": {
+   "description": "Targets a specific product.",
+   "properties": {
+    "matchType": {
+     "$ref": "SPGlobalProductMatchType"
+    },
+    "product": {
+     "$ref": "SPGlobalCreateProductValue"
+    },
+    "productIdType": {
+     "$ref": "SPGlobalProductIdType"
+    }
+   },
+   "required": [
+    "matchType",
+    "product",
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateProductValue": {
+   "properties": {
+    "marketplaceSettings": {
+     "description": "The product ids at specific marketplace level. Either the product id or the marketplace settings should always be specified",
+     "items": {
+      "$ref": "SPGlobalCreateProductMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "productId": {
+     "description": "The product identifier. Either the product id or the marketplace settings should always be specified",
+     "type": "string"
+    }
+   },
+   "required": [
+    "marketplaceSettings"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **CreateState Enum:** | CreateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SPGlobalCreateTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateTargetBid": {
+   "properties": {
+    "marketplaceSettings": {
+     "description": "The bid associated with the target at specified marketplace level. Either one of bid or marketplaceSettings should always be specified",
+     "items": {
+      "$ref": "SPGlobalCreateTargetBidMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalCreateTargetBidMarketplaceSetting": {
+   "properties": {
+    "bid": {
+     "description": "The maximum bid for a target.",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "$ref": "SPGlobalCurrencyCode"
+    },
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "marketplace"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "keywordTarget": {
+       "$ref": "SPGlobalCreateKeywordTarget"
+      }
+     },
+     "required": [
+      "keywordTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productTarget": {
+       "$ref": "SPGlobalCreateProductTarget"
+      }
+     },
+     "required": [
+      "productTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productCategoryTarget": {
+       "$ref": "SPGlobalCreateProductCategoryTarget"
+      }
+     },
+     "required": [
+      "productCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "themeTarget": {
+       "$ref": "SPGlobalCreateThemeTarget"
+      }
+     },
+     "required": [
+      "themeTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SPGlobalCreateTargetRequest": {
+   "properties": {
+    "targets": {
+     "items": {
+      "$ref": "SPGlobalTargetCreate"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCreateThemeTarget": {
+   "description": "Theme targets let advertisers select high-performing targets based on a common theme.",
+   "properties": {
+    "matchType": {
+     "$ref": "SPGlobalThemeMatchType"
+    }
+   },
+   "required": [
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "SPGlobalCurrencyCode": {
+   "description": "**CurrencyCode Enum:** | CurrencyCode | Description | |------|------| | `AED` | United Arab Emirates Dirham | | `AUD` | Australian Dollar | | `BRL` | Brazilian Real | | `CAD` | Canadian Dollar | | `CHF` | Swiss Franc | …",
+   "enum": [
+    "AED",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CHF",
+    "CNY",
+    "DKK",
+    "EGP",
+    "EUR",
+    "GBP",
+    "INR",
+    "JPY",
+    "MXN",
+    "MXP",
+    "NGN",
+    "NOK",
+    "NZD",
+    "PLN",
+    "SAR",
+    "SEK",
+    "SGD",
+    "TRY",
+    "USD",
+    "ZAR"
+   ],
+   "type": "string"
+  },
+  "SPGlobalDeleteTargetRequest": {
+   "properties": {
+    "targetIds": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targetIds"
+   ],
+   "type": "object"
+  },
+  "SPGlobalDeliveryReason": {
+   "description": "**DeliveryReason Enum:** | DeliveryReason | Description | |------|------| | `ADVERTISER_ARCHIVED` | | | `ADVERTISER_OUT_OF_BUDGET` | Indicates that an advertiser is out of budget for Sponsored Products campaigns for sel…",
+   "enum": [
+    "ADVERTISER_ARCHIVED",
+    "ADVERTISER_OUT_OF_BUDGET",
+    "ADVERTISER_OUT_OF_POSTPAY_CREDIT_LIMIT",
+    "ADVERTISER_OUT_OF_POSTPAY_MONTHLY_BUDGET",
+    "ADVERTISER_OUT_OF_PREPAY_BALANCE",
+    "ADVERTISER_PAUSED",
+    "ADVERTISER_PAYMENT_FAILURE",
+    "ADVERTISER_POLICING_PENDING_REVIEW",
+    "ADVERTISER_POLICING_SUSPENDED",
+    "AD_ARCHIVED",
+    "AD_CREATION_FAILED",
+    "AD_CREATION_IN_PROGRESS",
+    "AD_GROUP_ARCHIVED",
+    "AD_GROUP_INCOMPLETE",
+    "AD_GROUP_LOW_BID",
+    "AD_GROUP_PAUSED",
+    "AD_GROUP_PENDING_REVIEW",
+    "AD_GROUP_POLICING_PENDING_REVIEW",
+    "AD_GROUP_REJECTED",
+    "AD_INELIGIBLE",
+    "AD_MISSING_DECORATION",
+    "AD_MISSING_IMAGE",
+    "AD_NOT_DELIVERING",
+    "AD_PAUSED",
+    "AD_POLICING_PENDING_REVIEW",
+    "AD_POLICING_SUSPENDED",
+    "BRAND_INELIGIBLE",
+    "CAMPAIGN_ARCHIVED",
+    "CAMPAIGN_END_DATE_REACHED",
+    "CAMPAIGN_INCOMPLETE",
+    "CAMPAIGN_OUT_OF_BUDGET",
+    "CAMPAIGN_PAUSED",
+    "CAMPAIGN_PENDING_REVIEW",
+    "CAMPAIGN_PENDING_START_DATE",
+    "CAMPAIGN_REJECTED",
+    "CREATIVE_MISSING_ASSET",
+    "CREATIVE_PENDING_REVIEW",
+    "CREATIVE_REJECTED",
+    "LANDING_PAGE_INELIGIBLE",
+    "LANDING_PAGE_NOT_AVAILABLE",
+    "MODERATION_ADULT_NOVELTY_POLICY_VIOLATION",
+    "MODERATION_ADULT_PRODUCT_POLICY_VIOLATION",
+    "MODERATION_ADULT_SOFTLINES_POLICY_VIOLATION",
+    "MODERATION_CLAIM_WEIGHTLOSS_POLICY_VIOLATION",
+    "MODERATION_CONTENT_NUDITY_POLICY_VIOLATION",
+    "MODERATION_CONTENT_PROVOCATIVE_POLICY_VIOLATION",
+    "MODERATION_CONTENT_SMOKING_POLICY_VIOLATION",
+    "MODERATION_CRITICAL_EVENTS_POLICY_VIOLATION",
+    "MODERATION_ERROR_404",
+    "MODERATION_GRAPHICAL_SEXUAL_IMAGES_POLICY_VIOLATION",
+    "MODERATION_HFSS_PRODUCT_POLICY_VIOLATION",
+    "MODERATION_LANGUAGE_OFFENSIVE_POLICY_VIOLATION",
+    "MODERATION_NOT_COMPLIANT_TO_AD_POLICY",
+    "MODERATION_SMOKING_RELATED_POLICY_VIOLATION",
+    "NOT_BUYABLE",
+    "NOT_IN_BUYBOX",
+    "NOT_IN_POLICY",
+    "NO_INVENTORY",
+    "NO_PURCHASABLE_OFFER",
+    "OTHER",
+    "OUT_OF_REWARD_BUDGET",
+    "OUT_OF_STOCK",
+    "PIR_RULE_EXCLUDED",
+    "PORTFOLIO_ARCHIVED",
+    "PORTFOLIO_END_DATE_REACHED",
+    "PORTFOLIO_OUT_OF_BUDGET",
+    "PORTFOLIO_PAUSED",
+    "PORTFOLIO_PENDING_START_DATE",
+    "SECURITY_SCAN_PENDING_REVIEW",
+    "SECURITY_SCAN_REJECTED",
+    "SPEND_LIMIT_EXCEEDED",
+    "STATUS_UNAVAILABLE",
+    "TARGET_ARCHIVED",
+    "TARGET_BLOCKED",
+    "TARGET_PAUSED",
+    "TARGET_POLICING_SUSPENDED"
+   ],
+   "type": "string"
+  },
+  "SPGlobalDeliveryStatus": {
+   "description": "**DeliveryStatus Enum:** | DeliveryStatus | Description | |------|------| | `DELIVERING` | Represents the resource is delivering. For global, DELIVERING status indicates that the resource is delivering in all marketplac…",
+   "enum": [
+    "DELIVERING",
+    "LIMITED",
+    "NOT_DELIVERING",
+    "UNAVAILABLE"
+   ],
+   "type": "string"
+  },
+  "SPGlobalKeywordMatchType": {
+   "description": "**KeywordMatchType Enum:** | KeywordMatchType | Description | |------|------| | `BROAD` | Broad match search terms. This expands matching on user intent beyond PHRASE. | | `EXACT` | Exact match search terms. | | `PHRASE…",
+   "enum": [
+    "BROAD",
+    "EXACT",
+    "PHRASE"
+   ],
+   "type": "string"
+  },
+  "SPGlobalKeywordTarget": {
+   "description": "Targets a specific customer search term.",
+   "properties": {
+    "keyword": {
+     "description": "The customer search term or text to target. For valid characters and constraints, [see keyword character constraints](https://advertising.amazon.com/API/docs/en-us/reference/concepts/limits#keyword-character-constraints…",
+     "type": "string"
+    },
+    "matchType": {
+     "$ref": "SPGlobalKeywordMatchType"
+    },
+    "nativeLanguageKeyword": {
+     "description": "The unlocalized keyword text in the preferred locale of the advertiser.",
+     "type": "string"
+    },
+    "nativeLanguageLocale": {
+     "$ref": "SPGlobalLanguageLocale"
+    }
+   },
+   "required": [
+    "keyword",
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "SPGlobalLanguageLocale": {
+   "description": "A combination of ISO-639 standard for language code and ISO-3166 for country code. **LanguageLocale Enum:** | LanguageLocale | Description | |------|------| | `zh_CN` | Chinese (China). |",
+   "enum": [
+    "zh_CN"
+   ],
+   "type": "string"
+  },
+  "SPGlobalMarketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BE",
+    "BR",
+    "CA",
+    "DE",
+    "EG",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "PL",
+    "SA",
+    "SE",
+    "SG",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "SPGlobalMarketplaceScope": {
+   "enum": [
+    "GLOBAL"
+   ],
+   "type": "string"
+  },
+  "SPGlobalMarketplaceTargetConfigurations": {
+   "properties": {
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    },
+    "overrides": {
+     "$ref": "SPGlobalMarketplaceTargetFieldOverrides"
+    },
+    "targetId": {
+     "description": "Represents marketplace target id (Ex: targetId-US) associated to global target (Ex: targetId-Global)",
+     "type": "string"
+    }
+   },
+   "required": [
+    "marketplace",
+    "overrides",
+    "targetId"
+   ],
+   "type": "object"
+  },
+  "SPGlobalMarketplaceTargetFieldOverrides": {
+   "properties": {
+    "state": {
+     "$ref": "SPGlobalState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the target",
+     "items": {
+      "$ref": "SPGlobalTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetDetails": {
+     "$ref": "SPGlobalOverridableTargets"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalMatchType": {
+   "description": "**MatchType Enum:** | MatchType | Description | | --- | --- | | `PRODUCT_SIMILAR` | Products similar to the specified product. | | `KEYWORDS_LOOSE_MATCH` | Search terms loosely matching advertised product. | | `PHRASE` …",
+   "enum": [
+    "BROAD",
+    "EXACT",
+    "KEYWORDS_CLOSE_MATCH",
+    "KEYWORDS_LOOSE_MATCH",
+    "PHRASE",
+    "PRODUCT_COMPLEMENTS",
+    "PRODUCT_EXACT",
+    "PRODUCT_SIMILAR",
+    "PRODUCT_SUBSTITUTES"
+   ],
+   "type": "string"
+  },
+  "SPGlobalOverridableTargets": {
+   "oneOf": [
+    {
+     "properties": {
+      "keywordTarget": {
+       "$ref": "SPGlobalKeywordTarget"
+      }
+     },
+     "required": [
+      "keywordTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "themeTarget": {
+       "$ref": "SPGlobalThemeTarget"
+      }
+     },
+     "required": [
+      "themeTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SPGlobalProductCategoryRefinement": {
+   "properties": {
+    "productAgeRangeId": {
+     "description": "The age range ID to target.",
+     "type": "string"
+    },
+    "productAgeRangeIdResolved": {
+     "description": "The resolved age range to target.",
+     "type": "string"
+    },
+    "productBrandId": {
+     "description": "The brand ID to target.",
+     "type": "string"
+    },
+    "productBrandIdResolved": {
+     "description": "The resolved name of the brand.",
+     "type": "string"
+    },
+    "productCategoryId": {
+     "description": "The product category ID to target.",
+     "type": "string"
+    },
+    "productCategoryIdResolved": {
+     "description": "The resolved product category.",
+     "type": "string"
+    },
+    "productPriceGreaterThan": {
+     "description": "Refinement to target products with a price greater than the value within the product category.",
+     "format": "double",
+     "type": "number"
+    },
+    "productPriceLessThan": {
+     "description": "Refinement to target products with a price less than the value within the product category.",
+     "format": "double",
+     "type": "number"
+    },
+    "productPrimeShippingEligible": {
+     "description": "Target based on if a product is Prime-shipping eligible.",
+     "type": "boolean"
+    },
+    "productRatingGreaterThan": {
+     "description": "Refinement to target products with a rating greater than the value within the product category.",
+     "format": "double",
+     "type": "number"
+    },
+    "productRatingLessThan": {
+     "description": "Refinement to target products with a rating less than the value within the product category.",
+     "format": "double",
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalProductCategoryRefinementMarketplaceSetting": {
+   "properties": {
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    },
+    "productCategoryRefinement": {
+     "$ref": "SPGlobalProductCategoryRefinement"
+    }
+   },
+   "required": [
+    "marketplace",
+    "productCategoryRefinement"
+   ],
+   "type": "object"
+  },
+  "SPGlobalProductCategoryRefinementValue": {
+   "properties": {
+    "marketplaceSettings": {
+     "description": "Marketplace specific product category refinements. Either the value or the marketplaceSettings should always be specified",
+     "items": {
+      "$ref": "SPGlobalProductCategoryRefinementMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "marketplaceSettings"
+   ],
+   "type": "object"
+  },
+  "SPGlobalProductCategoryTarget": {
+   "description": "Targets a specific customer search term.",
+   "properties": {
+    "productCategoryRefinement": {
+     "$ref": "SPGlobalProductCategoryRefinementValue"
+    },
+    "productGenreRefinement": {
+     "$ref": "SPGlobalProductGenreRefinement"
+    }
+   },
+   "required": [
+    "productCategoryRefinement"
+   ],
+   "type": "object"
+  },
+  "SPGlobalProductGenreRefinement": {
+   "properties": {
+    "productGenreId": {
+     "description": "The product genre ID to target.",
+     "type": "string"
+    },
+    "productGenreIdResolved": {
+     "description": "The resolved product genre to target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "productGenreId"
+   ],
+   "type": "object"
+  },
+  "SPGlobalProductIdType": {
+   "description": "**ProductIdType Enum:** | ProductIdType | Description | |------|------| | `ASIN` | ASIN identifier type. | | `SKU` | SKU identifier type. |",
+   "enum": [
+    "ASIN",
+    "SKU"
+   ],
+   "type": "string"
+  },
+  "SPGlobalProductMarketplaceSetting": {
+   "properties": {
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    },
+    "productId": {
+     "description": "The product id applicable at the specified marketplace.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "marketplace",
+    "productId"
+   ],
+   "type": "object"
+  },
+  "SPGlobalProductMatchType": {
+   "description": "**ProductMatchType Enum:** | ProductMatchType | Description | |------|------| | `PRODUCT_EXACT` | Products exactly matching the specified product. | | `PRODUCT_SIMILAR` | Products similar to the specified product. |",
+   "enum": [
+    "PRODUCT_EXACT",
+    "PRODUCT_SIMILAR"
+   ],
+   "type": "string"
+  },
+  "SPGlobalProductTarget": {
+   "description": "Targets a specific product.",
+   "properties": {
+    "matchType": {
+     "$ref": "SPGlobalProductMatchType"
+    },
+    "product": {
+     "$ref": "SPGlobalProductValue"
+    },
+    "productIdType": {
+     "$ref": "SPGlobalProductIdType"
+    }
+   },
+   "required": [
+    "matchType",
+    "product",
+    "productIdType"
+   ],
+   "type": "object"
+  },
+  "SPGlobalProductValue": {
+   "properties": {
+    "marketplaceSettings": {
+     "description": "The product ids at specific marketplace level. Either the product id or the marketplace settings should always be specified",
+     "items": {
+      "$ref": "SPGlobalProductMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "productId": {
+     "description": "The product identifier. Either the product id or the marketplace settings should always be specified",
+     "type": "string"
+    }
+   },
+   "required": [
+    "marketplaceSettings"
+   ],
+   "type": "object"
+  },
+  "SPGlobalQueryTargetRequest": {
+   "properties": {
+    "adGroupIdFilter": {
+     "$ref": "SPGlobalTargetAdGroupIdFilter"
+    },
+    "adProductFilter": {
+     "$ref": "SPGlobalTargetAdProductFilter"
+    },
+    "campaignIdFilter": {
+     "$ref": "SPGlobalTargetCampaignIdFilter"
+    },
+    "marketplaceScopeFilter": {
+     "$ref": "SPGlobalTargetMarketplaceScopeFilter"
+    },
+    "matchTypeFilter": {
+     "$ref": "SPGlobalTargetMatchTypeFilter"
+    },
+    "maxResults": {
+     "default": 5000,
+     "format": "int32",
+     "maximum": 5000,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "negativeFilter": {
+     "$ref": "SPGlobalTargetNegativeFilter"
+    },
+    "nextToken": {
+     "type": "string"
+    },
+    "productIdFilter": {
+     "$ref": "SPGlobalTargetProductIdFilter"
+    },
+    "stateFilter": {
+     "$ref": "SPGlobalTargetStateFilter"
+    },
+    "targetIdFilter": {
+     "$ref": "SPGlobalTargetTargetIdFilter"
+    },
+    "targetTypeFilter": {
+     "$ref": "SPGlobalTargetTargetTypeFilter"
+    }
+   },
+   "required": [
+    "adProductFilter"
+   ],
+   "type": "object"
+  },
+  "SPGlobalState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **State Enum:** | State | Description | …",
+   "enum": [
+    "ARCHIVED",
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SPGlobalStatus": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "SPGlobalDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "SPGlobalDeliveryStatus"
+    },
+    "marketplaceSettings": {
+     "description": "The list of marketplace level delivery status and reasons of global resources, for all the marketplaces the global resource is applicable in.",
+     "items": {
+      "$ref": "SPGlobalStatusMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "deliveryStatus",
+    "marketplaceSettings"
+   ],
+   "type": "object"
+  },
+  "SPGlobalStatusMarketplaceSetting": {
+   "properties": {
+    "deliveryReasons": {
+     "description": "This is the list of reasons behind the delivery status.",
+     "items": {
+      "$ref": "SPGlobalDeliveryReason"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "deliveryStatus": {
+     "$ref": "SPGlobalDeliveryStatus"
+    },
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    }
+   },
+   "required": [
+    "deliveryStatus",
+    "marketplace"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTag": {
+   "properties": {
+    "key": {
+     "description": "A custom key value pair entered by the advertiser. For ADSP Campaigns and Ad Groups, Amazon creates a COMMENTS key when the Comments field is populated in UI.",
+     "type": "string"
+    },
+    "value": {
+     "description": "A custom key value pair entered by the advertiser.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key",
+    "value"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTarget": {
+   "properties": {
+    "adGroupId": {
+     "description": "A unique identifier for the ad group associated with the target. Only used for ad-group level targets.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "SPGlobalAdProduct"
+    },
+    "bid": {
+     "$ref": "SPGlobalTargetBid"
+    },
+    "campaignId": {
+     "description": "A unique identifier for the campaign associated with the target. Only used for campaign-level targets.",
+     "type": "string"
+    },
+    "creationDateTime": {
+     "description": "The date time the target was created.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "lastUpdatedDateTime": {
+     "description": "The date time the target was last updated.",
+     "format": "date-time",
+     "type": "string"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global target that enables overriding certain attributes at individual marketplace level. For example, if a global target is ENABLED but needs to be PAUSED in DE marketp…",
+     "items": {
+      "$ref": "SPGlobalMarketplaceTargetConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaceScope": {
+     "$ref": "SPGlobalMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of marketplace in which the global target is applicable. The marketplaces included should either be same as or subset of parent campaign/ad group",
+     "items": {
+      "$ref": "SPGlobalMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "negative": {
+     "description": "Indicates whether the target is negative or not.",
+     "type": "boolean"
+    },
+    "state": {
+     "$ref": "SPGlobalState"
+    },
+    "status": {
+     "$ref": "SPGlobalStatus"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the target",
+     "items": {
+      "$ref": "SPGlobalTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetDetails": {
+     "$ref": "SPGlobalTargetDetails"
+    },
+    "targetId": {
+     "description": "A unique identifier for the target.",
+     "type": "string"
+    },
+    "targetLevel": {
+     "$ref": "SPGlobalTargetLevel"
+    },
+    "targetType": {
+     "$ref": "SPGlobalTargetType"
+    }
+   },
+   "required": [
+    "adProduct",
+    "creationDateTime",
+    "lastUpdatedDateTime",
+    "marketplaceScope",
+    "marketplaces",
+    "negative",
+    "state",
+    "targetDetails",
+    "targetId",
+    "targetLevel",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetAdGroupIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetAdProductFilter": {
+   "properties": {
+    "include": {
+     "description": "**AdProduct Enum:** | AdProduct | Description | | --- | --- | | `SPONSORED_PRODUCTS` | Sponsored Products ad product. |",
+     "items": {
+      "$ref": "SPGlobalAdProduct"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetBid": {
+   "properties": {
+    "marketplaceSettings": {
+     "description": "The bid associated with the target at specified marketplace level. Either one of bid or marketplaceSettings should always be specified",
+     "items": {
+      "$ref": "SPGlobalTargetBidMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalTargetBidMarketplaceSetting": {
+   "properties": {
+    "bid": {
+     "description": "The maximum bid for a target.",
+     "format": "double",
+     "type": "number"
+    },
+    "currencyCode": {
+     "$ref": "SPGlobalCurrencyCode"
+    },
+    "marketplace": {
+     "$ref": "SPGlobalMarketplace"
+    }
+   },
+   "required": [
+    "currencyCode",
+    "marketplace"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetCampaignIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetCreate": {
+   "properties": {
+    "adGroupId": {
+     "description": "A unique identifier for the ad group associated with the target. Only used for ad-group level targets.",
+     "type": "string"
+    },
+    "adProduct": {
+     "$ref": "SPGlobalAdProduct"
+    },
+    "bid": {
+     "$ref": "SPGlobalCreateTargetBid"
+    },
+    "campaignId": {
+     "description": "A unique identifier for the campaign associated with the target. Only used for campaign-level targets.",
+     "type": "string"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global target that enables overriding certain attributes at individual marketplace level. For example, if a global target is ENABLED but needs to be PAUSED in DE marketp…",
+     "items": {
+      "$ref": "SPGlobalCreateMarketplaceTargetConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaceScope": {
+     "$ref": "SPGlobalMarketplaceScope"
+    },
+    "marketplaces": {
+     "description": "The list of marketplace in which the global target is applicable. The marketplaces included should either be same as or subset of parent campaign/ad group",
+     "items": {
+      "$ref": "SPGlobalMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "negative": {
+     "description": "Indicates whether the target is negative or not.",
+     "type": "boolean"
+    },
+    "state": {
+     "$ref": "SPGlobalCreateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the target",
+     "items": {
+      "$ref": "SPGlobalCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetDetails": {
+     "$ref": "SPGlobalCreateTargetDetails"
+    },
+    "targetType": {
+     "$ref": "SPGlobalTargetType"
+    }
+   },
+   "required": [
+    "adProduct",
+    "marketplaceScope",
+    "marketplaces",
+    "negative",
+    "state",
+    "targetDetails",
+    "targetType"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetDetails": {
+   "oneOf": [
+    {
+     "properties": {
+      "keywordTarget": {
+       "$ref": "SPGlobalKeywordTarget"
+      }
+     },
+     "required": [
+      "keywordTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productCategoryTarget": {
+       "$ref": "SPGlobalProductCategoryTarget"
+      }
+     },
+     "required": [
+      "productCategoryTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "productTarget": {
+       "$ref": "SPGlobalProductTarget"
+      }
+     },
+     "required": [
+      "productTarget"
+     ],
+     "type": "object"
+    },
+    {
+     "properties": {
+      "themeTarget": {
+       "$ref": "SPGlobalThemeTarget"
+      }
+     },
+     "required": [
+      "themeTarget"
+     ],
+     "type": "object"
+    }
+   ]
+  },
+  "SPGlobalTargetLevel": {
+   "description": "**TargetLevel Enum:** | TargetLevel | Description | |------|------| | `AD_GROUP` | Target applied at the ad group level. | | `CAMPAIGN` | Target applied at the campaign level. |",
+   "enum": [
+    "AD_GROUP",
+    "CAMPAIGN"
+   ],
+   "type": "string"
+  },
+  "SPGlobalTargetMarketplaceScopeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "$ref": "SPGlobalMarketplaceScope"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetMatchTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**MatchType Enum:** | MatchType | Description | | --- | --- | | `PRODUCT_SIMILAR` | Products similar to the specified product. | | `KEYWORDS_LOOSE_MATCH` | Search terms loosely matching advertised product. | | `PHRASE` …",
+     "items": {
+      "$ref": "SPGlobalMatchType"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetMultiStatusResponseWithPartialErrors": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "partialSuccess": {
+     "items": {
+      "$ref": "SPGlobalTargetPartialIndex"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "SPGlobalTargetMultiStatusSuccess"
+     },
+     "maxItems": 1000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalTargetMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "target": {
+     "$ref": "SPGlobalTarget"
+    }
+   },
+   "required": [
+    "index",
+    "target"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetNegativeFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "boolean"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetPartialIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 999,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "target": {
+     "$ref": "SPGlobalTarget"
+    }
+   },
+   "required": [
+    "errors",
+    "index",
+    "target"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetProductIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    },
+    "queryTermMatchType": {
+     "$ref": "SPGlobalTargetProductIdFilterType"
+    }
+   },
+   "required": [
+    "include",
+    "queryTermMatchType"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetProductIdFilterType": {
+   "description": "**TargetProductIdFilterType Enum:** | TargetProductIdFilterType | Description | | --- | --- | | `EXACT_MATCH` | Filter by exact match. | | `BROAD_MATCH` | Filter by broad match. |",
+   "enum": [
+    "BROAD_MATCH",
+    "EXACT_MATCH"
+   ],
+   "type": "string"
+  },
+  "SPGlobalTargetStateFilter": {
+   "properties": {
+    "include": {
+     "description": "**State Enum:** | State | Description | | --- | --- | | `ENABLED` | The object is set active by user and eligible for delivery. | | `PAUSED` | The object is stopped by user and not eligible for delivery. | | `ARCHIVED` …",
+     "items": {
+      "$ref": "SPGlobalState"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetSuccessResponse": {
+   "properties": {
+    "nextToken": {
+     "type": "string"
+    },
+    "targets": {
+     "items": {
+      "$ref": "SPGlobalTarget"
+     },
+     "maxItems": 5000,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalTargetTargetIdFilter": {
+   "properties": {
+    "include": {
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 100,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetTargetTypeFilter": {
+   "properties": {
+    "include": {
+     "description": "**TargetType Enum:** | TargetType | Description | | --- | --- | | `KEYWORD` | Target based on customer search terms. | | `PRODUCT` | Target based on a specific product. | | `PRODUCT_CATEGORY` | Target based on a product…",
+     "items": {
+      "$ref": "SPGlobalTargetType"
+     },
+     "maxItems": 4,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "include"
+   ],
+   "type": "object"
+  },
+  "SPGlobalTargetType": {
+   "description": "**TargetType Enum:** | TargetType | Description | |------|------| | `KEYWORD` | Target based on customer search terms. | | `PRODUCT_CATEGORY` | Target based on a product category. | | `PRODUCT` | Target based on a speci…",
+   "enum": [
+    "KEYWORD",
+    "PRODUCT",
+    "PRODUCT_CATEGORY",
+    "THEME"
+   ],
+   "type": "string"
+  },
+  "SPGlobalTargetUpdate": {
+   "properties": {
+    "bid": {
+     "$ref": "SPGlobalUpdateTargetBid"
+    },
+    "marketplaceConfigurations": {
+     "description": "List of marketplace-specific configurations for a global target that enables overriding certain attributes at individual marketplace level. For example, if a global target is ENABLED but needs to be PAUSED in DE marketp…",
+     "items": {
+      "$ref": "SPGlobalCreateMarketplaceTargetConfigurations"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    },
+    "marketplaces": {
+     "description": "The list of marketplace in which the global target is applicable. The marketplaces included should either be same as or subset of parent campaign/ad group",
+     "items": {
+      "$ref": "SPGlobalMarketplace"
+     },
+     "maxItems": 30,
+     "minItems": 1,
+     "type": "array"
+    },
+    "state": {
+     "$ref": "SPGlobalUpdateState"
+    },
+    "tags": {
+     "description": "Open ended labels with a key value pair applied to the target",
+     "items": {
+      "$ref": "SPGlobalCreateTag"
+     },
+     "maxItems": 50,
+     "minItems": 0,
+     "type": "array"
+    },
+    "targetId": {
+     "description": "A unique identifier for the target.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "targetId"
+   ],
+   "type": "object"
+  },
+  "SPGlobalThemeMatchType": {
+   "description": "**ThemeMatchType Enum:** | ThemeMatchType | Description | |------|------| | `KEYWORDS_CLOSE_MATCH` | Search terms closely matching advertised product. | | `KEYWORDS_LOOSE_MATCH` | Search terms loosely matching advertise…",
+   "enum": [
+    "KEYWORDS_CLOSE_MATCH",
+    "KEYWORDS_LOOSE_MATCH",
+    "PRODUCT_COMPLEMENTS",
+    "PRODUCT_SUBSTITUTES"
+   ],
+   "type": "string"
+  },
+  "SPGlobalThemeTarget": {
+   "description": "Theme targets let advertisers select high-performing targets based on a common theme.",
+   "properties": {
+    "matchType": {
+     "$ref": "SPGlobalThemeMatchType"
+    }
+   },
+   "required": [
+    "matchType"
+   ],
+   "type": "object"
+  },
+  "SPGlobalUpdateState": {
+   "description": "The user defined state for the resource. For ADSP, campaign and ad group resources can only be created in the PAUSED state and must be updated to ENABLED to activate for delivery **UpdateState Enum:** | UpdateState | De…",
+   "enum": [
+    "ENABLED",
+    "PAUSED"
+   ],
+   "type": "string"
+  },
+  "SPGlobalUpdateTargetBid": {
+   "properties": {
+    "marketplaceSettings": {
+     "description": "The bid associated with the target at specified marketplace level. Either one of bid or marketplaceSettings should always be specified",
+     "items": {
+      "$ref": "SPGlobalCreateTargetBidMarketplaceSetting"
+     },
+     "maxItems": 30,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "SPGlobalUpdateTargetRequest": {
+   "properties": {
+    "targets": {
+     "items": {
+      "$ref": "SPGlobalTargetUpdate"
+     },
+     "maxItems": 1000,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "targets"
+   ],
+   "type": "object"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}

@@ -1,0 +1,440 @@
+{
+ "api": "AmazonAdsAPIALLLinearTvReachForecastsContract_beta",
+ "file": "specs/dest/AmazonAdsAPIALLLinearTvReachForecastsContract_prod_3p_BETA.json",
+ "schemas": {
+  "BadGatewayResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "BadRequestResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ContentTooLargeResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "CreateLinearTvInventoryAllocation": {
+   "description": "Linear TV Inventory Allocation",
+   "properties": {
+    "grossRatingPoint": {
+     "description": "Gross Rating Point (GRP) for the Linear TV inventory.",
+     "format": "double",
+     "type": "number"
+    },
+    "inventoryType": {
+     "$ref": "LinearTvInventoryType"
+    },
+    "linearTvDaypartId": {
+     "description": "A unique identifier of the daypart associated with the Linear TV inventory.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "grossRatingPoint",
+    "inventoryType",
+    "linearTvDaypartId"
+   ],
+   "type": "object"
+  },
+  "CreateLinearTvReachForecastRequest": {
+   "properties": {
+    "linearTvReachForecasts": {
+     "items": {
+      "$ref": "LinearTvReachForecastCreate"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "linearTvReachForecasts"
+   ],
+   "type": "object"
+  },
+  "Error": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "fieldLocation": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ErrorCode": {
+   "description": "**ErrorCode Enum:** | ErrorCode | Description | | --- | --- | | `INTERNAL_ERROR` | The server encountered an unexpected condition that prevented it from fulfilling the request. | | `UNAUTHORIZED` | The request lacks the…",
+   "enum": [
+    "BAD_REQUEST",
+    "FORBIDDEN",
+    "INTERNAL_ERROR",
+    "NOT_FOUND",
+    "TOO_MANY_REQUESTS",
+    "UNAUTHORIZED"
+   ],
+   "type": "string"
+  },
+  "ErrorsIndex": {
+   "properties": {
+    "errors": {
+     "items": {
+      "$ref": "Error"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "index": {
+     "format": "int32",
+     "maximum": 99,
+     "minimum": 0,
+     "type": "integer"
+    }
+   },
+   "required": [
+    "errors",
+    "index"
+   ],
+   "type": "object"
+  },
+  "ForbiddenResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "GatewayTimeoutResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "InternalServerErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "LinearTvInventoryAllocation": {
+   "description": "Linear TV Inventory Allocation",
+   "properties": {
+    "grossRatingPoint": {
+     "description": "Gross Rating Point (GRP) for the Linear TV inventory.",
+     "format": "double",
+     "type": "number"
+    },
+    "inventoryType": {
+     "$ref": "LinearTvInventoryType"
+    },
+    "linearTvDaypartId": {
+     "description": "A unique identifier of the daypart associated with the Linear TV inventory.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "grossRatingPoint",
+    "inventoryType",
+    "linearTvDaypartId"
+   ],
+   "type": "object"
+  },
+  "LinearTvInventoryType": {
+   "description": "**LinearTvInventoryType Enum:** | LinearTvInventoryType | Description | | --- | --- | | `BROADCAST` | Inventory on broadcast TV Network. | | `CABLE` | Inventory on cable TV Network. | | `SYNDICATION` | Inventory within …",
+   "enum": [
+    "BROADCAST",
+    "CABLE",
+    "SYNDICATION"
+   ],
+   "type": "string"
+  },
+  "LinearTvReachForecast": {
+   "properties": {
+    "creationDateTime": {
+     "description": "The date time that the reach forecast was created.",
+     "type": "string"
+    },
+    "endDate": {
+     "description": "The end date of the Linear TV Reach Forecast.",
+     "format": "date",
+     "type": "string"
+    },
+    "linearTvInventoryAllocation": {
+     "description": "Inventory allocation for the Linear TV Reach Forecast.",
+     "items": {
+      "$ref": "LinearTvInventoryAllocation"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "linearTvReachForecastId": {
+     "description": "A unique identifier for a Linear TV Reach Forecast.",
+     "type": "string"
+    },
+    "linearTvReachPercent": {
+     "description": "The forecasted reach percent value.",
+     "format": "double",
+     "type": "number"
+    },
+    "marketplace": {
+     "$ref": "Marketplace"
+    },
+    "reachUnit": {
+     "$ref": "ReachUnit"
+    },
+    "startDate": {
+     "description": "The start date of the Linear TV Reach Forecast.",
+     "format": "date",
+     "type": "string"
+    }
+   },
+   "required": [
+    "creationDateTime",
+    "endDate",
+    "linearTvInventoryAllocation",
+    "linearTvReachForecastId",
+    "linearTvReachPercent",
+    "marketplace",
+    "reachUnit",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "LinearTvReachForecastCreate": {
+   "properties": {
+    "endDate": {
+     "description": "The end date of the Linear TV Reach Forecast.",
+     "format": "date",
+     "type": "string"
+    },
+    "linearTvInventoryAllocation": {
+     "description": "Inventory allocation for the Linear TV Reach Forecast.",
+     "items": {
+      "$ref": "CreateLinearTvInventoryAllocation"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    },
+    "marketplace": {
+     "$ref": "Marketplace"
+    },
+    "reachUnit": {
+     "$ref": "ReachUnit"
+    },
+    "startDate": {
+     "description": "The start date of the Linear TV Reach Forecast.",
+     "format": "date",
+     "type": "string"
+    }
+   },
+   "required": [
+    "endDate",
+    "linearTvInventoryAllocation",
+    "marketplace",
+    "reachUnit",
+    "startDate"
+   ],
+   "type": "object"
+  },
+  "LinearTvReachForecastMultiStatusResponse": {
+   "properties": {
+    "error": {
+     "items": {
+      "$ref": "ErrorsIndex"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    },
+    "success": {
+     "items": {
+      "$ref": "LinearTvReachForecastMultiStatusSuccess"
+     },
+     "maxItems": 10,
+     "minItems": 0,
+     "type": "array"
+    }
+   },
+   "type": "object"
+  },
+  "LinearTvReachForecastMultiStatusSuccess": {
+   "properties": {
+    "index": {
+     "format": "int32",
+     "maximum": 9,
+     "minimum": 0,
+     "type": "integer"
+    },
+    "linearTvReachForecast": {
+     "$ref": "LinearTvReachForecast"
+    }
+   },
+   "required": [
+    "index",
+    "linearTvReachForecast"
+   ],
+   "type": "object"
+  },
+  "Marketplace": {
+   "description": "A list of country codes representing Amazon marketplaces",
+   "enum": [
+    "AE",
+    "AU",
+    "BR",
+    "CA",
+    "DE",
+    "ES",
+    "FR",
+    "GB",
+    "IN",
+    "IT",
+    "JP",
+    "MX",
+    "NL",
+    "SA",
+    "SE",
+    "TR",
+    "US"
+   ],
+   "type": "string"
+  },
+  "NotFoundResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "ReachUnit": {
+   "description": "The unit of reach numbers. **ReachUnit Enum:** | ReachUnit | Description | | --- | --- | | `HOUSEHOLD` | Household which can be reached by ads. | | `INDIVIDUAL` | Individual people who can view ads. |",
+   "enum": [
+    "HOUSEHOLD",
+    "INDIVIDUAL"
+   ],
+   "type": "string"
+  },
+  "ServiceUnavailableErrorResponseContent": {
+   "properties": {
+    "code": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "TooManyRequestsResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  },
+  "UnauthorizedResponseContent": {
+   "properties": {
+    "code": {
+     "$ref": "ErrorCode"
+    },
+    "message": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "code",
+    "message"
+   ],
+   "type": "object"
+  }
+ }
+}
