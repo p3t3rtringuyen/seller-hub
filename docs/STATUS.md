@@ -2,14 +2,15 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P1 done — waiting for Gate 1
+- **Phase:** P2 — design; G1 passed; P2-ARCH running
 - **Updated:** 2026-11-10
-- **Waiting on user:** G1 — tick MVP in docs/SCOPE.md §2 (D10), D11, D57–D63, then `duyệt`; R5/R6; R1 Docker engine 500 (P3)
+- **Waiting on user:** nothing for P2-ARCH; D59 account with SP/SD campaigns (optional, before P2-DATA); R5/R6; R1 Docker engine 500 (P3)
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
+| P2-ARCH | p2-arch | local_77926486-9709-4463-8af3-4bd4511edf99 | opus / high | main | — | 2026-11-10 |
 
 ## Done
 
@@ -31,7 +32,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 
 ## Next runnable
 
-- After G1: P2-ARCH (opus/high) → P2-DATA → P2-BACKLOG.
+- P2-DATA after P2-ARCH is verified; then P2-BACKLOG → G2.
 
 ## Log
 
@@ -76,3 +77,5 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   limit error, but its outputs were already verified and committed (36e7aa6) — no action.
 - 2026-11-10 — P1-SCOPE done on its second turn: `docs/SCOPE.md` (102 feature rows, slice L0 +
   proposed MVP, legacy/console mapping, risks, SP-API roles) and D57–D63 (OPEN). Committed. G1 open.
+- 2026-11-10 — User: `duyệt` with the proposed answers. D10 = 23 rows ticked in SCOPE.md (L0 + MVP),
+  D11 no, D57–D63 = a (D59 a pending an account with SP/SD campaigns). G1 passed. Started P2-ARCH.
