@@ -2,14 +2,15 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P2 — design; P2-ARCH and P2-DATA done, P2-BACKLOG next
+- **Phase:** P2 — design; P2-BACKLOG running, then Gate 2
 - **Updated:** 2026-11-10
-- **Waiting on user:** `tiếp` to start P2-BACKLOG; R1 start Docker Desktop (native Postgres 16 apply of db/design still owed); D59 account (optional); R5/R6
+- **Waiting on user:** R1 start Docker Desktop (native Postgres 16 apply of db/design still owed; P3 needs it); D59 account (optional); R5/R6
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
+| P2-BACKLOG | p2-backlog | local_dc3e064d-84ec-4b18-9d2a-43c7a10d02c2 | sonnet / high | main | — | 2026-11-10 |
 
 ## Done
 
@@ -91,3 +92,4 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-10 — P2-DATA done: `db/design/*.sql` (57 tables, L0 first), `docs/data-model/**`.
   Docker was off, so the native apply check is still owed; substitute check on PGlite 16.4 passed
   per its report (not re-run by the orchestrator). Committed.
+- 2026-11-10 — User: `tiếp`. Started P2-BACKLOG. Docker still off.
