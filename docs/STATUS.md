@@ -2,15 +2,14 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P2 — design; P2-DATA running
+- **Phase:** P2 — design; P2-ARCH and P2-DATA done, P2-BACKLOG next
 - **Updated:** 2026-11-10
-- **Waiting on user:** R1 start Docker Desktop (P2-DATA applies DDL on Postgres 16; engine pipe missing 2026-11-10); D59 account (optional); R5/R6
+- **Waiting on user:** `tiếp` to start P2-BACKLOG; R1 start Docker Desktop (native Postgres 16 apply of db/design still owed); D59 account (optional); R5/R6
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
-| P2-DATA | p2-data | local_af2eb438-701e-449d-9137-85caa77aec1f | opus / high | main | throwaway pg16 container, non-default port | 2026-11-10 |
 
 ## Done
 
@@ -22,6 +21,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 | P1-REF | report read; competitor evidence partly secondhand (some pages blocked) | committed on main | docs/reports/P1-REF.md |
 | P1-WEB | report read; 188/194 web calls match api-endpoints.json; JSON parses | committed on main | docs/reports/P1-WEB.md |
 | P1-VENDOR | report read; 24 entries parse; no ids/ASINs; all tabs closed. Partial: CA DF account, promo wizard steps 2–3, Personalized/Points, Invoices/Payments unreachable | committed on main | docs/reports/P1-VENDOR.md |
+| P2-DATA | 14 DDL files / 57 tables listed; clean-room grep 0; report: applied on PG 16.4 (PGlite) + RLS smoke test. **Docker Postgres 16 apply SKIPPED (Docker off) — orchestrator to run** | committed on main | docs/reports/P2-DATA.md |
 | P2-ARCH | 14 ADRs + overview + conventions read (statuses, decisions); clean-room grep 0; mermaid not rendered | committed on main | docs/reports/P2-ARCH.md |
 | P1-SCOPE | SCOPE.md read: 102 rows with MVP? boxes (10 L0, 13 MVP, 39 v1, 30 later, 10 out/dropped); legacy mapping present; clean-room grep 0; D57–D63 added | committed on main | docs/reports/P1-SCOPE.md |
 | P1-API | report read; clean-room grep 0 (yes4all/y4a/codenames); SP-API names checked vs catalog/spapi | committed on main | docs/reports/P1-API.md |
@@ -87,3 +87,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-10 — User: defaults for D21 (compose self-host + AWS cloud) and D64 a (retention).
   ADR-0014 status set to Accepted, pending Gate 2. Started P2-DATA; Docker engine not running, so
   its Postgres apply check may be SKIPPED and re-run by the orchestrator later.
+- 2026-11-10 — D65: Vendor Central is read-only for every session (user rule); added to CLAUDE.md.
+- 2026-11-10 — P2-DATA done: `db/design/*.sql` (57 tables, L0 first), `docs/data-model/**`.
+  Docker was off, so the native apply check is still owed; substitute check on PGlite 16.4 passed
+  per its report (not re-run by the orchestrator). Committed.
