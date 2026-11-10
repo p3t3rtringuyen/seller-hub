@@ -183,3 +183,45 @@ vào cuối file với số tiếp theo.
   dữ liệu bán hàng + tồn kho + ads, gợi ý/harvest từ khoá, rule-based bidding, dayparting, pacing
   ngân sách, phân tích AI. Chỉ lấy yêu cầu, không chép UI/thương hiệu.
 - Trả lời: có.
+
+### D57 — Độ phủ báo cáo Ads v1 (search term, placement, impression share, B2B)
+- Trạng thái: OPEN · Mặc định đề xuất: **(a)** · Nêu bởi P1-SCOPE (từ P1-API Q1/Q3)
+- (a) Chỉ dùng v1 reports; cột nào v1 thiếu thì ẩn và ghi ngoại lệ; không dùng Reporting v3 (tắt 2027-06-30).
+- (b) Cho phép Reporting v3 tạm thời như ngoại lệ có tên tới 2027-06-30.
+- Trả lời: _
+
+### D58 — Amazon Marketing Stream v2 và AWS
+- Trạng thái: OPEN · Mặc định đề xuất: **(a)** · Nêu bởi P1-SCOPE (từ P1-ADS Q2/Q3)
+- (a) Stream v2 ở v1 (PLT-12); bản tự host dùng S3 + SQS trong AWS của chính seller; SaaS sau dùng bucket chung, prefix theo tenant.
+- (b) Không dùng Stream; chỉ poll report (độ tươi ~ ngày).
+- Trả lời: _
+
+### D59 — Kiểm kê Ads console lần 2 (SP/SD)
+- Trạng thái: OPEN · Mặc định đề xuất: **(a)** · Nêu bởi P1-SCOPE (từ P1-CONSOLE)
+- (a) Bạn cấp tài khoản có campaign SP/SD (chỉ đọc) để đọc chi tiết SP/SD, validation, tooltip trước P2-DATA. Streaming TV ngoài phạm vi.
+- (b) Không; dựa vào ads-web + specs.
+- Trả lời: _
+
+### D60 — Vendor trong MVP
+- Trạng thái: OPEN · Mặc định đề xuất: **(a)** · Nêu bởi P1-SCOPE (D5, P1-VENDOR)
+- (a) Vendor ở v1 (VEN-01…06 + ADS-20) ngay sau MVP seller.
+- (b) Đưa VEN-01, VEN-02, VEN-05 (PO + Retail Analytics) vào MVP.
+- Trả lời: _
+
+### D61 — Vendor promotions / coupons (console-only)
+- Trạng thái: OPEN · Mặc định đề xuất: **(a)** · Nêu bởi P1-SCOPE (từ P1-VENDOR Q1/Q2)
+- (a) Roadmap đọc/nhập tay (VEN-07), không scrape console; kiểm `promotions@2025-12-01` với tài khoản vendor; chạy lại P1-VENDOR với tài khoản 1P US không DF nếu có.
+- (b) Bỏ hẳn.
+- Trả lời: _
+
+### D62 — Độ tươi dữ liệu (thay "real-time mode" của legacy)
+- Trạng thái: OPEN · Mặc định đề xuất: **(a)** · Nêu bởi P1-SCOPE (từ P1-WEB)
+- (a) Một chế độ: mirror trong DB, làm mới entity ngay sau khi ghi, nút làm mới theo campaign, Stream v2 ở v1.
+- (b) Thêm chế độ đọc trực tiếp Amazon cho campaign đang chạy / hết budget.
+- Trả lời: _
+
+### D63 — Mức tự động của luật trong MVP
+- Trạng thái: OPEN · Mặc định đề xuất: **(a)** · Nêu bởi P1-SCOPE (từ P1-API Q5, P1-WEB)
+- (a) Luật L0 mặc định preview + duyệt; tự chạy (`rule+cap`) chỉ khi Owner/Admin đặt giới hạn (% đổi tối đa/ngày, sàn/trần bid).
+- (b) Chỉ preview + duyệt.
+- Trả lời: _

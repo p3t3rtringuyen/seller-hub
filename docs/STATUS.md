@@ -2,9 +2,9 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P1 — 7 of 7 discovery tasks done and committed; P1-SCOPE next
-- **Updated:** 2026-11-09
-- **Waiting on user:** `tiếp` to start P1-SCOPE; R5/R6 (own SP-API app, own Ads API LWA client); R1 Docker engine 500 (P3)
+- **Phase:** P1 done — waiting for Gate 1
+- **Updated:** 2026-11-10
+- **Waiting on user:** G1 — tick MVP in docs/SCOPE.md §2 (D10), D11, D57–D63, then `duyệt`; R5/R6; R1 Docker engine 500 (P3)
 
 ## Running
 
@@ -21,6 +21,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 | P1-REF | report read; competitor evidence partly secondhand (some pages blocked) | committed on main | docs/reports/P1-REF.md |
 | P1-WEB | report read; 188/194 web calls match api-endpoints.json; JSON parses | committed on main | docs/reports/P1-WEB.md |
 | P1-VENDOR | report read; 24 entries parse; no ids/ASINs; all tabs closed. Partial: CA DF account, promo wizard steps 2–3, Personalized/Points, Invoices/Payments unreachable | committed on main | docs/reports/P1-VENDOR.md |
+| P1-SCOPE | SCOPE.md read: 102 rows with MVP? boxes (10 L0, 13 MVP, 39 v1, 30 later, 10 out/dropped); legacy mapping present; clean-room grep 0; D57–D63 added | committed on main | docs/reports/P1-SCOPE.md |
 | P1-API | report read; clean-room grep 0 (yes4all/y4a/codenames); SP-API names checked vs catalog/spapi | committed on main | docs/reports/P1-API.md |
 
 ## Blocked / waiting
@@ -30,7 +31,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 
 ## Next runnable
 
-- P1-SCOPE (opus/high) on the user's `tiếp`.
+- After G1: P2-ARCH (opus/high) → P2-DATA → P2-BACKLOG.
 
 ## Log
 
@@ -70,3 +71,8 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-09 — P1-VENDOR done (CA Direct Fulfillment account). Vendor promotions/coupons are
   console-only (no SP-API); vendor API surface = POs, shipments, invoices, transaction status, DF
   (RDT-restricted), 8 GET_VENDOR_* reports. Open questions passed to P1-SCOPE. Committed.
+- 2026-11-10 — P1-SCOPE's first turn stopped on the 5-hour usage limit before writing any file;
+  resumed in the same session (told to write SCOPE.md section by section). P1-API also showed a
+  limit error, but its outputs were already verified and committed (36e7aa6) — no action.
+- 2026-11-10 — P1-SCOPE done on its second turn: `docs/SCOPE.md` (102 feature rows, slice L0 +
+  proposed MVP, legacy/console mapping, risks, SP-API roles) and D57–D63 (OPEN). Committed. G1 open.
