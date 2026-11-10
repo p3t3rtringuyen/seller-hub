@@ -1,6 +1,6 @@
 # ADR-0008 — Ingestion engine
 
-Status: Accepted, pending Gate 2 (D20) · Date: 2026-11-10 · Task: P2-ARCH
+Status: Accepted (Gate 2, D20, 2026-11-10) · Date: 2026-11-10 · Task: P2-ARCH
 
 ## Context
 
@@ -102,3 +102,9 @@ defineSync({
 
 A workflow needs human/timer steps longer than days (consider Temporal), or SaaS volume needs per-group limits
 (BullMQ Pro) beyond the semaphore.
+
+## Amendment — Gate 2 (2026-11-10)
+
+Accepted by the user with D20, from P2-BACKLOG. `docs/BACKLOG.md` §1 (shared-file protocol) is the authoritative statement.
+
+- The registry loader discovers `jobs/<key>/*.job.ts` and `commands/<key>/*.command.ts` in addition to `sync/<key>/*.sync.ts`.

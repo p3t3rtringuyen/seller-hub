@@ -8,6 +8,7 @@ Before doing anything, read:
 
 - `docs/PLAN.md` — phases, tasks, models, dependencies, outputs.
 - `docs/DECISIONS.md` — decisions taken by the user. `DECIDED` items are constraints.
+- `docs/BACKLOG.md` — slices, waves and the shared-file protocol (a P4 slice brief names its slice ID).
 - `docs/STATUS.md` — where the project is. Owned by the orchestrator; other sessions only read it.
 - Your brief names a task ID and a prompt file under `prompts/`. That file is your job.
 
@@ -76,13 +77,16 @@ own outputs (scripts run clean, DDL applies on Postgres 16).
 ## Target layout (created in P3)
 
 ```
-apps/web        Next.js (App Router), BFF — tokens never reach the browser
-apps/api        HTTP API
-apps/worker     ingestion jobs, schedulers, notification consumers
-packages/*      db, contracts, amazon-core, amazon-sp, amazon-ads, ingestion, ui, config
-db/design       DDL drafts from P2-DATA
-contracts/      OpenAPI, contract-first
+apps/web        Next.js (App Router), BFF — tokens never reach the browser; features/<module>/<key>/ for slice UI code
+apps/api        Fastify composition root (registers module routes from a generated registry)
+apps/worker     BullMQ composition root (sync definitions, jobs, command executor from generated registries)
+apps/mcp        later (AI-04)
+modules/<name>  feature modules (src/{routes,handlers,service,repository,sync,jobs,commands,permissions,public}/<key>/, migrations/, seed/, test/)
+packages/*      config, core, db, contracts, amazon-core, amazon-sp, amazon-ads, ingestion, metrics, ui, testing
+contracts/      shared/ (P3-SCAFFOLD) and modules/<module>/<key>.yaml (one OpenAPI file per slice)
+db/design       DDL drafts from P2-DATA (frozen reference); db/migrations is a generated index
+e2e/<key>/      Playwright specs per slice
 catalog/        machine-readable API catalogues from P1
-tools/          generators (catalog builders, codegen)
-docs/           plan, decisions, discovery, architecture, ADRs, data model, modules, reports
+tools/          generators (catalog builders, codegen, registry, contracts)
+docs/           plan, decisions, backlog, discovery, architecture, ADRs, data model, modules/<slice>.md, reports
 ```

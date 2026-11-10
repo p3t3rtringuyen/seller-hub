@@ -1,6 +1,6 @@
 # ADR-0005 — Credential vault
 
-Status: Accepted, pending Gate 2 (D20) · Date: 2026-11-10 · Task: P2-ARCH
+Status: Accepted (Gate 2, D20, 2026-11-10) · Date: 2026-11-10 · Task: P2-ARCH
 
 ## Context
 

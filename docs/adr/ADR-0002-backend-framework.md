@@ -1,6 +1,6 @@
 # ADR-0002 — Backend framework and module structure
 
-Status: Accepted, pending Gate 2 (D20) · Date: 2026-11-10 · Task: P2-ARCH
+Status: Accepted (Gate 2, D20, 2026-11-10) · Date: 2026-11-10 · Task: P2-ARCH
 
 ## Context
 
@@ -61,3 +61,9 @@ without Fastify.
 
 The team grows beyond agent sessions and wants Nest's conventions, or Fastify's JSON-schema path stops matching
 OpenAPI 3.1 features we rely on.
+
+## Amendment — Gate 2 (2026-11-10)
+
+Accepted by the user with D20, from P2-BACKLOG. `docs/BACKLOG.md` §1 (shared-file protocol) is the authoritative statement.
+
+- Each layer folder of a module has a `<key>` subdirectory per slice; `permissions/<key>.permissions.ts`; `public/<key>.ts` feeds a generated `public.generated.ts` (module `index.ts` is a single re-export line).

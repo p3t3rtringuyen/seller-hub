@@ -94,8 +94,8 @@ vào cuối file với số tiếp theo.
 ## Gate 2 — sau thiết kế (P2)
 
 ### D20 — Duyệt kiến trúc
-- Trạng thái: OPEN · Cách trả lời: đọc `docs/adr/`; `duyệt`, hoặc ghi ADR nào cần đổi và vì sao.
-- Trả lời: _
+- Trạng thái: DECIDED (2026-11-10) · Cách trả lời: đọc `docs/adr/`; `duyệt`, hoặc ghi ADR nào cần đổi và vì sao.
+- Trả lời: duyệt — ADR-0001…0014 và `docs/BACKLOG.md`, kèm các sửa đổi Gate 2 (contract theo từng slice, `*.job.ts`, slots/nav, message file theo slice — xem mục "Amendment — Gate 2" trong ADR-0001/0002/0003/0008/0010 và conventions; BACKLOG §1 là chuẩn).
 
 ### D21 — Môi trường production
 - Trạng thái: DECIDED (2026-11-10) · Mặc định: **docker compose** cho seller tự host + **AWS** cho bản cloud (vì

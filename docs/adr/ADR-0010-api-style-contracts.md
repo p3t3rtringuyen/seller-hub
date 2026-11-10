@@ -1,6 +1,6 @@
 # ADR-0010 — API style and contracts
 
-Status: Accepted, pending Gate 2 (D20) · Date: 2026-11-10 · Task: P2-ARCH
+Status: Accepted (Gate 2, D20, 2026-11-10) · Date: 2026-11-10 · Task: P2-ARCH
 
 ## Context
 
@@ -51,3 +51,10 @@ slices define endpoints in parallel; none may edit a shared contract file. The l
 
 A public developer API is offered (add a stability policy and separate public tag set), or bundling becomes a
 bottleneck.
+
+## Amendment — Gate 2 (2026-11-10)
+
+Accepted by the user with D20, from P2-BACKLOG. `docs/BACKLOG.md` §1 (shared-file protocol) is the authoritative statement.
+
+- Contract files are **one per slice**: `contracts/modules/<module>/<key>.yaml` (was one per module). New component names are prefixed `<Module><KeyPascal>`; `$ref` only to slices in `depends_on`.
+- One generic `POST …/commands` endpoint (`kind`, `payload`); each command handler declares its payload schema, mirrored with `x-command-kind` in the slice contract.

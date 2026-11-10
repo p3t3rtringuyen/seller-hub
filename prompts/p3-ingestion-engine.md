@@ -20,7 +20,7 @@ Ingestion and storage ADRs; `docs/data-model/*`; `catalog/spapi/{operations,repo
 - **Sync definition** interface — a slice adds one file: id, schedule, job type, parameters,
   parser, upsert target, natural key. Discovered through the registry (shared-file protocol).
 - Job types: paged API pull; SP-API report (create → poll → download → decompress → parse TSV /
-  JSON / XML → batch upsert); Data Kiosk query; Ads Reporting v3; Ads export snapshot; SP-API
+  JSON / XML → batch upsert); Data Kiosk query; Ads v1 report (no Reporting v3, D57 a); Ads export snapshot; SP-API
   notification consumer (SQS → handler registry); Marketing Stream consumer (SQS).
 - Scheduler per seller account and marketplace, with jitter; per-seller concurrency limit;
   priority for user-triggered refreshes.

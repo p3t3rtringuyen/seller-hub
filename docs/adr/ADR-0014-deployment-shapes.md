@@ -1,6 +1,6 @@
 # ADR-0014 — Deployment shapes: self-host and cloud
 
-Status: Accepted, pending Gate 2 (D20) — D21 DECIDED 2026-11-10 (default: docker compose self-host + AWS cloud). · Date: 2026-11-10 · Task: P2-ARCH
+Status: Accepted (Gate 2, D20, 2026-11-10) — D21 DECIDED 2026-11-10 (default: docker compose self-host + AWS cloud). · Date: 2026-11-10 · Task: P2-ARCH
 
 ## Context
 

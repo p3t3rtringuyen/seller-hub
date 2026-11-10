@@ -169,3 +169,9 @@ tiebreaker (`id`) is always appended server-side.
 - `modules/<a>` may import `packages/*` and other modules' **public entry** (`modules/<b>/src/index.ts`) only;
   never another module's repository or tables.
 - Only `packages/amazon-*` talk to Amazon; only executor jobs call Amazon write operations (trap 8).
+
+## Amendment — Gate 2 (2026-11-10)
+
+Accepted by the user with D20, from P2-BACKLOG. `docs/BACKLOG.md` §1 (shared-file protocol) is the authoritative statement.
+
+- §9: message files are `apps/web/messages/<locale>/<module>.<key>.json` (one per slice).

@@ -1,6 +1,6 @@
 # ADR-0003 — Frontend: Next.js App Router, BFF session, UI kit
 
-Status: Accepted, pending Gate 2 (D20) · Date: 2026-11-10 · Task: P2-ARCH
+Status: Accepted (Gate 2, D20, 2026-11-10) · Date: 2026-11-10 · Task: P2-ARCH
 
 ## Context
 
@@ -62,3 +62,9 @@ Playwright.
 ## Revisit when
 
 TanStack Table cannot meet a grid requirement within one P3-DS iteration, or the user buys MUI X Pro.
+
+## Amendment — Gate 2 (2026-11-10)
+
+Accepted by the user with D20, from P2-BACKLOG. `docs/BACKLOG.md` §1 (shared-file protocol) is the authoritative statement.
+
+- Slice UI code lives in `apps/web/features/<module>/<key>/`; screens are extended through generated slot and nav registries (`*.slot.tsx`, `*.nav.ts`); web features import each other only through `public.ts`.

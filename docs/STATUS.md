@@ -22,7 +22,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 | P1-WEB | report read; 188/194 web calls match api-endpoints.json; JSON parses | committed on main | docs/reports/P1-WEB.md |
 | P1-VENDOR | report read; 24 entries parse; no ids/ASINs; all tabs closed. Partial: CA DF account, promo wizard steps 2–3, Personalized/Points, Invoices/Payments unreachable | committed on main | docs/reports/P1-VENDOR.md |
 | P2-BACKLOG | BACKLOG.md read (15 slices S01–S15, waves 1a/1b/2–5, coverage of 23 rows, overlap table); clean-room grep 0; overlap/coverage scripts per its report (not re-run) | committed on main | docs/reports/P2-BACKLOG.md |
-| P2-DATA | 14 DDL files / 57 tables listed; clean-room grep 0; report: applied on PG 16.4 (PGlite) + RLS smoke test. **Docker Postgres 16 apply SKIPPED (Docker off) — orchestrator to run** | committed on main | docs/reports/P2-DATA.md |
+| P2-DATA | 14 DDL files / 57 tables listed; clean-room grep 0; report: applied on PG 16.4 (PGlite) + RLS smoke test. Docker apply run by orchestrator 2026-11-10: all 14 files rc=0 on PostgreSQL 16.15, 0 tenant tables without RLS | committed on main | docs/reports/P2-DATA.md |
 | P2-ARCH | 14 ADRs + overview + conventions read (statuses, decisions); clean-room grep 0; mermaid not rendered | committed on main | docs/reports/P2-ARCH.md |
 | P1-SCOPE | SCOPE.md read: 102 rows with MVP? boxes (10 L0, 13 MVP, 39 v1, 30 later, 10 out/dropped); legacy mapping present; clean-room grep 0; D57–D63 added | committed on main | docs/reports/P1-SCOPE.md |
 | P1-API | report read; clean-room grep 0 (yes4all/y4a/codenames); SP-API names checked vs catalog/spapi | committed on main | docs/reports/P1-API.md |
@@ -95,3 +95,9 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-10 — User: `tiếp`. Started P2-BACKLOG. Docker still off.
 - 2026-11-10 — P2-BACKLOG done: 15 slices in 5 waves (1a S01∥S02, 1b S03 = L0; then 2–5), 0 path
   overlaps per its checker. Committed. G2 open. Docker still off.
+- 2026-11-10 — User: `duyệt`. G2 passed (D20). ADR-0001…0014 Accepted; Gate 2 amendments appended to
+  ADR-0001/0002/0003/0008/0010 and conventions; PLAN.md (P3 OWNED_PATHS, P4 waves), CLAUDE.md layout,
+  prompts p3-amazon-clients / p3-ingestion-engine (no Reporting v3) / p4-slice updated per P2-BACKLOG.
+- 2026-11-10 — Docker up (28.0.1). Owed check done: `db/design/*.sql` applied in order on a throwaway
+  postgres:16 container (16.15), every file rc=0; container removed. Note: legacy container
+  `ads-api-cache-1` holds host port 6379 — seller-hub compose must not use default ports.

@@ -30,7 +30,7 @@ cheaper.
 | --- | --- | --- |
 | G0 | D0–D9 decided; R1–R3 confirmed; bootstrap done | P1 |
 | G1 | User ticked MVP in `docs/SCOPE.md`; D10–D11 decided; user said `duyệt` | P2 |
-| G2 | User approved ADRs and `docs/BACKLOG.md` (`duyệt`); D20–D21 decided | P3 |
+| G2 | User approved ADRs, the ADR amendments from P2-BACKLOG and `docs/BACKLOG.md` (`duyệt`); D20–D21 decided | P3 |
 | G3 | P3 merged; R5/R6 names set (`check-env.mjs SPAPI_ ADS_`); D30 decided; P3-SMOKE DONE | P4 |
 | G4 | MVP waves merged; D40 decided | P6-DEPLOY |
 
@@ -73,26 +73,40 @@ when P1-CONSOLE is done, in the slot of whichever P1 session finished first. P1-
 | --- | --- | --- | --- | --- | --- | --- |
 | P2-ARCH | `p2-architecture.md` | opus | high | main | G1 | `docs/architecture/**`, `docs/adr/**` |
 | P2-DATA | `p2-data-model.md` | opus | high | main | P2-ARCH | `docs/data-model/**`, `db/design/**` |
-| P2-BACKLOG | `p2-backlog.md` | sonnet | high | main | P2-DATA | `docs/BACKLOG.md` → **G2** |
+| P2-BACKLOG | `p2-backlog.md` | sonnet | high | main | P2-DATA | `docs/BACKLOG.md`, `docs/reports/P2-BACKLOG.md` → **G2** |
 
 ### P3 — Foundation
 
 | ID | Prompt | Model | Effort | Checkout | Depends | OWNED_PATHS |
 | --- | --- | --- | --- | --- | --- | --- |
-| P3-SCAFFOLD | `p3-scaffold.md` | sonnet | high | wt | G2 | repo root config, `apps/*` skeletons, `packages/config`, `packages/db`, `packages/contracts`, `docker-compose*.yml`, `.env.example`, `.github/**`, CLAUDE.md "Commands" section |
-| P3-CLIENTS | `p3-amazon-clients.md` | sonnet | high | wt | P3-SCAFFOLD merged | `packages/amazon-core/**`, `packages/amazon-sp/**`, `packages/amazon-ads/**`, `tools/codegen/**` |
-| P3-DS | `p3-design-system.md` | sonnet | medium | wt | P3-SCAFFOLD merged | `packages/ui/**`, `apps/web/app/(shell)/**` |
-| P3-IDENTITY | `p3-identity-tenancy.md` | sonnet | high | wt | P3-CLIENTS merged | `apps/api/src/modules/{auth,tenancy,connections}/**`, `apps/web/app/(auth)/**`, `apps/web/app/settings/**`, core-schema migrations |
-| P3-INGEST | `p3-ingestion-engine.md` | sonnet | high | wt | P3-CLIENTS merged | `apps/worker/**`, `packages/ingestion/**`, ingestion-schema migrations |
+| P3-SCAFFOLD | `p3-scaffold.md` | sonnet | high | wt | G2 | repo root config, `apps/*` skeletons, `packages/{config,db,contracts,core,metrics,testing}/**`, `modules/` root conventions + `pnpm new:module`, `tools/registry/**`, `tools/contracts/**`, `contracts/shared/**`, `contracts/redocly.yaml`, `.storybook/**`, Playwright config, `docker-compose*.yml`, `.env.example`, `.github/**`, CLAUDE.md "Commands" section. Implements every convention of BACKLOG §1.2 |
+| P3-CLIENTS | `p3-amazon-clients.md` | sonnet | high | wt | P3-SCAFFOLD merged | `packages/amazon-core/**`, `packages/amazon-sp/**`, `packages/amazon-ads/**` (incl. `src/v0/{ex-profiles,ex-exports,ex-portfolios,ex-targeting-recs,ex-targeting-discovery,ex-change-history,ex-budget-rules}` and ports `CampaignsPort, AdGroupsPort, AdsPort, TargetsPort`), `tools/codegen/**` |
+| P3-DS | `p3-design-system.md` | sonnet | medium | wt | P3-SCAFFOLD merged | `packages/ui/**`, `apps/web/app/(shell)/**`, `apps/web/app/(app)/layout.tsx`, shell code reading `nav.generated.ts` / `slots.generated.ts` |
+| P3-IDENTITY | `p3-identity-tenancy.md` | sonnet | high | wt | P3-CLIENTS merged | `modules/platform-{auth,tenancy,connections}/**`, `modules/platform-audit/**` (skeleton, `ops.audit_log`, `AuditWriter` only), `contracts/modules/platform-{auth,tenancy,connections,audit}/**`, `apps/web/app/(auth)/**`, `apps/web/app/(app)/settings/{members,connections}/**`, core-schema migrations inside those modules. Also: `/v1/me` column preferences, `ref.marketplaces` / `ref.ads_limits` read endpoint |
+| P3-INGEST | `p3-ingestion-engine.md` | sonnet | high | wt | P3-CLIENTS merged | `apps/worker/**`, `packages/ingestion/**` (incl. `migrations/**` for `ingest.*`), `apps/web/app/(app)/settings/sync/**`, `docs/architecture/ingestion.md`. Registry loader reads `*.sync.ts`, `*.job.ts`, `*.command.ts` |
 | P3-SMOKE | `p3-smoke.md` | haiku | low | main | P3-* merged, R5/R6, D30 | `docs/reports/P3-SMOKE.md` only → **G3** |
 
 P3-CLIENTS ∥ P3-DS; then P3-IDENTITY ∥ P3-INGEST. Each code task goes through P5 before merge.
 
 ### P4 — Feature slices
 
-One task per slice in `docs/BACKLOG.md`: ID `P4-<slice id>`, prompt `p4-slice.md`, model sonnet,
-effort high for slices that write to Amazon, medium otherwise, checkout wt. OWNED_PATHS, depends
-and wave come from the BACKLOG entry. A wave starts when the previous wave is merged.
+One task per slice in `docs/BACKLOG.md`: slices S01…S15, task ID `P4-S01`…, prompt `p4-slice.md`
+with parameter `SLICE_ID`, model sonnet, checkout wt. OWNED_PATHS (the slice's `owned` block is
+authoritative), depends_on, wave and size come from the BACKLOG entry. Effort `high` for slices that
+write to Amazon (S02, S03, S04, S05, S07, S09, S10, S11), `medium` otherwise.
+
+| Wave | Slices (≤ 3 writers) |
+| --- | --- |
+| 1a (L0) | S01 ∥ S02 |
+| 1b (L0) | S03 — closes slice L0 |
+| 2 | S04 · S05 · S06 |
+| 3 | S07 · S08 · S09 |
+| 4 | S10 · S11 · S12 |
+| 5 | S13 · S14 · S15 |
+
+A wave starts when the previous wave is merged **and the orchestrator has made the wave-prep commit**
+(BACKLOG §1.5: shared files, new dependencies). P5-QA runs for every slice (all have UI). Slices that
+write to Amazon are proven on the mock / replay client until D30 is decided. G4 = all five waves merged.
 
 ### P5 — Review and QA (for every wt task before merge)
 

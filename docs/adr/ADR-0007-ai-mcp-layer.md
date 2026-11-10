@@ -1,6 +1,6 @@
 # ADR-0007 — AI layer: MCP client (assistant) and seller-hub MCP server
 
-Status: Accepted, pending Gate 2 (D20) — built after MVP (D50 c); MVP only keeps the seams · Date: 2026-11-10
+Status: Accepted (Gate 2, D20, 2026-11-10) — built after MVP (D50 c); MVP only keeps the seams · Date: 2026-11-10
 
 ## Context
 

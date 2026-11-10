@@ -40,8 +40,9 @@ docs), `docs/discovery/reference-patterns.md`, `docs/SCOPE.md` (which APIs the M
 
 `packages/amazon-ads`
 - Client per region; LWA; client-id and profile-scope headers; versioned media types from
-  `catalog/ads/operations.json`; batch writes returning per-item results (207); Reporting v3
-  helper (create → poll → download → decompress).
+  `catalog/ads/operations.json`; batch writes returning per-item results (207); **v1 report**
+  helper (create → poll → download → decompress) — no Reporting v3 (D57 a). Named v0 exception
+  adapters under `src/v0/` as listed in PLAN.md (budget-rules read only).
 
 Both
 - Recorded-fixture tests (HTTP mocked; fixtures shaped from catalogue definitions or sandbox

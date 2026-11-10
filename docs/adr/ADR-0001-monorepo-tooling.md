@@ -1,6 +1,6 @@
 # ADR-0001 — Monorepo layout and tooling
 
-Status: Accepted, pending Gate 2 (D20) · Date: 2026-11-10 · Task: P2-ARCH
+Status: Accepted (Gate 2, D20, 2026-11-10) · Date: 2026-11-10 · Task: P2-ARCH
 
 ## Context
 
@@ -80,3 +80,9 @@ tools/              catalog builders, codegen, registry generator
 ## Revisit when
 
 Builds exceed ~10 min in CI (consider Nx affected or remote cache), or Biome gains the plugins we need.
+
+## Amendment — Gate 2 (2026-11-10)
+
+Accepted by the user with D20, from P2-BACKLOG. `docs/BACKLOG.md` §1 (shared-file protocol) is the authoritative statement.
+
+- Disjoint ownership inside a module is by slice key directory (see the ADR-0002 and ADR-0003 amendments); `tools/registry/**` generates the registries.

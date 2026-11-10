@@ -11,7 +11,8 @@ inside your OWNED_PATHS, using the shared packages rather than re-solving their 
 
 ## Read first
 
-1. Your BACKLOG entry, and the shared-file protocol at the top of `docs/BACKLOG.md`.
+1. Your BACKLOG entry, and the shared-file protocol (§1) of `docs/BACKLOG.md`. The `owned` block
+   of your slice is your OWNED_PATHS; follow the §1.2 conventions; never edit a file listed in §1.3.
 2. `docs/architecture/conventions.md`; the ADRs your slice touches.
 3. `docs/data-model/mapping.md` rows for your tables.
 4. The catalogue entries (`catalog/spapi/*`, `catalog/ads/*`) for every operation you call — rate
@@ -30,7 +31,8 @@ inside your OWNED_PATHS, using the shared packages rather than re-solving their 
    rules, validation with per-marketplace limits), handlers. **Writes to Amazon** go through the
    client packages, write an audit-log row and a change-history row, handle 207 partial failure
    per item, and require confirmation for bulk or destructive actions.
-5. **Screens** — from `packages/ui` only; copy and option labels in a constants module; tab /
+5. **Screens** — from `packages/ui` only; copy and option labels in your message catalogue
+   (`apps/web/messages/<locale>/<module>.<key>.json`, conventions §9); tab /
    sub-tab / modal state in the URL where the protocol says so.
 6. **Tests** — service rules (unit); repositories against Postgres including a cross-tenant
    test; contract tests; sync definitions from fixtures; one Playwright happy path per screen.
@@ -46,6 +48,7 @@ command is green; `git diff main...HEAD --stat` shows nothing outside OWNED_PATH
 
 ## Stop and ask
 
+- A P3 capability named under "Needs from packages" in your entry is missing → `BLOCKED`.
 - You need a change outside OWNED_PATHS (a shared package, another slice's table) → `BLOCKED`
   with the exact change; do not make it.
 - Amazon behaves differently from the catalogue or the docs → `NEEDS_DECISION` with what you
