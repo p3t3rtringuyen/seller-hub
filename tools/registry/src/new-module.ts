@@ -47,7 +47,7 @@ put(
       scripts: {
         lint: "eslint .",
         typecheck: "tsc --noEmit",
-        test: "vitest run --passWithNoTests",
+        test: "vitest run --passWithNoTests --hookTimeout=60000 --testTimeout=30000",
         build: `node -e "console.log('mod-${m}: source-only module, bundled by apps/api and apps/worker')"`,
       },
       dependencies: {

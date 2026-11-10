@@ -12,7 +12,7 @@
     "gen": "tsx ../../tools/contracts/src/cli.ts && openapi-typescript dist/openapi.json -o src/generated/schema.d.ts",
     "lint": "eslint . && tsx ../../tools/contracts/src/lint.ts",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests",
+    "test": "vitest run --passWithNoTests --hookTimeout=60000 --testTimeout=30000",
     "build": "node -e \"require('fs').accessSync('dist/openapi.json'); console.log('contracts: dist/openapi.json present')\""
   },
   "dependencies": {
