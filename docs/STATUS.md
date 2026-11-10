@@ -2,14 +2,15 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P2 done — waiting for Gate 2
+- **Phase:** P3 — foundation; G2 passed; P3-SCAFFOLD running
 - **Updated:** 2026-11-10
-- **Waiting on user:** G2 — read docs/adr + docs/BACKLOG.md, then `duyệt` (D20); R1 start Docker Desktop (owed Postgres 16 apply; P3-SCAFFOLD needs it); D59 account (optional); R5/R6; D30 before G3
+- **Waiting on user:** R5/R6 (own SP-API app, own Ads API LWA client) and D30 before G3; D59 account (optional)
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
+| P3-SCAFFOLD | p3-scaffold | local_faa2e3a4-0e32-46b1-b8d5-7b06859c7c93 | sonnet / high | wt / p3-scaffold | sellerhub_p3scaffold, non-default ports | 2026-11-10 |
 
 ## Done
 
@@ -34,7 +35,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 
 ## Next runnable
 
-- After G2: apply PLAN.md + CLAUDE.md layout edits listed in docs/reports/P2-BACKLOG.md (ADR-0001 `modules/<name>`), run the owed Docker Postgres 16 apply, then P3-SCAFFOLD (wt).
+- After P3-SCAFFOLD: P5-REVIEW (+ gate re-run), merge, then P3-CLIENTS ∥ P3-DS.
 
 ## Log
 
@@ -101,3 +102,4 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-10 — Docker up (28.0.1). Owed check done: `db/design/*.sql` applied in order on a throwaway
   postgres:16 container (16.15), every file rc=0; container removed. Note: legacy container
   `ads-api-cache-1` holds host port 6379 — seller-hub compose must not use default ports.
+- 2026-11-10 — Started P3-SCAFFOLD (worktree, branch p3-scaffold).
