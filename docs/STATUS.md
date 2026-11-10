@@ -2,15 +2,14 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P2 — design; G1 passed; P2-ARCH running
+- **Phase:** P2 — design; P2-ARCH done, P2-DATA next
 - **Updated:** 2026-11-10
-- **Waiting on user:** nothing for P2-ARCH; D59 account with SP/SD campaigns (optional, before P2-DATA); R5/R6; R1 Docker engine 500 (P3)
+- **Waiting on user:** D21 (production environment; ADR-0014 is Proposed until then), D64 (retention), then `tiếp` to start P2-DATA; D59 account (optional); R5/R6; R1 Docker (P3)
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
-| P2-ARCH | p2-arch | local_77926486-9709-4463-8af3-4bd4511edf99 | opus / high | main | — | 2026-11-10 |
 
 ## Done
 
@@ -22,6 +21,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 | P1-REF | report read; competitor evidence partly secondhand (some pages blocked) | committed on main | docs/reports/P1-REF.md |
 | P1-WEB | report read; 188/194 web calls match api-endpoints.json; JSON parses | committed on main | docs/reports/P1-WEB.md |
 | P1-VENDOR | report read; 24 entries parse; no ids/ASINs; all tabs closed. Partial: CA DF account, promo wizard steps 2–3, Personalized/Points, Invoices/Payments unreachable | committed on main | docs/reports/P1-VENDOR.md |
+| P2-ARCH | 14 ADRs + overview + conventions read (statuses, decisions); clean-room grep 0; mermaid not rendered | committed on main | docs/reports/P2-ARCH.md |
 | P1-SCOPE | SCOPE.md read: 102 rows with MVP? boxes (10 L0, 13 MVP, 39 v1, 30 later, 10 out/dropped); legacy mapping present; clean-room grep 0; D57–D63 added | committed on main | docs/reports/P1-SCOPE.md |
 | P1-API | report read; clean-room grep 0 (yes4all/y4a/codenames); SP-API names checked vs catalog/spapi | committed on main | docs/reports/P1-API.md |
 
@@ -79,3 +79,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   proposed MVP, legacy/console mapping, risks, SP-API roles) and D57–D63 (OPEN). Committed. G1 open.
 - 2026-11-10 — User: `duyệt` with the proposed answers. D10 = 23 rows ticked in SCOPE.md (L0 + MVP),
   D11 no, D57–D63 = a (D59 a pending an account with SP/SD campaigns). G1 passed. Started P2-ARCH.
+- 2026-11-10 — P2-ARCH reported NEEDS_DECISION: overview, conventions, ADR-0001…0014 written
+  (Fastify 5, pnpm + Turborepo, Better Auth core in the API, envelope-encrypted credential vault,
+  generated types + own transport for Amazon, BullMQ, REST/OpenAPI 3.1 contract-first). New D64
+  (retention); ADR-0014 Proposed until D21. Committed. Asked user for D21, D64.

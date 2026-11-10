@@ -225,3 +225,12 @@ vào cuối file với số tiếp theo.
 - (a) Luật L0 mặc định preview + duyệt; tự chạy (`rule+cap`) chỉ khi Owner/Admin đặt giới hạn (% đổi tối đa/ngày, sàn/trần bid).
 - (b) Chỉ preview + duyệt.
 - Trả lời: a.
+
+### D64 — Thời gian lưu dữ liệu vận hành
+- Trạng thái: OPEN · Mặc định đề xuất: **(a)** · Nêu bởi P2-ARCH (ADR-0009)
+- (a) Payload thô của report/export (object storage) 35 ngày; lịch sử chạy job 90 ngày; audit log và lịch sử
+  thay đổi 25 tháng (≥ 24 tháng dữ liệu báo cáo Ads); dữ liệu fact giữ đến khi xoá seller account. Đổi được
+  bằng biến môi trường.
+- (b) Giữ audit log / lịch sử thay đổi vô thời hạn (tốn dung lượng hơn, phù hợp nếu cần kiểm toán dài hạn).
+- (c) Bạn đặt con số khác.
+- Trả lời: _
