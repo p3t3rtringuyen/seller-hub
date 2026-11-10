@@ -234,3 +234,10 @@ vào cuối file với số tiếp theo.
 - (b) Giữ audit log / lịch sử thay đổi vô thời hạn (tốn dung lượng hơn, phù hợp nếu cần kiểm toán dài hạn).
 - (c) Bạn đặt con số khác.
 - Trả lời: a — thô 35 ngày, job 90 ngày, audit/lịch sử thay đổi 25 tháng, fact giữ đến khi xoá seller account; đổi bằng biến môi trường.
+
+### D65 — Vendor Central chỉ đọc
+- Trạng thái: DECIDED (2026-11-10, theo yêu cầu của bạn)
+- Trên Vendor Central (`vendorcentral.amazon.com`, gồm Promotion Central) agent **không bao giờ** create,
+  edit, delete — kể cả bản nháp, kể cả khi một task sau yêu cầu. Chỉ điều hướng và đọc. Đây là tài khoản
+  thật. Khác với profile Ads test (nơi được phép tạo, xem D30 khi tới Gate 3).
+- Áp dụng cho mọi session lái Chrome và mọi lần chạy lại P1-VENDOR (D61).

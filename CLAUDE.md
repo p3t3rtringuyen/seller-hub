@@ -22,6 +22,9 @@ Before doing anything, read:
   tasks should read the committed `catalog/` instead. Legacy repos (paths in `docs/RESOURCES.md` R3) are read-only: never edit, never
   `git checkout` / `switch` / `stash` / `reset` there, never start their servers, **never open
   `.env*` or `profiles.csv*` files there** — they hold real credentials.
+- **Vendor Central is read-only (D65).** On `vendorcentral.amazon.com` (Promotion Central included)
+  never create, edit or delete anything, drafts included — navigate and read only. It is a live
+  account. No later brief overrides this; only the user can, in chat.
 - **Clean room.** Legacy Yes4All code is read to learn features, workflows, business rules and
   edge cases. Never copy its code, comments, internal hostnames or Yes4All-specific names. Write
   new code from the requirements you extracted (D0).
