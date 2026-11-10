@@ -2,15 +2,14 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P2 — design; P2-BACKLOG running, then Gate 2
+- **Phase:** P2 done — waiting for Gate 2
 - **Updated:** 2026-11-10
-- **Waiting on user:** R1 start Docker Desktop (native Postgres 16 apply of db/design still owed; P3 needs it); D59 account (optional); R5/R6
+- **Waiting on user:** G2 — read docs/adr + docs/BACKLOG.md, then `duyệt` (D20); R1 start Docker Desktop (owed Postgres 16 apply; P3-SCAFFOLD needs it); D59 account (optional); R5/R6; D30 before G3
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
-| P2-BACKLOG | p2-backlog | local_dc3e064d-84ec-4b18-9d2a-43c7a10d02c2 | sonnet / high | main | — | 2026-11-10 |
 
 ## Done
 
@@ -22,6 +21,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 | P1-REF | report read; competitor evidence partly secondhand (some pages blocked) | committed on main | docs/reports/P1-REF.md |
 | P1-WEB | report read; 188/194 web calls match api-endpoints.json; JSON parses | committed on main | docs/reports/P1-WEB.md |
 | P1-VENDOR | report read; 24 entries parse; no ids/ASINs; all tabs closed. Partial: CA DF account, promo wizard steps 2–3, Personalized/Points, Invoices/Payments unreachable | committed on main | docs/reports/P1-VENDOR.md |
+| P2-BACKLOG | BACKLOG.md read (15 slices S01–S15, waves 1a/1b/2–5, coverage of 23 rows, overlap table); clean-room grep 0; overlap/coverage scripts per its report (not re-run) | committed on main | docs/reports/P2-BACKLOG.md |
 | P2-DATA | 14 DDL files / 57 tables listed; clean-room grep 0; report: applied on PG 16.4 (PGlite) + RLS smoke test. **Docker Postgres 16 apply SKIPPED (Docker off) — orchestrator to run** | committed on main | docs/reports/P2-DATA.md |
 | P2-ARCH | 14 ADRs + overview + conventions read (statuses, decisions); clean-room grep 0; mermaid not rendered | committed on main | docs/reports/P2-ARCH.md |
 | P1-SCOPE | SCOPE.md read: 102 rows with MVP? boxes (10 L0, 13 MVP, 39 v1, 30 later, 10 out/dropped); legacy mapping present; clean-room grep 0; D57–D63 added | committed on main | docs/reports/P1-SCOPE.md |
@@ -34,7 +34,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 
 ## Next runnable
 
-- P2-BACKLOG after P2-DATA is verified → G2. Then update CLAUDE.md layout + PLAN OWNED_PATHS per ADR-0001 (`modules/<name>`).
+- After G2: apply PLAN.md + CLAUDE.md layout edits listed in docs/reports/P2-BACKLOG.md (ADR-0001 `modules/<name>`), run the owed Docker Postgres 16 apply, then P3-SCAFFOLD (wt).
 
 ## Log
 
@@ -93,3 +93,5 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   Docker was off, so the native apply check is still owed; substitute check on PGlite 16.4 passed
   per its report (not re-run by the orchestrator). Committed.
 - 2026-11-10 — User: `tiếp`. Started P2-BACKLOG. Docker still off.
+- 2026-11-10 — P2-BACKLOG done: 15 slices in 5 waves (1a S01∥S02, 1b S03 = L0; then 2–5), 0 path
+  overlaps per its checker. Committed. G2 open. Docker still off.
