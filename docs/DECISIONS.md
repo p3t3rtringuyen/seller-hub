@@ -98,9 +98,9 @@ vào cuối file với số tiếp theo.
 - Trả lời: _
 
 ### D21 — Môi trường production
-- Trạng thái: OPEN · Mặc định: **docker compose** cho seller tự host + **AWS** cho bản cloud (vì
+- Trạng thái: DECIDED (2026-11-10) · Mặc định: **docker compose** cho seller tự host + **AWS** cho bản cloud (vì
   SP-API Notifications và Ads Marketing Stream giao qua SQS/EventBridge).
-- Trả lời: _
+- Trả lời: mặc định — docker compose cho bản tự host + AWS cho bản cloud.
 
 ---
 
@@ -227,10 +227,10 @@ vào cuối file với số tiếp theo.
 - Trả lời: a.
 
 ### D64 — Thời gian lưu dữ liệu vận hành
-- Trạng thái: OPEN · Mặc định đề xuất: **(a)** · Nêu bởi P2-ARCH (ADR-0009)
+- Trạng thái: DECIDED (2026-11-10) · Mặc định đề xuất: **(a)** · Nêu bởi P2-ARCH (ADR-0009)
 - (a) Payload thô của report/export (object storage) 35 ngày; lịch sử chạy job 90 ngày; audit log và lịch sử
   thay đổi 25 tháng (≥ 24 tháng dữ liệu báo cáo Ads); dữ liệu fact giữ đến khi xoá seller account. Đổi được
   bằng biến môi trường.
 - (b) Giữ audit log / lịch sử thay đổi vô thời hạn (tốn dung lượng hơn, phù hợp nếu cần kiểm toán dài hạn).
 - (c) Bạn đặt con số khác.
-- Trả lời: _
+- Trả lời: a — thô 35 ngày, job 90 ngày, audit/lịch sử thay đổi 25 tháng, fact giữ đến khi xoá seller account; đổi bằng biến môi trường.

@@ -2,14 +2,15 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P2 — design; P2-ARCH done, P2-DATA next
+- **Phase:** P2 — design; P2-DATA running
 - **Updated:** 2026-11-10
-- **Waiting on user:** D21 (production environment; ADR-0014 is Proposed until then), D64 (retention), then `tiếp` to start P2-DATA; D59 account (optional); R5/R6; R1 Docker (P3)
+- **Waiting on user:** R1 start Docker Desktop (P2-DATA applies DDL on Postgres 16; engine pipe missing 2026-11-10); D59 account (optional); R5/R6
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
+| P2-DATA | p2-data | local_af2eb438-701e-449d-9137-85caa77aec1f | opus / high | main | throwaway pg16 container, non-default port | 2026-11-10 |
 
 ## Done
 
@@ -32,7 +33,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 
 ## Next runnable
 
-- P2-DATA after P2-ARCH is verified; then P2-BACKLOG → G2.
+- P2-BACKLOG after P2-DATA is verified → G2. Then update CLAUDE.md layout + PLAN OWNED_PATHS per ADR-0001 (`modules/<name>`).
 
 ## Log
 
@@ -83,3 +84,6 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   (Fastify 5, pnpm + Turborepo, Better Auth core in the API, envelope-encrypted credential vault,
   generated types + own transport for Amazon, BullMQ, REST/OpenAPI 3.1 contract-first). New D64
   (retention); ADR-0014 Proposed until D21. Committed. Asked user for D21, D64.
+- 2026-11-10 — User: defaults for D21 (compose self-host + AWS cloud) and D64 a (retention).
+  ADR-0014 status set to Accepted, pending Gate 2. Started P2-DATA; Docker engine not running, so
+  its Postgres apply check may be SKIPPED and re-run by the orchestrator later.

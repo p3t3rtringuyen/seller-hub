@@ -1,7 +1,6 @@
 # ADR-0014 — Deployment shapes: self-host and cloud
 
-Status: **Proposed — depends on D21 (OPEN)**. This ADR assumes D21's documented default (docker compose for
-self-host + AWS for cloud); it is not accepted until the user decides D21. · Date: 2026-11-10 · Task: P2-ARCH
+Status: Accepted, pending Gate 2 (D20) — D21 DECIDED 2026-11-10 (default: docker compose self-host + AWS cloud). · Date: 2026-11-10 · Task: P2-ARCH
 
 ## Context
 
