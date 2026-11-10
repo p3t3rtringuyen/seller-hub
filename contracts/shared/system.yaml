@@ -1,0 +1,70 @@
+openapi: 3.1.0
+info:
+  title: seller-hub system endpoints
+  version: 0.1.0
+paths:
+  /healthz:
+    get:
+      operationId: system.getHealth
+      summary: Liveness probe
+      tags: [system]
+      x-public: true
+      x-scope: none
+      responses:
+        "200":
+          description: The process is up.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SystemHealth" }
+        "4XX":
+          $ref: "./common.yaml#/components/responses/Problem"
+  /readyz:
+    get:
+      operationId: system.getReadiness
+      summary: Readiness probe (database and Redis reachable)
+      tags: [system]
+      x-public: true
+      x-scope: none
+      responses:
+        "200":
+          description: Dependencies reachable.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SystemReadiness" }
+        "4XX":
+          $ref: "./common.yaml#/components/responses/Problem"
+        "503":
+          $ref: "./common.yaml#/components/responses/Problem"
+  /v1/openapi.json:
+    get:
+      operationId: system.getOpenApiDocument
+      summary: The bundled OpenAPI 3.1 document
+      tags: [system]
+      x-public: true
+      x-scope: none
+      responses:
+        "200":
+          description: The contract bundle served by this API.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SystemOpenApiDocument" }
+        "4XX":
+          $ref: "./common.yaml#/components/responses/Problem"
+components:
+  schemas:
+    SystemOpenApiDocument:
+      type: object
+      additionalProperties: true
+    SystemHealth:
+      type: object
+      required: [status]
+      properties:
+        status: { type: string, enum: [ok] }
+    SystemReadiness:
+      type: object
+      required: [status, checks]
+      properties:
+        status: { type: string, enum: [ok] }
+        checks:
+          type: object
+          additionalProperties: { type: string, enum: [ok] }

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["NODE_ENV"],
+  "globalPassThroughEnv": ["SH_*", "COMPOSE_PROJECT_NAME"],
+  "tasks": {
+    "//#gen": { "cache": false },
+    "lint": { "dependsOn": ["//#gen"] },
+    "typecheck": { "dependsOn": ["//#gen"] },
+    "test": { "dependsOn": ["//#gen"], "cache": false },
+    "build": { "dependsOn": ["//#gen"], "cache": false },
+    "dev": { "dependsOn": ["//#gen"], "cache": false, "persistent": true }
+  }
+}

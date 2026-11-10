@@ -1,0 +1,52 @@
+# Redocly lint rules for every file under contracts/ (ADR-0010 decision 3). Structural rules that need
+# the whole picture (component prefixes, x-permission declared by a *.permissions.ts file, duplicate
+# operationIds, x-command-kind coverage) are enforced by tools/contracts when it bundles.
+extends:
+  - minimal
+
+rules:
+  operation-operationId: error
+  operation-operationId-unique: error
+  operation-summary: error
+  no-unresolved-refs: error
+  no-unused-components: off
+  no-empty-servers: off
+  security-defined: off
+  no-invalid-media-type-examples: off
+
+  # operationId <module>.<verb><Noun>
+  rule/operation-id-format:
+    subject: { type: Operation, property: operationId }
+    assertions:
+      pattern: "/^[a-z][a-z0-9-]*\\.[a-z]+[A-Z][A-Za-z0-9]*$/"
+    message: "operationId must be <module>.<verb><Noun>, for example ads.listCampaigns"
+    severity: error
+
+  # every operation says who may call it, and at what scope
+  rule/operation-has-permission:
+    subject: { type: Operation }
+    assertions:
+      requireAny: [x-permission, x-public]
+    message: "operation needs x-permission (or x-public: true)"
+    severity: error
+  rule/operation-has-scope:
+    subject: { type: Operation }
+    assertions:
+      required: [x-scope]
+    message: "operation needs x-scope: tenant | seller-account | none"
+    severity: error
+  rule/operation-scope-values:
+    subject: { type: Operation, property: x-scope }
+    assertions:
+      enum: [tenant, seller-account, none]
+    severity: error
+
+  # every operation declares problem responses
+  rule/operation-has-4xx:
+    subject: { type: Responses }
+    assertions:
+      requireAny: ["4XX", "400", "401", "403", "404", "409", "422", "428", "429"]
+    message: "operation must declare a 4XX problem response"
+    severity: error
+
+  # Path format (versioned, kebab-case) is enforced by tools/contracts when it bundles.

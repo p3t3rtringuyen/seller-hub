@@ -1,0 +1,35 @@
+{
+  "name": "@seller-hub/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./migrate": "./src/migrate.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "build": "node -e \"console.log('db: source-only package, nothing to build')\"",
+    "migrate": "tsx scripts/cli.ts migrate",
+    "reset": "tsx scripts/cli.ts reset",
+    "seed": "tsx scripts/cli.ts seed",
+    "codegen": "tsx scripts/cli.ts codegen"
+  },
+  "dependencies": {
+    "@seller-hub/config": "workspace:*",
+    "@seller-hub/core": "workspace:*",
+    "kysely": "catalog:",
+    "pg": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@types/pg": "catalog:",
+    "eslint": "catalog:",
+    "kysely-codegen": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

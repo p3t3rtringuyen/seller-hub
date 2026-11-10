@@ -1,0 +1,127 @@
+openapi: 3.1.0
+info:
+  title: seller-hub shared components
+  version: 0.1.0
+  description: >
+    Shared parameters, responses and schemas (ADR-0010, conventions §3-§5). Owned by P3-SCAFFOLD; changed only
+    through the orchestrator. Slice contracts reference these with relative $refs and never redefine them.
+paths: {}
+components:
+  parameters:
+    SellerAccountId:
+      name: sellerAccountId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    Page:
+      name: page
+      in: query
+      description: Grid pagination (offset), 1-based.
+      schema: { type: integer, minimum: 1, default: 1 }
+    PageSize:
+      name: pageSize
+      in: query
+      schema: { type: integer, minimum: 1, maximum: 200, default: 50 }
+    Sort:
+      name: sort
+      in: query
+      description: Comma list of whitelisted fields, `-` prefix for descending (`-spend,name`).
+      schema: { type: string, maxLength: 200 }
+    Q:
+      name: q
+      in: query
+      description: Case-insensitive contains search on name / id.
+      schema: { type: string, maxLength: 200 }
+    Limit:
+      name: limit
+      in: query
+      description: Feed pagination (cursor).
+      schema: { type: integer, minimum: 1, maximum: 500, default: 100 }
+    Cursor:
+      name: cursor
+      in: query
+      description: Opaque cursor from the previous page.
+      schema: { type: string, maxLength: 2000 }
+    From:
+      name: from
+      in: query
+      description: Inclusive start date in the marketplace time zone (YYYY-MM-DD).
+      schema: { type: string, format: date }
+    To:
+      name: to
+      in: query
+      description: Inclusive end date in the marketplace time zone (YYYY-MM-DD).
+      schema: { type: string, format: date }
+    CompareFrom:
+      name: compareFrom
+      in: query
+      schema: { type: string, format: date }
+    CompareTo:
+      name: compareTo
+      in: query
+      schema: { type: string, format: date }
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: Client-generated key; the same key with the same payload returns the same command.
+      schema: { type: string, minLength: 8, maxLength: 128 }
+  headers:
+    XRequestId:
+      description: Correlation id; also `traceId` in error bodies.
+      schema: { type: string }
+    RetryAfter:
+      description: Seconds to wait before retrying (429 / 503).
+      schema: { type: integer, minimum: 0 }
+  responses:
+    Problem:
+      description: Error (RFC 9457 problem details). The HTTP status is always the real one.
+      headers:
+        X-Request-Id: { $ref: "#/components/headers/XRequestId" }
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+  schemas:
+    Problem:
+      type: object
+      required: [type, title, status, code, traceId]
+      properties:
+        type: { type: string, format: uri }
+        title: { type: string }
+        status: { type: integer, minimum: 400, maximum: 599 }
+        code: { type: string, description: "Closed list per module, declared in its contract." }
+        detail: { type: string }
+        traceId: { type: string }
+        errors:
+          type: array
+          items: { $ref: "#/components/schemas/ProblemFieldError" }
+    ProblemFieldError:
+      type: object
+      required: [path, code]
+      properties:
+        path: { type: string, description: JSON pointer into the request body. }
+        code: { type: string }
+        message: { type: string }
+        meta: { type: object, additionalProperties: true }
+    Money:
+      type: object
+      required: [amount, currency]
+      properties:
+        amount:
+          {
+            type: string,
+            pattern: "^-?\\d+(\\.\\d+)?$",
+            description: "Decimal string, never a float.",
+          }
+        currency: { type: string, pattern: "^[A-Z]{3}$" }
+    Freshness:
+      type: object
+      description: When the data shown was last synchronised from Amazon (UX-13, C6).
+      required: [syncedAt]
+      properties:
+        syncedAt: { type: [string, "null"], format: date-time }
+    CursorPage:
+      type: object
+      required: [nextCursor]
+      properties:
+        nextCursor: { type: [string, "null"] }

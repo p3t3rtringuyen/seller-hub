@@ -1,0 +1,32 @@
+{
+  "name": "@seller-hub/contracts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./openapi.json": "./dist/openapi.json",
+    "./operations.json": "./dist/operations.json"
+  },
+  "scripts": {
+    "gen": "tsx ../../tools/contracts/src/cli.ts && openapi-typescript dist/openapi.json -o src/generated/schema.d.ts",
+    "lint": "eslint . && tsx ../../tools/contracts/src/lint.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "build": "node -e \"require('fs').accessSync('dist/openapi.json'); console.log('contracts: dist/openapi.json present')\""
+  },
+  "dependencies": {
+    "openapi-fetch": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@redocly/cli": "catalog:",
+    "@seller-hub/config": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "openapi-typescript": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
