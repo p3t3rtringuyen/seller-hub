@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { resolvePorts } from "@seller-hub/config";
+import { bffTarget } from "@/lib/bff-target";
 
 // The BFF is the only browser-facing API surface (ADR-0003). This is the placeholder: it forwards SAFE
 // methods to apps/api with a correlation id and drops hop-by-hop and Set-Cookie headers. No session, no
@@ -44,8 +45,22 @@ async function forward(
       },
     );
   }
-  const target = new URL(`/${path.join("/")}`, apiBase());
-  target.search = new URL(request.url).search;
+  const target = bffTarget(path, apiBase(), new URL(request.url).search);
+  if (!target) {
+    return Response.json(
+      {
+        type: "https://seller-hub.dev/problems/bad-request",
+        title: "Bad request",
+        status: 400,
+        code: "bff_bad_path",
+        traceId,
+      },
+      {
+        status: 400,
+        headers: { "content-type": "application/problem+json", "x-request-id": traceId },
+      },
+    );
+  }
   const upstream = await fetch(target, {
     method: request.method,
     headers: {
