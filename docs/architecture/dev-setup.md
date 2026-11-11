@@ -32,7 +32,7 @@ file (CI does). Amazon credentials (`SPAPI_*`, `ADS_*`) are only filled by the u
 ### Ports and several stacks side by side
 
 Every host port and the compose project name come from the environment, with **non-standard defaults**
-(Postgres 55432, Redis 56379, MinIO 59000/59001, API 4100, web 3100). `SH_PORT_OFFSET` shifts all of them; an
+(Postgres 55432, Redis 56379, MinIO 59000/59001, API 4100, web 3100). `SH_PORT_OFFSET` shifts all of them and must be a **multiple of 100 from 0 to 900** (validated; no two services ever share a port); an
 explicit `SH_PG_PORT`, `SH_REDIS_PORT`, `SH_MINIO_PORT`, `SH_MINIO_CONSOLE_PORT`, `SH_API_PORT`, `SH_WEB_PORT` wins.
 
 ```bash
@@ -50,7 +50,7 @@ are bound to `127.0.0.1` only. Never reuse a project name of another stack, and 
 | `pnpm gate`                                  | **The gate**: `gen`, `lint`, `typecheck`, `test`, `build` (what every session runs)        |
 | `pnpm gen`                                   | Registries (`*.generated.*`) and the contract bundle; runs automatically before every task |
 | `pnpm lint` / `typecheck` / `test` / `build` | One step of the gate (Turborepo over the workspaces, plus `tools/` and root files)         |
-| `pnpm test:integration`                      | Like `test`, but a missing database/Redis is a failure, not a skip (CI uses this mode)     |
+| `pnpm test:integration`                      | Like `test`, but a missing database/Redis is a failure, not a skip (works on Windows too)  |
 | `pnpm db:migrate` / `db:seed` / `db:reset`   | Apply migrations / seed fixtures / drop all schemas and re-migrate (local DB only)         |
 | `pnpm db:codegen`                            | Regenerate `packages/db/src/generated/db.d.ts` from the live schema (commit the result)    |
 | `pnpm contracts:lint`                        | Redocly lint of `contracts/**` (also part of `lint`)                                       |
@@ -84,7 +84,9 @@ Decisions recorded by this task (where an ADR left a choice):
 - **Zod generator**: none. `packages/contracts/src/zod.ts` builds zod schemas from the bundle at runtime with
   `z.fromJSONSchema` (OpenAPI 3.1 component schemas are JSON Schema), so forms get the contract's own constraints.
 - **Migration runner**: `packages/db/src/migrate.ts`, a small forward-only runner (advisory lock, `public.schema_migrations`,
-  timestamp order from the generated index). It replaces node-pg-migrate named in ADR-0009 because that tool does not
+  timestamp order from the generated index). **Late arrivals**: a migration older than the newest applied one (a slice that was
+  created earlier but merged later) is applied in timestamp order and logged (`late arrival: …`), not refused — safe because
+  BACKLOG §1.2 forbids a migration to reference same-wave tables (orchestrator decision B4a). It replaces node-pg-migrate named in ADR-0009 because that tool does not
   recognise the 14-digit timestamps of BACKLOG §1.2 and orders several directories by its own rules.
 - **Lint boundaries**: `no-restricted-imports` overrides in `packages/config/eslint.mjs` instead of `eslint-plugin-boundaries`.
 - **Bundling**: `apps/api` and `apps/worker` build with tsup into one self-contained `dist/main.js`.
@@ -139,11 +141,22 @@ undeclared.
 `modules/example` (key `hello`) is a working example of every convention above, with its migration (`ops.example_hello`),
 seed, contract, web feature (`apps/web/features/example/hello`, `app/(app)/example`), metric
 (`packages/metrics/src/example`) and fixture. **Delete it when the first real module lands:** remove those paths, run
-`pnpm install && pnpm gen && pnpm db:reset && pnpm db:codegen`, and drop `@seller-hub/mod-example` from `apps/api`'s
-devDependencies.
+`pnpm install && pnpm gen && pnpm db:reset && pnpm db:codegen`.
 
 ## 7. Shared files and who edits them
 
 See BACKLOG §1.3. In short: root config, lockfile, `.github`, compose files, `.env.example`, `contracts/shared`,
 `tools/**`, `packages/{config,core,db,contracts,testing}` belong to P3-SCAFFOLD, then the orchestrator.
 New third-party versions go into the `catalog:` block of `pnpm-workspace.yaml`.
+
+## 8. Notes added after review
+
+- The registries import module files by **relative path**, so `apps/api` / `apps/worker` do not list modules as dependencies;
+  a new module needs no edit in any app's `package.json`.
+- Scheduled jobs (`schedule` in a `*.job.ts`) must define `processScheduled()`: ticks carry a system payload
+  (`{ system: true, traceId }`), not a seller account, and the job fans out itself. Jobs without `schedule` keep the
+  tenantId/sellerAccountId/traceId payload rule.
+- `.env.example` keeps DEV-ONLY placeholder passwords for the local stack; `loadConfig()` refuses them when
+  `NODE_ENV=production`.
+- The BFF (`apps/web/lib/bff-target.ts`) re-encodes every path segment, only forwards `/v1/*` and checks that the target
+  origin is the API origin.

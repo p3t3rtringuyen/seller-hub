@@ -94,3 +94,36 @@ was fixed in the second commit (`--hookTimeout=60000 --testTimeout=30000`); the 
 4. P3-INGEST: extend `SyncDefinition`/`JobDefinition`; the worker `registry.generated.ts` already lists syncs, jobs and commands.
 5. Delete `modules/example` (+ its web/metrics/fixture files) when the first real module lands.
 6. Lockfile policy: new third-party versions go into the `catalog:` block; `pnpm-lock.yaml` is regenerated, never hand-merged.
+
+## Review fixes (P5-REVIEW-P3-SCAFFOLD, 2026-11-11)
+
+Each fix has a test that fails on the old code. Commits are small and grouped per finding.
+
+| # | Fix | Test |
+| --- | --- | --- |
+| B1 | BFF target built by `apps/web/lib/bff-target.ts`: segments re-encoded, `/v1/` prefix required, dot/empty segments refused, origin must equal the API origin; the route answers 400 `bff_bad_path` | `apps/web/lib/bff-target.test.ts` (the `%2F%2Fhost` case) |
+| B2 | `no-restricted-imports` blocks now carry the full pattern list per file group (module boundary + HTTP clients + layer) | `packages/config/test/eslint.test.ts` (`calculateConfigForFile`) |
+| B3 | Prefix check runs on components the file itself defines (source YAML), so a `$ref` to a `depends_on` slice bundles | `tools/contracts/test/bundle.test.ts` (cross-file `$ref`); also reports duplicate `x-command-kind` |
+| B4 | Option (a): older unapplied migrations are applied in timestamp order and logged (`late arrival: …`); documented in dev-setup §4 | `packages/db/test/plan.test.ts` (`planMigrations`) |
+| S1 | Scheduled jobs carry a system payload `{system:true, traceId}` and run `processScheduled()`; generator requires it when `schedule` is set; account jobs keep the strict payload rule | `apps/worker/test/run-job.test.ts`, registry test |
+| S2 | Redaction: snake_case keys, `x-amz-access-token`, capitalised headers, 3 nesting levels, `err.config.data/body` | `packages/core/test/logger.test.ts` (LWA-shaped object) |
+| S3 | Placeholders stay in `.env.example` (commented DEV-ONLY); `loadConfig()` throws if any is used with `NODE_ENV=production` | `packages/config/test/config.test.ts` |
+| S4 | `apps/web/tsconfig.tsbuildinfo` untracked, `*.tsbuildinfo` ignored | — |
+| S5 | `pnpm test:integration` = `tsx scripts/test-integration.ts` (works on Windows) | run manually |
+| S6 | Globs skip `*.test.ts(x)`, `*.d.ts`, `*.generated.ts`; naming mismatches are reported as errors instead of throwing | registry test (stray files) |
+| S7 | `@seller-hub/mod-example` removed from `apps/api` devDependencies; documented that registries import modules by relative path | — |
+| S8 | `SH_PORT_OFFSET` must be a multiple of 100 (0–900); a test proves no two services share a port for any valid offset | `packages/config/test/config.test.ts` |
+| nits | migration header cites `packages/testing/test/platform-db.test.ts`; duplicate `x-command-kind` reported | — |
+
+Not changed (still listed above as limits): web-feature `public.ts` import rule, deepObject query parsing, `respond()` brand for
+`OperationResponse` (binding.ts treats any object with numeric `status` as a response), slot-name/nav-file-name checks,
+seed ordering hook.
+
+### Gate after the fixes
+
+`pnpm gate` (no stack): **exit 0**; lint, typecheck, test, build 11/11 tasks, tools tests 19 passed (registry 10, contracts 9),
+config 10, core 9, db 2, worker 6 (+1 skipped), web 6, api 4 (+9 skipped), mod-example 3 (+6 skipped), testing 2 (+5 skipped).
+**SKIPPED: all DB/Redis-backed tests** (api 9, mod-example 6, testing 5, worker 1 = 21) because Docker Desktop was not running
+in this session (`docker info` → engine pipe missing) and I did not start it. The DB-dependent code touched by these fixes is
+the migration runner's ordering (covered by the pure `planMigrations` test, not by a real Postgres run) — the orchestrator
+re-runs `pnpm gate` with the stack up (`SH_REQUIRE_DB=1 pnpm test:integration`) before merge.

@@ -9,10 +9,10 @@
   },
   "scripts": {
     "gen": "tsx tools/registry/src/cli.ts && pnpm --filter @seller-hub/contracts run gen",
-    "lint": "turbo run lint --concurrency=4 && eslint tools/registry tools/contracts scripts/stack.ts e2e .storybook playwright.config.ts eslint.config.mjs && prettier --check .",
+    "lint": "turbo run lint --concurrency=4 && eslint tools/registry tools/contracts scripts/stack.ts scripts/test-integration.ts e2e .storybook playwright.config.ts eslint.config.mjs && prettier --check .",
     "typecheck": "turbo run typecheck && tsc --noEmit",
     "test": "turbo run test && vitest run --root tools",
-    "test:integration": "SH_REQUIRE_DB=1 turbo run test",
+    "test:integration": "tsx scripts/test-integration.ts",
     "build": "turbo run build",
     "gate": "pnpm gen && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
     "format": "prettier --write .",
