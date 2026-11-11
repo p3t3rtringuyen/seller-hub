@@ -2,16 +2,15 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P3 — foundation; P3-SCAFFOLD done on its branch, in review
+- **Phase:** P3 — foundation; P3-SCAFFOLD fixing review findings
 - **Updated:** 2026-11-11
-- **Waiting on user:** R5/R6 (own SP-API app, own Ads API LWA client) and D30 before G3; D59 account (optional)
+- **Waiting on user:** R1 start Docker Desktop again (engine down 2026-11-11; DB part of the gate needs it); R5/R6 and D30 before G3; D59 (optional)
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
-| P3-SCAFFOLD (done, awaiting review) | p3-scaffold | local_faa2e3a4-0e32-46b1-b8d5-7b06859c7c93 | sonnet / high | wt / claude/p3-scaffold-f31648 | stacks down | 2026-11-10 |
-| P5-REVIEW-P3-SCAFFOLD | p5-review-scaffold | local_096a888d-f768-4778-b7f5-a1a7b7fec902 | opus / high | main (read-only) | sellerhub_p5review, own port offset | 2026-11-11 |
+| P3-SCAFFOLD (fixing review: B1–B4, S1–S8) | p3-scaffold | local_faa2e3a4-0e32-46b1-b8d5-7b06859c7c93 | sonnet / high | wt / claude/p3-scaffold-f31648 | stacks down | 2026-11-10 |
 
 ## Done
 
@@ -106,3 +105,8 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-10 — Started P3-SCAFFOLD (worktree, branch p3-scaffold).
 - 2026-11-11 — P3-SCAFFOLD reported DONE on `claude/p3-scaffold-f31648` (3 commits, 150 files; `pnpm gate`
   green from a fresh clone per its report). Started P5-REVIEW (opus). QA skipped for this task (no feature UI).
+- 2026-11-11 — P5-REVIEW-P3-SCAFFOLD: MERGE-AFTER-FIXES. Blockers: BFF SSRF (B1), ESLint import fences
+  overwritten (B2), cross-slice `$ref` rejected (B3), migration order across parallel merges (B4 → option a).
+  Sent B1–B4 + S1–S8 back to p3-scaffold; S3 decided: keep DEV-ONLY placeholders, fail closed in production.
+  `scripts/stack.ts` and dev-setup.md added to the P3-SCAFFOLD PLAN row. Reviewer gate exit 0 but DB part
+  SKIPPED (Docker down again).
