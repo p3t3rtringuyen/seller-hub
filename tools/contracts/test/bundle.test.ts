@@ -122,4 +122,25 @@ describe("contract bundler", () => {
       (await run({ "contracts/modules/m/k.yaml": declared }, { kinds: ["m.thing.do"] })).errors,
     ).toEqual([]);
   });
+
+  it("allows a $ref to a component of another slice without applying this slice's prefix to it", async () => {
+    const j = op()
+      .replace(/MKThing/g, "MJThing")
+      .replace("operationId: m.listThings", "operationId: m.listOtherThings")
+      .replace("/m/things:", "/m/other-things:")
+      .replace(': "#/components/schemas/MJThing"', ': "./k.yaml#/components/schemas/MKThing"');
+    const out = await run({ "contracts/modules/m/k.yaml": op(), "contracts/modules/m/j.yaml": j });
+    expect(out.errors).toEqual([]);
+    expect(out.operations.map((o) => o.operationId)).toEqual(
+      expect.arrayContaining(["m.listThings", "m.listOtherThings"]),
+    );
+  });
+
+  it("reports two schemas that declare the same x-command-kind", async () => {
+    const two = op(
+      "    MKPayloadA: { type: object, x-command-kind: m.thing.do }\n    MKPayloadB: { type: object, x-command-kind: m.thing.do }\n",
+    );
+    const out = await run({ "contracts/modules/m/k.yaml": two }, { kinds: ["m.thing.do"] });
+    expect(out.errors.join("\n")).toMatch(/declared by both/);
+  });
 });

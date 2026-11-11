@@ -3,7 +3,9 @@
 // whole picture. Each file is bundled on its own first (relative $refs to shared files are resolved into
 // that file's components), then merged; identical shared components collapse, conflicting ones fail.
 
+import { readFileSync } from "node:fs";
 import { isDeepStrictEqual } from "node:util";
+import { parse as parseYaml } from "yaml";
 import { join } from "node:path";
 import { bundle, createConfig } from "@redocly/openapi-core";
 
@@ -102,6 +104,14 @@ export async function bundleContracts(input: BundleInput): Promise<BundleOutput>
       errors.push(`${entry.file}: ${(e as Error).message}`);
       continue;
     }
+    // Names this file DEFINES itself (as written in the source, before bundling pulls in $ref targets from
+    // shared files or from the slices it depends on). Only these are subject to the slice prefix rule.
+    const source = parseYaml(readFileSync(join(input.root, entry.file), "utf8")) as Json;
+    const ownNames = new Set(
+      COMPONENT_SECTIONS.flatMap((sec) =>
+        Object.keys(source?.components?.[sec] ?? {}).map((n) => `${sec}:${n}`),
+      ),
+    );
     const owner = entry.module ?? "system";
     const isShared = entry.module === null;
     const prefixes =
@@ -117,7 +127,7 @@ export async function bundleContracts(input: BundleInput): Promise<BundleOutput>
         if (isShared) {
           (sharedNames[section] ??= new Set()).add(name);
           // system.yaml schemas follow the SystemXxx convention; common.yaml names are unprefixed shared names.
-        } else if (!sharedNames[section]?.has(name)) {
+        } else if (ownNames.has(`${section}:${name}`)) {
           const ok =
             preferred.some((p) => name.startsWith(p)) ||
             (entry.key === entry.module && name.startsWith(pascal(entry.module ?? "")));
@@ -205,7 +215,13 @@ export async function bundleContracts(input: BundleInput): Promise<BundleOutput>
   const declared = new Map<string, string>();
   for (const [name, schema] of Object.entries((doc.components.schemas ?? {}) as Json)) {
     const kind = (schema as Json)["x-command-kind"];
-    if (typeof kind === "string") declared.set(kind, name);
+    if (typeof kind === "string") {
+      if (declared.has(kind))
+        errors.push(
+          `x-command-kind "${kind}" is declared by both ${declared.get(kind)} and ${name}`,
+        );
+      declared.set(kind, name);
+    }
   }
   for (const kind of input.commandKinds) {
     if (!declared.has(kind))
