@@ -24,8 +24,10 @@ const EXPLICIT_VAR: Record<PortName, string> = {
 
 export function resolvePorts(env: Record<string, string | undefined>): Record<PortName, number> {
   const offset = Number(env.SH_PORT_OFFSET ?? "0");
-  if (!Number.isInteger(offset) || offset < 0 || offset > 1000) {
-    throw new Error("SH_PORT_OFFSET must be an integer between 0 and 1000");
+  if (!Number.isInteger(offset) || offset < 0 || offset > 900 || offset % 100 !== 0) {
+    throw new Error(
+      "SH_PORT_OFFSET must be a multiple of 100 between 0 and 900 (keeps stacks from colliding)",
+    );
   }
   const out = {} as Record<PortName, number>;
   for (const name of Object.keys(BASE_PORTS) as PortName[]) {

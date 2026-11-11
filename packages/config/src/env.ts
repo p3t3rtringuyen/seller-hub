@@ -14,7 +14,7 @@ export const envSchema = z.object({
   SH_LOG_LEVEL: z
     .enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"])
     .default("info"),
-  SH_PORT_OFFSET: z.coerce.number().int().min(0).max(1000).default(0),
+  SH_PORT_OFFSET: z.coerce.number().int().min(0).max(900).multipleOf(100).default(0),
 
   SH_PG_HOST: z.string().default("127.0.0.1"),
   SH_PG_DATABASE: z.string().default("seller_hub"),
@@ -55,6 +55,14 @@ export interface AppConfig {
   webUrl: string;
 }
 
+/** Placeholder values shipped in .env.example for the local compose stack. They must never run in production. */
+export const DEV_ONLY_VALUES: ReadonlySet<string> = new Set([
+  "sh_owner_dev_only",
+  "sh_app_dev_only",
+  "sh_minio_dev_only",
+  "sh_minio_dev_only_secret",
+]);
+
 export function loadConfig(source: Record<string, string | undefined> = process.env): AppConfig {
   const parsed = envSchema.safeParse(source);
   if (!parsed.success) {
@@ -63,6 +71,18 @@ export function loadConfig(source: Record<string, string | undefined> = process.
     throw new Error(`Invalid or missing environment variables: ${names}`);
   }
   const env = parsed.data;
+  if (env.NODE_ENV === "production") {
+    const dev = (
+      [
+        "SH_PG_OWNER_PASSWORD",
+        "SH_PG_APP_PASSWORD",
+        "SH_S3_ACCESS_KEY",
+        "SH_S3_SECRET_KEY",
+      ] as const
+    ).filter((k) => DEV_ONLY_VALUES.has(env[k]));
+    if (dev.length)
+      throw new Error(`Dev-only placeholder values are set in production for: ${dev.join(", ")}`);
+  }
   const ports = resolvePorts(source);
   const pg = (user: string, password: string) =>
     `postgres://${user}:${encodeURIComponent(password)}@${env.SH_PG_HOST}:${ports.pg}/${env.SH_PG_DATABASE}`;
