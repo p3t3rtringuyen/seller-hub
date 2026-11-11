@@ -2,15 +2,16 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P3 — foundation; P3-SCAFFOLD review = MERGE, waiting for full DB gate + user go-ahead
+- **Phase:** P3 — foundation; scaffold merged; P3-CLIENTS ∥ P3-DS running
 - **Updated:** 2026-11-11
-- **Waiting on user:** start Docker Desktop (full gate with DB/Redis before merge); go-ahead to merge `claude/p3-scaffold-f31648`; R5/R6, D30 before G3
+- **Waiting on user:** keep Docker Desktop running; R5/R6 and D30 before G3; D59 (optional)
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
-| P3-SCAFFOLD (fixes done, awaiting re-review + DB gate) | p3-scaffold | local_faa2e3a4-0e32-46b1-b8d5-7b06859c7c93 | sonnet / high | wt / claude/p3-scaffold-f31648 | stacks down | 2026-11-10 |
+| P3-CLIENTS | p3-clients | local_adcf9dd0-04fb-47d9-8eca-d5d673bd4c4f | sonnet / high | wt / p3-clients (from main 69f44a0) | sellerhub_p3clients, offset 100 | 2026-11-11 |
+| P3-DS | p3-ds | local_314e4f63-069d-4046-9dcf-d19d30134c20 | sonnet / medium | wt / p3-ds (from main 69f44a0) | sellerhub_p3ds, offset 200 | 2026-11-11 |
 
 ## Done
 
@@ -22,6 +23,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 | P1-REF | report read; competitor evidence partly secondhand (some pages blocked) | committed on main | docs/reports/P1-REF.md |
 | P1-WEB | report read; 188/194 web calls match api-endpoints.json; JSON parses | committed on main | docs/reports/P1-WEB.md |
 | P1-VENDOR | report read; 24 entries parse; no ids/ASINs; all tabs closed. Partial: CA DF account, promo wizard steps 2–3, Personalized/Points, Invoices/Payments unreachable | committed on main | docs/reports/P1-VENDOR.md |
+| P3-SCAFFOLD | review MERGE after 1 fix round; orchestrator full gate with stack (offset 400): exit 0, 89 tests, 0 skipped | merged 69f44a0 (--no-ff, not pushed) | docs/reports/P3-SCAFFOLD.md, P3-SCAFFOLD-review.md |
 | P2-BACKLOG | BACKLOG.md read (15 slices S01–S15, waves 1a/1b/2–5, coverage of 23 rows, overlap table); clean-room grep 0; overlap/coverage scripts per its report (not re-run) | committed on main | docs/reports/P2-BACKLOG.md |
 | P2-DATA | 14 DDL files / 57 tables listed; clean-room grep 0; report: applied on PG 16.4 (PGlite) + RLS smoke test. Docker apply run by orchestrator 2026-11-10: all 14 files rc=0 on PostgreSQL 16.15, 0 tenant tables without RLS | committed on main | docs/reports/P2-DATA.md |
 | P2-ARCH | 14 ADRs + overview + conventions read (statuses, decisions); clean-room grep 0; mermaid not rendered | committed on main | docs/reports/P2-ARCH.md |
@@ -35,7 +37,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 
 ## Next runnable
 
-- After P3-SCAFFOLD: P5-REVIEW (+ gate re-run), merge, then P3-CLIENTS ∥ P3-DS.
+- After P3-CLIENTS merges: P3-IDENTITY ∥ P3-INGEST. Each wt task: P5-REVIEW (+QA if UI) → full gate → user go-ahead → merge.
 
 ## Log
 
@@ -115,3 +117,6 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   re-review MERGE + full gate with Docker + the user's go-ahead.
 - 2026-11-11 — Re-review: MERGE (B1–B4, S1–S8 fixed with tests; repros pass). DB/Redis part of the gate still
   SKIPPED (Docker down). Orchestrator runs the full gate when Docker is up, then asks the user to merge.
+- 2026-11-11 — User: Docker on, merge. Full gate on the scaffold branch with the stack up
+  (sellerhub_orchgate, offset 400, SH_REQUIRE_DB=1): exit 0, 89 tests passed, 0 skipped; stack down.
+  Merged `claude/p3-scaffold-f31648` into main (69f44a0). Started P3-CLIENTS and P3-DS in worktrees.
