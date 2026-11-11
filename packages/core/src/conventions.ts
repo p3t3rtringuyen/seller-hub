@@ -88,6 +88,22 @@ export interface SyncDefinition {
 }
 export const defineSync = <T extends SyncDefinition>(d: T): T => d;
 
+/**
+ * Payload of a SCHEDULED job (BullMQ job scheduler ticks carry no seller account). A scheduled job runs as the
+ * system and fans out itself (for example one child job per seller account); it must not touch tenant data
+ * without taking a Scope from the rows it reads.
+ */
+export interface SystemJobPayload {
+  system: true;
+  traceId: string;
+}
+
+export interface SystemJobContext {
+  data: SystemJobPayload;
+  log: Logger;
+  jobId: string;
+}
+
 export interface JobContext<P extends JobPayloadBase = JobPayloadBase> {
   data: P;
   log: Logger;
@@ -99,7 +115,10 @@ export interface JobDefinition<P extends JobPayloadBase = JobPayloadBase> {
   /** `<module>.<job>`. */
   queue: string;
   process: (ctx: JobContext<P>) => Promise<unknown>;
+  /** Repeat every N (`30s`, `5m`, `6h`, `1d`). Requires `processScheduled`. */
   schedule?: { every: string };
+  /** Runs on each scheduler tick with a system payload (no tenant). Required when `schedule` is set. */
+  processScheduled?: (ctx: SystemJobContext) => Promise<unknown>;
   concurrency?: number;
 }
 export const defineJob = <P extends JobPayloadBase>(d: JobDefinition<P>): JobDefinition<P> => d;
