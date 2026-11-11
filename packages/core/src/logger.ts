@@ -5,27 +5,45 @@ import { pino, type Logger, type LoggerOptions } from "pino";
 
 export type { Logger };
 
-export const REDACT_PATHS = [
+const SECRET_KEYS = [
   "authorization",
   "cookie",
   "set-cookie",
+  "x-amz-access-token",
+  "x-api-key",
   "password",
-  "refreshToken",
-  "accessToken",
-  "clientSecret",
   "token",
-  "headers.authorization",
-  "headers.cookie",
-  "headers['set-cookie']",
+  "refreshToken",
+  "refresh_token",
+  "accessToken",
+  "access_token",
+  "idToken",
+  "id_token",
+  "clientSecret",
+  "client_secret",
+];
+
+const seg = (k: string) => (/^[A-Za-z_][A-Za-z0-9_]*$/.test(k) ? k : `["${k}"]`);
+const join = (prefix: string[], k: string) => [...prefix, seg(k)].join(".").replaceAll(".[", "[");
+
+/**
+ * Secret keys at the top level and up to three levels deep (`*`, `*.*`, `*.*.*`), which covers Amazon/LWA
+ * bodies (`access_token`), request headers (`req.headers.authorization`) and axios/undici-style errors
+ * (`err.config.headers.Authorization`). Header names are matched case-sensitively in lower case and in the
+ * capitalised form; the request-log allow-list is the first fence, this is the second.
+ */
+export const REDACT_PATHS: string[] = [
+  ...new Set(
+    SECRET_KEYS.flatMap((k) =>
+      [k, k[0]!.toUpperCase() + k.slice(1)].flatMap((name) =>
+        [[], ["*"], ["*", "*"], ["*", "*", "*"]].map((prefix) => join(prefix, name)),
+      ),
+    ),
+  ),
   "req.headers",
   "res.headers",
-  "*.authorization",
-  "*.cookie",
-  "*.password",
-  "*.refreshToken",
-  "*.accessToken",
-  "*.clientSecret",
-  "*.token",
+  "err.config.data",
+  "err.config.body",
 ];
 
 export interface LoggerConfig {
