@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/12_facts_ops.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/12_facts_ops.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 12 facts: sales, inventory, finance (SP-API)
 -- Slice: MVP (ORD-01 sales overview + TACoS, INV-01 history, FIN-01 fees per SKU/month).
 -- Same rules as 06_facts_ads.sql: monthly range partitions on the marketplace-local `date`, natural keys,

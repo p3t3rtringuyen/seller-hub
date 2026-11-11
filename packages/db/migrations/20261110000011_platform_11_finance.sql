@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/11_finance.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/11_finance.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 11 finance (financial transactions, SP-API)
 -- Slice: MVP (FIN-01: transactions by posted date; transactions screen + fee totals per SKU/month).
 -- Sources: finances@2024-06-19 listTransactions (catalog/spapi/definitions/finances@2024-06-19.json:

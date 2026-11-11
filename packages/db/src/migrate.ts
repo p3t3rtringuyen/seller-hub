@@ -4,6 +4,7 @@ import { findRepoRoot } from "@seller-hub/config";
 import pg from "pg";
 
 // Migration runner (ADR-0009 decision 8): plain SQL, forward-only, one lock, ordered by timestamp.
+// Late arrivals (older than an applied one) are applied in order and logged — orchestrator decision B4(a).
 //
 // Deviation from ADR-0009 (which names node-pg-migrate): BACKLOG §1.2 fixes the file name as
 // `<UTC yyyymmddhhmmss>_<module>_<key>_<desc>.sql` in several directories; node-pg-migrate does not
@@ -53,6 +54,24 @@ export function listMigrationFiles(root: string = findRepoRoot()): MigrationFile
   );
 }
 
+/**
+ * Which migrations still have to run, in timestamp order, and which of them are older than the newest
+ * already-applied one ("late arrivals" from a slice that merged after a newer one).
+ */
+export function planMigrations(
+  files: readonly MigrationFile[],
+  applied: ReadonlySet<string>,
+): { pending: MigrationFile[]; lateArrivals: Set<string> } {
+  const latest = files
+    .filter((f) => applied.has(f.name))
+    .reduce((max, f) => (f.timestamp > max ? f.timestamp : max), "");
+  const pending = files.filter((f) => !applied.has(f.name));
+  return {
+    pending,
+    lateArrivals: new Set(pending.filter((f) => f.timestamp < latest).map((f) => f.name)),
+  };
+}
+
 const LOCK_KEY = 8_246_002;
 
 export async function runMigrations(
@@ -82,14 +101,13 @@ export async function runMigrations(
         `applied migrations without a file (never delete merged migrations): ${missing.join(", ")}`,
       );
 
-    const latestApplied = files
-      .filter((f) => done.has(f.name))
-      .reduce((max, f) => (f.timestamp > max ? f.timestamp : max), "");
-    for (const file of files) {
-      if (done.has(file.name)) continue;
-      if (file.timestamp < latestApplied) {
-        throw new Error(
-          `${file.name} is older than an applied migration (${latestApplied}); migrations are forward-only — give it a newer timestamp`,
+    const { pending, lateArrivals } = planMigrations(files, done);
+    for (const file of pending) {
+      if (lateArrivals.has(file.name)) {
+        // Parallel slices merge in any order; BACKLOG §1.2 forbids referencing same-wave tables, so applying an
+        // older unapplied migration after newer ones is safe. It is applied in timestamp order and logged.
+        log(
+          `late arrival: ${file.name} is older than the newest applied migration; applying it now`,
         );
       }
       const text = readFileSync(file.path, "utf8");

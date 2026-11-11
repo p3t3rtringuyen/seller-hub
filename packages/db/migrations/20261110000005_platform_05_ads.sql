@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/05_ads.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/05_ads.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 05 ads (Amazon Ads mirror, Sponsored Products)
 -- Slice: L0 (ADS-01 sync, ADS-03 read) + MVP (ADS-04..09 write through ops.commands, refresh after write, D62 a).
 -- Generation: Ads API v1 by default (D53); v0 named exceptions: EX-PORTFOLIOS (portfolios),

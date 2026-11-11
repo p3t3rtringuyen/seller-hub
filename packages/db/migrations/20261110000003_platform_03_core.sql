@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/03_core.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/03_core.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 03 core (tenancy, seller accounts, connections, credentials)
 -- Slice: L0 (PLT-01, PLT-03, PLT-04; PLT-02 adds rows, no new tables).
 -- Frame: ADR-0004 (model, roles, invitations, RLS), ADR-0005 (credential vault), D55 a (fixed roles),

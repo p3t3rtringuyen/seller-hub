@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/01_ref.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/01_ref.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 01 ref (global reference data, no tenant, no RLS)
 -- Slice: L0 (PLT-04). Marketplace facts are DATA, never code constants (conventions §5/§9, D4).
 -- Read-only for sh_app. Seeded here; later changes are migrations.

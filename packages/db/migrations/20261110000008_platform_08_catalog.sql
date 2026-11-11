@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/08_catalog.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/08_catalog.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 08 catalog (listings and ASIN enrichment, SP-API)
 -- Slice: MVP (CAT-01 sync, CAT-02 Listing screen). Writes to listings (CAT-03) are v1.
 -- Sources: report GET_MERCHANT_LISTINGS_ALL_DATA (catalog/spapi/reports.json; flat file, columns per

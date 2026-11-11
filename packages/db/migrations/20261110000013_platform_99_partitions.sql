@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/99_partitions.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/99_partitions.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 99 initial partitions
 -- Creates monthly partitions for every range-partitioned table in seller-hub schemas.
 -- Window: facts get 25 months back (24-month Ads v1 date retention + current) to 3 months ahead;

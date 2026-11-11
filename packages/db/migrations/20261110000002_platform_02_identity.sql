@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/02_identity.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/02_identity.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 02 identity (global users and sessions; no tenant, no RLS)
 -- Slice: L0 (PLT-01). Frame: ADR-0004 decision 1 (Better Auth core behind IdentityService).
 -- Column names are ours; P3-IDENTITY maps Better Auth's model onto them with its field mapping.

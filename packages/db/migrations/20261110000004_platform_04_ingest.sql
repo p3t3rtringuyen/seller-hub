@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/04_ingest.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/04_ingest.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 04 ingest (sync engine state)
 -- Slice: L0 (PLT-05). Frame: ADR-0008 (DB-driven schedule, resumable runs, raw landing, inbox),
 -- ADR-0009 decision 4/5 (raw 35 d, job runs 90 d), D64 a.

@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/00_foundation.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/00_foundation.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 00 foundation
 -- Task P2-DATA. PostgreSQL 16. Applies first; every other file depends on it.
 -- Frame: ADR-0009 (schemas, partitions, RLS, retention), ADR-0004 (tenancy), conventions.md §1/§2/§10.

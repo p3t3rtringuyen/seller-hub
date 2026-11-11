@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/06_facts_ads.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/06_facts_ads.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 06 facts: Ads SP daily metrics
 -- Slice: L0 (ADS-02 campaign / ad group / target / ad), MVP (ADS-07 search term; placement for ADS-05).
 -- Source: Ads API v1 reports only (D57 a; AdsApiv1CreateReport / AdsApiv1RetrieveReport,

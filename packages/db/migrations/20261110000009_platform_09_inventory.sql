@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/09_inventory.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/09_inventory.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 09 inventory (FBA inventory mirror, SP-API)
 -- Slice: MVP (INV-01; inventory columns on Listing and Ads screens).
 -- Source: fbaInventory.getInventorySummaries (details=true, granularity Marketplace, startDateTime for

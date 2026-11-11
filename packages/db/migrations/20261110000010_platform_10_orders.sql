@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/10_orders.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/10_orders.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 10 orders (orders WITHOUT PII, SP-API)
 -- Slice: MVP (ORD-02 sync + list + detail). ORD-01 order metrics are facts (12_facts_ops.sql).
 -- D11 = no PII: buyer name/e-mail/phone, delivery address lines, city, postal code, buyer PO number

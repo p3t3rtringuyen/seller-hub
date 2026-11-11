@@ -1,5 +1,5 @@
 -- Up Migration
--- Source: db/design/07_ops.sql (P2-DATA, frozen reference). Verbatim copy; test/migrations-match-design.test.ts keeps them identical.
+-- Source: db/design/07_ops.sql (P2-DATA, frozen reference). Verbatim copy; packages/testing/test/platform-db.test.ts keeps them identical.
 -- seller-hub data model — 07 ops (writes to Amazon, audit, change history, rules)
 -- Slice: L0 (PLT-07 safe write layer, PLT-06 audit/history, AUT-01 rule engine + one bid rule).
 -- Frame: ADR-0011 (command pattern, outbox, confirmation, rule safety), D62 a (refresh after write),
