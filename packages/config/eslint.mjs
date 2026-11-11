@@ -11,9 +11,37 @@ import tseslint from "typescript-eslint";
 import reactHooks from "eslint-plugin-react-hooks";
 import nextPlugin from "@next/eslint-plugin-next";
 
-const restricted = (patterns, message) => ({
-  "no-restricted-imports": ["error", { patterns: [{ group: patterns, message }] }],
+// Flat config REPLACES a rule's options when a later block matches the same file, so each block passes the
+// COMPLETE list of pattern groups for its files (see test/eslint.test.ts).
+const restrictedGroups = (groups) => ({
+  "no-restricted-imports": ["error", { patterns: groups.flat() }],
 });
+const restricted = (patterns, message) => restrictedGroups([[{ group: patterns, message }]]);
+
+export const MODULE_BOUNDARY = [
+  {
+    group: ["@seller-hub/mod-*/*", "**/apps/**", "../../../*/src/**"],
+    message: "A module may import another module only through its public entry (conventions §11).",
+  },
+];
+export const HTTP_CLIENTS = [
+  {
+    group: ["axios", "got", "undici", "node-fetch", "@aws-sdk/client-sp*"],
+    message: "Amazon calls go through packages/amazon-* only.",
+  },
+];
+export const SERVICE_LAYER = [
+  {
+    group: ["**/routes/**", "**/handlers/**"],
+    message: "service must not import routes or handlers.",
+  },
+];
+export const REPOSITORY_LAYER = [
+  {
+    group: ["**/routes/**", "**/handlers/**", "**/service/**"],
+    message: "repository must not import routes, handlers or services.",
+  },
+];
 
 export function createConfig() {
   return tseslint.config(
@@ -81,36 +109,25 @@ export function createConfig() {
         ),
       },
     },
-    // Modules: other modules only through their public entry; never apps.
+    // Modules and apps/api|worker. ESLint flat config REPLACES a rule's options when a later block matches the
+    // same file, so every block below carries the COMPLETE pattern list for its files (union of groups). A test
+    // (packages/config/test/eslint.test.ts) asserts this with calculateConfigForFile.
     {
       files: ["modules/*/src/**/*.ts", "modules/*/test/**/*.ts"],
-      rules: restricted(
-        ["@seller-hub/mod-*/*", "**/apps/**", "../../../*/src/**"],
-        "A module may import another module only through its public entry (conventions §11).",
-      ),
+      rules: restrictedGroups([MODULE_BOUNDARY, HTTP_CLIENTS]),
+    },
+    {
+      files: ["apps/api/src/**/*.ts", "apps/worker/src/**/*.ts"],
+      rules: restrictedGroups([HTTP_CLIENTS]),
     },
     // Layering inside a module: handler -> service -> repository.
     {
       files: ["modules/*/src/service/**/*.ts"],
-      rules: restricted(
-        ["**/routes/**", "**/handlers/**"],
-        "service must not import routes or handlers.",
-      ),
+      rules: restrictedGroups([MODULE_BOUNDARY, HTTP_CLIENTS, SERVICE_LAYER]),
     },
     {
       files: ["modules/*/src/repository/**/*.ts"],
-      rules: restricted(
-        ["**/routes/**", "**/handlers/**", "**/service/**"],
-        "repository must not import routes, handlers or services.",
-      ),
-    },
-    // Only packages/amazon-* talk to Amazon (conventions §11): no HTTP clients elsewhere.
-    {
-      files: ["modules/*/src/**/*.ts", "apps/api/src/**/*.ts", "apps/worker/src/**/*.ts"],
-      rules: restricted(
-        ["axios", "got", "undici", "node-fetch", "@aws-sdk/client-sp*"],
-        "Amazon calls go through packages/amazon-* only.",
-      ),
+      rules: restrictedGroups([MODULE_BOUNDARY, HTTP_CLIENTS, REPOSITORY_LAYER]),
     },
     {
       files: ["**/*.test.{ts,tsx}", "**/test/**"],
