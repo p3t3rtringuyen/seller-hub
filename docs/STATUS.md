@@ -2,15 +2,16 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P3 — foundation; G2 passed; P3-SCAFFOLD running
-- **Updated:** 2026-11-10
+- **Phase:** P3 — foundation; P3-SCAFFOLD done on its branch, in review
+- **Updated:** 2026-11-11
 - **Waiting on user:** R5/R6 (own SP-API app, own Ads API LWA client) and D30 before G3; D59 account (optional)
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
-| P3-SCAFFOLD | p3-scaffold | local_faa2e3a4-0e32-46b1-b8d5-7b06859c7c93 | sonnet / high | wt / p3-scaffold | sellerhub_p3scaffold, non-default ports | 2026-11-10 |
+| P3-SCAFFOLD (done, awaiting review) | p3-scaffold | local_faa2e3a4-0e32-46b1-b8d5-7b06859c7c93 | sonnet / high | wt / claude/p3-scaffold-f31648 | stacks down | 2026-11-10 |
+| P5-REVIEW-P3-SCAFFOLD | p5-review-scaffold | local_096a888d-f768-4778-b7f5-a1a7b7fec902 | opus / high | main (read-only) | sellerhub_p5review, own port offset | 2026-11-11 |
 
 ## Done
 
@@ -103,3 +104,5 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   postgres:16 container (16.15), every file rc=0; container removed. Note: legacy container
   `ads-api-cache-1` holds host port 6379 — seller-hub compose must not use default ports.
 - 2026-11-10 — Started P3-SCAFFOLD (worktree, branch p3-scaffold).
+- 2026-11-11 — P3-SCAFFOLD reported DONE on `claude/p3-scaffold-f31648` (3 commits, 150 files; `pnpm gate`
+  green from a fresh clone per its report). Started P5-REVIEW (opus). QA skipped for this task (no feature UI).
