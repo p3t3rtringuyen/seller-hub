@@ -1,0 +1,73 @@
+# CI (ADR-0001, D54). Runs once a remote exists (D7). Same gate as local: pnpm gate
+# (gen, lint, typecheck, test, build), with real Postgres 16 and Redis 7 so DB tests cannot be skipped.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: sh_owner
+          POSTGRES_PASSWORD: sh_owner_dev_only
+          POSTGRES_DB: seller_hub
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U sh_owner" --health-interval 3s --health-timeout 3s --health-retries 20
+      redis:
+        image: redis:7-alpine
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 3s --health-timeout 3s --health-retries 20
+    env:
+      # CI uses the dev-only placeholders from .env.example; the service containers listen on standard ports.
+      SH_ENV_FILE: .env.example
+      SH_PG_PORT: "5432"
+      SH_REDIS_PORT: "6379"
+      SH_REQUIRE_DB: "1"
+      CI: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4 # version comes from "packageManager" in package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Gate (gen, lint, typecheck, test, build)
+        run: pnpm gate
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: gate
+    timeout-minutes: 30
+    env:
+      SH_ENV_FILE: .env.example
+      CI: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm gen
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/

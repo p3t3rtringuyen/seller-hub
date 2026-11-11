@@ -1,0 +1,28 @@
+{
+  "name": "@seller-hub/mod-example",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests --hookTimeout=60000 --testTimeout=30000",
+    "build": "node -e \"console.log('mod-example: source-only module, bundled by apps/api and apps/worker')\""
+  },
+  "dependencies": {
+    "@seller-hub/config": "workspace:*",
+    "@seller-hub/core": "workspace:*",
+    "@seller-hub/db": "workspace:*",
+    "kysely": "catalog:"
+  },
+  "devDependencies": {
+    "@seller-hub/testing": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

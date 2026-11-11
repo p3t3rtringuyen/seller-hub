@@ -71,8 +71,29 @@ recommendation first.
 
 ## Commands
 
-Filled in by P3-SCAFFOLD. Until then there is no build; discovery and design tasks validate their
-own outputs (scripts run clean, DDL applies on Postgres 16).
+Dev stack: Docker Compose (Postgres 16, Redis 7, MinIO). Node 24 LTS (newer works), pnpm 10.
+Full guide: `docs/architecture/dev-setup.md`.
+
+```
+pnpm install
+cp .env.example .env.local   # dev-only placeholders for the compose stack are pre-filled
+pnpm stack:up                # compose stack; ports and project name from env (SH_PORT_OFFSET, COMPOSE_PROJECT_NAME)
+pnpm db:migrate              # platform migrations (= db/design/*.sql, 14 files) + modules, in timestamp order
+pnpm db:seed                 # fixture tenants + seller accounts (+ every module seed)
+pnpm dev                     # web 3100, api 4100, worker
+```
+
+**Gate command — run it before reporting DONE, with the stack up so the DB tests really run:**
+
+```
+pnpm gate                    # = pnpm gen && pnpm lint && pnpm typecheck && pnpm test && pnpm build
+```
+
+Other: `pnpm gen` (registries + contract bundle), `pnpm test:integration` (DB and Redis required),
+`pnpm e2e` (Playwright), `pnpm new:module <module> [<key>]`, `pnpm db:reset`, `pnpm db:codegen`,
+`pnpm stack:down`. In a worktree use your own `COMPOSE_PROJECT_NAME` and `SH_PORT_OFFSET`, and bring
+the stack down when done. A DB test skipped because no database was reachable must be named in your
+report. Never edit `*.generated.*` files (gitignored).
 
 ## Target layout (created in P3)
 

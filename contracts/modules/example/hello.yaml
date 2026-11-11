@@ -1,0 +1,80 @@
+openapi: 3.1.0
+info:
+  title: example / hello
+  version: 0.1.0
+  description: >
+    EXAMPLE contract (delete with modules/example). One file per slice: contracts/modules/<module>/<key>.yaml.
+    Operation ids are <module>.<verb><Noun>; new components are prefixed <Module><KeyPascal>; every operation
+    has x-permission, x-scope and a 4XX problem response; request bodies reference a named schema.
+paths:
+  /v1/seller-accounts/{sellerAccountId}/example/hello/status:
+    get:
+      operationId: example.getHelloStatus
+      summary: Number of example greetings for the seller account
+      tags: [example]
+      x-permission: example.read
+      x-scope: seller-account
+      parameters:
+        - $ref: "../../shared/common.yaml#/components/parameters/SellerAccountId"
+      responses:
+        "200":
+          description: Status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleHelloStatus"
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/seller-accounts/{sellerAccountId}/example/hello:
+    post:
+      operationId: example.createHello
+      summary: Create an example greeting
+      tags: [example]
+      x-permission: example.write
+      x-scope: seller-account
+      parameters:
+        - $ref: "../../shared/common.yaml#/components/parameters/SellerAccountId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExampleHelloCreateRequest"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleHelloRow"
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+components:
+  schemas:
+    ExampleHelloStatus:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: integer
+          minimum: 0
+    ExampleHelloCreateRequest:
+      type: object
+      required: [greeting]
+      properties:
+        greeting:
+          type: string
+          maxLength: 200
+    ExampleHelloRow:
+      type: object
+      required: [id, greeting]
+      properties:
+        id: { type: string, format: uuid }
+        greeting: { type: string }
+    ExampleHelloEchoPayload:
+      description: Payload of the command handler `example.hello.echo` (POST /commands, ADR-0011).
+      x-command-kind: example.hello.echo
+      type: object
+      required: [text]
+      properties:
+        text: { type: string, maxLength: 80 }

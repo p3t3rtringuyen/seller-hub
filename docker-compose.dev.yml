@@ -1,0 +1,67 @@
+# Dev stack: Postgres 16, Redis 7, S3-compatible object storage (MinIO). Apps run on the host (pnpm dev).
+#
+# Several stacks can run side by side (one per worktree): the project name comes from COMPOSE_PROJECT_NAME
+# and every HOST port from env. `pnpm stack:up` (scripts/stack.ts) computes the ports from SH_PORT_OFFSET
+# (default 0 -> 55432 / 56379 / 59000 / 59001) and passes them in. None of the defaults is a standard port.
+#
+#   COMPOSE_PROJECT_NAME=sellerhub_b SH_PORT_OFFSET=100 pnpm stack:up
+name: ${COMPOSE_PROJECT_NAME:-sellerhub}
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      # sh_owner is the migration/maintenance role (ADR-0009); the foundation migration creates sh_app.
+      POSTGRES_USER: sh_owner
+      POSTGRES_PASSWORD: ${SH_PG_OWNER_PASSWORD:?set SH_PG_OWNER_PASSWORD (see .env.example)}
+      POSTGRES_DB: ${SH_PG_DATABASE:-seller_hub}
+    ports:
+      - "127.0.0.1:${SH_PG_PORT:-55432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sh_owner -d ${SH_PG_DATABASE:-seller_hub}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    # BullMQ needs noeviction; AOF keeps queued jobs across restarts.
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory-policy", "noeviction"]
+    ports:
+      - "127.0.0.1:${SH_REDIS_PORT:-56379}:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  # Upstream MinIO no longer publishes images; this is the last Bitnami build of MinIO (dev only).
+  # Replace with a maintained S3-compatible image when ADR-0014 is revisited.
+  minio:
+    image: bitnamilegacy/minio:2025.7.23
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: ${SH_S3_ACCESS_KEY:?set SH_S3_ACCESS_KEY (see .env.example)}
+      MINIO_ROOT_PASSWORD: ${SH_S3_SECRET_KEY:?set SH_S3_SECRET_KEY (see .env.example)}
+      MINIO_DEFAULT_BUCKETS: ${SH_S3_BUCKET:-seller-hub}
+    ports:
+      - "127.0.0.1:${SH_MINIO_PORT:-59000}:9000"
+      - "127.0.0.1:${SH_MINIO_CONSOLE_PORT:-59001}:9001"
+    volumes:
+      - miniodata:/bitnami/minio/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  pgdata:
+  redisdata:
+  miniodata:
