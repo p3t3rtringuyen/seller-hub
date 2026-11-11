@@ -2,15 +2,14 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P3 — foundation; P3-SCAFFOLD fixes done, re-review running
+- **Phase:** P3 — foundation; P3-SCAFFOLD review = MERGE, waiting for full DB gate + user go-ahead
 - **Updated:** 2026-11-11
-- **Waiting on user:** R1 start Docker Desktop again (engine down 2026-11-11; DB part of the gate needs it); R5/R6 and D30 before G3; D59 (optional)
+- **Waiting on user:** start Docker Desktop (full gate with DB/Redis before merge); go-ahead to merge `claude/p3-scaffold-f31648`; R5/R6, D30 before G3
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
-| P5-REVIEW-P3-SCAFFOLD (re-review) | p5-review-scaffold | local_096a888d-f768-4778-b7f5-a1a7b7fec902 | opus / high | main (read-only) | sellerhub_p5review | 2026-11-11 |
 | P3-SCAFFOLD (fixes done, awaiting re-review + DB gate) | p3-scaffold | local_faa2e3a4-0e32-46b1-b8d5-7b06859c7c93 | sonnet / high | wt / claude/p3-scaffold-f31648 | stacks down | 2026-11-10 |
 
 ## Done
@@ -114,3 +113,5 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-11 — P3-SCAFFOLD fixed B1–B4, S1–S8 and nits in 9 commits (b00e58d..459f4f5); gate green without
   the stack, 21 DB/Redis tests skipped (Docker down). Re-review sent to p5-review-scaffold. Merge needs:
   re-review MERGE + full gate with Docker + the user's go-ahead.
+- 2026-11-11 — Re-review: MERGE (B1–B4, S1–S8 fixed with tests; repros pass). DB/Redis part of the gate still
+  SKIPPED (Docker down). Orchestrator runs the full gate when Docker is up, then asks the user to merge.

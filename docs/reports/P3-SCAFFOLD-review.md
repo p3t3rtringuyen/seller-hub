@@ -130,3 +130,40 @@ local fake upstreams (B1); the Next server was stopped afterwards. No files chan
 1. Send B1–B4 back to P3-SCAFFOLD (same branch), then re-run the gate **with the stack up and `SH_REQUIRE_DB=1`**.
 2. Record the task's own decisions 1–9 (report) as ADR amendments; add S1 to P3-INGEST's brief, S2 to P3-CLIENTS/P3-IDENTITY.
 3. Decide S3 and B4 option (a)/(b) and write them into BACKLOG §1.2/§1.5.
+
+---
+
+## Re-review (2026-11-11)
+
+Commits `b00e58d..459f4f5` (9, on top of `947d6ea`; 44 files, +614/−110). Read-only again; worktree left clean.
+
+**Verdict: MERGE.** All 4 blockers and all 8 should-fix items are fixed, each with a test that fails on the old code.
+The DB/Redis part of the gate is still unverified by me (Docker down) — run it once with the stack before or right after merge.
+
+| # | Fix | Evidence |
+|---|---|---|
+| B1 | `apps/web/lib/bff-target.ts`: segments re-encoded, `/v1/` only, target origin must equal API origin, else 400 problem | My repro on `next start` (fake upstreams 4400/4500): `/bff/%2F%2F127.0.0.1:4500/steal → 400`, upstream hits only `4400 GET /v1/x` (before: 200 + hit on 4500). Unit test `bff-target.test.ts` covers `//host`, dot and empty segments, non-`/v1`. |
+| B2 | `eslint.mjs`: each file group carries the union of pattern groups | `--print-config`: service = boundary + HTTP + service layer; repository = boundary + HTTP + repository layer; route = boundary + HTTP. Stdin lint of a service importing a handler and `@seller-hub/mod-other/src/…` → 2 errors. `test/eslint.test.ts` asserts it via `calculateConfigForFile`. |
+| B3 | Prefix rule applies only to components the file defines in its own YAML; duplicate `x-command-kind` now an error | My scratch case (`ads/bulk.yaml` → `./campaign-manager.yaml#/…/AdsCampaignManagerCampaign`) now bundles, exit 0 (before: prefix error). New bundle tests for the cross-file `$ref` and the duplicate kind. |
+| B4 | Decision (a): `planMigrations()` applies late arrivals in timestamp order and logs `late arrival: …` | `packages/db/test/plan.test.ts`; documented in dev-setup ("Migration runner … Late arrivals … decision B4a"). Tested at plan level only; the DB path of `runMigrations` is unchanged apart from the plan and runs in the skipped DB tests. |
+| S1 | Scheduler ticks carry `{system: true, traceId}`; `processScheduled()` required with `schedule` (generator error) | `apps/worker/test/run-job.test.ts` (4 cases), registry test; dev-setup §8. |
+| S2 | Redaction: snake_case, `x-amz-access-token`, `x-api-key`, capitalised forms, up to 3 levels, `err.config.data/body` | `packages/core/test/logger.test.ts` checks 12 LWA/header/error-shaped secrets are absent from output. |
+| S3 | DEV-ONLY placeholders kept; `loadConfig()` throws if any of them is set with `NODE_ENV=production` | config test; dev-setup §8. Matches the decision. |
+| S4 | `tsbuildinfo` untracked, `*.tsbuildinfo` ignored | diff. |
+| S5 | `test:integration` → `tsx scripts/test-integration.ts` (sets `SH_REQUIRE_DB=1`, Windows-safe) | diff; not run (needs DB). |
+| S6 | Globs ignore `*.test.ts(x)`, `*.d.ts`, `*.generated.ts`; mismatches become errors, not throws | registry test "stray files". |
+| S7 | `@seller-hub/mod-example` dropped from `apps/api`; dev-setup §8: apps need no per-module deps | diff + gate build green. |
+| S8 | Offset must be a multiple of 100, 0..900 (env schema and `resolvePorts`) | config test proves no two ports collide across all valid offsets. |
+
+Also checked: the 14 platform migrations are still the design files byte for byte after the 2-line header (header now
+cites the right test). Nits from the first review not listed above stay as BACKLOG follow-ups (slot-name check, `respond()`
+brand, commands path `{id}` vs `{sellerAccountId}`, seed ordering).
+
+**Ownership:** every changed file is inside the updated PLAN row except **`scripts/test-integration.ts`** (new, a 10-line
+wrapper for S5). Harmless; add it to the row (or move it under `tools/`) when recording the merge. Nothing else outside.
+
+**Gate re-run:** from the worktree, `SH_ENV_FILE=.env.example SH_PORT_OFFSET=300 COMPOSE_PROJECT_NAME=sellerhub_p5review pnpm gate`
+→ **exit 0**; lint/typecheck/test/build 11/11 each. Tests: api 4 + 9 skipped, config 10, contracts 4, core 9, db 2,
+metrics 3, mod-example 3 + 6 skipped, testing 2 + 5 skipped, web 6, worker 6 + 1 skipped, tools 19 — **21 skipped**
+(DB/Redis). **Stack part SKIPPED:** `docker info` failed (Docker Desktop engine not running); no stack started,
+`ads-api-cache-1` untouched. The local `next start` used for B1 was stopped.
