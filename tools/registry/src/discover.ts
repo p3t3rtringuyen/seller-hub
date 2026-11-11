@@ -81,7 +81,19 @@ export interface Discovery {
 }
 
 function list(root: string, glob: string): string[] {
-  return fg.sync(glob, { cwd: root, dot: false, ignore: ["**/node_modules/**"] }).sort();
+  return fg
+    .sync(glob, {
+      cwd: root,
+      dot: false,
+      ignore: [
+        "**/node_modules/**",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.d.ts",
+        "**/*.generated.ts",
+      ],
+    })
+    .sort();
 }
 
 export function discover(root: string): Discovery {
@@ -89,11 +101,17 @@ export function discover(root: string): Discovery {
   const found = {} as Record<Kind, Found[]>;
   for (const kind of Object.keys(PATTERNS) as Kind[]) {
     const { glob, re } = PATTERNS[kind];
-    found[kind] = list(root, glob).map((file) => {
+    found[kind] = [];
+    for (const file of list(root, glob)) {
       const m = re.exec(file);
-      if (!m) throw new Error(`pattern for ${kind} does not match ${file}`);
-      return { file, module: m[1] ?? "", key: m[2] ?? "" };
-    });
+      if (!m) {
+        errors.push(
+          `${file}: does not follow the ${kind} naming convention (see docs/architecture/dev-setup.md)`,
+        );
+        continue;
+      }
+      found[kind].push({ file, module: m[1] ?? "", key: m[2] ?? "" });
+    }
   }
 
   const modules = fg

@@ -142,4 +142,28 @@ describe("registry generator", () => {
     expect(result.errors.join("\n")).toMatch(/kebab-case/);
     expect(result.errors.join("\n")).toMatch(/default-export/);
   });
+
+  it("requires processScheduled() on a scheduled job", async () => {
+    const { result } = await run({
+      "modules/m/src/jobs/k/a.job.ts":
+        'export default { queue: "m.a-job", process: async () => 1, schedule: { every: "1m" } };',
+    });
+    expect(result.errors.join("\n")).toMatch(/needs processScheduled/);
+    const ok = await run({
+      "modules/m/src/jobs/k/a.job.ts":
+        'export default { queue: "m.a-job", process: async () => 1, schedule: { every: "1m" }, processScheduled: async () => 1 };',
+    });
+    expect(ok.result.errors).toEqual([]);
+  });
+
+  it("reports stray files under convention folders instead of crashing (test files, .d.ts)", async () => {
+    const { result } = await run({
+      ...GOOD,
+      "modules/m/src/public/k.test.ts": "export {};",
+      "modules/m/src/public/types.d.ts": "export {};",
+      "modules/m/src/routes/k/helper.test.ts": "export {};",
+    });
+    expect(result.errors).toEqual([]);
+    expect(result.summary).toMatchObject({ routes: 1 });
+  });
 });

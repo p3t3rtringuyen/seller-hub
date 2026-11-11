@@ -158,6 +158,13 @@ export async function generate(d: Discovery): Promise<GenerateResult> {
           );
         if (typeof def.process !== "function")
           errors.push(`${j.file}: job ${queue} needs process()`);
+        if (
+          (def as { schedule?: unknown; processScheduled?: unknown }).schedule &&
+          typeof (def as { processScheduled?: unknown }).processScheduled !== "function"
+        )
+          errors.push(
+            `${j.file}: scheduled job ${queue} needs processScheduled() (ticks carry a system payload)`,
+          );
         if (queues.has(queue))
           errors.push(`${j.file}: duplicate queue ${queue} (also in ${queues.get(queue)})`);
         queues.set(queue, j.file);
