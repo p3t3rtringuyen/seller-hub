@@ -1,3 +1,5 @@
+import { readdirSync, readFileSync } from "node:fs";
+import path from "node:path";
 import { render, screen, within } from "@testing-library/react";
 import { ThemeProvider } from "@seller-hub/ui";
 import { describe, expect, it, vi } from "vitest";
@@ -92,5 +94,30 @@ describe("AppFrame reads the generated registries", () => {
     expect(screen.getByText("page body")).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Example");
     expect(screen.getByRole("combobox", { name: "Marketplace" })).toBeInTheDocument();
+  });
+});
+
+describe("landmarks (QA)", () => {
+  it("the shell owns the only <main>: no page under app/(app) renders its own", () => {
+    const root = path.resolve(__dirname, "../(app)");
+    const files = (readdirSync(root, { recursive: true }) as string[]).filter((f) =>
+      /\.(tsx|jsx)$/.test(f),
+    );
+    const offenders = files.filter((f) =>
+      /<main[\s>]/.test(readFileSync(path.join(root, f), "utf8")),
+    );
+    expect(offenders).toEqual([]);
+  });
+  it("renders one main landmark with the page inside it", () => {
+    pathname = "/example";
+    render(
+      <ThemeProvider>
+        <AppFrame>
+          <p>page body</p>
+        </AppFrame>
+      </ThemeProvider>,
+    );
+    expect(screen.getAllByRole("main")).toHaveLength(1);
+    expect(within(screen.getByRole("main")).getByText("page body")).toBeInTheDocument();
   });
 });

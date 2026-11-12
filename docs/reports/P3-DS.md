@@ -124,3 +124,66 @@ DB-backed tests ran against the live stack (not skipped). Not run: `pnpm e2e` (n
 - No Playwright e2e for the shell yet (`e2e/shell/`), and no `storybook` job in CI (`pnpm --filter @seller-hub/ui run measure`
   needs a chromium and `pnpm build-storybook`; suggested for CI next to `e2e`).
 - Stack `sellerhub_p3ds` brought down at the end (`pnpm stack:down`); `ads-api-cache-1` untouched.
+
+## Review + QA fixes (round 2)
+
+Inputs: `docs/reports/P3-DS-review.md` (MERGE-AFTER-FIXES, M1–M3) and `docs/reports/P3-DS-qa.md` (FAIL, 3 items).
+The browser measurement (`pnpm --filter @seller-hub/ui run measure`, chromium 1228, page size 25, 1400 px) now covers
+14 configurations instead of 6, and also probes keyboard focus and axe. Final run: `MEASURE OK: shapes equal, no
+clipped cell, CLS 0`, with `APP_URL` set to the production build of the app (`next start`) so `/example` is checked too.
+
+### Must fix (the skeleton rule)
+
+| Item | Cause | Fix | Measured (loading → loaded) |
+|---|---|---|---|
+| **M1** compact rows 32 vs 37.56 px | small MUI checkbox is 20 px + 2×9 px padding; the inline-edit icon button likewise | grid checkbox and inline-edit button use `p: 0.5` (28 px / 24 px), so every control fits the 32 px row | compact + selection: row 32 → 32, table 880 → 880, pager 933 → 933. Compact + inline edit: same. Compact + compare + inline edit: 48 → 48, 1288 → 1288 |
+| **M2** `wrap: true` grew rows | wrapped text was not clamped, skeleton drew 2 bars | wrapped text is clamped to `skeletonLines` (default 2) with `-webkit-line-clamp`, tooltip when clamped; the row height is budgeted from the line count by `datagrid/rowSizing.ts#rowHeightFor` (one function for skeleton and data rows) | wrapping column (long names): row 49 → 49, table 1314 → 1314, pager 1367 → 1367. Wrap + compact + compare: 69 → 69, 1834 → 1834 |
+| **M3** last page jumped | skeleton always drew `pageSize` rows | `rowSizing.ts#skeletonRowCount`: `min(pageSize, total − pageIndex·pageSize)` when the total is known, `pageSize` before the first answer | page 13 of 312 rows: 12 rows → 12, table 560 → 560, pager 613 → 613. Last page + compact + wrap + inline edit: 12 → 12, 677 → 677. Unknown total: 25 → 25 |
+
+Tests that measure: the new stories `Skeleton = loaded: …` (compact, compact + inline edit, compact + compare + inline
+edit, wrap, wrap + compact + compare, last page, last page + compact + wrap + inline edit, unknown total) assert the
+declared sizes in the gate and compare `getBoundingClientRect` boxes whenever a layout engine exists; the same stories are
+measured in chromium by `measure` (all 14 configurations pass, per-config JSON in `storybook-static/measure-grid.json`).
+`rowSizing.test.tsx` pins the budget numbers and the row counts. The review's note on CLS stands: CLS 0 is not
+evidence of parity (rows are new nodes), so heights are compared, not CLS.
+Honest limit: jsdom cannot measure layout, so the gate alone cannot fail on a real-layout regression; `measure` can
+and must run in CI (see follow-ups).
+
+### QA FAILs
+
+1. **Focus indicator** (sidebar button): the theme now draws a 2 px primary outline on `:focus-visible` for links,
+   buttons, `[tabindex]` and `MuiButtonBase.Mui-focusVisible` (`theme.tsx`); the sortable header button used `all: unset`
+   and now sets its own ring. Measured by keyboard in chromium (computed outline): menu toggle, nav link, sort header,
+   pager button and the app's skip link all have `outline: 2px solid`.
+2. **Grid select without a name** (axe `aria-input-field-name`): `GridPagination` uses `labelId` + `useId()`; RTL test
+   `combobox "Rows per page"`. This also fixes the duplicate id (review S2) when two grids share a page.
+3. **Landmarks on `/example`**: the example page rendered its own `<main>` inside the shell's `<main>` (nested and
+   duplicate). Fixed at the source: `apps/web/app/(app)/example/page.tsx` now renders a `<div>` (scaffold's example page,
+   outside OWNED_PATHS, one-word change; it is deleted with `modules/example` anyway). Rule: the shell owns the only
+   `<main>`; a test in `shell.test.tsx` fails if any file under `app/(app)` contains `<main`. axe on `/example` (all
+   rules): 0 violations. axe on the stories (iframe artefacts `region`, `landmark-one-main`, `page-has-heading-one`
+   excluded): 0 violations for the grid and the shell.
+
+### Should-fix items done
+
+- S2 duplicate id (above). S4 `InlineEditCell` takes `decimals` (currency exponent; JPY 0). Nit: Total-row alignment now
+  uses `numeric && !exempt` like the cells.
+- `measure` now also runs axe-core (`axe-core 4.10.3`, new devDependency of `packages/ui`) and keyboard-focus probes.
+
+### Follow-ups (not done)
+
+- **S1**: run `pnpm build-storybook && pnpm --filter @seller-hub/ui run measure` in CI (needs chromium; CI file is the
+  orchestrator's). Optional: `APP_URL=… ` for the app-page axe check.
+- **S3** shell copy to `apps/web/messages/en/*.json` (needs the generator's namespace for a non-slice file; left in
+  `(shell)/messages.ts`). **S5** "select all matching the filter" (needs the bulk slice's cap and server resolution).
+  **S6** reserve space for the bulk bar so the first tick does not move the table (decide: overlay on the toolbar).
+- A row with an inline-edit error message grows while editing (edit state, not a loading transition).
+- Remaining nits: DOM lib in root tsconfig vs a `.storybook/tsconfig.json`; `apps/web/app/page.tsx` placeholder text;
+  UX-10 touch-pointer rule and column resize.
+- Not covered by `pnpm gate`: browser measurement, axe, focus (all in `measure`).
+
+### Commands (round 2)
+
+`pnpm gate` (stack `sellerhub_p3ds`, offset 200, DB tests ran): exit 0, 12/12 tasks; ui 141 tests, web 14, api 13,
+core 9, config 10, mod-example 9, worker 7, testing 7, contracts 4, metrics 3, db 2, tools 19. `pnpm build-storybook`
+OK; `measure` with `APP_URL` OK. Stack brought down; `storybook-static` removed.

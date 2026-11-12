@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect, fn, userEvent, waitFor, within } from "storybook/test";
-import { DemoGrid } from "../stories/DemoGrid";
+import { DemoGrid, type DemoGridProps } from "../stories/DemoGrid";
 import { type DemoEntity } from "../stories/entities";
 import { expectSameShape } from "../stories/parity";
 import { describeGridShape, findBareClips, measureGridShape } from "./shape";
@@ -35,61 +35,103 @@ export const KeywordsLoading: Story = {
 // measurable property: column count/ids/widths/alignment, header labels, row count (= pageSize), row height,
 // toolbar, totals row, pager. In a real browser it also compares the measured boxes (no layout shift).
 
-function Parity({ entity, compare }: { entity: DemoEntity["id"]; compare?: boolean }) {
+type ParityConfig = Omit<DemoGridProps, "status" | "entity"> & { entity: DemoEntity["id"] };
+
+function Parity({ config, expectedRows }: { config: ParityConfig; expectedRows: number }) {
   return (
-    <div style={{ width: 1280 }}>
+    <div style={{ width: 1280 }} data-expected-rows={expectedRows}>
       <div data-which="loading">
-        <DemoGrid
-          entity={entity}
-          status="loading"
-          pageSize={25}
-          selectable
-          {...(compare ? { compare } : {})}
-        />
+        <DemoGrid {...config} status="loading" selectable />
       </div>
       <div data-which="ready" style={{ marginTop: 24 }}>
-        <DemoGrid
-          entity={entity}
-          status="ready"
-          pageSize={25}
-          selectable
-          {...(compare ? { compare } : {})}
-        />
+        <DemoGrid {...config} unknownTotal={false} status="ready" selectable />
       </div>
     </div>
   );
 }
 
-const parity = (entity: DemoEntity["id"], compare = false): Story => ({
-  args: { entity },
-  render: () => <Parity entity={entity} compare={compare} />,
-  play: async ({ canvasElement }) => expectSameShape(canvasElement, 25),
+const parity = (config: ParityConfig, expectedRows = 25): Story => ({
+  args: { entity: config.entity },
+  render: () => <Parity config={config} expectedRows={expectedRows} />,
+  play: async ({ canvasElement }) => expectSameShape(canvasElement, expectedRows),
 });
 
-export const ShapeParityCampaigns: Story = {
-  ...parity("campaigns"),
-  name: "Skeleton = loaded: campaigns",
-};
-export const ShapeParityAdGroups: Story = {
-  ...parity("adGroups"),
-  name: "Skeleton = loaded: ad groups",
-};
-export const ShapeParityKeywords: Story = {
-  ...parity("keywords"),
-  name: "Skeleton = loaded: keywords",
-};
-export const ShapeParityProductTargets: Story = {
-  ...parity("productTargets"),
-  name: "Skeleton = loaded: product targets",
-};
-export const ShapeParityAutoTargets: Story = {
-  ...parity("autoTargets"),
-  name: "Skeleton = loaded: auto targets",
-};
-export const ShapeParityCompare: Story = {
-  ...parity("campaigns", true),
-  name: "Skeleton = loaded: campaigns with compare",
-};
+const named = (name: string, story: Story): Story => ({ ...story, name });
+
+export const ShapeParityCampaigns = named(
+  "Skeleton = loaded: campaigns",
+  parity({ entity: "campaigns" }),
+);
+export const ShapeParityAdGroups = named(
+  "Skeleton = loaded: ad groups",
+  parity({ entity: "adGroups" }),
+);
+export const ShapeParityKeywords = named(
+  "Skeleton = loaded: keywords",
+  parity({ entity: "keywords" }),
+);
+export const ShapeParityProductTargets = named(
+  "Skeleton = loaded: product targets",
+  parity({ entity: "productTargets" }),
+);
+export const ShapeParityAutoTargets = named(
+  "Skeleton = loaded: auto targets",
+  parity({ entity: "autoTargets" }),
+);
+export const ShapeParityCompare = named(
+  "Skeleton = loaded: campaigns with compare",
+  parity({ entity: "campaigns", compare: true }),
+);
+// Review M1: the Campaign Manager configuration, compact rows + selection + real inline-edit cell.
+export const ShapeParityCompact = named(
+  "Skeleton = loaded: compact + selection",
+  parity({ entity: "campaigns", density: "compact" }),
+);
+export const ShapeParityCompactInlineEdit = named(
+  "Skeleton = loaded: compact + selection + inline edit",
+  parity({ entity: "campaigns", density: "compact", inlineEdit: true }),
+);
+export const ShapeParityCompactCompare = named(
+  "Skeleton = loaded: compact + compare + inline edit",
+  parity({ entity: "campaigns", density: "compact", compare: true, inlineEdit: true }),
+);
+// Review M2: a column that wraps (clamped to the 2 lines the skeleton draws), long text.
+export const ShapeParityWrap = named(
+  "Skeleton = loaded: wrapping column",
+  parity({ entity: "campaigns", wrapColumnIds: ["name"] }),
+);
+export const ShapeParityWrapCompactCompare = named(
+  "Skeleton = loaded: wrapping column + compact + compare",
+  parity({
+    entity: "keywords",
+    wrapColumnIds: ["keyword", "campaign"],
+    density: "compact",
+    compare: true,
+  }),
+);
+// Review M3: the last page has fewer rows than the page size; the skeleton draws the known count.
+export const ShapeParityLastPage = named(
+  "Skeleton = loaded: last page (12 of 25 rows)",
+  parity({ entity: "campaigns", initialPageIndex: 12 }, 12),
+);
+export const ShapeParityLastPageCompactWrap = named(
+  "Skeleton = loaded: last page + compact + wrap + inline edit",
+  parity(
+    {
+      entity: "adGroups",
+      initialPageIndex: 12,
+      density: "compact",
+      wrapColumnIds: ["adGroup"],
+      inlineEdit: true,
+    },
+    12,
+  ),
+);
+// Before the first answer the total is unknown: the page size.
+export const ShapeParityUnknownTotal = named(
+  "Skeleton = loaded when the total is unknown: page size",
+  parity({ entity: "campaigns", unknownTotal: true }),
+);
 
 // The same grid, switched from loading to loaded in place: nothing moves.
 function LoadTransition({ entity }: { entity: DemoEntity["id"] }) {

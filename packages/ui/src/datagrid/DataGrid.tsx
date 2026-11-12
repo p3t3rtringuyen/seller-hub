@@ -12,6 +12,7 @@ import { ColumnChooser } from "./ColumnChooser";
 import { emptyColumnState, pinningFor, visibleIds } from "./columnState";
 import { DeltaBadge } from "./DeltaBadge";
 import { GridPagination } from "./GridPagination";
+import { rowHeightFor, skeletonRowCount } from "./rowSizing";
 import { SkeletonMark } from "./GridSkeleton";
 import { TruncatedText } from "./TruncatedText";
 import type {
@@ -105,7 +106,6 @@ export function DataGrid<Row>(props: DataGridProps<Row>) {
   } = props;
   const columnState = props.columnState ?? emptyColumnState;
   const loading = status === "loading";
-  const rowHeight = (compare ? grid.compareRowHeight : grid.rowHeight)[density];
   const selectable = Boolean(selection);
 
   const tanColumns = useMemo<ColumnDef<Row>[]>(
@@ -142,6 +142,14 @@ export function DataGrid<Row>(props: DataGridProps<Row>) {
   });
 
   const leafColumns = table.getVisibleLeafColumns();
+  const wrapLines = Math.max(
+    1,
+    ...leafColumns.map((c) => {
+      const def = (c.columnDef.meta as ColMeta).def;
+      return def.wrap ? (def.skeletonLines ?? 2) : 1;
+    }),
+  );
+  const rowHeight = rowHeightFor(density, compare, wrapLines);
   const selW = selectable ? grid.selectionWidth : 0;
   const tableWidth = selW + leafColumns.reduce((n, c) => n + c.getSize(), 0);
   const pageIds = rows.map(getRowId);
@@ -192,7 +200,8 @@ export function DataGrid<Row>(props: DataGridProps<Row>) {
     else props.onSortChange(null);
   };
 
-  const dataRowCount = status === "loading" ? page.pageSize : rows.length;
+  const dataRowCount =
+    status === "loading" ? skeletonRowCount(page.pageSize, page.pageIndex, totalRows) : rows.length;
   const colSpan = leafColumns.length + (selectable ? 1 : 0);
 
   const renderHeader = (header: Header<Row, unknown>) => {
@@ -207,10 +216,23 @@ export function DataGrid<Row>(props: DataGridProps<Row>) {
       </TruncatedText>
     );
     const inner = def.sortable ? (
-      <button
+      <Box
+        component="button"
         type="button"
         onClick={() => nextSort(def.id)}
-        style={{ all: "unset", cursor: "pointer", display: "block", width: "100%", minWidth: 0 }}
+        sx={{
+          all: "unset",
+          cursor: "pointer",
+          display: "block",
+          width: "100%",
+          minWidth: 0,
+          // `all: unset` removes the browser outline: keyboard focus must stay visible.
+          "&:focus-visible": {
+            outline: "2px solid",
+            outlineColor: "primary.main",
+            outlineOffset: -2,
+          },
+        }}
         aria-label={
           sorted === "none"
             ? def.header
@@ -218,7 +240,7 @@ export function DataGrid<Row>(props: DataGridProps<Row>) {
         }
       >
         {label_}
-      </button>
+      </Box>
     ) : (
       label_
     );
@@ -318,7 +340,12 @@ export function DataGrid<Row>(props: DataGridProps<Row>) {
         {def.exempt ? (
           node
         ) : (
-          <TruncatedText text={text} wrap={def.wrap ?? false} align={align}>
+          <TruncatedText
+            text={text}
+            wrap={def.wrap ?? false}
+            lines={def.skeletonLines ?? 2}
+            align={align}
+          >
             {node}
           </TruncatedText>
         )}
@@ -445,6 +472,7 @@ export function DataGrid<Row>(props: DataGridProps<Row>) {
                       "sel-h",
                       <Checkbox
                         size="small"
+                        sx={{ p: 0.5 }}
                         disabled={loading || pageIds.length === 0}
                         checked={pageIds.length > 0 && selectedOnPage === pageIds.length}
                         indeterminate={selectedOnPage > 0 && selectedOnPage < pageIds.length}
@@ -520,6 +548,7 @@ export function DataGrid<Row>(props: DataGridProps<Row>) {
                           row ? (
                             <Checkbox
                               size="small"
+                              sx={{ p: 0.5 }}
                               checked={checked}
                               onChange={() => toggleSelection(row.id)}
                               inputProps={{ "aria-label": t("grid.selectRow") }}
@@ -549,7 +578,7 @@ export function DataGrid<Row>(props: DataGridProps<Row>) {
                   const isLabel = c.id === totalLabelFirstId;
                   const figure = totals?.[def.id];
                   const cmp = compare ? totalsCompare?.[def.id] : undefined;
-                  const align = def.numeric ? "right" : "left";
+                  const align = def.numeric && !def.exempt ? "right" : "left";
                   return (
                     <Box
                       component="td"

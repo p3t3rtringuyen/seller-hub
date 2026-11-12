@@ -9,7 +9,7 @@ import type { ComponentType } from "react";
 export default function ExamplePage() {
   const t = messagesByLocale.en?.["example.hello"] ?? {};
   return (
-    <main>
+    <div>
       <HelloCard title={String(t.title ?? "")} state="ready">
         <ul data-testid="nav-entries">
           {navEntries.map((n) => (
@@ -21,6 +21,6 @@ export default function ExamplePage() {
           return <Component key={i} />;
         })}
       </HelloCard>
-    </main>
+    </div>
   );
 }

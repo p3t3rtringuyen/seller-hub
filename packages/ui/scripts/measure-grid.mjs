@@ -5,6 +5,7 @@
 // getBoundingClientRect and compares them; it probes every cell for text clipped without an ellipsis; and it
 // switches one grid from loading to loaded while a PerformanceObserver sums layout-shift scores (CLS).
 /* global document, window, getComputedStyle */
+import { createRequire } from "node:module";
 import { createReadStream, existsSync, statSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
 import path from "node:path";
@@ -76,18 +77,28 @@ const clipProbe = () => {
   return bad;
 };
 
+// [label, story id, expected body rows]. The first six are the entity tabs; the rest are the configurations the
+// review found outside them: compact density, wrapping columns, inline-edit cells, the last page, unknown total.
 const entities = [
-  ["campaigns", "shape-parity-campaigns"],
-  ["ad groups", "shape-parity-ad-groups"],
-  ["keywords", "shape-parity-keywords"],
-  ["product targets", "shape-parity-product-targets"],
-  ["auto targets", "shape-parity-auto-targets"],
-  ["campaigns + compare", "shape-parity-compare"],
+  ["campaigns", "shape-parity-campaigns", 25],
+  ["ad groups", "shape-parity-ad-groups", 25],
+  ["keywords", "shape-parity-keywords", 25],
+  ["product targets", "shape-parity-product-targets", 25],
+  ["auto targets", "shape-parity-auto-targets", 25],
+  ["campaigns + compare", "shape-parity-compare", 25],
+  ["compact + selection", "shape-parity-compact", 25],
+  ["compact + inline edit", "shape-parity-compact-inline-edit", 25],
+  ["compact + compare + inline edit", "shape-parity-compact-compare", 25],
+  ["wrapping column", "shape-parity-wrap", 25],
+  ["wrap + compact + compare", "shape-parity-wrap-compact-compare", 25],
+  ["last page (12 rows)", "shape-parity-last-page", 12],
+  ["last page + compact + wrap + inline edit", "shape-parity-last-page-compact-wrap", 12],
+  ["total unknown", "shape-parity-unknown-total", 25],
 ];
-const result = { tabs: [], cls: null, clippedCells: 0 };
+const result = { tabs: [], cls: null, clippedCells: 0, focus: [], axe: [] };
 let failed = false;
 
-for (const [label, id] of entities) {
+for (const [label, id, expectedRows] of entities) {
   await page.goto(`${base}/iframe.html?id=data-grid-datagrid--${id}&viewMode=story`);
   await page.waitForSelector(
     '[data-which="ready"] [data-testid="datagrid"] tbody tr[data-part="row"]',
@@ -98,13 +109,15 @@ for (const [label, id] of entities) {
   const checks = {
     columnWidths: same(m.loading.columns, m.ready.columns),
     rowHeights: same(m.loading.rowHeights, m.ready.rowHeights),
-    rowCount: m.loading.rowHeights.length === 25 && m.ready.rowHeights.length === 25,
+    rowCount:
+      m.loading.rowHeights.length === expectedRows && m.ready.rowHeights.length === expectedRows,
     header: m.loading.headerHeight === m.ready.headerHeight,
     totals: m.loading.totalsHeight === m.ready.totalsHeight,
     toolbar: m.loading.toolbarHeight === m.ready.toolbarHeight,
     pagination:
       m.loading.paginationHeight === m.ready.paginationHeight &&
       m.loading.paginationTop === m.ready.paginationTop,
+    tableHeight: m.loading.tableHeight === m.ready.tableHeight,
     totalHeight: m.loading.totalHeight === m.ready.totalHeight,
   };
   const ok = Object.values(checks).every(Boolean) && clipped.length === 0;
@@ -113,8 +126,8 @@ for (const [label, id] of entities) {
   result.tabs.push({
     tab: label,
     columns: m.ready.columns.length,
-    rows: m.ready.rowHeights.length,
-    rowHeight: m.ready.rowHeights[0],
+    rows: { loading: m.loading.rowHeights.length, ready: m.ready.rowHeights.length },
+    rowHeight: { loading: m.loading.rowHeights[0], ready: m.ready.rowHeights[0] },
     headerHeight: m.ready.headerHeight,
     totalsHeight: m.ready.totalsHeight,
     tableHeight: { loading: m.loading.tableHeight, ready: m.ready.tableHeight },
@@ -139,6 +152,110 @@ await page.waitForSelector('[data-testid="datagrid"][data-state="ready"]');
 await page.waitForTimeout(500);
 result.cls = await page.evaluate(() => window.__cls);
 if (result.cls !== 0) failed = true;
+
+// Keyboard focus is visible everywhere: tab to a control and read its computed outline.
+const focusRing = () => {
+  const el = document.activeElement;
+  if (!el || el === document.body) return null;
+  const cs = getComputedStyle(el);
+  const visible =
+    (cs.outlineStyle !== "none" && parseFloat(cs.outlineWidth) > 0) ||
+    (cs.boxShadow && cs.boxShadow !== "none");
+  return {
+    tag: el.tagName,
+    label: el.getAttribute("aria-label") ?? el.textContent?.slice(0, 30),
+    visible,
+  };
+};
+const tabTo = async (pg, pick, max = 25) => {
+  for (let i = 0; i < max; i++) {
+    await pg.keyboard.press("Tab");
+    const hit = await pg.evaluate(pick);
+    if (hit) return pg.evaluate(focusRing);
+  }
+  return null;
+};
+const focusCases = [
+  [
+    "shell: nav link",
+    "shell-appshell--default",
+    () => document.activeElement?.tagName === "A" && document.activeElement.closest("nav") !== null,
+  ],
+  [
+    "grid: sortable header button",
+    "data-grid-datagrid--campaigns",
+    () =>
+      document.activeElement?.closest("th") !== null &&
+      document.activeElement?.tagName === "BUTTON",
+  ],
+  [
+    "grid: pager button",
+    "data-grid-datagrid--campaigns",
+    () => document.activeElement?.getAttribute("aria-label") === "Next page",
+  ],
+];
+for (const [label, id, pick] of focusCases) {
+  await page.goto(`${base}/iframe.html?id=${id}&viewMode=story`);
+  await page.waitForSelector('[data-testid="sidebar"], [data-testid="datagrid"]');
+  const ring = await tabTo(page, pick, 40);
+  const ok = Boolean(ring?.visible);
+  if (!ok) failed = true;
+  result.focus.push({ label, ring, ok });
+}
+
+// The menu toggle (the QA failure): reach it with the keyboard, then read its ring. The story's play function has
+// already expanded the menu, so the first Tab lands on a link; Shift+Tab goes back to the toggle button.
+{
+  await page.goto(`${base}/iframe.html?id=shell-appshell--default&viewMode=story`);
+  await page.waitForSelector('[data-testid="sidebar"]');
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Shift+Tab");
+  const ring = await page.evaluate(focusRing);
+  const ok = Boolean(ring?.visible) && /menu/.test(ring?.label ?? "");
+  if (!ok) failed = true;
+  result.focus.push({ label: "shell: menu toggle button", ring, ok });
+}
+
+// axe-core on the stories (iframe artefacts excluded: a story has no page landmarks) and, when APP_URL is set,
+// on the real app page (all rules).
+const axeSource = createRequire(import.meta.url).resolve("axe-core/axe.min.js");
+const runAxe = async (pg, rules) => {
+  await pg.addScriptTag({ path: axeSource });
+  return pg.evaluate(async (disabled) => {
+    const r = await window.axe.run(document, {
+      rules: Object.fromEntries(disabled.map((id) => [id, { enabled: false }])),
+    });
+    return r.violations.map((v) => ({
+      id: v.id,
+      impact: v.impact,
+      nodes: v.nodes.length,
+      sample: v.nodes[0]?.target,
+    }));
+  }, rules);
+};
+const storyArtefacts = ["region", "landmark-one-main", "page-has-heading-one"];
+for (const id of [
+  "data-grid-datagrid--campaigns",
+  "data-grid-datagrid--shape-parity-campaigns",
+  "shell-appshell--default",
+]) {
+  await page.goto(`${base}/iframe.html?id=${id}&viewMode=story`);
+  await page.waitForSelector('[data-testid="sidebar"], [data-testid="datagrid"]');
+  const violations = await runAxe(page, storyArtefacts);
+  if (violations.length) failed = true;
+  result.axe.push({ target: id, violations });
+}
+if (process.env.APP_URL) {
+  await page.goto(`${process.env.APP_URL}/example`);
+  await page.waitForSelector('[data-testid="sidebar"]');
+  const violations = await runAxe(page, []);
+  if (violations.length) failed = true;
+  result.axe.push({ target: `${process.env.APP_URL}/example`, violations });
+  const ring = await tabTo(page, () => document.activeElement?.tagName === "A", 12);
+  const ok = Boolean(ring?.visible);
+  if (!ok) failed = true;
+  result.focus.push({ label: "app: first link", ring, ok });
+}
 
 await browser.close();
 server.close();

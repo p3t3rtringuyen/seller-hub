@@ -1,4 +1,5 @@
 "use client";
+import { useId } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
@@ -29,6 +30,7 @@ export function GridPagination({
   onChange,
 }: GridPaginationProps) {
   const t = useMessages();
+  const labelId = useId();
   const total = totalRows ?? 0;
   const from = total === 0 ? 0 : pageIndex * pageSize + 1;
   const to = Math.min(total, (pageIndex + 1) * pageSize);
@@ -47,7 +49,7 @@ export function GridPagination({
         borderColor: "divider",
       }}
     >
-      <Typography variant="body2" color="text.secondary" id="rows-per-page-label">
+      <Typography variant="body2" color="text.secondary" id={labelId}>
         {t("grid.rowsPerPage")}
       </Typography>
       <Select
@@ -55,7 +57,7 @@ export function GridPagination({
         variant="standard"
         value={pageSize}
         disabled={loading}
-        inputProps={{ "aria-labelledby": "rows-per-page-label" }}
+        labelId={labelId}
         onChange={(e) => onChange({ pageIndex: 0, pageSize: Number(e.target.value) })}
       >
         {pageSizeOptions.map((n) => (

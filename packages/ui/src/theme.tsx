@@ -45,6 +45,28 @@ export const theme = createTheme({
     button: { textTransform: "none", fontWeight: 600 },
   },
   components: {
+    // Keyboard focus is visible everywhere (MUI's ButtonBase removes the outline and relies on a ripple that does
+    // not show on icon buttons and links). One ring, drawn on :focus-visible only, so mouse users see no change.
+    MuiCssBaseline: {
+      styleOverrides: {
+        "a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible, [role='button']:focus-visible":
+          {
+            outline: "2px solid var(--mui-palette-primary-main)",
+            outlineOffset: 2,
+          },
+        "main:focus-visible": { outline: "none" },
+      },
+    },
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          "&.Mui-focusVisible": {
+            outline: "2px solid var(--mui-palette-primary-main)",
+            outlineOffset: 2,
+          },
+        },
+      },
+    },
     MuiButton: { defaultProps: { disableElevation: true, size: "small" } },
     MuiTextField: { defaultProps: { size: "small", variant: "outlined" } },
     MuiPaper: { styleOverrides: { root: { backgroundImage: "none" } } },

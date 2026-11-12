@@ -23,6 +23,8 @@ export interface InlineEditCellProps {
   disabledReason?: string;
   ariaLabel: string;
   max?: number;
+  /** Digits after the dot for money (currency exponent: JPY 0, USD 2); default 2. */
+  decimals?: number;
 }
 
 /**
@@ -39,6 +41,7 @@ export function InlineEditCell({
   disabledReason,
   ariaLabel,
   max,
+  decimals,
 }: InlineEditCellProps) {
   const t = useMessages();
   const [editing, setEditing] = useState(false);
@@ -91,7 +94,12 @@ export function InlineEditCell({
           {display}
         </span>
         {disabled ? null : (
-          <IconButton size="small" aria-label={`${t("edit.edit")} ${ariaLabel}`} onClick={start}>
+          <IconButton
+            size="small"
+            sx={{ p: 0.5 }}
+            aria-label={`${t("edit.edit")} ${ariaLabel}`}
+            onClick={start}
+          >
             <EditIcon sx={{ fontSize: 14 }} />
           </IconButton>
         )}
@@ -128,7 +136,15 @@ export function InlineEditCell({
           setDraft(
             kind === "text"
               ? e.target.value
-              : sanitizeNumeric(kind, e.target.value, max !== undefined ? { max } : {}, draft),
+              : sanitizeNumeric(
+                  kind,
+                  e.target.value,
+                  {
+                    ...(max !== undefined ? { max } : {}),
+                    ...(decimals !== undefined ? { decimals } : {}),
+                  },
+                  draft,
+                ),
           )
         }
         onKeyDown={(e) => {

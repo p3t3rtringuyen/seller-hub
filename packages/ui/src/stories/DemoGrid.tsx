@@ -1,8 +1,9 @@
 "use client";
 import { useMemo, useState } from "react";
 import { DataGrid, type DataGridProps } from "../datagrid/DataGrid";
+import { InlineEditCell } from "../datagrid/InlineEditCell";
 import { emptyColumnState } from "../datagrid/columnState";
-import type { ColumnState, GridSort } from "../datagrid/types";
+import type { ColumnState, GridColumn, GridSort } from "../datagrid/types";
 import { entities, type DemoEntity, type DemoRow } from "./entities";
 
 export interface DemoGridProps {
@@ -20,6 +21,14 @@ export interface DemoGridProps {
   toolbar?: DataGridProps<DemoRow>["toolbar"];
   bulkBar?: (selected: ReadonlySet<string>, clear: () => void) => DataGridProps<DemoRow>["bulkBar"];
   emptyTitle?: string;
+  density?: "compact" | "comfortable";
+  /** Column ids that wrap (clamped to 2 lines) instead of truncating. */
+  wrapColumnIds?: string[];
+  /** Render the Budget / Bid column with the real InlineEditCell. */
+  inlineEdit?: boolean;
+  initialPageIndex?: number;
+  /** Total unknown (first load, before any answer). */
+  unknownTotal?: boolean;
 }
 
 /** A stateful harness around DataGrid: owns page, sort, selection and column state like a real screen would. */
@@ -38,9 +47,14 @@ export function DemoGrid({
   toolbar,
   bulkBar,
   emptyTitle,
+  density = "comfortable",
+  wrapColumnIds = [],
+  inlineEdit = false,
+  initialPageIndex = 0,
+  unknownTotal = false,
 }: DemoGridProps) {
   const def = entities[entity];
-  const [page, setPage] = useState({ pageIndex: 0, pageSize: initialPageSize });
+  const [page, setPage] = useState({ pageIndex: initialPageIndex, pageSize: initialPageSize });
   const [sort, setSort] = useState<GridSort | null>(null);
   const [columnState, setColumnState] = useState<ColumnState>(initialColumnState);
   const [selected, setSelected] = useState<Set<string>>(new Set());
@@ -61,17 +75,41 @@ export function DemoGrid({
       );
     });
   }, [def, page, rowCount, sort, totalRows]);
+  const columns = useMemo<GridColumn<DemoRow>[]>(
+    () =>
+      def.columns.map((c) => {
+        let col = c;
+        if (wrapColumnIds.includes(c.id)) col = { ...col, wrap: true, skeletonLines: 2 };
+        if (inlineEdit && (c.id === "budget" || c.id === "bid")) {
+          col = {
+            ...col,
+            cell: (r) => (
+              <InlineEditCell
+                ariaLabel={c.header}
+                display={`$${Number(r[c.id]).toFixed(2)}`}
+                value={String(r[c.id])}
+                kind="money"
+                onSave={async () => undefined}
+              />
+            ),
+          };
+        }
+        return col;
+      }),
+    [def, wrapColumnIds, inlineEdit],
+  );
   const totals = useMemo(() => def.totals(rows), [def, rows]);
 
   return (
     <DataGrid<DemoRow>
       label={def.label}
-      columns={def.columns}
+      columns={columns}
+      density={density}
       rows={rows}
       getRowId={(r) => r.id}
       status={status}
       page={page}
-      totalRows={status === "loading" ? undefined : (rowCount ?? totalRows)}
+      totalRows={unknownTotal ? undefined : (rowCount ?? totalRows)}
       onPageChange={setPage}
       sort={sort}
       onSortChange={setSort}
