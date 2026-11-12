@@ -2,16 +2,16 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P3 — foundation; scaffold merged; P3-CLIENTS ∥ P3-DS running
+- **Phase:** P3 — P3-CLIENTS and P3-DS done on their branches; reviews next
 - **Updated:** 2026-11-12
-- **Waiting on user:** start Docker Desktop (down 2026-11-12; needed for full gates before merge); keep ≥ 6 GB free on C:; R5/R6 and D30 before G3; D59 (optional)
+- **Waiting on user:** `tiếp` to start P5-REVIEW for P3-CLIENTS and P3-DS (+ P5-QA for P3-DS); R5/R6 and D30 before G3; D59 (optional)
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
-| P3-CLIENTS | p3-clients | local_adcf9dd0-04fb-47d9-8eca-d5d673bd4c4f | sonnet / high | wt / claude/p3-clients-0ff97d (from main 52ab652) | sellerhub_p3clients, offset 100 | 2026-11-11 |
-| P3-DS | p3-ds | local_314e4f63-069d-4046-9dcf-d19d30134c20 | sonnet / medium | wt / claude/p3-ds-306d32 (from main 52ab652) | sellerhub_p3ds, offset 200 | 2026-11-11 |
+| P3-CLIENTS (done, awaiting review) | p3-clients | local_adcf9dd0-04fb-47d9-8eca-d5d673bd4c4f | sonnet / high | wt / claude/p3-clients-0ff97d (from main 52ab652) | sellerhub_p3clients, offset 100 | 2026-11-11 |
+| P3-DS (done, awaiting review + QA) | p3-ds | local_314e4f63-069d-4046-9dcf-d19d30134c20 | sonnet / medium | wt / claude/p3-ds-306d32 (from main 52ab652) | sellerhub_p3ds, offset 200 | 2026-11-11 |
 
 ## Done
 
@@ -126,3 +126,9 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-12 — C: has 9.3 GB free; the user restarted both sessions themselves (worktrees
   p3-clients-0ff97d, p3-ds-306d32). Docker engine down again: both told to skip DB tests if still down;
   orchestrator runs full gates before merge.
+- 2026-11-12 — Docker back (28.0.1), C: 21 GB free. P3-CLIENTS DONE on `claude/p3-clients-0ff97d` (e448c8c;
+  113 files, mostly packages/amazon-*) and P3-DS DONE on `claude/p3-ds-306d32` (d7578c0; 73 files), both
+  with full gate + stack per their reports. Overlap between the branches: `pnpm-lock.yaml` only → the second
+  merge regenerates it with `pnpm install`. P3-DS also edited `.storybook/*`, `tsconfig.json`,
+  `apps/web/{next.config.ts,package.json}` (outside its row; scaffold comments anticipated `.storybook`) →
+  reviewer to judge. Reviews wait for the user's `tiếp` (sessions can only start on a user turn).
