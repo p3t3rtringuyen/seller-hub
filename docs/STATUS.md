@@ -3,15 +3,15 @@
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
 - **Phase:** P3 — foundation; scaffold merged; P3-CLIENTS ∥ P3-DS running
-- **Updated:** 2026-11-11
-- **Waiting on user:** keep Docker Desktop running; R5/R6 and D30 before G3; D59 (optional)
+- **Updated:** 2026-11-12
+- **Waiting on user:** start Docker Desktop (down 2026-11-12; needed for full gates before merge); keep ≥ 6 GB free on C:; R5/R6 and D30 before G3; D59 (optional)
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
-| P3-CLIENTS | p3-clients | local_adcf9dd0-04fb-47d9-8eca-d5d673bd4c4f | sonnet / high | wt / p3-clients (from main 69f44a0) | sellerhub_p3clients, offset 100 | 2026-11-11 |
-| P3-DS | p3-ds | local_314e4f63-069d-4046-9dcf-d19d30134c20 | sonnet / medium | wt / p3-ds (from main 69f44a0) | sellerhub_p3ds, offset 200 | 2026-11-11 |
+| P3-CLIENTS | p3-clients | local_adcf9dd0-04fb-47d9-8eca-d5d673bd4c4f | sonnet / high | wt / claude/p3-clients-0ff97d (from main 52ab652) | sellerhub_p3clients, offset 100 | 2026-11-11 |
+| P3-DS | p3-ds | local_314e4f63-069d-4046-9dcf-d19d30134c20 | sonnet / medium | wt / claude/p3-ds-306d32 (from main 52ab652) | sellerhub_p3ds, offset 200 | 2026-11-11 |
 
 ## Done
 
@@ -120,3 +120,9 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-11 — User: Docker on, merge. Full gate on the scaffold branch with the stack up
   (sellerhub_orchgate, offset 400, SH_REQUIRE_DB=1): exit 0, 89 tests passed, 0 skipped; stack down.
   Merged `claude/p3-scaffold-f31648` into main (69f44a0). Started P3-CLIENTS and P3-DS in worktrees.
+- 2026-11-11 — P3-CLIENTS and P3-DS failed to start: C: had 1.4 GB free (worktree needs 5.4 GB). With the
+  user's OK: pruned Docker build cache (2.56 GB), removed image postgres:16, removed the merged scaffold
+  worktree (branch kept). Docker's 17 GB vhdx does not shrink by itself; user asked to free space.
+- 2026-11-12 — C: has 9.3 GB free; the user restarted both sessions themselves (worktrees
+  p3-clients-0ff97d, p3-ds-306d32). Docker engine down again: both told to skip DB tests if still down;
+  orchestrator runs full gates before merge.
