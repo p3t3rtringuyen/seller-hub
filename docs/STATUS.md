@@ -2,14 +2,17 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P3 — P3-CLIENTS and P3-DS done on their branches; reviews next
+- **Phase:** P3 — reviewing P3-CLIENTS and P3-DS (+ QA of P3-DS)
 - **Updated:** 2026-11-12
-- **Waiting on user:** `tiếp` to start P5-REVIEW for P3-CLIENTS and P3-DS (+ P5-QA for P3-DS); R5/R6 and D30 before G3; D59 (optional)
+- **Waiting on user:** nothing now (go-ahead to merge comes after reviews); R5/R6 and D30 before G3; D59 (optional)
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
+| P5-REVIEW-P3-CLIENTS | p5-review-clients | local_7fc255ee-62ef-492f-9188-2180b2d88de1 | opus / high | main (read-only) | sellerhub_p5clients, offset 500 | 2026-11-12 |
+| P5-REVIEW-P3-DS | p5-review-ds | local_a0a5ec22-8eb6-4607-beea-f650726c6f45 | opus / high | main (read-only) | sellerhub_p5ds, offset 600 | 2026-11-12 |
+| P5-QA-P3-DS | p5-qa-ds | local_bc9d5189-b031-4570-bea3-098701cef1ae | haiku / medium | wt from claude/p3-ds-306d32 | sellerhub_p5qads, offset 700 | 2026-11-12 |
 | P3-CLIENTS (done, awaiting review) | p3-clients | local_adcf9dd0-04fb-47d9-8eca-d5d673bd4c4f | sonnet / high | wt / claude/p3-clients-0ff97d (from main 52ab652) | sellerhub_p3clients, offset 100 | 2026-11-11 |
 | P3-DS (done, awaiting review + QA) | p3-ds | local_314e4f63-069d-4046-9dcf-d19d30134c20 | sonnet / medium | wt / claude/p3-ds-306d32 (from main 52ab652) | sellerhub_p3ds, offset 200 | 2026-11-11 |
 
@@ -132,3 +135,5 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   merge regenerates it with `pnpm install`. P3-DS also edited `.storybook/*`, `tsconfig.json`,
   `apps/web/{next.config.ts,package.json}` (outside its row; scaffold comments anticipated `.storybook`) →
   reviewer to judge. Reviews wait for the user's `tiếp` (sessions can only start on a user turn).
+- 2026-11-12 — User: `tiếp`. Started P5-REVIEW for P3-CLIENTS and P3-DS (opus, read-only) and P5-QA for P3-DS
+  (haiku, worktree from the DS branch). 5 sessions active of the 6 cap.
