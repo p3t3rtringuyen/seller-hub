@@ -1,0 +1,73 @@
+[
+  {
+    "name": "SPQueryCampaign (2 pages)",
+    "match": {
+      "method": "POST",
+      "path": "/adsApi/v1/query/campaigns"
+    },
+    "responses": [
+      {
+        "status": 200,
+        "json": {
+          "campaigns": [
+            {
+              "campaignId": "C1",
+              "name": "Brand | exact",
+              "state": "ENABLED",
+              "adProduct": "SPONSORED_PRODUCTS"
+            }
+          ],
+          "nextToken": "PAGE2"
+        }
+      },
+      {
+        "status": 200,
+        "json": {
+          "campaigns": [
+            {
+              "campaignId": "C2",
+              "name": "Auto | close",
+              "state": "PAUSED",
+              "adProduct": "SPONSORED_PRODUCTS"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "SPUpdateTarget (207 partial failure)",
+    "match": {
+      "method": "POST",
+      "path": "/adsApi/v1/update/targets"
+    },
+    "response": {
+      "status": 207,
+      "json": {
+        "success": [
+          {
+            "index": 0,
+            "target": {
+              "targetId": "T1",
+              "bid": {
+                "bid": 0.75
+              }
+            }
+          }
+        ],
+        "error": [
+          {
+            "index": 1,
+            "errors": [
+              {
+                "code": "FIELD_VALUE_IS_BELOW_MINIMUM_LIMIT",
+                "message": "Bid is below the marketplace minimum",
+                "fieldLocation": "/targets/1/bid/bid"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+]
