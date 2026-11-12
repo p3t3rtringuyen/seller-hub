@@ -33,13 +33,23 @@ describe("207 mapping", () => {
 
   it("never treats an item Amazon did not mention as success", () => {
     const r = mapMultiStatus(inputs, { success: [{ index: 0, campaign: {} }], error: [] });
+    // A write whose outcome is unknown is never retryable: it may already have been applied (M3, ADR-0006).
     expect(r.items[1]).toMatchObject({
       ok: false,
-      errors: [{ code: "missing_result" }],
-      retryable: true,
+      errors: [{ code: "outcome_unknown" }],
+      retryable: false,
     });
     expect(r.items[2]?.ok).toBe(false);
     expect(r.allOk).toBe(false);
+  });
+
+  it("an item missing from a READ is retryable (repeating a read is harmless)", () => {
+    const r = mapMultiStatus(
+      inputs,
+      { success: [{ index: 0, campaign: {} }] },
+      { idempotent: true },
+    );
+    expect(r.items[1]).toMatchObject({ errors: [{ code: "missing_result" }], retryable: true });
   });
 
   it("a 207 with only errors is a total failure, not a success", () => {

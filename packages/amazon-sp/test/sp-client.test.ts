@@ -180,7 +180,13 @@ describe("restricted data guard (D11)", () => {
       jsonResponse(200, { reportDocumentId: "D1", url: "https://s3.test/d" }),
     );
     expect(
-      (await sp.reports.getReportDocument(scope, { path: { reportDocumentId: "D1" } })).status,
+      (
+        await sp.reports.getReportDocument(
+          scope,
+          { path: { reportDocumentId: "D1" } },
+          { reportType: "GET_MERCHANT_LISTINGS_ALL_DATA" },
+        )
+      ).status,
     ).toBe(200);
   });
 });

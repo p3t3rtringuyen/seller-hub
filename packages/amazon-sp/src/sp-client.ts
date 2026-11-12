@@ -23,6 +23,8 @@ export interface SpCallOptions {
   wait?: WaitMode;
   /** The caller guarantees a repeated write cannot duplicate its effect. */
   idempotent?: boolean;
+  /** Required by `reports.getReportDocument`: the type of the report the document belongs to (D11 guard). */
+  reportType?: string;
 }
 
 export type SpResult<K extends SpOperationId> = CallResult<OperationResponse<SpOperationTypes[K]>>;
@@ -77,7 +79,9 @@ export function createSpClient(core: AmazonClient): SpClient {
       body?: unknown;
     };
 
-    const verdict = checkRestriction(id, meta.restricted === true, a);
+    const verdict = checkRestriction(id, meta.restricted === true, a, {
+      reportType: options.reportType,
+    });
     if (verdict.refuse) throw new PiiDisabled(id, verdict.refuse);
 
     const result = await core.call({

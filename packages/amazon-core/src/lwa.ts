@@ -169,7 +169,7 @@ export class LwaTokenService {
 
   private async exchange(ref: CredentialRef, form: Record<string, string>): Promise<CachedToken> {
     const body = new URLSearchParams(form).toString();
-    const url = lwaTokenUrl(ref.region);
+    const url = lwaTokenUrl(ref.region, ref.api);
     let lastStatus = 0;
     for (let attempt = 1; attempt <= this.retry.maxAttempts; attempt++) {
       let status: number;

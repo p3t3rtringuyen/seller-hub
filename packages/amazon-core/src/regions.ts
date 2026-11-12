@@ -53,8 +53,12 @@ export function parseRegion(value: string | undefined): Region {
 export const AMAZON_MODES = ["production", "sandbox", "replay"] as const;
 export type AmazonMode = (typeof AMAZON_MODES)[number];
 
+/**
+ * An unset mode is `replay` (fixtures, no network): nothing reaches live Amazon unless someone asks for it
+ * (D30 is OPEN). `replay` without a fixture transport fails at boot, so a forgotten setting is loud, not live.
+ */
 export function parseAmazonMode(value: string | undefined): AmazonMode {
-  const v = (value ?? "production").trim().toLowerCase();
+  const v = (value === undefined || value.trim() === "" ? "replay" : value).trim().toLowerCase();
   if (!(AMAZON_MODES as readonly string[]).includes(v)) {
     throw new Error(`unknown SH_AMAZON_MODE "${value}" (expected production | sandbox | replay)`);
   }
@@ -67,6 +71,10 @@ export function baseUrlFor(api: ApiFamily, region: Region, mode: AmazonMode): st
   return mode === "sandbox" ? e.spApiSandbox : e.spApi;
 }
 
-export function lwaTokenUrl(region: Region): string {
-  return REGION_ENDPOINTS[region].lwaToken;
+/**
+ * LWA token endpoint. Ads: regional (docs/discovery/ads-domains.md §1). SP-API: Amazon's own SDK always exchanges
+ * at api.amazon.com whatever the region (LwaAuthClient.mjs), so SP does the same; verify live in P3-SMOKE.
+ */
+export function lwaTokenUrl(region: Region, api: ApiFamily = "ads"): string {
+  return api === "sp" ? REGION_ENDPOINTS.na.lwaToken : REGION_ENDPOINTS[region].lwaToken;
 }

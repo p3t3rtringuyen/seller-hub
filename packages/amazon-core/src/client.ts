@@ -52,6 +52,11 @@ export interface AmazonClientOptions {
   requestTimeoutMs?: number;
   /** Ads has no limit table: conservative start, AIMD afterwards (ADR-0006). */
   ads?: AdsLimiterDefaults;
+  /**
+   * Ads has no sandbox host, so `sandbox` mode reaches the LIVE Ads API. In that mode only reads are allowed unless
+   * this is set (D30 OPEN: no write may reach live Amazon by accident).
+   */
+  allowAdsWritesInSandbox?: boolean;
 }
 
 export interface CallInput {
@@ -225,11 +230,25 @@ export class AmazonClient {
       throw new PiiDisabled(op.id, op.restrictedReason ?? "restricted data");
     }
 
+    if (
+      this.options.mode === "sandbox" &&
+      op.api === "ads" &&
+      op.method !== "GET" &&
+      op.idempotent !== true &&
+      this.options.allowAdsWritesInSandbox !== true
+    ) {
+      throw new OperationUsageError(
+        `${op.id} is an Ads write and sandbox mode has no Ads sandbox host (it would reach the live API); refused`,
+        ctx,
+      );
+    }
+
     const isRead = op.method === "GET";
     const mayRepeatAfterServerError = isRead || input.idempotent === true || op.idempotent === true;
     const wait: WaitMode = input.wait ?? { kind: "wait" };
 
     let forcedRefresh = false;
+    let refreshedOnce = false;
     let attempt = 0;
     let lastRetryAfterMs = 0;
 
@@ -303,15 +322,11 @@ export class AmazonClient {
 
       const kind = classifyStatus(response.status);
 
-      if (
-        response.status === 401 &&
-        attempt < this.retry.maxAttempts &&
-        stats.retries === 0 &&
-        !forcedRefresh
-      ) {
+      if (response.status === 401 && attempt < this.retry.maxAttempts && !refreshedOnce) {
         // Token may have been revoked or rotated: refresh once, then retry immediately.
         stats.retries++;
         forcedRefresh = true;
+        refreshedOnce = true;
         continue;
       }
 
@@ -452,7 +467,11 @@ function scrub(value: unknown, depth = 0): unknown {
       out[k] = SECRETISH.test(k) ? "[redacted]" : scrub(v, depth + 1);
     return out;
   }
-  if (typeof value === "string") return value.length > 500 ? `${value.slice(0, 500)}…` : value;
+  if (typeof value === "string") {
+    // Value patterns too: a token can sit under an innocent key (N3).
+    const clean = value.replace(/Atz[ar]\|[\w.~+/=-]+/g, "[redacted]");
+    return clean.length > 500 ? `${clean.slice(0, 500)}…` : clean;
+  }
   return value;
 }
 

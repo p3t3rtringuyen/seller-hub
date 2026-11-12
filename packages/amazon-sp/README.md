@@ -25,8 +25,8 @@ Reads never call low-rate operations per user request (SCOPE §5 risk 5): read t
 
 - `sp.withRestrictedDataToken()` and `tokens.createRestrictedDataToken` always throw `PiiDisabled`.
 - Operations flagged `restricted` are refused by the transport. `orders.getOrder` / `orders.searchOrders` are allowed only
-  without `BUYER` / `RECIPIENT` in `includedData`; `reports.getReportDocument` only for reports this client created, and
-  `createReport` refuses report types that return buyer data (`restriction.ts`, a conservative pattern list — verify
+  without `BUYER` / `RECIPIENT` in `includedData`; `reports.getReportDocument` only with `{ reportType }` stated and non-PII (a document id can come from a schedule or
+  `getReports`), and `createReport` / `createReportSchedule` refuse report types that return buyer data (`restriction.ts`, a conservative pattern list — verify
   against Amazon's restricted-reports list when D11 changes).
 
 ## Adding an operation / testing

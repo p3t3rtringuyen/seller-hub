@@ -42,8 +42,8 @@ export const isPiiReportType = (reportType: string): boolean =>
 function includedData(query: unknown): string[] {
   if (typeof query !== "object" || query === null) return [];
   const v = (query as Record<string, unknown>).includedData;
-  if (Array.isArray(v)) return v.map(String);
-  if (typeof v === "string") return v.split(",");
+  if (Array.isArray(v)) return v.map((e) => String(e).trim().toUpperCase());
+  if (typeof v === "string") return v.split(",").map((e) => e.trim().toUpperCase());
   return [];
 }
 
@@ -52,11 +52,12 @@ export function checkRestriction(
   operationId: string,
   restricted: boolean,
   request: { query?: unknown; body?: unknown },
+  context: { reportType?: string | undefined } = {},
 ): RestrictionVerdict {
   if (operationId === "tokens.createRestrictedDataToken") {
     return { allowedBecause: null, refuse: "Restricted Data Token flow is disabled (D11)" };
   }
-  if (operationId === "reports.createReport") {
+  if (operationId === "reports.createReport" || operationId === "reports.createReportSchedule") {
     const type = (request.body as { reportType?: unknown } | undefined)?.reportType;
     if (typeof type === "string" && isPiiReportType(type)) {
       return { allowedBecause: null, refuse: `report type ${type} returns buyer data (D11)` };
@@ -69,12 +70,24 @@ export function checkRestriction(
       ? { allowedBecause: null, refuse: `includedData ${bad.join(",")} returns buyer data (D11)` }
       : { allowedBecause: "no BUYER/RECIPIENT in includedData" };
   }
+  if (operationId === "reports.getReportDocument") {
+    // A document id can come from createReport, a schedule or getReports, so its report type must be stated by
+    // the caller and be non-PII. An unknown type is refused (fail closed, M1).
+    const type = context.reportType;
+    if (!type) {
+      return {
+        allowedBecause: null,
+        refuse:
+          "getReportDocument needs the report type (pass { reportType }) to prove the report has no buyer data (D11)",
+      };
+    }
+    if (isPiiReportType(type)) {
+      return { allowedBecause: null, refuse: `report type ${type} returns buyer data (D11)` };
+    }
+    return { allowedBecause: `document of non-PII report type ${type}` };
+  }
   if (!restricted) return { allowedBecause: null };
 
-  if (operationId === "reports.getReportDocument") {
-    // The document id can only come from a report our own createReport created, and it refuses PII report types.
-    return { allowedBecause: "document of a non-PII report created by this client" };
-  }
   return { allowedBecause: null, refuse: "operation is flagged restricted in the catalogue (D11)" };
 }
 

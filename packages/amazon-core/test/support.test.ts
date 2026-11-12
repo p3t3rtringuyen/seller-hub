@@ -47,7 +47,10 @@ describe("regions and modes", () => {
   it("parses regions and modes strictly", () => {
     expect(parseRegion("EU")).toBe("eu");
     expect(() => parseRegion("xx")).toThrow();
-    expect(parseAmazonMode(undefined)).toBe("production");
+    // M2: an unset mode must never mean live Amazon (D30 OPEN).
+    expect(parseAmazonMode(undefined)).toBe("replay");
+    expect(parseAmazonMode("")).toBe("replay");
+    expect(parseAmazonMode("production")).toBe("production");
     expect(() => parseAmazonMode("live")).toThrow();
   });
 

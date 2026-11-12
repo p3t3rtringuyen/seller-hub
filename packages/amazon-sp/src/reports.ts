@@ -84,7 +84,7 @@ export async function runReport(
     const status = report.processingStatus ?? "UNKNOWN";
     if (status === "DONE") {
       if (!report.reportDocumentId) throw new ReportFailedError(reportId, "DONE_WITHOUT_DOCUMENT");
-      return await fetchDocument(sp, scope, reportId, report.reportDocumentId);
+      return await fetchDocument(sp, scope, reportId, report.reportDocumentId, request.reportType);
     }
     if (status === "CANCELLED" || status === "FATAL") throw new ReportFailedError(reportId, status);
     if (sp.now() - started + pollMs > timeoutMs) throw new ReportTimeoutError(reportId);
@@ -97,9 +97,11 @@ export async function fetchDocument(
   scope: SpScope,
   reportId: string,
   reportDocumentId: string,
+  reportType: string,
 ): Promise<ReportOutcome> {
-  const doc = (await sp.reports.getReportDocument(scope, { path: { reportDocumentId } }))
-    .body as ReportDocumentBody;
+  const doc = (
+    await sp.reports.getReportDocument(scope, { path: { reportDocumentId } }, { reportType })
+  ).body as ReportDocumentBody;
   const document = await sp.download(doc.url, {
     compression: doc.compressionAlgorithm === "GZIP" ? "auto" : "none",
   });

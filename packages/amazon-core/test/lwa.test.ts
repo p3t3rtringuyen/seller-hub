@@ -67,10 +67,20 @@ describe("LWA token service", () => {
     expect(lwaCalls(transport)).toHaveLength(3);
   });
 
-  it("uses the LWA endpoint of the credential's region", async () => {
+  it("SP-API tokens are exchanged at api.amazon.com in every region (as Amazon's SDK does)", async () => {
     const { lwa, transport } = setup();
     await lwa.getAccessToken(FAKE_REF("sp", "eu"));
     await lwa.getAccessToken(FAKE_REF("sp", "fe"));
+    expect(lwaCalls(transport).map((r) => new URL(r.url).host)).toEqual([
+      "api.amazon.com",
+      "api.amazon.com",
+    ]);
+  });
+
+  it("Ads tokens use the regional LWA endpoint", async () => {
+    const { lwa, transport } = setup();
+    await lwa.getAccessToken(FAKE_REF("ads", "eu"));
+    await lwa.getAccessToken(FAKE_REF("ads", "fe"));
     expect(lwaCalls(transport).map((r) => new URL(r.url).host)).toEqual([
       "api.amazon.co.uk",
       "api.amazon.co.jp",

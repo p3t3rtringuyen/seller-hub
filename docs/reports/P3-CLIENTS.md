@@ -68,3 +68,24 @@ Created: `packages/amazon-core/**`, `packages/amazon-sp/**`, `packages/amazon-ad
 - P3-IDENTITY: vault-backed `CredentialSource` (call `markNeedsReauth` → connection status), cipher key derivation, `ConnectionNeedsReauth` handling in the connections UI.
 - P3-SMOKE: run `sandbox` scripts with real credentials; record Ads rate behaviour ("verify live").
 - When D11 flips: implement the RDT flow behind `withRestrictedDataToken` and replace the PII report-type pattern list.
+
+## Review fixes (P5-REVIEW-P3-CLIENTS, MERGE-AFTER-FIXES)
+
+Each must-fix has a test that fails without the fix. Files: `packages/amazon-{core,sp,ads}/**` only.
+
+| # | Fix | Test |
+| --- | --- | --- |
+| M1 | `createReportSchedule` refuses PII report types like `createReport`. `getReportDocument` no longer gets the "verified no PII" stamp unconditionally: the caller must pass `{ reportType }` (`runReport`/`fetchDocument` do), a PII or missing type is refused (`PiiDisabled`, no call made). `includedData` comparison is case/space-insensitive (N4). | `amazon-sp/test/restriction.test.ts` |
+| M2 | `SH_AMAZON_MODE` unset/empty is now **`replay`** (no network; fails at boot without a fixture transport), never `production`. In `sandbox` mode every Ads operation that is not a read (GET or catalogue-idempotent POST) is refused with `OperationUsageError` before any network call, unless `allowAdsWritesInSandbox` is passed. The `sandbox` scripts only read and keep working. | `amazon-core/test/review-fixes.test.ts`, `support.test.ts` |
+| M3 | `mapMultiStatus` takes `idempotent`: an item Amazon did not mention is `outcome_unknown`, `retryable: false` for writes (reconcile by re-reading); `missing_result`, `retryable: true` only for reads. `ads.batch` passes the operation's idempotency. | `amazon-core/test/batch.test.ts`, `amazon-ads/test/portfolios.test.ts` |
+| M4 | EX-PORTFOLIOS `create`/`update` go through `ads.batch`: chunked by `batchMax` (100), per-item `BatchResult`, and `Prefer: return=representation` is sent for v0 batch operations whose catalogue headers list `Prefer` (`AdsCallOptions.headers` added). The port signature changed (items in, `BatchResult` out). | `amazon-ads/test/portfolios.test.ts` |
+
+Cheap "may fix later" items taken: **S5** SP-API tokens are exchanged at `api.amazon.com` in every region (as Amazon's SDK does; Ads stays regional) - still to be verified live in P3-SMOKE; **S8** the 401 forced refresh now happens once per call even after an earlier 429/5xx retry; **N3** token-shaped values (`Atza|…`, `Atzr|…`) are scrubbed from kept error details whatever their key; **N4** (above).
+
+Follow-ups left (not done): **S6** report gate key should include the Ads app fingerprint (and tenant-fair scheduling, P3-INGEST); **S7** limiter budget keyed by the Amazon selling partner / advertiser id instead of the internal seller account (needs P3-IDENTITY to expose it); **N1** fold AIMD into the Lua script; **N2** cache credentials in-process in the vault source; **N5** `createAdsReports` methods rely on `this` (destructuring breaks); **N6** make `fixtures/campaigns.json` page keying use `bodyIncludes` on the token; **N7** bind the Redis key as AAD in the token cipher.
+
+Gate: see "Review fixes - gate" below.
+
+### Review fixes - gate
+
+`COMPOSE_PROJECT_NAME=sellerhub_p3clients SH_PORT_OFFSET=100 SH_ENV_FILE=.env.example pnpm gate` with the stack up: **exit 0**, nothing skipped. amazon-core 82 passed (incl. 6 on real Redis), amazon-sp 24, amazon-ads 32, tools 23 (regeneration still reproduces the committed generated files), api 13 and db 2 on real Postgres, all others green. Stack brought down afterwards.

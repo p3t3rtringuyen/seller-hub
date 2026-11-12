@@ -38,6 +38,8 @@ export interface AdsCallOptions {
   idempotent?: boolean;
   /** Media type override for operations that offer several versions (v0 recommendations). */
   accept?: string;
+  /** Extra request headers (for example `Prefer`). */
+  headers?: Record<string, string>;
 }
 
 export type AdsResult<K extends AdsOperationId> = CallResult<
@@ -119,6 +121,7 @@ export function createAdsClient(core: AmazonClient): AdsClient {
       ...(options.wait ? { wait: options.wait } : {}),
       ...(options.idempotent !== undefined ? { idempotent: options.idempotent } : {}),
       ...(options.accept ? { accept: options.accept } : {}),
+      ...(options.headers ? { headers: options.headers } : {}),
     });
   }
 
@@ -140,15 +143,21 @@ export function createAdsClient(core: AmazonClient): AdsClient {
     const results: BatchResult<TIn, TOut>[] = [];
     for (const part of chunks) {
       try {
+        // v0 batch writes whose catalogue lists a `Prefer` header need `return=representation` or success items
+        // carry only ids (ADR-0006).
+        const prefer = meta.headers?.some((h) => h.name.toLowerCase() === "prefer")
+          ? { prefer: "return=representation" }
+          : {};
         const res = await call(
           id,
           scope,
           { body: { ...(options.extraBody ?? {}), [meta.batchField]: part } },
-          options,
+          { ...options, headers: { ...prefer, ...options.headers } },
         );
         results.push(
           mapMultiStatus<TIn, TOut>(part, res.body, {
             wrapperKey: meta.generation === "v0" ? meta.batchField : null,
+            idempotent: meta.idempotent === true || options.idempotent === true,
           }),
         );
       } catch (error) {

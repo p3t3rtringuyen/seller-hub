@@ -44,6 +44,8 @@ export interface AmazonRuntimeOptions {
   retry?: RetryPolicy;
   ads?: AdsLimiterDefaults;
   userAgent?: string;
+  /** See `AmazonClientOptions.allowAdsWritesInSandbox`. */
+  allowAdsWritesInSandbox?: boolean;
   tokenCache?: TokenCache;
   bucketStore?: BucketStore;
   gate?: ConcurrencyGate;
@@ -100,6 +102,7 @@ export function createAmazonRuntime(options: AmazonRuntimeOptions): AmazonRuntim
     ...(options.retry ? { retry: options.retry } : {}),
     ...(options.ads ? { ads: options.ads } : {}),
     ...(options.userAgent ? { userAgent: options.userAgent } : {}),
+    ...(options.allowAdsWritesInSandbox ? { allowAdsWritesInSandbox: true } : {}),
     ...(observers.length ? { observer: combineObservers(...observers) } : {}),
   });
   return { client, lwa, limiter, gate, mode, clock };

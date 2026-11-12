@@ -74,6 +74,11 @@ export interface MapOptions {
   entityKey?: string | undefined;
   /** Index of `inputs[0]` in Amazon's numbering (when this chunk is part of a larger batch). Default 0. */
   offset?: number;
+  /**
+   * The operation can be repeated without a duplicate effect (a read). Only then is an item Amazon did not mention
+   * `retryable`; for a write it is `outcome_unknown`, reconciled by re-reading, never blindly repeated (ADR-0006).
+   */
+  idempotent?: boolean;
 }
 
 export function mapMultiStatus<TIn, TOut = unknown>(
@@ -123,8 +128,15 @@ export function mapMultiStatus<TIn, TOut = unknown>(
         index: i,
         input,
         ok: false,
-        errors: [{ code: "missing_result", message: "Amazon returned no result for this item" }],
-        retryable: true,
+        errors: [
+          options.idempotent === true
+            ? { code: "missing_result", message: "Amazon returned no result for this item" }
+            : {
+                code: "outcome_unknown",
+                message: "Amazon returned no result for this item; re-read before any retry",
+              },
+        ],
+        retryable: options.idempotent === true,
       },
   );
   return summarise(items);
