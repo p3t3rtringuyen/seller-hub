@@ -19,6 +19,33 @@ vi.mock("next/link", () => ({
   ),
 }));
 
+// The shell reads the session from the provider of the (app) layout (P3-IDENTITY: /v1/me). These tests exercise the
+// frame itself, so the session is a fixed fake whose permissions are the ones the registered nav entries ask for.
+vi.mock("./session", async () => {
+  const { navEntries: registered } = await import("../../nav.generated");
+  const permissions = [...new Set(registered.map((e) => e.permission))];
+  return {
+    useShellSession: () => ({
+      loading: false,
+      permissions,
+      sellerPermissions: permissions,
+      context: { tenantId: "t1", sellerAccountId: "s1", marketplaceId: "ATVPDKIKX0DER" },
+      options: {
+        tenants: [{ id: "t1", label: "Tenant" }],
+        sellerAccounts: [{ id: "s1", label: "Seller" }],
+        marketplaces: [{ id: "ATVPDKIKX0DER", label: "United States" }],
+      },
+      switching: false,
+      switchContext: () => undefined,
+      me: null,
+      marketplaces: [],
+      error: null,
+      reload: async () => undefined,
+      signOut: async () => undefined,
+    }),
+  };
+});
+
 const entry = (over: Partial<NavEntry>): NavEntry => ({
   id: "x.y",
   labelKey: "nav",
@@ -89,7 +116,7 @@ describe("AppFrame reads the generated registries", () => {
     );
     const nav = screen.getByRole("navigation", { name: "Main navigation" });
     const link = within(nav).getByRole("link", { name: "Example" });
-    expect(link).toHaveAttribute("href", navEntries[0]!.href);
+    expect(link).toHaveAttribute("href", navEntries.find((e) => e.id === "example.hello")!.href);
     expect(link).toHaveAttribute("aria-current", "page");
     expect(screen.getByText("page body")).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Example");
