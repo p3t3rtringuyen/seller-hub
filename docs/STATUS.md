@@ -2,14 +2,16 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P3 — scaffold, clients, DS merged; P3-IDENTITY ∥ P3-INGEST next
+- **Phase:** P3 — P3-IDENTITY ∥ P3-INGEST running; P3-STAGING after P3-IDENTITY (D66)
 - **Updated:** 2026-11-13
-- **Waiting on user:** `tiếp` to start P3-IDENTITY ∥ P3-INGEST; how a2z-solutions.stream is hosted (D40); R5/R6 and D30 before G3
+- **Waiting on user:** R10 for staging — a Linux server (none yet; guide sent 2026-11-13) + Cloudflare access for a2z-solutions.stream; R5/R6 and D30 before G3
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
+| P3-IDENTITY | p3-identity | local_f51b8083-d8cd-4af2-bd47-7f8543c9d714 | sonnet / high | wt from main 2bc895e | sellerhub_p3identity, offset 100 | 2026-11-13 |
+| P3-INGEST | p3-ingest | local_01abf0e9-fac4-4428-85f4-34b7de68b4ee | sonnet / high | wt from main 2bc895e | sellerhub_p3ingest, offset 200 | 2026-11-13 |
 
 ## Done
 
@@ -37,7 +39,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 
 ## Next runnable
 
-- P3-IDENTITY ∥ P3-INGEST (wt, from main), then P3-SMOKE (needs R5/R6, D30) → G3.
+- After P3-IDENTITY merges: P3-STAGING (needs R10). After both merge: P3-SMOKE (needs R5/R6, D30) → G3, and wave 1a.
 
 ## Log
 
@@ -152,3 +154,6 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-13 — Pushed main to origin (48c70ea..cc3793c). User: domain a2z-solutions.stream shows "Hello world".
   Checked: Cloudflare answers 200 text/plain "Hello world" (11 bytes) — not served from this repo (no deploy
   workflow exists; deploy is P6-DEPLOY after G4, D40 OPEN). Asked the user how the domain is hosted.
+- 2026-11-13 — User: staging right after sign-in exists (D66; PLAN gains P3-STAGING). User has no server yet;
+  sent a step-by-step guide. Started P3-IDENTITY and P3-INGEST in worktrees (briefs override the prompts'
+  outdated OWNED_PATHS with the PLAN rows).
