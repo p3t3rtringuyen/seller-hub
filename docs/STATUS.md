@@ -2,16 +2,16 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P3 — P3-CLIENTS and P3-DS fixing review/QA findings
-- **Updated:** 2026-11-12
-- **Waiting on user:** nothing now (go-ahead to merge comes after reviews); R5/R6 and D30 before G3; D59 (optional)
+- **Phase:** P3 — re-review of P3-CLIENTS and P3-DS fixes (+ QA re-check of P3-DS)
+- **Updated:** 2026-11-13
+- **Waiting on user:** start Docker Desktop (down 2026-11-13; full gates before merge need it); push `main` (auto mode blocks `git push`; user runs it or adds a permission rule); R5/R6 and D30 before G3
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
-| P3-CLIENTS (fixing review M1–M4) | p3-clients | local_adcf9dd0-04fb-47d9-8eca-d5d673bd4c4f | sonnet / high | wt / claude/p3-clients-0ff97d (from main 52ab652) | sellerhub_p3clients, offset 100 | 2026-11-11 |
-| P3-DS (fixing review M1–M3 + 3 QA FAILs) | p3-ds | local_314e4f63-069d-4046-9dcf-d19d30134c20 | sonnet / medium | wt / claude/p3-ds-306d32 (from main 52ab652) | sellerhub_p3ds, offset 200 | 2026-11-11 |
+| P3-CLIENTS (fixes f0e6b2e, in re-review) | p3-clients | local_adcf9dd0-04fb-47d9-8eca-d5d673bd4c4f | sonnet / high | wt / claude/p3-clients-0ff97d (from main 52ab652) | sellerhub_p3clients, offset 100 | 2026-11-11 |
+| P3-DS (fixes bce9210, in re-review + QA re-check) | p3-ds | local_314e4f63-069d-4046-9dcf-d19d30134c20 | sonnet / medium | wt / claude/p3-ds-306d32 (from main 52ab652) | sellerhub_p3ds, offset 200 | 2026-11-11 |
 
 ## Done
 
@@ -139,3 +139,8 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   207 mapping). P3-DS MERGE-AFTER-FIXES (skeleton mismatches: compact density, wrap columns, last-page
   count); QA FAIL ×3 (focus ring, grid select name, landmarks); QA report copied to main. Sent back to
   both sessions; both hit the 5-hour usage limit before changing anything, resumed after reset (15:50).
+- 2026-11-12 — User asked to push `main`; auto-mode classifier denied `git push` twice (also after the user's
+  OK in chat). Pre-push scan clean. Told the user to push or add `Bash(git push origin main)` to settings.
+- 2026-11-13 — P3-CLIENTS fixed M1–M4 (f0e6b2e); P3-DS fixed M1–M3 + QA ×3 (bce9210). Re-review sent to both
+  reviewers; QA re-check sent to p5-qa-ds (ff-only to bce9210). Docker down again: DB part skipped by them;
+  orchestrator runs full gates before asking the user to merge.
