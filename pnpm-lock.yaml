@@ -319,6 +319,15 @@ importers:
 
   apps/worker:
     dependencies:
+      '@seller-hub/amazon-ads':
+        specifier: workspace:*
+        version: link:../../packages/amazon-ads
+      '@seller-hub/amazon-core':
+        specifier: workspace:*
+        version: link:../../packages/amazon-core
+      '@seller-hub/amazon-sp':
+        specifier: workspace:*
+        version: link:../../packages/amazon-sp
       '@seller-hub/config':
         specifier: workspace:*
         version: link:../../packages/config
@@ -328,13 +337,22 @@ importers:
       '@seller-hub/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@seller-hub/ingestion':
+        specifier: workspace:*
+        version: link:../../packages/ingestion
       bullmq:
         specifier: 'catalog:'
         version: 5.81.5
       ioredis:
         specifier: 'catalog:'
         version: 5.11.1
+      kysely:
+        specifier: 'catalog:'
+        version: 0.28.19
     devDependencies:
+      '@seller-hub/testing':
+        specifier: workspace:*
+        version: link:../../packages/testing
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.2

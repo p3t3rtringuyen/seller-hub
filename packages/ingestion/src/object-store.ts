@@ -93,7 +93,8 @@ export class S3ObjectStore implements ObjectStore {
   /** Creates the bucket when it does not exist (dev MinIO starts empty). Safe to call at every start. */
   async ensureBucket(): Promise<void> {
     const res = await this.request("PUT", "");
-    if (!res.ok && res.status !== 409) throw new Error(`creating the bucket failed with ${res.status}`);
+    if (!res.ok && res.status !== 409)
+      throw new Error(`creating the bucket failed with ${res.status}`);
   }
 
   async put(key: string, body: Uint8Array, contentType?: string): Promise<void> {

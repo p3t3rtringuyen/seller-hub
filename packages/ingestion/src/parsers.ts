@@ -11,7 +11,8 @@ export function parseCsv(text: string): Record<string, string>[] {
 }
 
 function parseDelimited(text: string, delimiter: string): Record<string, string>[] {
-  const records = splitRecords(text.replace(/^﻿/, ""), delimiter);
+  const body = text.charCodeAt(0) === 0xfeff ? text.slice(1) : text; // drop a byte order mark
+  const records = splitRecords(body, delimiter);
   const header = records.shift();
   if (!header) return [];
   const names = header.map((h) => h.trim());

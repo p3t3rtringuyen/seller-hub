@@ -123,8 +123,7 @@ export async function createIngest(o: IngestOptions): Promise<Ingest> {
   const adsTesting = replay ? await import("@seller-hub/amazon-ads/testing") : null;
   const runtime = createAmazonRuntime({
     credentials:
-      o.credentials ??
-      (testing ? testing.fakeCredentialSource() : missingVaultCredentialSource()),
+      o.credentials ?? (testing ? testing.fakeCredentialSource() : missingVaultCredentialSource()),
     mode,
     ...(testing && spTesting && adsTesting
       ? {
@@ -152,7 +151,10 @@ export async function createIngest(o: IngestOptions): Promise<Ingest> {
       secretKey: o.config.env.SH_S3_SECRET_KEY,
     });
     await s3.ensureBucket().catch((e: Error) => {
-      o.logger.warn({ err: e.message }, "object store not reachable yet; raw landing will retry per run");
+      o.logger.warn(
+        { err: e.message },
+        "object store not reachable yet; raw landing will retry per run",
+      );
     });
     objectStore = s3;
   }
@@ -200,7 +202,11 @@ const INBOX_QUEUE = "ingest.inbox";
 const MAINTENANCE_QUEUE = "ingest.maintenance";
 
 /** Concurrency per priority queue: interactive work is never starved by a backfill (ADR-0008 decision 1). */
-const WORKER_CONCURRENCY: Record<PriorityClass, number> = { interactive: 4, scheduled: 4, backfill: 2 };
+const WORKER_CONCURRENCY: Record<PriorityClass, number> = {
+  interactive: 4,
+  scheduled: 4,
+  backfill: 2,
+};
 
 export async function startIngest(o: IngestOptions): Promise<RunningIngest> {
   const ingest = await createIngest(o);
@@ -229,17 +235,28 @@ export async function startIngest(o: IngestOptions): Promise<RunningIngest> {
       { connection: o.connection, concurrency: WORKER_CONCURRENCY[priority] },
     );
     w.on("failed", (job, err) =>
-      log.error({ queue: RUN_QUEUES[priority], jobId: job?.id, err: err.message }, "ingest job crashed"),
+      log.error(
+        { queue: RUN_QUEUES[priority], jobId: job?.id, err: err.message },
+        "ingest job crashed",
+      ),
     );
     workers.push(w);
   }
 
   const pushHandlers: PushDefinition[] = ingest.definitions.filter(isPush);
 
-  async function every(queueName: string, everyMs: number, run: () => Promise<unknown>): Promise<void> {
+  async function every(
+    queueName: string,
+    everyMs: number,
+    run: () => Promise<unknown>,
+  ): Promise<void> {
     const queue = new Queue(queueName, { connection: o.connection });
     extraQueues.push(queue);
-    await queue.upsertJobScheduler(`${queueName}:schedule`, { every: everyMs }, { name: queueName, data: {} });
+    await queue.upsertJobScheduler(
+      `${queueName}:schedule`,
+      { every: everyMs },
+      { name: queueName, data: {} },
+    );
     workers.push(
       new Worker(queueName, async () => run(), { connection: o.connection, concurrency: 1 }),
     );

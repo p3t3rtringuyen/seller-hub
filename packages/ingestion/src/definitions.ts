@@ -42,9 +42,17 @@ function operationKnown(id: string): boolean {
   return false;
 }
 
-export function toIngestDefinitions(defs: readonly SyncDefinition[]): IngestDefinition[] {
+/**
+ * Families that are scaffolding, not runnable: the P3-SCAFFOLD `modules/example` sync declares `family: "example"`
+ * (to be deleted with that module). The engine skips them instead of refusing to boot; a typo in a real family
+ * is still an error.
+ */
+export const PLACEHOLDER_FAMILIES: readonly string[] = ["example"];
+
+export function toIngestDefinitions(all: readonly SyncDefinition[]): IngestDefinition[] {
   const problems: string[] = [];
   const seen = new Set<string>();
+  const defs = all.filter((d) => !PLACEHOLDER_FAMILIES.includes(d.family));
   for (const d of defs) {
     const key = String(d.key);
     if (seen.has(key)) problems.push(`${key}: duplicate key`);

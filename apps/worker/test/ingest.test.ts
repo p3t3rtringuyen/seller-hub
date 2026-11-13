@@ -23,7 +23,11 @@ const cfg = loadConfig({ ...process.env, NODE_ENV: "test" });
 const t = await tryCreateTestDb();
 let redis: Redis | null = null;
 try {
-  redis = new Redis(cfg.redisUrl, { maxRetriesPerRequest: null, lazyConnect: true, retryStrategy: () => null });
+  redis = new Redis(cfg.redisUrl, {
+    maxRetriesPerRequest: null,
+    lazyConnect: true,
+    retryStrategy: () => null,
+  });
   redis.on("error", () => undefined);
   await redis.connect();
 } catch (e) {
@@ -48,13 +52,18 @@ const fixtureReport = defineSpReport<{ sku: string; asin: string; price: string 
   family: "spapi-report",
   scopeKind: "marketplace",
   schedule: { every: "6h" },
-  report: (ctx) => ({ reportType: "GET_MERCHANT_LISTINGS_ALL_DATA", marketplaceIds: [ctx.scopeKey] }),
+  report: (ctx) => ({
+    reportType: "GET_MERCHANT_LISTINGS_ALL_DATA",
+    marketplaceIds: [ctx.scopeKey],
+  }),
   parse: (text) => parseTsv(text) as { sku: string; asin: string; price: string }[],
   async upsert(ctx, rows) {
     for (const r of rows) {
       await sql`insert into catalog.listings (id, tenant_id, seller_account_id, marketplace_id, seller_sku, asin, price_amount, synced_at)
         values (gen_random_uuid(), ${ctx.scope.tenantId}, ${ctx.scope.sellerAccountId}, ${ctx.scopeKey}, ${r.sku}, ${r.asin}, ${r.price}::numeric, ${ctx.now()})
-        on conflict (seller_account_id, marketplace_id, seller_sku) do update set asin = excluded.asin`.execute(ctx.trx);
+        on conflict (seller_account_id, marketplace_id, seller_sku) do update set asin = excluded.asin`.execute(
+        ctx.trx,
+      );
     }
   },
 });
@@ -92,16 +101,27 @@ describe.skipIf(!t || !redis)("ingestion on the worker (BullMQ + Postgres + repl
     let state = "";
     for (let i = 0; i < 80 && state !== "done" && state !== "failed"; i++) {
       await new Promise((r) => setTimeout(r, 250));
-      const r = await sql<{ state: string }>`select state from ingest.job_runs where id = ${runId}`.execute(t!.owner.db);
+      const r = await sql<{
+        state: string;
+      }>`select state from ingest.job_runs where id = ${runId}`.execute(t!.owner.db);
       state = r.rows[0]?.state ?? "";
     }
     expect(state).toBe("done");
     const listings = await withScope(t!.app.db, A, async (trx) =>
-      (await sql<{ seller_sku: string }>`select seller_sku from catalog.listings order by seller_sku`.execute(trx)).rows.map((r) => r.seller_sku),
+      (
+        await sql<{
+          seller_sku: string;
+        }>`select seller_sku from catalog.listings order by seller_sku`.execute(trx)
+      ).rows.map((r) => r.seller_sku),
     );
     expect(listings).toEqual(["SKU-1", "SKU-2"]);
     expect([...store.objects.keys()].some((k) => k.includes(runId))).toBe(true);
-    const run = await sql<{ rows_upserted: number; attempts: number }>`select rows_upserted, attempts from ingest.job_runs where id = ${runId}`.execute(t!.owner.db);
+    const run = await sql<{
+      rows_upserted: number;
+      attempts: number;
+    }>`select rows_upserted, attempts from ingest.job_runs where id = ${runId}`.execute(
+      t!.owner.db,
+    );
     expect(run.rows[0]).toMatchObject({ rows_upserted: 2, attempts: 0 });
   }, 30_000);
 });

@@ -11,7 +11,12 @@ import type { SpClient } from "@seller-hub/amazon-sp";
 import type { Logger, SellerScope } from "@seller-hub/core";
 import type { Database } from "@seller-hub/db";
 import { DAY_MS, nextRunDelayMs } from "./duration";
-import { adapterFor, DEFAULT_POLLING, type PollingConfig } from "./families/async-jobs";
+import {
+  adapterFor,
+  DEFAULT_POLLING,
+  type LandedDocument,
+  type PollingConfig,
+} from "./families/async-jobs";
 import { isAdsDefinition, isPull, scopeKindOf } from "./definitions";
 import type { SellerDirectory } from "./directory";
 import { rawObjectKey, type ObjectStore } from "./object-store";
@@ -24,6 +29,7 @@ import type {
   RunEnqueuer,
   RunPayload,
   StepResult,
+  SyncTarget,
   UpsertContext,
 } from "./types";
 
@@ -86,7 +92,7 @@ export interface Engine {
   processRun(payload: RunPayload): Promise<StepResult>;
   buildContext(args: {
     scope: SellerScope;
-    target: import("./types").SyncTarget;
+    target: SyncTarget;
     def: PullDefinition;
     run: repo.RunRow;
     state: repo.SyncStateRow;
@@ -144,7 +150,7 @@ export function createEngine(deps: EngineDeps): Engine {
 
   function buildContext(a: {
     scope: SellerScope;
-    target: import("./types").SyncTarget;
+    target: SyncTarget;
     def: PullDefinition;
     run: repo.RunRow;
     state: repo.SyncStateRow;
@@ -250,7 +256,7 @@ export function createEngine(deps: EngineDeps): Engine {
     run: repo.RunRow,
     state: repo.SyncStateRow,
     def: PullDefinition,
-    target: import("./types").SyncTarget,
+    target: SyncTarget,
   ): Promise<StepResult> {
     const t0 = now();
     const scratch = await repo.scoped(scope, deps.db, (trx) =>
@@ -364,9 +370,7 @@ export function createEngine(deps: EngineDeps): Engine {
     def: PullDefinition,
     scratch: repo.RunScratch,
   ): Promise<{ total: number; next?: StepResult }> {
-    const adapter = adapterFor(def.family as never, config.polling) as ReturnType<
-      typeof adapterFor
-    > & { create: Function; poll: Function; download: Function };
+    const adapter = adapterFor(def.family as never, config.polling);
     if (!adapter) throw new Error(`family ${def.family} has no async adapter`);
     const a = adapter as unknown as {
       create(c: RunContext, d: PullDefinition): Promise<string>;
@@ -380,7 +384,7 @@ export function createEngine(deps: EngineDeps): Engine {
         d: PullDefinition,
         id: string,
         doc: string,
-      ): Promise<import("./families/async-jobs").LandedDocument[]>;
+      ): Promise<LandedDocument[]>;
     };
 
     if (run.state === "requested") {
@@ -456,11 +460,7 @@ export function createEngine(deps: EngineDeps): Engine {
     }
   }
 
-  async function land(
-    ctx: RunContext,
-    run: repo.RunRow,
-    docs: import("./families/async-jobs").LandedDocument[],
-  ): Promise<void> {
+  async function land(ctx: RunContext, run: repo.RunRow, docs: LandedDocument[]): Promise<void> {
     const at = now();
     const expires = new Date(at.getTime() + config.rawRetentionDays * DAY_MS);
     let part = 0;

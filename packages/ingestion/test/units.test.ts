@@ -55,6 +55,13 @@ describe("definitions (boot-time validation of the registry)", () => {
       ] as never),
     ).not.toThrow();
   });
+  it("skips the scaffold's placeholder family instead of failing the boot", () => {
+    const defs = toIngestDefinitions([
+      { key: "example.hello-refresh", family: "example" },
+      ok,
+    ] as never);
+    expect(defs.map((d) => d.key)).toEqual(["x.a"]);
+  });
   it("rejects a schedule on a push family", () => {
     expect(() =>
       toIngestDefinitions([

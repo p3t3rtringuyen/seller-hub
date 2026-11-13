@@ -26,8 +26,13 @@ function parseArgs(argv: string[]): { cmd: string; flags: Map<string, string[]> 
   return { cmd, flags };
 }
 
+const out = (line: string): void =>
+  void process.stdout.write(`${line}
+`);
+
 function usage(msg: string): never {
-  console.error(`ingest: ${msg}`);
+  process.stderr.write(`ingest: ${msg}
+`);
   process.exit(2);
 }
 
@@ -44,12 +49,18 @@ const scope = { tenantId, sellerAccountId };
 const config = loadConfig();
 const logger = createLogger({ name: "ingest-cli", level: config.env.SH_LOG_LEVEL });
 const connection = new Redis(config.redisUrl, { maxRetriesPerRequest: null });
-const ingest = await createIngest({ config, logger, connection, definitions: syncs.map((s) => s.value) });
+const ingest = await createIngest({
+  config,
+  logger,
+  connection,
+  definitions: syncs.map((s) => s.value),
+});
 try {
   if (cmd === "backfill") {
     const from = new Date(need("from"));
     const to = new Date(need("to"));
-    if (Number.isNaN(from.getTime()) || Number.isNaN(to.getTime())) usage("--from/--to must be dates");
+    if (Number.isNaN(from.getTime()) || Number.isNaN(to.getTime()))
+      usage("--from/--to must be dates");
     const scopeKey = one("scope");
     const res = await ingest.scheduler.backfill(scope, {
       syncKey: need("sync"),
@@ -57,7 +68,7 @@ try {
       to,
       ...(scopeKey ? { scopeKey } : {}),
     });
-    console.log(`backfill: ${res.windows} window(s) queued (newest first, priority backfill)`);
+    out(`backfill: ${res.windows} window(s) queued (newest first, priority backfill)`);
   } else if (cmd === "refresh") {
     const scopeKey = one("scope");
     const entityIds = flags.get("entity");
@@ -66,9 +77,9 @@ try {
       ...(scopeKey ? { scopeKey } : {}),
       ...(entityIds ? { entityIds } : {}),
     });
-    console.log(`refresh: run ${res.runId} ${res.created ? "created" : "already open"}`);
+    out(`refresh: run ${res.runId} ${res.created ? "created" : "already open"}`);
   } else if (cmd === "replay-inbox") {
-    console.log(`replay-inbox: ${await replayInbox(scope, ingest.app.db)} message(s) reset to pending`);
+    out(`replay-inbox: ${await replayInbox(scope, ingest.app.db)} message(s) reset to pending`);
   } else {
     usage("commands: backfill | refresh | replay-inbox");
   }
