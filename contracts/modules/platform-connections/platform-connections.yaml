@@ -1,0 +1,323 @@
+openapi: 3.1.0
+info:
+  title: platform-connections
+  version: 0.1.0
+  description: >
+    Amazon connections of a seller account: SP-API self-authorization (an admin enters the refresh token once; it is
+    validated with a read-only call and stored envelope-encrypted, ADR-0005), the Ads API LWA authorization-code flow
+    (scope advertising::campaign_management), Ads profile listing and linking to a marketplace, and disconnect. No
+    response ever contains a token, a code or a secret. Error `code` values: refresh_token_invalid,
+    authorization_code_invalid, state_invalid, not_connected, amazon_app_not_configured, amazon_unreachable,
+    amazon_error, amazon_throttled, invalid_format, unknown_marketplace, profile_marketplace_mismatch.
+paths:
+  /v1/seller-accounts/{sellerAccountId}/connections:
+    get:
+      operationId: platform-connections.listConnections
+      summary: Connections of the seller account with status and timestamps
+      tags: [platform-connections]
+      x-permission: connections.read
+      x-scope: seller-account
+      parameters:
+        - $ref: "../../shared/common.yaml#/components/parameters/SellerAccountId"
+      responses:
+        "200":
+          description: Connections
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformConnectionsConnectionList" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/seller-accounts/{sellerAccountId}/connections/spapi/self-authorization:
+    post:
+      operationId: platform-connections.connectSpapiSelfAuthorization
+      summary: Connects SP-API with a self-authorized refresh token (validated before it is stored)
+      tags: [platform-connections]
+      x-permission: connections.manage
+      x-scope: seller-account
+      parameters:
+        - $ref: "../../shared/common.yaml#/components/parameters/SellerAccountId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PlatformConnectionsSelfAuthorizationRequest" }
+      responses:
+        "200":
+          description: Connected; the marketplaces the token can see
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformConnectionsSpapiConnected" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/seller-accounts/{sellerAccountId}/connections/ads/authorization:
+    post:
+      operationId: platform-connections.startAdsAuthorization
+      summary: Starts the Ads authorization-code flow and returns the consent URL
+      tags: [platform-connections]
+      x-permission: connections.manage
+      x-scope: seller-account
+      parameters:
+        - $ref: "../../shared/common.yaml#/components/parameters/SellerAccountId"
+      responses:
+        "200":
+          description: Where to send the browser
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformConnectionsAuthorizationStarted" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/connections/ads/callback:
+    post:
+      operationId: platform-connections.completeAdsAuthorization
+      summary: Completes the Ads flow with the code and state from the consent redirect
+      tags: [platform-connections]
+      x-permission: connections.manage
+      x-scope: tenant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PlatformConnectionsCallbackRequest" }
+      responses:
+        "200":
+          description: Connected; profiles listed
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformConnectionsAdsConnected" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/seller-accounts/{sellerAccountId}/connections/{api}:
+    delete:
+      operationId: platform-connections.disconnectApi
+      summary: Disconnects an API - the stored credential is deleted (crypto-shred)
+      tags: [platform-connections]
+      x-permission: connections.manage
+      x-scope: seller-account
+      parameters:
+        - $ref: "../../shared/common.yaml#/components/parameters/SellerAccountId"
+        - name: api
+          in: path
+          required: true
+          schema: { type: string, enum: [spapi, ads] }
+      responses:
+        "200":
+          description: Revoked
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformConnectionsDisconnected" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/seller-accounts/{sellerAccountId}/ads/profiles:
+    get:
+      operationId: platform-connections.listAdsProfiles
+      summary: Ads profiles seen through the Ads connection (an empty list is the connected-but-empty state)
+      tags: [platform-connections]
+      x-permission: connections.read
+      x-scope: seller-account
+      parameters:
+        - $ref: "../../shared/common.yaml#/components/parameters/SellerAccountId"
+      responses:
+        "200":
+          description: Profiles
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformConnectionsAdsProfileList" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/seller-accounts/{sellerAccountId}/ads/profiles/refresh:
+    post:
+      operationId: platform-connections.refreshAdsProfiles
+      summary: Lists the Ads profiles again from Amazon
+      tags: [platform-connections]
+      x-permission: connections.manage
+      x-scope: seller-account
+      parameters:
+        - $ref: "../../shared/common.yaml#/components/parameters/SellerAccountId"
+      responses:
+        "200":
+          description: Synced
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformConnectionsProfilesSynced" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/seller-accounts/{sellerAccountId}/ads/profiles/{profileId}/link:
+    put:
+      operationId: platform-connections.linkAdsProfile
+      summary: Links an Ads profile to a marketplace of the seller account
+      tags: [platform-connections]
+      x-permission: connections.manage
+      x-scope: seller-account
+      parameters:
+        - $ref: "../../shared/common.yaml#/components/parameters/SellerAccountId"
+        - $ref: "#/components/parameters/PlatformConnectionsProfileId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PlatformConnectionsLinkRequest" }
+      responses:
+        "200":
+          description: Linked
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformConnectionsAdsProfile" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+    delete:
+      operationId: platform-connections.unlinkAdsProfile
+      summary: Removes the link between an Ads profile and its marketplace
+      tags: [platform-connections]
+      x-permission: connections.manage
+      x-scope: seller-account
+      parameters:
+        - $ref: "../../shared/common.yaml#/components/parameters/SellerAccountId"
+        - $ref: "#/components/parameters/PlatformConnectionsProfileId"
+      responses:
+        "204":
+          description: Unlinked
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+components:
+  parameters:
+    PlatformConnectionsProfileId:
+      name: profileId
+      in: path
+      required: true
+      description: Amazon profileId (text; ids exceed 2^53).
+      schema: { type: string, minLength: 1, maxLength: 40 }
+  schemas:
+    PlatformConnectionsConnection:
+      type: object
+      required:
+        [
+          api,
+          status,
+          authMethod,
+          scopes,
+          connectedAt,
+          lastTokenRefreshAt,
+          lastErrorCode,
+          lastErrorAt,
+          revokedAt,
+        ]
+      properties:
+        api: { type: string, enum: [spapi, ads] }
+        status: { type: string, enum: [pending, active, needs_reauth, revoked, error] }
+        authMethod: { type: string, enum: [self_authorization, oauth_code] }
+        scopes:
+          type: array
+          items: { type: string }
+        connectedAt: { type: [string, "null"], format: date-time }
+        lastTokenRefreshAt: { type: [string, "null"], format: date-time }
+        lastErrorCode: { type: [string, "null"] }
+        lastErrorAt: { type: [string, "null"], format: date-time }
+        revokedAt: { type: [string, "null"], format: date-time }
+    PlatformConnectionsConnectionList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformConnectionsConnection" }
+    PlatformConnectionsSelfAuthorizationRequest:
+      type: object
+      required: [refreshToken]
+      properties:
+        refreshToken:
+          type: string
+          minLength: 1
+          maxLength: 2000
+          writeOnly: true
+          description: The self-authorized LWA refresh token. Write-only - it is never returned.
+    PlatformConnectionsParticipation:
+      type: object
+      required: [marketplaceId, name, countryCode, isParticipating]
+      properties:
+        marketplaceId: { type: string }
+        name: { type: string }
+        countryCode: { type: string }
+        isParticipating: { type: boolean }
+    PlatformConnectionsSpapiConnected:
+      type: object
+      required: [connection, marketplaces]
+      properties:
+        connection: { $ref: "#/components/schemas/PlatformConnectionsConnection" }
+        marketplaces:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformConnectionsParticipation" }
+    PlatformConnectionsAuthorizationStarted:
+      type: object
+      required: [authorizationUrl, expiresAt]
+      properties:
+        authorizationUrl: { type: string }
+        expiresAt: { type: string, format: date-time }
+    PlatformConnectionsCallbackRequest:
+      type: object
+      required: [code, state]
+      properties:
+        code: { type: string, maxLength: 500, writeOnly: true }
+        state: { type: string, maxLength: 200, writeOnly: true }
+    PlatformConnectionsProfilesSynced:
+      type: object
+      required: [count, synced]
+      properties:
+        count: { type: integer, minimum: 0 }
+        synced: { type: boolean }
+        errorCode: { type: string }
+    PlatformConnectionsAdsConnected:
+      type: object
+      required: [sellerAccountId, connection, profiles]
+      properties:
+        sellerAccountId: { type: string, format: uuid }
+        connection: { $ref: "#/components/schemas/PlatformConnectionsConnection" }
+        profiles: { $ref: "#/components/schemas/PlatformConnectionsProfilesSynced" }
+    PlatformConnectionsDisconnected:
+      allOf:
+        - $ref: "#/components/schemas/PlatformConnectionsConnection"
+        - type: object
+          required: [note]
+          properties:
+            note: { type: string }
+    PlatformConnectionsAdsProfile:
+      type: object
+      required:
+        [
+          id,
+          amazonProfileId,
+          accountType,
+          accountName,
+          adsCountryCode,
+          marketplaceId,
+          currency,
+          timeZone,
+          validPaymentMethod,
+          status,
+          linkedMarketplaceId,
+          syncedAt,
+        ]
+      properties:
+        id: { type: string, format: uuid }
+        amazonProfileId: { type: string }
+        accountType: { type: string, enum: [seller, vendor, agency] }
+        accountName: { type: [string, "null"] }
+        adsCountryCode: { type: string }
+        marketplaceId: { type: [string, "null"] }
+        currency: { type: [string, "null"] }
+        timeZone: { type: string }
+        validPaymentMethod: { type: [boolean, "null"] }
+        status: { type: string, enum: [available, linked, unavailable] }
+        linkedMarketplaceId: { type: [string, "null"] }
+        syncedAt: { type: string, format: date-time }
+    PlatformConnectionsAdsProfileList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformConnectionsAdsProfile" }
+    PlatformConnectionsLinkRequest:
+      type: object
+      required: [marketplaceId]
+      properties:
+        marketplaceId: { type: string, maxLength: 20 }
