@@ -149,3 +149,6 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   "after done, push". Merged P3-CLIENTS (8597b92) and P3-DS (1bebd09; pnpm-lock regenerated, frozen install
   OK). Gate on merged main: tests all pass, 0 skipped; first `next build` hit Windows EBUSY on .next, re-run
   build green (15/15). User added `Bash(git push origin main)` to .claude/settings.json.
+- 2026-11-13 — Pushed main to origin (48c70ea..cc3793c). User: domain a2z-solutions.stream shows "Hello world".
+  Checked: Cloudflare answers 200 text/plain "Hello world" (11 bytes) — not served from this repo (no deploy
+  workflow exists; deploy is P6-DEPLOY after G4, D40 OPEN). Asked the user how the domain is hosted.
