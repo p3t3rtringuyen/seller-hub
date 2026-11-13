@@ -2,16 +2,14 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P3 — re-review of P3-CLIENTS and P3-DS fixes (+ QA re-check of P3-DS)
+- **Phase:** P3 — scaffold, clients, DS merged; P3-IDENTITY ∥ P3-INGEST next
 - **Updated:** 2026-11-13
-- **Waiting on user:** start Docker Desktop (down 2026-11-13; full gates before merge need it); push `main` (auto mode blocks `git push`; user runs it or adds a permission rule); R5/R6 and D30 before G3
+- **Waiting on user:** `tiếp` to start P3-IDENTITY ∥ P3-INGEST; how a2z-solutions.stream is hosted (D40); R5/R6 and D30 before G3
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
-| P3-CLIENTS (fixes f0e6b2e, in re-review) | p3-clients | local_adcf9dd0-04fb-47d9-8eca-d5d673bd4c4f | sonnet / high | wt / claude/p3-clients-0ff97d (from main 52ab652) | sellerhub_p3clients, offset 100 | 2026-11-11 |
-| P3-DS (fixes bce9210, in re-review + QA re-check) | p3-ds | local_314e4f63-069d-4046-9dcf-d19d30134c20 | sonnet / medium | wt / claude/p3-ds-306d32 (from main 52ab652) | sellerhub_p3ds, offset 200 | 2026-11-11 |
 
 ## Done
 
@@ -23,6 +21,8 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 | P1-REF | report read; competitor evidence partly secondhand (some pages blocked) | committed on main | docs/reports/P1-REF.md |
 | P1-WEB | report read; 188/194 web calls match api-endpoints.json; JSON parses | committed on main | docs/reports/P1-WEB.md |
 | P1-VENDOR | report read; 24 entries parse; no ids/ASINs; all tabs closed. Partial: CA DF account, promo wizard steps 2–3, Personalized/Points, Invoices/Payments unreachable | committed on main | docs/reports/P1-VENDOR.md |
+| P3-CLIENTS | re-review MERGE (M1–M4 fixed); orchestrator full gate with stack: exit 0, 208 tests, 0 skipped | merged 8597b92 | docs/reports/P3-CLIENTS*.md |
+| P3-DS | re-review MERGE; QA PASS on re-check; orchestrator full gate with stack: exit 0, 225 tests, 0 skipped | merged 1bebd09 (lockfile regenerated) | docs/reports/P3-DS*.md |
 | P3-SCAFFOLD | review MERGE after 1 fix round; orchestrator full gate with stack (offset 400): exit 0, 89 tests, 0 skipped | merged 69f44a0 (--no-ff, not pushed) | docs/reports/P3-SCAFFOLD.md, P3-SCAFFOLD-review.md |
 | P2-BACKLOG | BACKLOG.md read (15 slices S01–S15, waves 1a/1b/2–5, coverage of 23 rows, overlap table); clean-room grep 0; overlap/coverage scripts per its report (not re-run) | committed on main | docs/reports/P2-BACKLOG.md |
 | P2-DATA | 14 DDL files / 57 tables listed; clean-room grep 0; report: applied on PG 16.4 (PGlite) + RLS smoke test. Docker apply run by orchestrator 2026-11-10: all 14 files rc=0 on PostgreSQL 16.15, 0 tenant tables without RLS | committed on main | docs/reports/P2-DATA.md |
@@ -37,7 +37,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 
 ## Next runnable
 
-- After P3-CLIENTS merges: P3-IDENTITY ∥ P3-INGEST. Each wt task: P5-REVIEW (+QA if UI) → full gate → user go-ahead → merge.
+- P3-IDENTITY ∥ P3-INGEST (wt, from main), then P3-SMOKE (needs R5/R6, D30) → G3.
 
 ## Log
 
@@ -144,3 +144,8 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-13 — P3-CLIENTS fixed M1–M4 (f0e6b2e); P3-DS fixed M1–M3 + QA ×3 (bce9210). Re-review sent to both
   reviewers; QA re-check sent to p5-qa-ds (ff-only to bce9210). Docker down again: DB part skipped by them;
   orchestrator runs full gates before asking the user to merge.
+- 2026-11-13 — Docker restarted (orchestrator launched Docker Desktop; engine up). Re-reviews: both MERGE; QA
+  re-check PASS. Full gates on each branch with stack: clients 208 tests, DS 225 tests, 0 skipped. User:
+  "after done, push". Merged P3-CLIENTS (8597b92) and P3-DS (1bebd09; pnpm-lock regenerated, frozen install
+  OK). Gate on merged main: tests all pass, 0 skipped; first `next build` hit Windows EBUSY on .next, re-run
+  build green (15/15). User added `Bash(git push origin main)` to .claude/settings.json.
