@@ -107,3 +107,71 @@ Measured table shape, unit, integration, Storybook build and Playwright checks p
 - Brief named branch `claude/p3-ds-306d32`; the worktree is on `claude/p5-qa-ds-dcb574` at the same commit `d7578c0`.
 - Playwright used the already installed `chromium-1228`; no new browser download.
 - Stack `sellerhub_p5qads` brought down at the end (`pnpm stack:down`).
+
+## Re-check (2026-11-13)
+
+Branch: fast-forwarded to `bce9210` (`fix(ui): skeleton parity for compact, wrap and last page; focus, names and landmarks`) with `git merge --ff-only claude/p3-ds-306d32`. No code changed, nothing committed. Docker Desktop was down: not started. DB-dependent items are NOT RUN. The web app pages used here need no DB.
+
+### Commands
+
+| Command | Result |
+|---|---|
+| `pnpm install --frozen-lockfile` | exit 0 |
+| `pnpm build-storybook` | exit 0 |
+| `pnpm --filter @seller-hub/ui run measure` | `MEASURE OK: shapes equal, no clipped cell, CLS 0` (Chromium via Playwright) |
+| `pnpm --filter @seller-hub/ui run test` | exit 0: 5 files, 141 tests pass |
+| `pnpm --filter @seller-hub/web run test` | exit 0: 3 files, 14 tests pass |
+| `pnpm --filter @seller-hub/web run dev` + browser pane on `/example` | HTTP 200 |
+| `pnpm test:integration`, `pnpm e2e` | NOT RUN: need the DB (Docker down) |
+
+### (1) The three FAIL items from the first run
+
+| Item | Result | Evidence |
+|---|---|---|
+| Keyboard focus visible on shell sidebar button | **PASS** | `/example`, Tab x2 → focused `BUTTON` "Expand menu", `:focus-visible` true, computed `outline: 2px solid rgb(110, 168, 255)`, `outline-offset: 2px` (before: `outline-style: none`) |
+| Axe serious violation on the grid select (`aria-input-field-name`) | **PASS** | Storybook `data-grid-datagrid--campaigns`, axe-core 4.14.0: serious/critical = 0. Remaining 3 are moderate story-iframe artefacts (`region` x4, `landmark-one-main`, `page-has-heading-one`), same as in the first run |
+| Landmark violations on `/example` | **PASS** | axe-core on `/example`: 0 violations (before: `landmark-main-is-top-level`, `landmark-no-duplicate-main`, `landmark-unique`) |
+
+Shell story `shell-appshell--default`: axe 0 violations (before: 1 moderate `region`).
+
+### (2) The three skeleton cases (probe, Chromium, viewport 1400, pageSize 25)
+
+Row heights (px), rows (skeleton / loaded), table height (skeleton → loaded), pager top (skeleton → loaded). All checks true for each case, CLS 0, clipped cells 0.
+
+| Case | Columns | Rows (skel / loaded) | Row h (skel / loaded) | Table h | Pager top | Result |
+|---|---|---|---|---|---|---|
+| compact + selection | 12 | 25 / 25 | 32 / 32 | 880 → 880 | 933 → 933 | PASS |
+| compact + inline edit | 12 | 25 / 25 | 32 / 32 | 880 → 880 | 933 → 933 | PASS |
+| compact + compare + inline edit | 12 | 25 / 25 | 48 / 48 | 1288 → 1288 | 1341 → 1341 | PASS |
+| wrapping column | 12 | 25 / 25 | 49 / 49 | 1314 → 1314 | 1367 → 1367 | PASS |
+| wrap + compact + compare | 12 | 25 / 25 | 69 / 69 | 1834 → 1834 | 1887 → 1887 | PASS |
+| last page, known 12 rows (of pageSize 25) | 12 | 12 / 12 | 40 / 40 | 560 → 560 | 613 → 613 | PASS |
+| last page + compact + wrap + inline edit | 11 | 12 / 12 | 49 / 49 | 677 → 677 | 730 → 730 | PASS |
+| total unknown (skeleton = pageSize) | 12 | 25 / 25 | 40 / 40 | 1080 → 1080 | 1133 → 1133 | PASS |
+
+The skeleton row count equals the loaded row count on the last page (12 rows, not pageSize 25).
+
+### (3) Regression of the six earlier configurations
+
+| Configuration | Rows (skel / loaded) | Row h | Table h (skel → loaded) | Pager top | Result |
+|---|---|---|---|---|---|
+| campaigns | 25 / 25 | 40 / 40 | 1080 → 1080 | 1133 → 1133 | PASS (same as run 1) |
+| ad groups (11 cols) | 25 / 25 | 40 / 40 | 1080 → 1080 | 1133 → 1133 | PASS |
+| keywords | 25 / 25 | 40 / 40 | 1080 → 1080 | 1133 → 1133 | PASS |
+| product targets | 25 / 25 | 40 / 40 | 1080 → 1080 | 1133 → 1133 | PASS |
+| auto targets (10 cols) | 25 / 25 | 40 / 40 | 1080 → 1080 | 1133 → 1133 | PASS |
+| campaigns + compare | 25 / 25 | 56 / 56 | 1496 → 1496 | 1549 → 1549 | PASS |
+
+Column widths for campaigns in the browser pane (run 1 and run 2): `44,280,110,92,140,120,96,88,108,108,92,92`, unchanged.
+
+### Items NOT RUN (DB-dependent or not reached)
+
+- `pnpm test:integration` and `pnpm e2e` (Playwright): need Postgres/Redis, Docker is down.
+- Tenant isolation, partial API failure, throttled call, and permission-locked item in the live app.
+- Browser visual walk of the grid panels (only the probe, the story axe, and the sidebar focus were measured in this re-check).
+
+### Verdict
+
+The three earlier FAIL items now PASS, the three skeleton edge cases PASS, and the six earlier configurations show no regression. The DB-dependent items stay NOT RUN.
+
+**Overall (re-check): PASS (0 items FAIL; NOT RUN listed above).**

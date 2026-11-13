@@ -142,3 +142,45 @@ Reporting v3 paths and `Prefer` headers, reading of the SP SDK's LWA client for 
 
 - Live/sandbox calls (`pnpm --filter … sandbox`): not run — D30 OPEN, no credentials.
 - Generated type files not read line by line (regeneration test covers provenance).
+
+## Re-review (2026-11-13)
+
+Fix commit `f0e6b2e` on `claude/p3-clients-0ff97d` (20 files, +519/−41, on top of `e448c8c`). Read-only, as before.
+
+**Verdict: MERGE.** M1–M4 are fixed. Each has a test that would fail on `e448c8c`. No new file outside OWNED_PATHS.
+The orchestrator's full gate, with the stack up, is still needed before merge (DB and Redis parts were skipped here, see below).
+
+### Ownership
+
+`git diff --stat e448c8c f0e6b2e`: only `packages/amazon-{core,sp,ads}/**` and `docs/reports/P3-CLIENTS.md`.
+No change to `pnpm-lock.yaml`, `tools/codegen` or generated files.
+
+### Must-fix status
+
+| # | Fix (file) | Test that fails without it | Status |
+| --- | --- | --- | --- |
+| M1 | `restriction.ts:60` applies the PII report-type check to `createReportSchedule` as well. `getReportDocument` now needs `{ reportType }` and refuses a missing or PII type (`restriction.ts:73-88`). `runReport`/`fetchDocument` pass the type through. | `amazon-sp/test/restriction.test.ts`. My bypass case (schedule `GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING`) now raises `PiiDisabled` with 0 requests sent; on `e448c8c` it would have reached the transport. `getReportDocument` with no type is now refused; on `e448c8c` it was allowed. | Fixed |
+| M2 | Unset or empty `SH_AMAZON_MODE` now means `replay` (`regions.ts:60`). Without a fixture transport, replay fails at boot (`env.ts`, existing test). In `sandbox` mode, `client.ts:233-244` refuses any Ads op that is not a GET and not catalogue-`idempotent` before any network call. The check reads `op.idempotent`, not the caller's `input.idempotent`, so a caller cannot bypass it. The only way through is an explicit `allowAdsWritesInSandbox`. | `support.test.ts`: `parseAmazonMode(undefined/"") === "replay"` (was `production`). `review-fixes.test.ts`: an Ads write in sandbox mode raises `OperationUsageError` with 0 requests sent; reads and SP calls still pass; the opt-in works. | Fixed (see R1) |
+| M3 | `batch.ts:131-139`: an item Amazon did not mention is `outcome_unknown` with `retryable: false`, unless the mapping is `idempotent`. `ads.batch` passes `meta.idempotent \|\| options.idempotent`. | `batch.test.ts` (expectation changed from `retryable: true`). `portfolios.test.ts`: a truncated 207 on `SPCreateCampaign` gives `outcome_unknown`, and a read batch stays retryable. | Fixed |
+| M4 | EX-PORTFOLIOS `create`/`update` now go through `ads.batch`: chunked by `batchMax` 100, return a `BatchResult`. `Prefer: return=representation` is sent when the catalogue lists a `Prefer` header (`Create/UpdatePortfolios` do). | `portfolios.test.ts`: 150 items are sent as 2 requests (100 + 50) with the `prefer` header; the result maps per item (149 ok, 1 `DUPLICATE_VALUE`); the update path is covered. | Fixed |
+
+The task also took S5 (SP-API LWA token at `api.amazon.com` in every region, Ads stays regional; covered by `lwa.test.ts`; still to be verified live in P3-SMOKE), S8 (`refreshedOnce` flag; 429→401→200 test), N3 (value-pattern scrub of `Atza|`/`Atzr|`) and N4 (case-insensitive `includedData`). I read each one and it is correct. Left open, as listed in the task report: S6, S7, N1, N2, N5, N6, N7. These are BACKLOG follow-ups.
+
+### New observations (may fix later, not blocking)
+
+- **R1 — replay mode does not pin the host.** If `SH_AMAZON_MODE` is unset and a composition root passes a real transport (`createAmazonRuntime({ credentials, transport: createFetchTransport() })`), mode resolves to `replay` but `baseUrlFor` still returns the production hosts (`regions.ts:69-72`). The sandbox write guard does not apply in replay mode, so calls go live. The default path (no transport passed) fails at boot as intended, so this needs a deliberate wrong wiring. Fix: in `replay` mode, use a non-routable base URL (e.g. `https://replay.invalid`) or refuse a transport that is not a fixture transport.
+- **R2 — `getReportDocument`'s `reportType` is the caller's word.** That is acceptable: it is an explicit statement checked against the PII list, fail-closed when absent, and Amazon still demands an RDT for restricted documents. A slice that reads document ids from `getReports` should pass the type that `getReports` returned, not a constant. Note this in the amazon-sp README when convenient.
+
+### Gate (2026-11-13, worktree at `f0e6b2e`, clean)
+
+Docker Desktop is down, so per the orchestrator **no stack was started**.
+`COMPOSE_PROJECT_NAME=sellerhub_p5clients SH_PORT_OFFSET=500 SH_ENV_FILE=.env.example pnpm gate` gave **exit 0**: gen, lint, typecheck, test, build, turbo 14/14 per phase.
+
+- amazon-core: 76 passed, 6 skipped. The 6 skipped are `redis.test.ts`: **SKIPPED, no Redis**.
+- amazon-sp: 24/24 passed.
+- amazon-ads: 32/32 passed.
+- tools: 23/23 passed (regeneration still equals the committed files).
+- **SKIPPED (no Postgres/Redis):** api 9 of 13, testing 5 of 7, mod-example 6 of 9, worker 1 of 7 (Redis integration).
+- Everything else is green.
+
+All the new review tests are pure (mock transport) and ran. The orchestrator must run the full gate with the stack up before merge.

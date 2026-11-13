@@ -182,3 +182,75 @@ exactly, see the table above). `pnpm e2e`: no shell spec exists.
 5. Lint rule: web features import each other only through `public.ts` (P3-SCAFFOLD carry-over).
 6. Catalog versions for MUI / emotion / TanStack / Recharts; ESLint browser globals + hooks rules for
    `packages/ui/**` (author requests 1, 2).
+
+---
+
+## Re-review (2026-11-13) — commit `bce9210` (15 files, +613 / −84, on top of `d7578c0`)
+
+### Verdict: **MERGE** (= `APPROVE`). M1–M3 are fixed and measured. The QA fixes are in the code. No new blocker.
+
+### M1–M3: fix, test, would the test fail without the fix
+
+| | Fix | Gate test (jsdom, `rowSizing.test.tsx`) | Browser test (`measure`, new stories) | Fails on `d7578c0`? |
+|---|---|---|---|---|
+| M1 compact | `Checkbox sx={{ p: 0.5 }}` (`DataGrid.tsx`), `IconButton p: 0.5` (`InlineEditCell.tsx`) | compares the declared 32 px in both states. **It would pass without the fix**, because the declared height was already 32 in both | "compact + selection", "compact + inline edit", "compact + compare + inline edit" compare `getBoundingClientRect` heights loading vs loaded | **Yes, browser only.** My probe on `d7578c0` measured 32 → 37.56 px in the same configuration; on `bce9210` it measures 32 → 32 |
+| M2 wrap | `wrapStyle(lines)` clamps text to `skeletonLines` (`TruncatedText.tsx`); `rowHeightFor()` budgets `lines × 18 + 13` (`rowSizing.ts`) → 49 px for 2 lines | asserts 49 px in both states, plus `-webkit-line-clamp: 2` and 2 skeleton bars. Would fail without the fix (declared 40, no clamp) | "wrapping column", "wrap + compact + compare" | Yes, in both. Probe: was 40 → 67.84; now 49 → 49 |
+| M3 last page | `skeletonRowCount(pageSize, pageIndex, totalRows)` (`rowSizing.ts`), used at `DataGrid.tsx` `dataRowCount` | 12 rows in both states on page 13 of 312; unknown total still gives 25. Would fail without the fix (25 vs 12) | "last page (12 rows)", "last page + compact + wrap + inline edit", "total unknown" | Yes, in both. Probe with a known total: was 25 → 7 rows; now 7 → 7 (table 360 = 360) |
+
+My independent probe (same scratch harness as the first review, now with a known total on the last page) on `bce9210`.
+Loading = loaded in every case. Rows/row height/table height/pager top: baseline 25/40/1080/1133; compact
+25/32/880/933; compact + compare 25/48/1288/1341; compare 25/56/1496/1549; wrap 25/49/1314/1367; inline edit
+25/40; compact + inline edit 25/32/880/933; last page 7, known total, 7/40/360/413; last page + compact + wrap +
+inline edit 7/49/432/485; container 800 px 25/40. The last page with an *unknown* total still draws 25 rows, which
+is correct (UX-04: page size before the first answer).
+
+**Residual (S1, carried):** M1's only failing-without-fix test is the browser `measure`, which is still outside
+`pnpm gate` and CI. Add a CI job for `build-storybook` + `measure` (orchestrator/CI owner). Follow-up, not blocking.
+
+### QA fixes (code check; the P5-QA session re-measures them in the browser)
+
+- **Visible focus on the shell sidebar button.** `theme.tsx`: `MuiButtonBase` `&.Mui-focusVisible` gets a 2 px
+  primary outline, and `MuiCssBaseline` gives one to `a, button, [tabindex], [role=button]:focus-visible`. Sortable
+  headers keep `all: unset` but add `&:focus-visible` (`DataGrid.tsx`). The menu toggle is a MUI `IconButton`
+  (`AppShell.tsx:132`), so the ButtonBase rule covers it. `measure` checks the computed outline after a real Tab
+  on the nav link, the header sort button, the pager and the menu toggle: all `ok`.
+- **Accessible name on the grid select.** `GridPagination.tsx`: `useId()` + `labelId` (replaces the static id = S2).
+  The test finds 2 comboboxes named "Rows per page" with two grids, and every id unique. axe finds no violations in
+  three stories (`region`, `landmark-one-main` and `page-has-heading-one` are disabled there, as story-iframe
+  artefacts).
+- **Landmarks.** `AppShell` owns the only `<main>`. `apps/web/app/(app)/example/page.tsx` drops `<main>` for a
+  `<div>`. `shell.test.tsx` adds a test that no file under `app/(app)` contains `<main` and that exactly one
+  `main` role wraps the page.
+
+### Ownership of the fix commit
+
+New outside the PLAN row: `apps/web/app/(app)/example/page.tsx`, the example slice's page from P3-SCAFFOLD. The
+change is one tag, needed for the single-`main` QA fix. **Acceptable**, but name it to the orchestrator.
+`packages/ui/package.json` adds `axe-core 4.10.3` (dev) and `pnpm-lock.yaml` changes with it: expected. Everything
+else is in `packages/ui/**`, `apps/web/app/(shell)/**` and the task's report.
+
+### New nits (non-blocking)
+
+- `rowSizing.ts`: `LINE_HEIGHT` 18 / `CELL_VERTICAL` 13 are constants, not tokens in `tokens.ts` with the rest of
+  the grid geometry. A theme font-size change would need both kept in step. The browser `measure` would catch drift.
+- `skeletonRowCount` uses the previous `totalRows` on a filter or search change. If the new answer has a different
+  count, rows still change once. That cannot be avoided without the count; page change (the common case) is exact.
+- The compact in-place transition reports CLS 4.7e-6 in my probe (0 in `measure`, which runs comfortable only).
+  This is sub-pixel and has no visible effect.
+- First-review S3 (shell copy in TS), S5 (select all matching), S6 (bulk bar pushes the table) are unchanged.
+  S4 is partly fixed: `InlineEditCell` now takes `decimals`; the caller must pass the currency exponent. These are
+  BACKLOG follow-ups as listed above.
+
+### Gate (re-run, Docker down — DB/Redis part SKIPPED)
+
+From `.claude/worktrees/p3-ds-306d32` at `bce9210`, with `COMPOSE_PROJECT_NAME=sellerhub_p5ds SH_PORT_OFFSET=600
+SH_ENV_FILE=.env.example`. The stack was not started (Docker Desktop down, per the orchestrator).
+- `pnpm install --frozen-lockfile`: lockfile up to date.
+- `pnpm gate` → **exit 0**. Tests: ui 141 (was 120), web 14 (was 12), config 10, core 9, contracts 4, metrics 3,
+  db 2, tools 19, worker 6 + 1 skipped, mod-example 3 + 6 skipped, testing 2 + 5 skipped, api 4 + 9 skipped.
+- **SKIPPED: 21 DB/Redis tests** (worker 1, mod-example 6, testing 5, api 9) — "no test database / no Redis
+  reachable". They passed in the first review's run with the stack (`d7578c0`). This commit does not touch
+  any DB/Redis code.
+- `pnpm build-storybook` → exit 0. `pnpm --filter @seller-hub/ui run measure` → exit 0, `MEASURE OK`: 14/14 shape
+  configurations ok, CLS 0, 4/4 focus cases ok, axe 0 violations on 3 stories (APP_URL not set: app-page axe not run).
+- Worktree left clean (`git status` empty).
