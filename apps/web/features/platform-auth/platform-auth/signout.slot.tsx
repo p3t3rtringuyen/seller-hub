@@ -1,30 +1,6 @@
-"use client";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { useShellSession } from "../../../app/(shell)/session";
-import { copy } from "@/lib/copy";
+import { SignOut } from "./SignOut";
 
-const t = copy("platform-auth.platform-auth");
-
-/** Header slot (declared by the shell): who is signed in, and Sign out. */
-function SignOut() {
-  const { me, signOut } = useShellSession();
-  if (!me) return null;
-  return (
-    <>
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        data-testid="current-user"
-        sx={{ display: { xs: "none", sm: "block" } }}
-      >
-        {me.user.email}
-      </Typography>
-      <Button size="small" onClick={() => void signOut()} data-testid="signout">
-        {t("nav.signOut")}
-      </Button>
-    </>
-  );
-}
-
+// Slot convention: a plain module whose default export is { slot, component, order }. It must NOT be a "use client"
+// file (the registry is also read by server components, where an object exported from a client module is a reference);
+// the client code lives in SignOut.tsx.
 export default { slot: "shell.header.actions", component: SignOut, order: 900 };

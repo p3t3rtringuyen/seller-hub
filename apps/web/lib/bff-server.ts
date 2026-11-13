@@ -106,7 +106,9 @@ export async function forward(
     body = await request.arrayBuffer();
     if (body.byteLength > MAX_BODY_BYTES)
       return problem(413, "payload_too_large", "Payload too large", traceId);
-    headers["content-type"] = request.headers.get("content-type") ?? "application/json";
+    // Only describe a body that exists: Fastify answers 400 to `content-type: application/json` with an empty body.
+    if (body.byteLength > 0)
+      headers["content-type"] = request.headers.get("content-type") ?? "application/json";
   }
 
   let upstream: Response;
@@ -114,7 +116,7 @@ export async function forward(
     upstream = await fetch(target, {
       method: request.method,
       headers,
-      ...(body ? { body } : {}),
+      ...(body && body.byteLength > 0 ? { body } : {}),
       redirect: "manual",
       cache: "no-store",
     });
