@@ -16,6 +16,7 @@ const config: NextConfig = {
     "@seller-hub/config",
     "@seller-hub/metrics",
     "@seller-hub/core",
+    "@seller-hub/ui",
   ],
   // Lint runs as its own gate step (pnpm lint).
   eslint: { ignoreDuringBuilds: true },
