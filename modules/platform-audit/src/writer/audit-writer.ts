@@ -28,7 +28,8 @@ export interface AuditEvent {
   commandId?: string | null;
 }
 
-const SECRET_KEY = /token|secret|password|passwd|authorization|cookie|api[-_]?key|credential|code$/i;
+const SECRET_KEY =
+  /token|secret|password|passwd|authorization|cookie|api[-_]?key|credential|code$/i;
 
 /** Replaces values under secret-looking keys (any depth) so a careless caller cannot leak into the log. */
 export function sanitizeDetails(value: unknown, depth = 0): unknown {
@@ -47,7 +48,11 @@ export function sanitizeDetails(value: unknown, depth = 0): unknown {
 }
 
 /** Inserts one row inside an existing scoped transaction, so the audit row commits with the action it records. */
-export async function insertAuditRow(trx: ScopedTx, scope: Scope, event: AuditEvent): Promise<string> {
+export async function insertAuditRow(
+  trx: ScopedTx,
+  scope: Scope,
+  event: AuditEvent,
+): Promise<string> {
   const s = requireScope(scope);
   const id = uuidv7();
   const ip = event.ipAddress && isIP(event.ipAddress) ? event.ipAddress : null;

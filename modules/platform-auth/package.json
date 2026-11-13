@@ -1,0 +1,33 @@
+{
+  "name": "@seller-hub/mod-platform-auth",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests --hookTimeout=60000 --testTimeout=30000",
+    "build": "node -e \"console.log('mod-platform-auth: source-only module, bundled by apps/api and apps/worker')\"",
+    "setup-token": "tsx bin/setup-token.ts"
+  },
+  "dependencies": {
+    "@seller-hub/config": "workspace:*",
+    "@seller-hub/core": "workspace:*",
+    "@seller-hub/db": "workspace:*",
+    "kysely": "catalog:",
+    "@node-rs/argon2": "catalog:",
+    "@seller-hub/mod-platform-audit": "workspace:*",
+    "@seller-hub/mod-platform-tenancy": "workspace:*"
+  },
+  "devDependencies": {
+    "@seller-hub/testing": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "tsx": "catalog:"
+  }
+}

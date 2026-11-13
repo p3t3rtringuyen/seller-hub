@@ -1,0 +1,198 @@
+openapi: 3.1.0
+info:
+  title: platform-auth
+  version: 0.1.0
+  description: >
+    Sign-in, first-owner setup (one-time setup token, no default admin), invitation acceptance, tenant switch and
+    sign-out. The session token is an opaque secret handled by the BFF: the API returns it only in the response headers
+    `x-sh-session` and `x-sh-session-max-age` (and asks to clear it with `x-sh-session-clear`); it is never in a body and
+    never reaches browser JavaScript (ADR-0003, ADR-0004). Error `code` values: invalid_credentials, too_many_attempts,
+    no_active_membership, setup_token_invalid, email_taken, account_exists, invitation_invalid,
+    invitation_email_mismatch, already_member, too_short, too_long, too_simple, contains_email, invalid_email, length.
+paths:
+  /v1/auth/setup:
+    post:
+      operationId: platform-auth.setupOwner
+      summary: Creates the first Owner and tenant with a one-time setup token (printed by `pnpm auth:setup-token`)
+      tags: [platform-auth]
+      x-public: true
+      x-scope: none
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PlatformAuthSetupRequest" }
+      responses:
+        "201":
+          description: Account created and signed in
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformAuthSignedIn" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/auth/sign-in:
+    post:
+      operationId: platform-auth.signIn
+      summary: E-mail and password sign-in (throttled; the same answer for unknown e-mail and wrong password)
+      tags: [platform-auth]
+      x-public: true
+      x-scope: none
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PlatformAuthSignInRequest" }
+      responses:
+        "200":
+          description: Signed in
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformAuthSignedIn" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/auth/sign-out:
+    post:
+      operationId: platform-auth.signOut
+      summary: Revokes the current session
+      tags: [platform-auth]
+      x-permission: session.read
+      x-scope: tenant
+      responses:
+        "204":
+          description: Signed out
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/auth/switch-tenant:
+    post:
+      operationId: platform-auth.switchTenant
+      summary: Switches the active tenant and rotates the session
+      tags: [platform-auth]
+      x-permission: session.read
+      x-scope: tenant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PlatformAuthSwitchTenantRequest" }
+      responses:
+        "200":
+          description: Switched
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformAuthSignedIn" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/auth/invitations/preview:
+    post:
+      operationId: platform-auth.previewInvitation
+      summary: Who an invitation is for (the token travels in the body, never in a URL)
+      tags: [platform-auth]
+      x-public: true
+      x-scope: none
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PlatformAuthInvitationTokenRequest" }
+      responses:
+        "200":
+          description: Invitation summary
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformAuthInvitationPreview" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/auth/invitations/register:
+    post:
+      operationId: platform-auth.registerWithInvitation
+      summary: A new person creates their account from an invitation and joins the tenant
+      tags: [platform-auth]
+      x-public: true
+      x-scope: none
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PlatformAuthRegisterRequest" }
+      responses:
+        "201":
+          description: Account created, joined and signed in
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformAuthSignedIn" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/auth/invitations/accept:
+    post:
+      operationId: platform-auth.acceptInvitation
+      summary: A signed-in user accepts an invitation addressed to their e-mail
+      tags: [platform-auth]
+      x-permission: session.read
+      x-scope: tenant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PlatformAuthInvitationTokenRequest" }
+      responses:
+        "200":
+          description: Joined; the session now points at that tenant
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformAuthSignedIn" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+components:
+  schemas:
+    PlatformAuthSetupRequest:
+      type: object
+      required: [setupToken, email, password, tenantName]
+      properties:
+        setupToken: { type: string, maxLength: 200 }
+        email: { type: string, maxLength: 254 }
+        password: { type: string, maxLength: 128 }
+        displayName: { type: [string, "null"], maxLength: 120 }
+        tenantName: { type: string, maxLength: 120 }
+    PlatformAuthSignInRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, maxLength: 254 }
+        password: { type: string, maxLength: 128 }
+    PlatformAuthSwitchTenantRequest:
+      type: object
+      required: [tenantId]
+      properties:
+        tenantId: { type: string, format: uuid }
+    PlatformAuthInvitationTokenRequest:
+      type: object
+      required: [token]
+      properties:
+        token: { type: string, maxLength: 200 }
+    PlatformAuthRegisterRequest:
+      type: object
+      required: [token, password]
+      properties:
+        token: { type: string, maxLength: 200 }
+        password: { type: string, maxLength: 128 }
+        displayName: { type: [string, "null"], maxLength: 120 }
+    PlatformAuthInvitationPreview:
+      type: object
+      required: [email, role, accountExists]
+      properties:
+        email: { type: string }
+        role: { type: string, enum: [admin, manager, analyst, viewer] }
+        accountExists: { type: boolean }
+    PlatformAuthSignedIn:
+      type: object
+      required: [user, tenantId]
+      description: The session token is NOT part of the body (see the module description).
+      properties:
+        user:
+          type: object
+          required: [id, email, displayName]
+          properties:
+            id: { type: string, format: uuid }
+            email: { type: string }
+            displayName: { type: [string, "null"] }
+        tenantId: { type: string, format: uuid }

@@ -29,17 +29,30 @@ describe.skipIf(!t)("AuditWriter - tenant isolation and append-only (real Postgr
   beforeAll(async () => {
     await seedFixtures(t!);
     const w = createAuditWriter(t!.app.db);
-    await w.write(A, { action: "auth.login", actorLabel: "a@example.test", details: { token: "x" } });
-    await w.write(B, { action: "auth.login", actorLabel: "b@example.test", ipAddress: "not-an-ip" });
+    await w.write(A, {
+      action: "auth.login",
+      actorLabel: "a@example.test",
+      details: { token: "x" },
+    });
+    await w.write(B, {
+      action: "auth.login",
+      actorLabel: "b@example.test",
+      ipAddress: "not-an-ip",
+    });
   });
   afterAll(async () => {
     await t?.drop();
   });
 
   const rows = (scope: { tenantId: string }) =>
-    withScope(t!.app.db, scope, async (trx) =>
-      (await sql<{ actor_label: string; details: unknown; ip_address: string | null }>`
-        select actor_label, details, ip_address from ops.audit_log`.execute(trx)).rows,
+    withScope(
+      t!.app.db,
+      scope,
+      async (trx) =>
+        (
+          await sql<{ actor_label: string; details: unknown; ip_address: string | null }>`
+        select actor_label, details, ip_address from ops.audit_log`.execute(trx)
+        ).rows,
     );
 
   it("each tenant sees only its own audit rows (RLS, unfiltered query)", async () => {
