@@ -36,8 +36,19 @@ export const envSchema = z.object({
   SH_API_URL: optionalString,
   SH_WEB_PUBLIC_URL: optionalString,
 
-  /** Vault master key (ADR-0005). Optional until P3-IDENTITY makes it required. */
+  /** Vault key (ADR-0005), 32 bytes base64. Single-key form; `SH_MASTER_KEYS` takes precedence. Checked at API boot. */
   SH_MASTER_KEY: optionalString,
+  /** Vault key ring (ADR-0005): comma list of `kid:base64(32 bytes)`. */
+  SH_MASTER_KEYS: optionalString,
+  /** Which kid of `SH_MASTER_KEYS` encrypts new credentials (default: the first). */
+  SH_MASTER_KEY_ACTIVE: optionalString,
+  /** `1` = the API/BFF sits behind a reverse proxy / tunnel whose forwarded headers can be trusted (client IP, https). */
+  SH_TRUST_PROXY: z.enum(["0", "1"]).default("0"),
+  /** Amazon app (LWA) credentials of this deployment; per-seller refresh tokens live in the vault, not here. */
+  SPAPI_LWA_CLIENT_ID: optionalString,
+  SPAPI_LWA_CLIENT_SECRET: optionalString,
+  ADS_LWA_CLIENT_ID: optionalString,
+  ADS_LWA_CLIENT_SECRET: optionalString,
 });
 
 export type Env = z.infer<typeof envSchema>;
@@ -61,6 +72,7 @@ export const DEV_ONLY_VALUES: ReadonlySet<string> = new Set([
   "sh_app_dev_only",
   "sh_minio_dev_only",
   "sh_minio_dev_only_secret",
+  "ZGV2LW9ubHktbWFzdGVyLWtleS1zZWxsZXItaHViISE=",
 ]);
 
 export function loadConfig(source: Record<string, string | undefined> = process.env): AppConfig {
@@ -78,8 +90,9 @@ export function loadConfig(source: Record<string, string | undefined> = process.
         "SH_PG_APP_PASSWORD",
         "SH_S3_ACCESS_KEY",
         "SH_S3_SECRET_KEY",
+        "SH_MASTER_KEY",
       ] as const
-    ).filter((k) => DEV_ONLY_VALUES.has(env[k]));
+    ).filter((k) => DEV_ONLY_VALUES.has(env[k] ?? ""));
     if (dev.length)
       throw new Error(`Dev-only placeholder values are set in production for: ${dev.join(", ")}`);
   }
