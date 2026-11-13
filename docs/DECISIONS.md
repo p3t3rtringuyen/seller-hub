@@ -241,3 +241,12 @@ vào cuối file với số tiếp theo.
   edit, delete — kể cả bản nháp, kể cả khi một task sau yêu cầu. Chỉ điều hướng và đọc. Đây là tài khoản
   thật. Khác với profile Ads test (nơi được phép tạo, xem D30 khi tới Gate 3).
 - Áp dụng cho mọi session lái Chrome và mọi lần chạy lại P1-VENDOR (D61).
+
+### D66 — Staging sớm trên a2z-solutions.stream
+- Trạng thái: DECIDED (2026-11-13, theo lựa chọn của bạn)
+- Dựng bản **staging** ngay sau khi P3-IDENTITY merge (có đăng nhập), không đợi đủ MVP.
+- Domain `a2z-solutions.stream` đang qua Cloudflare (hiện trả "Hello world", không từ repo này).
+- Mặc định đề xuất (chờ bạn xác nhận khi tới bước đó): docker compose trên một server Linux của bạn (D21),
+  Cloudflare Tunnel trỏ domain về server, **Cloudflare Access** chặn mọi người trừ bạn; chỉ dữ liệu
+  fixture/sandbox (D30 vẫn OPEN). Cần từ bạn: server (VPS/máy chủ) và quyền quản lý Cloudflare của domain (R10).
+

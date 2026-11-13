@@ -88,6 +88,15 @@ when P1-CONSOLE is done, in the slot of whichever P1 session finished first. P1-
 
 P3-CLIENTS ∥ P3-DS; then P3-IDENTITY ∥ P3-INGEST. Each code task goes through P5 before merge.
 
+### P3-STAGING — early staging (D66)
+
+| ID | Prompt | Model | Effort | Checkout | Depends | OWNED_PATHS |
+| --- | --- | --- | --- | --- | --- | --- |
+| P3-STAGING | written by the orchestrator when it starts | sonnet | medium | wt | P3-IDENTITY merged, R10 (server + Cloudflare access) | `deploy/staging/**`, `docs/onboarding/staging.md`, `docs/reports/P3-STAGING.md` |
+
+Staging = docker compose on the user's server behind Cloudflare Tunnel + Cloudflare Access (only the
+user), fixture/sandbox data only until D30. It is a preview, not P6-DEPLOY; P6 hardens it later.
+
 ### P4 — Feature slices
 
 One task per slice in `docs/BACKLOG.md`: slices S01…S15, task ID `P4-S01`…, prompt `p4-slice.md`
