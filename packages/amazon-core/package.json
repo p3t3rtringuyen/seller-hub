@@ -1,0 +1,31 @@
+{
+  "name": "@seller-hub/amazon-core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./testing": "./src/testing/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint . ../../tools/codegen",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests --hookTimeout=60000 --testTimeout=30000",
+    "build": "node -e \"console.log('amazon-core: source-only package, nothing to build')\"",
+    "codegen": "tsx ../../tools/codegen/src/cli.ts"
+  },
+  "dependencies": {
+    "@seller-hub/core": "workspace:*",
+    "ioredis": "catalog:"
+  },
+  "devDependencies": {
+    "@seller-hub/config": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "openapi-typescript": "catalog:",
+    "swagger2openapi": "7.0.8",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

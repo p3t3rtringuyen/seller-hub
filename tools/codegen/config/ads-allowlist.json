@@ -1,0 +1,161 @@
+{
+  "$comment": "Amazon Ads operations the clients are generated for (ADR-0006, D53). v1 is the default; every v0 entry must carry an EX-* id that exists in catalog/ads/domain-map.json (checked by codegen and by a test). The v0 budget-rules entries are the READ operations only (GET); rule writes are not generated. `readPosts` = POST operations that only read (safe to repeat after a 5xx).",
+  "operations": [
+    { "id": "SPCreateCampaign" },
+    { "id": "SPQueryCampaign" },
+    { "id": "SPUpdateCampaign" },
+    { "id": "SPDeleteCampaign" },
+    { "id": "SPCreateAdGroup" },
+    { "id": "SPQueryAdGroup" },
+    { "id": "SPUpdateAdGroup" },
+    { "id": "SPDeleteAdGroup" },
+    { "id": "SPCreateAd" },
+    { "id": "SPQueryAd" },
+    { "id": "SPUpdateAd" },
+    { "id": "SPDeleteAd" },
+    { "id": "SPCreateTarget" },
+    { "id": "SPQueryTarget" },
+    { "id": "SPUpdateTarget" },
+    { "id": "SPDeleteTarget" },
+    { "id": "AdsApiv1CreateReport" },
+    { "id": "AdsApiv1RetrieveReport" },
+    { "id": "AdsApiv1DeleteReport" },
+    { "id": "QueryAdvertiserAccount" },
+
+    { "id": "listProfiles", "api": "profiles-3-0", "exception": "EX-PROFILES" },
+    { "id": "getProfileById", "api": "profiles-3-0", "exception": "EX-PROFILES" },
+    { "id": "updateProfiles", "api": "profiles-3-0", "exception": "EX-PROFILES" },
+
+    { "id": "CampaignExport", "api": "AmazonAdsAPIExports", "exception": "EX-EXPORTS" },
+    { "id": "AdGroupExport", "api": "AmazonAdsAPIExports", "exception": "EX-EXPORTS" },
+    { "id": "AdExport", "api": "AmazonAdsAPIExports", "exception": "EX-EXPORTS" },
+    { "id": "TargetExport", "api": "AmazonAdsAPIExports", "exception": "EX-EXPORTS" },
+    { "id": "GetExport", "api": "AmazonAdsAPIExports", "exception": "EX-EXPORTS" },
+
+    { "id": "ListPortfolios", "api": "Portfolios", "exception": "EX-PORTFOLIOS", "readPost": true },
+    { "id": "CreatePortfolios", "api": "Portfolios", "exception": "EX-PORTFOLIOS" },
+    { "id": "UpdatePortfolios", "api": "Portfolios", "exception": "EX-PORTFOLIOS" },
+    {
+      "id": "portfolioBudgetUsage",
+      "api": "Portfolios",
+      "exception": "EX-PORTFOLIOS",
+      "readPost": true
+    },
+
+    {
+      "id": "getHistory",
+      "api": "Changehistory",
+      "exception": "EX-CHANGE-HISTORY",
+      "readPost": true
+    },
+
+    {
+      "id": "GetThemeBasedBidRecommendationForAdGroup_v1",
+      "api": "SponsoredProducts",
+      "exception": "EX-TARGETING-RECS",
+      "readPost": true
+    },
+    {
+      "id": "getRankedKeywordRecommendation",
+      "api": "SponsoredProducts",
+      "exception": "EX-TARGETING-RECS",
+      "readPost": true
+    },
+    {
+      "id": "getProductRecommendations",
+      "api": "SponsoredProducts",
+      "exception": "EX-TARGETING-RECS",
+      "readPost": true
+    },
+
+    {
+      "id": "getTargetableCategories",
+      "api": "SponsoredProducts",
+      "exception": "EX-TARGETING-DISCOVERY"
+    },
+    {
+      "id": "getRefinementsForCategory",
+      "api": "SponsoredProducts",
+      "exception": "EX-TARGETING-DISCOVERY"
+    },
+    {
+      "id": "getTargetableASINCounts",
+      "api": "SponsoredProducts",
+      "exception": "EX-TARGETING-DISCOVERY",
+      "readPost": true
+    },
+    {
+      "id": "getCategoryRecommendationsForASINs",
+      "api": "SponsoredProducts",
+      "exception": "EX-TARGETING-DISCOVERY",
+      "readPost": true
+    },
+    {
+      "id": "searchBrands",
+      "api": "SponsoredProducts",
+      "exception": "EX-TARGETING-DISCOVERY",
+      "readPost": true
+    },
+
+    {
+      "id": "GetSPBudgetRulesForAdvertiser",
+      "api": "SponsoredProducts",
+      "exception": "EX-BUDGET-RULES"
+    },
+    {
+      "id": "GetBudgetRuleByRuleIdForSPCampaigns",
+      "api": "SponsoredProducts",
+      "exception": "EX-BUDGET-RULES"
+    },
+    {
+      "id": "GetCampaignsAssociatedWithSPBudgetRule",
+      "api": "SponsoredProducts",
+      "exception": "EX-BUDGET-RULES"
+    },
+    {
+      "id": "ListAssociatedBudgetRulesForSPCampaigns",
+      "api": "SponsoredProducts",
+      "exception": "EX-BUDGET-RULES"
+    },
+    {
+      "id": "GetSBBudgetRulesForAdvertiser",
+      "api": "sponsored-brands-4-0",
+      "exception": "EX-BUDGET-RULES"
+    },
+    {
+      "id": "GetBudgetRuleByRuleIdForSBCampaigns",
+      "api": "sponsored-brands-4-0",
+      "exception": "EX-BUDGET-RULES"
+    },
+    {
+      "id": "GetCampaignsAssociatedWithSBBudgetRule",
+      "api": "sponsored-brands-4-0",
+      "exception": "EX-BUDGET-RULES"
+    },
+    {
+      "id": "ListAssociatedBudgetRulesForSBCampaigns",
+      "api": "sponsored-brands-4-0",
+      "exception": "EX-BUDGET-RULES"
+    },
+    {
+      "id": "GetSDBudgetRulesForAdvertiser",
+      "api": "sponsored-display-3-0",
+      "exception": "EX-BUDGET-RULES"
+    },
+    {
+      "id": "GetBudgetRuleByRuleIdForSDCampaigns",
+      "api": "sponsored-display-3-0",
+      "exception": "EX-BUDGET-RULES"
+    },
+    {
+      "id": "GetCampaignsAssociatedWithSDBudgetRule",
+      "api": "sponsored-display-3-0",
+      "exception": "EX-BUDGET-RULES"
+    },
+    {
+      "id": "ListAssociatedBudgetRulesForSDCampaigns",
+      "api": "sponsored-display-3-0",
+      "exception": "EX-BUDGET-RULES"
+    }
+  ]
+}

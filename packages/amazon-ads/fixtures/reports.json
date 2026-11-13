@@ -1,0 +1,84 @@
+[
+  {
+    "name": "AdsApiv1CreateReport",
+    "match": {
+      "method": "POST",
+      "path": "/adsApi/v1/create/reports"
+    },
+    "response": {
+      "status": 207,
+      "json": {
+        "success": [
+          {
+            "index": 0,
+            "report": {
+              "reportId": "RPT-1",
+              "status": "PENDING",
+              "format": "GZIP_JSON"
+            }
+          }
+        ],
+        "error": []
+      }
+    }
+  },
+  {
+    "name": "AdsApiv1RetrieveReport (processing, then completed)",
+    "match": {
+      "method": "POST",
+      "path": "/adsApi/v1/retrieve/reports"
+    },
+    "responses": [
+      {
+        "status": 207,
+        "json": {
+          "success": [
+            {
+              "index": 0,
+              "report": {
+                "reportId": "RPT-1",
+                "status": "PROCESSING",
+                "format": "GZIP_JSON"
+              }
+            }
+          ],
+          "error": []
+        }
+      },
+      {
+        "status": 207,
+        "json": {
+          "success": [
+            {
+              "index": 0,
+              "report": {
+                "reportId": "RPT-1",
+                "status": "COMPLETED",
+                "format": "GZIP_JSON",
+                "completedReportParts": [
+                  {
+                    "url": "https://offline-report-storage.s3.amazonaws.com/fixture/RPT-1.json.gz",
+                    "sizeInBytes": 120,
+                    "urlExpirationDateTime": "2026-11-02T00:00:00Z"
+                  }
+                ]
+              }
+            }
+          ],
+          "error": []
+        }
+      }
+    ]
+  },
+  {
+    "name": "report part download",
+    "match": {
+      "method": "GET",
+      "path": "/fixture/RPT-1.json.gz"
+    },
+    "response": {
+      "status": 200,
+      "base64": "H4sIAAAAAAAACh3IMQqAMAwF0N1j/LlKUtAhqycptUjQ2mK6Se8uuj3egy20BIEnv4zMIzEcYsg16H5BHugGwcroDjm1W+Ofud7JTMtlECYih3hqPAziPxdrEPbT3PvwAoEK7bVjAAAA"
+    }
+  }
+]

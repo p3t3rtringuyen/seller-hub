@@ -1,0 +1,74 @@
+[
+  {
+    "name": "reports.createReport",
+    "match": {
+      "method": "POST",
+      "path": "/reports/2021-06-30/reports"
+    },
+    "response": {
+      "status": 202,
+      "json": {
+        "reportId": "ID-1001"
+      }
+    }
+  },
+  {
+    "name": "reports.getReport (in progress, then done)",
+    "match": {
+      "method": "GET",
+      "path": "/reports/2021-06-30/reports/ID-1001"
+    },
+    "responses": [
+      {
+        "status": 200,
+        "json": {
+          "reportId": "ID-1001",
+          "reportType": "GET_MERCHANT_LISTINGS_ALL_DATA",
+          "processingStatus": "IN_PROGRESS",
+          "marketplaceIds": ["ATVPDKIKX0DER"],
+          "createdTime": "2026-11-01T00:00:00+00:00"
+        }
+      },
+      {
+        "status": 200,
+        "json": {
+          "reportId": "ID-1001",
+          "reportType": "GET_MERCHANT_LISTINGS_ALL_DATA",
+          "processingStatus": "DONE",
+          "reportDocumentId": "DOC-1",
+          "marketplaceIds": ["ATVPDKIKX0DER"],
+          "createdTime": "2026-11-01T00:00:00+00:00"
+        }
+      }
+    ]
+  },
+  {
+    "name": "reports.getReportDocument",
+    "match": {
+      "method": "GET",
+      "path": "/reports/2021-06-30/documents/DOC-1"
+    },
+    "response": {
+      "status": 200,
+      "json": {
+        "reportDocumentId": "DOC-1",
+        "url": "https://tortuga-prod-na.s3.amazonaws.com/fixture/DOC-1",
+        "compressionAlgorithm": "GZIP"
+      }
+    }
+  },
+  {
+    "name": "report document download",
+    "match": {
+      "method": "GET",
+      "path": "/fixture/DOC-1"
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "content-type": "text/plain"
+      },
+      "base64": "H4sIAAAAAAAACivOLuVMLM7M4ywoykxO5Qr2DtU15HQygAJDTkNLPUtLsLARQtiI08hEz9SACwBGp7B3PQAAAA=="
+    }
+  }
+]
