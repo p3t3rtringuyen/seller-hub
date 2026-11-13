@@ -51,7 +51,10 @@ export async function pollPushQueue(o: {
       parsed = null;
     }
     if (!parsed || !parsed.scope) {
-      o.log.warn({ sqsMessageId: m.messageId }, "push message could not be routed to a seller account; dropped");
+      o.log.warn(
+        { sqsMessageId: m.messageId },
+        "push message could not be routed to a seller account; dropped",
+      );
       out.dropped++;
       await o.sqs.delete(m.receiptHandle);
       continue;
@@ -112,7 +115,9 @@ export async function processInbox(o: {
       result.done++;
     } catch (e) {
       const code = ((e as { code?: unknown }).code as string | undefined) ?? "handler_error";
-      await repo.scoped(o.scope, o.db, (trx) => repo.finishInbox(trx, row.id, { ok: false, errorCode: code.slice(0, 80) }));
+      await repo.scoped(o.scope, o.db, (trx) =>
+        repo.finishInbox(trx, row.id, { ok: false, errorCode: code.slice(0, 80) }),
+      );
       o.log.warn({ inboxId: row.id, code }, "inbox message failed");
       result.failed++;
     }

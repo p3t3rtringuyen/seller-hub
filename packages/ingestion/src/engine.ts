@@ -173,7 +173,10 @@ export function createEngine(deps: EngineDeps): Engine {
       entityIds: a.entityIds,
       marketplaceIds: kind === "marketplace" ? [state.scopeKey] : target.marketplaceIds,
       spScope,
-      adsScope: { ...spScope, ...(state.scopeKey && kind === "ads-profile" ? { profileId: state.scopeKey } : {}) },
+      adsScope: {
+        ...spScope,
+        ...(state.scopeKey && kind === "ads-profile" ? { profileId: state.scopeKey } : {}),
+      },
       sp: deps.amazon.sp,
       ads: deps.amazon.ads,
       adsReports: deps.amazon.adsReports,
@@ -205,7 +208,14 @@ export function createEngine(deps: EngineDeps): Engine {
     const def = pull.get(run.syncKey);
     const state = run.syncStateId ? await repo.getSyncState(scope, deps.db, run.syncStateId) : null;
     if (!def || !state) {
-      await failRun(scope, run, state, "unknown_definition", `no definition or sync state for ${run.syncKey}`, false);
+      await failRun(
+        scope,
+        run,
+        state,
+        "unknown_definition",
+        `no definition or sync state for ${run.syncKey}`,
+        false,
+      );
       return { done: true, state: "failed" };
     }
     const target = await deps.directory.getTarget(scope);
@@ -226,7 +236,8 @@ export function createEngine(deps: EngineDeps): Engine {
       def.concurrency ?? config.sellerConcurrency,
       15 * 60_000,
     );
-    if (!lease) return { done: false, delayMs: 5_000 + Math.floor(random() * 25_000), state: run.state };
+    if (!lease)
+      return { done: false, delayMs: 5_000 + Math.floor(random() * 25_000), state: run.state };
     try {
       return await step(scope, run, state, def, target);
     } finally {
@@ -359,8 +370,17 @@ export function createEngine(deps: EngineDeps): Engine {
     if (!adapter) throw new Error(`family ${def.family} has no async adapter`);
     const a = adapter as unknown as {
       create(c: RunContext, d: PullDefinition): Promise<string>;
-      poll(c: RunContext, d: PullDefinition, id: string): Promise<{ ready: boolean; retryAfterMs?: number; documentId?: string }>;
-      download(c: RunContext, d: PullDefinition, id: string, doc: string): Promise<import("./families/async-jobs").LandedDocument[]>;
+      poll(
+        c: RunContext,
+        d: PullDefinition,
+        id: string,
+      ): Promise<{ ready: boolean; retryAfterMs?: number; documentId?: string }>;
+      download(
+        c: RunContext,
+        d: PullDefinition,
+        id: string,
+        doc: string,
+      ): Promise<import("./families/async-jobs").LandedDocument[]>;
     };
 
     if (run.state === "requested") {
@@ -375,9 +395,15 @@ export function createEngine(deps: EngineDeps): Engine {
       if (!run.amazonRequestId) throw new Error("run is processing without a request id");
       const polled = await a.poll(ctx, def, run.amazonRequestId);
       if (!polled.ready)
-        return { total: 0, next: { done: false, delayMs: polled.retryAfterMs ?? 15_000, state: "processing" } };
+        return {
+          total: 0,
+          next: { done: false, delayMs: polled.retryAfterMs ?? 15_000, state: "processing" },
+        };
       await repo.scoped(ctx.scope, deps.db, (trx) =>
-        repo.patchRun(trx, run, { state: "downloading", amazonDocumentId: polled.documentId ?? null }),
+        repo.patchRun(trx, run, {
+          state: "downloading",
+          amazonDocumentId: polled.documentId ?? null,
+        }),
       );
       Object.assign(run, { state: "downloading", amazonDocumentId: polled.documentId ?? null });
     }
@@ -396,7 +422,16 @@ export function createEngine(deps: EngineDeps): Engine {
     if (def.family === "ads-export" && def.reconcile) {
       await repo.scoped(ctx.scope, deps.db, async (trx) => {
         await def.reconcile?.(
-          { scope: ctx.scope, trx, syncKey: ctx.syncKey, scopeKey: ctx.scopeKey, runId: ctx.runId, window: ctx.window, log: ctx.log, now },
+          {
+            scope: ctx.scope,
+            trx,
+            syncKey: ctx.syncKey,
+            scopeKey: ctx.scopeKey,
+            runId: ctx.runId,
+            window: ctx.window,
+            log: ctx.log,
+            now,
+          },
           rows,
         );
       });
@@ -404,7 +439,11 @@ export function createEngine(deps: EngineDeps): Engine {
     return { total };
   }
 
-  async function parseDoc(def: PullDefinition, texts: string[], ctx: RunContext): Promise<readonly unknown[]> {
+  async function parseDoc(
+    def: PullDefinition,
+    texts: string[],
+    ctx: RunContext,
+  ): Promise<readonly unknown[]> {
     switch (def.family) {
       case "ads-report":
         return def.parse(texts, ctx);
@@ -460,7 +499,8 @@ export function createEngine(deps: EngineDeps): Engine {
     const out: string[] = [];
     for (const o of objects) {
       const bytes = await deps.objectStore.get(o.objectKey);
-      if (!bytes) throw new Error(`landed document ${o.objectKey} is missing from the object store`);
+      if (!bytes)
+        throw new Error(`landed document ${o.objectKey} is missing from the object store`);
       out.push(new TextDecoder().decode(bytes));
     }
     return out;
@@ -478,7 +518,9 @@ export function createEngine(deps: EngineDeps): Engine {
     total: number,
   ): Promise<StepResult> {
     const finishedAt = now();
-    const scratch = await repo.scoped(ctx.scope, deps.db, (trx) => repo.readScratch(trx, state.id, run.id));
+    const scratch = await repo.scoped(ctx.scope, deps.db, (trx) =>
+      repo.readScratch(trx, state.id, run.id),
+    );
     await repo.scoped(ctx.scope, deps.db, async (trx) => {
       await repo.patchRun(trx, run, {
         state: "done",
@@ -508,7 +550,9 @@ export function createEngine(deps: EngineDeps): Engine {
       await repo.finishSyncSuccess(trx, state.id, run.id, {
         cursor,
         now: finishedAt,
-        nextRunAt: def.schedule ? new Date(finishedAt.getTime() + nextRunDelayMs(def.schedule, random)) : null,
+        nextRunAt: def.schedule
+          ? new Date(finishedAt.getTime() + nextRunDelayMs(def.schedule, random))
+          : null,
         lastRun: {
           runId: run.id,
           rows: total,
@@ -532,7 +576,12 @@ export function createEngine(deps: EngineDeps): Engine {
   ): Promise<void> {
     const at = now();
     await repo.scoped(scope, deps.db, async (trx) => {
-      await repo.patchRun(trx, run, { state: "failed", errorCode: code, errorDetail: detail, finishedAt: at });
+      await repo.patchRun(trx, run, {
+        state: "failed",
+        errorCode: code,
+        errorDetail: detail,
+        finishedAt: at,
+      });
       if (state && countFailure) {
         const failures = state.consecutiveFailures + 1;
         const delay = Math.min(60 * 60_000, backoffMs(failures) * 4);
@@ -566,16 +615,33 @@ export function createEngine(deps: EngineDeps): Engine {
     if (e instanceof ConnectionNeedsReauth) {
       const api = isAdsDefinition(def) ? "ads" : "sp";
       await repo.pauseSyncs(scope, deps.db, api, "needs_reauth");
-      await failRun(scope, run, null, "needs_reauth", "the connection needs the seller to reconnect", false);
+      await failRun(
+        scope,
+        run,
+        null,
+        "needs_reauth",
+        "the connection needs the seller to reconnect",
+        false,
+      );
       ctx.log.warn({ api }, "connection needs reauth: syncs paused");
       return { done: true, state: "failed" };
     }
     // Throttling is a delay, not a failure (decision 11).
     if (e instanceof AmazonThrottledError || e instanceof LocalRateLimitError) {
-      const scratch = await repo.scoped(scope, deps.db, (trx) => repo.readScratch(trx, state.id, run.id));
+      const scratch = await repo.scoped(scope, deps.db, (trx) =>
+        repo.readScratch(trx, state.id, run.id),
+      );
       const throttles = (scratch.throttles ?? 0) + 1;
       if (throttles > config.maxThrottles) {
-        await failRun(scope, run, state, "throttled_too_long", `throttled ${throttles} times`, !aux, throttles);
+        await failRun(
+          scope,
+          run,
+          state,
+          "throttled_too_long",
+          `throttled ${throttles} times`,
+          !aux,
+          throttles,
+        );
         return { done: true, state: "failed" };
       }
       await repo.scoped(scope, deps.db, async (trx) => {
@@ -589,7 +655,9 @@ export function createEngine(deps: EngineDeps): Engine {
     const { code, detail } = sanitize(e);
     const retryable = e instanceof AmazonClientError ? e.retryable : true; // unknown errors: bounded retries
     const attempts = run.attempts + 1;
-    const scratch = await repo.scoped(scope, deps.db, (trx) => repo.readScratch(trx, state.id, run.id));
+    const scratch = await repo.scoped(scope, deps.db, (trx) =>
+      repo.readScratch(trx, state.id, run.id),
+    );
     if (retryable && attempts < config.maxAttempts) {
       await repo.scoped(scope, deps.db, (trx) =>
         repo.patchRun(trx, run, { attempts, errorCode: code, errorDetail: detail }),

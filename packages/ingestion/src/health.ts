@@ -49,11 +49,7 @@ export interface SyncHealth {
   generatedAt: string;
 }
 
-function freshnessOf(
-  s: repo.SyncStateRow,
-  every: number | null,
-  now: Date,
-): Freshness {
+function freshnessOf(s: repo.SyncStateRow, every: number | null, now: Date): Freshness {
   if (s.status === "paused" || s.status === "disabled") return "paused";
   if (s.status === "failing" || s.consecutiveFailures > 0) return "failing";
   if (!s.lastSuccessAt) return "never";
@@ -75,8 +71,13 @@ export async function getSyncHealth(
   ]);
   const items = states.map((s): SyncHealthItem => {
     const def = byKey.get(s.syncKey);
-    const every = def && "schedule" in def && def.schedule ? parseDurationMs(def.schedule.every) : null;
-    const last = (s.cursor.lastRun ?? null) as { rows?: number; durationMs?: number; throttles?: number } | null;
+    const every =
+      def && "schedule" in def && def.schedule ? parseDurationMs(def.schedule.every) : null;
+    const last = (s.cursor.lastRun ?? null) as {
+      rows?: number;
+      durationMs?: number;
+      throttles?: number;
+    } | null;
     const running = s.cursor.runs ? Object.keys(s.cursor.runs as object).length : 0;
     return {
       syncKey: s.syncKey,
@@ -88,7 +89,9 @@ export async function getSyncHealth(
       pausedReason: s.pausedReason,
       lastSuccessAt: s.lastSuccessAt?.toISOString() ?? null,
       lastFailureAt: s.lastFailureAt?.toISOString() ?? null,
-      lagSeconds: s.lastSuccessAt ? Math.round((now.getTime() - s.lastSuccessAt.getTime()) / 1000) : null,
+      lagSeconds: s.lastSuccessAt
+        ? Math.round((now.getTime() - s.lastSuccessAt.getTime()) / 1000)
+        : null,
       nextRunAt: s.nextRunAt?.toISOString() ?? null,
       consecutiveFailures: s.consecutiveFailures,
       lastErrorCode: s.lastErrorCode,
@@ -109,7 +112,8 @@ export async function getSyncHealth(
       state: r.state,
       startedAt: r.startedAt?.toISOString() ?? null,
       finishedAt: r.finishedAt?.toISOString() ?? null,
-      durationMs: r.startedAt && r.finishedAt ? r.finishedAt.getTime() - r.startedAt.getTime() : null,
+      durationMs:
+        r.startedAt && r.finishedAt ? r.finishedAt.getTime() - r.startedAt.getTime() : null,
       rows: r.rowsUpserted,
       attempts: r.attempts,
       errorCode: r.errorCode,

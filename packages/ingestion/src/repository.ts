@@ -77,7 +77,8 @@ export interface RunScratch {
 }
 
 type Row = Record<string, unknown>;
-const d = (v: unknown): Date | null => (v == null ? null : v instanceof Date ? v : new Date(String(v)));
+const d = (v: unknown): Date | null =>
+  v == null ? null : v instanceof Date ? v : new Date(String(v));
 
 function mapRun(r: Row): RunRow {
   return {
@@ -135,7 +136,9 @@ export async function getSyncState(
   const s = requireSellerScope(scope);
   return withScope(db, s, async (trx) => {
     const res = await sql<Row>`select * from ingest.sync_states
-      where id = ${id} and tenant_id = ${s.tenantId} and seller_account_id = ${s.sellerAccountId}`.execute(trx);
+      where id = ${id} and tenant_id = ${s.tenantId} and seller_account_id = ${s.sellerAccountId}`.execute(
+      trx,
+    );
     return res.rows[0] ? mapState(res.rows[0]) : null;
   });
 }
@@ -171,7 +174,9 @@ export async function readScratch(
   runId: string,
 ): Promise<RunScratch> {
   const res = await sql<{ s: RunScratch | null }>`
-    select cursor #> array['runs', ${runId}::text] as s from ingest.sync_states where id = ${syncStateId}`.execute(trx);
+    select cursor #> array['runs', ${runId}::text] as s from ingest.sync_states where id = ${syncStateId}`.execute(
+    trx,
+  );
   return res.rows[0]?.s ?? {};
 }
 
@@ -256,7 +261,9 @@ export async function pauseSyncs(
         set status = 'paused', paused_reason = ${reason}
       where tenant_id = ${s.tenantId} and seller_account_id = ${s.sellerAccountId}
         and status not in ('paused', 'disabled')
-        and ${api === "ads" ? sql`sync_key like 'ads.%'` : sql`sync_key not like 'ads.%'`}`.execute(trx);
+        and ${api === "ads" ? sql`sync_key like 'ads.%'` : sql`sync_key not like 'ads.%'`}`.execute(
+      trx,
+    );
     return Number(res.numAffectedRows ?? 0);
   });
 }
@@ -410,7 +417,11 @@ export async function listRawObjects(
       select object_key, part, source_ref from ingest.raw_objects
        where job_run_id = ${runId} and tenant_id = ${s.tenantId} and seller_account_id = ${s.sellerAccountId}
        order by part`.execute(trx);
-    return res.rows.map((r) => ({ objectKey: r.object_key, part: r.part, sourceRef: r.source_ref }));
+    return res.rows.map((r) => ({
+      objectKey: r.object_key,
+      part: r.part,
+      sourceRef: r.source_ref,
+    }));
   });
 }
 
@@ -441,7 +452,10 @@ export interface EnsureState {
 }
 
 /** Inserts missing (account, sync, scope) rows; existing rows are left alone. Returns how many were created. */
-export async function ensureSyncStates(system: Database, rows: readonly EnsureState[]): Promise<number> {
+export async function ensureSyncStates(
+  system: Database,
+  rows: readonly EnsureState[],
+): Promise<number> {
   let created = 0;
   await system.transaction().execute(async (trx) => {
     for (const r of rows) {
@@ -483,7 +497,9 @@ export async function claimDueStates(
        set status = case when s.status = 'running' then 'running' else 'scheduled' end,
            next_run_at = ${new Date(now.getTime() + leaseMs)}
       from due where s.id = due.id
-    returning s.id, s.tenant_id, s.seller_account_id, s.sync_key, s.scope_key, s.cursor`.execute(system);
+    returning s.id, s.tenant_id, s.seller_account_id, s.sync_key, s.scope_key, s.cursor`.execute(
+    system,
+  );
   return res.rows.map((r) => ({
     id: r.id as string,
     tenantId: r.tenant_id as string,
@@ -536,7 +552,9 @@ export async function maintainPartitions(
   ] as const) {
     const cutoff = new Date(now.getTime() - days * 86_400_000);
     const c = await sql<{ n: number }>`select core.ensure_monthly_partitions(
-        ${table}::regclass, ${now}::date, (${now}::date + interval '3 months')::date) as n`.execute(system);
+        ${table}::regclass, ${now}::date, (${now}::date + interval '3 months')::date) as n`.execute(
+      system,
+    );
     created += Number(c.rows[0]?.n ?? 0);
     const parts = await sql<{ name: string; bound: string }>`
       select c.relname as name, pg_get_expr(c.relpartbound, c.oid) as bound
@@ -638,7 +656,8 @@ export async function replayInbox(
 ): Promise<number> {
   const s = requireSellerScope(scope);
   return withScope(db, s, async (trx) => {
-    const res = await sql`update ingest.inbox set status = 'pending', attempts = 0, error_code = null
+    const res =
+      await sql`update ingest.inbox set status = 'pending', attempts = 0, error_code = null
       where status = 'failed' and tenant_id = ${s.tenantId} and seller_account_id = ${s.sellerAccountId}
         ${opts.id ? sql`and id = ${opts.id}` : sql``}`.execute(trx);
     return Number(res.numAffectedRows ?? 0);

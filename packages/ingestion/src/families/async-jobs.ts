@@ -22,8 +22,7 @@ export interface LandedDocument {
 }
 
 export type PollResult =
-  | { ready: false; retryAfterMs: number }
-  | { ready: true; documentId: string };
+  { ready: false; retryAfterMs: number } | { ready: true; documentId: string };
 
 export interface AsyncJobAdapter<D extends PullDefinition = PullDefinition> {
   create(ctx: RunContext, def: D): Promise<string>;
@@ -77,7 +76,8 @@ export const spReportAdapter = (polling: PollingConfig): AsyncJobAdapter<SpRepor
   async create(ctx, def) {
     const res = await ctx.sp.reports.createReport(ctx.spScope, { body: spReportRequest(ctx, def) });
     const reportId = (res.body as { reportId?: string } | undefined)?.reportId;
-    if (!reportId) throw new AsyncJobFailedError("createReport returned no reportId", "no_report_id");
+    if (!reportId)
+      throw new AsyncJobFailedError("createReport returned no reportId", "no_report_id");
     return reportId;
   },
   async poll(ctx, _def, reportId) {
@@ -94,7 +94,9 @@ export const spReportAdapter = (polling: PollingConfig): AsyncJobAdapter<SpRepor
   async download(ctx, def, reportId, documentId) {
     const reportType = def.report(ctx).reportType;
     const out = await fetchDocument(ctx.sp, ctx.spScope, reportId, documentId, reportType);
-    return [{ bytes: out.document, contentType: "text/tab-separated-values", sourceRef: reportType }];
+    return [
+      { bytes: out.document, contentType: "text/tab-separated-values", sourceRef: reportType },
+    ];
   },
 });
 
@@ -148,12 +150,10 @@ export const adsExportAdapter = (polling: PollingConfig): AsyncJobAdapter<AdsExp
     return exportId;
   },
   async poll(ctx, def, exportId) {
-    const res = await ctx.ads.call(
-      "GetExport",
-      ctx.adsScope,
-      { path: { exportId } } as never,
-      { accept: EXPORT_MEDIA[def.exportOperation], idempotent: true },
-    );
+    const res = await ctx.ads.call("GetExport", ctx.adsScope, { path: { exportId } } as never, {
+      accept: EXPORT_MEDIA[def.exportOperation],
+      idempotent: true,
+    });
     const body = (res.body ?? {}) as ExportShape;
     if (body.status === "COMPLETED") {
       if (!body.url) throw new AsyncJobFailedError("export completed without a url", "no_url");
@@ -174,14 +174,19 @@ export const adsExportAdapter = (polling: PollingConfig): AsyncJobAdapter<AdsExp
 export const dataKioskAdapter = (polling: PollingConfig): AsyncJobAdapter<DataKioskDefinition> => ({
   async create(ctx, def) {
     if (!ctx.kiosk)
-      throw new AsyncJobFailedError("Data Kiosk is not configured for this worker", "kiosk_unavailable");
+      throw new AsyncJobFailedError(
+        "Data Kiosk is not configured for this worker",
+        "kiosk_unavailable",
+      );
     return (await ctx.kiosk.createQuery(ctx.spScope, def.query(ctx))).queryId;
   },
   async poll(ctx, _def, queryId) {
-    if (!ctx.kiosk) throw new AsyncJobFailedError("Data Kiosk is not configured", "kiosk_unavailable");
+    if (!ctx.kiosk)
+      throw new AsyncJobFailedError("Data Kiosk is not configured", "kiosk_unavailable");
     const q = await ctx.kiosk.getQuery(ctx.spScope, queryId);
     if (q.status === "DONE") {
-      if (!q.documentId) throw new AsyncJobFailedError("query DONE without a document", "no_document");
+      if (!q.documentId)
+        throw new AsyncJobFailedError("query DONE without a document", "no_document");
       return { ready: true, documentId: q.documentId };
     }
     if (q.status === "FATAL" || q.status === "CANCELLED")
@@ -189,7 +194,8 @@ export const dataKioskAdapter = (polling: PollingConfig): AsyncJobAdapter<DataKi
     return { ready: false, retryAfterMs: polling.kioskPollMs };
   },
   async download(ctx, _def, _queryId, documentId) {
-    if (!ctx.kiosk) throw new AsyncJobFailedError("Data Kiosk is not configured", "kiosk_unavailable");
+    if (!ctx.kiosk)
+      throw new AsyncJobFailedError("Data Kiosk is not configured", "kiosk_unavailable");
     const { url } = await ctx.kiosk.getDocument(ctx.spScope, documentId);
     const bytes = await ctx.sp.download(url, { compression: "auto" });
     return [{ bytes, contentType: "application/jsonl", sourceRef: "data-kiosk" }];

@@ -13,7 +13,9 @@ export interface SellerDirectory {
   /** Every active seller account of every tenant — the scheduler's cross-tenant view (system use only). */
   listTargets(): Promise<SyncTarget[]>;
   /** One account, or null when it is gone/disconnected. */
-  getTarget(scope: Required<Pick<Scope, "tenantId" | "sellerAccountId">>): Promise<SyncTarget | null>;
+  getTarget(
+    scope: Required<Pick<Scope, "tenantId" | "sellerAccountId">>,
+  ): Promise<SyncTarget | null>;
 }
 
 interface TargetRow {
@@ -29,7 +31,8 @@ interface TargetRow {
 }
 
 function pausedOf(status: string | null): SyncTarget["paused"][keyof SyncTarget["paused"]] {
-  if (status === "needs_reauth" || status === "revoked" || status === "error") return "needs_reauth";
+  if (status === "needs_reauth" || status === "revoked" || status === "error")
+    return "needs_reauth";
   return undefined;
 }
 

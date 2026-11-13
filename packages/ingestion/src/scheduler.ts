@@ -33,7 +33,10 @@ export interface TickResult {
   skipped: number;
 }
 
-export function createScheduler(engine: Engine, options: { claimBatch?: number; ensureEveryMs?: number } = {}) {
+export function createScheduler(
+  engine: Engine,
+  options: { claimBatch?: number; ensureEveryMs?: number } = {},
+) {
   const { deps, config } = engine;
   const claimBatch = options.claimBatch ?? 200;
   const ensureEveryMs = options.ensureEveryMs ?? 10 * 60_000;
@@ -46,7 +49,12 @@ export function createScheduler(engine: Engine, options: { claimBatch?: number; 
     const rows: repo.EnsureState[] = [];
     for (const t of targets) {
       for (const def of engine.pull.values()) {
-        const startsIn = def.schedule ? nextRunDelayMs({ every: "0s", ...(def.schedule.jitter ? { jitter: def.schedule.jitter } : {}) }, deps.random) : 0;
+        const startsIn = def.schedule
+          ? nextRunDelayMs(
+              { every: "0s", ...(def.schedule.jitter ? { jitter: def.schedule.jitter } : {}) },
+              deps.random,
+            )
+          : 0;
         for (const scopeKey of scopesFor(def, t)) {
           rows.push({
             tenantId: t.tenantId,
@@ -70,7 +78,12 @@ export function createScheduler(engine: Engine, options: { claimBatch?: number; 
     return repo.ensureSyncStates(deps.system, rows);
   }
 
-  async function enqueueRun(run: repo.RunRow, priority: PriorityClass, step: number, delayMs?: number): Promise<void> {
+  async function enqueueRun(
+    run: repo.RunRow,
+    priority: PriorityClass,
+    step: number,
+    delayMs?: number,
+  ): Promise<void> {
     await deps.enqueuer.enqueue(payloadOf(run, step), {
       priority,
       jobId: jobIdOf(run.id, step),
@@ -130,15 +143,28 @@ export function createScheduler(engine: Engine, options: { claimBatch?: number; 
   }
 
   /** Looks up the sync state for (syncKey, scopeKey), creating it when the account qualifies. */
-  async function stateFor(scope: SellerScope, def: PullDefinition, scopeKey: string): Promise<repo.SyncStateRow> {
+  async function stateFor(
+    scope: SellerScope,
+    def: PullDefinition,
+    scopeKey: string,
+  ): Promise<repo.SyncStateRow> {
     const existing = await repo.findSyncState(scope, deps.db, def.key, scopeKey);
     if (existing) return existing;
-    const target = await deps.directory.getTarget({ tenantId: scope.tenantId, sellerAccountId: scope.sellerAccountId as string });
+    const target = await deps.directory.getTarget({
+      tenantId: scope.tenantId,
+      sellerAccountId: scope.sellerAccountId as string,
+    });
     if (!target) throw new Error("seller account not found or not active");
     if (!scopesFor(def, target).includes(scopeKey))
       throw new Error(`${def.key} does not apply to this account/scope`);
     await repo.ensureSyncStates(deps.system, [
-      { tenantId: scope.tenantId, sellerAccountId: scope.sellerAccountId as string, syncKey: def.key, scopeKey, nextRunAt: deps.now() },
+      {
+        tenantId: scope.tenantId,
+        sellerAccountId: scope.sellerAccountId as string,
+        syncKey: def.key,
+        scopeKey,
+        nextRunAt: deps.now(),
+      },
     ]);
     const created = await repo.findSyncState(scope, deps.db, def.key, scopeKey);
     if (!created) throw new Error("sync state could not be created");
@@ -162,7 +188,8 @@ export function createScheduler(engine: Engine, options: { claimBatch?: number; 
     const def = definition(r.syncKey);
     const state = await stateFor(scope, def, r.scopeKey ?? "");
     const now = deps.now();
-    const entityIds = r.entityIds?.length && def.refreshEntities ? [...r.entityIds].sort() : undefined;
+    const entityIds =
+      r.entityIds?.length && def.refreshEntities ? [...r.entityIds].sort() : undefined;
     const window = entityIds ? { start: null, end: null } : computeWindow(def, state.cursor, now);
     const { run, created } = await repo.createRun(scope, deps.db, {
       syncStateId: state.id,
@@ -174,7 +201,10 @@ export function createScheduler(engine: Engine, options: { claimBatch?: number; 
       windowEnd: window.end,
       traceId: r.traceId ?? `refresh:${now.getTime()}`,
       ...(entityIds
-        ? { entityIds, keySuffix: createHash("sha1").update(entityIds.join(",")).digest("hex").slice(0, 12) }
+        ? {
+            entityIds,
+            keySuffix: createHash("sha1").update(entityIds.join(",")).digest("hex").slice(0, 12),
+          }
         : {}),
       now,
     });
@@ -197,13 +227,18 @@ export function createScheduler(engine: Engine, options: { claimBatch?: number; 
     const now = deps.now();
     const maxBack = (def.window.backfillDays ?? 730) * DAY_MS;
     if (now.getTime() - r.from.getTime() > maxBack)
-      throw new Error(`${def.key} keeps ${def.window.backfillDays ?? 730} days of history; from is too early`);
+      throw new Error(
+        `${def.key} keeps ${def.window.backfillDays ?? 730} days of history; from is too early`,
+      );
     if (r.from >= r.to) throw new Error("from must be before to");
     const state = await stateFor(scope, def, r.scopeKey ?? "");
     const chunk = (def.window.maxRangeDays ?? 31) * DAY_MS;
     const windows: { start: Date; end: Date }[] = [];
     for (let end = r.to.getTime(); end > r.from.getTime(); end -= chunk) {
-      windows.push({ start: new Date(Math.max(r.from.getTime(), end - chunk)), end: new Date(end) });
+      windows.push({
+        start: new Date(Math.max(r.from.getTime(), end - chunk)),
+        end: new Date(end),
+      });
     }
     let i = 0;
     for (const w of windows) {

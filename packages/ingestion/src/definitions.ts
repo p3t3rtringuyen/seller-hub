@@ -88,7 +88,8 @@ export const isPush = (d: IngestDefinition): d is PushDefinition => !isPull(d);
 /** `account` for SP-API syncs, `ads-profile` for Ads syncs unless the definition says otherwise. */
 export function scopeKindOf(def: PullDefinition): SyncScopeKind {
   if (def.scopeKind) return def.scopeKind;
-  const ads = def.family === "ads-report" || def.family === "ads-export" || def.appliesTo?.api === "ads";
+  const ads =
+    def.family === "ads-report" || def.family === "ads-export" || def.appliesTo?.api === "ads";
   return ads ? "ads-profile" : "account";
 }
 
