@@ -23,6 +23,79 @@ import { createAmazonPort, type AmazonPort, type LwaAppConfig } from "./amazon-p
 // live account. The app credentials (LWA client id/secret) are the deployment's, from env; in replay mode obviously fake
 // ones are used when none are set so the flow can be exercised end to end.
 
+// The two read operations the connect flows use, embedded as data. `apps/api` is bundled into one dist/main.js (tsup), where
+// the fixture directories of packages/amazon-* (read from disk, relative to their source file) do not exist - and the staging
+// preview runs that bundle in replay mode (D30). Shapes follow packages/amazon-{ads,sp}/fixtures (themselves shaped from
+// Amazon's models: profiles-3-0 `Profile`, sellers@v1 `MarketplaceParticipation`).
+const EMBEDDED_READ_FIXTURES: Fixture[] = [
+  {
+    name: "listProfiles (embedded)",
+    match: { method: "GET", path: "/v2/profiles" },
+    response: {
+      status: 200,
+      json: [
+        {
+          profileId: 1234567890,
+          countryCode: "US",
+          currencyCode: "USD",
+          dailyBudget: 0,
+          timezone: "America/Los_Angeles",
+          accountInfo: {
+            marketplaceStringId: "ATVPDKIKX0DER",
+            id: "ENTITY1ABC",
+            type: "seller",
+            name: "Fixture Seller",
+            validPaymentMethod: true,
+          },
+        },
+      ],
+    },
+  },
+  {
+    name: "sellers.getMarketplaceParticipations (embedded)",
+    match: { method: "GET", path: "/sellers/v1/marketplaceParticipations" },
+    response: {
+      status: 200,
+      headers: { "x-amzn-RequestId": "fixture-req-1" },
+      json: {
+        payload: [
+          {
+            marketplace: {
+              id: "ATVPDKIKX0DER",
+              countryCode: "US",
+              name: "Amazon.com",
+              defaultCurrencyCode: "USD",
+              defaultLanguageCode: "en_US",
+              domainName: "www.amazon.com",
+            },
+            participation: { isParticipating: true, hasSuspendedListings: false },
+          },
+          {
+            marketplace: {
+              id: "A2EUQ1WTGCTBG2",
+              countryCode: "CA",
+              name: "Amazon.ca",
+              defaultCurrencyCode: "CAD",
+              defaultLanguageCode: "en_CA",
+              domainName: "www.amazon.ca",
+            },
+            participation: { isParticipating: true, hasSuspendedListings: false },
+          },
+        ],
+      },
+    },
+  },
+];
+
+/** Fixtures from the packages' directories when they exist on disk (dev, tests); nothing when bundled. */
+function diskFixtures(load: () => Fixture[]): Fixture[] {
+  try {
+    return load();
+  } catch {
+    return [];
+  }
+}
+
 export const MOCK_AUTH_CODE = "mock-authorization-code";
 export const MOCK_ADS_REFRESH_TOKEN = "Atzr|mock-ads-refresh-token-not-real";
 
@@ -104,7 +177,12 @@ export function composeAmazon(opts: {
     opts.transport ??
     (mode === "replay"
       ? createReplayTransport({
-          fixtures: [...connectionsReplayFixtures(), ...adsFixtures(), ...spFixtures()],
+          fixtures: [
+            ...connectionsReplayFixtures(),
+            ...EMBEDDED_READ_FIXTURES,
+            ...diskFixtures(adsFixtures),
+            ...diskFixtures(spFixtures),
+          ],
         })
       : createFetchTransport());
   const credentials = vaultCredentialSource({ db: opts.db, keys, app, audit: opts.audit });

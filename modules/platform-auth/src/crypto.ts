@@ -1,21 +1,24 @@
 import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
-import { hash, verify } from "@node-rs/argon2";
+import { argon2id, argon2Verify } from "hash-wasm";
 
 // Password hashing and opaque tokens (ADR-0004 decision 1): argon2id with the OWASP minimum parameters
 // (19 MiB, t=2, p=1); sessions, setup tokens and invitation tokens are 32 random bytes shown once and stored as SHA-256.
+// hash-wasm (WebAssembly, no native add-on) so that apps/api still bundles into one self-contained dist/main.js.
 
-const ARGON2 = {
-  algorithm: 2 /* Algorithm.Argon2id (const enum) */,
-  memoryCost: 19456,
-  timeCost: 2,
-  parallelism: 1,
-} as const;
-
-export const hashPassword = (password: string): Promise<string> => hash(password, ARGON2);
+export const hashPassword = (password: string): Promise<string> =>
+  argon2id({
+    password,
+    salt: randomBytes(16),
+    parallelism: 1,
+    iterations: 2,
+    memorySize: 19456, // KiB
+    hashLength: 32,
+    outputType: "encoded", // $argon2id$v=19$m=19456,t=2,p=1$<salt>$<hash>
+  });
 
 export async function verifyPassword(stored: string, password: string): Promise<boolean> {
   try {
-    return await verify(stored, password);
+    return await argon2Verify({ password, hash: stored });
   } catch {
     return false;
   }
