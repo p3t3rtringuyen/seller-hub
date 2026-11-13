@@ -49,7 +49,7 @@ export class S3ObjectStore implements ObjectStore {
     contentType?: string,
   ): Promise<Response> {
     const url = new URL(
-      `${this.o.endpoint.replace(/\/$/, "")}/${this.o.bucket}/${key.split("/").map(encodeURIComponent).join("/")}`,
+      `${this.o.endpoint.replace(/\/$/, "")}/${this.o.bucket}${key ? `/${key.split("/").map(encodeURIComponent).join("/")}` : ""}`,
     );
     const amzDate = new Date().toISOString().replace(/[:-]|\.\d{3}/g, "");
     const date = amzDate.slice(0, 8);
@@ -88,6 +88,12 @@ export class S3ObjectStore implements ObjectStore {
       headers: sendHeaders,
       ...(body ? { body: body as never } : {}),
     });
+  }
+
+  /** Creates the bucket when it does not exist (dev MinIO starts empty). Safe to call at every start. */
+  async ensureBucket(): Promise<void> {
+    const res = await this.request("PUT", "");
+    if (!res.ok && res.status !== 409) throw new Error(`creating the bucket failed with ${res.status}`);
   }
 
   async put(key: string, body: Uint8Array, contentType?: string): Promise<void> {

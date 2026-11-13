@@ -2,6 +2,7 @@ import { loadConfig, loadEnvFile } from "@seller-hub/config";
 import { createLogger } from "@seller-hub/core";
 import { Redis } from "ioredis";
 import { commands, jobs, syncs } from "./registry.generated";
+import { startIngest } from "./ingest";
 import { startWorkers } from "./runtime";
 
 loadEnvFile();
@@ -11,6 +12,12 @@ const logger = createLogger({ name: "worker", level: config.env.SH_LOG_LEVEL });
 // BullMQ requires maxRetriesPerRequest: null on its connections.
 const connection = new Redis(config.redisUrl, { maxRetriesPerRequest: null });
 const running = await startWorkers({ connection, logger, jobs: jobs.map((j) => j.value) });
+const ingest = await startIngest({
+  config,
+  logger,
+  connection,
+  definitions: syncs.map((s) => s.value),
+});
 logger.info(
   {
     queues: [...running.queues.keys()],
@@ -27,6 +34,7 @@ async function shutdown(signal: string): Promise<void> {
   logger.info({ signal }, "shutting down: finishing active jobs");
   try {
     await running.close();
+    await ingest.close();
     connection.disconnect();
   } finally {
     process.exit(0);

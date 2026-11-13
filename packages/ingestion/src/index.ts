@@ -9,6 +9,7 @@ export * from "./parsers";
 export * from "./scheduler";
 export * from "./types";
 export {
+  accountsWithPendingInbox,
   replayInbox,
   listRuns,
   listSyncStates,
