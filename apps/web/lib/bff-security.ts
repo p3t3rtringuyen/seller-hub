@@ -81,11 +81,18 @@ export function csrfFailure(input: {
   cookies: Map<string, string>;
   publicUrl: string;
   names: CookieNames;
+  /**
+   * Origin the request itself was served from. Accepted in addition to `publicUrl` ONLY when cookies are not Secure (plain-http
+   * local development, where `localhost` and `127.0.0.1` are both reachable). Behind https only the configured public URL counts.
+   */
+  requestOrigin?: string;
 }): CsrfFailure | null {
   if (SAFE_METHODS.has(input.method.toUpperCase())) return null;
   const origin = input.headers.get("origin");
   const expected = new URL(input.publicUrl).origin;
-  if (origin !== null && origin !== expected) return "origin_mismatch";
+  const accepted = new Set([expected]);
+  if (!input.names.secure && input.requestOrigin) accepted.add(input.requestOrigin);
+  if (origin !== null && !accepted.has(origin)) return "origin_mismatch";
   if (origin === null) {
     const site = input.headers.get("sec-fetch-site");
     if (site !== null && site !== "same-origin" && site !== "none") return "cross_site";

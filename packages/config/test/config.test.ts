@@ -30,7 +30,34 @@ describe("loadConfig", () => {
     const dev = { ...required, SH_PG_OWNER_PASSWORD: "sh_owner_dev_only", NODE_ENV: "production" };
     expect(() => loadConfig(dev)).toThrow(/SH_PG_OWNER_PASSWORD/);
     expect(loadConfig({ ...dev, NODE_ENV: "development" }).env.NODE_ENV).toBe("development");
-    expect(loadConfig({ ...required, NODE_ENV: "production" }).env.NODE_ENV).toBe("production");
+    const prod = {
+      ...required,
+      NODE_ENV: "production",
+      SH_WEB_PUBLIC_URL: "https://app.example.test",
+      SH_BFF_SECRET: "x".repeat(32),
+    };
+    expect(loadConfig(prod).env.NODE_ENV).toBe("production");
+  });
+
+  it("production needs an https public URL and a BFF secret (review m4, m5)", () => {
+    const prod = { ...required, NODE_ENV: "production" };
+    expect(() => loadConfig(prod)).toThrow(/SH_WEB_PUBLIC_URL.*SH_BFF_SECRET/);
+    expect(() =>
+      loadConfig({
+        ...prod,
+        SH_WEB_PUBLIC_URL: "http://app.example.test",
+        SH_BFF_SECRET: "x".repeat(32),
+      }),
+    ).toThrow(/https/);
+    expect(() =>
+      loadConfig({
+        ...prod,
+        SH_WEB_PUBLIC_URL: "https://app.example.test",
+        SH_BFF_SECRET: "short",
+      }),
+    ).toThrow(/SH_BFF_SECRET/);
+    // development is unaffected
+    expect(loadConfig({ ...required, NODE_ENV: "development" }).env.NODE_ENV).toBe("development");
   });
 });
 

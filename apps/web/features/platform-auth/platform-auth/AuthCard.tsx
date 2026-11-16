@@ -15,7 +15,7 @@ export function AuthCard({
   children?: ReactNode;
 }) {
   return (
-    <Box sx={{ minHeight: "100vh", display: "grid", placeItems: "center", p: 2 }}>
+    <Box component="main" sx={{ minHeight: "100vh", display: "grid", placeItems: "center", p: 2 }}>
       <Paper variant="outlined" sx={{ width: "100%", maxWidth: 440, p: 4 }}>
         <Typography variant="overline" color="text.secondary">
           seller-hub

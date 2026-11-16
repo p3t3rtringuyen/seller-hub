@@ -24,11 +24,18 @@ function apiBase(): string {
   return process.env.SH_API_URL || `http://127.0.0.1:${resolvePorts(process.env).api}`;
 }
 
-function problem(status: number, code: string, title: string, traceId: string): Response {
+function problem(
+  status: number,
+  code: string,
+  title: string,
+  traceId: string,
+  detail?: string,
+): Response {
   return Response.json(
     {
       type: `https://seller-hub.dev/problems/${code.replace(/_/g, "-")}`,
       title,
+      ...(detail ? { detail } : {}),
       status,
       code,
       traceId,
@@ -81,8 +88,18 @@ export async function forward(
     cookies: jar,
     publicUrl: publicUrl(),
     names,
+    requestOrigin: new URL(request.url).origin,
   });
-  if (failure) return problem(403, "csrf_failed", "Request blocked (CSRF check)", traceId);
+  if (failure)
+    return problem(
+      403,
+      "csrf_failed",
+      "Request blocked (CSRF check)",
+      traceId,
+      failure === "origin_mismatch" || failure === "cross_site"
+        ? `Open the app at ${publicUrl()} (SH_WEB_PUBLIC_URL) so that the browser's origin matches.`
+        : "Reload the page and try again.",
+    );
 
   const target = bffTarget(path, apiBase(), new URL(request.url).search);
   if (!target) return problem(400, "bff_bad_path", "Bad request", traceId);
@@ -93,6 +110,8 @@ export async function forward(
   };
   const session = jar.get(names.session);
   if (session) headers.authorization = `Bearer ${session}`;
+  // The BFF vouches for the client headers below with a shared secret; the API ignores them without it (production).
+  if (process.env.SH_BFF_SECRET) headers["x-sh-bff-secret"] = process.env.SH_BFF_SECRET;
   const ip = clientIp(request.headers, process.env);
   if (ip) headers["x-sh-client-ip"] = ip;
   const ua = request.headers.get("user-agent");

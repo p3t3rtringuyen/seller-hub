@@ -98,6 +98,18 @@ describe("envKeyProvider fails closed", () => {
     expect(() => envKeyProvider({ SH_MASTER_KEY: "not base64 !!!" })).toThrow(VaultConfigError);
     expect(() => envKeyProvider({ SH_MASTER_KEYS: "nokid" })).toThrow(/kid:base64/);
   });
+  it("refuses the dev-only placeholder in production, as a single key or in a ring (review m6)", () => {
+    const dev = "ZGV2LW9ubHktbWFzdGVyLWtleS1zZWxsZXItaHViISE=";
+    expect(() => envKeyProvider({ NODE_ENV: "production", SH_MASTER_KEY: dev })).toThrow(
+      /dev-only/,
+    );
+    expect(() => envKeyProvider({ NODE_ENV: "production", SH_MASTER_KEYS: `k1:${dev}` })).toThrow(
+      /dev-only/,
+    );
+    expect(envKeyProvider({ NODE_ENV: "development", SH_MASTER_KEYS: `k1:${dev}` }).activeKid).toBe(
+      "k1",
+    );
+  });
   it("reads a single key, a key ring and the active kid", async () => {
     expect(envKeyProvider({ SH_MASTER_KEY: b64() }).activeKid).toBe("default");
     const ring = envKeyProvider({ SH_MASTER_KEYS: `a:${b64()},b:${b64()}` });

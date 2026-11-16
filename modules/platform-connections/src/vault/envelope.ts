@@ -1,3 +1,4 @@
+import { DEV_ONLY_VALUES } from "@seller-hub/config";
 import { createCipheriv, createDecipheriv, hkdfSync, randomBytes } from "node:crypto";
 
 // Credential vault, envelope encryption (ADR-0005). Per credential: a fresh 32-byte data key (DEK) encrypts the secret
@@ -119,6 +120,14 @@ export function envKeyProvider(env: Record<string, string | undefined> = process
     throw new VaultConfigError(
       "SH_MASTER_KEY (or SH_MASTER_KEYS) is required: the credential vault cannot start without a key",
     );
+  }
+  if (env.NODE_ENV === "production") {
+    // The dev placeholder of .env.example must never protect real credentials, whichever variable carries it (review m6).
+    for (const [kid, key] of ring)
+      if (DEV_ONLY_VALUES.has(key.toString("base64")))
+        throw new VaultConfigError(
+          `master key "${kid}" is the dev-only placeholder; generate a real one for production`,
+        );
   }
   const activeKid = env.SH_MASTER_KEY_ACTIVE?.trim() || [...ring.keys()][0]!;
   if (!ring.has(activeKid))

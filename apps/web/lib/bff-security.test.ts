@@ -72,6 +72,31 @@ describe("CSRF (origin + double submit)", () => {
       }),
     ).toBe("origin_mismatch");
   });
+  it("in plain-http dev the origin the page was served from is accepted too (localhost vs 127.0.0.1); behind https it is not", () => {
+    const dev = cookieNames("http://127.0.0.1:3100");
+    const args = {
+      method: "POST",
+      publicUrl: "http://127.0.0.1:3100",
+      names: dev,
+      cookies: new Map([[dev.csrf, "tok123"]]),
+      requestOrigin: "http://localhost:3100",
+    };
+    const h = headers({ origin: "http://localhost:3100", "x-csrf-token": "tok123" });
+    expect(csrfFailure({ ...args, headers: h })).toBeNull();
+    expect(
+      csrfFailure({
+        ...args,
+        headers: headers({ origin: "http://evil.example", "x-csrf-token": "tok123" }),
+      }),
+    ).toBe("origin_mismatch");
+    const prod = { ...base, requestOrigin: "https://other.example.test" };
+    expect(
+      csrfFailure({
+        ...prod,
+        headers: headers({ origin: "https://other.example.test", "x-csrf-token": "tok123" }),
+      }),
+    ).toBe("origin_mismatch");
+  });
   it("rejects a cross-site browser request that sent no Origin", () => {
     expect(
       csrfFailure({

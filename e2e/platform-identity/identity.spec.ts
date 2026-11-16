@@ -36,6 +36,10 @@ test("sign in -> tenant -> connect SP-API and Ads (mock Amazon) -> pick a profil
 }) => {
   const run = Date.now();
   const email = `owner-${run}@example.test`;
+  const hydration: string[] = [];
+  page.on("console", (m) => {
+    if (/hydrat/i.test(m.text())) hydration.push(m.text().slice(0, 200));
+  });
 
   // --- first owner via the setup token ------------------------------------------------------------------------------
   await page.goto("/setup");
@@ -91,6 +95,8 @@ test("sign in -> tenant -> connect SP-API and Ads (mock Amazon) -> pick a profil
   await expect(page.getByRole("navigation", { name: "Main navigation" })).toContainText(
     "Connections",
   );
+
+  expect(hydration, "no hydration mismatch (QA FAIL-3)").toEqual([]);
 
   // --- sign out, then the app is closed to an anonymous browser -------------------------------------------------------
   await page.getByTestId("signout").click();
@@ -161,6 +167,23 @@ test("an invited viewer can read connections but not manage them (roles are enfo
   expect(res.status).toBe(403);
   expect(res.body.code).toBe("forbidden");
   await ctx.close();
+});
+
+test("auth screens have a main landmark; the app also works on localhost, not only on the configured address (QA FAIL-1, FAIL-2)", async ({
+  page,
+  baseURL,
+}) => {
+  const localhost = baseURL!.replace("127.0.0.1", "localhost");
+  for (const path of ["/sign-in", "/setup", "/accept-invitation"]) {
+    await page.goto(localhost + path);
+    await expect(page.getByRole("main")).toHaveCount(1, NAV);
+  }
+  // a write from a page served on localhost passes the CSRF check (plain-http dev): wrong password => 401, not 403
+  await page.goto(localhost + "/sign-in");
+  await page.getByTestId("signin-email").fill("nobody@example.test");
+  await page.getByTestId("signin-password").fill("wrong wrong wrong");
+  await page.getByTestId("signin-submit").click();
+  await expect(page.getByTestId("form-error")).toContainText("incorrect", NAV);
 });
 
 test("CSRF: a write needs the Origin of this app and the double-submit token", async ({

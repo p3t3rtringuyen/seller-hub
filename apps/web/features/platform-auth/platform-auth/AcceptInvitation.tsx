@@ -50,8 +50,8 @@ export function AcceptInvitation() {
     setError(null);
     try {
       if (preview.accountExists) {
-        await post("/v1/auth/sign-in", { email: preview.email, password });
-        await post("/v1/auth/invitations/accept", { token });
+        // one call: checks the password and joins, also for an account that belongs to no tenant right now
+        await post("/v1/auth/invitations/accept-with-password", { token, password });
       } else {
         await post("/v1/auth/invitations/register", {
           token,
