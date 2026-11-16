@@ -157,3 +157,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-13 — User: staging right after sign-in exists (D66; PLAN gains P3-STAGING). User has no server yet;
   sent a step-by-step guide. Started P3-IDENTITY and P3-INGEST in worktrees (briefs override the prompts'
   outdated OWNED_PATHS with the PLAN rows).
+- 2026-11-16 — P3-IDENTITY DONE (branch claude/p3-identity-8a0f9d, 11 commits, gate green, 6 e2e) and P3-INGEST
+  DONE (claude/p3-ingest-5d7cbd, 5 commits, gate green; sync-health route, vault source, Data Kiosk client left
+  out). Only overlap: pnpm-lock.yaml. User: `Tiếp, review`. Started P5-REVIEW for both (opus, read-only) and
+  P5-QA for P3-IDENTITY (haiku, worktree from its branch, sellerhub_qaidentity, offset 300).
