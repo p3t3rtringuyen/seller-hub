@@ -218,9 +218,16 @@ export function createEngine(deps: EngineDeps): Engine {
       return { done: true, state: "cancelled" };
     }
 
+    // One chain per run (R1): the run stores the step it expects next; a job from an older step is a leftover of a
+    // chain that was re-enqueued while the original was still queued, and it is dropped.
+    const expected =
+      (state.cursor.runs as Record<string, { nextStep?: number }> | undefined)?.[run.id]
+        ?.nextStep ?? 0;
+    if (payload.step < expected) return { done: true, state: "duplicate" };
+
     // One chain per run (B1): a second step chain of the same run (a stale re-enqueue racing a slow step) is dropped,
     // not delayed. The lease is longer than any step; it is released as soon as the step returns.
-    const runLease = await deps.amazon.gate.tryAcquire(`ingest:run:${run.id}`, 1, 30 * 60_000);
+    const runLease = await deps.amazon.gate.tryAcquire(`ingest:run:${run.id}`, 1, 60 * 60_000);
     if (!runLease) return { done: true, state: "duplicate" };
     try {
       // Per-seller fairness (decision 8): at most N runs of this account and family at once.
@@ -246,6 +253,7 @@ export function createEngine(deps: EngineDeps): Engine {
             state.id,
             run.id,
             new Date(now().getTime() + (result.delayMs ?? 0)),
+            payload.step + 1,
           ),
         );
       return result;

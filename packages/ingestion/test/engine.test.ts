@@ -263,7 +263,7 @@ describe.skipIf(!t)("ingestion engine (real Postgres)", () => {
 
       // a brand-new engine (new process) picks the run up again
       const h2 = await makeEngine([def]);
-      await h2.engine.processRun(first.payload);
+      await h2.engine.processRun({ ...first.payload, step: 1 });
       expect(calls).toEqual([undefined, "p2", "p3", "p3"]); // pages 1-2 were not fetched again
       expect(upserted).toEqual(["a", "b", "c", "d"]);
       const run = (await repo.listRuns(A, t!.app.db)).find((r) => r.id === runId)!;
@@ -417,7 +417,7 @@ describe.skipIf(!t)("ingestion engine (real Postgres)", () => {
       expect(res.done).toBe(false);
       expect(res.delayMs).toBeGreaterThan(0);
       await lease!.release();
-      const res2 = await h.engine.processRun(job.payload);
+      const res2 = await h.engine.processRun({ ...job.payload, step: 1 });
       expect(res2.done).toBe(true);
       expect((await repo.listRuns(A, t!.app.db)).find((r) => r.id === runId)?.state).toBe("done");
     });

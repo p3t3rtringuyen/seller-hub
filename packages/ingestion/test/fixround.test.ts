@@ -27,6 +27,13 @@ import {
 const t = await tryCreateTestDb();
 const A: SellerScope = { tenantId: FIXTURE.tenantId, sellerAccountId: FIXTURE.sellerAccountId };
 const PROFILE = "1234567890";
+beforeAll(async () => {
+  if (t) await seedFixtures(t);
+});
+afterAll(async () => {
+  await t?.drop();
+});
+
 const target = (extra: Partial<SyncTarget> = {}): SyncTarget => ({
   tenantId: A.tenantId,
   sellerAccountId: A.sellerAccountId as string,
@@ -90,13 +97,6 @@ function routeReport(tr: MockTransport, statuses: Record<string, unknown>[], tsv
 }
 
 describe.skipIf(!t)("P3-INGEST fix round 1", () => {
-  beforeAll(async () => {
-    await seedFixtures(t!);
-  });
-  afterAll(async () => {
-    await t?.drop();
-  });
-
   describe("B1: one step chain per run", () => {
     it("two concurrent steps of the same run create ONE Amazon report; the second chain is dropped", async () => {
       const h = await engineWith([spDef("b1.concurrent")]);
@@ -128,7 +128,7 @@ describe.skipIf(!t)("P3-INGEST fix round 1", () => {
       const chainOf = () => h.queue.history.filter((q) => q.payload.runId === runId).length;
       const first = h.queue.pending.shift()!;
       await h.engine.processRun(first.payload); // creates the report
-      await h.engine.processRun(first.payload); // first poll: not ready, waits 25 min
+      await h.engine.processRun({ ...first.payload, step: 1 }); // first poll: not ready, waits 25 min
       const before = chainOf();
       for (let minute = 1; minute <= 24; minute++) {
         clock += 60_000;
@@ -155,7 +155,14 @@ describe.skipIf(!t)("P3-INGEST fix round 1", () => {
       });
       expect(b.runId).toBe(a.runId);
       expect(b.created).toBe(false);
-      expect(h.queue.history).toHaveLength(1);
+      // the second press re-adds the not-yet-started run at interactive priority (a twin job of step 0) ...
+      expect(new Set(h.queue.history.map((q) => q.payload.runId)).size).toBe(1);
+      // ... and the step guard makes the pair one chain: only one of them creates the report
+      routeReport(h.amazon.transport, [{ processingStatus: "DONE", reportDocumentId: "D-1" }]);
+      await h.drain();
+      expect(
+        h.amazon.transport.callsTo({ method: "POST", path: "/reports/2021-06-30/reports" }),
+      ).toHaveLength(1);
     });
   });
 
@@ -378,7 +385,6 @@ describe.skipIf(!t)("P3-INGEST fix round 1", () => {
       const queue = new InlineQueue();
       const requester = createRunRequester({
         db: t!.app.db,
-        system: t!.owner.db,
         directory: staticSellerDirectory([target()]),
         definitions: [def as IngestDefinition],
         enqueuer: queue,
@@ -386,8 +392,8 @@ describe.skipIf(!t)("P3-INGEST fix round 1", () => {
       const r1 = await requester.requestRefresh(A, { syncKey: "m6.sync" });
       const r2 = await requester.requestRefresh(A, { syncKey: "m6.sync" });
       expect([r1.created, r2.created]).toEqual([true, false]);
-      expect(queue.history).toHaveLength(1);
-      expect(queue.history[0]?.priority).toBe("interactive");
+      expect(queue.history.map((q) => q.priority)).toEqual(["interactive", "interactive"]); // run + twin
+      expect(new Set(queue.history.map((q) => q.payload.runId)).size).toBe(1);
       const res = await requester.backfill(A, {
         syncKey: "m6.sync",
         fromDate: addDays(todayIn("UTC"), -25),
@@ -455,5 +461,100 @@ describe.skipIf(!t)("P3-INGEST fix round 1", () => {
         "done",
       );
     });
+  });
+});
+
+describe.skipIf(!t)("fix round 2: R1 and the new minors", () => {
+  it("R1: a backlog of never-started runs and a tick per minute leaves ONE queued job per run", async () => {
+    let clock = Date.now();
+    const calls: string[] = [];
+    const def = definePagedPull<{ id: string }>({
+      key: "r1.backlog",
+      family: "paged-pull",
+      window: { lookbackDays: 1, backfillDays: 60, maxRangeDays: 1 },
+      fetchPage: async (ctx) => {
+        if (ctx.priority === "backfill") calls.push(ctx.runId);
+        return { rows: [] };
+      },
+      upsert: async () => {},
+    });
+    const h = await engineWith([def], { now: () => new Date(clock) });
+    const to = todayIn("UTC");
+    const res = await h.scheduler.backfill(A, {
+      syncKey: "r1.backlog",
+      fromDate: addDays(to, -29),
+      toDate: to,
+    });
+    expect(res.windows).toBe(30);
+    const mine = new Set(
+      (await repo.listRuns(A, t!.app.db, { syncKey: "r1.backlog", limit: 200 }))
+        .filter((r) => r.priority === "backfill")
+        .map((r) => r.id),
+    );
+    expect(mine.size).toBe(30);
+    expect(h.queue.pending).toHaveLength(30);
+    // the queue is slow: nothing is drained for 30 simulated minutes, a tick every minute
+    for (let minute = 1; minute <= 30; minute++) {
+      clock += 60_000;
+      await h.scheduler.tick();
+    }
+    const perRun = new Map<string, number>();
+    for (const q of h.queue.pending.filter((x) => mine.has(x.payload.runId)))
+      perRun.set(q.payload.runId, (perRun.get(q.payload.runId) ?? 0) + 1);
+    expect(perRun.size).toBe(30);
+    expect(Math.max(...perRun.values())).toBe(1);
+    expect(h.queue.history.filter((q) => mine.has(q.payload.runId))).toHaveLength(30); // the sweep never added a second job
+    // draining runs each run once, in one sequence
+    await h.drain();
+    expect(calls).toHaveLength(30);
+    expect(new Set(calls).size).toBe(30);
+  });
+
+  it("R1: a job of an older step is dropped once the run expects a later one", async () => {
+    const def = defineSpReport<Record<string, string>>({
+      key: "r1.stepguard",
+      family: "spapi-report",
+      scopeKind: "marketplace",
+      schedule: { every: "6h" },
+      report: (ctx) => ({
+        reportType: "GET_MERCHANT_LISTINGS_ALL_DATA",
+        marketplaceIds: [ctx.scopeKey],
+      }),
+      parse: (text) => parseTsv(text),
+      upsert: async () => {},
+    });
+    const h = await engineWith([def]);
+    routeReport(h.amazon.transport, [{ processingStatus: "DONE", reportDocumentId: "D-1" }]);
+    await h.scheduler.requestRefresh(A, { syncKey: "r1.stepguard", scopeKey: "ATVPDKIKX0DER" });
+    const job = h.queue.pending.shift()!;
+    expect((await h.engine.processRun(job.payload)).done).toBe(false); // step 0 creates the report
+    // a leftover job of step 0 (a re-enqueued twin) arrives after the chain moved on to step 1
+    expect((await h.engine.processRun(job.payload)).state).toBe("duplicate");
+    expect(
+      h.amazon.transport.callsTo({ method: "POST", path: "/reports/2021-06-30/reports" }),
+    ).toHaveLength(1);
+    expect((await h.engine.processRun({ ...job.payload, step: 1 })).state).not.toBe("duplicate");
+  });
+
+  it("N2: a refresh joins a run that has not started, but starts a new run when the open one is already past its fetch", async () => {
+    const def = definePagedPull<{ id: string }>({
+      key: "n2.refresh",
+      family: "paged-pull",
+      schedule: { every: "6h" },
+      window: { lookbackDays: 1, maxRangeDays: 5 },
+      fetchPage: async () => ({ rows: [] }),
+      upsert: async () => {},
+    });
+    const h = await engineWith([def]);
+    const a = await h.scheduler.requestRefresh(A, { syncKey: "n2.refresh" });
+    const joined = await h.scheduler.requestRefresh(A, { syncKey: "n2.refresh" });
+    expect(joined).toEqual({ runId: a.runId, created: false });
+    expect(h.queue.history.map((q) => q.priority)).toEqual(["interactive", "interactive"]);
+    await sql`update ingest.job_runs set state = 'upserting', started_at = now() where id = ${a.runId}`.execute(
+      t!.owner.db,
+    );
+    const later = await h.scheduler.requestRefresh(A, { syncKey: "n2.refresh" });
+    expect(later.created).toBe(true);
+    expect(later.runId).not.toBe(a.runId);
   });
 });

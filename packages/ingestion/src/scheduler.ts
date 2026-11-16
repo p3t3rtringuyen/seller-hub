@@ -41,7 +41,6 @@ export function createScheduler(
     options.requester ??
     createRunRequester({
       db: deps.db,
-      system: deps.system,
       directory: deps.directory,
       definitions: deps.definitions,
       enqueuer: deps.enqueuer,
@@ -134,11 +133,20 @@ export function createScheduler(
       }
       // A run whose chain died is overdue past its own next step; put it back (idempotent: it resumes from its state,
       // and a duplicate chain is dropped by the per-run lease in processRun).
-      for (const run of await repo.findStaleRuns(deps.system, now, STALE_GRACE_MS, 100)) {
-        await deps.enqueuer.enqueue(payloadFor(run, Math.floor(now.getTime() / 1000)), {
+      // The job id is the run's NEXT step: if the original job is still queued or delayed, BullMQ ignores the add;
+      // if it was lost, it is re-created. Either way one chain (R1). The next-step time is pushed out so the next
+      // tick leaves the run alone.
+      for (const { run, nextStep } of await repo.findStaleRuns(
+        deps.system,
+        now,
+        STALE_GRACE_MS,
+        100,
+      )) {
+        await deps.enqueuer.enqueue(payloadFor(run, nextStep), {
           priority: run.priority,
-          jobId: jobIdFor(run.id, Math.floor(now.getTime() / 1000)),
+          jobId: jobIdFor(run.id, nextStep),
         });
+        await repo.bumpNextStepAt(deps.system, run, new Date(now.getTime() + STALE_GRACE_MS));
         result.resumed++;
       }
       return result;

@@ -154,3 +154,23 @@ imported from the IDENTITY branch.
 ### Gate (fix round 1)
 
 `pnpm gate` with the stack up (`sellerhub_p3ingest`, offset 200, `SH_REQUIRE_DB=1`): **exit 0**, 16/16 tasks for lint, typecheck, test and build. Ingestion 51 tests (5 files, 14 new in `fixround.test.ts`), worker 10, web 22; DB, Redis and MinIO tests ran, none skipped. Stack brought down afterwards.
+
+## Fix round 2 (re-review 1: R1 and five minors)
+
+| Item | What changed | Test |
+|---|---|---|
+| **R1** | The heartbeat is now `runs[runId] = { nextStep, nextStepAt }`, written where a step hands the run back (`nextStep = payload.step + 1`). `processRun` drops a job whose `step` is below the stored `nextStep` (`state: "duplicate"`). The stale sweep re-enqueues with `jobIdFor(run.id, nextStep)` (step 0 for a run that never started), so BullMQ ignores the add while the original job is still queued or delayed and re-creates it only when it was lost; it also pushes `nextStepAt` out by the grace so the next tick leaves the run alone. The drain helper and the worker continue a chain with `step + 1`. | `fixround.test.ts`: 30 never-started backfill runs, queue not drained for 30 simulated minutes with a tick per minute: at most one queued job per run, 30 jobs ever added, then each run executes once. Checked to FAIL with the old sweep (`expected 2 to be 1`). Also: an older-step job is dropped after the run moved on |
+| N1 | `requester` no longer takes the owner connection: missing sync states are inserted under `withScope` on the app connection (`ensureSyncStateScoped`), so the API process needs no `sh_owner` | M6 test builds the requester without `system` |
+| N2 | a refresh joins only a run that has not started (`requested`, no `startedAt`) and re-adds it at `interactive` priority (a twin job of step 0; the step guard makes the pair one chain). If the open run is already past its fetch, a new run is created | "N2" test |
+| N3 | per-run lease TTL 30 to 60 min (longer than the per-seller gate, 45 min) | not covered by a test |
+| N4 | `SH_JOB_RUN_RETENTION_DAYS` in `packages/config/src/env.ts` and `.env.example`: **orchestrator** (outside this task's paths). The worker keeps reading it from `process.env` with default 90 | |
+| N5 | `loadConfig` moved inside the `try` in `minio.test.ts`: without an env file the suite skips instead of failing at import | |
+
+Behaviour change worth knowing: a delayed re-enqueue is a NEW step number; code or tests that call `processRun` again
+with the same payload after a `done: false` result are dropped as duplicates. Use `{ ...payload, step: payload.step + 1 }`.
+
+### Gate (fix round 2)
+
+See the result line at the end of this section.
+
+`pnpm gate` with the stack up (`sellerhub_p3ingest`, offset 200, `SH_REQUIRE_DB=1`): **exit 0**, 16/16 tasks per stage. Ingestion 54 tests (5 files), worker 10, web 22; nothing skipped. Stack brought down.

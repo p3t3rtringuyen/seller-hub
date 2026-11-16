@@ -57,8 +57,6 @@ export function scopesFor(def: PullDefinition, target: SyncTarget): string[] {
 export interface RunRequesterOptions {
   /** `sh_app`. */
   db: Database;
-  /** `sh_owner`: only to create missing sync-state rows. */
-  system: Database;
   directory: SellerDirectory;
   definitions: readonly IngestDefinition[];
   enqueuer: RunEnqueuer;
@@ -111,15 +109,11 @@ export function createRunRequester(o: RunRequesterOptions) {
     if (existing) return existing;
     if (!scopesFor(def, target).includes(scopeKey))
       throw new Error(`${def.key} does not apply to this account/scope`);
-    await repo.ensureSyncStates(o.system, [
-      {
-        tenantId: scope.tenantId,
-        sellerAccountId: scope.sellerAccountId as string,
-        syncKey: def.key,
-        scopeKey,
-        nextRunAt: now(),
-      },
-    ]);
+    await repo.ensureSyncStateScoped(scope, o.db, {
+      syncKey: def.key,
+      scopeKey,
+      nextRunAt: now(),
+    });
     const created = await repo.findSyncState(scope, o.db, def.key, scopeKey);
     if (!created) throw new Error("sync state could not be created");
     return created;
@@ -142,8 +136,17 @@ export function createRunRequester(o: RunRequesterOptions) {
     const entityIds =
       r.entityIds?.length && def.refreshEntities ? [...r.entityIds].sort() : undefined;
     if (!entityIds) {
+      // Join only a run that has not started: a run already past its fetch would miss what changed since (D62 a).
+      // The queued job keeps its priority, so the same run is added again at interactive priority; the step guard
+      // drops whichever of the two jobs comes second.
       const open = await repo.findOpenSyncRun(scope, o.db, state.id);
-      if (open) return { runId: open.id, created: false };
+      if (open && open.state === "requested" && !open.startedAt) {
+        await o.enqueuer.enqueue(payloadFor(open, 0), {
+          priority: "interactive",
+          jobId: `${jobIdFor(open.id, 0)}-interactive`,
+        });
+        return { runId: open.id, created: false };
+      }
     }
     const tz = timeZoneFor(target, def, state.scopeKey);
     const window = entityIds

@@ -76,6 +76,8 @@ export interface RunScratch {
   complete?: boolean;
   /** Heartbeat: when the next step of this run is due (see findStaleRuns). */
   nextStepAt?: string;
+  /** Step number of the job that must run next (R1). */
+  nextStep?: number;
   /** Part keys landed in the object store, in order. */
   parts?: { key: string; sourceRef?: string }[];
 }
@@ -709,14 +711,16 @@ export async function findStaleRuns(
   now: Date,
   graceMs: number,
   limit: number,
-): Promise<RunRow[]> {
+): Promise<{ run: RunRow; nextStep: number }[]> {
   const cutoff = new Date(now.getTime() - graceMs);
-  const res = await sql<Row>`select jr.* from ingest.job_runs jr
+  const res = await sql<Row>`select jr.*,
+      coalesce((s.cursor #>> array['runs', jr.id::text, 'nextStep'])::int, 0) as next_step
+    from ingest.job_runs jr
     left join ingest.sync_states s on s.id = jr.sync_state_id
     where jr.state not in ('done', 'failed', 'cancelled')
       and coalesce((s.cursor #>> array['runs', jr.id::text, 'nextStepAt'])::timestamptz, jr.updated_at) < ${cutoff}
     order by jr.updated_at limit ${limit}`.execute(system);
-  return res.rows.map(mapRun);
+  return res.rows.map((r) => ({ run: mapRun(r), nextStep: Number(r.next_step) }));
 }
 
 /** Heartbeat: when the next step of the run is due. Written whenever a step hands the run back to the queue. */
@@ -725,13 +729,18 @@ export async function setNextStepAt(
   syncStateId: string,
   runId: string,
   at: Date,
+  /** The step number of the job that must run next; older jobs of the run are dropped. Omit to keep it. */
+  nextStep?: number,
 ): Promise<void> {
   await sql`
     update ingest.sync_states
        set cursor = jsonb_set(
-             jsonb_set(jsonb_set(cursor, '{runs}', coalesce(cursor->'runs', '{}'::jsonb), true),
-                       array['runs', ${runId}::text], coalesce(cursor #> array['runs', ${runId}::text], '{}'::jsonb), true),
-             array['runs', ${runId}::text, 'nextStepAt'], to_jsonb(${at.toISOString()}::text), true)
+             jsonb_set(
+               jsonb_set(jsonb_set(cursor, '{runs}', coalesce(cursor->'runs', '{}'::jsonb), true),
+                         array['runs', ${runId}::text], coalesce(cursor #> array['runs', ${runId}::text], '{}'::jsonb), true),
+               array['runs', ${runId}::text, 'nextStepAt'], to_jsonb(${at.toISOString()}::text), true),
+             array['runs', ${runId}::text, 'nextStep'],
+             to_jsonb(coalesce(${nextStep ?? null}::int, (cursor #>> array['runs', ${runId}::text, 'nextStep'])::int, 0)), true)
      where id = ${syncStateId}`.execute(trx);
 }
 
@@ -770,4 +779,26 @@ export async function purgeInbox(
 export async function finishAuxRun(trx: Trx, syncStateId: string, runId: string): Promise<void> {
   await sql`update ingest.sync_states set cursor = cursor #- array['runs', ${runId}::text]
     where id = ${syncStateId}`.execute(trx);
+}
+
+/** The sweep re-enqueued this run: push its next-step time out so the next tick does not do it again (R1). */
+export async function bumpNextStepAt(system: Database, run: RunRow, at: Date): Promise<void> {
+  if (!run.syncStateId) return;
+  const stateId = run.syncStateId;
+  await system.transaction().execute((trx) => setNextStepAt(trx, stateId, run.id, at));
+}
+
+/** Creates the sync-state row for one (sync, scope) under the caller's scope (RLS WITH CHECK applies): no owner role. */
+export async function ensureSyncStateScoped(
+  scope: SellerScope,
+  db: Database,
+  r: { syncKey: string; scopeKey: string; nextRunAt: Date | null },
+): Promise<void> {
+  const s = requireSellerScope(scope);
+  await withScope(db, s, async (trx) => {
+    await sql`insert into ingest.sync_states
+        (id, tenant_id, seller_account_id, sync_key, scope_key, status, next_run_at)
+      values (${uuidv7()}, ${s.tenantId}, ${s.sellerAccountId}, ${r.syncKey}, ${r.scopeKey}, 'idle', ${r.nextRunAt})
+      on conflict (seller_account_id, sync_key, scope_key) do nothing`.execute(trx);
+  });
 }

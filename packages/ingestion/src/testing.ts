@@ -106,10 +106,13 @@ export function createTestEngine(o: {
       steps++;
       if (!res.done) {
         delays.push(res.delayMs ?? 0);
-        await queue.enqueue(next.payload, {
-          priority: next.priority,
-          jobId: `${next.payload.runId}-r${steps}`,
-        });
+        await queue.enqueue(
+          { ...next.payload, step: next.payload.step + 1 }, // a delayed re-enqueue is the next step, as in the worker
+          {
+            priority: next.priority,
+            jobId: `${next.payload.runId}-r${steps}`,
+          },
+        );
       }
     }
     return { steps, delays };
