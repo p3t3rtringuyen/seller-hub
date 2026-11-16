@@ -226,3 +226,26 @@ error, and another tenant seeing nothing. DB tests use `tryCreateTestDb()`; with
 - **Sync-health route**: the BFF/API route and OpenAPI contract for `sync-health` and `sync/{key}/refresh`, the
   `sync.read` / `sync.refresh` permissions and the nav entry are outside this task's paths; the screen calls
   `/bff/v1/seller-accounts/{id}/sync-health` and shows its error state with Retry until they exist.
+
+## 8. Fix round 1 (P5 review): behaviours to know
+
+- **One step chain per run.** `processRun` takes a per-run lease (`ingest:run:<id>`); a second chain of the same run is
+  dropped (`state: "duplicate"`). Every time a step hands a run back it writes `nextStepAt` (in
+  `sync_states.cursor.runs[runId]`); the tick's stale sweep re-enqueues a run only when its own next step is 10 minutes
+  overdue, so a 30-minute report poll is never mistaken for a dead worker. A refresh, tick or backfill that finds the run
+  already open joins it and enqueues nothing.
+- **Dates are marketplace-local** (conventions §6). `ctx.timeZone` is the Ads profile's zone, else the marketplace's, else
+  the account's; `ctx.dates = { from, to }` are inclusive local dates and the scheduled window is computed from them
+  (`windows.ts`). Use `ctx.dates`, never `window.start.toISOString().slice(0, 10)`. `backfill` takes `fromDate` and
+  `toDate` local dates (CLI: `--from 2026-01-01 --to 2026-03-01`).
+- **Connections decide what exists.** Only an `active` connection gets sync states; `needs_reauth`, `revoked` and `error`
+  pause that API's syncs; `pending` or missing creates none (`SyncTarget.connected`).
+- **No data is a result, not an error.** An SP report that Amazon cancels (no data) and a Data Kiosk query that is DONE
+  without a document finish as successful runs with 0 rows. `FATAL` still fails.
+- **Raw landing is idempotent**: run-stable keys, and one transaction replaces the run's index rows.
+- **Ads export urls are never stored**; the run keeps the export id and asks for a fresh url at download.
+- **Enqueue-only requester**: `createRunRequester({ db, system, directory, definitions, enqueuer })` gives the API route
+  and the command executor `requestRefresh`, `backfill` and `getSyncHealth(scope)` without any Amazon client. The BullMQ
+  binding (`BullRunEnqueuer`, `RUN_QUEUES`) is `@seller-hub/ingestion/queue`. The worker's scheduler uses the same object.
+- **Deploying**: workers wait for the active step on SIGTERM. A report step (download, parse, upsert) can be long, so give
+  the worker container a generous `stop_grace_period`; whatever is cut off is recovered by the stale sweep.

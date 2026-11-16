@@ -16,7 +16,6 @@ import {
   accountsWithPendingInbox,
   createScheduler,
   PRIORITY_CLASSES,
-  PRIORITY_NUMBER,
   processInbox,
   S3ObjectStore,
   toIngestDefinitions,
@@ -28,11 +27,11 @@ import {
   type ObjectStore,
   type PriorityClass,
   type PushDefinition,
-  type RunEnqueuer,
   type RunPayload,
   type Scheduler,
   type SellerDirectory,
 } from "@seller-hub/ingestion";
+import { BullRunEnqueuer, RUN_QUEUES } from "@seller-hub/ingestion/queue";
 import { Queue, Worker } from "bullmq";
 import type { Redis } from "ioredis";
 import { assertJobPayload } from "./payload";
@@ -40,37 +39,6 @@ import { assertJobPayload } from "./payload";
 // Composition root of the ingestion engine inside the worker: builds the Amazon runtime, the engine and scheduler,
 // and (in `startIngest`) one BullMQ worker per priority queue plus the tick, inbox and maintenance schedules.
 // The engine itself lives in packages/ingestion; this file only binds it to BullMQ, Redis, Postgres and S3.
-
-export const RUN_QUEUES: Record<PriorityClass, string> = {
-  interactive: "ingest.interactive",
-  scheduled: "ingest.scheduled",
-  backfill: "ingest.backfill",
-};
-
-export class BullRunEnqueuer implements RunEnqueuer {
-  readonly queues: Record<PriorityClass, Queue>;
-  constructor(connection: Redis) {
-    this.queues = Object.fromEntries(
-      PRIORITY_CLASSES.map((p) => [p, new Queue(RUN_QUEUES[p], { connection })]),
-    ) as Record<PriorityClass, Queue>;
-  }
-  async enqueue(
-    payload: RunPayload,
-    options: { priority: PriorityClass; delayMs?: number; jobId: string },
-  ): Promise<void> {
-    await this.queues[options.priority].add("run", payload, {
-      jobId: options.jobId, // a repeated enqueue of the same step is a no-op (conventions §8)
-      priority: PRIORITY_NUMBER[options.priority],
-      ...(options.delayMs ? { delay: options.delayMs } : {}),
-      removeOnComplete: { age: 3_600 },
-      removeOnFail: { age: 86_400 },
-      attempts: 1, // retries are the engine's (state is in ingest.job_runs), not BullMQ's
-    });
-  }
-  async close(): Promise<void> {
-    await Promise.all(Object.values(this.queues).map((q) => q.close()));
-  }
-}
 
 /**
  * Credentials for Amazon calls. The vault (ADR-0005) belongs to P3-IDENTITY; until it exposes a `CredentialSource`
@@ -175,7 +143,12 @@ export async function createIngest(o: IngestOptions): Promise<Ingest> {
     objectStore,
     enqueuer,
     logger: o.logger,
-    config: { rawRetentionDays: o.config.env.SH_RAW_RETENTION_DAYS, ...o.engineConfig },
+    config: {
+      rawRetentionDays: o.config.env.SH_RAW_RETENTION_DAYS,
+      // D64 a: "changeable by env". Not in the typed config (packages/config is not this task's); read here.
+      jobRunRetentionDays: Number(process.env.SH_JOB_RUN_RETENTION_DAYS) || 90,
+      ...o.engineConfig,
+    },
   });
   const scheduler = createScheduler(engine);
   return {

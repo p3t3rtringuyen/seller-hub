@@ -57,15 +57,16 @@ const ingest = await createIngest({
 });
 try {
   if (cmd === "backfill") {
-    const from = new Date(need("from"));
-    const to = new Date(need("to"));
-    if (Number.isNaN(from.getTime()) || Number.isNaN(to.getTime()))
-      usage("--from/--to must be dates");
+    // Local dates of the profile/marketplace (conventions §6), inclusive.
+    const fromDate = need("from");
+    const toDate = need("to");
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(fromDate) || !/^\d{4}-\d{2}-\d{2}$/.test(toDate))
+      usage("--from/--to must be dates (YYYY-MM-DD, marketplace-local)");
     const scopeKey = one("scope");
     const res = await ingest.scheduler.backfill(scope, {
       syncKey: need("sync"),
-      from,
-      to,
+      fromDate,
+      toDate,
       ...(scopeKey ? { scopeKey } : {}),
     });
     out(`backfill: ${res.windows} window(s) queued (newest first, priority backfill)`);

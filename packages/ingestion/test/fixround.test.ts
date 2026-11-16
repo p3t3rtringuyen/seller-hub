@@ -1,6 +1,6 @@
 import { gzipSync } from "node:zlib";
 import { encodeText } from "@seller-hub/amazon-core";
-import { bytesResponse, jsonResponse } from "@seller-hub/amazon-core/testing";
+import { bytesResponse, jsonResponse, type MockTransport } from "@seller-hub/amazon-core/testing";
 import { addDays, todayIn, type SellerScope } from "@seller-hub/core";
 import { FIXTURE, seedFixtures, tryCreateTestDb } from "@seller-hub/testing";
 import { sql } from "kysely";
@@ -69,11 +69,7 @@ const spDef = (key: string, rows: unknown[] = []) =>
     upsert: async (_c, r) => void rows.push(...r),
   });
 
-function routeReport(
-  tr: import("@seller-hub/amazon-core/testing").MockTransport,
-  statuses: Record<string, unknown>[],
-  tsv = "a\tb\n1\t2\n",
-) {
+function routeReport(tr: MockTransport, statuses: Record<string, unknown>[], tsv = "a\tb\n1\t2\n") {
   tr.route(
     { method: "POST", path: "/reports/2021-06-30/reports" },
     jsonResponse(202, { reportId: "R-1" }),

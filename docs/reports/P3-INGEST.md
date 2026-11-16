@@ -112,3 +112,46 @@ D11 (nothing PII, the clients refuse restricted operations); D30 open (mock tran
 - **Large reports** are held in memory (documents are decompressed with a 512 MiB cap by the client). Stream parsing is a
   later optimisation; measure with the 100k-SKU report in S06.
 - **Stack**: brought down at the end of the task (`pnpm stack:down`); `ads-api-cache-1` was never touched.
+
+## Fix round 1 (P5-REVIEW: MERGE-AFTER-FIXES)
+
+Commits: **FIX** = `fix(ingestion): one step chain per run, idempotent landing, local windows, …` (engine, requester,
+repository, adapters, directory, tests); **WORKER** = `fix(worker): use the shared queue binding, …`;
+**DOCS** = the commit that adds this section. `git log --oneline main..` has the hashes.
+
+| Item | Commit | What changed | Test (`packages/ingestion/test/fixround.test.ts` unless noted) |
+|---|---|---|---|
+| B1 | FIX | per-run lease drops a second chain; `nextStepAt` heartbeat written whenever a step hands the run back; stale = overdue past its own next step; refresh, tick and backfill join an open run (`findOpenSyncRun`) and enqueue nothing | concurrent `processRun` makes one `createReport`; 25-minute poll with 24 ticks stays one chain, a dead chain is then resumed; double refresh is one chain |
+| M1 | FIX | all parts put under run-stable keys, then ONE transaction replaces the run's `raw_objects` rows; SP texts joined with a newline | part 1 PUT fails once: rows `[0, 1]`, no stray objects, no duplicate parse |
+| M2 | FIX | export `documentId = exportId`; `download` calls `GetExport` for a fresh url | the expired first url is never fetched; no url in `job_runs` |
+| M3 | FIX | `SyncTarget.timeZone` plus per-marketplace and per-profile zones read by the directory; `windows.ts`; `ctx.timeZone`, `ctx.dates`; backfill takes local dates (CLI too) | `units.test.ts`: 00:30 UTC in Los Angeles, DST edge, chunk edges; `engine.test.ts` backfill |
+| M4 | FIX | `SyncTarget.connected`; directory maps `active` only; `scopesFor` returns none for an unconnected API; such runs are cancelled; `reconcilePaused` knows `not_connected` | `units.test.ts` scopes; an Ads-only account gets no SP states |
+| M5 | FIX | SP `CANCELLED` and Data Kiosk `DONE` without a document give a successful run with 0 rows and no landing; `FATAL` still fails | CANCELLED, FATAL, Kiosk |
+| M6 | FIX + WORKER | `createRunRequester` (`requestRefresh`, `backfill`, `getSyncHealth(scope)` with definition metadata); `BullRunEnqueuer` and `RUN_QUEUES` moved to `@seller-hub/ingestion/queue`; the worker scheduler uses the requester | requester with no Amazon client; worker `ingest.test.ts` still passes through BullMQ |
+| minor 1 | FIX | cancel and reauth drop the run's scratch | "a cancelled run leaves no scratch" |
+| minor 2 | FIX + WORKER | inbox purge in the daily maintenance (done 35 d, failed 90 d); `SH_JOB_RUN_RETENTION_DAYS` read by the worker (default 90) | not covered by a test |
+| minor 3 | FIX | `complete` flag in the scratch | "a crash after the last page commit" |
+| minor 4 | FIX | `attempts` reset after progress | `engine.test.ts` resume (attempts now 0) |
+| minor 5 | FIX | pause and resume act on the sync keys of the definitions that use the API, not on an `ads.%` prefix | not covered by a test |
+| minor 6 | FIX | per-seller gate lease 15 to 45 min | not covered by a test |
+| minor 9 | FIX | the demo upsert is one multi-row statement per batch | demo end to end (`engine.test.ts`) |
+| minor 10 | DOCS | shutdown and `stop_grace_period` note in `ingestion.md` §8 | |
+
+**Vault wiring (when P3-IDENTITY is merged):** one line in `apps/worker/src/main.ts`, `credentials: vaultCredentialSource(...)`
+passed to `startIngest`. The directory already honours connection status (M4), so nothing else changes. Nothing was
+imported from the IDENTITY branch.
+
+**BACKLOG follow-ups, not done here:**
+
+- **M7** Ads v1 report slot: hold the gate lease keyed by run id from `create` to the terminal state; decide after P3-SMOKE.
+- **M8** inbox rows stuck in `processing`: claim, handle and finish in one transaction per row, or reclaim `processing` past
+  a timeout; needed before PLT-11 (v1).
+- minor 2 (rest): the bucket lifecycle rule (35 d) is not set by the worker's `ensureBucket`.
+- minor 7: failed inbox rows are retried without backoff.
+- minor 8: the settings screen uses raw MUI `Table`, a text loading state and in-file copy instead of `packages/ui` cells,
+  `SkeletonMark` and `apps/web/messages`; fix with the sync-health API task.
+- Data Kiosk: the "no data" rule (M5) is implemented; confirm the real API behaviour in P3-SMOKE once a client exists.
+
+### Gate (fix round 1)
+
+`pnpm gate` with the stack up (`sellerhub_p3ingest`, offset 200, `SH_REQUIRE_DB=1`): **exit 0**, 16/16 tasks for lint, typecheck, test and build. Ingestion 51 tests (5 files, 14 new in `fixround.test.ts`), worker 10, web 22; DB, Redis and MinIO tests ran, none skipped. Stack brought down afterwards.

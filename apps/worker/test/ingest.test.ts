@@ -12,7 +12,8 @@ import { FIXTURE, seedFixtures, tryCreateTestDb } from "@seller-hub/testing";
 import { Redis } from "ioredis";
 import { sql } from "kysely";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { RUN_QUEUES, startIngest, type RunningIngest } from "../src/ingest";
+import { RUN_QUEUES } from "@seller-hub/ingestion/queue";
+import { startIngest, type RunningIngest } from "../src/ingest";
 
 // The whole path on the real stack: BullMQ + Redis queues, Postgres with RLS, the Amazon runtime in replay mode
 // (fixtures from packages/amazon-sp/fixtures/reports.json, no network), raw landing in memory. Skipped without
