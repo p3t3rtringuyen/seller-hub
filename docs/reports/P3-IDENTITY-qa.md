@@ -100,3 +100,48 @@ Status: PASS / FAIL / NOT RUN. Evidence is what was measured in the run (dev ser
 - Docker Desktop was not running at start; it was started and the stack came up healthy.
 - `pnpm install` (1 min 57 s) needed no changes.
 - Dev servers were started with `pnpm dev` (web 3400, API 4400, worker) for the browser run and stopped at the end.
+
+## Re-check 1 (fix round 1, branch `claude/p3-identity-8a0f9d` tip `66ca5a2`)
+
+Worktree fast-forwarded (`git merge --ff-only claude/p3-identity-8a0f9d`, 29 files). Same stack: `sellerhub_qaidentity`, `SH_PORT_OFFSET=300`, `SH_ENV_FILE=.env.example`, mock Amazon. Stack reused its volumes (migrate: 0 new).
+
+**Verdict: PASS.** The four prior FAILs (items 1, 26, 34, 35) are fixed in this run. No regression found in the quick pass.
+
+### Suites
+
+| Suite | Result |
+| --- | --- |
+| `pnpm test:integration` (`SH_REQUIRE_DB=1`) | exit 0. **495 passed, 0 failed, 0 skipped**: 472 in the 18 workspace packages + 23 in `tools/`. |
+| `pnpm e2e` | exit 0. **7 passed** (was 6): the identity spec now has one more test. |
+
+### Items re-checked
+
+| # | Item | Status | Evidence |
+| --- | --- | --- | --- |
+| 1 | Setup on **localhost:3400** | PASS | Setup token → `POST /bff/v1/auth/setup` 201; signed in as `owner.b@qa.test`, tenant "QA Tenant B", redirected to `/settings/connections`. The form submitted with no origin error. |
+| 1 | Setup on **127.0.0.1:3400** | PASS | New token → 201; signed in as `owner.c@qa.test`, tenant "QA Tenant C". |
+| 26 | Landmarks on auth screens | PASS | `/sign-in`: `main` 1, `h1` "Sign in". `/setup`: `main` present. `/accept-invitation`: `main` 1; token removed from the address bar (`location.hash` empty). |
+| 34 | Hydration error in ContextSwitcher | PASS | Selects now render with stable ids (`context-seller-account`, `context-marketplace`). A fresh tab on `/settings/members` shows no hydration error in the console (only 404/403 network entries, the 403 being my deliberate viewer-invite probe). The same tab's older buffer still held the pre-fix message, so only the fresh tab is evidence. |
+| 35 | Sign-in while already signed in | PASS | Signed in as `owner.c`, then `POST /bff/v1/auth/sign-in` as `owner.a` → 200; `/v1/me` = `owner.a`, tenant "QA Tenant A" (the browser follows the new session). DB: `owner.c` session `revoked_at` set at the sign-in time. Not reproduced as a failure. |
+
+### Regression pass
+
+| Area | Status | Evidence |
+| --- | --- | --- |
+| Sign-in / sign-out | PASS | Sign-in 200; sign-out 204 and redirect to `/sign-in`. |
+| Invitations | PASS | Owner creates invitation → 201 (link with `#token=`). Accept as a new user with name and password → "Create your account" → signed in as `viewer.d` with role viewer in "QA Tenant C". Viewer `POST /bff/v1/invitations` → 403. |
+| Connections | PASS | Owner: SP-API `self-authorization` 200; Ads `authorization` 200 with the mock callback URL. Viewer: no Connect/Disconnect buttons. Disconnect not re-run in this pass (the e2e suite covers connect). |
+| Tenant isolation | PASS (in e2e) | `e2e` identity spec covers the invited viewer; the earlier 404 probes were not repeated. |
+
+### Not re-run
+
+Reconnect, the visual focus ring, absolute session expiry, and the analyst disconnect call, as in the original run.
+
+### Observations (new, for the orchestrator)
+
+- A setup token creates a **new tenant** even when tenants already exist (`owner.b` and `owner.c` were both created this way). The report says "first Owner"; confirm this is intended for operator-issued tokens.
+- The localhost origin is now accepted in plain-http dev (`requestOrigin`), so `SH_WEB_PUBLIC_URL` is no longer needed for local use.
+
+### Stack
+
+Dev servers stopped; `pnpm stack:down` run; leftover Node listeners on ports 3400/4400 killed. `ads-api-cache-1` untouched.

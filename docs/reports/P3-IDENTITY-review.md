@@ -150,3 +150,62 @@ BFF the scaffold left to this task; `copy.ts` is missing from the report's share
 
 m3–m9 above; Redis-backed throttle; session purge job; CSP; 2FA / reset / verification per the ADR-0004 decision;
 bundle-safe `loadFixtureDir` (task follow-up 4).
+
+---
+
+## Re-review 1 — branch tip `66ca5a2` (fix round 1: `e44b53f`, `e469946`, `739b17d`, `595456e`, `66ca5a2`)
+
+### Verdict: **MERGE**
+
+All four majors and the five minors scheduled for this round (m1, m2, m4, m5, m6) are fixed correctly and each has a test
+aimed at the defect. The four QA fixes look right. No regression found that blocks the merge. Five new remarks below,
+all minor or informational; they can go to the BACKLOG or into the P3-STAGING brief. Deferred on purpose and not
+re-checked: m3, m7, m8, m9, the ADR-0004 question.
+
+### Items checked
+
+| Item | Verdict | Notes |
+| --- | --- | --- |
+| M1 argon2 on the event loop | fixed | `crypto.ts`: `node:crypto.argon2` (async, libuv pool; parameter names match Node's API) behind a semaphore (4 running, 32 queued, then `server_busy`). The slot is handed to the next waiter without decrementing, which is correct. Stored PHC strings from hash-wasm still verify; costs in a stored string are capped; tags compared with `timingSafeEqual`. `crypto.test.ts` asserts the timer ticks during hashing. See r1 for the fallback. |
+| M2 throttle bypasses | fixed | `reserve()` counts the attempt before any await (parallel guesses count); an IP bucket always exists (`unknown`, 200/15 min); LRU eviction (entry deleted and re-inserted on each attempt) instead of `clear()`, so a spray evicts the target only after 10 000 newer keys, and the per-IP budget makes that expensive. Success clears only the e-mail counter. See r2. |
+| M3 re-invited user locked out / orphan | fixed | New public op `acceptInvitationWithPassword` (contract + route + UI): the invitation is previewed, the password is checked through the same throttled `checkCredentials`, the user joins and gets a session, and no membership is needed beforehand. `acceptInvitationNewUser` deletes the user it created when acceptance fails. API test "removed member re-invited". |
+| M4 scoped Admin cannot finish Ads | fixed | Callback is now `session.read` at tenant scope; after `consumeState` (already bound to the user), `tenancy.can(user, tenant, state.sellerAccountId, "connections.manage")` answers 404 otherwise. Tenant-wide Admins/Owners still pass because tenant-wide grants apply to every account. The state is burnt on denial, which is fine. API test covers the scoped Admin (own account only). |
+| m1 invitation re-check | fixed | `markInvitationAccepted` guards `accepted_at/revoked_at/expires_at`, 0 rows → `invitation_invalid`, transaction rolls back the membership. Test for revocation during submission. |
+| m2 last-owner race | fixed | `select … for update` on the tenant row at the start of `setMemberRoles` and `removeMember`. Concurrency test (exactly one demotion wins). |
+| m4 forged client headers | fixed | API honours `x-sh-client-ip`/`x-sh-user-agent` only with a matching `x-sh-bff-secret` (constant-time); without a configured secret it trusts only outside production. The BFF sends the secret. API test. |
+| m5 https in production | fixed | `loadConfig` refuses production without an `https://` `SH_WEB_PUBLIC_URL` and without `SH_BFF_SECRET` (≥ 32 chars). Test. |
+| m6 dev key in the ring | fixed | `envKeyProvider` refuses any ring key equal to a DEV_ONLY value in production. Test. |
+| QA: `main` landmark | fixed | `AuthCard` renders `<main>`. |
+| QA: localhost vs 127.0.0.1 | fixed, acceptable | In plain-http mode only, the request's own origin is also accepted (see r4); behind https only `SH_WEB_PUBLIC_URL`. The double-submit token is still required. The 403 now explains which address to open. |
+| QA: ContextSwitcher hydration | fixed, plausible | Stable ids on the three selects. `packages/ui/src/shell/ContextSwitcher.tsx` is a P3-DS file outside the row; the change is minimal and justified. Verified only by the e2e console assertion, as the report itself says. |
+| QA: sign-in keeps the old session | hardened | `issueSession` revokes the caller's bearer token (`previousToken`) after the new session exists. Double revocation in `switchTenant`/`acceptInvitationSignedIn` is harmless. API test. |
+
+### New remarks (non-blocking)
+
+- **r1 · minor — the silent hash-wasm fallback brings M1 back on Node 24.0–24.6.** `crypto.ts` falls back to the
+  blocking WebAssembly argon2 when `node:crypto.argon2` is missing, while `package.json` `engines` says `node >=24`.
+  Fix: `engines: ">=24.7"` and/or log loudly (or refuse in production) at boot when the native function is absent.
+  P3-STAGING must pin a Node image ≥ 24.7.
+- **r2 · minor — the shared `unknown` IP bucket lets anyone lock out all sign-ins.** When the API knows no client IP,
+  every attempt shares one 200/15 min bucket, so 200 bad attempts block sign-in for everyone for 15 minutes. This
+  happens when `SH_TRUST_PROXY=0` in production, or when the API has `SH_BFF_SECRET` and the web app does not (or has a
+  different value). The web app never runs `loadConfig`, so nothing catches the mismatch. For P3-STAGING: set
+  `SH_TRUST_PROXY=1` and the same `SH_BFF_SECRET` on web and api. Later: validate the web env at boot.
+- **r3 · nit — misplaced doc comment.** `packages/config/src/env.ts`: the `SH_TRUST_PROXY` doc comment now sits above
+  `SH_BFF_SECRET` (two stacked comments), so `SH_TRUST_PROXY` lost its own.
+- **r4 · info — in plain-http mode the accepted origin comes from the Host header.** A DNS-rebinding page can pass the
+  Origin check, but the real app's cookies are host-bound and the double-submit token is still required, so it can act
+  only unauthenticated. Production cannot be plain http any more (m5), so this is dev-only.
+- **r5 · info — flaky test, not from this task.** `packages/config/test/eslint.test.ts` failed once in my first run
+  (machine under load from other stacks) and passed twice in a row afterwards.
+
+### Checks (re-review)
+
+| Check | Result |
+| --- | --- |
+| Static review of `git diff 657c756 66ca5a2` (29 files, +840/−101) | done |
+| `vitest run test/crypto.test.ts` (platform-auth) | 4 passed |
+| `vitest run test/vault.test.ts` (platform-connections) | 13 passed |
+| `vitest run` (packages/config) | 11 passed on 2 of 3 runs (r5) |
+| `vitest run lib/bff-security.test.ts` (apps/web) | 11 passed |
+| `pnpm gate`, DB/API tests, e2e | **skipped**: no stack, per brief. The task report states gate exit 0 with `SH_REQUIRE_DB=1` and 7 e2e passed. |

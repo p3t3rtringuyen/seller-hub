@@ -246,3 +246,108 @@ B1 tests (concurrent `processRun`, long poll + ticks, double refresh) · M1 re-l
 assert one index row per part) · M2 export download after URL expiry (mock 403 on the old URL) · M3 window in
 `America/Los_Angeles` at 00:30 UTC · M4 Ads-only account gets no SP states · M5 `CANCELLED` → done, 0 rows · M6
 requester used by the worker scheduler and importable without Amazon clients · `pnpm gate` green with the stack up.
+
+---
+
+## Re-review 1 (branch tip `b48292c`)
+
+Scope: `git diff ffe37b7..b48292c` (3 commits: `23aeb67` fix, `d4e69a4` worker + docs, `b48292c` report mapping;
+22 files, +1352/−328), the "Fix round 1" section of `docs/reports/P3-INGEST.md`, and the new
+`packages/ingestion/test/fixround.test.ts`. Same rules as before: read-only, no stack. Vault wiring is deferred on
+purpose until P3-IDENTITY merges; that is accepted.
+
+### Verdict
+
+**MERGE-AFTER-FIXES — 1 must-fix (major, residual of B1)**, plus 5 new minors. The original M1–M6 and the claimed
+minors are fixed and tested. B1's correctness half is fixed: two chains never run a step at once, and a healthy long
+wait is no longer taken for a dead chain. Its amplification half is not: when the queue is slow, the stale sweep still
+starts extra chains that never merge.
+
+### Item by item
+
+| Item | Status | Evidence |
+|---|---|---|
+| B1 | **Partly fixed**, see R1 | Per-run lease `engine.ts:223-224` drops an overlapping chain (`state: "duplicate"`). The `nextStepAt` heartbeat (`engine.ts:244`, `repository.ts:723`) is written whenever a step returns `done: false`. `findStaleRuns` (`repository.ts:707`) uses the heartbeat. Tick, refresh and backfill join an open run and enqueue nothing (`scheduler.ts:113-133`, `requester.ts:144-146`, `:169`, `:208`). Tests: concurrent `processRun` → one `createReport`; a 25-min poll with 24 ticks → one chain; double refresh → one chain. |
+| M1 | Fixed | Run-stable key (`run.createdAt`). The index is replaced in one transaction (`replaceRawObjects`: delete, then insert). Texts joined with `\n`. Test: PUT of part 1 fails once → rows `[0, 1]`. |
+| M2 | Fixed | `documentId = exportId`; `download` calls `GetExport` for a fresh URL; no URL in `job_runs`. Tested. |
+| M3 | Fixed | `windows.ts` builds windows from local dates in the profile's zone, else the marketplace's, else the account's. `ctx.timeZone`, `ctx.dates`; backfill and CLI take `YYYY-MM-DD` local dates. The directory reads `ads_profiles.time_zone` and `ref.marketplaces.time_zone`. I checked `localMidnight`'s two-pass DST settle and the catch-up rule. Unit tests: 00:30 UTC in Los Angeles, DST edge, chunk edges. |
+| M4 | Fixed | `connected` = `active` (or a paused status). `pending` or missing → no states. A run of an unconnected API is cancelled `not_connected`, and `reconcilePaused` resumes `not_connected`. Tested (Ads-only account, pending connection). |
+| M5 | Fixed | SP `CANCELLED` and Kiosk `DONE` without a document → `documentId: null` → `upserting` → `finish` with 0 rows, nothing landed. `FATAL` still fails. Tested. |
+| M6 | Fixed (see N1) | `createRunRequester` (refresh, backfill, `getSyncHealth` with definition metadata). `BullRunEnqueuer` / `RUN_QUEUES` live in `@seller-hub/ingestion/queue`. The scheduler uses the requester. Tested without Amazon clients. |
+| Minors 1, 3, 4, 5, 6, 9, 10 | Fixed | Scratch dropped on cancel and reauth. `complete` flag. `attempts` reset after progress. Pause/resume by definition keys. Gate TTL 45 min. Demo upsert multi-row. Shutdown note in `ingestion.md` §8. |
+| Minor 2 | Partly fixed | Inbox purge added to maintenance; `SH_JOB_RUN_RETENTION_DAYS` read (see N4). Bucket lifecycle → BACKLOG (accepted). |
+| M7, M8, minors 7, 8 | Deferred to BACKLOG | As agreed. |
+
+### R1 (major, must fix) — Under queue backlog the stale sweep still starts chains that never merge
+
+- `packages/ingestion/src/scheduler.ts:137-141` re-enqueues a stale run with
+  `jobId = ${runId}-${epochSeconds}`. That job id is new on every tick. `repository.ts:707` falls back to
+  `jr.updated_at` when a run has no heartbeat yet (a run created but not yet started). The per-run lease only
+  excludes *overlapping* steps: it is released at the end of each step, so two chains that take turns both live on
+  (`apps/worker/src/ingest.ts:203` continues each with `step + 1`).
+- Failure scenario: first-connect backfill of 24 monthly windows × 5 syncs = 120 runs on the `backfill` queue
+  (concurrency 2). Most windows wait more than 10 min before their first step. From then on, every tick re-enqueues
+  up to 100 of them under fresh job ids. Nothing writes a heartbeat until a step runs, so the next tick does it
+  again. Each extra job later runs a step and becomes its own chain. Example: run X ends up with ~1 chain per minute
+  of backlog, each polling `getReport` every 30 s. That multiplies queue load, deepens the backlog that caused it,
+  and burns the seller's SP quota. The same happens to a scheduled run whose delayed next job is promoted but waits
+  more than 10 min behind others.
+- Data stays correct: steps are serialised and the state machine is persisted. This is an amplification and quota
+  problem, not data loss, so I rank it major rather than blocker. It will still show up on the first real backfill.
+- Fix (small):
+  1. Store the expected next step in the heartbeat: `runs[runId] = { nextStep, nextStepAt }`, written where the
+     step returns `done: false`, with `nextStep = payload.step + 1`.
+  2. In `processRun`, drop (`done: true`) a payload whose `step` is below the stored `nextStep`.
+  3. Have the stale sweep re-enqueue with `jobIdFor(run.id, nextStep)` (step 0 for a never-started run). If the
+     original job is still waiting or delayed, BullMQ ignores the add (same job id). If it was really lost, it is
+     re-created. Either way there is one chain.
+  - Also bump `nextStepAt` when the sweep re-enqueues, so it doesn't fire on every tick.
+- Test: 120 runs created, the queue not drained for 30 simulated minutes with a tick per minute → at most one queued
+  job per run, then draining runs each run's steps in a single sequence.
+
+### New minors (may fix later / with the sync-health API task)
+
+- **N1** `requester.ts:104-126`: `stateFor` inserts missing sync states through `system` (the owner role). So the
+  API process, which will host the refresh route, would need `sh_owner` credentials and bypass RLS. Insert under
+  `withScope` on the app connection instead (RLS `WITH CHECK` allows it), and drop `system` from the requester.
+  Fix before the sync-health/refresh API task.
+- **N2** `requester.ts:144-146`: a refresh without `entityIds` joins any open non-backfill run. If that run is a
+  `scheduled` run that already fetched its data (`processing` past its pages, `parsing`, `upserting`), a
+  refresh-after-write (D62 a) for a definition without `refreshEntities` returns `created: false` and misses the
+  write until the next schedule. The user's "Refresh now" also keeps the scheduled run's queue and priority. Join
+  only a run that has not started yet (`state = 'requested'`, no `startedAt`), and re-enqueue it at `interactive`.
+  Otherwise create a new run, whose window ends later, so its job key differs.
+- **N3** `engine.ts:223`: the per-run lease TTL (30 min) is shorter than the per-seller gate (45 min) and than a
+  large report's download → parse → upsert step. A step that outlives it lets a second chain step in concurrently.
+  Renew it, or make it at least the gate's TTL.
+- **N4** `apps/worker/src/ingest.ts:149`: `SH_JOB_RUN_RETENTION_DAYS` is read from `process.env` outside the
+  typed config and is not in `.env.example`. Both files are outside this task's paths. Orchestrator: add it to
+  `packages/config/src/env.ts` and `.env.example`.
+- **N5** `packages/ingestion/test/minio.test.ts:6-7` (unchanged from round 0): `loadConfig` runs at module top
+  level, outside the `try`. Without an env file the suite fails ("Invalid or missing environment variables")
+  instead of skipping. The gate passes only because the stack env is loaded. Move `loadConfig` inside the `try`.
+
+### Regressions
+
+None found:
+- Ownership is unchanged: only owned paths plus `pnpm-lock.yaml` (`bullmq`/`ioredis` now dependencies of
+  `@seller-hub/ingestion`).
+- `@seller-hub/core` time helpers (`localDateOf`, `addDays`, `daysBetween`) already exist on `main`.
+- The cross-tenant test still covers the repository, and the new repository functions are scoped or system-only
+  as before.
+- `processRun` cancels runs for paused or unconnected APIs before taking any lease.
+- The M5 empty path re-reads no landed documents.
+
+### Commands (re-review 1)
+
+| Command | Result |
+|---|---|
+| `git log --oneline ffe37b7..b48292c`, `git diff --stat`, `git diff --name-only main...<branch>` | 3 commits; files inside OWNED_PATHS + `pnpm-lock.yaml` |
+| `npx vitest run` in `packages/ingestion` (task worktree at `b48292c`, no env) | units **18 passed**; engine 15, fixround 12, families 5 **skipped (no database)**; `minio.test.ts` **fails at import** without env (N5, environment-only) |
+
+**Skipped:** `pnpm gate` and every DB/Redis/MinIO test, because the brief forbids starting a stack. The task reports
+gate exit 0 with the stack up (ingestion 51, worker 10, web 22).
+
+### For the next round
+
+R1 only (+ its test). N1–N5 may go to BACKLOG or ride along. After R1, I expect **MERGE**.

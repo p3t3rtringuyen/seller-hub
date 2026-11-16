@@ -168,3 +168,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   6 major). Fix round sent to both. Order: IDENTITY merges first, then INGEST wires `vaultCredentialSource`.
   Open for the user: ADR-0004 amendment (hand-written auth instead of Better Auth). Planning gap: sync-health /
   refresh API (ADR-0008) has no owner — to be added as a small task after INGEST merges.
+- 2026-11-16 — Fix round 1 done on both. Re-review: P3-IDENTITY MERGE (r1–r5 non-blocking); QA re-check PASS
+  (495/495, e2e 7/7). P3-INGEST MERGE-AFTER-FIXES (R1 stale sweep under slow queue) — fix round 2 sent.
+  Orchestrator full gate on P3-IDENTITY 66ca5a2 (sellerhub_orchgate, offset 400, SH_REQUIRE_DB=1): exit 0,
+  e2e 7/7; stack down. Waiting for the user's go-ahead to merge P3-IDENTITY and the ADR-0004 answer.
