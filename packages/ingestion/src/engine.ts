@@ -190,18 +190,21 @@ export function createEngine(deps: EngineDeps): Engine {
     if (repo.TERMINAL_STATES.includes(run.state)) return { done: true, state: run.state };
 
     const def = pull.get(run.syncKey);
-    const state = run.syncStateId ? await repo.getSyncState(scope, deps.db, run.syncStateId) : null;
-    if (!def || !state) {
+    const state0 = run.syncStateId
+      ? await repo.getSyncState(scope, deps.db, run.syncStateId)
+      : null;
+    if (!def || !state0) {
       await failRun(
         scope,
         run,
-        state,
+        state0,
         "unknown_definition",
         `no definition or sync state for ${run.syncKey}`,
         false,
       );
       return { done: true, state: "failed" };
     }
+    let state: repo.SyncStateRow = state0;
     const target = await deps.directory.getTarget(scope);
     if (!target) {
       await cancelRun(scope, run, state, "account_unavailable");
@@ -218,18 +221,20 @@ export function createEngine(deps: EngineDeps): Engine {
       return { done: true, state: "cancelled" };
     }
 
-    // One chain per run (R1): the run stores the step it expects next; a job from an older step is a leftover of a
-    // chain that was re-enqueued while the original was still queued, and it is dropped.
-    const expected =
-      (state.cursor.runs as Record<string, { nextStep?: number }> | undefined)?.[run.id]
-        ?.nextStep ?? 0;
-    if (payload.step < expected) return { done: true, state: "duplicate" };
-
     // One chain per run (B1): a second step chain of the same run (a stale re-enqueue racing a slow step) is dropped,
     // not delayed. The lease is longer than any step; it is released as soon as the step returns.
     const runLease = await deps.amazon.gate.tryAcquire(`ingest:run:${run.id}`, 1, 60 * 60_000);
     if (!runLease) return { done: true, state: "duplicate" };
     try {
+      // One chain per run (R1, N7): the run stores the step it expects next; a job from an older step is a leftover of
+      // a chain that was re-enqueued while the original was still queued, and it is dropped. Read AFTER the lease: a
+      // chain that finished this step a moment ago has advanced it.
+      const fresh = await repo.getSyncState(scope, deps.db, state.id);
+      const expected =
+        (fresh?.cursor.runs as Record<string, { nextStep?: number }> | undefined)?.[run.id]
+          ?.nextStep ?? 0;
+      if (payload.step < expected) return { done: true, state: "duplicate" };
+      if (fresh) state = fresh;
       // Per-seller fairness (decision 8): at most N runs of this account and family at once.
       const lease = await deps.amazon.gate.tryAcquire(
         `ingest:seller:${scope.sellerAccountId}:${def.family}`,

@@ -557,4 +557,71 @@ describe.skipIf(!t)("fix round 2: R1 and the new minors", () => {
     expect(later.created).toBe(true);
     expect(later.runId).not.toBe(a.runId);
   });
+
+  it("R1 + R2 together: a backlog gets no duplicate chains, and a run whose step job FAILED is resumed within a grace period", async () => {
+    let clock = Date.now();
+    const calls: string[] = [];
+    const def = definePagedPull<{ id: string }>({
+      key: "r2.failed-job",
+      family: "paged-pull",
+      window: { lookbackDays: 1, backfillDays: 60, maxRangeDays: 1 },
+      fetchPage: async (ctx) => {
+        if (ctx.priority === "backfill") calls.push(ctx.runId);
+        return { rows: [] };
+      },
+      upsert: async () => {},
+    });
+    const h = await engineWith([def], { now: () => new Date(clock) });
+    const to = todayIn("UTC");
+    await h.scheduler.backfill(A, {
+      syncKey: "r2.failed-job",
+      fromDate: addDays(to, -4),
+      toDate: to,
+    });
+    const mine = new Set(
+      (await repo.listRuns(A, t!.app.db, { syncKey: "r2.failed-job", limit: 50 }))
+        .filter((r) => r.priority === "backfill")
+        .map((r) => r.id),
+    );
+    expect(mine.size).toBe(5);
+    // one run's first job was taken by a worker and failed (DB restart mid-step): the queue keeps it as FAILED
+    const victim = h.queue.pending.find((q) => mine.has(q.payload.runId))!;
+    h.queue.fail(victim);
+    const queuedFor = (id: string) => h.queue.pending.filter((q) => q.payload.runId === id).length;
+
+    for (let minute = 1; minute <= 9; minute++) {
+      clock += 60_000;
+      await h.scheduler.tick();
+    }
+    expect(queuedFor(victim.payload.runId)).toBe(0); // inside the grace period: nothing yet
+    for (let minute = 10; minute <= 14; minute++) {
+      clock += 60_000;
+      await h.scheduler.tick();
+    }
+    // R2: the sweep re-added the failed job (replacing the kept failed one), exactly once
+    expect(queuedFor(victim.payload.runId)).toBe(1);
+    // R1: every other run still has exactly its one original job
+    for (const id of mine) if (id !== victim.payload.runId) expect(queuedFor(id)).toBe(1);
+    await h.drain();
+    expect(calls).toHaveLength(5);
+    expect(new Set(calls).size).toBe(5);
+  });
+
+  it("N6: a refresh of a windowless sync whose run already started creates a new run", async () => {
+    const def = definePagedPull<{ id: string }>({
+      key: "n6.windowless",
+      family: "paged-pull",
+      schedule: { every: "6h" },
+      fetchPage: async () => ({ rows: [] }),
+      upsert: async () => {},
+    });
+    const h = await engineWith([def]);
+    const a = await h.scheduler.requestRefresh(A, { syncKey: "n6.windowless" });
+    await sql`update ingest.job_runs set state = 'upserting', started_at = now() where id = ${a.runId}`.execute(
+      t!.owner.db,
+    );
+    const b = await h.scheduler.requestRefresh(A, { syncKey: "n6.windowless" });
+    expect(b.created).toBe(true);
+    expect(b.runId).not.toBe(a.runId);
+  });
 });

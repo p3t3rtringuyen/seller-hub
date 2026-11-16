@@ -280,7 +280,16 @@ export interface RunPayload {
 export interface RunEnqueuer {
   enqueue(
     payload: RunPayload,
-    options: { priority: PriorityClass; delayMs?: number; jobId: string },
+    options: {
+      priority: PriorityClass;
+      delayMs?: number;
+      jobId: string;
+      /**
+       * The stale sweep's recovery add: when a job with this id already exists but is FINISHED (failed or completed,
+       * kept for a while), remove it and add again; a job that is waiting, delayed or active is left alone (R2).
+       */
+      replaceFinished?: boolean;
+    },
   ): Promise<void>;
 }
 

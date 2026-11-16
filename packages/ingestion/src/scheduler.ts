@@ -145,6 +145,7 @@ export function createScheduler(
         await deps.enqueuer.enqueue(payloadFor(run, nextStep), {
           priority: run.priority,
           jobId: jobIdFor(run.id, nextStep),
+          replaceFinished: true, // a failed job of this step is kept by the queue and would swallow the add (R2)
         });
         await repo.bumpNextStepAt(deps.system, run, new Date(now.getTime() + STALE_GRACE_MS));
         result.resumed++;

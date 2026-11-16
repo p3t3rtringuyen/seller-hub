@@ -152,11 +152,15 @@ export function createRunRequester(o: RunRequesterOptions) {
     const window = entityIds
       ? { start: null, end: null }
       : computeWindow(def, state.cursor, at, tz);
+    // A started run is still open: its job key (windowless syncs have none to tell them apart) must differ, or
+    // createRun would hand the started run back and the refresh would silently join it (N6).
+    const startedOpen = !entityIds && (await repo.findOpenSyncRun(scope, o.db, state.id));
     const { run, created } = await repo.createRun(scope, o.db, {
       syncStateId: state.id,
       syncKey: def.key,
       scopeKey: state.scopeKey,
       family: entityIds ? "entity-refresh" : def.family,
+      ...(startedOpen ? { keySuffix: `r${at.getTime()}` } : {}),
       priority: "interactive",
       windowStart: window.start,
       windowEnd: window.end,

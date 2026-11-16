@@ -22,11 +22,22 @@ export interface QueuedRun {
 export class InlineQueue implements RunEnqueuer {
   readonly pending: QueuedRun[] = [];
   readonly history: QueuedRun[] = [];
+  /** Ids of jobs that ended (failed or completed) and are still kept, as BullMQ keeps them for hours. */
+  readonly finished = new Set<string>();
+
+  /** Simulates a job that was taken from the queue and failed (the worker threw). */
+  fail(job: QueuedRun): void {
+    const i = this.pending.indexOf(job);
+    if (i >= 0) this.pending.splice(i, 1);
+    this.finished.add(job.jobId);
+  }
   async enqueue(
     payload: RunPayload,
-    options: { priority: string; delayMs?: number; jobId: string },
+    options: { priority: string; delayMs?: number; jobId: string; replaceFinished?: boolean },
   ): Promise<void> {
-    // BullMQ ignores a job whose id is already in the queue: so does this.
+    // BullMQ ignores a job whose id exists in any state: pending, or failed/completed and still kept. So does this.
+    if (options.replaceFinished) this.finished.delete(options.jobId);
+    if (this.finished.has(options.jobId)) return;
     if (this.pending.some((p) => p.jobId === options.jobId)) return;
     const item = {
       payload,

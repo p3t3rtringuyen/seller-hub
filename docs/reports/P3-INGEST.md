@@ -174,3 +174,18 @@ with the same payload after a `done: false` result are dropped as duplicates. Us
 See the result line at the end of this section.
 
 `pnpm gate` with the stack up (`sellerhub_p3ingest`, offset 200, `SH_REQUIRE_DB=1`): **exit 0**, 16/16 tasks per stage. Ingestion 54 tests (5 files), worker 10, web 22; nothing skipped. Stack brought down.
+
+## Fix round 3 (re-review 2: R2, N6, N7)
+
+| Item | What changed | Test |
+|---|---|---|
+| **R2** | `RunEnqueuer.enqueue` takes `replaceFinished`. The stale sweep sets it; `BullRunEnqueuer` then removes an existing job with that id when it is `failed` or `completed` (BullMQ keeps them for hours and ignores an add whose id exists in any state) and adds again. A job that is waiting, delayed or active is left alone, so R1 still holds. The in-memory test queue now keeps failed ids and has `fail(job)`. | `fixround.test.ts` "R1 + R2 together": 5 backlog runs, a tick per minute; one run's job fails and is kept as failed; nothing is added inside the 10-minute grace, then the failed run is re-added once and every other run still has exactly its one job; draining runs each run once. Checked to FAIL without `replaceFinished` |
+| N6 | a refresh whose sync already has a started open run gets a `keySuffix`, so `createRun` makes a new run instead of handing the started one back | "N6" test |
+| N7 | the step guard reads `nextStep` from a fresh sync-state read taken AFTER the per-run lease | covered by the existing step-guard test (no new race test) |
+
+Not done: catching `processRun` errors in the worker processor (the reviewer's "also consider"); the sweep recovery above
+bounds a crashed job to one grace period. N4 stays with the orchestrator.
+
+Gate: `pnpm gate` with the stack up (`sellerhub_p3ingest`, offset 200, `SH_REQUIRE_DB=1`): see the result line below.
+
+**Result:** `pnpm gate` exit 0, 16/16 tasks per stage; ingestion 56 tests (5 files), worker 10, web 22; nothing skipped. Stack brought down.

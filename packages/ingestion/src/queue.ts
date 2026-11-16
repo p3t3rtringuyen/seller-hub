@@ -28,8 +28,19 @@ export class BullRunEnqueuer implements RunEnqueuer {
 
   async enqueue(
     payload: RunPayload,
-    options: { priority: PriorityClass; delayMs?: number; jobId: string },
+    options: {
+      priority: PriorityClass;
+      delayMs?: number;
+      jobId: string;
+      replaceFinished?: boolean;
+    },
   ): Promise<void> {
+    if (options.replaceFinished) {
+      // BullMQ ignores an add whose id still exists in ANY state, failed included (kept 24 h): free a finished one.
+      const existing = await this.queues[options.priority].getJob(options.jobId);
+      if (existing && ["failed", "completed"].includes(await existing.getState()))
+        await existing.remove();
+    }
     await this.queues[options.priority].add("run", payload, {
       jobId: options.jobId, // a repeated enqueue of the same step is a no-op (conventions §8)
       priority: PRIORITY_NUMBER[options.priority],
