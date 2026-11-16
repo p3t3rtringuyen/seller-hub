@@ -26,6 +26,8 @@ export interface ClientContext {
   ip?: string | null | undefined;
   userAgent?: string | null | undefined;
   traceId?: string | undefined;
+  /** The caller's current session token (BFF sends it when the browser already has one): revoked when a new session is issued. */
+  previousToken?: string | undefined;
 }
 
 export interface SessionIssued {
@@ -71,6 +73,7 @@ export function identityService(deps: IdentityServiceDeps) {
       absoluteMs: SESSION_ABSOLUTE_MS,
     });
     await repo.touchSignIn(user.id);
+    if (ctx.previousToken) await repo.revokeSessionByHash(sha256(ctx.previousToken)); // one browser, one live session
     return {
       token,
       maxAgeSeconds: SESSION_ABSOLUTE_MS / 1000,
@@ -175,31 +178,7 @@ export function identityService(deps: IdentityServiceDeps) {
       input: { email: string; password: string },
       ctx: ClientContext = {},
     ): Promise<SessionIssued> {
-      const email = input.email.trim();
-      const wait = limiter.retryAfterMs(email, ctx.ip ?? null);
-      if (wait > 0)
-        throw new DomainError(
-          "rate_limited",
-          "too_many_attempts",
-          "Too many failed attempts. Try again later.",
-          [],
-          {
-            retryAfterSeconds: Math.ceil(wait / 1000),
-          },
-        );
-      const user = EMAIL_RE.test(email) ? await repo.findUserByEmail(email) : null;
-      const stored = user && !user.disabledAt ? user.passwordHash : null;
-      // Verify against a dummy hash for unknown users so the response time does not reveal which e-mails exist.
-      const valid = await verifyPassword(stored ?? (await dummyHash()), input.password);
-      if (!user || !stored || !valid) {
-        limiter.failure(email, ctx.ip ?? null);
-        if (user) await auditFailure(user, ctx);
-        throw new DomainError(
-          "unauthenticated",
-          "invalid_credentials",
-          "E-mail or password is incorrect",
-        );
-      }
+      const user = await checkCredentials(input.email, input.password, ctx);
       const memberships = await deps.tenancy.listUserMemberships(user.id);
       if (!memberships.length)
         throw new DomainError(
@@ -207,7 +186,7 @@ export function identityService(deps: IdentityServiceDeps) {
           "no_active_membership",
           "Your account is not a member of any active tenant",
         );
-      limiter.success(email);
+      limiter.success(input.email.trim());
       const session = await issueSession(user, memberships[0]!.tenantId, ctx);
       await deps.audit.write(
         { tenantId: session.tenantId, userId: user.id },
@@ -305,14 +284,56 @@ export function identityService(deps: IdentityServiceDeps) {
         throw e;
       }
       const user = (await repo.findUserById(userId))!;
-      const { tenantId } = await deps.tenancy.acceptInvitation(
-        input.token,
-        { id: userId, email: user.email },
-        { ip: ctx.ip, traceId: ctx.traceId },
-      );
+      let tenantId: string;
+      try {
+        ({ tenantId } = await deps.tenancy.acceptInvitation(
+          input.token,
+          { id: userId, email: user.email },
+          { ip: ctx.ip, traceId: ctx.traceId },
+        ));
+      } catch (e) {
+        await repo.deleteUser(userId).catch(() => undefined); // no half-created account (review M3)
+        throw e;
+      }
       const session = await issueSession(user, tenantId, ctx);
       await deps.audit.write(
         { tenantId, userId },
+        {
+          action: "auth.login",
+          actorLabel: user.email,
+          details: { method: "invitation" },
+          ipAddress: ctx.ip ?? null,
+          traceId: ctx.traceId ?? null,
+        },
+      );
+      return session;
+    },
+
+    /**
+     * An existing account accepts an invitation with its password in ONE call. Unlike sign-in this works for a user who
+     * currently belongs to no tenant (removed earlier, then re-invited - review M3).
+     */
+    async acceptInvitationWithPassword(
+      input: { token: string; password: string },
+      ctx: ClientContext = {},
+    ): Promise<SessionIssued> {
+      const preview = await deps.tenancy.previewInvitation(input.token);
+      if (!preview.accountExists)
+        throw new DomainError(
+          "conflict",
+          "account_missing",
+          "No account exists for this e-mail - register instead",
+        );
+      const user = await checkCredentials(preview.email, input.password, ctx);
+      const { tenantId } = await deps.tenancy.acceptInvitation(
+        input.token,
+        { id: user.id, email: user.email },
+        { ip: ctx.ip, traceId: ctx.traceId },
+      );
+      limiter.success(preview.email);
+      const session = await issueSession(user, tenantId, ctx);
+      await deps.audit.write(
+        { tenantId, userId: user.id },
         {
           action: "auth.login",
           actorLabel: user.email,
@@ -340,6 +361,35 @@ export function identityService(deps: IdentityServiceDeps) {
       return issueSession(user, tenantId, ctx);
     },
   };
+
+  /**
+   * E-mail + password check shared by sign-in and "accept invitation with my password": reserves a throttle slot BEFORE any
+   * work, verifies against a dummy hash for unknown users (same answer, same cost), audits failures of known users.
+   */
+  async function checkCredentials(emailRaw: string, password: string, ctx: ClientContext) {
+    const email = emailRaw.trim();
+    const wait = limiter.reserve(email, ctx.ip ?? null);
+    if (wait > 0)
+      throw new DomainError(
+        "rate_limited",
+        "too_many_attempts",
+        "Too many failed attempts. Try again later.",
+        [],
+        { retryAfterSeconds: Math.ceil(wait / 1000) },
+      );
+    const user = EMAIL_RE.test(email) ? await repo.findUserByEmail(email) : null;
+    const stored = user && !user.disabledAt ? user.passwordHash : null;
+    const valid = await verifyPassword(stored ?? (await dummyHash()), password);
+    if (!user || !stored || !valid) {
+      if (user) await auditFailure(user, ctx);
+      throw new DomainError(
+        "unauthenticated",
+        "invalid_credentials",
+        "E-mail or password is incorrect",
+      );
+    }
+    return user;
+  }
 
   async function auditFailure(user: UserRow, ctx: ClientContext): Promise<void> {
     const memberships = await deps.tenancy.listUserMemberships(user.id).catch(() => []);

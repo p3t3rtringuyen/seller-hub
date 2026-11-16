@@ -12,4 +12,5 @@ export default defineRoutes((router) => {
   router.operation("platform-auth.previewInvitation", h.previewInvitation);
   router.operation("platform-auth.registerWithInvitation", h.registerWithInvitation);
   router.operation("platform-auth.acceptInvitation", h.acceptInvitation);
+  router.operation("platform-auth.acceptInvitationWithPassword", h.acceptInvitationWithPassword);
 });

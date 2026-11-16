@@ -26,21 +26,40 @@ describe("passwords and tokens", () => {
 });
 
 describe("login limiter", () => {
-  it("blocks after the budget, per e-mail, and forgets after the window", () => {
-    let t = 0;
-    const l = createLoginLimiter({ maxPerEmail: 3, windowMs: 1000, now: () => t });
-    for (let i = 0; i < 3; i++) l.failure("a@example.test", "1.1.1.1");
-    expect(l.retryAfterMs("A@example.test", "2.2.2.2")).toBeGreaterThan(0);
-    expect(l.retryAfterMs("b@example.test", "2.2.2.2")).toBe(0);
-    t = 1500;
-    expect(l.retryAfterMs("a@example.test", null)).toBe(0);
+  it("reserves slots before the check: parallel attempts cannot exceed the budget", () => {
+    const l = createLoginLimiter({ maxPerEmail: 3, maxPerIp: 100, windowMs: 1000 });
+    const results = Array.from({ length: 10 }, () => l.reserve("a@example.test", "1.1.1.1"));
+    expect(results.filter((r) => r === 0)).toHaveLength(3);
   });
-  it("a success clears the e-mail counter", () => {
-    const l = createLoginLimiter({ maxPerEmail: 2 });
-    l.failure("a@example.test", null);
-    l.failure("a@example.test", null);
+  it("forgets after the window and forgives the e-mail on success", () => {
+    let t = 0;
+    const l = createLoginLimiter({ maxPerEmail: 2, windowMs: 1000, now: () => t });
+    l.reserve("a@example.test", "1.1.1.1");
+    l.reserve("a@example.test", "1.1.1.2");
+    expect(l.reserve("a@example.test", "1.1.1.3")).toBeGreaterThan(0);
     l.success("a@example.test");
-    expect(l.retryAfterMs("a@example.test", null)).toBe(0);
+    expect(l.reserve("a@example.test", "1.1.1.4")).toBe(0);
+    t = 5000;
+    expect(l.reserve("a@example.test", "1.1.1.5")).toBe(0);
+  });
+  it("limits password spraying across e-mails per IP, and shares one bucket when the IP is unknown", () => {
+    const l = createLoginLimiter({ maxPerIp: 3, maxUnknownIp: 5, windowMs: 1000 });
+    const byIp = Array.from({ length: 6 }, (_v, i) => l.reserve(`u${i}@example.test`, "9.9.9.9"));
+    expect(byIp.filter((r) => r === 0)).toHaveLength(3);
+    const unknown = Array.from({ length: 8 }, (_v, i) => l.reserve(`v${i}@example.test`, null));
+    expect(unknown.filter((r) => r === 0)).toHaveLength(5);
+  });
+  it("a flood of distinct e-mails evicts the oldest entries but never resets the target's counter", () => {
+    const l = createLoginLimiter({
+      maxPerEmail: 2,
+      maxPerIp: 1e9,
+      maxUnknownIp: 1e9,
+      maxKeys: 100,
+    });
+    l.reserve("target@example.test", null);
+    l.reserve("target@example.test", null);
+    for (let i = 0; i < 50; i++) l.reserve(`noise${i}@example.test`, null);
+    expect(l.reserve("target@example.test", null)).toBeGreaterThan(0);
   });
 });
 
@@ -67,7 +86,7 @@ describe.skipIf(!t)("IdentityService (real Postgres)", () => {
       db: t!.app.db,
       audit,
       tenancy,
-      limiter: createLoginLimiter({ maxPerEmail: 5 }),
+      limiter: createLoginLimiter({ maxPerEmail: 5, maxPerIp: 1e9, maxUnknownIp: 1e9 }),
     });
   });
   afterAll(async () => {
@@ -301,5 +320,75 @@ describe.skipIf(!t)("IdentityService (real Postgres)", () => {
     await expect(
       identity.signIn({ email: "analyst@example.test", password: PASSWORD }),
     ).rejects.toMatchObject({ code: "no_active_membership" });
+  });
+
+  it("a removed member who is re-invited can accept with their password (review M3)", async () => {
+    const ownerId = (await identity.resolveSession(ownerSession))!.userId;
+    const actor = {
+      scope: { tenantId: ownerTenant, userId: ownerId },
+      email: "owner@example.test",
+    };
+    const { token } = await tenancy.createInvitation(actor, {
+      email: "analyst@example.test",
+      role: "viewer",
+    });
+    expect(await identity.previewInvitation(token)).toMatchObject({ accountExists: true });
+    await expect(
+      identity.acceptInvitationNewUser({ token, password: PASSWORD }),
+    ).rejects.toMatchObject({ code: "account_exists" });
+    await expect(
+      identity.acceptInvitationWithPassword({ token, password: "not the password at all" }),
+    ).rejects.toMatchObject({ code: "invalid_credentials" });
+    const s = await identity.acceptInvitationWithPassword({ token, password: PASSWORD });
+    expect(s.tenantId).toBe(ownerTenant);
+    expect((await tenancy.access(s.user.id, ownerTenant, null))?.roles).toEqual(["viewer"]);
+  });
+
+  it("a failed registration leaves no orphan account (review M3)", async () => {
+    const ownerId = (await identity.resolveSession(ownerSession))!.userId;
+    const actor = {
+      scope: { tenantId: ownerTenant, userId: ownerId },
+      email: "owner@example.test",
+    };
+    const { token } = await tenancy.createInvitation(actor, {
+      email: "orphan@example.test",
+      role: "viewer",
+    });
+    const failing = identityService({
+      db: t!.app.db,
+      audit: createAuditWriter(t!.app.db),
+      tenancy: new Proxy(tenancy, {
+        get: (target, prop, recv) =>
+          prop === "acceptInvitation"
+            ? async () => {
+                throw new Error("boom");
+              }
+            : Reflect.get(target, prop, recv),
+      }),
+    });
+    await expect(failing.acceptInvitationNewUser({ token, password: PASSWORD })).rejects.toThrow(
+      "boom",
+    );
+    expect(
+      (
+        await sql`select 1 from identity.users where email_normalized = 'orphan@example.test'`.execute(
+          t!.owner.db,
+        )
+      ).rows,
+    ).toHaveLength(0);
+    // and the invitation is still usable
+    expect((await identity.acceptInvitationNewUser({ token, password: PASSWORD })).tenantId).toBe(
+      ownerTenant,
+    );
+  });
+
+  it("signing in again replaces the previous session of the same browser (QA FAIL-4)", async () => {
+    const first = await identity.signIn({ email: "owner@example.test", password: PASSWORD });
+    const second = await identity.signIn(
+      { email: "owner@example.test", password: PASSWORD },
+      { previousToken: first.token },
+    );
+    expect(await identity.resolveSession(first.token)).toBeNull();
+    expect(await identity.resolveSession(second.token)).not.toBeNull();
   });
 });

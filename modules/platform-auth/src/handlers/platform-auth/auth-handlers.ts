@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "node:crypto";
 import { isIP } from "node:net";
 import {
   DomainError,
@@ -23,12 +24,32 @@ function header(req: OperationRequest, name: string): string | undefined {
   return Array.isArray(v) ? v[0] : v;
 }
 
+/**
+ * The BFF is the only legitimate caller (ADR-0003). It vouches for the client IP and user agent with `x-sh-bff-secret`
+ * (`SH_BFF_SECRET`, required in production): without a matching secret those headers are ignored, so a direct caller cannot
+ * forge audit IPs or dodge the per-IP throttle. With no secret configured (local dev) they are honoured.
+ */
+export function bffTrusted(
+  req: OperationRequest,
+  env: Record<string, string | undefined> = process.env,
+): boolean {
+  const expected = env.SH_BFF_SECRET;
+  if (!expected) return env.NODE_ENV !== "production";
+  const given = header(req, "x-sh-bff-secret");
+  if (!given) return false;
+  const a = Buffer.from(given);
+  const b = Buffer.from(expected);
+  return a.length === b.length && timingSafeEqual(a, b);
+}
+
 export function clientContext(req: OperationRequest): ClientContext {
-  const ip = header(req, "x-sh-client-ip");
+  const trusted = bffTrusted(req);
+  const ip = trusted ? header(req, "x-sh-client-ip") : undefined;
   return {
     ip: ip && isIP(ip) ? ip : null,
-    userAgent: header(req, "x-sh-user-agent") ?? header(req, "user-agent") ?? null,
+    userAgent: trusted ? (header(req, "x-sh-user-agent") ?? null) : null,
     traceId: req.traceId,
+    previousToken: bearerToken(req.headers.authorization) ?? undefined,
   };
 }
 
@@ -99,6 +120,17 @@ export function authHandlers() {
         201,
         await authService().acceptInvitationNewUser(
           { token: b.token!, password: b.password!, displayName: b.displayName ?? null },
+          clientContext(req),
+        ),
+      );
+    },
+
+    acceptInvitationWithPassword: async (req: OperationRequest) => {
+      const b = req.body as Body;
+      return issued(
+        200,
+        await authService().acceptInvitationWithPassword(
+          { token: b.token!, password: b.password! },
           clientContext(req),
         ),
       );
