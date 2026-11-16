@@ -116,8 +116,7 @@ D11 (nothing PII, the clients refuse restricted operations); D30 open (mock tran
 ## Fix round 1 (P5-REVIEW: MERGE-AFTER-FIXES)
 
 Commits: **FIX** = `fix(ingestion): one step chain per run, idempotent landing, local windows, …` (engine, requester,
-repository, adapters, directory, tests); **WORKER** = `fix(worker): use the shared queue binding, …`;
-**DOCS** = the commit that adds this section. `git log --oneline main..` has the hashes.
+repository, adapters, directory, tests); **DOCS+WORKER** = `d4e69a4` (the worker changes, the shared queue import, local-date backfill CLI and retention env, landed in the same commit as this section); FIX = `23aeb67`. `git log --oneline main..` has the hashes.
 
 | Item | Commit | What changed | Test (`packages/ingestion/test/fixround.test.ts` unless noted) |
 |---|---|---|---|
@@ -127,9 +126,9 @@ repository, adapters, directory, tests); **WORKER** = `fix(worker): use the shar
 | M3 | FIX | `SyncTarget.timeZone` plus per-marketplace and per-profile zones read by the directory; `windows.ts`; `ctx.timeZone`, `ctx.dates`; backfill takes local dates (CLI too) | `units.test.ts`: 00:30 UTC in Los Angeles, DST edge, chunk edges; `engine.test.ts` backfill |
 | M4 | FIX | `SyncTarget.connected`; directory maps `active` only; `scopesFor` returns none for an unconnected API; such runs are cancelled; `reconcilePaused` knows `not_connected` | `units.test.ts` scopes; an Ads-only account gets no SP states |
 | M5 | FIX | SP `CANCELLED` and Data Kiosk `DONE` without a document give a successful run with 0 rows and no landing; `FATAL` still fails | CANCELLED, FATAL, Kiosk |
-| M6 | FIX + WORKER | `createRunRequester` (`requestRefresh`, `backfill`, `getSyncHealth(scope)` with definition metadata); `BullRunEnqueuer` and `RUN_QUEUES` moved to `@seller-hub/ingestion/queue`; the worker scheduler uses the requester | requester with no Amazon client; worker `ingest.test.ts` still passes through BullMQ |
+| M6 | FIX + DOCS+WORKER | `createRunRequester` (`requestRefresh`, `backfill`, `getSyncHealth(scope)` with definition metadata); `BullRunEnqueuer` and `RUN_QUEUES` moved to `@seller-hub/ingestion/queue`; the worker scheduler uses the requester | requester with no Amazon client; worker `ingest.test.ts` still passes through BullMQ |
 | minor 1 | FIX | cancel and reauth drop the run's scratch | "a cancelled run leaves no scratch" |
-| minor 2 | FIX + WORKER | inbox purge in the daily maintenance (done 35 d, failed 90 d); `SH_JOB_RUN_RETENTION_DAYS` read by the worker (default 90) | not covered by a test |
+| minor 2 | FIX + DOCS+WORKER | inbox purge in the daily maintenance (done 35 d, failed 90 d); `SH_JOB_RUN_RETENTION_DAYS` read by the worker (default 90) | not covered by a test |
 | minor 3 | FIX | `complete` flag in the scratch | "a crash after the last page commit" |
 | minor 4 | FIX | `attempts` reset after progress | `engine.test.ts` resume (attempts now 0) |
 | minor 5 | FIX | pause and resume act on the sync keys of the definitions that use the API, not on an `ads.%` prefix | not covered by a test |
