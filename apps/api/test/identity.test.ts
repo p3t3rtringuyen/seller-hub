@@ -455,6 +455,133 @@ describe.skipIf(!t)("identity over HTTP (real Postgres, mock Amazon)", () => {
     ).toEqual([accountA2]);
   });
 
+  it("a seller-account-scoped Admin can finish the Ads connection for their account only (review M4)", async () => {
+    const second = await call("POST", "/v1/seller-accounts", {
+      session: alice,
+      body: { name: "Acme MX", regionCode: "NA" },
+    });
+    const accountScoped = second.json.id as string;
+    const inv = await call("POST", "/v1/invitations", {
+      session: alice,
+      body: { email: "carol@example.test", role: "admin", sellerAccountId: accountScoped },
+    });
+    const token = new URL(inv.json.link).hash.replace("#token=", "");
+    const reg = await call("POST", "/v1/auth/invitations/register", {
+      body: { token, password: PASSWORD },
+    });
+    const carol: Session = {
+      token: String(reg.headers["x-sh-session"]),
+      tenantId: reg.json.tenantId,
+      userId: reg.json.user.id,
+    };
+    const start = await call(
+      "POST",
+      `/v1/seller-accounts/${accountScoped}/connections/ads/authorization`,
+      { session: carol },
+    );
+    expect(start.status).toBe(200);
+    const url = new URL(start.json.authorizationUrl);
+    const done = await call("POST", "/v1/connections/ads/callback", {
+      session: carol,
+      body: { code: url.searchParams.get("code"), state: url.searchParams.get("state") },
+    });
+    expect(done.status).toBe(200);
+    expect(done.json.sellerAccountId).toBe(accountScoped);
+    expect(
+      (
+        await call("POST", `/v1/seller-accounts/${accountA}/connections/ads/authorization`, {
+          session: carol,
+        })
+      ).status,
+    ).toBe(404);
+  });
+
+  it("a removed member who is re-invited can accept with their password (review M3)", async () => {
+    const inv1 = await call("POST", "/v1/invitations", {
+      session: alice,
+      body: { email: "dave@example.test", role: "viewer" },
+    });
+    const t1 = new URL(inv1.json.link).hash.replace("#token=", "");
+    const reg = await call("POST", "/v1/auth/invitations/register", {
+      body: { token: t1, password: PASSWORD },
+    });
+    const members = (await call("GET", "/v1/members", { session: alice })).json.items as {
+      membershipId: string;
+      email: string;
+    }[];
+    await call(
+      "DELETE",
+      `/v1/members/${members.find((m) => m.email === "dave@example.test")!.membershipId}`,
+      { session: alice },
+    );
+    expect(
+      (
+        await call("GET", "/v1/me", {
+          session: { token: String(reg.headers["x-sh-session"]), tenantId: "", userId: "" },
+        })
+      ).status,
+    ).toBe(401);
+    const inv2 = await call("POST", "/v1/invitations", {
+      session: alice,
+      body: { email: "dave@example.test", role: "analyst" },
+    });
+    const t2 = new URL(inv2.json.link).hash.replace("#token=", "");
+    const back = await call("POST", "/v1/auth/invitations/accept-with-password", {
+      body: { token: t2, password: PASSWORD },
+    });
+    expect(back.status).toBe(200);
+    const dave: Session = {
+      token: String(back.headers["x-sh-session"]),
+      tenantId: back.json.tenantId,
+      userId: back.json.user.id,
+    };
+    expect((await call("GET", "/v1/me", { session: dave })).json.roles).toEqual(["analyst"]);
+  });
+
+  it("signing in while signed in replaces the cookie's session: the old token stops working (QA FAIL-4)", async () => {
+    const old = await signIn("alice@example.test");
+    const r = await call("POST", "/v1/auth/sign-in", {
+      session: old,
+      body: { email: "alice@example.test", password: PASSWORD },
+    });
+    expect(r.status).toBe(200);
+    expect((await call("GET", "/v1/me", { session: old })).status).toBe(401);
+    expect(
+      (
+        await call("GET", "/v1/me", {
+          session: { ...old, token: String(r.headers["x-sh-session"]) },
+        })
+      ).status,
+    ).toBe(200);
+  });
+
+  it("client IP and user agent headers are ignored unless the BFF proves itself (review m4)", async () => {
+    const env = process.env.SH_BFF_SECRET;
+    process.env.SH_BFF_SECRET = "bff-secret-for-test-0123456789abcdef";
+    try {
+      await call("POST", "/v1/auth/sign-in", {
+        body: { email: "alice@example.test", password: PASSWORD },
+        headers: { "x-sh-client-ip": "198.51.100.7" },
+      });
+      await call("POST", "/v1/auth/sign-in", {
+        body: { email: "alice@example.test", password: PASSWORD },
+        headers: {
+          "x-sh-client-ip": "198.51.100.8",
+          "x-sh-bff-secret": "bff-secret-for-test-0123456789abcdef",
+        },
+      });
+    } finally {
+      if (env === undefined) delete process.env.SH_BFF_SECRET;
+      else process.env.SH_BFF_SECRET = env;
+    }
+    const { rows } = await sql<{
+      ip: string | null;
+    }>`select host(ip_address) as ip from identity.sessions where host(ip_address) in ('198.51.100.7','198.51.100.8')`.execute(
+      t!.owner.db,
+    );
+    expect(rows.map((r) => r.ip)).toEqual(["198.51.100.8"]);
+  });
+
   it("preferences (column layout): stored per user and tenant, validated", async () => {
     const put = await call("PUT", "/v1/me/preferences/ads.campaigns.grid", {
       session: alice,

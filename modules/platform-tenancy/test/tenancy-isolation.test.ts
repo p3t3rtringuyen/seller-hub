@@ -335,4 +335,49 @@ describe.skipIf(!t)("tenancyService - roles, owners and invitations", () => {
       maxValue: "1000.0000",
     });
   });
+
+  it("owners demoting each other at the same time cannot leave the tenant without an owner (review m2)", async () => {
+    const o2 = uuidv7();
+    await sql`insert into identity.users (id, email) values (${o2}, 'o2@example.test')`.execute(
+      t!.owner.db,
+    );
+    const repo = tenancyRepository(t!.app.db);
+    const m2 = await repo.createMembership({ tenantId: FIXTURE.tenantId, userId: o2 }, o2);
+    await repo.replaceGrants(
+      { tenantId: FIXTURE.tenantId, userId: o2 },
+      m2,
+      [{ role: "owner", sellerAccountId: null }],
+      null,
+    );
+    const results = await Promise.allSettled([
+      svc.setMemberRoles({ scope: ownerScope }, m2, [{ role: "viewer", sellerAccountId: null }]),
+      svc.setMemberRoles(
+        { scope: { tenantId: FIXTURE.tenantId, userId: o2 } },
+        memberships[owner]!,
+        [{ role: "viewer", sellerAccountId: null }],
+      ),
+    ]);
+    expect(results.filter((r) => r.status === "fulfilled")).toHaveLength(1);
+    expect(results.filter((r) => r.status === "rejected")).toHaveLength(1);
+    const { rows } = await sql<{
+      n: string;
+    }>`select count(distinct membership_id)::text n from core.role_grants where tenant_id = ${FIXTURE.tenantId} and role = 'owner'`.execute(
+      t!.owner.db,
+    );
+    expect(Number(rows[0]!.n)).toBeGreaterThanOrEqual(1);
+  });
+
+  it("an invitation revoked while its holder submits is not accepted (review m1)", async () => {
+    const repo = tenancyRepository(t!.app.db);
+    const { invitation } = await svc.createInvitation(
+      { scope: ownerScope, email: "o@example.test" },
+      { email: "late@example.test", role: "viewer" },
+    );
+    await svc.revokeInvitation({ scope: ownerScope }, invitation.id);
+    const { withScope } = await import("@seller-hub/db");
+    const ok = await withScope(t!.app.db, ownerScope, (trx) =>
+      repo.markInvitationAccepted(ownerScope, invitation.id, owner, trx),
+    );
+    expect(ok).toBe(false);
+  });
 });

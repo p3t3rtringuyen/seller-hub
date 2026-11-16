@@ -271,6 +271,17 @@ export function connectionsService(deps: ConnectionsServiceDeps) {
           "state_invalid",
           "This connection attempt expired or was already used. Start again.",
         );
+      // The route is tenant-scoped (a seller-account-scoped Admin has no tenant-level connections.manage): check the
+      // permission on the account the STATE names, as for every other account route (review M4).
+      if (
+        !(await deps.tenancy.can(
+          a.scope.userId!,
+          a.scope.tenantId,
+          consumed.sellerAccountId,
+          "connections.manage",
+        ))
+      )
+        throw new DomainError("not_found", "not_found", "seller account not found");
       const scope: Scope = { ...tenantScope, sellerAccountId: consumed.sellerAccountId };
       const { account, region } = await accountOf(scope);
       const refreshToken = await deps.amazon.exchangeAuthorizationCode({

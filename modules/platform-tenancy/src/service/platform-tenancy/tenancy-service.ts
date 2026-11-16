@@ -94,6 +94,17 @@ export function tenancyService(deps: TenancyServiceDeps) {
       return { scope: { tenantId, userId, sellerAccountId } as Scope, roles };
     },
 
+    /** Does the user hold `permission` on this seller account (or tenant-wide when null)? */
+    async can(
+      userId: string,
+      tenantId: string,
+      sellerAccountId: string | null,
+      permission: string,
+    ): Promise<boolean> {
+      const access = await this.access(userId, tenantId, sellerAccountId);
+      return !!access && permissionsFor(access.roles, deps.permissionMatrix).includes(permission);
+    },
+
     async listUserMemberships(userId: string) {
       return (await repo.listUserMemberships(userScope(userId))).filter(
         (m) => m.status === "active" && m.tenantStatus === "active",
@@ -191,6 +202,7 @@ export function tenancyService(deps: TenancyServiceDeps) {
       let affectedUserId = "";
       let before: GrantInput[] = [];
       await withScope(deps.db, scope, async (trx) => {
+        await repo.lockTenant(scope, trx);
         const members = await repo.listMembers(scope, trx);
         const target = members.find((m) => m.membershipId === membershipId);
         if (!target) throw new DomainError("not_found", "not_found", "member not found");
@@ -218,6 +230,7 @@ export function tenancyService(deps: TenancyServiceDeps) {
       const scope = a.scope;
       let affectedUserId = "";
       await withScope(deps.db, scope, async (trx) => {
+        await repo.lockTenant(scope, trx);
         const members = await repo.listMembers(scope, trx);
         const target = members.find((m) => m.membershipId === membershipId);
         if (!target) throw new DomainError("not_found", "not_found", "member not found");
@@ -371,7 +384,12 @@ export function tenancyService(deps: TenancyServiceDeps) {
           null,
           trx,
         );
-        await repo.markInvitationAccepted(scope, inv.id, user.id, trx);
+        if (!(await repo.markInvitationAccepted(scope, inv.id, user.id, trx)))
+          throw new DomainError(
+            "not_found",
+            "invitation_invalid",
+            "This invitation is invalid or expired",
+          );
         await deps.audit.writeIn(trx, scope, {
           action: "member.joined",
           targetType: "membership",

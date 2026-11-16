@@ -3,10 +3,11 @@ import { jsonResponse, MockTransport } from "@seller-hub/amazon-core/testing";
 import { uuidv7 } from "@seller-hub/core";
 import { withScope } from "@seller-hub/db";
 import { createAuditWriter } from "@seller-hub/mod-platform-audit";
-import { tenancyService } from "@seller-hub/mod-platform-tenancy";
+import { tenancyRepository, tenancyService } from "@seller-hub/mod-platform-tenancy";
 import { FIXTURE, seedFixtures, tryCreateTestDb } from "@seller-hub/testing";
 import { sql } from "kysely";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import permissions from "../../platform-tenancy/src/permissions/platform-tenancy.permissions";
 import { composeAmazon, MOCK_ADS_REFRESH_TOKEN } from "../src/amazon/compose";
 import { connectionsRepository } from "../src/repository/platform-connections/connections-repository";
 import { connectionsService } from "../src/service/platform-connections/connections-service";
@@ -14,6 +15,7 @@ import { open } from "../src/vault/envelope";
 import { vaultCredentialSource } from "../src/vault/vault-credential-source";
 
 const t = await tryCreateTestDb();
+const matrix = new Map(permissions.map((p) => [p.permission, new Set(p.roles)]));
 const ENV = { SH_MASTER_KEY: randomBytes(32).toString("base64"), SH_AMAZON_MODE: "replay" };
 const SP_TOKEN = "Atzr|self-authorized-sp-refresh-token-0123456789";
 
@@ -39,12 +41,22 @@ describe.skipIf(!t)("connections (real Postgres, mock Amazon transport)", () => 
       await sql`insert into identity.users (id, email) values (${id}, ${email})`.execute(
         t!.owner.db,
       );
+    // the callback checks connections.manage on the account the state names, so the actors need real grants
+    const tenancyRepo = tenancyRepository(t!.app.db);
+    for (const [uid, scope] of [
+      [userA, A],
+      [userB, B],
+    ] as const) {
+      const sc = { tenantId: scope.tenantId, userId: uid };
+      const m = await tenancyRepo.createMembership(sc, uid);
+      await tenancyRepo.replaceGrants(sc, m, [{ role: "owner", sellerAccountId: null }], null);
+    }
     const audit = createAuditWriter(t!.app.db);
     amazon = composeAmazon({ env: ENV, db: t!.app.db, audit });
     const tenancy = tenancyService({
       db: t!.app.db,
       audit,
-      permissionMatrix: new Map(),
+      permissionMatrix: matrix,
       webPublicUrl: "https://app.example.test",
     });
     svc = connectionsService({
@@ -127,7 +139,7 @@ describe.skipIf(!t)("connections (real Postgres, mock Amazon transport)", () => 
     const tenancy = tenancyService({
       db: t!.app.db,
       audit,
-      permissionMatrix: new Map(),
+      permissionMatrix: matrix,
       webPublicUrl: "https://app.example.test",
     });
     const s2 = connectionsService({

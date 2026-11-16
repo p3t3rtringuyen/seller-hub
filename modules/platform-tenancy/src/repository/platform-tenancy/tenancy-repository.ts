@@ -332,15 +332,27 @@ export function tenancyRepository(db: Database) {
       });
     },
 
+    /** Closes the invitation only while it is still open; false when it was revoked, used or expired meanwhile. */
     async markInvitationAccepted(
       scope: Scope,
       id: string,
       userId: string,
       trx: ScopedTx,
-    ): Promise<void> {
+    ): Promise<boolean> {
       const s = requireScope(scope);
-      await sql`update core.invitations set accepted_at = now(), accepted_user_id = ${userId}
-                 where tenant_id = ${s.tenantId} and id = ${id}`.execute(trx);
+      const r =
+        await sql`update core.invitations set accepted_at = now(), accepted_user_id = ${userId}
+                           where tenant_id = ${s.tenantId} and id = ${id}
+                             and accepted_at is null and revoked_at is null and expires_at > now()`.execute(
+          trx,
+        );
+      return Number(r.numAffectedRows ?? 0) > 0;
+    },
+
+    /** Serialises owner-affecting changes of one tenant (the last-owner rule counts owners after the change). */
+    async lockTenant(scope: Scope, trx: ScopedTx): Promise<void> {
+      const s = requireScope(scope);
+      await sql`select id from core.tenants where id = ${s.tenantId} for update`.execute(trx);
     },
 
     // --- seller accounts ------------------------------------------------------------------------------------
