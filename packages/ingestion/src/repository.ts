@@ -72,6 +72,10 @@ export interface RunScratch {
   throttles?: number;
   rows?: number;
   entityIds?: string[];
+  /** The last page was committed: a resume must not start over (nextToken null alone is ambiguous). */
+  complete?: boolean;
+  /** Heartbeat: when the next step of this run is due (see findStaleRuns). */
+  nextStepAt?: string;
   /** Part keys landed in the object store, in order. */
   parts?: { key: string; sourceRef?: string }[];
 }
@@ -252,18 +256,17 @@ export async function finishSyncFailure(
 export async function pauseSyncs(
   scope: SellerScope,
   db: Database,
-  api: "sp" | "ads",
+  syncKeys: readonly string[],
   reason: string,
 ): Promise<number> {
   const s = requireSellerScope(scope);
+  if (syncKeys.length === 0) return 0;
   return withScope(db, s, async (trx) => {
     const res = await sql`update ingest.sync_states
         set status = 'paused', paused_reason = ${reason}
       where tenant_id = ${s.tenantId} and seller_account_id = ${s.sellerAccountId}
         and status not in ('paused', 'disabled')
-        and ${api === "ads" ? sql`sync_key like 'ads.%'` : sql`sync_key not like 'ads.%'`}`.execute(
-      trx,
-    );
+        and sync_key in (${sql.join([...syncKeys])})`.execute(trx);
     return Number(res.numAffectedRows ?? 0);
   });
 }
@@ -327,6 +330,27 @@ export async function createRun(
     if (n.entityIds?.length)
       await writeScratch(trx, n.syncStateId, id, { entityIds: [...n.entityIds] });
     return { run, created: true };
+  });
+}
+
+/**
+ * The open run of a sync that carries the live schedule (not a backfill window, not an entity refresh), if any.
+ * A scheduled window ends "now", so two requests never share a job key: this is what makes a second request, or a tick
+ * that finds the sync due while its refresh is still queued, join the live run instead of starting another (B1).
+ */
+export async function findOpenSyncRun(
+  scope: SellerScope,
+  db: Database,
+  syncStateId: string,
+): Promise<RunRow | null> {
+  const s = requireSellerScope(scope);
+  return withScope(db, s, async (trx) => {
+    const res = await sql<Row>`select * from ingest.job_runs
+      where sync_state_id = ${syncStateId} and tenant_id = ${s.tenantId} and seller_account_id = ${s.sellerAccountId}
+        and state not in ('done', 'failed', 'cancelled')
+        and priority_class <> 'backfill' and family <> 'entity-refresh'
+      order by created_at desc limit 1`.execute(trx);
+    return res.rows[0] ? mapRun(res.rows[0]) : null;
   });
 }
 
@@ -516,22 +540,23 @@ export async function reconcilePaused(
   p: {
     tenantId: string;
     sellerAccountId: string;
-    api: "sp" | "ads";
+    /** Sync keys of the definitions that use this API (decided by the definition, not by the key prefix). */
+    syncKeys: readonly string[];
     reason: string | undefined;
     now: Date;
   },
 ): Promise<void> {
-  const apiFilter = p.api === "ads" ? sql`sync_key like 'ads.%'` : sql`sync_key not like 'ads.%'`;
+  if (p.syncKeys.length === 0) return;
+  const keys = sql.join([...p.syncKeys]);
   if (p.reason) {
     await sql`update ingest.sync_states set status = 'paused', paused_reason = ${p.reason}
       where seller_account_id = ${p.sellerAccountId} and tenant_id = ${p.tenantId}
-        and status not in ('paused', 'disabled') and ${apiFilter}`.execute(system);
+        and status not in ('paused', 'disabled') and sync_key in (${keys})`.execute(system);
   } else {
     await sql`update ingest.sync_states set status = 'idle', paused_reason = null, next_run_at = ${p.now}
       where seller_account_id = ${p.sellerAccountId} and tenant_id = ${p.tenantId}
-        and status = 'paused' and paused_reason in ('needs_reauth', 'tenant_suspended') and ${apiFilter}`.execute(
-      system,
-    );
+        and status = 'paused' and paused_reason in ('needs_reauth', 'tenant_suspended', 'not_connected')
+        and sync_key in (${keys})`.execute(system);
   }
 }
 
@@ -674,17 +699,71 @@ export async function accountsWithPendingInbox(
   return res.rows.map((r) => ({ tenantId: r.tenant_id, sellerAccountId: r.seller_account_id }));
 }
 
-/** Unfinished runs whose state has not moved for `staleMs` (a worker died mid-run): the tick re-enqueues them. */
+/**
+ * Unfinished runs that are overdue: their own scheduled next step (`runs[runId].nextStepAt`, written every time a
+ * step hands the run back) passed more than `graceMs` ago, or, with no heartbeat at all, the row has not changed for
+ * `graceMs`. A run that is healthily waiting (a long poll, a Retry-After) is not stale.
+ */
 export async function findStaleRuns(
   system: Database,
   now: Date,
-  staleMs: number,
+  graceMs: number,
   limit: number,
 ): Promise<RunRow[]> {
-  const res = await sql<Row>`select * from ingest.job_runs
-    where state not in ('done', 'failed', 'cancelled') and updated_at < ${new Date(now.getTime() - staleMs)}
-    order by updated_at limit ${limit}`.execute(system);
+  const cutoff = new Date(now.getTime() - graceMs);
+  const res = await sql<Row>`select jr.* from ingest.job_runs jr
+    left join ingest.sync_states s on s.id = jr.sync_state_id
+    where jr.state not in ('done', 'failed', 'cancelled')
+      and coalesce((s.cursor #>> array['runs', jr.id::text, 'nextStepAt'])::timestamptz, jr.updated_at) < ${cutoff}
+    order by jr.updated_at limit ${limit}`.execute(system);
   return res.rows.map(mapRun);
+}
+
+/** Heartbeat: when the next step of the run is due. Written whenever a step hands the run back to the queue. */
+export async function setNextStepAt(
+  trx: Trx,
+  syncStateId: string,
+  runId: string,
+  at: Date,
+): Promise<void> {
+  await sql`
+    update ingest.sync_states
+       set cursor = jsonb_set(
+             jsonb_set(jsonb_set(cursor, '{runs}', coalesce(cursor->'runs', '{}'::jsonb), true),
+                       array['runs', ${runId}::text], coalesce(cursor #> array['runs', ${runId}::text], '{}'::jsonb), true),
+             array['runs', ${runId}::text, 'nextStepAt'], to_jsonb(${at.toISOString()}::text), true)
+     where id = ${syncStateId}`.execute(trx);
+}
+
+/**
+ * Replaces the raw-object index of a run in ONE transaction, so a retried landing never leaves duplicate parts
+ * (the index has no unique key: it is partitioned on landed_at).
+ */
+export async function replaceRawObjects(
+  trx: Trx,
+  p: { tenantId: string; sellerAccountId: string; runId: string },
+  rows: readonly Parameters<typeof insertRawObject>[1][],
+): Promise<void> {
+  await sql`delete from ingest.raw_objects
+    where job_run_id = ${p.runId} and tenant_id = ${p.tenantId} and seller_account_id = ${p.sellerAccountId}`.execute(
+    trx,
+  );
+  for (const r of rows) await insertRawObject(trx, r);
+}
+
+/** D64 a: inbox rows that are done are kept as long as raw objects, failed ones 90 days. */
+export async function purgeInbox(
+  system: Database,
+  now: Date,
+  retention: { doneDays: number; failedDays: number },
+): Promise<number> {
+  const day = 86_400_000;
+  const res = await sql`delete from ingest.inbox
+    where (status = 'done' and received_at < ${new Date(now.getTime() - retention.doneDays * day)})
+       or (status = 'failed' and received_at < ${new Date(now.getTime() - retention.failedDays * day)})`.execute(
+    system,
+  );
+  return Number(res.numAffectedRows ?? 0);
 }
 
 /** Backfill and entity-refresh runs do not touch the cursor or the schedule; they only drop their scratch. */

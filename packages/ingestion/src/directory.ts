@@ -25,10 +25,23 @@ interface TargetRow {
   region_code: string;
   status: string;
   marketplace_ids: string[];
-  profiles: { profileId: string; marketplaceId: string | null; accountType: string }[] | null;
+  profiles:
+    | {
+        profileId: string;
+        marketplaceId: string | null;
+        accountType: string;
+        timeZone: string | null;
+      }[]
+    | null;
+  marketplace_zones: Record<string, string> | null;
   sp_status: string | null;
   ads_status: string | null;
 }
+
+// Only an ACTIVE connection is syncable. needs_reauth / revoked / error are paused (the seller must act);
+// pending or missing connections are simply "not connected": no sync states are created for that API.
+const connectedOf = (status: string | null): boolean =>
+  status === "active" || pausedOf(status) !== undefined;
 
 function pausedOf(status: string | null): SyncTarget["paused"][keyof SyncTarget["paused"]] {
   if (status === "needs_reauth" || status === "revoked" || status === "error")
@@ -48,10 +61,14 @@ function toTarget(r: TargetRow): SyncTarget {
     accountType: r.account_type,
     region: parseRegion(r.region_code.toLowerCase()),
     marketplaceIds: r.marketplace_ids ?? [],
+    marketplaceTimeZones: r.marketplace_zones ?? {},
+    timeZone: (r.marketplace_ids ?? []).map((m) => r.marketplace_zones?.[m]).find(Boolean) ?? "UTC",
+    connected: { sp: connectedOf(r.sp_status), ads: connectedOf(r.ads_status) },
     adsProfiles: (r.profiles ?? []).map((p) => ({
       profileId: p.profileId,
       marketplaceId: p.marketplaceId,
       accountType: p.accountType as "seller" | "vendor" | "agency",
+      ...(p.timeZone ? { timeZone: p.timeZone } : {}),
     })),
     paused,
   };
@@ -63,9 +80,13 @@ const SELECT = sql`
                      from core.seller_account_marketplaces m
                     where m.seller_account_id = sa.id and m.is_enabled and coalesce(m.is_participating, true)),
                   '{}') as marketplace_ids,
+         (select jsonb_object_agg(m.marketplace_id, rm.time_zone)
+            from core.seller_account_marketplaces m join ref.marketplaces rm on rm.id = m.marketplace_id
+           where m.seller_account_id = sa.id) as marketplace_zones,
          (select jsonb_agg(jsonb_build_object('profileId', p.amazon_profile_id,
                                               'marketplaceId', p.marketplace_id,
-                                              'accountType', p.account_type) order by p.amazon_profile_id)
+                                              'accountType', p.account_type,
+                                              'timeZone', p.time_zone) order by p.amazon_profile_id)
             from core.ads_profiles p
            where p.seller_account_id = sa.id and p.status = 'linked') as profiles,
          (select c.status from core.connections c where c.seller_account_id = sa.id and c.api = 'spapi') as sp_status,

@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import merchantListings from "../src/demo/merchant-listings.sync";
 import { DefinitionError, toIngestDefinitions } from "../src/definitions";
 import { nextRunDelayMs, parseDurationMs } from "../src/duration";
-import { computeWindow } from "../src/engine";
+import { backfillWindows, computeWindow, localMidnight, windowDates } from "../src/windows";
 import { MemoryObjectStore, rawObjectKey, S3ObjectStore } from "../src/object-store";
 import { parseCsv, parseJsonRecords, parseTsv, parseXmlRecords } from "../src/parsers";
 import { jobKeyOf } from "../src/repository";
@@ -94,9 +94,65 @@ describe("scheduling helpers", () => {
     const now = new Date("2026-11-13T10:00:00Z");
     expect(computeWindow(def, {}, now).start?.toISOString()).toBe("2026-11-10T00:00:00.000Z");
     const gap = computeWindow(def, { windowEnd: "2026-11-01T00:00:00.000Z" }, now);
-    expect(gap.start?.toISOString()).toBe("2026-11-01T00:00:00.000Z");
+    expect(gap.start?.toISOString()).toBe("2026-10-31T00:00:00.000Z"); // the last window ended on the 31st
     const long = computeWindow(def, { windowEnd: "2026-06-01T00:00:00.000Z" }, now);
     expect((long.end!.getTime() - long.start!.getTime()) / 86_400_000).toBe(31);
+  });
+  it("windows are marketplace-local dates: 00:30 UTC is still yesterday in Los Angeles (M3)", () => {
+    const def: PullDefinition = definePagedPull<unknown>({
+      key: "x.w",
+      family: "paged-pull",
+      window: { lookbackDays: 3, maxRangeDays: 31 },
+      fetchPage: async () => ({ rows: [] }),
+      upsert: async () => undefined,
+    });
+    const now = new Date("2026-11-14T00:30:00Z"); // 16:30 on 13 Nov in Los Angeles (PST, UTC-8)
+    const w = computeWindow(def, {}, now, "America/Los_Angeles");
+    expect(w.start?.toISOString()).toBe("2026-11-10T08:00:00.000Z"); // local midnight of 10 Nov
+    expect(windowDates(w, "America/Los_Angeles")).toEqual({ from: "2026-11-10", to: "2026-11-13" });
+    // the UTC reading would be a future date for a US profile
+    expect(windowDates(w, "UTC")?.to).toBe("2026-11-14");
+    // DST edge: local midnight on the spring-forward day
+    expect(localMidnight("2026-03-08", "America/Los_Angeles").toISOString()).toBe(
+      "2026-03-08T08:00:00.000Z",
+    );
+    expect(localMidnight("2026-03-09", "America/Los_Angeles").toISOString()).toBe(
+      "2026-03-09T07:00:00.000Z",
+    );
+    // backfill chunks end on local midnights, newest first
+    const ws = backfillWindows("2026-11-01", "2026-11-13", 10, "America/Los_Angeles");
+    expect(ws.map((x) => x.start.toISOString())).toEqual([
+      "2026-11-04T08:00:00.000Z",
+      "2026-11-01T07:00:00.000Z",
+    ]);
+    expect(ws[0]?.end.toISOString()).toBe("2026-11-14T08:00:00.000Z");
+  });
+  it("an account with no active connection for an API gets no scopes for it (M4)", () => {
+    const t: SyncTarget = {
+      tenantId: "t",
+      sellerAccountId: "s",
+      accountType: "seller",
+      region: "na",
+      marketplaceIds: ["M1"],
+      adsProfiles: [{ profileId: "P1", marketplaceId: "M1", accountType: "seller" }],
+      paused: {},
+      connected: { sp: false, ads: true },
+    };
+    const sp = definePagedPull<unknown>({
+      key: "x.sp",
+      family: "paged-pull",
+      fetchPage: async () => ({ rows: [] }),
+      upsert: async () => undefined,
+    });
+    const ads = definePagedPull<unknown>({
+      key: "x.ads",
+      family: "paged-pull",
+      appliesTo: { api: "ads" },
+      fetchPage: async () => ({ rows: [] }),
+      upsert: async () => undefined,
+    });
+    expect(scopesFor(sp as PullDefinition, t)).toEqual([]);
+    expect(scopesFor(ads as PullDefinition, t)).toEqual(["P1"]);
   });
   it("scopes: Ads syncs run per Ads profile, SP syncs per account or marketplace; vendor accounts are filtered", () => {
     const target: SyncTarget = {

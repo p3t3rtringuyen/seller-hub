@@ -22,7 +22,9 @@ export interface LandedDocument {
 }
 
 export type PollResult =
-  { ready: false; retryAfterMs: number } | { ready: true; documentId: string };
+  | { ready: false; retryAfterMs: number }
+  /** `documentId: null` = Amazon has no data for the request: a successful, empty run. */
+  | { ready: true; documentId: string | null };
 
 export interface AsyncJobAdapter<D extends PullDefinition = PullDefinition> {
   create(ctx: RunContext, def: D): Promise<string>;
@@ -88,7 +90,9 @@ export const spReportAdapter = (polling: PollingConfig): AsyncJobAdapter<SpRepor
       if (!body.reportDocumentId) throw new ReportFailedError(reportId, "DONE_WITHOUT_DOCUMENT");
       return { ready: true, documentId: body.reportDocumentId };
     }
-    if (status === "CANCELLED" || status === "FATAL") throw new ReportFailedError(reportId, status);
+    // Amazon cancels a report by itself when there is no data to return (reports_2021-06-30 model): not a failure.
+    if (status === "CANCELLED") return { ready: true, documentId: null };
+    if (status === "FATAL") throw new ReportFailedError(reportId, status);
     return { ready: false, retryAfterMs: polling.spPollMs };
   },
   async download(ctx, def, reportId, documentId) {
@@ -157,13 +161,21 @@ export const adsExportAdapter = (polling: PollingConfig): AsyncJobAdapter<AdsExp
     const body = (res.body ?? {}) as ExportShape;
     if (body.status === "COMPLETED") {
       if (!body.url) throw new AsyncJobFailedError("export completed without a url", "no_url");
-      return { ready: true, documentId: body.url };
+      // The pre-signed url is a bearer link to seller data: never stored. The export id is the document id and
+      // `download` asks for a fresh url (it may be hours later, after the old one expired).
+      return { ready: true, documentId: exportId };
     }
     if (body.status === "FAILED")
       throw new AsyncJobFailedError(`export ${exportId} failed`, "export_failed");
     return { ready: false, retryAfterMs: polling.adsPollMs };
   },
-  async download(ctx, def, _exportId, url) {
+  async download(ctx, def, exportId) {
+    const res = await ctx.ads.call("GetExport", ctx.adsScope, { path: { exportId } } as never, {
+      accept: EXPORT_MEDIA[def.exportOperation],
+      idempotent: true,
+    });
+    const url = ((res.body ?? {}) as ExportShape).url;
+    if (!url) throw new AsyncJobFailedError("export has no download url", "no_url");
     const bytes = await ctx.ads.download(url, { compression: "auto" });
     return [{ bytes, contentType: "application/json", sourceRef: def.exportOperation }];
   },
@@ -185,9 +197,8 @@ export const dataKioskAdapter = (polling: PollingConfig): AsyncJobAdapter<DataKi
       throw new AsyncJobFailedError("Data Kiosk is not configured", "kiosk_unavailable");
     const q = await ctx.kiosk.getQuery(ctx.spScope, queryId);
     if (q.status === "DONE") {
-      if (!q.documentId)
-        throw new AsyncJobFailedError("query DONE without a document", "no_document");
-      return { ready: true, documentId: q.documentId };
+      // DONE without a data document means the query returned no data: an empty, successful run.
+      return { ready: true, documentId: q.documentId ?? null };
     }
     if (q.status === "FATAL" || q.status === "CANCELLED")
       throw new AsyncJobFailedError(`query ${queryId} ended as ${q.status}`, "query_failed");

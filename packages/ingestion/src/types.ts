@@ -48,6 +48,8 @@ export interface SyncTargetProfile {
   profileId: string;
   marketplaceId: string | null;
   accountType: "seller" | "vendor" | "agency";
+  /** IANA zone of the profile; authoritative for Ads business dates (conventions §6). */
+  timeZone?: string;
 }
 
 /** What the scheduler needs to know about one connected seller account. Supplied by a `SellerDirectory`. */
@@ -58,6 +60,15 @@ export interface SyncTarget {
   region: Region;
   marketplaceIds: readonly string[];
   adsProfiles: readonly SyncTargetProfile[];
+  /** Default zone for business dates of this account (its first marketplace's zone); `UTC` when unknown. */
+  timeZone?: string;
+  /** Zone per marketplace id (ref.marketplaces.time_zone). */
+  marketplaceTimeZones?: Readonly<Record<string, string>>;
+  /**
+   * Which APIs have an ACTIVE connection. A missing key means "connected" so a static test target needs no
+   * ceremony; the database directory always sets both. An API that is not connected gets no sync states.
+   */
+  connected?: Partial<Record<"sp" | "ads", boolean>>;
   /**
    * Per API: set when that connection is not usable (needs reauth, revoked, account disconnected). The scheduler
    * pauses the syncs of that API instead of failing them (ADR-0008 decision 11).
@@ -93,6 +104,10 @@ export interface RunContext {
   runId: string;
   priority: PriorityClass;
   window: RunWindow;
+  /** IANA zone the window's dates are in: the Ads profile's, else the marketplace's, else the account's (conventions §6). */
+  timeZone: string;
+  /** The window as inclusive local dates (`YYYY-MM-DD`); null when the sync has no window. Use these, not UTC slices. */
+  dates: { from: string; to: string } | null;
   /** Committed cursor of the sync (e.g. `lastUpdatedAfter`). Never changes during a run. */
   cursor: Readonly<Record<string, unknown>>;
   /** Set for refresh-after-write runs (D62 a): only these entities are wanted. */

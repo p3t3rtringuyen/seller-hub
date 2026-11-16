@@ -11,6 +11,7 @@ import type { SpClient } from "@seller-hub/amazon-sp";
 import type { Logger, SellerScope } from "@seller-hub/core";
 import type { Database } from "@seller-hub/db";
 import { DAY_MS, nextRunDelayMs } from "./duration";
+import { timeZoneFor, windowDates } from "./windows";
 import {
   adapterFor,
   DEFAULT_POLLING,
@@ -110,35 +111,6 @@ const sanitize = (e: unknown): { code: string; detail: string } => {
   return { code: code.slice(0, 80), detail: message.slice(0, 500) };
 };
 
-export const payloadOf = (run: repo.RunRow, step: number): RunPayload => ({
-  tenantId: run.tenantId,
-  sellerAccountId: run.sellerAccountId,
-  traceId: run.traceId ?? run.id,
-  runId: run.id,
-  runCreatedAt: run.createdAt.toISOString(),
-  step,
-});
-
-export const jobIdOf = (runId: string, step: number): string => `${runId}-${step}`;
-
-/** Window for a scheduled run (ADR-0008 decision 6: a lookback that converges restatements, never a full re-pull). */
-export function computeWindow(
-  def: PullDefinition,
-  cursor: Record<string, unknown>,
-  now: Date,
-): { start: Date | null; end: Date | null } {
-  const w = def.window;
-  if (!w?.lookbackDays) return { start: null, end: null };
-  const dayStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
-  let start = new Date(dayStart.getTime() - w.lookbackDays * DAY_MS);
-  const last = typeof cursor.windowEnd === "string" ? new Date(cursor.windowEnd) : null;
-  if (last && !Number.isNaN(last.getTime()) && last < start) start = last; // catch up after a gap
-  let end = now;
-  const max = (w.maxRangeDays ?? 31) * DAY_MS;
-  if (end.getTime() - start.getTime() > max) end = new Date(start.getTime() + max);
-  return { start, end };
-}
-
 export function createEngine(deps: EngineDeps): Engine {
   const config: EngineConfig = { ...DEFAULT_ENGINE_CONFIG, ...deps.config };
   const now = deps.now ?? (() => new Date());
@@ -147,6 +119,9 @@ export function createEngine(deps: EngineDeps): Engine {
   const pull = new Map<string, PullDefinition>(
     deps.definitions.filter(isPull).map((d) => [d.key, d]),
   );
+
+  const keysFor = (api: "sp" | "ads"): string[] =>
+    [...pull.values()].filter((d) => (isAdsDefinition(d) ? "ads" : "sp") === api).map((d) => d.key);
 
   function buildContext(a: {
     scope: SellerScope;
@@ -163,6 +138,7 @@ export function createEngine(deps: EngineDeps): Engine {
       sellerAccountId: scope.sellerAccountId,
       region: target.region,
     };
+    const tz = timeZoneFor(target, def, state.scopeKey);
     const { cursor: stateCursor } = state;
     const { runs: _runs, lastRun: _lastRun, ...cursor } = stateCursor as Record<string, unknown>;
     void _runs;
@@ -175,6 +151,8 @@ export function createEngine(deps: EngineDeps): Engine {
       runId: run.id,
       priority: run.priority,
       window: { start: run.windowStart, end: run.windowEnd },
+      timeZone: tz,
+      dates: windowDates({ start: run.windowStart, end: run.windowEnd }, tz),
       cursor,
       entityIds: a.entityIds,
       marketplaceIds: kind === "marketplace" ? [state.scopeKey] : target.marketplaceIds,
@@ -226,28 +204,53 @@ export function createEngine(deps: EngineDeps): Engine {
     }
     const target = await deps.directory.getTarget(scope);
     if (!target) {
-      await cancelRun(scope, run, "account_unavailable");
+      await cancelRun(scope, run, state, "account_unavailable");
       return { done: true, state: "cancelled" };
     }
     const api = isAdsDefinition(def) ? "ads" : "sp";
     if (target.paused[api]) {
-      await repo.pauseSyncs(scope, deps.db, api, target.paused[api] as string);
-      await cancelRun(scope, run, target.paused[api] as string);
+      await repo.pauseSyncs(scope, deps.db, keysFor(api), target.paused[api] as string);
+      await cancelRun(scope, run, state, target.paused[api] as string);
+      return { done: true, state: "cancelled" };
+    }
+    if (target.connected?.[api] === false) {
+      await cancelRun(scope, run, state, "not_connected");
       return { done: true, state: "cancelled" };
     }
 
-    // Per-seller fairness (decision 8): at most N runs of this account and family at once.
-    const lease = await deps.amazon.gate.tryAcquire(
-      `ingest:seller:${scope.sellerAccountId}:${def.family}`,
-      def.concurrency ?? config.sellerConcurrency,
-      15 * 60_000,
-    );
-    if (!lease)
-      return { done: false, delayMs: 5_000 + Math.floor(random() * 25_000), state: run.state };
+    // One chain per run (B1): a second step chain of the same run (a stale re-enqueue racing a slow step) is dropped,
+    // not delayed. The lease is longer than any step; it is released as soon as the step returns.
+    const runLease = await deps.amazon.gate.tryAcquire(`ingest:run:${run.id}`, 1, 30 * 60_000);
+    if (!runLease) return { done: true, state: "duplicate" };
     try {
-      return await step(scope, run, state, def, target);
+      // Per-seller fairness (decision 8): at most N runs of this account and family at once.
+      const lease = await deps.amazon.gate.tryAcquire(
+        `ingest:seller:${scope.sellerAccountId}:${def.family}`,
+        def.concurrency ?? config.sellerConcurrency,
+        45 * 60_000,
+      );
+      const result: StepResult = lease
+        ? await (async () => {
+            try {
+              return await step(scope, run, state, def, target);
+            } finally {
+              await lease.release();
+            }
+          })()
+        : { done: false, delayMs: 5_000 + Math.floor(random() * 25_000), state: run.state };
+      // Heartbeat: say when the next step is due, so a healthy wait is never mistaken for a dead chain.
+      if (!result.done)
+        await repo.scoped(scope, deps.db, (trx) =>
+          repo.setNextStepAt(
+            trx,
+            state.id,
+            run.id,
+            new Date(now().getTime() + (result.delayMs ?? 0)),
+          ),
+        );
+      return result;
     } finally {
-      await lease.release();
+      await runLease.release();
     }
   }
 
@@ -307,6 +310,7 @@ export function createEngine(deps: EngineDeps): Engine {
       total += await upsertAll(ctx, def, rows, state, run, scratch, null);
       return { total };
     }
+    if (scratch.complete) return { total }; // crashed between the last page's commit and finish: do not start over
     let token = scratch.nextToken ?? undefined;
     let pages = scratch.pages ?? 0;
     for (;;) {
@@ -349,8 +353,9 @@ export function createEngine(deps: EngineDeps): Engine {
       for (let i = 0; i < rows.length; i += size) await def.upsert(uctx, rows.slice(i, i + size));
       await repo.writeScratch(trx, state.id, run.id, {
         ...scratch,
-        ...(nextToken ? { nextToken } : { nextToken: null }),
+        ...(nextToken ? { nextToken } : { nextToken: null, complete: true }),
       });
+      await repo.patchRun(trx, run, { attempts: 0 }); // progress was made: transient errors count afresh
     });
     return rows.length;
   }
@@ -378,7 +383,7 @@ export function createEngine(deps: EngineDeps): Engine {
         c: RunContext,
         d: PullDefinition,
         id: string,
-      ): Promise<{ ready: boolean; retryAfterMs?: number; documentId?: string }>;
+      ): Promise<{ ready: boolean; retryAfterMs?: number; documentId?: string | null }>;
       download(
         c: RunContext,
         d: PullDefinition,
@@ -390,7 +395,11 @@ export function createEngine(deps: EngineDeps): Engine {
     if (run.state === "requested") {
       const requestId = await a.create(ctx, def);
       await repo.scoped(ctx.scope, deps.db, (trx) =>
-        repo.patchRun(trx, run, { state: "processing", amazonRequestId: requestId }),
+        repo.patchRun(trx, run, {
+          state: "processing",
+          amazonRequestId: requestId,
+          attempts: 0,
+        }),
       );
       run = Object.assign(run, { state: "processing" as const, amazonRequestId: requestId });
       return { total: 0, next: { done: false, delayMs: 2_000, state: "processing" } };
@@ -403,10 +412,17 @@ export function createEngine(deps: EngineDeps): Engine {
           total: 0,
           next: { done: false, delayMs: polled.retryAfterMs ?? 15_000, state: "processing" },
         };
+      if (polled.documentId == null) {
+        // Amazon has no data for this window (SP-API CANCELLED, Data Kiosk DONE without a document): a successful
+        // run with zero rows, nothing to land or parse (M5).
+        await markState(ctx, run, "upserting");
+        return { total: 0 };
+      }
       await repo.scoped(ctx.scope, deps.db, (trx) =>
         repo.patchRun(trx, run, {
           state: "downloading",
           amazonDocumentId: polled.documentId ?? null,
+          attempts: 0,
         }),
       );
       Object.assign(run, { state: "downloading", amazonDocumentId: polled.documentId ?? null });
@@ -454,7 +470,7 @@ export function createEngine(deps: EngineDeps): Engine {
       case "spapi-report":
       case "ads-export":
       case "data-kiosk":
-        return def.parse(texts.join(""), ctx);
+        return def.parse(texts.join("\n"), ctx);
       default:
         return [];
     }
@@ -463,35 +479,47 @@ export function createEngine(deps: EngineDeps): Engine {
   async function land(ctx: RunContext, run: repo.RunRow, docs: LandedDocument[]): Promise<void> {
     const at = now();
     const expires = new Date(at.getTime() + config.rawRetentionDays * DAY_MS);
+    const rows: Parameters<typeof repo.insertRawObject>[1][] = [];
     let part = 0;
     for (const doc of docs) {
+      // The key is stable for the run (its creation date, not "now"), so a retry overwrites the same object.
       const key = rawObjectKey({
         tenantId: ctx.scope.tenantId,
         sellerAccountId: ctx.scope.sellerAccountId as string,
         syncKey: ctx.syncKey,
-        at,
+        at: run.createdAt,
         runId: run.id,
         part,
       });
       await deps.objectStore.put(key, doc.bytes, doc.contentType);
-      await repo.scoped(ctx.scope, deps.db, (trx) =>
-        repo.insertRawObject(trx, {
+      rows.push({
+        tenantId: ctx.scope.tenantId,
+        sellerAccountId: ctx.scope.sellerAccountId as string,
+        runId: run.id,
+        syncKey: ctx.syncKey,
+        objectKey: key,
+        part,
+        contentType: doc.contentType,
+        byteSize: doc.bytes.byteLength,
+        sha256: createHash("sha256").update(doc.bytes).digest(),
+        sourceRef: doc.sourceRef,
+        now: at,
+        expiresAt: expires,
+      });
+      part += 1;
+    }
+    // One transaction: the index of this run is replaced as a whole, so a retried landing never duplicates a part.
+    await repo.scoped(ctx.scope, deps.db, (trx) =>
+      repo.replaceRawObjects(
+        trx,
+        {
           tenantId: ctx.scope.tenantId,
           sellerAccountId: ctx.scope.sellerAccountId as string,
           runId: run.id,
-          syncKey: ctx.syncKey,
-          objectKey: key,
-          part,
-          contentType: doc.contentType,
-          byteSize: doc.bytes.byteLength,
-          sha256: createHash("sha256").update(doc.bytes).digest(),
-          sourceRef: doc.sourceRef,
-          now: at,
-          expiresAt: expires,
-        }),
-      );
-      part += 1;
-    }
+        },
+        rows,
+      ),
+    );
   }
 
   async function readLanded(ctx: RunContext, run: repo.RunRow): Promise<string[]> {
@@ -597,10 +625,16 @@ export function createEngine(deps: EngineDeps): Engine {
     });
   }
 
-  async function cancelRun(scope: SellerScope, run: repo.RunRow, reason: string): Promise<void> {
-    await repo.scoped(scope, deps.db, (trx) =>
-      repo.patchRun(trx, run, { state: "cancelled", errorCode: reason, finishedAt: now() }),
-    );
+  async function cancelRun(
+    scope: SellerScope,
+    run: repo.RunRow,
+    state: repo.SyncStateRow | null,
+    reason: string,
+  ): Promise<void> {
+    await repo.scoped(scope, deps.db, async (trx) => {
+      await repo.patchRun(trx, run, { state: "cancelled", errorCode: reason, finishedAt: now() });
+      if (state) await repo.finishAuxRun(trx, state.id, run.id);
+    });
   }
 
   async function handleError(
@@ -614,11 +648,11 @@ export function createEngine(deps: EngineDeps): Engine {
     const { scope } = ctx;
     if (e instanceof ConnectionNeedsReauth) {
       const api = isAdsDefinition(def) ? "ads" : "sp";
-      await repo.pauseSyncs(scope, deps.db, api, "needs_reauth");
+      await repo.pauseSyncs(scope, deps.db, keysFor(api), "needs_reauth");
       await failRun(
         scope,
         run,
-        null,
+        state,
         "needs_reauth",
         "the connection needs the seller to reconnect",
         false,

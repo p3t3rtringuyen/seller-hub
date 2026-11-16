@@ -47,22 +47,26 @@ export default defineSpReport<ListingRow>({
         openDate: orNull(r["open-date"]),
       })),
   async upsert(ctx, rows) {
-    // A full report replaces the mirror: rows are keyed by (seller account, marketplace, sku); removal of SKUs
-    // that disappear is the slice's concern (`deleted_at`), the demo only upserts.
-    for (const r of rows) {
-      await sql`
-        insert into catalog.listings
-          (id, tenant_id, seller_account_id, marketplace_id, seller_sku, asin, item_name, price_amount,
-           report_status, fulfillment_channel, open_date, synced_at)
-        values (${uuidv7()}, ${ctx.scope.tenantId}, ${ctx.scope.sellerAccountId}, ${ctx.scopeKey}, ${r.sku},
-                ${r.asin}, ${r.title}, ${r.price}::numeric, ${r.status}, ${r.fulfillmentChannel},
-                ${r.openDate}::timestamptz, ${ctx.now()})
-        on conflict (seller_account_id, marketplace_id, seller_sku) do update set
-          asin = excluded.asin, item_name = excluded.item_name, price_amount = excluded.price_amount,
-          report_status = excluded.report_status, fulfillment_channel = excluded.fulfillment_channel,
-          open_date = excluded.open_date, synced_at = excluded.synced_at, deleted_at = null`.execute(
-        ctx.trx,
-      );
-    }
+    // One multi-row statement per batch (a slice must not copy an N+1 insert: 100k SKUs would be 100k round trips).
+    // A report can list a SKU twice; ON CONFLICT cannot touch a row twice in one statement, so keep the last.
+    const bySku = new Map(rows.map((r) => [r.sku, r]));
+    if (bySku.size === 0) return;
+    const values = [...bySku.values()].map(
+      (r) =>
+        sql`(${uuidv7()}, ${ctx.scope.tenantId}, ${ctx.scope.sellerAccountId}, ${ctx.scopeKey}, ${r.sku},
+             ${r.asin}, ${r.title}, ${r.price}::numeric, ${r.status}, ${r.fulfillmentChannel},
+             ${r.openDate}::timestamptz, ${ctx.now()})`,
+    );
+    await sql`
+      insert into catalog.listings
+        (id, tenant_id, seller_account_id, marketplace_id, seller_sku, asin, item_name, price_amount,
+         report_status, fulfillment_channel, open_date, synced_at)
+      values ${sql.join(values)}
+      on conflict (seller_account_id, marketplace_id, seller_sku) do update set
+        asin = excluded.asin, item_name = excluded.item_name, price_amount = excluded.price_amount,
+        report_status = excluded.report_status, fulfillment_channel = excluded.fulfillment_channel,
+        open_date = excluded.open_date, synced_at = excluded.synced_at, deleted_at = null`.execute(
+      ctx.trx,
+    );
   },
 });

@@ -59,6 +59,8 @@ export function createTestEngine(o: {
   definitions: readonly IngestDefinition[];
   targets: SyncTarget[];
   kiosk?: DataKioskPort;
+  /** Virtual clock for the engine (the scheduler tick, heartbeats). Default: the real one. */
+  now?: () => Date;
   config?: Partial<EngineConfig>;
 }): TestEngine {
   const amazon = createTestRuntime();
@@ -83,6 +85,7 @@ export function createTestEngine(o: {
     enqueuer: queue,
     logger: createLogger({ name: "ingestion-test", level: "silent" }),
     random: () => 0.5,
+    ...(o.now ? { now: o.now } : {}),
     config: {
       polling: { spPollMs: 1_000, adsPollMs: 1_000, kioskPollMs: 1_000 },
       backoffBaseMs: 1_000,

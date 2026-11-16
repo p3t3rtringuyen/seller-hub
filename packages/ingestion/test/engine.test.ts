@@ -2,7 +2,13 @@ import { readFileSync } from "node:fs";
 import { gzipSync } from "node:zlib";
 import { bytesResponse, jsonResponse, type MockTransport } from "@seller-hub/amazon-core/testing";
 import { AmazonValidationError, ConnectionNeedsReauth, encodeText } from "@seller-hub/amazon-core";
-import { createLogger, MissingScopeError, type SellerScope } from "@seller-hub/core";
+import {
+  addDays,
+  createLogger,
+  MissingScopeError,
+  todayIn,
+  type SellerScope,
+} from "@seller-hub/core";
 import { withScope } from "@seller-hub/db";
 import { FIXTURE, seedFixtures, tryCreateTestDb } from "@seller-hub/testing";
 import { sql } from "kysely";
@@ -263,7 +269,7 @@ describe.skipIf(!t)("ingestion engine (real Postgres)", () => {
       const run = (await repo.listRuns(A, t!.app.db)).find((r) => r.id === runId)!;
       expect(run.state).toBe("done");
       expect(run.rowsUpserted).toBe(4);
-      expect(run.attempts).toBe(1);
+      expect(run.attempts).toBe(0); // progress after the retry resets the count
       const state = await repo.findSyncState(A, t!.app.db, "test.paged", "");
       expect(state?.cursor.runs).toEqual({});
       // last-sync marker with overlap: the next run asks for changes since (start - 15 min), not everything
@@ -427,17 +433,19 @@ describe.skipIf(!t)("ingestion engine (real Postgres)", () => {
         async upsert() {},
       });
       const h = await makeEngine([def]);
-      const to = new Date();
-      const from = new Date(to.getTime() - 70 * 86_400_000);
-      const res = await h.scheduler.backfill(A, { syncKey: "test.backfill", from, to });
+      const toDate = todayIn("UTC");
+      const fromDate = addDays(toDate, -69); // 70 inclusive days -> 31 + 31 + 8
+      const res = await h.scheduler.backfill(A, { syncKey: "test.backfill", fromDate, toDate });
       expect(res.windows).toBe(3);
       const runs = (await repo.listRuns(A, t!.app.db, { syncKey: "test.backfill" })).sort(
         (a, b) => (b.windowEnd as Date).getTime() - (a.windowEnd as Date).getTime(),
       );
       expect(runs.map((r) => r.priority)).toEqual(["backfill", "backfill", "backfill"]);
-      expect(runs[0]?.windowEnd?.getTime()).toBe(to.getTime());
+      // local-date windows: the newest ends at the start of tomorrow, the oldest starts at fromDate's midnight
+      expect(runs[0]?.windowEnd?.toISOString()).toBe(`${addDays(toDate, 1)}T00:00:00.000Z`);
+      expect(runs[2]?.windowStart?.toISOString()).toBe(`${fromDate}T00:00:00.000Z`);
       // idempotent: asking again reuses the open runs
-      const again = await h.scheduler.backfill(A, { syncKey: "test.backfill", from, to });
+      const again = await h.scheduler.backfill(A, { syncKey: "test.backfill", fromDate, toDate });
       expect(again.windows).toBe(3);
       expect(await repo.listRuns(A, t!.app.db, { syncKey: "test.backfill" })).toHaveLength(3);
       await h.drain();
@@ -447,8 +455,8 @@ describe.skipIf(!t)("ingestion engine (real Postgres)", () => {
       await expect(
         h.scheduler.backfill(A, {
           syncKey: "test.backfill",
-          from: new Date(to.getTime() - 900 * 86_400_000),
-          to,
+          fromDate: addDays(toDate, -900),
+          toDate,
         }),
       ).rejects.toThrow(/too early/);
     });
