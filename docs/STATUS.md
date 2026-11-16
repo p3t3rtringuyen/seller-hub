@@ -161,3 +161,10 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   DONE (claude/p3-ingest-5d7cbd, 5 commits, gate green; sync-health route, vault source, Data Kiosk client left
   out). Only overlap: pnpm-lock.yaml. User: `Tiếp, review`. Started P5-REVIEW for both (opus, read-only) and
   P5-QA for P3-IDENTITY (haiku, worktree from its branch, sellerhub_qaidentity, offset 300).
+- 2026-11-16 — Reviews: P3-IDENTITY MERGE-AFTER-FIXES (0 blocker, 4 major: argon2 blocks event loop, sign-in
+  throttle bypass, invitation acceptance without membership, scoped Admin cannot finish Ads connect; 9 minor).
+  QA P3-IDENTITY FAIL ×4 (auth screens no `main`, localhost origin CSRF, ContextSwitcher hydration, old session
+  kept after re-sign-in); suites 477/477, e2e 6/6. P3-INGEST MERGE-AFTER-FIXES (1 blocker duplicate step chains,
+  6 major). Fix round sent to both. Order: IDENTITY merges first, then INGEST wires `vaultCredentialSource`.
+  Open for the user: ADR-0004 amendment (hand-written auth instead of Better Auth). Planning gap: sync-health /
+  refresh API (ADR-0008) has no owner — to be added as a small task after INGEST merges.
