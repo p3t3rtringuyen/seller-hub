@@ -86,7 +86,7 @@ First Owner on a fresh server: `pnpm auth:setup-token` (needs `SH_PG_*`), open `
 | `packages/config/src/env.ts` | optional `SH_MASTER_KEYS`, `SH_MASTER_KEY_ACTIVE`, `SH_TRUST_PROXY`, `SPAPI_/ADS_LWA_CLIENT_ID/SECRET`; `SH_MASTER_KEY` + dev placeholder added to the production refusal list | config validation |
 | `apps/api/src/main.ts` | wires audit writer, Amazon stack, authenticator and the module services (BACKLOG §1.3 names P3-IDENTITY owner of auth plugin/main) | composition root |
 | `apps/api/test/identity.test.ts` (new), `apps/api/test/api.test.ts` | new HTTP-level identity test; the scaffold guard test now binds only the example/system operations (the contract holds the platform operations too) | evidence |
-| `apps/web/app/bff/[...path]/route.ts` (+ `lib/bff-*.ts`, `app/bff/csrf/route.ts`) | the placeholder BFF becomes the real one | scaffold follow-up #3 |
+| `apps/web/app/bff/[...path]/route.ts` (+ `lib/{bff-security,bff-server,bff-target,api-client,copy}.ts`, `app/bff/csrf/route.ts`) | the placeholder BFF becomes the real one | scaffold follow-up #3 |
 | `apps/web/app/(shell)/session.ts` → `session.tsx`; `app/(app)/layout.tsx` | the typed stub becomes the provider backed by `/v1/me`; the layout wraps `AppFrame` with it | scaffold/P3-DS said P3-IDENTITY implements it |
 | `apps/web/app/(shell)/shell.test.tsx` | mocks `./session` (the frame no longer fabricates a session); the example-link assertion looks the entry up by id | consequence of the line above |
 | `apps/web/vitest.config.ts` | `@/` alias (same as tsconfig) | tests import `@/lib/...` |
@@ -144,3 +144,32 @@ and two problems found only by building and running the bundle: (1) `@node-rs/ar
 4. P3-CLIENTS/orchestrator: bundle-safe `loadFixtureDir` (see above).
 5. P6-SEC: CSP, Redis-backed login throttle, 2FA, session purge, review of the in-house identity code.
 6. Next wave: slices add permissions in their own `*.permissions.ts`; `/v1/me` already returns the union per seller account for the UI.
+
+## Fix round 1 (P5-REVIEW MERGE-AFTER-FIXES, P5-QA FAIL 4)
+
+Commits: `e44b53f` (M1), `e469946` (M2, M3, m4 API side, FAIL-4), `739b17d` (M4, m1, m2), `595456e` (FAIL-1/2/3, m4 BFF side, m5, m6). Each fix has a test that fails on the old code.
+
+| Item | Fix | Commit | Test |
+| --- | --- | --- | --- |
+| M1 argon2 blocks the loop | `node:crypto` async argon2 (libuv thread pool; hash-wasm only as fallback on Node < 24.7), semaphore: 4 running, 32 queued, then `server_busy` (503); stored PHC strings still verify, absurd stored costs refused | `e44b53f` | `platform-auth/test/crypto.test.ts` (event loop ticks while hashing, queue overflow, old hash-wasm hash verifies) |
+| M2 throttle bypasses | slot is reserved *before* the check (parallel guesses count), IP bucket always (shared `unknown` bucket without a client IP), oldest-first eviction instead of `clear()` | `e469946` | `identity.test.ts` limiter tests (parallel, spraying, unknown IP, flood does not reset the target) |
+| M3 re-invited user locked out; orphan | new public op `platform-auth.acceptInvitationWithPassword` (password check + join in one call, no membership needed; the accept page uses it); failed registration deletes the user it created | `e469946` (+ UI in `595456e`) | `identity.test.ts` (removed member re-invited, orphan cleanup), `apps/api/test/identity.test.ts` over HTTP |
+| M4 scoped Admin cannot finish Ads | callback is `session.read` at tenant scope; the service checks `connections.manage` on the seller account **the state names** (`tenancy.can`) → 404 otherwise | `739b17d` | `apps/api/test/identity.test.ts` (scoped Admin completes for their account only) |
+| m1 invitation re-check | `markInvitationAccepted` only while open and unexpired; 0 rows → `invitation_invalid`, transaction rolls back | `739b17d` | `tenancy-isolation.test.ts` |
+| m2 last-owner race | `select … for update` on the tenant row at the start of role change and removal | `739b17d` | `tenancy-isolation.test.ts` (two owners demote each other concurrently: exactly one succeeds) |
+| m4 API trusts client headers | BFF sends `x-sh-bff-secret` (`SH_BFF_SECRET`); the API ignores `x-sh-client-ip`/`x-sh-user-agent` without it; the secret is required in production | `e469946`, `595456e` | `apps/api/test/identity.test.ts`, `packages/config/test` |
+| m5 https in production | `loadConfig` refuses production without an `https://` `SH_WEB_PUBLIC_URL` | `595456e` | `packages/config/test/config.test.ts` |
+| m6 dev key via key ring | `envKeyProvider` refuses the dev placeholder in production, single key or ring | `595456e` | `platform-connections/test/vault.test.ts` |
+| FAIL-1 `<main>` on auth screens | `AuthCard` renders a `main` landmark | `595456e` | e2e (`getByRole("main")` on `/sign-in`, `/setup`, `/accept-invitation`) |
+| FAIL-2 localhost vs 127.0.0.1 | in plain-http dev the origin the page is served from is accepted as well; behind https only `SH_WEB_PUBLIC_URL`; the 403 now says which address to open; `.env.example` documents `SH_WEB_PUBLIC_URL` | `595456e` | `bff-security.test.ts`, e2e (sign-in attempt from `localhost`) |
+| FAIL-3 hydration mismatch | `packages/ui/src/shell/ContextSwitcher.tsx` (P3-DS file, minimal): stable `id`s on its three selects instead of generated ones | `595456e` | e2e fails the happy path if any console message mentions hydration. **Limit:** checked by that assertion in Chromium dev mode, not by reading the original warning's cause; if it returns, look at what differs between the server and first client render of the shell |
+| FAIL-4 old session kept | **Not reproduced in code or tests.** Hardened regardless: a sign-in (and register/accept) made with a session cookie present revokes that previous session; the BFF always sends the cookie as bearer, so one browser holds one live session and a stale cookie can no longer keep acting as the old user | `e469946` | `identity.test.ts`, `apps/api/test/identity.test.ts` |
+
+Also: `copy.ts` and the other `apps/web/lib` files are now in the shared-file table above; new env names `SH_BFF_SECRET` (`.env.example`, `packages/config/src/env.ts`).
+**Staging (D66) must set:** `SH_WEB_PUBLIC_URL=https://…`, `SH_BFF_SECRET` (same value for web and api, ≥ 32 chars), `SH_TRUST_PROXY=1`, a real `SH_MASTER_KEY`; production refuses to start without the first, second and fourth. Run Node ≥ 24.7 (native argon2).
+
+Gate with the stack up (`sellerhub_p3identity`, offset 100, `SH_REQUIRE_DB=1`): `pnpm gate` **exit 0** (lint, typecheck, test, build all 19/19; nothing skipped); platform-audit 4, platform-tenancy 31, platform-auth 24, platform-connections 24, config 11, web 25, api 33 tests. `pnpm e2e`: **7 passed**. Stack brought down afterwards.
+
+### Follow-ups left for the BACKLOG (not in this round)
+
+m3 forwarded-IP trust (only the configured proxy's header; web port reachable only through the tunnel), m7 seller-account-only members can list all members, m8 SP-API token not bound to the seller account identity, m9 `SH_AMAZON_MODE=sandbox` is partly live (staging stays on replay); Better Auth decision, e-mail verification, password reset, TOTP and `require_two_factor` enforcement (the ADR-0004 question goes to the user; hand-written auth stays for now); Redis-backed throttle; session purge job; CSP; bundle-safe `loadFixtureDir`.
