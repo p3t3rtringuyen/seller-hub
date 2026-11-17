@@ -1,0 +1,35 @@
+{
+  "name": "@seller-hub/ingestion",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./testing": "./src/testing.ts",
+    "./queue": "./src/queue.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests --hookTimeout=60000 --testTimeout=30000",
+    "build": "node -e \"console.log('ingestion: source-only package, nothing to build')\""
+  },
+  "dependencies": {
+    "@seller-hub/amazon-ads": "workspace:*",
+    "@seller-hub/amazon-core": "workspace:*",
+    "@seller-hub/amazon-sp": "workspace:*",
+    "@seller-hub/core": "workspace:*",
+    "@seller-hub/db": "workspace:*",
+    "bullmq": "catalog:",
+    "ioredis": "catalog:",
+    "kysely": "catalog:"
+  },
+  "devDependencies": {
+    "@seller-hub/config": "workspace:*",
+    "@seller-hub/testing": "workspace:*",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
