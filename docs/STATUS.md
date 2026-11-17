@@ -180,3 +180,5 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-17 — P3-INGEST integration done (3b1d06b: main merged, vault wired, N4). Re-review 3: MERGE (4 minors →
   BACKLOG). Orchestrator full gate on 3b1d06b (sellerhub_orchgate, offset 400, SH_REQUIRE_DB=1): exit 0, 565 tests,
   0 skipped, e2e 7/7; stack down. Waiting for the user's go-ahead to merge P3-INGEST.
+- 2026-11-17 — User: `Merge và push`. Merged P3-INGEST (--no-ff). P3 code tasks all merged. Next: sync-health /
+  refresh API task (planning gap from ADR-0008), P3-STAGING (needs R10), P3-SMOKE (needs R5/R6 + D30) → G3.
