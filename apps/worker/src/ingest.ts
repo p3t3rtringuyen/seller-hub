@@ -145,8 +145,7 @@ export async function createIngest(o: IngestOptions): Promise<Ingest> {
     logger: o.logger,
     config: {
       rawRetentionDays: o.config.env.SH_RAW_RETENTION_DAYS,
-      // D64 a: "changeable by env". Not in the typed config (packages/config is not this task's); read here.
-      jobRunRetentionDays: Number(process.env.SH_JOB_RUN_RETENTION_DAYS) || 90,
+      jobRunRetentionDays: o.config.env.SH_JOB_RUN_RETENTION_DAYS,
       ...o.engineConfig,
     },
   });

@@ -189,3 +189,23 @@ bounds a crashed job to one grace period. N4 stays with the orchestrator.
 Gate: `pnpm gate` with the stack up (`sellerhub_p3ingest`, offset 200, `SH_REQUIRE_DB=1`): see the result line below.
 
 **Result:** `pnpm gate` exit 0, 16/16 tasks per stage; ingestion 56 tests (5 files), worker 10, web 22; nothing skipped. Stack brought down.
+
+## Integration (P3-IDENTITY merged, main at bd14904)
+
+- **Merge:** `git merge main` into the branch, no conflicts (lockfile included); `pnpm install --frozen-lockfile` passes.
+- **Vault wired:** `apps/worker/src/credentials.ts` builds the `vaultCredentialSource` from
+  `@seller-hub/mod-platform-connections` (key from `SH_MASTER_KEY`/`SH_MASTER_KEYS`, LWA app from the `SPAPI_*`/`ADS_*`
+  variables, fixtures under `replay`) and `apps/worker/src/main.ts` passes it to `startIngest({ credentials })`. The worker
+  fails closed without a master key, like the API. `apps/worker/package.json` gained `mod-platform-connections` and
+  `mod-platform-audit` (workspace deps). LWA `invalid_grant` calls the vault's `markNeedsReauth`, which sets
+  `core.connections.status = needs_reauth`; the directory reads that status (M4), so the account's syncs for that API are
+  paused on the next tick and its open runs are cancelled.
+- **Test** `apps/worker/test/vault-wiring.test.ts` (mock transport only, D30): the stored refresh token is what LWA
+  receives; another seller account has no credential; `invalid_grant` flips the connection to `needs_reauth` and the
+  directory then pauses SP scopes.
+- **N4 (orchestrator exception):** `SH_JOB_RUN_RETENTION_DAYS` (default 90) added to `packages/config/src/env.ts` and
+  `.env.example` (two lines each); the worker reads it from the typed config.
+- **Gate:** `pnpm gate` with the stack up (`sellerhub_p3ingest`, offset 200, `SH_REQUIRE_DB=1`): exit 0, 20/20 tasks per
+  stage; ingestion 56 tests, worker 13, config 11; nothing skipped. A first run failed only because
+  `config/test/eslint.test.ts` "service files" hit its 30 s timeout under 10 parallel suites (it passes alone and on the
+  re-run); that test is not ours. Docker Desktop was not running at the start of this round and was started.

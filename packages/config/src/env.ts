@@ -31,6 +31,8 @@ export const envSchema = z.object({
   SH_S3_ACCESS_KEY: z.string().min(1),
   SH_S3_SECRET_KEY: z.string().min(1),
   SH_RAW_RETENTION_DAYS: z.coerce.number().int().positive().default(35),
+  /** Retention of `ingest.job_runs` partitions (D64 a). */
+  SH_JOB_RUN_RETENTION_DAYS: z.coerce.number().int().positive().default(90),
 
   SH_API_HOST: z.string().default("127.0.0.1"),
   SH_API_URL: optionalString,
