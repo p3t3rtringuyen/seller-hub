@@ -431,3 +431,74 @@ package and the worker scheduler. `testing.ts` now re-enqueues `step + 1`, as th
 ### For the next round
 
 R2 (+ a test where the queue keeps failed job ids). N6 and N7 may go to BACKLOG. After R2, I expect **MERGE**.
+
+---
+
+## Re-review 3 (branch tip `3b1d06b`)
+
+Scope:
+- Fix round 3 (`3ee1745`: R2, N6, N7).
+- The merge of `main` @ `bd14904` (P3-IDENTITY) into the branch (`5fd3435`).
+- The integration commit `3b1d06b`: vault credential source in the worker, and N4 typed `SH_JOB_RUN_RETENTION_DAYS`.
+
+The touches to `packages/config/src/env.ts` and `.env.example` are an orchestrator-granted exception to the row; I
+accept them. Read-only, no stack.
+
+### Verdict
+
+**MERGE** — no must-fix left. 4 minors for BACKLOG (N8–N11).
+
+### Fix round 3
+
+| Item | Status | Evidence |
+|---|---|---|
+| R2 | Fixed | The sweep adds with `replaceFinished: true` (`scheduler.ts`). `BullRunEnqueuer.enqueue` looks up the id and removes it if `failed`/`completed`, and leaves a waiting, delayed or active job alone (`queue.ts`). The in-memory queue now keeps finished ids like BullMQ, so the test can show the bug. Test "R1 + R2 together": a backlog keeps one job per run, and a run whose job failed is re-added once after the grace and drained once. The `getState` → `remove` sequence isn't atomic, but a finished job can't change state underneath without a retry, which this queue never does (`attempts: 1`). |
+| N6 | Fixed | When an open started run exists, the refresh run gets `keySuffix: r<time>`, so a windowless sync creates a new run (`requester.ts`). Tested. |
+| N7 | Fixed | The step guard re-reads the sync state *after* taking the per-run lease, and the step uses the fresh state (`engine.ts`). |
+
+### Integration seam (vault, P3-IDENTITY)
+
+| Check | Result |
+|---|---|
+| Wiring | `apps/worker/src/credentials.ts` builds `vaultCredentialSource` (`envKeyProvider`, LWA app creds from `SPAPI_/ADS_LWA_CLIENT_*`, audit writer). `main.ts` passes it to `startIngest` and closes its pool on shutdown. |
+| Least privilege | Credentials are read through `sh_app` (a separate `max: 3` pool) under RLS, one account at a time. The vault-wiring test proves another account's call fails ("no active sp credential") instead of borrowing one. |
+| Fail closed | `envKeyProvider` throws at boot without `SH_MASTER_KEY(S)`. In production it refuses the `.env.example` dev key (P3-IDENTITY m6). |
+| Secrets not logged or in payloads | Job payloads are unchanged (ids, `runCreatedAt`, `step`). `credentials.ts` logs nothing. The vault keeps the decrypted refresh token in memory for the LWA call only. Errors carry names and ids, not values (`NoCredentialError` has the seller account id only). The engine's `sanitize` stores `message` only, which is safe for these errors. `markNeedsReauth`'s audit details are `{ api, reason }`. `FAKE_APP` in `credentials.ts` is an obviously fake replay-only app id/secret, used only when `SH_AMAZON_MODE=replay` and the env vars are empty. |
+| `invalid_grant` → pause | The client calls `markNeedsReauth`, which sets `core.connections.status = needs_reauth`. The directory maps it to `paused.sp`, and `scopesFor` returns `[]`. Tested end to end on the real DB (`vault-wiring.test.ts`). Status names match P3-IDENTITY's `markStatus`. |
+| D30 | The new test uses `createTestRuntime` + `jsonResponse` (mock transport) only. No live Amazon call anywhere. |
+| Merge | `5fd3435` changes no file under `packages/ingestion` or `apps/worker`. `git merge-tree main <branch>` is clean. Outside the row, `git diff main...<branch>` touches only `.env.example`, `packages/config/src/env.ts` (the N4 exception) and `pnpm-lock.yaml`. |
+| N4 | `SH_JOB_RUN_RETENTION_DAYS` is in the zod schema (int, positive, default 90) and `.env.example`, and is read from typed config in `apps/worker/src/ingest.ts`. Fixed. |
+
+### New minors (BACKLOG)
+
+- **N8** `docs/architecture/ingestion.md:150-151` still says replay mode uses "fake credentials". Since `3b1d06b`
+  the worker always uses the vault, in replay too: only the LWA *app* falls back to `FAKE_APP`. A replay run therefore
+  needs a sealed refresh token in `core.credentials` for the account (e.g. created through the mock "connect" flow);
+  the fixture seeds create none. Update the doc, or seed a sealed dev credential for the fixture account.
+- **N9** `apps/worker/src/credentials.ts:17-34`: in production with no `SPAPI_`/`ADS_LWA_CLIENT_*` set, the worker
+  boots. Every run of that API then fails at call time ("application credentials are not configured") and is
+  retried 4× → `failing`. Consider a boot-time warning (or refusal) when an API has active connections but no app
+  credentials. Also map `NoCredentialError` and the missing-app error to non-retryable, so they fail once.
+- **N10** `apps/worker/test/ingest.test.ts:23` has the same pattern as N5: `loadConfig` runs at module top level, so
+  without an env file the suite fails at import instead of skipping. It dates from round 0 but was not covered by
+  N5. Move it inside the guard.
+- **N11** (carried) The BACKLOG items agreed in earlier rounds stay open:
+  - M7: Ads report slot.
+  - M8: inbox `processing` rows.
+  - Bucket lifecycle rule.
+  - Minor 7: inbox retry backoff.
+  - Minor 8: settings screen on `packages/ui` primitives and messages.
+  - Sync-health/refresh API task (`createRunRequester` is ready for it).
+  - Data Kiosk client.
+
+### Commands (re-review 3)
+
+| Command | Result |
+|---|---|
+| `git log --oneline 9513e9a..3b1d06b`, `git show 3ee1745`, `git show 3b1d06b`, `git show --stat 5fd3435` | reviewed as above |
+| `git diff --name-only main...<branch>` + `git merge-tree --write-tree main <branch>` | only owned paths + the N4 exception + lockfile; clean |
+| `npx vitest run` in `packages/ingestion` (worktree at `3b1d06b`, no env) | units **18 passed**, 38 DB/MinIO tests skipped |
+| `npx vitest run` in `apps/worker` (no env) | run-job 4, worker 2, registry 2 **passed**; vault-wiring 3 skipped (no DB); `ingest.test.ts` **fails at import** without env (N10, environment-only) |
+
+**Skipped:** `pnpm gate` and every DB/Redis/MinIO test (no stack, per the brief). The orchestrator's gate, run with
+the stack up after the merge, is the evidence for those.

@@ -177,3 +177,6 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   follow-ups. P3-INGEST fix round 3 (R2) done at 3ee1745 → re-review 3; then it merges `main` and wires
   `vaultCredentialSource`; orchestrator adds N4 (`SH_JOB_RUN_RETENTION_DAYS` in typed config + .env.example).
   P3-STAGING unblocked on code; still needs R10 (server + Cloudflare).
+- 2026-11-17 — P3-INGEST integration done (3b1d06b: main merged, vault wired, N4). Re-review 3: MERGE (4 minors →
+  BACKLOG). Orchestrator full gate on 3b1d06b (sellerhub_orchgate, offset 400, SH_REQUIRE_DB=1): exit 0, 565 tests,
+  0 skipped, e2e 7/7; stack down. Waiting for the user's go-ahead to merge P3-INGEST.
