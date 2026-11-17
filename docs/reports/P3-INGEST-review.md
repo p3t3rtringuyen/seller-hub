@@ -351,3 +351,83 @@ gate exit 0 with the stack up (ingestion 51, worker 10, web 22).
 ### For the next round
 
 R1 only (+ its test). N1–N5 may go to BACKLOG or ride along. After R1, I expect **MERGE**.
+
+---
+
+## Re-review 2 (commit `9513e9a`)
+
+Scope: `git diff b48292c..9513e9a` (1 commit, 9 files, +227/−53): R1, N1, N2, N3, N5. N4 moves to the orchestrator
+at integration (accepted). Read-only, no stack.
+
+### Verdict
+
+**MERGE-AFTER-FIXES — 1 must-fix (R2, major).** R2 is a regression introduced by the R1 fix, and the fix is small.
+R1's backlog amplification is gone. N1, N2, N3 and N5 are fixed.
+
+### Item by item
+
+| Item | Status | Evidence |
+|---|---|---|
+| R1 | Fixed for the backlog case | The heartbeat stores `nextStep = payload.step + 1` (`engine.ts` → `setNextStepAt`). `processRun` drops a payload with `step < nextStep` (`engine.ts:223-226`). The sweep re-adds with the chain's own id `jobIdFor(run.id, nextStep)`, so BullMQ ignores it while the original is queued (`scheduler.ts:147`), and pushes `nextStepAt` out by the grace (`:149`). Tests: "a backlog of never-started runs and a tick per minute leaves ONE queued job per run"; "a job of an older step is dropped". **But see R2.** |
+| N1 | Fixed | `requester.ts` no longer takes `system`. `ensureSyncStateScoped` inserts under `withScope` on the app connection (RLS `WITH CHECK`). The requester needs no owner role. |
+| N2 | Fixed (see N6) | A refresh joins only an open run in `requested` with no `startedAt` (`requester.ts:143`), and re-adds it at `interactive` (`…-0-interactive`). The step guard drops whichever of the two jobs runs second. Otherwise it creates a new run. Tested. |
+| N3 | Fixed | Per-run lease TTL 60 min (≥ the 45-min per-seller gate). |
+| N5 | Fixed | `loadConfig` inside the `try`: without env the MinIO suite is skipped, not crashed (confirmed below). |
+
+### R2 (major, must fix) — A run whose step job *failed* cannot be resumed for 24 h
+
+- `packages/ingestion/src/scheduler.ts:147`. The sweep now reuses the chain's own job id for `nextStep`.
+  `packages/ingestion/src/queue.ts:38` keeps failed jobs for 24 h (`removeOnFail: { age: 86_400 }`), and BullMQ
+  ignores an `add` whose job id still exists in any state, failed included.
+- When `processRun` throws, the heartbeat is not advanced, so `nextStep` stays at the failed job's step `N`. A throw
+  is easy to get: a Postgres restart or connection reset mid-step, a serialisation error in a scoped transaction, the
+  object store down while landing outside the engine's catch, or a job BullMQ fails after `maxStalledCount` stalls.
+  Every sweep then re-adds `${runId}-N`, the existing failed job swallows it, and the next sweep runs 10 min later
+  and does the same.
+- Failure scenario: the DB restarts while the scheduled listings run is at step 7. Job `${runId}-7` fails, and the
+  run stays `processing` with `nextStep = 7`. For the next 24 h the sweep's adds are no-ops. Meanwhile the tick
+  skips this sync every time (`scheduler.ts:112`, `findOpenSyncRun` → "its live chain carries it"), so the sync
+  does not run at all for a day. The status screen shows it in flight and slowly going stale.
+- Round 1 recovered this in 10 min (unique ids), so this is a regression. The in-memory test queue
+  (`testing.ts:30`) only dedups *pending* ids, so it cannot show the problem.
+- Fix (either is enough):
+  - (a) Give the sweep a recovery id distinct from chain ids, e.g. `${runId}-${nextStep}-resume-${epochSeconds}`.
+    The step guard now makes a same-step duplicate harmless: whichever job runs first advances `nextStep`, and the
+    other is dropped. `bumpNextStepAt` bounds it to one extra job per grace period.
+  - (b) Look up `${runId}-${nextStep}` in the queue before adding; if it is `failed` or `completed`, remove it, then
+    add.
+  - Also consider catching `processRun` errors in the worker processor (`apps/worker/src/ingest.ts:197`) and
+    returning a backoff re-enqueue, so a run job never ends in BullMQ's failed set.
+- Test: make the test queue keep failed ids (or use BullMQ in the worker test). A step throws once → the sweep
+  resumes the run within one grace period.
+
+### New minors (may fix later)
+
+- **N6** `requester.ts:155`: for a sync with no window (`lookbackDays` unset, e.g. a `lastUpdatedAfter` paged
+  pull), the job key is `syncKey:sa:scope:-:-`, the same as the open run's. When that run has already started,
+  N2's "start a new run" path makes `createRun` return the started run with `created: false` and enqueues nothing.
+  The refresh silently joins a run that is past its fetch, which is exactly the case N2 meant to avoid (D62 a
+  refresh after write for a definition without `refreshEntities`). Add a `keySuffix` (e.g. the request time)
+  when an open started run exists.
+- **N7** `engine.ts:223-226`: the step guard reads `nextStep` from the `state` loaded *before* the per-run lease is
+  taken. Chain Y can finish step N between that read and X acquiring the lease, so X runs step N once more. Its
+  successor id collides with Y's and is deduped, so it converges, but at the cost of an extra Amazon call (e.g. a
+  second `getReport`). Re-read the run's scratch after taking the lease.
+
+### Regressions
+
+R2 above. No other: the diff stays within owned paths. The requester API changes (no `system`) are internal to the
+package and the worker scheduler. `testing.ts` now re-enqueues `step + 1`, as the worker does.
+
+### Commands (re-review 2)
+
+| Command | Result |
+|---|---|
+| `git log --oneline b48292c..9513e9a`, `git diff --stat` | 1 commit, 9 files, all inside OWNED_PATHS |
+| `npx vitest run` in `packages/ingestion` (task worktree at `9513e9a`, no env) | units **18 passed**; engine 15, fixround 15, families 5, minio 1 **skipped (no database / object store)**; the MinIO suite now skips cleanly (N5 confirmed) |
+
+**Skipped:** `pnpm gate` and every DB/Redis/MinIO test (no stack, per the brief).
+
+### For the next round
+
+R2 (+ a test where the queue keeps failed job ids). N6 and N7 may go to BACKLOG. After R2, I expect **MERGE**.

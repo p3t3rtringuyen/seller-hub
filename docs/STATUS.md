@@ -172,3 +172,8 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
   (495/495, e2e 7/7). P3-INGEST MERGE-AFTER-FIXES (R1 stale sweep under slow queue) — fix round 2 sent.
   Orchestrator full gate on P3-IDENTITY 66ca5a2 (sellerhub_orchgate, offset 400, SH_REQUIRE_DB=1): exit 0,
   e2e 7/7; stack down. Waiting for the user's go-ahead to merge P3-IDENTITY and the ADR-0004 answer.
+- 2026-11-17 — User: `Merge và push`. Merged P3-IDENTITY (42361c7, --no-ff). ADR-0004 amended: hand-written auth
+  instead of Better Auth; P6-SEC review mandatory; e-mail verification, reset, TOTP, require_two_factor are
+  follow-ups. P3-INGEST fix round 3 (R2) done at 3ee1745 → re-review 3; then it merges `main` and wires
+  `vaultCredentialSource`; orchestrator adds N4 (`SH_JOB_RUN_RETENTION_DAYS` in typed config + .env.example).
+  P3-STAGING unblocked on code; still needs R10 (server + Cloudflare).

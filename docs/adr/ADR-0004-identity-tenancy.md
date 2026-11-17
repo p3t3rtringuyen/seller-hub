@@ -84,3 +84,15 @@ core.seller_account_marketplaces (seller_account, marketplace_id, ads_profile_id
 
 A customer requires enterprise SSO/SCIM, or a security review (P6-SEC) finds the library inadequate — then add
 Keycloak (or a hosted IdP) as an OIDC login method behind `IdentityService`.
+
+## Amendment — P3-IDENTITY (2026-11-17)
+
+Accepted by the orchestrator on the user's go-ahead to merge P3-IDENTITY (recommendation stated before the merge).
+
+- Decision 1 changes: identity is **hand-written** in `modules/platform-auth` (argon2id via `hash-wasm` off the
+  event loop, opaque session ids hashed at rest, sign-in throttling, CSRF at the BFF) instead of Better Auth's core.
+  The interface (`IdentityService`, session authenticator) is unchanged, so Better Auth can still replace the
+  internals later.
+- Consequences: P6-SEC must review the in-house identity code. E-mail verification, password reset, TOTP 2FA and
+  enforcement of `tenants.require_two_factor` are open work (BACKLOG follow-ups), required before any non-staging
+  use; staging (D66) stays behind Cloudflare Access.
