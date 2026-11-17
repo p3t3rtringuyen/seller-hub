@@ -40,6 +40,7 @@ export function ContextSwitcher({
 }: ContextSwitcherProps) {
   const t = useMessages();
   const select = (
+    id: string,
     label: string,
     current: string,
     items: readonly ContextOption[],
@@ -47,6 +48,8 @@ export function ContextSwitcher({
   ) => (
     <TextField
       select
+      // stable ids: generated ones differed between the server and the client render (hydration mismatch)
+      id={`context-${id}`}
       size="small"
       label={label}
       value={current}
@@ -68,18 +71,23 @@ export function ContextSwitcher({
       sx={{ display: "flex", gap: 1, alignItems: "center", flexWrap: "wrap" }}
     >
       {showTenant && options.tenants.length > 0
-        ? select(t("shell.tenant"), value.tenantId, options.tenants, (tenantId) =>
+        ? select("tenant", t("shell.tenant"), value.tenantId, options.tenants, (tenantId) =>
             onChange({ ...value, tenantId }),
           )
         : null}
       {select(
+        "seller-account",
         t("shell.sellerAccount"),
         value.sellerAccountId,
         options.sellerAccounts,
         (sellerAccountId) => onChange({ ...value, sellerAccountId }),
       )}
-      {select(t("shell.marketplace"), value.marketplaceId, options.marketplaces, (marketplaceId) =>
-        onChange({ ...value, marketplaceId }),
+      {select(
+        "marketplace",
+        t("shell.marketplace"),
+        value.marketplaceId,
+        options.marketplaces,
+        (marketplaceId) => onChange({ ...value, marketplaceId }),
       )}
       {switching ? <span role="status">{t("shell.switching")}</span> : null}
     </Box>

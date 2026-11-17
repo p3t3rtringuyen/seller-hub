@@ -1,7 +1,7 @@
 import { Writable } from "node:stream";
 import { createHelloRoutes } from "../../../modules/example/src/routes/hello/hello.route";
 import helloPermissions from "../../../modules/example/src/permissions/hello.permissions";
-import { zodForComponent } from "@seller-hub/contracts";
+import { contractOperations, zodForComponent } from "@seller-hub/contracts";
 import { createLogger, isUuid, type Role } from "@seller-hub/core";
 import { FIXTURE, seedFixtures, tryCreateTestDb } from "@seller-hub/testing";
 import { sql } from "kysely";
@@ -12,6 +12,12 @@ import type { Authenticator } from "../src/auth";
 // Header "x-test-user: <tenantId>:<role>" stands in for the session until P3-IDENTITY. The principal resolves a
 // seller account only if it belongs to the caller's tenant (null => 404, never 403, conventions §3).
 const t = await tryCreateTestDb();
+
+// This file tests the guard and the binder with the example module only. The platform modules (P3-IDENTITY) have their
+// own HTTP-level test (identity.test.ts), so their operations are left out here instead of being given stub handlers.
+const exampleOperations = contractOperations.filter(
+  (o) => o.operationId.startsWith("example.") || o.operationId.startsWith("system."),
+);
 
 const logLines: string[] = [];
 const logger = createLogger({
@@ -56,6 +62,7 @@ describe.skipIf(!t)("API (real Postgres, contract-validated)", () => {
     built = await buildApp({
       logger,
       authenticator,
+      operations: exampleOperations,
       readiness: { database: async () => void (await sql`select 1`.execute(t!.app.db)) },
       routes: [
         {
@@ -220,6 +227,7 @@ describe("boot checks (no database needed)", () => {
     await expect(
       buildApp({
         logger,
+        operations: exampleOperations,
         permissions: [],
         routes: [
           {
@@ -238,6 +246,7 @@ describe("boot checks (no database needed)", () => {
   it("lists every route with its permission (default-deny audit)", async () => {
     const { app, permissionMatrix } = await buildApp({
       logger,
+      operations: exampleOperations,
       routes: [
         {
           module: "example",

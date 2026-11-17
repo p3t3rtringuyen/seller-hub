@@ -2,14 +2,16 @@
 
 Owned by the orchestrator. Other sessions read only. Update before ending every turn.
 
-- **Phase:** P3 — scaffold, clients, DS merged; P3-IDENTITY ∥ P3-INGEST next
+- **Phase:** P3 — P3-IDENTITY ∥ P3-INGEST running; P3-STAGING after P3-IDENTITY (D66)
 - **Updated:** 2026-11-13
-- **Waiting on user:** `tiếp` to start P3-IDENTITY ∥ P3-INGEST; how a2z-solutions.stream is hosted (D40); R5/R6 and D30 before G3
+- **Waiting on user:** R10 for staging — a Linux server (none yet; guide sent 2026-11-13) + Cloudflare access for a2z-solutions.stream; R5/R6 and D30 before G3
 
 ## Running
 
 | Task | Session name | local id | Model | Checkout / branch | Ports / compose project | Started |
 | --- | --- | --- | --- | --- | --- | --- |
+| P3-IDENTITY | p3-identity | local_f51b8083-d8cd-4af2-bd47-7f8543c9d714 | sonnet / high | wt from main 2bc895e | sellerhub_p3identity, offset 100 | 2026-11-13 |
+| P3-INGEST | p3-ingest | local_01abf0e9-fac4-4428-85f4-34b7de68b4ee | sonnet / high | wt from main 2bc895e | sellerhub_p3ingest, offset 200 | 2026-11-13 |
 
 ## Done
 
@@ -37,7 +39,7 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 
 ## Next runnable
 
-- P3-IDENTITY ∥ P3-INGEST (wt, from main), then P3-SMOKE (needs R5/R6, D30) → G3.
+- After P3-IDENTITY merges: P3-STAGING (needs R10). After both merge: P3-SMOKE (needs R5/R6, D30) → G3, and wave 1a.
 
 ## Log
 
@@ -152,3 +154,26 @@ Owned by the orchestrator. Other sessions read only. Update before ending every 
 - 2026-11-13 — Pushed main to origin (48c70ea..cc3793c). User: domain a2z-solutions.stream shows "Hello world".
   Checked: Cloudflare answers 200 text/plain "Hello world" (11 bytes) — not served from this repo (no deploy
   workflow exists; deploy is P6-DEPLOY after G4, D40 OPEN). Asked the user how the domain is hosted.
+- 2026-11-13 — User: staging right after sign-in exists (D66; PLAN gains P3-STAGING). User has no server yet;
+  sent a step-by-step guide. Started P3-IDENTITY and P3-INGEST in worktrees (briefs override the prompts'
+  outdated OWNED_PATHS with the PLAN rows).
+- 2026-11-16 — P3-IDENTITY DONE (branch claude/p3-identity-8a0f9d, 11 commits, gate green, 6 e2e) and P3-INGEST
+  DONE (claude/p3-ingest-5d7cbd, 5 commits, gate green; sync-health route, vault source, Data Kiosk client left
+  out). Only overlap: pnpm-lock.yaml. User: `Tiếp, review`. Started P5-REVIEW for both (opus, read-only) and
+  P5-QA for P3-IDENTITY (haiku, worktree from its branch, sellerhub_qaidentity, offset 300).
+- 2026-11-16 — Reviews: P3-IDENTITY MERGE-AFTER-FIXES (0 blocker, 4 major: argon2 blocks event loop, sign-in
+  throttle bypass, invitation acceptance without membership, scoped Admin cannot finish Ads connect; 9 minor).
+  QA P3-IDENTITY FAIL ×4 (auth screens no `main`, localhost origin CSRF, ContextSwitcher hydration, old session
+  kept after re-sign-in); suites 477/477, e2e 6/6. P3-INGEST MERGE-AFTER-FIXES (1 blocker duplicate step chains,
+  6 major). Fix round sent to both. Order: IDENTITY merges first, then INGEST wires `vaultCredentialSource`.
+  Open for the user: ADR-0004 amendment (hand-written auth instead of Better Auth). Planning gap: sync-health /
+  refresh API (ADR-0008) has no owner — to be added as a small task after INGEST merges.
+- 2026-11-16 — Fix round 1 done on both. Re-review: P3-IDENTITY MERGE (r1–r5 non-blocking); QA re-check PASS
+  (495/495, e2e 7/7). P3-INGEST MERGE-AFTER-FIXES (R1 stale sweep under slow queue) — fix round 2 sent.
+  Orchestrator full gate on P3-IDENTITY 66ca5a2 (sellerhub_orchgate, offset 400, SH_REQUIRE_DB=1): exit 0,
+  e2e 7/7; stack down. Waiting for the user's go-ahead to merge P3-IDENTITY and the ADR-0004 answer.
+- 2026-11-17 — User: `Merge và push`. Merged P3-IDENTITY (42361c7, --no-ff). ADR-0004 amended: hand-written auth
+  instead of Better Auth; P6-SEC review mandatory; e-mail verification, reset, TOTP, require_two_factor are
+  follow-ups. P3-INGEST fix round 3 (R2) done at 3ee1745 → re-review 3; then it merges `main` and wires
+  `vaultCredentialSource`; orchestrator adds N4 (`SH_JOB_RUN_RETENTION_DAYS` in typed config + .env.example).
+  P3-STAGING unblocked on code; still needs R10 (server + Cloudflare).

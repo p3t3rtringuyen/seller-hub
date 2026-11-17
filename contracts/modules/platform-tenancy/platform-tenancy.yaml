@@ -1,0 +1,550 @@
+openapi: 3.1.0
+info:
+  title: platform-tenancy
+  version: 0.1.0
+  description: >
+    Tenants, members, roles (D55 a), invitations, seller accounts, `/v1/me` with permissions and per-user preferences,
+    and the read-only `ref.*` endpoints (marketplaces, Ads limits - PLT-04). Error `code` values of this module:
+    last_owner, owner_required, already_member, invitation_invalid, invitation_email_mismatch, role_not_invitable,
+    unknown_seller_account, unknown_role, unknown_region, invalid_key, must_be_object, too_large, length.
+paths:
+  /v1/me:
+    get:
+      operationId: platform-tenancy.getMe
+      summary: The signed-in user, the active tenant, seller accounts and permissions
+      tags: [platform-tenancy]
+      x-permission: session.read
+      x-scope: tenant
+      responses:
+        "200":
+          description: Profile and permissions
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformTenancyMe" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/me/preferences/{prefKey}:
+    parameters:
+      - name: prefKey
+        in: path
+        required: true
+        description: Dotted lowercase key, for example `ads.campaigns.grid` (column layout, hidden/pinned columns).
+        schema: { type: string, minLength: 1, maxLength: 80 }
+    get:
+      operationId: platform-tenancy.getPreference
+      summary: One preference of the signed-in user in the active tenant
+      tags: [platform-tenancy]
+      x-permission: session.read
+      x-scope: tenant
+      responses:
+        "200":
+          description: The stored value
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformTenancyPreference" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+    put:
+      operationId: platform-tenancy.putPreference
+      summary: Stores a preference (replaces the value)
+      tags: [platform-tenancy]
+      x-permission: session.read
+      x-scope: tenant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PlatformTenancyPreferenceRequest" }
+      responses:
+        "200":
+          description: Stored
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformTenancyPreference" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+    delete:
+      operationId: platform-tenancy.deletePreference
+      summary: Deletes a preference
+      tags: [platform-tenancy]
+      x-permission: session.read
+      x-scope: tenant
+      responses:
+        "204":
+          description: Deleted
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/members:
+    get:
+      operationId: platform-tenancy.listMembers
+      summary: Members of the active tenant with their role grants
+      tags: [platform-tenancy]
+      x-permission: members.read
+      x-scope: tenant
+      responses:
+        "200":
+          description: Members
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformTenancyMemberList" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/members/{membershipId}/roles:
+    put:
+      operationId: platform-tenancy.setMemberRoles
+      summary: Replaces the role grants of a member (Owner/Admin; owner changes need an Owner)
+      tags: [platform-tenancy]
+      x-permission: members.manage
+      x-scope: tenant
+      parameters:
+        - $ref: "#/components/parameters/PlatformTenancyMembershipId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PlatformTenancySetRolesRequest" }
+      responses:
+        "200":
+          description: The new grants
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformTenancyGrantList" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/members/{membershipId}:
+    delete:
+      operationId: platform-tenancy.removeMember
+      summary: Removes a member from the tenant
+      tags: [platform-tenancy]
+      x-permission: members.manage
+      x-scope: tenant
+      parameters:
+        - $ref: "#/components/parameters/PlatformTenancyMembershipId"
+      responses:
+        "204":
+          description: Removed
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/invitations:
+    get:
+      operationId: platform-tenancy.listInvitations
+      summary: Invitations of the active tenant
+      tags: [platform-tenancy]
+      x-permission: members.manage
+      x-scope: tenant
+      responses:
+        "200":
+          description: Invitations (newest first)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformTenancyInvitationList" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+    post:
+      operationId: platform-tenancy.createInvitation
+      summary: Invites someone by e-mail; the one-time link is returned once
+      tags: [platform-tenancy]
+      x-permission: members.manage
+      x-scope: tenant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PlatformTenancyInvitationRequest" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformTenancyInvitationCreated" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/invitations/{invitationId}:
+    delete:
+      operationId: platform-tenancy.revokeInvitation
+      summary: Revokes an open invitation
+      tags: [platform-tenancy]
+      x-permission: members.manage
+      x-scope: tenant
+      parameters:
+        - name: invitationId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "204":
+          description: Revoked
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/seller-accounts:
+    get:
+      operationId: platform-tenancy.listSellerAccounts
+      summary: Seller accounts the caller may see
+      tags: [platform-tenancy]
+      x-permission: accounts.read
+      x-scope: tenant
+      responses:
+        "200":
+          description: Seller accounts
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformTenancySellerAccountList" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+    post:
+      operationId: platform-tenancy.createSellerAccount
+      summary: Creates a seller account (one Amazon selling partner in one region)
+      tags: [platform-tenancy]
+      x-permission: connections.manage
+      x-scope: tenant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PlatformTenancySellerAccountRequest" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformTenancySellerAccount" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/seller-accounts/{sellerAccountId}:
+    get:
+      operationId: platform-tenancy.getSellerAccount
+      summary: One seller account (404 for ids of another tenant)
+      tags: [platform-tenancy]
+      x-permission: accounts.read
+      x-scope: seller-account
+      parameters:
+        - $ref: "../../shared/common.yaml#/components/parameters/SellerAccountId"
+      responses:
+        "200":
+          description: The seller account
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformTenancySellerAccount" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/seller-accounts/{sellerAccountId}/marketplaces:
+    get:
+      operationId: platform-tenancy.listAccountMarketplaces
+      summary: Marketplaces of a seller account with time zone, currency and linked Ads profile
+      tags: [platform-tenancy]
+      x-permission: accounts.read
+      x-scope: seller-account
+      parameters:
+        - $ref: "../../shared/common.yaml#/components/parameters/SellerAccountId"
+      responses:
+        "200":
+          description: Marketplaces
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformTenancyAccountMarketplaceList" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/ref/marketplaces:
+    get:
+      operationId: platform-tenancy.listMarketplaces
+      summary: Reference data - Amazon marketplaces (ref.marketplaces)
+      tags: [platform-tenancy]
+      x-permission: ref.read
+      x-scope: tenant
+      responses:
+        "200":
+          description: Marketplaces
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformTenancyMarketplaceList" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+  /v1/ref/ads-limits:
+    get:
+      operationId: platform-tenancy.listAdsLimits
+      summary: Reference data - Ads bid and budget bounds (ref.ads_limits)
+      tags: [platform-tenancy]
+      x-permission: ref.read
+      x-scope: tenant
+      parameters:
+        - name: marketplaceId
+          in: query
+          schema: { type: string, maxLength: 20 }
+      responses:
+        "200":
+          description: Limits (decimal strings)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PlatformTenancyAdsLimitList" }
+        "4XX":
+          $ref: "../../shared/common.yaml#/components/responses/Problem"
+components:
+  parameters:
+    PlatformTenancyMembershipId:
+      name: membershipId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+  schemas:
+    PlatformTenancyRole:
+      type: string
+      enum: [owner, admin, manager, analyst, viewer]
+    PlatformTenancyInvitableRole:
+      type: string
+      enum: [admin, manager, analyst, viewer]
+    PlatformTenancyMe:
+      type: object
+      required: [user, tenant, tenants, roles, permissions, sellerAccounts]
+      properties:
+        user: { $ref: "#/components/schemas/PlatformTenancyUser" }
+        tenant: { $ref: "#/components/schemas/PlatformTenancyTenantRef" }
+        tenants:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformTenancyTenantName" }
+        roles:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformTenancyRole" }
+        permissions:
+          type: array
+          items: { type: string }
+        sellerAccounts:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformTenancyMeSellerAccount" }
+    PlatformTenancyUser:
+      type: object
+      required: [id, email, displayName, locale]
+      properties:
+        id: { type: string, format: uuid }
+        email: { type: string }
+        displayName: { type: [string, "null"] }
+        locale: { type: string }
+    PlatformTenancyTenantRef:
+      type: object
+      required: [id, name, requireTwoFactor]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        requireTwoFactor: { type: boolean }
+    PlatformTenancyTenantName:
+      type: object
+      required: [id, name]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+    PlatformTenancyMeSellerAccount:
+      type: object
+      required: [id, name, regionCode, accountType, status, roles, permissions]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        regionCode: { type: string, enum: [NA, EU, FE] }
+        accountType: { type: string, enum: [seller, vendor] }
+        status: { type: string, enum: [active, disconnected, deleting] }
+        roles:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformTenancyRole" }
+        permissions:
+          type: array
+          items: { type: string }
+    PlatformTenancyPreference:
+      type: object
+      required: [key, value]
+      properties:
+        key: { type: string }
+        value: { type: object, additionalProperties: true }
+    PlatformTenancyPreferenceRequest:
+      type: object
+      required: [value]
+      properties:
+        value:
+          type: object
+          additionalProperties: true
+          description: Free-form JSON object, at most 16 KiB.
+    PlatformTenancyGrant:
+      type: object
+      required: [role, sellerAccountId]
+      properties:
+        role: { $ref: "#/components/schemas/PlatformTenancyRole" }
+        sellerAccountId:
+          type: [string, "null"]
+          format: uuid
+          description: null = every seller account of the tenant.
+    PlatformTenancyGrantList:
+      type: object
+      required: [membershipId, grants]
+      properties:
+        membershipId: { type: string, format: uuid }
+        grants:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformTenancyGrant" }
+    PlatformTenancySetRolesRequest:
+      type: object
+      required: [grants]
+      properties:
+        grants:
+          type: array
+          minItems: 1
+          maxItems: 50
+          items: { $ref: "#/components/schemas/PlatformTenancyGrant" }
+    PlatformTenancyMember:
+      type: object
+      required: [membershipId, userId, email, displayName, status, createdAt, grants]
+      properties:
+        membershipId: { type: string, format: uuid }
+        userId: { type: string, format: uuid }
+        email: { type: string }
+        displayName: { type: [string, "null"] }
+        status: { type: string, enum: [active, suspended] }
+        createdAt: { type: string, format: date-time }
+        grants:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformTenancyGrant" }
+    PlatformTenancyMemberList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformTenancyMember" }
+    PlatformTenancyInvitation:
+      type: object
+      required: [id, email, role, sellerAccountId, expiresAt, acceptedAt, revokedAt, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        email: { type: string }
+        role: { $ref: "#/components/schemas/PlatformTenancyInvitableRole" }
+        sellerAccountId: { type: [string, "null"], format: uuid }
+        expiresAt: { type: string, format: date-time }
+        acceptedAt: { type: [string, "null"], format: date-time }
+        revokedAt: { type: [string, "null"], format: date-time }
+        createdAt: { type: string, format: date-time }
+    PlatformTenancyInvitationList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformTenancyInvitation" }
+    PlatformTenancyInvitationRequest:
+      type: object
+      required: [email, role]
+      properties:
+        email: { type: string, maxLength: 254 }
+        role:
+          {
+            type: string,
+            description: "admin | manager | analyst | viewer (owner is never invited).",
+          }
+        sellerAccountId: { type: [string, "null"], format: uuid }
+    PlatformTenancyInvitationCreated:
+      type: object
+      required: [invitation, link]
+      properties:
+        invitation: { $ref: "#/components/schemas/PlatformTenancyInvitation" }
+        link:
+          type: string
+          description: One-time accept link (SMTP is not wired; the inviter copies it). Shown once.
+    PlatformTenancySellerAccount:
+      type: object
+      required: [id, name, regionCode, accountType, sellingPartnerId, status]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        regionCode: { type: string, enum: [NA, EU, FE] }
+        accountType: { type: string, enum: [seller, vendor] }
+        sellingPartnerId: { type: [string, "null"] }
+        status: { type: string, enum: [active, disconnected, deleting] }
+    PlatformTenancySellerAccountList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformTenancySellerAccount" }
+    PlatformTenancySellerAccountRequest:
+      type: object
+      required: [name, regionCode]
+      properties:
+        name: { type: string, maxLength: 120 }
+        regionCode: { type: string, description: "NA | EU | FE" }
+        accountType: { type: string, enum: [seller, vendor] }
+    PlatformTenancyAccountMarketplace:
+      type: object
+      required:
+        [
+          marketplaceId,
+          name,
+          countryCode,
+          currency,
+          timeZone,
+          isEnabled,
+          isParticipating,
+          adsProfileId,
+        ]
+      properties:
+        marketplaceId: { type: string }
+        name: { type: string }
+        countryCode: { type: string }
+        currency: { type: string }
+        timeZone: { type: string }
+        isEnabled: { type: boolean }
+        isParticipating: { type: [boolean, "null"] }
+        adsProfileId: { type: [string, "null"], format: uuid }
+    PlatformTenancyAccountMarketplaceList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformTenancyAccountMarketplace" }
+    PlatformTenancyMarketplace:
+      type: object
+      required:
+        [
+          id,
+          regionCode,
+          countryCode,
+          adsCountryCode,
+          currency,
+          timeZone,
+          domainName,
+          name,
+          isEnabled,
+        ]
+      properties:
+        id: { type: string }
+        regionCode: { type: string, enum: [NA, EU, FE] }
+        countryCode: { type: string }
+        adsCountryCode: { type: string }
+        currency: { type: string }
+        timeZone: { type: string }
+        domainName: { type: string }
+        name: { type: string }
+        isEnabled: { type: boolean }
+    PlatformTenancyMarketplaceList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformTenancyMarketplace" }
+    PlatformTenancyAdsLimit:
+      type: object
+      required:
+        [marketplaceId, adProduct, limitKind, accountType, currency, minValue, maxValue, source]
+      properties:
+        marketplaceId: { type: string }
+        adProduct: { type: string }
+        limitKind: { type: string }
+        accountType: { type: string }
+        currency: { type: string }
+        minValue: { type: string, description: Decimal string. }
+        maxValue: { type: string, description: Decimal string. }
+        source: { type: string }
+    PlatformTenancyAdsLimitList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/PlatformTenancyAdsLimit" }

@@ -69,6 +69,9 @@ catalogs:
     globals:
       specifier: 16.5.0
       version: 16.5.0
+    hash-wasm:
+      specifier: 4.12.0
+      version: 4.12.0
     ioredis:
       specifier: 5.11.1
       version: 5.11.1
@@ -383,6 +386,163 @@ importers:
       '@seller-hub/db':
         specifier: workspace:*
         version: link:../../packages/db
+      kysely:
+        specifier: 'catalog:'
+        version: 0.28.19
+    devDependencies:
+      '@seller-hub/testing':
+        specifier: workspace:*
+        version: link:../../packages/testing
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.19.2
+      eslint:
+        specifier: 'catalog:'
+        version: 9.39.5
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 3.2.7(@types/node@24.19.2)(jsdom@26.1.0)(tsx@4.23.15)(yaml@2.9.1)
+
+  modules/platform-audit:
+    dependencies:
+      '@seller-hub/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@seller-hub/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@seller-hub/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      kysely:
+        specifier: 'catalog:'
+        version: 0.28.19
+    devDependencies:
+      '@seller-hub/testing':
+        specifier: workspace:*
+        version: link:../../packages/testing
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.19.2
+      eslint:
+        specifier: 'catalog:'
+        version: 9.39.5
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 3.2.7(@types/node@24.19.2)(jsdom@26.1.0)(tsx@4.23.15)(yaml@2.9.1)
+
+  modules/platform-auth:
+    dependencies:
+      '@seller-hub/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@seller-hub/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@seller-hub/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@seller-hub/mod-platform-audit':
+        specifier: workspace:*
+        version: link:../platform-audit
+      '@seller-hub/mod-platform-tenancy':
+        specifier: workspace:*
+        version: link:../platform-tenancy
+      hash-wasm:
+        specifier: 'catalog:'
+        version: 4.12.0
+      kysely:
+        specifier: 'catalog:'
+        version: 0.28.19
+    devDependencies:
+      '@seller-hub/testing':
+        specifier: workspace:*
+        version: link:../../packages/testing
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.19.2
+      eslint:
+        specifier: 'catalog:'
+        version: 9.39.5
+      tsx:
+        specifier: 'catalog:'
+        version: 4.23.15
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 3.2.7(@types/node@24.19.2)(jsdom@26.1.0)(tsx@4.23.15)(yaml@2.9.1)
+
+  modules/platform-connections:
+    dependencies:
+      '@seller-hub/amazon-ads':
+        specifier: workspace:*
+        version: link:../../packages/amazon-ads
+      '@seller-hub/amazon-core':
+        specifier: workspace:*
+        version: link:../../packages/amazon-core
+      '@seller-hub/amazon-sp':
+        specifier: workspace:*
+        version: link:../../packages/amazon-sp
+      '@seller-hub/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@seller-hub/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@seller-hub/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@seller-hub/mod-platform-audit':
+        specifier: workspace:*
+        version: link:../platform-audit
+      '@seller-hub/mod-platform-tenancy':
+        specifier: workspace:*
+        version: link:../platform-tenancy
+      ioredis:
+        specifier: 'catalog:'
+        version: 5.11.1
+      kysely:
+        specifier: 'catalog:'
+        version: 0.28.19
+    devDependencies:
+      '@seller-hub/testing':
+        specifier: workspace:*
+        version: link:../../packages/testing
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.19.2
+      eslint:
+        specifier: 'catalog:'
+        version: 9.39.5
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 3.2.7(@types/node@24.19.2)(jsdom@26.1.0)(tsx@4.23.15)(yaml@2.9.1)
+
+  modules/platform-tenancy:
+    dependencies:
+      '@seller-hub/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@seller-hub/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@seller-hub/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@seller-hub/mod-platform-audit':
+        specifier: workspace:*
+        version: link:../platform-audit
       kysely:
         specifier: 'catalog:'
         version: 0.28.19
@@ -3112,6 +3272,9 @@ packages:
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
+
+  hash-wasm@4.12.0:
+    resolution: {integrity: sha512-+/2B2rYLb48I/evdOIhP+K/DD2ca2fgBjp6O+GBEnCDk2e4rpeXIK8GvIyRPjTezgmWn9gmKwkQjjx6BtqDHVQ==}
 
   hasown@2.0.4:
     resolution: {integrity: sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==}
@@ -6673,6 +6836,8 @@ snapshots:
   has-flag@3.0.0: {}
 
   has-flag@4.0.0: {}
+
+  hash-wasm@4.12.0: {}
 
   hasown@2.0.4:
     dependencies:
